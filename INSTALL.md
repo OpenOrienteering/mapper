@@ -19,11 +19,11 @@ components. Direct dependencies are:
  - Clipper library (aka libpolyclipping) >= 6.1.3.a
    http://www.angusj.com/delphi/clipper.php
  - PROJ.4 Cartographic Projections Library >= 4.8
-   http://proj4.org/
+   https://proj4.org/
  - GDAL Geospatial Data Abstraction Library
-   http://www.gdal.org/
+   https://www.gdal.org/
  - ZLib Compression Library
-   http://zlib.net/
+   https://zlib.net/
 
 When building for Linux, you may use the distributions' packages. 
 However, openSUSE is known to lack the Clipper library.
@@ -109,7 +109,7 @@ it needs.
 
 For setting up Kits, see the Qt Creator documentation:
 
-http://doc.qt.io/qtcreator/creator-targets.html
+https://doc.qt.io/qtcreator/creator-targets.html
 
 Starting with Qt Creator 4.3, it might become possible to simply open the
 superbuild's openorienteering-mapper build directory as a regular project

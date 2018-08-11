@@ -23,9 +23,13 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(FeatureSummary)
 
+if(CCACHE_PROGRAM)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
+endif()
+
 # Project declaration
 
-project(Mapper VERSION 0.8.1.2 LANGUAGES CXX C)
+project(Mapper VERSION 0.8.2 LANGUAGES CXX C)
 
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")

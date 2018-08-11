@@ -21,8 +21,10 @@
 
 #include "world_file.h"
 
+#include <QChar>
 #include <QCharRef>
 #include <QFile>
+#include <QFileDevice>
 #include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>

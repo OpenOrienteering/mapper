@@ -1234,48 +1234,48 @@
 <context>
     <name>OpenOrienteering::EditPointTool</name>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="535"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
         <translatorcomment>Illesztés egy létező objektumokhoz</translatorcomment>
         <translation>Illeszt</translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="537"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
         <translatorcomment>Pontokat módosít vagy erőltetett szögeket használ</translatorcomment>
         <translation>Pont /Szög</translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="537"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="538"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
         <translation>Sarokpontot vált</translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="716"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="717"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Befejezi a szerkesztést. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="735"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="736"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <extracomment>Actually, this means: &quot;Keep the opposite handle&apos;s position. &quot;</extracomment>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Tartsa a szembenfekvő fogantyúpozíciókat. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="756"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="757"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton: Törli azt; az útvonalon: Hozzáad egy új sarokpontot; &lt;b&gt;%2&lt;/b&gt;: Adj hozzá egy normál pontot. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="759"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="760"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt; ponton: Törli azt; az útvonalon: Hozzáad egy új pontot; &lt;b&gt;%2&lt;/b&gt;-val: Adj hozzá egy sarokpontot. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="763"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
         <translation>&lt;b&gt;%1+Kattintás&lt;/b&gt;a ponton a sarok és normál pont közötti váltáshoz. </translation>
     </message>
@@ -1283,31 +1283,31 @@
 <context>
     <name>OpenOrienteering::EditTool</name>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="722"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="511"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
         <translation>&lt;b&gt;Koordináta távolság:&lt;/b&gt;%1, %2 mm &lt;b&gt;Különbség&lt;/b&gt; %3 m </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="728"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Fix szögek. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
-        <location filename="../src/tools/edit_point_tool.cpp" line="739"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="520"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Létező objektumhoz igazít. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="745"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="746"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="526"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
         <translation>&lt;b&gt;Kattintás&lt;/b&gt;: Egy objektum kiválasztása. &lt;b&gt;Megragad&lt;/b&gt;: Több objektum kiválasztása. &lt;b&gt;%1+Kattintás&lt;/b&gt;: Kiválasztás megfordítása. </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="748"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="749"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="529"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;: Kiválasztott objektum törlése. </translation>
@@ -2193,22 +2193,22 @@
         <translation type="vanished">Hiba szimbólum betöltésekor.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="421"/>
+        <location filename="../src/core/objects/object.cpp" line="439"/>
         <source>Error while loading an object of type %1.</source>
         <translation>Hiba egy %1 típusú objektum betöltésekor.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="494"/>
+        <location filename="../src/core/objects/object.cpp" line="512"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>Hiba egy %1 típusú objektum betöltésekor %2:%3: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="453"/>
+        <location filename="../src/core/objects/object.cpp" line="471"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Nem található szimbólum a %1:%2 -n lévő objektumhoz.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="465"/>
+        <location filename="../src/core/objects/object.cpp" line="483"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
         <translation>Pont objektum egy definiálatlan vagy hibás szimbólummal a %1:%2 -n.</translation>
     </message>
@@ -2375,10 +2375,10 @@
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="120"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="122"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="125"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2073"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2110"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2092"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2095"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2099"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2129"/>
         <source>Could not read file: %1</source>
         <translation>Nem olvasható a %1 fájl</translation>
     </message>
@@ -2688,143 +2688,143 @@
 <context>
     <name>OpenOrienteering::MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="294"/>
+        <location filename="../src/gui/main_window.cpp" line="316"/>
         <source>&amp;New</source>
         <translation>&amp;Új</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="296"/>
+        <location filename="../src/gui/main_window.cpp" line="319"/>
         <source>Create a new map</source>
         <translation>Egy új térképet hoz létre</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="300"/>
+        <location filename="../src/gui/main_window.cpp" line="323"/>
         <source>&amp;Open...</source>
         <translation>Meg&amp;nyit...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="302"/>
+        <location filename="../src/gui/main_window.cpp" line="326"/>
         <source>Open an existing file</source>
         <translation>Megnyit egy létező fájlt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="306"/>
+        <location filename="../src/gui/main_window.cpp" line="330"/>
         <source>Open &amp;recent</source>
         <translation>Megnyit egy ko&amp;rábbi fájlt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="317"/>
+        <location filename="../src/gui/main_window.cpp" line="342"/>
         <source>&amp;Save</source>
         <translation>&amp;Mentés</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="322"/>
+        <location filename="../src/gui/main_window.cpp" line="348"/>
         <source>Save &amp;as...</source>
         <translation>Mentés má&amp;sként...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="324"/>
+        <location filename="../src/gui/main_window.cpp" line="351"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="330"/>
+        <location filename="../src/gui/main_window.cpp" line="357"/>
         <source>Settings...</source>
         <translation>Beállítások...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="335"/>
+        <location filename="../src/gui/main_window.cpp" line="362"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="107"/>
         <source>Close</source>
         <translation>Bezár</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="337"/>
+        <location filename="../src/gui/main_window.cpp" line="365"/>
         <source>Close this file</source>
         <translation>Bezárja a fájlt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="341"/>
+        <location filename="../src/gui/main_window.cpp" line="369"/>
         <source>E&amp;xit</source>
         <translation>&amp;Kilép</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="343"/>
+        <location filename="../src/gui/main_window.cpp" line="372"/>
         <source>Exit the application</source>
         <translation>Kilépés az alkalmazásból</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="350"/>
+        <location filename="../src/gui/main_window.cpp" line="378"/>
         <source>&amp;File</source>
         <translation>&amp;Fájl</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="369"/>
+        <location filename="../src/gui/main_window.cpp" line="397"/>
         <source>General</source>
         <translation>Általános</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="384"/>
+        <location filename="../src/gui/main_window.cpp" line="412"/>
         <source>Open &amp;Manual</source>
         <translation>Súgó &amp;megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="385"/>
+        <location filename="../src/gui/main_window.cpp" line="414"/>
         <source>Show the help file for this application</source>
         <translation>Megmutatja az alkalmazás súgóját</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="389"/>
+        <location filename="../src/gui/main_window.cpp" line="418"/>
         <source>&amp;About %1</source>
         <translation>%1 &amp;névjegye</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="390"/>
+        <location filename="../src/gui/main_window.cpp" line="420"/>
         <source>Show information about this application</source>
         <translation>Megmutatja az alkalmazás információkat</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="394"/>
+        <location filename="../src/gui/main_window.cpp" line="423"/>
         <source>About &amp;Qt</source>
         <translation>A &amp;Qt névjegye</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="395"/>
+        <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Show information about Qt</source>
         <translation>Megmutatja a Qt névjegyét</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="401"/>
+        <location filename="../src/gui/main_window.cpp" line="430"/>
         <source>&amp;Help</source>
         <translation>&amp;Súgó</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="585"/>
+        <location filename="../src/gui/main_window.cpp" line="618"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>El akarja dobni az automatikusan mentett verziót?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="591"/>
+        <location filename="../src/gui/main_window.cpp" line="624"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>A fájlt módosította. 
 Menti a változtatásokat?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="422"/>
-        <location filename="../src/gui/main_window.cpp" line="733"/>
+        <location filename="../src/gui/main_window.cpp" line="455"/>
+        <location filename="../src/gui/main_window.cpp" line="766"/>
         <source>Unsaved file</source>
         <translation>Mentetlen fájl</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="705"/>
-        <location filename="../src/gui/main_window.cpp" line="1000"/>
+        <location filename="../src/gui/main_window.cpp" line="738"/>
+        <location filename="../src/gui/main_window.cpp" line="1033"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="445"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="705"/>
+        <location filename="../src/gui/main_window.cpp" line="738"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -2833,37 +2833,37 @@ Do you want to scale the symbols to the selected scale?</source>
 Átméretezi a jelkészletet a választott térkép új méretarányának megfelelően?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="775"/>
+        <location filename="../src/gui/main_window.cpp" line="808"/>
         <source>Crash warning</source>
         <translation>Összeomlás figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="776"/>
+        <location filename="../src/gui/main_window.cpp" line="809"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Úgy tűnik %1 összeomlott amikor ezt a fájlt legutóbb megnyitotta &lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Biztos megpróbálja megnyitni?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="967"/>
+        <location filename="../src/gui/main_window.cpp" line="1000"/>
         <source>Autosaving...</source>
         <translation>Automatikus mentés...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="977"/>
+        <location filename="../src/gui/main_window.cpp" line="1010"/>
         <source>Autosaving failed!</source>
         <translation>Automatikus mentés sikertelen!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1052"/>
+        <location filename="../src/gui/main_window.cpp" line="1085"/>
         <source>All maps</source>
         <translation>Minden térkép</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1056"/>
+        <location filename="../src/gui/main_window.cpp" line="1089"/>
         <source>All files</source>
         <translation>Minden fájl</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="744"/>
+        <location filename="../src/gui/main_window.cpp" line="777"/>
         <source>Open file</source>
         <translation>Fájl megnyitása</translation>
     </message>
@@ -2873,20 +2873,20 @@ Do you want to scale the symbols to the selected scale?</source>
         <translation>Egy új fájl megnyitása előtt az aktuális fájlt be kell zárni.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
+        <location filename="../src/gui/main_window.cpp" line="789"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="693"/>
         <source>Opening %1</source>
         <translation>%1 megnyitása</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="792"/>
-        <location filename="../src/gui/main_window.cpp" line="1112"/>
+        <location filename="../src/gui/main_window.cpp" line="825"/>
+        <location filename="../src/gui/main_window.cpp" line="1145"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="707"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="792"/>
+        <location filename="../src/gui/main_window.cpp" line="825"/>
         <source>Cannot open file:
 %1
 
@@ -2897,19 +2897,19 @@ File format not recognized.</source>
 A fájl formátum nem felismerhető.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="869"/>
+        <location filename="../src/gui/main_window.cpp" line="902"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>A fájlt módosították.
 El akarja dobni a módosításokat?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="920"/>
+        <location filename="../src/gui/main_window.cpp" line="953"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="999"/>
+        <location filename="../src/gui/main_window.cpp" line="1032"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -2920,22 +2920,22 @@ Ebben a formátumban mentem - nyomja meg az Igen gombot.
 Más formátumot választok - nyomja meg a Nem gombot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1092"/>
+        <location filename="../src/gui/main_window.cpp" line="1125"/>
         <source>Save file</source>
         <translation>Fájl mentése</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1113"/>
+        <location filename="../src/gui/main_window.cpp" line="1146"/>
         <source>File could not be saved:</source>
         <translation>A fájl nem lehetett menteni:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1114"/>
+        <location filename="../src/gui/main_window.cpp" line="1147"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Valamilyen probléma van a fájl formátum meghatározásában.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1115"/>
+        <location filename="../src/gui/main_window.cpp" line="1148"/>
         <source>Please report this as a bug.</source>
         <translation>Kérem, hogy jelezze ezt a hibát.</translation>
     </message>
@@ -2950,9 +2950,10 @@ Más formátumot választok - nyomja meg a Nem gombot.</translation>
         <location filename="../src/core/map.cpp" line="727"/>
         <location filename="../src/core/map.cpp" line="804"/>
         <location filename="../src/core/map.cpp" line="832"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3995"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3968"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="287"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="345"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="529"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
@@ -3005,7 +3006,7 @@ mert a formátum ismeretlen.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="728"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3996"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3969"/>
         <source>Cannot open file:
 %1
 for reading.</source>
@@ -3030,6 +3031,7 @@ olvasásra.</translation>
     </message>
     <message>
         <location filename="../src/core/map.cpp" line="704"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="572"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -3068,12 +3070,12 @@ Rescale the imported data?</source>
         <translation>Új szín</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3975"/>
         <source>Import...</source>
         <translation>Importálás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4003"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3976"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>A szimbólumcserét elvetette.
@@ -3099,182 +3101,182 @@ Az adatokat mégis importálja?</translation>
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Undo</source>
         <translation>Visszavon</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="858"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
         <source>Undo the last step</source>
         <translation>Utolsó lépés visszavonása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
         <source>Redo</source>
         <translation>Mégis</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="859"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
         <source>Redo the last step</source>
         <translation>Visszavont lépés végrehajtása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="860"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
         <source>Cu&amp;t</source>
         <translation>Ki&amp;vág</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="861"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="863"/>
         <source>C&amp;opy</source>
         <translation>Más&amp;ol</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="862"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
         <source>&amp;Paste</source>
         <translation>&amp;Beilleszt</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="881"/>
         <source>Zoom in</source>
         <translation>Nagyít</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="882"/>
         <source>Zoom out</source>
         <translation>Kicsinyít</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="880"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="884"/>
         <source>Toggle fullscreen mode</source>
         <translation>Teljes képernyőre vált</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="881"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
         <source>Set custom zoom factor...</source>
         <translation>Nagyítás beállítása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Symbol window</source>
         <translation>Térképjelek ablak</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
         <source>Show/Hide the symbol window</source>
         <translation>Térképjelek ablak mutatása/elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Color window</source>
         <translation>Színkészlet ablak</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="893"/>
         <source>Show/Hide the color window</source>
         <translation>Színkészlet ablak mutatása/elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Replace the symbols with those from another map file</source>
         <translation>Szimbólumtábla lecserélése egy másik térképfájléval</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
         <source>Scale all symbols...</source>
         <translation>Minden térképjel átméretezése...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
         <source>Scale the whole symbol set</source>
         <translation>A teljes jelkészlet méretezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Change map scale...</source>
         <translation>Térkép méretarányának megváltoztatása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="897"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
         <source>Change the map scale and adjust map objects and symbol sizes</source>
         <translation>Megváltoztatja a térkép méretarányát és beállítja a térkép objektumok és jelek méretét</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="899"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="903"/>
         <source>Map notes...</source>
         <translation>Térképhez fűzött megjegyzések...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
         <source>Template setup window</source>
         <translation>Háttér beállítás ablak</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="901"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
         <source>Show/Hide the template window</source>
         <translation>Háttér ablak mutatása/elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="904"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="908"/>
         <source>Open template...</source>
         <translation>Háttér megnyitása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="883"/>
         <source>Show whole map</source>
         <translation>Mutassa az egész térképet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
         <source>Edit objects</source>
         <translation>Objektumok szerkesztése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
         <source>Set point objects</source>
         <translation>Pont objektum rajzolása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="912"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
         <source>Draw paths</source>
         <translation>Vonal rajzolása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="913"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
         <source>Draw circles and ellipses</source>
         <translation>Kör és ellipszis rajzolása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="917"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
         <source>Write text</source>
         <translation>Szöveg írása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="918"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
         <source>Duplicate</source>
         <translation>Megkettőz</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="919"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="923"/>
         <source>Switch symbol</source>
         <translation>Térképjel cseréje</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
         <source>Fill / Create border</source>
         <translation>Szegély kitöltés/létrehozás</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="921"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
         <source>Switch dash direction</source>
         <translation>A jel iránynak megfordítása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="922"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <source>Connect paths</source>
         <translation>Vonalak egyesítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="924"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
         <source>Cut object</source>
         <translation>Objektum vágása</translation>
     </message>
@@ -3283,67 +3285,67 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">Objektum(ok) elforgatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="937"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
         <source>Measure lengths and areas</source>
         <translation>Hossz és terület mérése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
         <source>Cut away from area</source>
         <translation>Kivágás egy területből</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="942"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>Merge area holes</source>
         <translation>Lyukak egyesítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="954"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
         <source>Paint on template settings</source>
         <translation>Háttérre rajzolás beállításai</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="960"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
         <source>Enable touch cursor</source>
         <translation>Érintő kurzor engedélyezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="961"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="966"/>
         <source>Enable GPS display</source>
         <translation>GPS megjelenítés engedélyezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="963"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="968"/>
         <source>Enable GPS distance rings</source>
         <translation>GPS pontosság kör megjelenítés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="965"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="970"/>
         <source>Set point object at GPS position</source>
         <translation>Pont objektum beállítása a GPS pozíción</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="967"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Set temporary marker at GPS position</source>
         <translation>Egy átmeneti jelölő elhelyezése a GPS pozíción</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="969"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Create temporary path at GPS position</source>
         <translation>Egy átmeneti vonal létrehozása a GPS pozíción</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="971"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="976"/>
         <source>Clear temporary GPS markers</source>
         <translation>GPS átmeneti jelölők törlése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="974"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
         <source>Enable compass display</source>
         <translation>Tájoló megjelenítésének engedélyezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="975"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Align map with north</source>
         <translation>A térkép Északra tájolása</translation>
     </message>
@@ -3352,72 +3354,72 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">Átkapcsolja a háttér láthatóságát</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="977"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3604"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3587"/>
         <source>Add new part...</source>
         <translation>Új rész hozzáadása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="978"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3664"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="983"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3647"/>
         <source>Rename current part...</source>
         <translation>Az aktuális rész átnevezése...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="979"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3625"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3608"/>
         <source>Remove current part</source>
         <translation>Az aktuális rész eltávolítása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="980"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="985"/>
         <source>Merge all parts</source>
         <translation>Részek egyesítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="982"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="987"/>
         <source>Import...</source>
         <translation>Importálás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1034"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1040"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="241"/>
         <source>&amp;Edit</source>
         <translation>&amp;Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
         <source>&amp;View</source>
         <translation>&amp;Nézet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1084"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1091"/>
         <source>&amp;Tools</source>
         <translation>&amp;Eszközök</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1137"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1144"/>
         <source>Sy&amp;mbols</source>
         <translation>Térkép&amp;jelek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1119"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1126"/>
         <source>M&amp;ap</source>
         <translation>Tér&amp;kép</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1149"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1156"/>
         <source>&amp;Templates</source>
         <translation>&amp;Hátterek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1205"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1212"/>
         <source>Drawing</source>
         <translation>Rajzolás</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>Paint on template</source>
         <translation>Háttérre rajzolás</translation>
     </message>
@@ -3437,104 +3439,104 @@ Az adatokat mégis importálja?</translation>
         <translation>Térkép mentve</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="872"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="876"/>
         <source>Show grid</source>
         <translation>Mutassa a rácsot</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="873"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1180"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="877"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1187"/>
         <source>Configure grid...</source>
         <translation>Rács beállítása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="883"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="887"/>
         <source>Hatch areas</source>
         <translation>Sraffozott területek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="884"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="888"/>
         <source>Baseline view</source>
         <translation>Alapvonal nézet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="889"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="102"/>
         <source>Hide all templates</source>
         <translation>Minden háttér elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="891"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Replace symbol set...</source>
         <translation>Jelkészlet cseréje innen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="900"/>
         <source>Georeferencing...</source>
         <translation>Georeferálás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Rotate map...</source>
         <translation>Térkép forgatás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="898"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="902"/>
         <source>Rotate the whole map</source>
         <translation>Az egész térkép elforgatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="905"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="909"/>
         <source>Reopen template...</source>
         <translation>Háttér újranyitása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
         <source>Tag editor</source>
         <translation>Címke szerkesztő</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="911"/>
         <source>Show/Hide the tag editor window</source>
         <translation>Címke szerkesztő ablak mutatása/elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="918"/>
         <source>Draw rectangles</source>
         <translation>Téglalap rajzolása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="915"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="919"/>
         <source>Draw free-handedly</source>
         <translation>Szabadkézi rajzolás</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="916"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="920"/>
         <source>Fill bounded areas</source>
         <translation>Kitöltés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="863"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="867"/>
         <source>Delete</source>
         <translation>Töröl</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>Cut free form hole</source>
         <translation>Szabadkézi lyuk vágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="926"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Cut round hole</source>
         <translation>Kerek lyuk vágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="927"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="931"/>
         <source>Cut rectangular hole</source>
         <translation>Téglalap alakú lyuk vágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="935"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="940"/>
         <source>Rotate pattern</source>
         <translation>Minta elforgatása</translation>
     </message>
@@ -3543,316 +3545,316 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">Objektum(ok) méretezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="938"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
         <source>Unify areas</source>
         <translation>Terület egyesítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
         <source>Intersect areas</source>
         <translation>Átfedések meghagyása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
         <source>Area XOr</source>
         <translation>Átfedések kitörlése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="945"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Cutout</source>
         <translation>Terület kivágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="946"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="951"/>
         <source>Cut away</source>
         <translation>Terület kitörlése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="947"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Distribute points along path</source>
         <translation>Pontok elosztása egy vonal mentén</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="984"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="989"/>
         <source>Map coordinates</source>
         <translation>Térkép koordinátái</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="986"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="991"/>
         <source>Projected coordinates</source>
         <translation>Vetített koordináták</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="988"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Latitude/Longitude (Dec)</source>
         <translation>Szélesség/hosszúság (Dec)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="990"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="995"/>
         <source>Latitude/Longitude (DMS)</source>
         <translation>Szélesség/Hosszűság (DMS)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1069"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1075"/>
         <source>Display coordinates as...</source>
         <translation>A koordinátákat mutatja mint...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="928"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="932"/>
         <source>Cut hole</source>
         <translation>Lyuk vágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="799"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
         <source>Ctrl+A</source>
         <translation>Ctrl+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="800"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="801"/>
         <source>Ctrl+Shift+A</source>
         <translation>Ctrl+Shift+A</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="801"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="802"/>
         <source>Ctrl+I</source>
         <translation>Ctrl+I</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="803"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="804"/>
         <source>G</source>
         <translation>G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="816"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="817"/>
         <source>E</source>
         <translation>E</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="817"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="818"/>
         <source>L</source>
         <translation>L</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="818"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="819"/>
         <source>S</source>
         <translation>S</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="819"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="820"/>
         <source>P</source>
         <translation>P</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="820"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="821"/>
         <source>O</source>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="821"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="822"/>
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="822"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="823"/>
         <source>F</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="823"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="824"/>
         <source>T</source>
         <translation>T</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="825"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="826"/>
         <source>D</source>
         <translation>D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="826"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="827"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="827"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="828"/>
         <source>Ctrl+F</source>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="828"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="829"/>
         <source>Ctrl+D</source>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="829"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="830"/>
         <source>C</source>
         <translation>C</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="830"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="831"/>
         <source>R</source>
         <translation>R</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="831"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="832"/>
         <source>Z</source>
         <translation>Z</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="832"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="833"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="833"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="834"/>
         <source>H</source>
         <translation>H</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="834"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="835"/>
         <source>M</source>
         <translation>M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="835"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="836"/>
         <source>U</source>
         <translation>U</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="836"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="837"/>
         <source>N</source>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="837"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="838"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="864"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="868"/>
         <source>Select all</source>
         <translation>Mindent kijelöl</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="865"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="869"/>
         <source>Select nothing</source>
         <translation>Semmi sincs kiválasztva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="866"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
         <source>Invert selection</source>
         <translation>Kijelölés megfordítása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="875"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="879"/>
         <source>Move to my location</source>
         <translation>Menjen a pozíciómra</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Symbol set ID...</source>
         <translation>Jelkulcs készlet azonosító...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="894"/>
         <source>Edit the symbol set ID</source>
         <translation>Jelkulcs készlet azonosító szerkesztése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Load CRT file...</source>
         <translation>CRT fájl betöltése...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="892"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Assign new symbols by cross-reference table</source>
         <translation>Új szimbólumok kijelölése a keresztreferencia táblázat által</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
         <source>Copy position</source>
         <translation>Elhelyezkedés másolása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
         <source>Copy position to clipboard.</source>
         <translation>Elhelyezkedés vágolapra másolása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1173"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1180"/>
         <source>View</source>
         <translation>Nézet</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1191"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1196"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1328"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3539"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1198"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1203"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1335"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3520"/>
         <source>Map parts</source>
         <translation>Térkép részei</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1223"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1230"/>
         <source>Select template...</source>
         <translation>Háttér kiválasztása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1229"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1236"/>
         <source>Editing</source>
         <translation>Szerkesztés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1254"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1261"/>
         <source>Advanced editing</source>
         <translation>Haladó szerkesztés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1288"/>
         <source>Select symbol</source>
         <translation>Térképjel kiválasztása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1321"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1328"/>
         <source>Hide top bar</source>
         <translation>Elrejti a felső állapotsort</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1324"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1331"/>
         <source>Show top bar</source>
         <translation>Mutatja a felső állapotsort</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1371"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>1x zoom</source>
         <translation>1x nagyítás</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1375"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1382"/>
         <source>2x zoom</source>
         <translation>2x nagyítás</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1603"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1623"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1680"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1700"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1713"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3110"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3116"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3122"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3128"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3137"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3954"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3961"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1610"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1630"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1687"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1707"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1720"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3117"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3123"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3129"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3144"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3927"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3934"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1603"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1610"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>A Nyomtatás/Exportálás nem működik ebben a program verzióban!</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1623"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1630"/>
         <source>No undo steps available.</source>
         <translation>Nincs elérhető visszavonási lépés.</translation>
     </message>
@@ -3862,8 +3864,8 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">%1 objektum(ok) vágása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1680"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1713"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1687"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1720"/>
         <source>An internal error occurred, sorry!</source>
         <translation>Egy belső hiba keletkezett, bocsánat!</translation>
     </message>
@@ -3872,7 +3874,7 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">%1 objektum(ok) másolva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1700"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1707"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>Nincs beilleszthető objektum a vágólapra másolva!</translation>
     </message>
@@ -3881,72 +3883,72 @@ Az adatokat mégis importálja?</translation>
         <translation type="vanished">%1 objektum(ok) beillesztve</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1797"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1804"/>
         <source>Set custom zoom factor</source>
         <translation>A nagyítási faktor beállítása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1797"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1804"/>
         <source>Zoom factor:</source>
         <translation>Nagyítási faktor:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1871"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1878"/>
         <source>Symbols</source>
         <translation>Térképjelek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1885"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1892"/>
         <source>Colors</source>
         <translation>Színek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1906"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1913"/>
         <source>Symbol set ID</source>
         <translation>Jelkulcs azonosító</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1907"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1914"/>
         <source>Edit the symbol set ID:</source>
         <translation>Jelkulcs azonosító szerkesztése:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1934"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1941"/>
         <source>Scale all symbols</source>
         <translation>Minden térképjelet átméretez</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1934"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1941"/>
         <source>Scale to percentage:</source>
         <translation>Átméretezési arány (százalék):</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1958"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1965"/>
         <source>Map notes</source>
         <translation>Térképhez fűzött megjegyzések</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1963"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1970"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1964"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1971"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2004"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2011"/>
         <source>Templates</source>
         <translation>Hátterek</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2066"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2073"/>
         <source>Tag Editor</source>
         <translation>Címke szerkesztő</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2130"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2137"/>
         <source>No
 symbol
 selected</source>
@@ -3956,7 +3958,7 @@ térképjel
 kiválasztva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2132"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2139"/>
         <source>Multiple
 symbols
 selected</source>
@@ -3966,41 +3968,41 @@ térképjel
 kiválasztva</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2228"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2235"/>
         <source>Place point objects on the map.</source>
         <translation>Pont objektum elhelyezése a térképre.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2228"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2235"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy pont objektumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2230"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2237"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>Sokszög és görbe vonal rajzolás.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2230"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2232"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2234"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2236"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2238"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2237"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2239"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2241"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2243"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2245"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy vonalat, területet vagy kombinált szimbólumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2232"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2239"/>
         <source>Draw circles and ellipses.</source>
         <translation>Körök és ellipszisek rajzolása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2236"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2243"/>
         <source>Draw paths free-handedly.</source>
         <translation>Szabadkézi rajz készítése.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2238"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2245"/>
         <source>Fill bounded areas.</source>
         <translation>Körülhatárolt terület kitöltése.</translation>
     </message>
@@ -4009,110 +4011,110 @@ kiválasztva</translation>
         <translation type="vanished">Kijelölt objektum(ok) törlése.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2350"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>Területkitöltés és pont objektum irányának állítása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2350"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy forgatható mintával kitöltött területobjektumot vagy egy forgatható pontobjektumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2373"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2380"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>Létrejövő térképjel: %1 %2.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2374"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2381"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>Az eszköz használatához legalább két terület vagy vonal objektum kijelölése szükséges.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2376"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2383"/>
         <source>Unify overlapping objects.</source>
         <translation>Átfedésben lévő területek egyesítése.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2378"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2385"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>Az elsőnek kiválasztott objektummal átfedésben nem lévő részeket kitörli.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2380"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2387"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>Az elsőnek kijelölt objektummal átfedésben lévő területeket kitörli.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2382"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>Az elsőnek kijelölt objektummal átfedésben lévő területeket kitörli.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translatorcomment>&quot;cut out this part&quot; nem tudom mire vonatkozik</translatorcomment>
         <translation>Lyukak egyesítése, vagy lyukak egyesítése az objektum határvonalával.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy lyukat tartalmazó területet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2391"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>Kivágat készítése néhány objektumról vagy az egész térképről.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2391"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>Jelöljön ki egy zárt határvonalú objektumot a kivágandó terület meghatározásához.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>Néhány objektum vagy minden kitörlése egy meghatározott területen belül.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2412"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>Egy meglévő vonal mentén pont objektumokat helyez el egyenletesen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2412"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>Az eszköz használatához legalább egy vonal és egy pont objektum kijelölése szükséges.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3137"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3144"/>
         <source>Merging holes failed.</source>
         <translation>Lyukak egyesítése sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3431"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3412"/>
         <source>Clear temporary markers</source>
         <translation>Törli az átmeneti jelölőket</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3431"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3412"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>Biztos, hogy törli az összes átmeneti GPS jelölőt? Ezt a lépést nem lehet visszavonni.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3545"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3527"/>
         <source>Merge this part with</source>
         <translation>A rész egyesítése ezzel</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3551"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3534"/>
         <source>Move selected objects to</source>
         <translation>Kijelölt objektumok mozgatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3605"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3665"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3588"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3648"/>
         <source>Enter the name of the map part:</source>
         <translation>A térképrészlet nevének bevitele:</translation>
     </message>
@@ -4121,93 +4123,93 @@ kiválasztva</translation>
         <translation type="vanished">Biztos, hogy törli a a &quot;%1&quot; térképrészletet minden objektumával együtt? Ezt a lépést nem lehet visszavonni.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3703"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3735"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3686"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3718"/>
         <source>Merge map parts</source>
         <translation>Térképrészek egyesítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3704"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3687"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>Biztos, hogy a &quot;%1&quot; térképrész minden objektumát &quot;%2&quot;-be mozgatja, és törli &quot;%1&quot;-t?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3736"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3719"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>Biztos, hogy minden objektumot áthelyez a &quot;%1&quot; térképrészbe, és minden más térképrészt töröl?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3961"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3934"/>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation>Nem lehetséges a kiválasztott fájl importálása, mert nem sikerült betölteni.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2234"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2241"/>
         <source>Draw rectangles.</source>
         <translation>Téglalap rajzolása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="846"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="847"/>
         <source>Print...</source>
         <translation>Nyomtatás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="848"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="849"/>
         <source>&amp;Image</source>
         <translation>&amp;Kép</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="850"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="851"/>
         <source>&amp;PDF</source>
         <translation>&amp;PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="874"/>
         <source>Clear undo / redo history</source>
         <translation>Törli a visszavonás / mégis listát</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="870"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="874"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
         <translation>Törli a visszavonás/ mégis listát, hogy csökkentse a térkép fájl méretét.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="874"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Pan</source>
         <translation>Megfog</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="886"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="890"/>
         <source>Overprinting simulation</source>
         <translation>Felülnyomás szimulációja</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="910"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="914"/>
         <source>Edit lines</source>
         <translation>Vonalak szerkesztése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="943"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="948"/>
         <source>Convert to curves</source>
         <translation>Görbévé alakít</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="944"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="949"/>
         <source>Simplify path</source>
         <translation>Vonal(ak) egyszerűsítése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1031"/>
         <source>&amp;Export as...</source>
         <translation>&amp;Exportálás mint...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2240"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2247"/>
         <source>Write text on the map.</source>
         <translation>Szöveget ír a térképre.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2240"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2247"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy szöveg objektumot.</translation>
     </message>
@@ -4216,26 +4218,26 @@ kiválasztva</translation>
         <translation type="vanished">Megkettőzi a kiválasztott objektumo(ka)t.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2332"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2336"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2338"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2345"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki legalább egy objektumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2347"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2354"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>Jelek irányának változtatása vonal objektumon.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2347"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2349"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2354"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2356"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki legalább egy vonal objektumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2349"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2356"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>Utak egymáshoz közeli végpontjainak egyesítése.</translation>
     </message>
@@ -4244,17 +4246,17 @@ kiválasztva</translation>
         <translation type="vanished">Kiválasztott objektum(ok) szétdarabolása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2353"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2360"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>Az eszköz használatához legalább egy terület vagy vonal objektum kijelölése szükséges.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2369"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>Lyuk vágása a kijelölt területbe.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2369"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki egy területet.</translation>
     </message>
@@ -4267,18 +4269,18 @@ kiválasztva</translation>
         <translation type="vanished">Kiválasztott objektum(ok) átméretezése.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2355"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>Szögletes vonalak Bezier-görbévé alakítása.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2355"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2357"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2364"/>
         <source>Select a path object to activate this tool.</source>
         <translation>Az eszköz használatához jelöljön ki legalább egy vonal objektumot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2357"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2364"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>Vonal objektumon a töréspontok számának csökkentése az eredeti alak megtartásával.</translation>
     </message>
@@ -4287,8 +4289,8 @@ kiválasztva</translation>
         <translation type="vanished">A kijelölt objektum(ok) jelkulcsát erre változtatja.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2407"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2409"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2414"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2416"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>Az eszköz használatához válasszon ki egy objektumot, és egy azonos típusú, de másik jelkulcsot.</translation>
     </message>
@@ -4301,7 +4303,7 @@ kiválasztva</translation>
         <translation type="vanished">%1 objektum(ok) megkettőzve</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2738"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2745"/>
         <source>Object selection</source>
         <translation>Objektum kiválasztás</translation>
     </message>
@@ -4310,82 +4312,80 @@ kiválasztva</translation>
         <translation type="vanished">Objektum kijelölése sikertelen, mert nincs a kijelölt jelkulcsnak megfelelő objektum a térképen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3096"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3103"/>
         <source>Measure</source>
         <translation>Mérés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3110"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3117"/>
         <source>Unification failed.</source>
         <translation>Egyesítés sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3116"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3123"/>
         <source>Intersection failed.</source>
         <translation>Átfedés sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3122"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3129"/>
         <source>Difference failed.</source>
         <translation>Szétválasztás sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3128"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3135"/>
         <source>XOr failed.</source>
         <translation>Átfedések kitörlése sikertelen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3626"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3609"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
         <translation>Eltávolítja a(z) &quot;%1&quot; térképrészt és minden objektumát?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3681"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3664"/>
         <source>Switched to map part &apos;%1&apos;.</source>
         <translation>A(z) &quot;%1&quot; rész térképre átváltva.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3790"/>
         <source>Paint free-handedly on a template</source>
-        <translation>Szabadkézi rajz készítése háttérre</translation>
+        <translation type="vanished">Szabadkézi rajz készítése háttérre</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3792"/>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation>Szabadkézi rajz készítése háttérre. Hozzon létre vagy töltsön be egy rajzolható hátteret a gomb bekapcsolásához</translation>
+        <translation type="vanished">Szabadkézi rajz készítése háttérre. Hozzon létre vagy töltsön be egy rajzolható hátteret a gomb bekapcsolásához</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3921"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3894"/>
         <source>Import %1, GPX, OSM or DXF file</source>
         <translation>Importálja a %1, GPX, OSM or DXF fájlt</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3898"/>
         <source>Importable files</source>
         <translation>Importálható fájlok</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3925"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3898"/>
         <source>All files</source>
         <translation>Minden fájl</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3954"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3927"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Nem lehetséges a kiválasztott fájl importálása, mert nem támogatott formátumú.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="934"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="939"/>
         <source>Rotate objects</source>
         <translation>Objektum forgatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="936"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="941"/>
         <source>Scale objects</source>
         <translation>Objektumok méretezése</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1637"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1644"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <extracomment>The singular form will not be used!</extracomment>
@@ -4395,7 +4395,7 @@ kiválasztva</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1690"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1697"/>
         <source>Copied %n object(s)</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
@@ -4404,7 +4404,7 @@ kiválasztva</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1730"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1737"/>
         <source>Pasted %n object(s)</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
@@ -4413,42 +4413,42 @@ kiválasztva</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2332"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
         <source>Deletes the selected objects.</source>
         <translation>Törli a kiválasztott objektumokat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2334"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2341"/>
         <source>Duplicate the selected objects.</source>
         <translation>Megkettőzi a kiválasztott objektumokat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2336"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2343"/>
         <source>Rotate the selected objects.</source>
         <translation>Elforgatja a kiválasztott objektumokat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2338"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2345"/>
         <source>Scale the selected objects.</source>
         <translation>Méretezi a kiválasztott objektumokat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2353"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2360"/>
         <source>Cut the selected objects into smaller parts.</source>
         <translation>Kivágja a kiválasztott objektumokat kisebb részekbe.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2407"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2414"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <translation>Kicseréli a kiválasztott objektum szimbólumát a kiválasztott szimbólumra.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2409"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2416"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <translation>Kitölti a kiválasztott vonalat vagy létrehoz egy határolót a kiválasztott területekhez.</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2528"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2535"/>
         <source>Duplicated %n object(s)</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
@@ -4457,7 +4457,7 @@ kiválasztva</translation>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2738"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2745"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <translation>Nem választottak ki objektumokat, mert objektumok nincsenek a kiválasztott szimbólumokkal.</translation>
     </message>
@@ -4478,7 +4478,7 @@ kiválasztva</translation>
         <location filename="../src/tools/draw_path_tool.cpp" line="1245"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="720"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="721"/>
-        <location filename="../src/tools/edit_point_tool.cpp" line="765"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="766"/>
         <source>More: %1, %2</source>
         <translation>Több: %1, %2</translation>
     </message>
@@ -4503,27 +4503,27 @@ kiválasztva</translation>
         <translation>&amp;Keresés...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="62"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="63"/>
         <source>Find &amp;next</source>
         <translation>Következő k&amp;eresése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="92"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="94"/>
         <source>Find objects</source>
         <translation>Objektumok keresése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="101"/>
         <source>&amp;Find next</source>
         <translation>&amp;Következő keresése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="104"/>
         <source>Find &amp;all</source>
         <translation>Mind &amp;megkeresése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="107"/>
         <source>Query editor</source>
         <translation>Kérdés szerkesztő</translation>
     </message>
@@ -5209,37 +5209,37 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <translation>Ezt a szimbólumot nem lehet megfelelő OCD szimbólumként menteni megint.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1984"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2003"/>
         <source>Justified alignment is not supported.</source>
         <translation>Az igazított illesztés nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1999"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2018"/>
         <source>Vertical alignment &apos;%1&apos; is not supported.</source>
         <translation>A vertikális illesztés &apos;%1&apos; nem támogatott.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1971"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1990"/>
         <source>Ignoring custom weight (%1).</source>
         <translation>Egyedi súlyozás (%1) figyelmenkívül hagyva.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2008"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
         <source>Custom character spacing may be incorrect.</source>
         <translation>Az egyedi karaktertávolság lehet, hogy hibás.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2032"/>
         <source>Ignoring custom word spacing (%1 %).</source>
         <translation>Egyedi szóköz távolság (%1 %) figyelmen kívül hagyása.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2037"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2056"/>
         <source>Ignoring custom indents (%1/%2).</source>
         <translation>Egyedi behúzás (%1/%2) figyelmen kívül hagyása.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2059"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2078"/>
         <source>Ignoring text framing (mode %1).</source>
         <translation>Szöveg keret (%1 mód) figyelmen kívül hagyása.</translation>
     </message>
@@ -5264,28 +5264,28 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <translation>A szimbólum határolóját nem lehetett betölteni.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1595"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1614"/>
         <source>Unable to load object</source>
         <translation>Objektum betöltése sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1605"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1624"/>
         <source>Unable to import rectangle object</source>
         <translation>Szögletes objektum importálása sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1646"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1665"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
         <translation>Szöveg szimbólum importálása sikertelen, útvonal nem található (npts=%1): %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="1946"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="1965"/>
         <source>Trying to import a text object with unknown coordinate format</source>
         <translation>Ismeretlen koordináta formátumú szöveges objektum importálási kísérlete</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2076"/>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2080"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2095"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2099"/>
         <source>Invalid data.</source>
         <translation>Érvénytelen adat.</translation>
     </message>
@@ -5294,7 +5294,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <translation type="vanished">Nem tesztelt fájl importálás az alábbi formátumhoz: OCD %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_import.cpp" line="2111"/>
+        <location filename="../src/fileformats/ocd_file_import.cpp" line="2130"/>
         <source>OCD files of version %1 are not supported!</source>
         <translation>A %1 verziójú OCD fájlok nem támogatottak!</translation>
     </message>
@@ -5394,30 +5394,35 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
 <context>
     <name>OpenOrienteering::PaintOnTemplateSelectDialog</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="350"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="460"/>
         <source>Select template to draw onto</source>
         <translation>Válasszon hátteret a rárajzoláshoz</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="364"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="487"/>
         <source>Cancel</source>
         <translation>Mégsem</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="365"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="488"/>
         <source>Draw</source>
         <translation>Rajzol</translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_tool_paint.cpp" line="558"/>
+        <source>Template file exists: &apos;%1&apos;</source>
+        <translation>Háttérfájl létezik: &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>OpenOrienteering::PaintOnTemplateTool</name>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="74"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="161"/>
         <source>&lt;b&gt;Click and drag&lt;/b&gt;: Paint. &lt;b&gt;Right click and drag&lt;/b&gt;: Erase. </source>
         <translation>&lt;b&gt;Kattint és megragad&lt;/b&gt;: Fest. &lt;b&gt;Jobb kattintás és megragad&lt;/b&gt;: Törlés. </translation>
     </message>
     <message>
-        <location filename="../src/templates/template_tool_paint.cpp" line="77"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="164"/>
         <source>Color selection</source>
         <translation>Színkiválasztás</translation>
     </message>
@@ -5663,331 +5668,331 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
 <context>
     <name>OpenOrienteering::PrintWidget</name>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="253"/>
+        <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Show templates</source>
         <translation>Hátterek mutatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="264"/>
+        <location filename="../src/gui/print_widget.cpp" line="273"/>
         <source>Show grid</source>
         <translation>Rács mutatása</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="177"/>
+        <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Page orientation:</source>
         <translation>Oldal tájolása:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="137"/>
+        <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Printer:</source>
         <translation>Nyomtató:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="170"/>
+        <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
         <translation>Álló</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="172"/>
+        <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
         <translation>Fekvő</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="151"/>
+        <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
         <translation>Oldal formátuma:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="180"/>
+        <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
         <translation>Másolatok:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="193"/>
+        <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
         <translation>Bal:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="196"/>
+        <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
         <translation>Felső:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="199"/>
+        <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Width:</source>
         <translation>Szélesség:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="202"/>
+        <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Height:</source>
         <translation>Magasság:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="300"/>
+        <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
         <translation>Előnézet...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="185"/>
+        <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
         <translation>Egy oldalas</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="186"/>
+        <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
         <translation>Egyedi méret beállítás</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="187"/>
+        <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
         <translation>Térkép területe:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="189"/>
+        <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
         <translation>Nyomtatási területet középpontba helyezése</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="157"/>
-        <location filename="../src/gui/print_widget.cpp" line="161"/>
-        <location filename="../src/gui/print_widget.cpp" line="192"/>
+        <location filename="../src/gui/print_widget.cpp" line="160"/>
+        <location filename="../src/gui/print_widget.cpp" line="164"/>
         <location filename="../src/gui/print_widget.cpp" line="195"/>
         <location filename="../src/gui/print_widget.cpp" line="198"/>
         <location filename="../src/gui/print_widget.cpp" line="201"/>
         <location filename="../src/gui/print_widget.cpp" line="204"/>
+        <location filename="../src/gui/print_widget.cpp" line="207"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="142"/>
+        <location filename="../src/gui/print_widget.cpp" line="145"/>
         <source>Properties</source>
         <translation>Tulajdonságok</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="205"/>
+        <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Page overlap:</source>
         <translation>Oldal átlapolása:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="209"/>
+        <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>Options</source>
         <translation>Opciók</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="237"/>
+        <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Resolution:</source>
         <translation>Felbontás:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <location filename="../src/gui/print_widget.cpp" line="248"/>
         <source>Print in different scale:</source>
         <translation>Nyomtatás más méretarányban:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="260"/>
+        <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
         <translation>A háttér megjelenítése eltérő lehet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="267"/>
+        <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
         <translation>Felülnyomás szimulálása</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="270"/>
+        <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>Világ fájl mentése</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="276"/>
+        <location filename="../src/gui/print_widget.cpp" line="238"/>
         <source>Default</source>
         <translation>Alapértelmezett</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="277"/>
-        <source>Device CMYK (experimental)</source>
-        <translation>CMYK eszköz (kísérleti)</translation>
+        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <source>Device CMYK</source>
+        <translation>CMYK eszköz</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="278"/>
+        <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Color mode:</source>
         <translation>Szín mód:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="302"/>
-        <location filename="../src/gui/print_widget.cpp" line="408"/>
+        <location filename="../src/gui/print_widget.cpp" line="305"/>
+        <location filename="../src/gui/print_widget.cpp" line="411"/>
         <source>Print</source>
         <translation>Nyomtatás</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="306"/>
+        <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export...</source>
         <translation>Exportálás...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="413"/>
+        <location filename="../src/gui/print_widget.cpp" line="416"/>
         <source>PDF export</source>
         <translation>PDF export</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="424"/>
+        <location filename="../src/gui/print_widget.cpp" line="427"/>
         <source>Image export</source>
         <translation>Kép export</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="530"/>
+        <location filename="../src/gui/print_widget.cpp" line="533"/>
         <source>Save to PDF</source>
         <translation>Menés PDF-ben</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="235"/>
-        <location filename="../src/gui/print_widget.cpp" line="939"/>
-        <location filename="../src/gui/print_widget.cpp" line="980"/>
+        <location filename="../src/gui/print_widget.cpp" line="244"/>
+        <location filename="../src/gui/print_widget.cpp" line="942"/>
+        <location filename="../src/gui/print_widget.cpp" line="983"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1110"/>
+        <location filename="../src/gui/print_widget.cpp" line="1113"/>
         <source>Not supported on Android.</source>
         <translation>Nem támogatott Androidon.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1118"/>
+        <location filename="../src/gui/print_widget.cpp" line="1121"/>
         <source>Failed to prepare the preview.</source>
         <translation>Nem sikerült elkészíteni az előnézetet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1129"/>
+        <location filename="../src/gui/print_widget.cpp" line="1132"/>
         <source>Print Preview Progress</source>
         <translation>Nyomtatási előnézet folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1146"/>
+        <location filename="../src/gui/print_widget.cpp" line="1149"/>
         <source>Warning</source>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1147"/>
+        <location filename="../src/gui/print_widget.cpp" line="1150"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
         <translation>Ez egy nem szabványos nézet. Biztos nyomtatni/exportálni akarja így a térképet?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1164"/>
+        <location filename="../src/gui/print_widget.cpp" line="1167"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1165"/>
+        <location filename="../src/gui/print_widget.cpp" line="1168"/>
         <source>BMP</source>
         <translation>BMP</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1166"/>
+        <location filename="../src/gui/print_widget.cpp" line="1169"/>
         <source>TIFF</source>
         <translation>TIFF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1167"/>
+        <location filename="../src/gui/print_widget.cpp" line="1170"/>
         <source>JPEG</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1187"/>
+        <location filename="../src/gui/print_widget.cpp" line="1190"/>
         <source>Failed to prepare the image. Not enough memory.</source>
         <translation>Nem sikerült elkészíteni a képet. Nem elég a memória.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1243"/>
+        <location filename="../src/gui/print_widget.cpp" line="1246"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>Nem sikerült elkészíteni a PDF exportot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1253"/>
+        <location filename="../src/gui/print_widget.cpp" line="1256"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1169"/>
-        <location filename="../src/gui/print_widget.cpp" line="1197"/>
-        <location filename="../src/gui/print_widget.cpp" line="1255"/>
-        <location filename="../src/gui/print_widget.cpp" line="1267"/>
+        <location filename="../src/gui/print_widget.cpp" line="1172"/>
+        <location filename="../src/gui/print_widget.cpp" line="1200"/>
+        <location filename="../src/gui/print_widget.cpp" line="1258"/>
+        <location filename="../src/gui/print_widget.cpp" line="1270"/>
         <source>Export map ...</source>
         <translation>Térkép exportálása...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1168"/>
-        <location filename="../src/gui/print_widget.cpp" line="1254"/>
+        <location filename="../src/gui/print_widget.cpp" line="1171"/>
+        <location filename="../src/gui/print_widget.cpp" line="1257"/>
         <source>All files (*.*)</source>
         <translation>Minden fájl (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1292"/>
+        <location filename="../src/gui/print_widget.cpp" line="1295"/>
         <source>Failed to prepare the printing.</source>
         <translation>Nem  sikerült elkészíteni a nyomtatást.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1301"/>
+        <location filename="../src/gui/print_widget.cpp" line="1304"/>
         <source>Printing Progress</source>
         <translation>Nyomtatás folyamatban</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1110"/>
-        <location filename="../src/gui/print_widget.cpp" line="1118"/>
-        <location filename="../src/gui/print_widget.cpp" line="1187"/>
-        <location filename="../src/gui/print_widget.cpp" line="1206"/>
-        <location filename="../src/gui/print_widget.cpp" line="1243"/>
-        <location filename="../src/gui/print_widget.cpp" line="1273"/>
-        <location filename="../src/gui/print_widget.cpp" line="1292"/>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
-        <location filename="../src/gui/print_widget.cpp" line="1319"/>
-        <location filename="../src/gui/print_widget.cpp" line="1383"/>
+        <location filename="../src/gui/print_widget.cpp" line="1113"/>
+        <location filename="../src/gui/print_widget.cpp" line="1121"/>
+        <location filename="../src/gui/print_widget.cpp" line="1190"/>
+        <location filename="../src/gui/print_widget.cpp" line="1209"/>
+        <location filename="../src/gui/print_widget.cpp" line="1246"/>
+        <location filename="../src/gui/print_widget.cpp" line="1276"/>
+        <location filename="../src/gui/print_widget.cpp" line="1295"/>
+        <location filename="../src/gui/print_widget.cpp" line="1309"/>
+        <location filename="../src/gui/print_widget.cpp" line="1322"/>
+        <location filename="../src/gui/print_widget.cpp" line="1386"/>
         <source>Error</source>
         <translation>Hiba</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="216"/>
+        <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Vector
 graphics</source>
         <translation>Vektoros
 grafikák</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="217"/>
+        <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Raster
 graphics</source>
         <translation>Raszteres
 grafikák</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="218"/>
+        <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
         <translation>Színrebontás</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="231"/>
+        <location filename="../src/gui/print_widget.cpp" line="234"/>
         <source>Mode:</source>
         <translation>Mód:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1206"/>
+        <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translation>Kép mentése sikertelen. Létezik az útvonal? Elegendő a jogosultsága?</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1210"/>
-        <location filename="../src/gui/print_widget.cpp" line="1277"/>
+        <location filename="../src/gui/print_widget.cpp" line="1213"/>
+        <location filename="../src/gui/print_widget.cpp" line="1280"/>
         <source>Exported successfully to %1</source>
         <translation>Sikeresen exportálva %1-be</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1273"/>
+        <location filename="../src/gui/print_widget.cpp" line="1276"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Nem sikerült befejezni a PDF exportot.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1283"/>
-        <location filename="../src/gui/print_widget.cpp" line="1315"/>
+        <location filename="../src/gui/print_widget.cpp" line="1286"/>
+        <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Canceled.</source>
         <translation>Elvetve.</translation>
     </message>
@@ -5996,29 +6001,29 @@ separations</source>
         <translation type="vanished">Nyomtatás</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1319"/>
+        <location filename="../src/gui/print_widget.cpp" line="1322"/>
         <source>The print job could not be stopped.</source>
         <translation>A nyomtatási feladat nem leállítható.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1310"/>
+        <location filename="../src/gui/print_widget.cpp" line="1313"/>
         <source>Successfully created print job</source>
         <translation>A nyomtatási feladat sikeresen létrehozva</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
+        <location filename="../src/gui/print_widget.cpp" line="1309"/>
         <source>An error occurred during printing.</source>
         <translation>Egy hiba történt a nyomtatás alatt.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1367"/>
-        <location filename="../src/gui/print_widget.cpp" line="1375"/>
+        <location filename="../src/gui/print_widget.cpp" line="1370"/>
+        <location filename="../src/gui/print_widget.cpp" line="1378"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Ismeretlen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1383"/>
+        <location filename="../src/gui/print_widget.cpp" line="1386"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>A térkép területe üres. A kimenet elvetve.</translation>
     </message>
@@ -6607,7 +6612,7 @@ Elmented  a változtatásaidat?</translation>
         <translation>Figyelmeztetés</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1286"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1293"/>
         <source>Description</source>
         <translation>Leírás</translation>
     </message>
@@ -6740,13 +6745,13 @@ Elmented  a változtatásaidat?</translation>
         <translation>Ezzel a szimbólummal jelölt objektumok kivétele a kiválasztásból</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1299"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1306"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1064"/>
         <source>Hide objects with this symbol</source>
         <translation>Kijelölt szimbólummal jelölt objektumok elrejtése</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1310"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1317"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1065"/>
         <source>Protect objects with this symbol</source>
         <translation>Ezzel a szimbolummal jelölt objektumok zárolása</translation>
@@ -6829,7 +6834,7 @@ Elmented  a változtatásaidat?</translation>
         <translation>A térkép tartalmaz &quot;%1&quot; szimbólummal jelölt objektumot. A törléssel az objektumok is törlődnek és a változtatás nem visszavonható. Valóban ezt akarja csinálni?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="867"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="871"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1069"/>
         <source>Select all objects with selected symbols</source>
         <translation>Kijelöli ezzel a szimbólummal jelölt objektumokat</translation>
@@ -6969,7 +6974,7 @@ vagy, ezt tudod. Űzd el haragod, s jer velem!
         <translation type="obsolete">Súgó</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="233"/>
         <source>%n object(s) selected</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
@@ -6978,8 +6983,8 @@ vagy, ezt tudod. Űzd el haragod, s jer velem!
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="177"/>
-        <location filename="../src/gui/map/map_find_feature.cpp" line="223"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="179"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="225"/>
         <source>Invalid query</source>
         <translation>Érvénytelen kérdés</translation>
     </message>
@@ -7312,6 +7317,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="203"/>
+        <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation>Háttér hozzáadása...</translation>
     </message>

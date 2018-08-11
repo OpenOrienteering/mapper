@@ -3970,8 +3970,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Purple 50%</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Фіолетовий 50%</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 2</comment>
@@ -3985,18 +3985,18 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Коричневий для контурів</translation>
+    </message>
         <message>
             <source>Black 50-65% for buildings</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Чорний 50-65% для будівель</translation>
+    </message>
         <message>
             <source>Black 50%</source>
             <comment>Color 6</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Чорний 50%</translation>
+    </message>
         <message>
             <source>Black 30%</source>
             <comment>Color 7</comment>
@@ -4055,18 +4055,18 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Blue 75%</source>
             <comment>Color 18</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Синій 75%</translation>
+    </message>
         <message>
             <source>Blue 30%</source>
             <comment>Color 19</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Синій 30%</translation>
+    </message>
         <message>
             <source>OpenOrienteering Blue 50%</source>
             <comment>Color 20</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>OpenOrienteering Синій 50%</translation>
+    </message>
         <message>
             <source>Brown</source>
             <comment>Color 21</comment>
@@ -4080,8 +4080,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Grey</source>
             <comment>Color 23</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Сірий</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 24</comment>

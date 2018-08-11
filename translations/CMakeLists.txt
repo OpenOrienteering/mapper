@@ -67,15 +67,18 @@ set(map_symbols_translations
   map_symbols_fi.ts
   map_symbols_fr.ts
   map_symbols_hu.ts
-  map_symbols_it.ts
-  map_symbols_nl.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
   map_symbols_uk.ts
 )
+# Make translation list available for SymbolSetTool
+set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(map_symbols_translations_template
+  map_symbols_it.ts
+  map_symbols_nl.ts
+  map_symbols_pl.ts
   map_symbols_template.ts
 )
 

@@ -5,7 +5,7 @@ authors:
   - Kai Pastor
   - Thomas Schoeps
 keywords: Toolbars
-edited: 30 November 2015
+edited: 5 June 2018
 todo:
   - Split this page and update ALL context help in Mapper.
   - Update context help for zoom-in and -out in Mapper.
@@ -25,7 +25,7 @@ todo:
 
 Toolbars may be moved to a more convenient position. To detach and move, pick the handle at the left end and drag the toolbar to your preferred position. The resulting order of your toolbars may thus be different from this page.
 
-You may hide toolbars you don't use. To close or open a toolbar right click on any open toolbar or docked window. This will open a small window where you can disable or enable toolbars and docked windows.
+You may hide toolbars you do not use. To close or open a toolbar, right click on any open toolbar or docked window. This will open a small window where you can disable or enable toolbars and docked windows.
 
 
 ## General toolbar {#general-toolbar}
@@ -94,13 +94,13 @@ At the moment, the map parts toolbar has only a single drop down box for indicat
 #### ![ ](../mapper-images/tool-edit.png) Edit objects {#tool_edit_point}
 E
 
-Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple object hold the Shift key when you click subsequent objects. If you Shift-click on an object which has been already been selected the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
+Using this tool, click on the map to select a single object. If the object you wish is not selected with the first click, click more times to go through all objects below the cursor. To select multiple objects, hold the Shift key when you click subsequent objects. If you Shift-click on an object which has already been selected, the click will deselect that object. A group of objects may also be selected by drawing a selection box with a left-click and drag.
 
-If only a few objects are selected, the nodes defining these object become visible. There are different types of nodes:
+If only a few objects are selected, the nodes defining these objects become visible. There are different types of nodes:
  - A square stands for a normal node.
  - A diamond depicts a [dash point (see below)](#dash-points).
  - A circle depicts a bezier curve handle, defining the tangent of a curve point.
-Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
+Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve, click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
 
 To **add** an extra node to an existing line or curve, Ctrl-click on an empty spot of a path. By moving the mouse, the new node can be positioned in the same action. If a **dash point** is required, hold the space bar down while Ctrl-clicking. To **remove** a node, Ctrl-click an existing node.
 
@@ -146,7 +146,7 @@ To constrain the **drawing angle**, hold Ctrl while drawing a path. The availabl
 
 To **pick a direction** of an existing object, Ctrl+click the desired object before starting to draw the path. Drawing angles will then be automatically constrained to the picked direction (and its perpendicular directions) until you press the Ctrl key. This is very useful for e.g. drawing parallel houses or hedges/fences in front of houses which are parallel to them.
 
-To remove a misplaced point while drawing a line use the backspace key to **undo** one step at a time, or leave it and correct the position using the [point editing tool](#tool_edit_point). If the partly drawn line is discovered to be a mistake use the Esc key to abort and remove it entirely.
+To remove a misplaced point while drawing a line, use the backspace key to **undo** one step at a time, or leave it and correct the position using the [point editing tool](#tool_edit_point). If the partly drawn line is discovered to be a mistake, use the Esc key to abort and remove it entirely.
 
 ##### Closed paths
 To draw a **closed path** (closed contour line, lake, etc.), press the return key to close the last segment of the path to the starting point. When drawing with area symbols, paths are closed automatically. However, there may be an unwanted corner at the start/end point if you just finish the path roughly at the position where you started it, instead of pressing return.
@@ -158,7 +158,7 @@ Dash points serve different purposes, depending on the symbol on which they are 
 2. For lines with patterns such as fences, it is sometimes useful to be able to steer the positioning of the patterns. When a dash point is inserted in a line with such a pattern, patterns are shifted away from it. This is e.g. useful for corners of a fence to ensure a minimum distance of the dash patterns to the corners.
 3. Some symbols (e.g. 516 Power line) require bars at some nodes (pylons) but for example not at the point where the line ends at the edge of the map (no pylon). The bar is defined as a dash symbol inside the line symbol for 516 Power line. It will appear only at dash points along a line.
 
-In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip at the bottom edge shows "**Dash points on**". This switch may be varied from node to node along the line.
+In general, it is enough to remember that dash points steer the positioning of line dashes, patterns, and dash symbols. When drawing, just try out how it behaves. Dash point nodes have a diamond shape when the line is selected (ordinary nodes are square). Drawing of a node as a dash point is toggled with the space bar: dash points will be drawn while the helpful tip in the status bar at the bottom edge shows "**Dash points on**". This switch may be varied from node to node along the line.
 
 
 #### ![ ](../mapper-images/draw-circle.png) Draw circles and ellipses {#tool_draw_circle}
@@ -189,14 +189,14 @@ This tool draws both line and area objects by approximating the path taken by th
 #### ![ ](../mapper-images/tool-fill.png) Fill bounded areas {#tool_fill}
 F
 
-This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created.
+This tool fills areas of unbroken white space with an area symbol. To use this tool, select the area symbol, then click on white space i.e. any place not already covered by another area object. Internally, this tool first finds all paths, which can belong to many different objects, that form a boundary around the unbroken white space. A new closed shape is created that has the same paths as the white space boundary and is filled with your chosen symbol. Also, if you use this tool with a line symbol selected, then a border around the white space will be created.
 
 *Attention:* This tool will not work if your chosen white space is not completely contained by other path objects.
 
 #### ![ ](../mapper-images/draw-text.png) Write text {#tool_draw_text}
 T
 
-This tool places text on the map. In order to be language-independent orienteering maps generally do not have names or text information on features, but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.
+This tool places text on the map. In order to be language-independent, orienteering maps generally do not have names or text information on features, but text is useful for map titles and version numbers for example. It is necessary to select a text symbol (which determines the font settings) before the text tool will become available.
 
 Two different types of text objects can be placed with this tool:
 
@@ -216,24 +216,24 @@ Click and hold the left mouse button to draw while the mouse is moved. Hold the 
 #### ![ ](../mapper-images/delete.png) Delete {#tool_delete}
 Del
 
-This tool deletes a currently selected object(s).
+This tool deletes the currently selected map object(s).
 
 
 #### ![ ](../mapper-images/tool-duplicate.png) Duplicate {#duplicate}
 D
 
-This tool creates a duplicate of any selected object. Select the object(s), then click the tool to create an identical second symbol in the same place. As the duplicate is created in the same place, the appearance of the map does not immediately change. However, the duplicate can be selected and dragged to another location leaving the original symbol behind. To drag a symbol select the [edit objects tool](#tool_edit_point), then click and hold on the enclosing box and drag as required. The duplicate tool is particularly useful when applied to create and move identical groups of items.
+This tool creates a duplicate of each selected map object. Select the object(s), then click the tool to create identical cloned objects in the same place. As the duplicates are created in the same place, the appearance of the map does not immediately change. However, the duplicates can be selected and dragged to another location, leaving the original objects behind. To drag an object, select the [edit objects tool](#tool_edit_point), then click and hold on the enclosing box and drag as required. The duplicate tool is particularly useful when applied to create and move identical groups of items.
 
 
 #### ![ ](../mapper-images/tool-switch-symbol.png) Switch symbol {#switch_symbol}
 Ctrl+G
 
-This tool changes the symbols of the selected objects to another. To use it, select the object(s) to change on the map, then select the target symbol in the symbol window. (*Attention:* With default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) Then click the tool and the map symbols will change to the target symbol - provided that the target symbol can be applied to the selected map objects (i.e. either both must be points, or both texts, or both one of line, area or combined symbols.)
+This tool changes the symbols of the selected map objects to another. To use it, select the object(s) to change on the map, then select the target symbol in the symbol window. (*Attention:* With default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) Then click the tool and the map symbols will change to the target symbol - provided that the target symbol can be applied to the selected map objects (i.e. either both must be points, or both texts, or both one of line, area or combined symbols.)
 
 #### ![ ](../mapper-images/tool-fill-border.png) Fill / Create border {#fill_create_border}
 Ctrl+F
 
-Having drawn a [closed boundary](#drawing-toolbar) which requires a fill (such as a fence containing a thicket) select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting an object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
+Having drawn a [closed boundary](#drawing-toolbar) which requires a fill (such as a fence containing a thicket), select the boundary on the map (using the [point edit tool](#tool_edit_point) tool), then choose the required fill symbol in the symbols window. (*Attention:* with default settings, it is not possible to do this the other way round as selecting a map object will select its symbol, so the initial symbol selection is discarded.) A left click on the fill tool will put the chosen fill into the selected boundary.
 
 Internally, this tool creates a duplicate of the selected object and assigns it the selected symbol. So, in addition to filling closed boundaries, it is also possible to create a boundary around an area, or create duplicates of lines with another symbol using this tool.
 
@@ -317,18 +317,13 @@ This cuts away all objects except inside a given region, making a map excerpt. I
  - Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.
  - Then select the cutout tool. The shape will be marked in red.
  - For making a cutout of the map, now press the return key.
- - For cutting only some object, select those objects before pressing return.
+ - For cutting only some objects, select those objects before pressing return.
 
 
 #### ![ ](../mapper-images/tool-cutout-physical-inner.png) Cut away {#cutaway_physical}
-This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to those of the cutout tool.
+This is the opposite to the above cutout tool. It cuts away all or a subset of objects inside a selected cutout region. Usage is identical to that of the cutout tool.
 
-This tool is useful for making training maps where certain symbols are missing in some places. For example, to create a contour-only region in a map, proceed like this:
-
- - Draw the cutout shape (with any line or area symbol). The shape must be closed, ensure this by finishing the drawing by pressing the return key.
- - Click the cut away tool. The shape will be marked in red.
- - In the symbol pane, select all symbols you want to cut away, e.g. everything except contours. You can select a range of symbols by clicking the first symbol, then clicking the last symbol while holding the Shift key.
- - Press the return key.
+This tool is useful for making training maps where certain symbols are missing in some places.
 
 
 #### ![ ](../mapper-images/tool-convert-to-curves.png) Convert to curves {#convert_to_curves}

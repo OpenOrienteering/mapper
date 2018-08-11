@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -82,6 +82,13 @@ UndoManager::UndoManager(Map* map)
 , loaded_state_index(-1)
 {
 	undo_steps.reserve(max_undo_steps + 1);  // +1 is for push before trim
+	if (map)
+	{
+		connect(map, &Map::symbolDeleted, this, [this]() {
+			validateUndoSteps();
+			validateRedoSteps();
+		}, Qt::QueuedConnection);
+	}
 }
 
 
@@ -296,7 +303,7 @@ void UndoManager::updateMapState(const UndoStep *step) const
 
 void UndoManager::clearRedoSteps()
 {
-	if (canRedo())
+	if (current_index < int(undo_steps.size()))
 	{
 		undo_steps.erase(begin(undo_steps) + StepList::difference_type(current_index), end(undo_steps));
 		if (clean_state_index > StepList::difference_type(current_index))
@@ -311,14 +318,16 @@ void UndoManager::clearRedoSteps()
 
 void UndoManager::validateUndoSteps()
 {
-	if (canUndo())
+	if (current_index > 0)
 	{
 		int num_removed_undo_steps = 0;
 		if (current_index > int(max_undo_steps))
 			num_removed_undo_steps += current_index - int(max_undo_steps);
 		
+		auto rfirst = undo_steps.rend() - StepList::difference_type(current_index);
+		Q_ASSERT(rfirst->get() == nextUndoStep());
 		auto rlast = undo_steps.rend() - num_removed_undo_steps;
-		auto rfirst = std::find_if(undo_steps.rbegin(), rlast, [](auto&& step) { return !step->isValid(); });
+		rfirst = std::find_if(rfirst, rlast, [](auto&& step) { return !step->isValid(); });
 		if (rfirst != rlast)
 			num_removed_undo_steps += std::distance(rfirst, rlast);
 		
@@ -342,7 +351,7 @@ void UndoManager::validateUndoSteps()
 
 void UndoManager::validateRedoSteps()
 {
-	if (canRedo())
+	if (current_index < int(undo_steps.size()))
 	{
 		auto num_removed_redo_steps = StepList::difference_type(0);
 		

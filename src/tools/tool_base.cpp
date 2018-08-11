@@ -21,10 +21,12 @@
 
 #include "tool_base.h"
 
+#include <cstdlib>
 #include <iterator>
 #include <type_traits>
 
 #include <QtGlobal>
+#include <QCoreApplication>
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>

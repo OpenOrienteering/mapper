@@ -21,15 +21,22 @@
 
 #include "template_tool_paint.h"
 
+#include <cstddef>
+
 #include <Qt>
 #include <QtMath>
 #include <QAbstractButton>
+#include <QCoreApplication>
 #include <QCursor>
 #include <QDir>
 #include <QFileInfo>
 #include <QFlags>
+#include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QImage>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QMessageBox>
@@ -38,11 +45,11 @@
 #include <QPaintEvent>
 #include <QPen>
 #include <QPixmap>
+#include <QPointF>
 #include <QPushButton>
 #include <QRect>
 #include <QRgb>
 #include <QSettings>
-#include <QSizeF>
 #include <QVariant>
 #include <QVBoxLayout>
 
@@ -519,7 +526,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 #ifdef Q_OS_ANDROID
 		window->showStatusBarMessage(message, 2000);
 #else
-		QMessageBox::warning(window, Map::tr("Error"), message, QMessageBox::Ok, QMessageBox::Ok);
+		QMessageBox::warning(window, OpenOrienteering::Map::tr("Error"), message, QMessageBox::Ok, QMessageBox::Ok);
 #endif
 	};
 	
@@ -562,7 +569,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	p.end();
 	if (!image.save(image_file_path))
 	{
-		show_message(Map::tr("Cannot save file\n%1:\n%2").arg(filename, QString{}));
+		show_message(OpenOrienteering::Map::tr("Cannot save file\n%1:\n%2").arg(filename, QString{}));
 		return nullptr;
 	}
 	

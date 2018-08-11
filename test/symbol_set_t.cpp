@@ -72,7 +72,7 @@ namespace
 const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
 const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
 
-const auto translation_suffix = { "template", "cs", "de", "eo", "fi", "fr", "nl", "ru", "sv", "uk" };
+const auto map_symbol_translations = QByteArray(MAP_SYMBOL_TRANSLATIONS);  // clazy:exclude=non-pod-global-static
 
 using TranslationEntries = std::vector<SymbolSetTool::TranslationEntry>;
 
@@ -85,7 +85,8 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 	});
 	QVERIFY(found == end(entries));
 	entries.push_back({context, source, comment, {} });
-	entries.back().translations.reserve(std::extent<decltype(translation_suffix)>::value);
+	// n occurences of ';' means n+1 translations, plus translation template -> n+2
+	entries.back().translations.reserve(std::size_t(map_symbol_translations.count(';')) + 2);
 }
 
 
@@ -615,18 +616,21 @@ void SymbolSetTool::processSymbolSet()
 void SymbolSetTool::processSymbolSetTranslations_data()
 {
 	QTest::addColumn<int>("unused");
-	for (auto suffix : translation_suffix)
-		QTest::newRow(suffix) << 0;
+	QTest::newRow("map_symbols_template.ts") << 0;
+#ifdef MAP_SYMBOL_TRANSLATIONS
+	const auto files = map_symbol_translations.split(';');
+	for (const auto& file : files)
+		QTest::newRow(file) << 0;
+#endif
 }
 	
 void SymbolSetTool::processSymbolSetTranslations()
 {
-	auto suffix = QTest::currentDataTag();
-	auto language = QString::fromLatin1(suffix);
+	auto translation_filename = QString::fromLatin1(QTest::currentDataTag());
+	auto language = translation_filename.mid(int(qstrlen("map_symbols_")));
+	language.chop(int(qstrlen(".ts")));
 	if (language.length() > 2)
 		language.clear();
-	
-	auto translation_filename = QString::fromLatin1("map_symbols_%1.ts").arg(QLatin1String(suffix));
 	
 	QByteArray new_data;
 	QByteArray existing_data;

@@ -1832,8 +1832,33 @@ void OCAD8FileExport::doExport()
 		const Template* temp = map->getTemplate(i);
 		
 		QString template_path = temp->getTemplatePath();
-		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0
-		    || QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
+		
+		auto supported_by_ocd = false;
+		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0)
+		{
+			supported_by_ocd = true;
+			
+			if (temp->isTemplateGeoreferenced())
+			{
+				if (temp->getTemplateState() == Template::Unloaded)
+				{
+					// Try to load the template, so that the positioning gets set.
+					const_cast<Template*>(temp)->loadTemplateFile(false);
+				}
+				
+				if (temp->getTemplateState() != Template::Loaded)
+				{
+					addWarning(tr("Unable to save correct position of missing template: \"%1\"")
+					           .arg(temp->getTemplateFilename()));
+				}
+			}
+		}
+		else if (QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
+		{
+			supported_by_ocd = true;
+		}
+		
+		if (supported_by_ocd)
 		{
 			// FIXME: export template view parameters
 			
@@ -1852,10 +1877,10 @@ void OCAD8FileExport::doExport()
 			template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
 			
 			QString string;
-			auto template_path_8bit = encoding_1byte->fromUnicode(template_path);
-			string.sprintf("%s\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
-				template_path_8bit.data(), s, x, y, a, u, v, d, p, t, o
+			string.sprintf("\ts%d\tx%d\ty%d\ta%f\tu%f\tv%f\td%d\tp%d\tt%d\to%d",
+				s, x, y, a, u, v, d, p, t, o
 			);
+			string.prepend(template_path);
 			
 			OCADStringEntry* entry = ocad_string_entry_new(file, string.length() + 1);
 			entry->type = 8;

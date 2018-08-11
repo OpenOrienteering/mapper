@@ -27,7 +27,7 @@
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1637"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1644"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1690"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1697"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1730"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1737"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2528"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2535"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -89,7 +89,7 @@
 <context>
     <name>OpenOrienteering::TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="233"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>
