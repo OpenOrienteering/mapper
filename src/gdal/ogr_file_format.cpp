@@ -22,17 +22,19 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <iterator>
 #include <memory>
 #include <vector>
-#include <type_traits>
 
-#include <cpl_error.h>
 #include <cpl_conv.h>
-#include <cpl_string.h>
 #include <gdal.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
+
+#if GDAL_VERSION_NUM < GDAL_COMPUTE_VERSION(2,0,0)
+#  include <Qt>
+#endif
 
 #include <QtGlobal>
 #include <QtMath>
@@ -40,6 +42,7 @@
 #include <QColor>
 #include <QCoreApplication>
 #include <QFileInfo>
+#include <QFlags>
 #include <QHash>
 #include <QLatin1Char>
 #include <QLatin1String>
@@ -57,6 +60,7 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
+#include "core/path_coord.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"

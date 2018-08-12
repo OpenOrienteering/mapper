@@ -12,7 +12,14 @@
     
     { include: [ "\"qtsingleapplication.h\"", "private", "<QtSingleApplication>", "public" ] },
     
+    # GDAL
+    { include: [ "\"gdal_version.h\"", "private", "<gdal.h>", "public" ] },
     { include: [ "\"ogr_core.h\"", "private", "<ogr_api.h>", "public" ] },
+    { include: [ "\"cpl_port.h\"", "private", "<gdal.h>", "public" ] },
+    { include: [ "\"cpl_error.h\"", "private", "<gdal.h>", "public" ] },
+    { include: [ "\"cpl_progress.h\"", "private", "<gdal.h>", "public" ] },
+    { include: [ "\"cpl_virtualmem.h\"", "private", "<gdal.h>", "public" ] },
+    # GDAL 2: gdal.h includes "cpl_minixml.h", "ogr_api.h"
     
     # ?
     { include: [ "<ext/alloc_traits.h>", "private", "<memory>", "public" ] },

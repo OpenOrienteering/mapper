@@ -20,8 +20,14 @@
 #include "gdal_manager.h"
 
 #include <cpl_conv.h>
-#include <gdal.h> // IWYU pragma: keep
-#include <ogr_api.h>
+
+#include <gdal.h>
+
+#if GDAL_VERSION_NUM < GDAL_COMPUTE_VERSION(2,0,0)
+#  include <ogr_api.h>
+# else
+#  include <cstddef>
+#endif
 
 #include <QtGlobal>
 #include <QByteArray>
