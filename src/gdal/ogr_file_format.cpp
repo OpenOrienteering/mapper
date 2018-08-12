@@ -269,7 +269,7 @@ std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path,
 // ### OgrFileExportFormat ###
 
 OgrFileExportFormat::OgrFileExportFormat()
- : FileFormat(OgrFile, "OGR", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ExportSupported | ExportLossy)
+ : FileFormat(OgrFile, "OGR-export", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ExportSupported | ExportLossy)
 {
 	for (const auto& extension : GdalManager().supportedVectorExportExtensions())
 		addExtension(QString::fromLatin1(extension));
