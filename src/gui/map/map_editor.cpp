@@ -573,23 +573,22 @@ bool MapEditorController::exportTo(const QString& path, const FileFormat& format
 	auto exporter = format.makeExporter(path, map, main_view);
 	if (!exporter)
 	{
-		QMessageBox::warning(nullptr,
-		                     tr("Error"),
-		                     tr("Cannot export the map as\n"
-		                        "\"%1\"\n"
-		                        "because saving as %2 (.%3) is not supported.").
-		                     arg(path,
-		                         format.description(),
-		                         format.fileExtensions().join(QLatin1String(", ")) ) );
+		auto message =
+		        tr("Cannot export the map as\n"
+		           "\"%1\"\n"
+		           "because saving as %2 (.%3) is not supported.").
+		        arg(path,
+		            format.description(),
+		            format.fileExtensions().join(QLatin1String(", ")) );
+		QMessageBox::warning(nullptr, tr("Error"), message);
 		return false;
 	}
 	
 	if (!exporter->doExport())
 	{
-		QMessageBox::warning(nullptr,
-		                     tr("Error"),
-		                     tr("Cannot save file\n%1:\n%2")
-		                     .arg(path, exporter->warnings().back()) );
+		auto message = tr("Cannot save file\n%1:\n%2")
+		               .arg(path, exporter->warnings().back());
+		QMessageBox::warning(nullptr, tr("Error"), message);
 		return false;
 	}
 	
@@ -617,6 +616,14 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 	}
 	
 	auto importer = format.makeImporter(path, map, main_view);
+	if (!importer)
+	{
+		QMessageBox::warning(dialog_parent, tr("Error"),
+		                     MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(path, MainWindow::tr("Invalid file type.")));
+		return false;
+	}
+	
 	if (!importer->doImport())
 	{
 		delete map;
@@ -624,14 +631,14 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		main_view = nullptr;
 		
 		Q_ASSERT(!importer->warnings().empty());
-		QMessageBox::warning(window, tr("Error"), importer->warnings().back());
+		QMessageBox::warning(dialog_parent, tr("Error"), importer->warnings().back());
 		return false;
 	}
 	
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())
-		MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+		MainWindow::showMessageBox(dialog_parent, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	return true;
 }
 

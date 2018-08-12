@@ -274,16 +274,14 @@ public:
 	/**
 	 * Creates an Importer that will read a map file from the given stream.
 	 * 
-	 * If the Importer can not be created, a FileFormatException shall be
-	 * thrown. The default implementation does just that.
+	 * The default implementation returns an unset unique_ptr.
 	 */
 	virtual std::unique_ptr<Importer> makeImporter(const QString& path, Map *map, MapView *view) const;
 	
 	/** 
 	 * Creates an Exporter that will save a map to the given path.
-	 *
-	 * If the Exporter can not be created, a FileFormatException shall be
-	 * thrown. The default implementation does just that.
+	 * 
+	 * The default implementation returns an unset unique_ptr.
 	 */
 	virtual std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const;
 	

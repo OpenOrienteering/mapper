@@ -225,7 +225,7 @@ public:
 	/**
 	 * Save the content of the main window.
 	 */ 
-	bool saveTo(const QString &path, const FileFormat* format = nullptr);
+	bool saveTo(const QString &path, const FileFormat& format);
 	
 	/** Shows the open file dialog for the given file type(s) and returns the chosen file
 	 *  or an empty string if the dialog is aborted.

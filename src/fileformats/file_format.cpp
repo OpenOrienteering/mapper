@@ -22,6 +22,8 @@
 
 #include <QCoreApplication>
 
+#include "file_import_export.h"
+
 
 namespace OpenOrienteering {
 
@@ -82,12 +84,14 @@ FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer
 
 std::unique_ptr<Importer> FileFormat::makeImporter(const QString& /*path*/, Map* /*map*/, MapView* /*view*/) const
 {
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
+	qWarning("Format '%s' does not support import", format_id);
+	return nullptr;
 }
 
 std::unique_ptr<Exporter> FileFormat::makeExporter(const QString& /*path*/, const Map* /*map*/, const MapView* /*view*/) const
 {
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
+	qWarning("Format '%s' does not support export", format_id);
+	return nullptr;
 }
 
 
