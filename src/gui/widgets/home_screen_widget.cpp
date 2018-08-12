@@ -514,8 +514,8 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 		QDirIterator it(location.path(), QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 		while (it.hasNext()) {
 			it.next();
-			auto format = FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsImport);
-			if (!format || !format->supportsExport())
+			auto format = FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsFileOpen);
+			if (!format || !format->supportsWriting())
 				continue;
 			
 			QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());
@@ -563,7 +563,7 @@ void HomeScreenWidgetMobile::addFilesToFileList(QListWidget* file_list, const QS
 	QDirIterator it(path, QDir::Files | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 	while (it.hasNext()) {
 		it.next();
-		if (!FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsImport))
+		if (!FileFormats.findFormatForFilename(it.filePath(), &FileFormat::supportsFileOpen))
 			continue;
 		
 		QListWidgetItem* new_item = new QListWidgetItem(it.fileInfo().fileName());

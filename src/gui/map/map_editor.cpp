@@ -3920,7 +3920,7 @@ void MapEditorController::importClicked()
 	QStringList map_extensions;
 	for (auto format : FileFormats.formats())
 	{
-		if (!format->supportsImport())
+		if (!format->supportsReading())
 			continue;
 		
 		map_names.push_back(format->primaryExtension().toUpper());
@@ -3942,7 +3942,7 @@ void MapEditorController::importClicked()
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
 	
 	bool success = false;
-	auto map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsImport);
+	auto map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsFileImport);
 	if (map_format)
 	{
 		// Map format recognized by filename extension

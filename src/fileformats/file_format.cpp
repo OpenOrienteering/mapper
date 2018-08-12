@@ -40,7 +40,7 @@ const char* FileFormatException::what() const noexcept
 
 // ### FileFormat ###
 
-FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
+FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, Features features)
  : file_type(file_type),
    format_id(id),
    format_description(description),
@@ -63,9 +63,20 @@ void FileFormat::addExtension(const QString& file_extension)
 }
 
 
+bool FileFormat::supportsReading() const
+{
+	return supportsFileOpen() || supportsFileImport();
+}
+
+bool FileFormat::supportsWriting() const
+{
+	return supportsFileSave() || supportsFileSaveAs() || supportsFileExport();
+}
+
+
 FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer*/, int /*size*/) const
 {
-	return supportsImport() ? Unknown : NotSupported;
+	return supportsReading() ? Unknown : NotSupported;
 }
 
 

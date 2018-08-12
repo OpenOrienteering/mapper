@@ -52,19 +52,19 @@ void FileFormatRegistry::registerFormat(FileFormat *format)
 {
 	fmts.push_back(format);
 	if (fmts.size() == 1) default_format_id = format->id();
-	if (format->supportsImport())
+	if (format->supportsReading())
 	{
 		// There must be at least one one format for a filename with the registered extension.
-		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsImport) != nullptr);
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsReading) != nullptr);
 		// The filter shall be unique at least by description.
-		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsImport) == format); 
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsReading) == format); 
 	}
-	if (format->supportsExport())
+	if (format->supportsWriting())
 	{
 		// There must be at least one one format for a filename with the registered extension.
-		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsExport) != nullptr);
+		Q_ASSERT(findFormatForFilename(QLatin1String("filename.") + format->primaryExtension(), &FileFormat::supportsWriting) != nullptr);
 		// The filter shall be unique at least by description.
-		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsExport) == format); 
+		Q_ASSERT(findFormatByFilter(format->filter(), &FileFormat::supportsWriting) == format); 
 	}
 }
 
@@ -85,7 +85,7 @@ std::unique_ptr<Importer> FileFormatRegistry::makeImporter(const QString& path, 
 {
 	auto extension = QFileInfo(path).suffix();
 	auto format = findFormat([extension](auto format) {
-		return format->supportsImport()
+		return format->supportsReading()
 		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
 	});
 	if (!format)
@@ -97,7 +97,7 @@ std::unique_ptr<Exporter> FileFormatRegistry::makeExporter(const QString& path, 
 {
 	auto extension = QFileInfo(path).suffix();
 	auto format = findFormat([extension](auto format) {
-		return format->supportsExport()
+		return format->supportsWriting()
 		       && format->fileExtensions().contains(extension, Qt::CaseInsensitive);
 	});
 	if (!format && QFileInfo::exists(path))
@@ -149,7 +149,7 @@ const FileFormat* FileFormatRegistry::findFormatForData(const QString& path, Fil
 	FileFormat* candidate = nullptr;
 	for (auto format : fmts)
 	{
-		if (!format->supportsImport() || !(format->fileType() & types))
+		if (!format->supportsReading() || !(format->fileType() & types))
 			continue;
 		
 		switch (format->understands(buffer, total_read))

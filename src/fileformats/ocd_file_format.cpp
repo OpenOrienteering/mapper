@@ -52,12 +52,13 @@ QString labelForVersion(quint16 version)
 	}
 }
 
-FileFormat::FormatFeatures featuresForVersion(quint16 version)
+FileFormat::Features featuresForVersion(quint16 version)
 {
 	switch (version)
 	{
 	case OcdFileFormat::legacyVersion():
-		return FileFormat::ImportSupported | FileFormat::ExportSupported | FileFormat::ExportLossy;
+		return FileFormat::Feature::FileOpen | FileFormat::Feature::FileImport | FileFormat::Feature::ReadingLossy |
+		       FileFormat::Feature::FileSave | FileFormat::Feature::FileSaveAs | FileFormat::Feature::WritingLossy;
 		
 	case OcdFileFormat::autoDeterminedVersion():
 		// Intentionally no FileFormat::ExportSupported. This prevents this
@@ -65,12 +66,13 @@ FileFormat::FormatFeatures featuresForVersion(quint16 version)
 		// to create an exporter for the autoDeterminedVersion(). The actual
 		// export version will be determined from the Map's versionProperty()
 		// if possible, or from OcdFileExport::default_version.
-		return FileFormat::ImportSupported | FileFormat::ExportLossy;
+		return FileFormat::Feature::FileOpen | FileFormat::Feature::FileImport | FileFormat::Feature::ReadingLossy |
+		       FileFormat::Feature::FileSave | FileFormat::Feature::WritingLossy;
 		
 	default:
 		// Intentionally no FileFormat::ImportSupported. Import is handled
 		// by the autoDeterminedVersion().
-		return FileFormat::ExportSupported | FileFormat::ExportLossy;
+		return FileFormat::Feature::FileSave | FileFormat::Feature::FileSaveAs | FileFormat::Feature::WritingLossy;
 	}
 }
 

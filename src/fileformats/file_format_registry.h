@@ -54,8 +54,8 @@ public:
 	inline const std::vector<FileFormat *> &formats() const { return fmts; }
 	
 	
-	/** Finds a file format with the given internal ID, or returns nullptr if no format
-	 *  is found.
+	/** Finds a file format which satisfies the given predicate, or returns 
+	 *  nullptr if no format is found.
 	 */
 	const FileFormat* findFormat(std::function<bool(const FileFormat*)> predicate) const;
 	

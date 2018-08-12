@@ -42,7 +42,7 @@ bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*f
 
 bool MainWindowController::exportTo(const QString& path)
 {
-	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsExport);
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsWriting);
 	if (!format)
 		format = FileFormats.findFormat(FileFormats.defaultFormat());
 	if (!format)
@@ -53,7 +53,7 @@ bool MainWindowController::exportTo(const QString& path)
 		                        "because the format is unknown.").arg(path));
 		return false;
 	}
-	if (!format->supportsExport())
+	if (!format->supportsWriting())
 	{
 		QMessageBox::warning(window,
 		                     tr("Error"),
@@ -100,7 +100,7 @@ bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
-	if (FileFormats.findFormatForFilename(filename, &FileFormat::supportsImport))
+	if (FileFormats.findFormatForFilename(filename, &FileFormat::supportsReading))
 		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return nullptr;

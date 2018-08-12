@@ -804,7 +804,7 @@ void MainWindow::showOpenDialog()
 
 bool MainWindow::openPath(const QString &path)
 {
-	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsFileOpen);
 	if (!format)
 		format = FileFormats.findFormatForData(path, FileFormat::AllFiles);
 	return openPath(path, format);
@@ -1055,6 +1055,10 @@ Autosave::AutosaveResult MainWindow::autosave()
 
 bool MainWindow::save()
 {
+	auto format = currentFormat();
+	if (format && !format->supportsFileSave())
+		return showSaveAsDialog();
+	
 	return saveTo(currentPath(), currentFormat());
 }
 
@@ -1067,7 +1071,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 		return showSaveAsDialog();
 	
 	if (!format)
-		format = FileFormats.findFormatForFilename(path, &FileFormat::supportsExport);
+		format = FileFormats.findFormatForFilename(path, &FileFormat::supportsWriting);
 	
 	if (!format)
 	{
@@ -1078,7 +1082,7 @@ bool MainWindow::saveTo(const QString &path, const FileFormat* format)
 		return false;
 	}
 	
-	if (format->isExportLossy())
+	if (format->isWritingLossy())
 	{
 		QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
 		int result = QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Yes, QMessageBox::No);
@@ -1119,7 +1123,7 @@ MainWindow::FileInfo MainWindow::getOpenFileName(QWidget* parent, const QString&
 	{
 		for (auto format : FileFormats.formats())
 		{
-			if (format->supportsImport())
+			if (format->supportsFileOpen())
 			{
 				if (filters.isEmpty())
 				{
@@ -1147,9 +1151,9 @@ MainWindow::FileInfo MainWindow::getOpenFileName(QWidget* parent, const QString&
 	if (!path.isEmpty())
 	{
 		path = QFileInfo(path).canonicalFilePath();
-		format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsImport);
+		format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsFileOpen);
 		if (!format)
-			format = FileFormats.findFormatForFilename(path, &FileFormat::supportsImport);
+			format = FileFormats.findFormatForFilename(path, &FileFormat::supportsFileOpen);
 		if (!format)
 			format = FileFormats.findFormatForData(path, types);
 	}
@@ -1196,7 +1200,7 @@ bool MainWindow::showSaveAsDialog()
 	QString filters;
 	for (auto format : FileFormats.formats())
 	{
-		if (format->supportsExport())
+		if (format->supportsFileSaveAs())
 		{
 			if (filters.isEmpty()) 
 				filters = format->filter();
@@ -1223,7 +1227,7 @@ bool MainWindow::showSaveAsDialog()
 	if (path.isEmpty())
 		return false;
 	
-	const FileFormat *format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsExport);
+	const FileFormat *format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsFileSaveAs);
 	if (!format)
 	{
 		QMessageBox::information(this, tr("Error"), 

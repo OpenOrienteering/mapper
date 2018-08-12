@@ -253,7 +253,10 @@ namespace {
 // ### OgrFileImportFormat ###
 
 OgrFileImportFormat::OgrFileImportFormat()
- : FileFormat(OgrFile, "OGR", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ImportSupported)
+ : FileFormat(OgrFile, "OGR",
+              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+              QString{},
+              Feature::FileOpen | Feature::FileImport | Feature::ReadingLossy )
 {
 	for (const auto& extension : GdalManager().supportedVectorImportExtensions())
 		addExtension(QString::fromLatin1(extension));
@@ -269,7 +272,10 @@ std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path,
 // ### OgrFileExportFormat ###
 
 OgrFileExportFormat::OgrFileExportFormat()
- : FileFormat(OgrFile, "OGR-export", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ExportSupported | ExportLossy)
+ : FileFormat(OgrFile, "OGR-export",
+              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+              QString{},
+              Feature::FileExport | Feature::WritingLossy )
 {
 	for (const auto& extension : GdalManager().supportedVectorExportExtensions())
 		addExtension(QString::fromLatin1(extension));
