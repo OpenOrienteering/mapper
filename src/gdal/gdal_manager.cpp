@@ -212,8 +212,7 @@ private:
 	{
 		QSettings settings;
 		
-#ifdef GDAL_DMD_EXTENSIONS
-		// GDAL >= 2.0
+#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 		settings.beginGroup(gdal_manager_group);
 		auto count = GDALGetDriverCount();
 		enabled_vector_import_extensions.clear();
