@@ -890,6 +890,11 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
+	if (auto vector_format = FileFormats.findFormat("OGR-export"))
+		export_vector_act = newAction("export-vector", vector_format->description(), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
+	else
+		export_vector_act = nullptr;
+	
 #else
 	print_act = nullptr;
 	export_image_act = nullptr;
@@ -1072,6 +1077,8 @@ void MapEditorController::createMenuAndToolbars()
 	export_menu->menuAction()->setMenuRole(QAction::NoRole);
 	export_menu->addAction(export_image_act);
 	export_menu->addAction(export_pdf_act);
+	if (export_vector_act)
+		export_menu->addAction(export_vector_act);
 	file_menu->insertMenu(insertion_act, export_menu);
 #endif
 	file_menu->insertSeparator(insertion_act);
@@ -1620,6 +1627,35 @@ bool MapEditorController::keyReleaseEventFilter(QKeyEvent* event)
 {
 	return map_widget->keyReleaseEventFilter(event);
 }
+
+
+
+// slot
+void MapEditorController::exportVector()
+{
+	QSettings settings;
+	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
+	
+	auto format = FileFormats.findFormat("OGR-export");
+	if (!format)
+		return;  /// \todo Error message?
+	
+	QString filename = FileDialog::getSaveFileName(
+	                       window,
+	                       tr("Export"),
+	                       import_directory,
+	                       QString::fromLatin1("%1 (%2);;%3 (*.*)")
+	                       .arg(format->description(),
+	                            QLatin1String("*.") + format->fileExtensions().join(QString::fromLatin1(" *.")),
+	                            tr("All files")) );
+	if (filename.isEmpty() || filename.isNull())
+		return;
+	
+	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
+	
+	exportTo(filename, *format);
+}
+
 
 void MapEditorController::printClicked(int task)
 {

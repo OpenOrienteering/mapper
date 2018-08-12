@@ -254,6 +254,11 @@ public:
 	
 public slots:
 	/**
+	 * Lets the user export the map as geospatial vector data.
+	 */
+	void exportVector();
+	
+	/**
 	 * Makes the print/export dock widget visible, and configures it for 
 	 * the given task (which is of type PrintWidget::TaskFlags).
 	 */
@@ -628,6 +633,7 @@ private:
 	QAction* print_act;
 	QAction* export_image_act;
 	QAction* export_pdf_act;
+	QAction* export_vector_act;
 	
 	QAction* undo_act;
 	QAction* redo_act;
