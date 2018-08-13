@@ -1533,11 +1533,44 @@ bool OgrFileExport::exportImplementation()
 		auto layer = createLayer("Layer", wkbUnknown);
 		if (layer == nullptr)
 			throw FileFormatException(tr("Failed to create layer: %2").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
-
-		addPointsToLayer(layer, is_point_object);
-		addTextToLayer(layer, is_text_object);
-		addLinesToLayer(layer, is_line_object);
-		addAreasToLayer(layer, is_area_object);
+		
+		std::vector<const Symbol*> symbols;
+		symbols.reserve(std::size_t(num_symbols));
+		for (auto i = 0; i < num_symbols; ++i)
+		{
+			if (symbols_in_use[i])
+				symbols.push_back(map->getSymbol(i));
+		}
+		std::sort(begin(symbols), end(symbols), Symbol::lessByColorPriority);
+		for (auto symbol : symbols)
+		{
+			auto match_symbol = [symbol](auto object) { return object->getSymbol() == symbol; };
+			switch (symbol->getType())
+			{
+			case Symbol::Point:
+				addPointsToLayer(layer, match_symbol);
+				break;
+			case Symbol::Text:
+				addTextToLayer(layer, match_symbol);
+				break;
+			case Symbol::Line:
+				addLinesToLayer(layer, match_symbol);
+				break;
+			case Symbol::Combined:
+				if (!symbol->getContainedTypes() & Symbol::Area)
+				{
+					addLinesToLayer(layer, match_symbol);
+					break;
+				}
+				// fall through
+			case Symbol::Area:
+				addAreasToLayer(layer, match_symbol);
+				break;
+			case Symbol::NoSymbol:
+			case Symbol::AllSymbols:
+				Q_UNREACHABLE();
+			}
+		}
 	}
 	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
 	{
