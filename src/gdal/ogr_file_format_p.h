@@ -365,6 +365,7 @@ public:
 		GeorefOptional = 0x01,   ///< The driver does not need or use georeferencing.
 		NeedsWgs84     = 0x02,   ///< The driver needs WGS84 geographic coordinates.
 		SingleLayer    = 0x04,   ///< The driver supports just a single layer.
+		UseLayerField  = 0x08,   ///< Write the symbol names to the layer field.
 	};
 
 	/**
@@ -398,6 +399,8 @@ private:
 	ogr::unique_srs map_srs;
 	ogr::unique_styletable table;
 	ogr::unique_transformation transformation;
+	
+	const char* symbol_field;
 
 	OgrQuirks quirks;
 };

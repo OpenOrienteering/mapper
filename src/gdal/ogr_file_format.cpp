@@ -1480,8 +1480,17 @@ bool OgrFileExport::exportImplementation()
 		throw FileFormatException(tr("Failed to create dataset: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
 
 	// Name field definition
-	o_name_field = ogr::unique_fielddefn(OGR_Fld_Create("Name", OFTString));
-	OGR_Fld_SetWidth(o_name_field.get(), 32);
+	if (quirks.testFlag(UseLayerField))
+	{
+		symbol_field = "Layer";
+		o_name_field = nullptr;
+	}
+	else
+	{
+		symbol_field = "Name";
+		o_name_field = ogr::unique_fielddefn(OGR_Fld_Create(symbol_field, OFTString));
+		OGR_Fld_SetWidth(o_name_field.get(), 32);
+	}
 
 	// Determine symbols in use
 	std::vector<bool> symbols_in_use;
@@ -1675,7 +1684,7 @@ void OgrFileExport::setupQuirks(GDALDriverH po_driver)
 	    { "DGN",           GeorefOptional },
 	    { "DGNv8",         GeorefOptional },
 	    { "DWG",           GeorefOptional },
-	    { "DXF",           OgrQuirks() | GeorefOptional | SingleLayer },
+	    { "DXF",           OgrQuirks() | GeorefOptional | SingleLayer | UseLayerField },
 	    { "Geomedia",      GeorefOptional },
 	    { "GPX",           NeedsWgs84 },
 	    { "INGRES",        GeorefOptional },
@@ -1707,7 +1716,7 @@ void OgrFileExport::addPointsToLayer(OGRLayerH layer, const std::function<bool (
 
 		QString sym_name = symbol->getPlainTextName();
 		sym_name.truncate(32);
-		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), "Name"), sym_name.toLatin1().constData());
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
 
 		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
 		QPointF proj_cord = georef.toProjectedCoords(object->asPoint()->getCoordF());
@@ -1738,7 +1747,7 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 
 		QString sym_name = object->asText()->getText();
 		sym_name.truncate(32);
-		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), "Name"), sym_name.toLatin1().constData());
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
 
 		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
 		QPointF proj_cord = georef.toProjectedCoords(object->asText()->getAnchorCoordF());
@@ -1778,7 +1787,7 @@ void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (c
 		for (const auto& part : parts)
 		{
 			auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
-			OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), "Name"), sym_name.toLatin1().constData());
+			OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
 
 			for (const auto& coord : part.path_coords)
 			{
@@ -1816,7 +1825,7 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 
 		QString sym_name = symbol->getPlainTextName();
 		sym_name.truncate(32);
-		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), "Name"), sym_name.toLatin1().constData());
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
 
 		auto polygon = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPolygon));
 		auto cur_ring = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
@@ -1860,8 +1869,11 @@ OGRLayerH OgrFileExport::createLayer(const char* layer_name, OGRwkbGeometryType 
 		return nullptr;
 	}
 
-	if (OGR_L_CreateField(po_layer, o_name_field.get(), 1) != OGRERR_NONE)
+	if (!quirks.testFlag(UseLayerField)
+	    && OGR_L_CreateField(po_layer, o_name_field.get(), 1) != OGRERR_NONE)
+	{
 		addWarning(tr("Failed to create name field: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+	}
 
 	return po_layer;
 }
