@@ -53,6 +53,11 @@ public:
 		GPX,
 		OSM
 	};
+
+	enum ExportOption
+	{
+		OneLayerPerSymbol
+	};
 	
 	/**
 	 * Constructs a new manager object.
@@ -75,7 +80,18 @@ public:
 	 */
 	bool isFormatEnabled(FileFormat format) const;
 	
+
+	/**
+	 * Enables or disables an OGR export option
+	 */
+	void setExportOptionEnabled(ExportOption option, bool enabled);
 	
+	/**
+	 * Returns if an OGR export option is enabled
+	 */
+	bool isExportOptionEnabled(ExportOption option) const;
+
+
 	/**
 	 * Returns the file name extensions for supported raster formats.
 	 */
@@ -84,7 +100,12 @@ public:
 	/**
 	 * Returns the file name extensions for supported vector formats.
 	 */
-	const std::vector<QByteArray>& supportedVectorExtensions() const;
+	const std::vector<QByteArray>& supportedVectorImportExtensions() const;
+
+	/**
+	 * Returns the file name extensions for supported vector export formats.
+	 */
+	const std::vector<QByteArray>& supportedVectorExportExtensions() const;
 	
 	
 	/**

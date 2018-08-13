@@ -22,6 +22,8 @@
 
 #include <QCoreApplication>
 
+#include "file_import_export.h"
+
 
 namespace OpenOrienteering {
 
@@ -40,7 +42,7 @@ const char* FileFormatException::what() const noexcept
 
 // ### FileFormat ###
 
-FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
+FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, Features features)
  : file_type(file_type),
    format_id(id),
    format_description(description),
@@ -63,20 +65,33 @@ void FileFormat::addExtension(const QString& file_extension)
 }
 
 
+bool FileFormat::supportsReading() const
+{
+	return supportsFileOpen() || supportsFileImport();
+}
+
+bool FileFormat::supportsWriting() const
+{
+	return supportsFileSave() || supportsFileSaveAs() || supportsFileExport();
+}
+
+
 FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer*/, int /*size*/) const
 {
-	return supportsImport() ? Unknown : NotSupported;
+	return supportsReading() ? Unknown : NotSupported;
 }
 
 
 std::unique_ptr<Importer> FileFormat::makeImporter(const QString& /*path*/, Map* /*map*/, MapView* /*view*/) const
 {
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
+	qWarning("Format '%s' does not support import", format_id);
+	return nullptr;
 }
 
 std::unique_ptr<Exporter> FileFormat::makeExporter(const QString& /*path*/, const Map* /*map*/, const MapView* /*view*/) const
 {
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
+	qWarning("Format '%s' does not support export", format_id);
+	return nullptr;
 }
 
 

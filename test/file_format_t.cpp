@@ -426,7 +426,7 @@ void FileFormatTest::understandsTest()
 		QEXPECT_FAIL("", "OCD format not support on big endian systems", Abort);
 #endif
 	QVERIFY(format);
-	QVERIFY(format->supportsImport());
+	QVERIFY(format->supportsReading());
 	QCOMPARE(int(format->understands(data.constData(), data.length())), support);
 }
 
@@ -540,7 +540,8 @@ void FileFormatTest::saveAndLoad_data()
 		auto format = FileFormats.findFormat(format_id);
 		QVERIFY(format);
 		QCOMPARE(format->fileType(), FileFormat::MapFile);
-		QVERIFY(format->supportsImport() || format->supportsExport());
+		QVERIFY(format->supportsReading());
+		QVERIFY(format->supportsWriting());
 		
 		for (auto raw_path : example_files)
 		{
@@ -612,7 +613,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// If the export is lossy, do an extra export / import cycle in order to
 	// be independent of information which cannot be exported into this format
-	if (new_map && format->isExportLossy())
+	if (new_map && format->isWritingLossy())
 	{
 		fuzzyCompareMaps(*new_map, *original);
 		

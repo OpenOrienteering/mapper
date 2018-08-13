@@ -60,8 +60,12 @@ namespace OpenOrienteering {
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
-              ImportSupported | ExportSupported | ExportLossy)
+ : FileFormat(MapFile,
+              "OCAD78",
+              ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"),
+              QString::fromLatin1("ocd"),
+              Feature::FileOpen | Feature::FileImport | Feature::ReadingLossy |
+              Feature::FileSave | Feature::FileSaveAs | Feature::WritingLossy )
 {
 	// Nothing
 }

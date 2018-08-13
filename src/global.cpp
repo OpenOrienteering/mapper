@@ -40,7 +40,8 @@ void doStaticInitializations()
 		FileFormats.registerFormat(format.release());
 #endif
 #ifdef MAPPER_USE_GDAL
-	FileFormats.registerFormat(new OgrFileFormat());
+	FileFormats.registerFormat(new OgrFileExportFormat());
+	FileFormats.registerFormat(new OgrFileImportFormat());
 #endif
 }
 
