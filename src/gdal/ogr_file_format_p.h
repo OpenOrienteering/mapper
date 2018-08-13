@@ -362,8 +362,9 @@ public:
 	 */
 	enum OgrQuirk
 	{
-		NeedsWgs84		= 0x1,
-		OneLayer		= 0x2,
+		GeorefOptional = 0x01,   ///< The driver does not need or use georeferencing.
+		NeedsWgs84     = 0x02,   ///< The driver needs WGS84 geographic coordinates.
+		SingleLayer    = 0x04,   ///< The driver supports just a single layer.
 	};
 
 	/**

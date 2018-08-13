@@ -1519,7 +1519,7 @@ bool OgrFileExport::exportImplementation()
 		return symbol && symbol->getContainedTypes() & Symbol::Area;
 	};
 
-	if (quirks & OneLayer)
+	if (quirks & SingleLayer)
 	{
 		auto layer = createLayer("Layer", wkbUnknown);
 		if (layer == nullptr)
@@ -1645,34 +1645,13 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 	}
 
 	/**
-	 * Only certain drivers work without georeferencing info
-	 * Based on http://www.gdal.org/ogr_formats.html as of March 5, 2018
+	 * Only certain drivers work without georeferencing info.
+	 * GeorefOptional based on http://www.gdal.org/ogr_formats.html as of March 5, 2018
 	 */
-	static const char* local_drivers[] = {
-	    "ARCGEN",
-	    "BNA",
-	    "CSV",
-	    "DGN",
-	    "DGNv8",
-	    "DWG",
-	    "DXF",
-	    "Geomedia",
-	    "INGRES",
-	    "ODS",
-	    "OpenJUMP .jml",
-	    "REC",
-	    "SEGY",
-	    "XLS",
-	    "XLSX",
-	};
-	if (local_only)
+	if (local_only && !quirks.testFlag(GeorefOptional))
 	{
-		using std::begin;
-		using std::end;
-		QByteArray driver_name = GDALGetDriverShortName(po_driver);
-		if (std::find(begin(local_drivers), end(local_drivers), driver_name) == end(local_drivers))
-			throw FileFormatException(tr("The %1 driver requires valid georefencing info.")
-		                              .arg(QString::fromLatin1(driver_name)));
+		throw FileFormatException(tr("The %1 driver requires valid georefencing info.")
+		                          .arg(QString::fromLatin1(GDALGetDriverShortName(po_driver))));
 	}
 
 	if (quirks & NeedsWgs84)
@@ -1686,10 +1665,36 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 
 void OgrFileExport::setupQuirks(GDALDriverH po_driver)
 {
-	if (qstrcmp(GDALGetDriverShortName(po_driver), "GPX") == 0 || qstrcmp(GDALGetDriverShortName(po_driver), "LIBKML") == 0)
-		quirks |= NeedsWgs84;
-	else if (qstrcmp(GDALGetDriverShortName(po_driver), "DXF") == 0)
-		quirks |= OneLayer;
+	static struct {
+		const char* name;
+		OgrQuirks quirks;
+	} driver_quirks[] = {
+	    { "ARCGEN",        GeorefOptional },
+	    { "BNA",           GeorefOptional },
+	    { "CSV",           GeorefOptional },
+	    { "DGN",           GeorefOptional },
+	    { "DGNv8",         GeorefOptional },
+	    { "DWG",           GeorefOptional },
+	    { "DXF",           OgrQuirks() | GeorefOptional | SingleLayer },
+	    { "Geomedia",      GeorefOptional },
+	    { "GPX",           NeedsWgs84 },
+	    { "INGRES",        GeorefOptional },
+	    { "LIBKML",        NeedsWgs84 },
+	    { "ODS",           GeorefOptional },
+	    { "OpenJUMP .jml", GeorefOptional },
+	    { "REC",           GeorefOptional },
+	    { "SEGY",          GeorefOptional },
+	    { "XLS",           GeorefOptional },
+	    { "XLSX",          GeorefOptional },
+	};
+	using std::begin;
+	using std::end;
+	auto driver_name = GDALGetDriverShortName(po_driver);
+	auto driver_info = std::find_if(begin(driver_quirks), end(driver_quirks), [driver_name](auto entry) {
+		return qstrcmp(driver_name, entry.name) == 0;
+	});
+	if (driver_info != end(driver_quirks))
+		quirks |= driver_info->quirks;
 }
 
 void OgrFileExport::addPointsToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition)
