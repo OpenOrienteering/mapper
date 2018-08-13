@@ -1649,10 +1649,21 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 	 * Based on http://www.gdal.org/ogr_formats.html as of March 5, 2018
 	 */
 	static const char* local_drivers[] = {
-	    "ARCGEN", "BNA", "DWG", "DXF",
-	    "CSV", "Geomedia", "INGRES", "OpenJUMP .jml",
-	    "DGN", "DGNv8", "ODS", "REC",
-	    "SEGY", "XLS", "XLSX"
+	    "ARCGEN",
+	    "BNA",
+	    "CSV",
+	    "DGN",
+	    "DGNv8",
+	    "DWG",
+	    "DXF",
+	    "Geomedia",
+	    "INGRES",
+	    "ODS",
+	    "OpenJUMP .jml",
+	    "REC",
+	    "SEGY",
+	    "XLS",
+	    "XLSX",
 	};
 	if (local_only)
 	{
