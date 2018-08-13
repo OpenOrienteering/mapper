@@ -18,7 +18,7 @@
  */
 
 #include "ogr_file_format.h"
-#include "ogr_file_format_p.h"
+#include "ogr_file_format_p.h"  // IWYU pragma: associated
 
 #include <algorithm>
 #include <cstddef>

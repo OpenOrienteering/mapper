@@ -20,12 +20,16 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_P_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_P_H
 
+#include <functional>
 #include <memory>
+#include <type_traits>
+#include <vector>
 
 #include <QByteArray>
 #include <QCoreApplication>
-#include <QFileInfo>
+#include <QFlags>
 #include <QHash>
+#include <QString>
 
 // The GDAL/OGR C API is more stable than the C++ API.
 #include <gdal.h>
@@ -36,19 +40,18 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_import_export.h"
 
-class QFile;
-
 namespace OpenOrienteering {
 
 class AreaSymbol;
 class Georeferencing;
 class LatLon;
 class LineSymbol;
+class Map;
+class MapView;
 class MapColor;
 class MapPart;
 class Object;
 class PathObject;
-class PointObject;
 class PointSymbol;
 class TextSymbol;
 
@@ -169,10 +172,6 @@ namespace ogr
 
 /**
  * An Importer for geospatial vector data supported by OGR.
- * 
- * OGR needs to know the filename. The filename can be either derived from
- * a QFile passed as stream to the constructor, or set directly through the
- * option "filename".
  * 
  * The option "separate_layers" will cause OGR layers to be imported as distinct
  * map parts if set to true.
