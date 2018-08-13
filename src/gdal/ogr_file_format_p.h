@@ -386,7 +386,7 @@ protected:
 
 	OGRLayerH createLayer(const char* layer_name, OGRwkbGeometryType type);
 
-	void populateStyleTable();
+	void populateStyleTable(const std::vector<bool>& symbols_in_use);
 
 	void setupGeoreferencing(GDALDriverH po_driver);
 	void setupQuirks(GDALDriverH po_driver);

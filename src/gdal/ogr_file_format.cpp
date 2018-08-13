@@ -1483,8 +1483,20 @@ bool OgrFileExport::exportImplementation()
 	o_name_field = ogr::unique_fielddefn(OGR_Fld_Create("Name", OFTString));
 	OGR_Fld_SetWidth(o_name_field.get(), 32);
 
+	// Determine symbols in use
+	std::vector<bool> symbols_in_use;
+	map->determineSymbolsInUse(symbols_in_use);
+	
+	const auto num_symbols = map->getNumSymbols();
+	
+	// Clear helper symbols
+	for (auto i = 0; i < num_symbols; ++i)
+	{
+		symbols_in_use[i] = symbols_in_use[i] & !map->getSymbol(i)->isHelperSymbol();
+	}
+	
 	// Setup style table
-	populateStyleTable();
+	populateStyleTable(symbols_in_use);
 
 	auto is_point_object = [](const Object* object) {
 		const auto symbol = object->getSymbol();
@@ -1520,18 +1532,6 @@ bool OgrFileExport::exportImplementation()
 	}
 	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
 	{
-		// Determine symbols in use
-		std::vector<bool> symbols_in_use;
-		map->determineSymbolsInUse(symbols_in_use);
-
-		const auto num_symbols = map->getNumSymbols();
-		
-		// Clear helper symbols
-		for (auto i = 0; i < num_symbols; ++i)
-		{
-			symbols_in_use[i] = symbols_in_use[i] & !map->getSymbol(i)->isHelperSymbol();
-		}
-
 		// Add points, lines, areas in this order for driver compatability (esp GPX)
 		for (auto i = 0; i < num_symbols; ++i)
 		{
@@ -1850,7 +1850,7 @@ OGRLayerH OgrFileExport::createLayer(const char* layer_name, OGRwkbGeometryType 
 	return po_layer;
 }
 
-void OgrFileExport::populateStyleTable()
+void OgrFileExport::populateStyleTable(const std::vector<bool>& symbols_in_use)
 {
 	table = ogr::unique_styletable(OGR_STBL_Create());
 	auto manager = ogr::unique_stylemanager(OGR_SM_Create(table.get()));
@@ -1876,9 +1876,6 @@ void OgrFileExport::populateStyleTable()
 	};
 
 	// Go through all used symbols and create a style table
-	std::vector<bool> symbols_in_use;
-	map->determineSymbolsInUse(symbols_in_use);
-
 	const auto num_symbols = map->getNumSymbols();
 	for (auto i = 0; i < num_symbols; ++i)
 	{
