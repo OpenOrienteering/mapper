@@ -1524,15 +1524,16 @@ bool OgrFileExport::exportImplementation()
 		std::vector<bool> symbols_in_use;
 		map->determineSymbolsInUse(symbols_in_use);
 
+		const auto num_symbols = map->getNumSymbols();
+		
 		// Clear helper symbols
-		for (auto i = map->getNumSymbols() - 1; i >= 0; --i) {
-			if (symbols_in_use[i])
-				if (map->getSymbol(i)->isHelperSymbol())
-					symbols_in_use[i] = false;
+		for (auto i = 0; i < num_symbols; ++i)
+		{
+			symbols_in_use[i] = symbols_in_use[i] & !map->getSymbol(i)->isHelperSymbol();
 		}
 
 		// Add points, lines, areas in this order for driver compatability (esp GPX)
-		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		for (auto i = 0; i < num_symbols; ++i)
 		{
 			if (symbols_in_use[i])
 			{
@@ -1560,7 +1561,7 @@ bool OgrFileExport::exportImplementation()
 		}
 
 		// Line symbols
-		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		for (auto i = 0; i < num_symbols; ++i)
 		{
 			if (symbols_in_use[i])
 			{
@@ -1579,7 +1580,7 @@ bool OgrFileExport::exportImplementation()
 		}
 
 		// Area symbols
-		for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+		for (auto i = 0; i < num_symbols; ++i)
 		{
 			if (symbols_in_use[i])
 			{
@@ -1878,7 +1879,8 @@ void OgrFileExport::populateStyleTable()
 	std::vector<bool> symbols_in_use;
 	map->determineSymbolsInUse(symbols_in_use);
 
-	for (auto i = map->getNumSymbols() - 1; i >= 0; --i)
+	const auto num_symbols = map->getNumSymbols();
+	for (auto i = 0; i < num_symbols; ++i)
 	{
 		if (symbols_in_use[i])
 		{
