@@ -56,7 +56,7 @@ public:
 	const QString gdal_osm_key{ QStringLiteral("osm") };
 
 	// Export options
-	const QString ogr_per_symbol_layers_key{ QStringLiteral("per_symbol_layer") };
+	const QString ogr_one_layer_per_symbol_key{ QStringLiteral("per_symbol_layer") };
 	
 	GdalManagerPrivate()
 	: dirty{ true }
@@ -130,8 +130,8 @@ public:
 		QString key;
 		switch (option)
 		{
-		case GdalManager::PER_SYMBOL_LAYERS:
-			key = ogr_per_symbol_layers_key;
+		case GdalManager::OneLayerPerSymbol:
+			key = ogr_one_layer_per_symbol_key;
 			break;
 		}
 		QSettings settings;
@@ -145,8 +145,8 @@ public:
 		QString key;
 		switch (option)
 		{
-		case GdalManager::PER_SYMBOL_LAYERS:
-			key = ogr_per_symbol_layers_key;
+		case GdalManager::OneLayerPerSymbol:
+			key = ogr_one_layer_per_symbol_key;
 			break;
 		}
 		QSettings settings;

@@ -57,7 +57,7 @@ private:
 	QCheckBox* import_dxf;
 	QCheckBox* import_gpx;
 	QCheckBox* import_osm;
-	QCheckBox* export_per_symbol_layers;
+	QCheckBox* export_one_layer_per_symbol;
 	QTableWidget* parameters;
 };
 

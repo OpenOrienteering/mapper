@@ -56,7 +56,7 @@ public:
 
 	enum ExportOption
 	{
-		PER_SYMBOL_LAYERS
+		OneLayerPerSymbol
 	};
 	
 	/**

@@ -1393,8 +1393,8 @@ OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView*
 : Exporter(path, map, view)
 {
 	GdalManager manager;
-	bool per_symbol_layers = manager.isExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS);
-	setOption(QString::fromLatin1("Per Symbol Layers"), per_symbol_layers);
+	bool one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
+	setOption(QString::fromLatin1("Per Symbol Layers"), one_layer_per_symbol);
 }
 
 OgrFileExport::~OgrFileExport() = default;

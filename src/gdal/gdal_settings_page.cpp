@@ -61,8 +61,8 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	form_layout->addItem(Util::SpacerItem::create(this));
 	form_layout->addRow(Util::Headline::create(tr("Export Options")));
 
-	export_per_symbol_layers = new QCheckBox(tr("Create a layer for each symbol"));
-	form_layout->addRow(export_per_symbol_layers);
+	export_one_layer_per_symbol = new QCheckBox(tr("Create a layer for each symbol"));
+	form_layout->addRow(export_one_layer_per_symbol);
 	
 	form_layout->addItem(Util::SpacerItem::create(this));
 	form_layout->addRow(Util::Headline::create(tr("Configuration")));
@@ -107,7 +107,7 @@ void GdalSettingsPage::apply()
 	FileFormats.unregisterFormat(FileFormats.findFormat(format->id()));
 	FileFormats.registerFormat(format);
 
-	manager.setExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS, export_per_symbol_layers->checkState());
+	manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, export_one_layer_per_symbol->isChecked());
 	
 	const auto old_parameters = manager.parameterKeys();
 	
@@ -144,7 +144,7 @@ void GdalSettingsPage::updateWidgets()
 	import_gpx->setChecked(manager.isFormatEnabled(GdalManager::GPX));
 	import_osm->setChecked(manager.isFormatEnabled(GdalManager::OSM));
 
-	export_per_symbol_layers->setChecked(manager.isExportOptionEnabled(GdalManager::PER_SYMBOL_LAYERS));
+	export_one_layer_per_symbol->setChecked(manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol));
 	
 	auto options = manager.parameterKeys();
 	options.sort();
