@@ -381,6 +381,8 @@ public:
 	bool exportImplementation() override;
 
 protected:
+	std::vector<const Symbol*> symbolsForExport() const;
+	
 	void addPointsToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition);
 	void addTextToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition);
 	void addLinesToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition);
@@ -390,7 +392,7 @@ protected:
 
 	static QByteArray symbolId(const Symbol* symbol) { return QByteArray::number(quint64(symbol), 16); }
 	
-	void populateStyleTable(const std::vector<bool>& symbols_in_use);
+	void populateStyleTable(const std::vector<const Symbol*>& symbols);
 
 	void setupGeoreferencing(GDALDriverH po_driver);
 	void setupQuirks(GDALDriverH po_driver);
