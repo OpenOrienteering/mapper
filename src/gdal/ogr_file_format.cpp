@@ -246,6 +246,173 @@ namespace {
 		return srs_wkt;
 	}
 	
+	
+	
+	QByteArray toRgbString(const MapColor* color)
+	{
+		auto rgb = QColor(color->getRgb()).name(QColor::HexArgb).toLatin1();
+		std::rotate(rgb.begin()+1, rgb.begin()+3, rgb.end()); // Move alpha to end
+		return rgb;
+	}
+	
+	QByteArray makeStyleString(const PointSymbol* point_symbol)
+	{
+		QByteArray style;
+		if (auto main_color = point_symbol->guessDominantColor())
+		{
+			style.reserve(40);
+			style += "SYMBOL(id:\"ogr-sym-0\"";
+			style += ",c:" + toRgbString(main_color);
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ")";
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const LineSymbol* line_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		auto main_color = line_symbol->getColor();
+		if (main_color && line_symbol->getLineWidth())
+		{
+			style += "PEN(c:" + toRgbString(main_color);
+			style += ",w:" + QByteArray::number(line_symbol->getLineWidth()/1000.0) + "mm";
+			if (line_symbol->isDashed())
+				style += ",p:\"2mm 1mm\""; // TODO
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ");";
+		}
+		if (line_symbol->hasBorder())
+		{
+			const auto& left_border = line_symbol->getBorder();
+			if (left_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(left_border.color);
+				style += ",w:" + QByteArray::number(left_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(-left_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-left_border.color->getPriority());
+				if (left_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+			const auto& right_border = line_symbol->getBorder();
+			if (right_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(right_border.color);
+				style += ",w:" + QByteArray::number(right_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(right_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-right_border.color->getPriority());
+				if (right_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+		}
+		if (style.isEmpty())
+		{
+			if (auto main_color = line_symbol->guessDominantColor())
+			{
+				style += "PEN(c:" + toRgbString(main_color);
+				style += ",w:1pt";
+				style += ",l:" + QByteArray::number(-main_color->getPriority());
+				style += ')';
+			}
+		}
+		if (style.endsWith(';'))
+		{
+			style.chop(1);
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const AreaSymbol* area_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		if (auto color = area_symbol->getColor())
+		{
+			style += "BRUSH(fc:" + toRgbString(color);
+			style += ",l:" + QByteArray::number(-color->getPriority());
+			style += ");";
+		}
+		
+		auto num_fill_patterns = area_symbol->getNumFillPatterns();
+		for (int i = 0; i < num_fill_patterns; ++i)
+		{
+			auto part = area_symbol->getFillPattern(i);
+			switch (part.type)
+			{
+			case AreaSymbol::FillPattern::LinePattern:
+				if (!part.line_color)
+					continue;
+				style += "BRUSH(fc:" + toRgbString(part.line_color);
+				style += ",id:\"ogr-brush-2\"";  // parallel horizontal lines
+				style += ",a:" + QByteArray::number(qRadiansToDegrees(part.angle));
+				style += ",l:" + QByteArray::number(-part.line_color->getPriority());
+				style += ");";
+				break;
+			case AreaSymbol::FillPattern::PointPattern:
+				// TODO
+				qWarning("Cannot handle point pattern in area symbol %s",
+				         qPrintable(area_symbol->getName()));
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
+	QByteArray makeStyleString(const TextSymbol* text_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		style += "LABEL(c:" + toRgbString(text_symbol->getColor());
+		style += ",f:\"" + text_symbol->getFontFamily().toUtf8() + "\"";
+		style += ",s:"+QByteArray::number(text_symbol->getFontSize())+ "mm";
+		style += ",t:\"{Name}\"";
+		style += ')';
+		return style;
+	}
+	
+	
+	QByteArray makeStyleString(const CombinedSymbol* combined_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		for (auto i = combined_symbol->getNumParts() - 1; i >= 0; i--)
+		{
+			const auto subsymbol = combined_symbol->getPart(i);
+			if (subsymbol)
+			{
+				switch (subsymbol->getType())
+				{
+				case Symbol::Line:
+					style += makeStyleString(subsymbol->asLine()) + ';';
+					break;
+				case Symbol::Area:
+					style += makeStyleString(subsymbol->asArea()) + ';';
+					break;
+				case Symbol::Combined:
+					style += makeStyleString(subsymbol->asCombined()) + ';';
+					break;
+				case Symbol::Point:
+				case Symbol::Text:
+					qWarning("Cannot handle point or text symbol in combined symbol %s",
+					         qPrintable(combined_symbol->getName()));
+					break;
+				case Symbol::NoSymbol:
+				case Symbol::AllSymbols:
+					Q_UNREACHABLE();
+				}
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
 }  // namespace
 
 
@@ -1904,91 +2071,37 @@ void OgrFileExport::populateStyleTable(const std::vector<const Symbol*>& symbols
 	table = ogr::unique_styletable(OGR_STBL_Create());
 	auto manager = ogr::unique_stylemanager(OGR_SM_Create(table.get()));
 
-	auto get_pen_style = [](const Symbol* symbol) {
-		auto main_color = symbol->guessDominantColor();
-		if (!main_color)
-			return QByteArray("PEN(c:#000000)");
-
-		QString rgb = QColor(main_color->getRgb()).name();
-		QString style = QString::fromLatin1("PEN(c:%1)").arg(rgb);
-		return style.toUtf8();
-	};
-
-	auto get_brush_style = [](const Symbol* symbol) {
-		auto main_color = symbol->guessDominantColor();
-		if (!main_color)
-			return QByteArray("BRUSH(fc:#000000)");
-
-		QString rgb = QColor(main_color->getRgb()).name();
-		QString style = QString::fromLatin1("BRUSH(fc:%1)").arg(rgb);
-		return style.toUtf8();
-	};
-
 	// Go through all used symbols and create a style table
 	for (auto symbol : symbols)
 	{
+		QByteArray style_string;
 		switch (symbol->getType())
 		{
 		case Symbol::Text:
-			{
-				QByteArray new_style = QByteArray("LABEL(f:\"", 50);
-				new_style.append(symbol->asText()->getFontFamily().toUtf8())
-				        .append("\", s:12, t:{Name})");
-				OGR_SM_AddStyle(manager.get(), symbolId(symbol), new_style);
-				break;
-			}
+			style_string = makeStyleString(symbol->asText());
+			break;
 		case Symbol::Point:
+			style_string = makeStyleString(symbol->asPoint());
+			break;
 		case Symbol::Line:
-			{
-				OGR_SM_AddStyle(manager.get(), symbolId(symbol), get_pen_style(symbol));
-				break;
-			}
+			style_string = makeStyleString(symbol->asLine());
+			break;
 		case Symbol::Area:
-			{
-				OGR_SM_AddStyle(manager.get(),
-				                symbolId(symbol),
-				                get_brush_style(symbol)
-				                .append(";")
-				                .append(get_pen_style(symbol)));
-				break;
-			}
+			style_string = makeStyleString(symbol->asArea());
+			break;
 		case Symbol::Combined:
-			{
-				QByteArray style;
-				style.reserve(60);
-				const auto combined = symbol->asCombined();
-				for (auto i = combined->getNumParts() - 1; i >= 0; i--)
-				{
-					const auto subsymbol = combined->getPart(i);
-					if (subsymbol)
-					{
-						switch (subsymbol->getType())
-						{
-						case Symbol::Line:
-							style.append(get_pen_style(subsymbol)).append(";");
-							break;
-						case Symbol::Area:
-							style.append(get_brush_style(subsymbol)).append(";");
-							break;
-						case Symbol::Combined:
-							break;
-						case Symbol::Point:
-						case Symbol::Text:
-							addWarning(tr("Point or text symbol in a combined symbol not handled."));
-							break;
-						case Symbol::NoSymbol:
-						case Symbol::AllSymbols:
-							Q_UNREACHABLE();
-						}
-					}
-				}
-				OGR_SM_AddStyle(manager.get(), symbolId(symbol), style);
-				break;
-			}
+			style_string = makeStyleString(symbol->asCombined());
+			break;
 		case Symbol::NoSymbol:
 		case Symbol::AllSymbols:
 			Q_UNREACHABLE();
 		}
+		
+#ifdef MAPPER_DEVELOPMENT_BUILD
+		if (qEnvironmentVariableIsSet("MAPPER_DEBUG_OGR"))
+			qDebug("%s:\t \"%s\"", qPrintable(symbol->getPlainTextName()), style_string.constData());
+#endif
+		OGR_SM_AddStyle(manager.get(), symbolId(symbol), style_string);
 	}
 }
 
