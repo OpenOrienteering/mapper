@@ -246,6 +246,173 @@ namespace {
 		return srs_wkt;
 	}
 	
+	
+	
+	QByteArray toRgbString(const MapColor* color)
+	{
+		auto rgb = QColor(color->getRgb()).name(QColor::HexArgb).toLatin1();
+		std::rotate(rgb.begin()+1, rgb.begin()+3, rgb.end()); // Move alpha to end
+		return rgb;
+	}
+	
+	QByteArray makeStyleString(const PointSymbol* point_symbol)
+	{
+		QByteArray style;
+		if (auto main_color = point_symbol->guessDominantColor())
+		{
+			style.reserve(40);
+			style += "SYMBOL(id:\"ogr-sym-0\"";
+			style += ",c:" + toRgbString(main_color);
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ")";
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const LineSymbol* line_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		auto main_color = line_symbol->getColor();
+		if (main_color && line_symbol->getLineWidth())
+		{
+			style += "PEN(c:" + toRgbString(main_color);
+			style += ",w:" + QByteArray::number(line_symbol->getLineWidth()/1000.0) + "mm";
+			if (line_symbol->isDashed())
+				style += ",p:\"2mm 1mm\""; // TODO
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ");";
+		}
+		if (line_symbol->hasBorder())
+		{
+			const auto& left_border = line_symbol->getBorder();
+			if (left_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(left_border.color);
+				style += ",w:" + QByteArray::number(left_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(-left_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-left_border.color->getPriority());
+				if (left_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+			const auto& right_border = line_symbol->getBorder();
+			if (right_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(right_border.color);
+				style += ",w:" + QByteArray::number(right_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(right_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-right_border.color->getPriority());
+				if (right_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+		}
+		if (style.isEmpty())
+		{
+			if (auto main_color = line_symbol->guessDominantColor())
+			{
+				style += "PEN(c:" + toRgbString(main_color);
+				style += ",w:1pt";
+				style += ",l:" + QByteArray::number(-main_color->getPriority());
+				style += ')';
+			}
+		}
+		if (style.endsWith(';'))
+		{
+			style.chop(1);
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const AreaSymbol* area_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		if (auto color = area_symbol->getColor())
+		{
+			style += "BRUSH(fc:" + toRgbString(color);
+			style += ",l:" + QByteArray::number(-color->getPriority());
+			style += ");";
+		}
+		
+		auto num_fill_patterns = area_symbol->getNumFillPatterns();
+		for (int i = 0; i < num_fill_patterns; ++i)
+		{
+			auto part = area_symbol->getFillPattern(i);
+			switch (part.type)
+			{
+			case AreaSymbol::FillPattern::LinePattern:
+				if (!part.line_color)
+					continue;
+				style += "BRUSH(fc:" + toRgbString(part.line_color);
+				style += ",id:\"ogr-brush-2\"";  // parallel horizontal lines
+				style += ",a:" + QByteArray::number(qRadiansToDegrees(part.angle));
+				style += ",l:" + QByteArray::number(-part.line_color->getPriority());
+				style += ");";
+				break;
+			case AreaSymbol::FillPattern::PointPattern:
+				// TODO
+				qWarning("Cannot handle point pattern in area symbol %s",
+				         qPrintable(area_symbol->getName()));
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
+	QByteArray makeStyleString(const TextSymbol* text_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		style += "LABEL(c:" + toRgbString(text_symbol->getColor());
+		style += ",f:\"" + text_symbol->getFontFamily().toUtf8() + "\"";
+		style += ",s:"+QByteArray::number(text_symbol->getFontSize())+ "mm";
+		style += ",t:\"{Name}\"";
+		style += ')';
+		return style;
+	}
+	
+	
+	QByteArray makeStyleString(const CombinedSymbol* combined_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		for (auto i = combined_symbol->getNumParts() - 1; i >= 0; i--)
+		{
+			const auto subsymbol = combined_symbol->getPart(i);
+			if (subsymbol)
+			{
+				switch (subsymbol->getType())
+				{
+				case Symbol::Line:
+					style += makeStyleString(subsymbol->asLine()) + ';';
+					break;
+				case Symbol::Area:
+					style += makeStyleString(subsymbol->asArea()) + ';';
+					break;
+				case Symbol::Combined:
+					style += makeStyleString(subsymbol->asCombined()) + ';';
+					break;
+				case Symbol::Point:
+				case Symbol::Text:
+					qWarning("Cannot handle point or text symbol in combined symbol %s",
+					         qPrintable(combined_symbol->getName()));
+					break;
+				case Symbol::NoSymbol:
+				case Symbol::AllSymbols:
+					Q_UNREACHABLE();
+				}
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
 }  // namespace
 
 
@@ -1492,20 +1659,10 @@ bool OgrFileExport::exportImplementation()
 		OGR_Fld_SetWidth(o_name_field.get(), 32);
 	}
 
-	// Determine symbols in use
-	std::vector<bool> symbols_in_use;
-	map->determineSymbolsInUse(symbols_in_use);
-	
-	const auto num_symbols = map->getNumSymbols();
-	
-	// Clear helper symbols
-	for (auto i = 0; i < num_symbols; ++i)
-	{
-		symbols_in_use[i] = symbols_in_use[i] & !map->getSymbol(i)->isHelperSymbol();
-	}
+	auto symbols = symbolsForExport();
 	
 	// Setup style table
-	populateStyleTable(symbols_in_use);
+	populateStyleTable(symbols);
 
 	auto is_point_object = [](const Object* object) {
 		const auto symbol = object->getSymbol();
@@ -1534,14 +1691,6 @@ bool OgrFileExport::exportImplementation()
 		if (layer == nullptr)
 			throw FileFormatException(tr("Failed to create layer: %2").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
 		
-		std::vector<const Symbol*> symbols;
-		symbols.reserve(std::size_t(num_symbols));
-		for (auto i = 0; i < num_symbols; ++i)
-		{
-			if (symbols_in_use[i])
-				symbols.push_back(map->getSymbol(i));
-		}
-		std::sort(begin(symbols), end(symbols), Symbol::lessByColorPriority);
 		for (auto symbol : symbols)
 		{
 			auto match_symbol = [symbol](auto object) { return object->getSymbol() == symbol; };
@@ -1575,67 +1724,54 @@ bool OgrFileExport::exportImplementation()
 	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
 	{
 		// Add points, lines, areas in this order for driver compatability (esp GPX)
-		for (auto i = 0; i < num_symbols; ++i)
+		for (auto symbol : symbols)
 		{
-			if (symbols_in_use[i])
+			if (symbol->getType() == Symbol::Point)
 			{
-				const auto symbol = map->getSymbol(i);
-
-				if (symbol->getType() == Symbol::Point)
-				{
-					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
-					if (layer != nullptr)
-						addPointsToLayer(layer, [&symbol](const Object* object) {
-							const auto sym = object->getSymbol();
-							return sym == symbol;
-						});
-				}
-				else if (symbol->getType() == Symbol::Text)
-				{
-					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
-					if (layer != nullptr)
-						addTextToLayer(layer, [&symbol](const Object* object) {
-							const auto sym = object->getSymbol();
-							return sym == symbol;
-						});
-				}
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+				if (layer != nullptr)
+					addPointsToLayer(layer, [&symbol](const Object* object) {
+						const auto sym = object->getSymbol();
+						return sym == symbol;
+					});
+			}
+			else if (symbol->getType() == Symbol::Text)
+			{
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+				if (layer != nullptr)
+					addTextToLayer(layer, [&symbol](const Object* object) {
+						const auto sym = object->getSymbol();
+						return sym == symbol;
+					});
 			}
 		}
 
 		// Line symbols
-		for (auto i = 0; i < num_symbols; ++i)
+		for (auto symbol : symbols)
 		{
-			if (symbols_in_use[i])
+			if (symbol->getType() == Symbol::Line
+			    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
 			{
-				const auto symbol = map->getSymbol(i);
-				if (symbol->getType() == Symbol::Line
-				    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
-				{
-					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
-					if (layer != nullptr)
-						addLinesToLayer(layer, [&symbol](const Object* object) {
-							const auto sym = object->getSymbol();
-							return sym == symbol;
-						});
-				}
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
+				if (layer != nullptr)
+					addLinesToLayer(layer, [&symbol](const Object* object) {
+						const auto sym = object->getSymbol();
+						return sym == symbol;
+					});
 			}
 		}
 
 		// Area symbols
-		for (auto i = 0; i < num_symbols; ++i)
+		for (auto symbol : symbols)
 		{
-			if (symbols_in_use[i])
+			if (symbol->getContainedTypes() & Symbol::Area)
 			{
-				const auto symbol = map->getSymbol(i);
-				if (symbol->getContainedTypes() & Symbol::Area)
-				{
-					auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
-					if (layer != nullptr)
-						addAreasToLayer(layer, [&symbol](const Object* object) {
-							const auto sym = object->getSymbol();
-							return sym == symbol;
-						});
-				}
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
+				if (layer != nullptr)
+					addAreasToLayer(layer, [&symbol](const Object* object) {
+						const auto sym = object->getSymbol();
+						return sym == symbol;
+					});
 			}
 		}
 	}
@@ -1660,6 +1796,28 @@ bool OgrFileExport::exportImplementation()
 
 	return true;
 }
+
+
+std::vector<const Symbol*> OgrFileExport::symbolsForExport() const
+{
+	std::vector<bool> symbols_in_use;
+	map->determineSymbolsInUse(symbols_in_use);
+	
+	const auto num_symbols = map->getNumSymbols();
+	std::vector<const Symbol*> symbols;
+	symbols.reserve(std::size_t(num_symbols));
+	for (auto i = 0; i < num_symbols; ++i)
+	{
+		auto symbol = map->getSymbol(i);
+		if (symbols_in_use[std::size_t(i)]
+		    && !symbol->isHidden()
+		    && !symbol->isHelperSymbol())
+			symbols.push_back(symbol);
+	}
+	std::sort(begin(symbols), end(symbols), Symbol::lessByColorPriority);
+	return symbols;
+}
+
 
 void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 {
@@ -1761,8 +1919,7 @@ void OgrFileExport::addPointsToLayer(OGRLayerH layer, const std::function<bool (
 
 		OGR_F_SetGeometry(po_feature.get(), pt.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1776,11 +1933,22 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 	const auto& georef = map->getGeoreferencing();
 
 	auto add_feature = [&](const Object* object) {
+		auto symbol = object->getSymbol();
 		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
 
-		QString sym_name = object->asText()->getText();
+		QString sym_name = symbol->getPlainTextName();
 		sym_name.truncate(32);
 		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+		auto text = object->asText()->getText();
+		if (o_name_field)
+		{
+			// Use the name field for the text (useful e.g. for KML).
+			// This may overwrite the symbol name, and
+			// it may be too short for the full text.
+			auto index = OGR_F_GetFieldIndex(po_feature.get(), OGR_Fld_GetNameRef(o_name_field.get()));
+			OGR_F_SetFieldString(po_feature.get(), index, text.leftRef(32).toUtf8().constData());
+		}
 
 		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
 		QPointF proj_cord = georef.toProjectedCoords(object->asText()->getAnchorCoordF());
@@ -1792,8 +1960,15 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 
 		OGR_F_SetGeometry(po_feature.get(), pt.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(object->getSymbol()))));
+		QByteArray style = OGR_STBL_Find(table.get(), symbolId(symbol));
+		if (!o_name_field || text.length() > 32)
+		{
+			// There is no label field, or the text is too long.
+			// Put the text directly in the label.
+			text.replace(QRegularExpression(QLatin1String("([\"\\\\])"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
+			style.replace("{Name}", text.toUtf8());
+		}
+		OGR_F_SetStyleString(po_feature.get(), style);
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1833,8 +2008,7 @@ void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (c
 
 			OGR_F_SetGeometry(po_feature.get(), line_string.get());
 
-			OGR_F_SetStyleString(po_feature.get(),
-			                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+			OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 			if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 				throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1880,8 +2054,7 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 
 		OGR_F_SetGeometry(po_feature.get(), polygon.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1911,102 +2084,42 @@ OGRLayerH OgrFileExport::createLayer(const char* layer_name, OGRwkbGeometryType 
 	return po_layer;
 }
 
-void OgrFileExport::populateStyleTable(const std::vector<bool>& symbols_in_use)
+void OgrFileExport::populateStyleTable(const std::vector<const Symbol*>& symbols)
 {
 	table = ogr::unique_styletable(OGR_STBL_Create());
 	auto manager = ogr::unique_stylemanager(OGR_SM_Create(table.get()));
 
-	auto get_pen_style = [](const Symbol* symbol) {
-		auto main_color = symbol->guessDominantColor();
-		if (!main_color)
-			return QByteArray("PEN(c:#000000)");
-
-		QString rgb = QColor(main_color->getRgb()).name();
-		QString style = QString::fromLatin1("PEN(c:%1)").arg(rgb);
-		return style.toUtf8();
-	};
-
-	auto get_brush_style = [](const Symbol* symbol) {
-		auto main_color = symbol->guessDominantColor();
-		if (!main_color)
-			return QByteArray("BRUSH(fc:#000000)");
-
-		QString rgb = QColor(main_color->getRgb()).name();
-		QString style = QString::fromLatin1("BRUSH(fc:%1)").arg(rgb);
-		return style.toUtf8();
-	};
-
 	// Go through all used symbols and create a style table
-	const auto num_symbols = map->getNumSymbols();
-	for (auto i = 0; i < num_symbols; ++i)
+	for (auto symbol : symbols)
 	{
-		if (symbols_in_use[i])
+		QByteArray style_string;
+		switch (symbol->getType())
 		{
-			const auto symbol = map->getSymbol(i);
-			switch (symbol->getType())
-			{
-			case Symbol::Text:
-				{
-					QByteArray new_style = QByteArray("LABEL(f:\"", 50);
-					new_style.append(symbol->asText()->getFontFamily().toUtf8())
-					        .append("\", s:12, t:{Name})");
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i), new_style);
-					break;
-				}
-			case Symbol::Point:
-			case Symbol::Line:
-				{
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i),
-					                get_pen_style(symbol));
-					break;
-				}
-			case Symbol::Area:
-				{
-					OGR_SM_AddStyle(manager.get(),
-					                QByteArray::number(i),
-					                get_brush_style(symbol)
-					                .append(";")
-					                .append(get_pen_style(symbol)));
-					break;
-				}
-			case Symbol::Combined:
-				{
-					QByteArray style;
-					style.reserve(60);
-					const auto combined = symbol->asCombined();
-					for (auto i = combined->getNumParts() - 1; i >= 0; i--)
-					{
-						const auto subsymbol = combined->getPart(i);
-						if (subsymbol)
-						{
-							switch (subsymbol->getType())
-							{
-							case Symbol::Line:
-								style.append(get_pen_style(subsymbol)).append(";");
-								break;
-							case Symbol::Area:
-								style.append(get_brush_style(subsymbol)).append(";");
-								break;
-							case Symbol::Combined:
-								break;
-							case Symbol::Point:
-							case Symbol::Text:
-								addWarning(tr("Point or text symbol in a combined symbol not handled."));
-								break;
-							case Symbol::NoSymbol:
-							case Symbol::AllSymbols:
-								Q_UNREACHABLE();
-							}
-						}
-					}
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i), style);
-					break;
-				}
-			case Symbol::NoSymbol:
-			case Symbol::AllSymbols:
-				Q_UNREACHABLE();
-			}
+		case Symbol::Text:
+			style_string = makeStyleString(symbol->asText());
+			break;
+		case Symbol::Point:
+			style_string = makeStyleString(symbol->asPoint());
+			break;
+		case Symbol::Line:
+			style_string = makeStyleString(symbol->asLine());
+			break;
+		case Symbol::Area:
+			style_string = makeStyleString(symbol->asArea());
+			break;
+		case Symbol::Combined:
+			style_string = makeStyleString(symbol->asCombined());
+			break;
+		case Symbol::NoSymbol:
+		case Symbol::AllSymbols:
+			Q_UNREACHABLE();
 		}
+		
+#ifdef MAPPER_DEVELOPMENT_BUILD
+		if (qEnvironmentVariableIsSet("MAPPER_DEBUG_OGR"))
+			qDebug("%s:\t \"%s\"", qPrintable(symbol->getPlainTextName()), style_string.constData());
+#endif
+		OGR_SM_AddStyle(manager.get(), symbolId(symbol), style_string);
 	}
 }
 
