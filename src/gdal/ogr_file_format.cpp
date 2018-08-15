@@ -1936,9 +1936,19 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 		auto symbol = object->getSymbol();
 		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
 
-		QString sym_name = object->asText()->getText();
+		QString sym_name = symbol->getPlainTextName();
 		sym_name.truncate(32);
 		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+		auto text = object->asText()->getText();
+		if (o_name_field)
+		{
+			// Use the name field for the text (useful e.g. for KML).
+			// This may overwrite the symbol name, and
+			// it may be too short for the full text.
+			auto index = OGR_F_GetFieldIndex(po_feature.get(), OGR_Fld_GetNameRef(o_name_field.get()));
+			OGR_F_SetFieldString(po_feature.get(), index, text.leftRef(32).toUtf8().constData());
+		}
 
 		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
 		QPointF proj_cord = georef.toProjectedCoords(object->asText()->getAnchorCoordF());
@@ -1950,7 +1960,15 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 
 		OGR_F_SetGeometry(po_feature.get(), pt.get());
 
-		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
+		QByteArray style = OGR_STBL_Find(table.get(), symbolId(symbol));
+		if (!o_name_field || text.length() > 32)
+		{
+			// There is no label field, or the text is too long.
+			// Put the text directly in the label.
+			text.replace(QRegularExpression(QLatin1String("([\"\\\\])"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
+			style.replace("{Name}", text.toUtf8());
+		}
+		OGR_F_SetStyleString(po_feature.get(), style);
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
