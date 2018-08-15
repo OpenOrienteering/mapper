@@ -2244,6 +2244,9 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 	for (int i = 0; i < combined_symbol->getNumParts(); ++i)
 	{
 		const Symbol* part = combined_symbol->getPart(i);
+		if (!part)
+			continue;
+		
 		QByteArray ocd_data;
 		quint8 type = 0;
 		switch (part->getType())
