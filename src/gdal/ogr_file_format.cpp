@@ -1761,8 +1761,7 @@ void OgrFileExport::addPointsToLayer(OGRLayerH layer, const std::function<bool (
 
 		OGR_F_SetGeometry(po_feature.get(), pt.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1776,6 +1775,7 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 	const auto& georef = map->getGeoreferencing();
 
 	auto add_feature = [&](const Object* object) {
+		auto symbol = object->getSymbol();
 		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
 
 		QString sym_name = object->asText()->getText();
@@ -1792,8 +1792,7 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 
 		OGR_F_SetGeometry(po_feature.get(), pt.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(object->getSymbol()))));
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1833,8 +1832,7 @@ void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (c
 
 			OGR_F_SetGeometry(po_feature.get(), line_string.get());
 
-			OGR_F_SetStyleString(po_feature.get(),
-			                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+			OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 			if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 				throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1880,8 +1878,7 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 
 		OGR_F_SetGeometry(po_feature.get(), polygon.get());
 
-		OGR_F_SetStyleString(po_feature.get(),
-		                     OGR_STBL_Find(table.get(), QByteArray::number(map->findSymbolIndex(symbol))));
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
 
 		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
 			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
@@ -1950,20 +1947,19 @@ void OgrFileExport::populateStyleTable(const std::vector<bool>& symbols_in_use)
 					QByteArray new_style = QByteArray("LABEL(f:\"", 50);
 					new_style.append(symbol->asText()->getFontFamily().toUtf8())
 					        .append("\", s:12, t:{Name})");
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i), new_style);
+					OGR_SM_AddStyle(manager.get(), symbolId(symbol), new_style);
 					break;
 				}
 			case Symbol::Point:
 			case Symbol::Line:
 				{
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i),
-					                get_pen_style(symbol));
+					OGR_SM_AddStyle(manager.get(), symbolId(symbol), get_pen_style(symbol));
 					break;
 				}
 			case Symbol::Area:
 				{
 					OGR_SM_AddStyle(manager.get(),
-					                QByteArray::number(i),
+					                symbolId(symbol),
 					                get_brush_style(symbol)
 					                .append(";")
 					                .append(get_pen_style(symbol)));
@@ -1999,7 +1995,7 @@ void OgrFileExport::populateStyleTable(const std::vector<bool>& symbols_in_use)
 							}
 						}
 					}
-					OGR_SM_AddStyle(manager.get(), QByteArray::number(i), style);
+					OGR_SM_AddStyle(manager.get(), symbolId(symbol), style);
 					break;
 				}
 			case Symbol::NoSymbol:

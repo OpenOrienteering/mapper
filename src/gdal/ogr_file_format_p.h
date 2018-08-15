@@ -388,6 +388,8 @@ protected:
 
 	OGRLayerH createLayer(const char* layer_name, OGRwkbGeometryType type);
 
+	static QByteArray symbolId(const Symbol* symbol) { return QByteArray::number(quint64(symbol), 16); }
+	
 	void populateStyleTable(const std::vector<bool>& symbols_in_use);
 
 	void setupGeoreferencing(GDALDriverH po_driver);
