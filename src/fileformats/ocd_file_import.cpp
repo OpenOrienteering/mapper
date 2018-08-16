@@ -2263,10 +2263,7 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 
 bool OcdFileImport::importImplementation()
 {
-	Q_ASSERT(buffer.isEmpty());
-	
-	buffer.clear();
-	buffer.append(device()->readAll());
+	buffer = device()->readAll();
 	if (buffer.isEmpty())
 		throw FileFormatException(device()->errorString());
 	
