@@ -41,8 +41,8 @@
         <message>
             <source>Opaque Blue</source>
             <comment>Color 7</comment>
-            <translation>Непрозорий Синій</translation>
-        </message>
+            <translation>Непрозорий синій</translation>
+    </message>
         <message>
             <source>Blue</source>
             <comment>Color 8</comment>
@@ -86,8 +86,8 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation>Непрозорий Білий поверх Зеленого</translation>
-        </message>
+            <translation>Непрозорий білий поверх зеленого</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
@@ -106,8 +106,8 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation>Непрозорий Зелений</translation>
-        </message>
+            <translation>Непрозорий зелений</translation>
+    </message>
         <message>
             <source>Green 50%</source>
             <comment>Color 21</comment>
@@ -126,13 +126,13 @@
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation>Зелений 50% зверху Жовтого</translation>
-        </message>
+            <translation>Зелений 50% поверх жовтого</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation>Білий зверху Жовтого</translation>
-        </message>
+            <translation>Білий поверх жовтого</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
@@ -151,12 +151,12 @@
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation>Лінія, що з&apos;єднує точки однакової висоти. Стандартний вертикальний інтервал між горизонталями (перетин рельєфу) складає 5 метрів. Для плоских ділянок можливе використання перетину 2.5 метри. Найменший вигин горизонталі має становити 0,25 мм від центру до центру лінії.</translation>
+            <translation>Лінія, що з&apos;єднує точки однакової висоти. Стандартний вертикальний інтервал між горизонталями (перетин рельєфу) становить 5 метрів. Для плоскої місцевості можливе використання перетину 2.5 метри. Найменший вигин горизонталі має становити 0,25 мм від центру до центру лінії.</translation>
     </message>
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation>Бергштрих, горизонталь</translation>
+            <translation>Берґштрих, горизонталь</translation>
     </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -171,32 +171,32 @@
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation>Кожна п&apos;ята горизонталь повинна бути потовщеною. Це сприяє швидкості оцінки різниці висот і загального сприйняття форм місцевості. При необхідності показу дрібних деталей, потовщена горизонталь може бути зображена знаком звичайної горизонталі. Для відображення маленьких пагорбів та западин потовщена горизонталь зазвичай не використовується.</translation>
+            <translation>Кожна п&apos;ята горизонталь має бути зображена потовщеною лінією. Це полегшує оцінку різниці висот та сприяє уявленню про загальну форму поверхні землі. Потовщена горизонталь може бути представлена знаком звичайної горизонталі, якщо вона проходить через ділянку багату на деталі. Малі горби та западини, як правило, не зображуються потовщеними горизонталями.</translation>
     </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation>Підпис висоти горизонталі</translation>
-        </message>
+            <translation>Позначка висоти</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation>Підписи висоти горизонталі допомагають учасникові при оцінці великої різниці висот. Їх ставлять на потовщених горизонталях у мало насичених деталями місцях. Цифри орієнтують так, щоб їх верх був розташований у верхній частині схилу.</translation>
+            <translation>Позначки висоти застосовують щоб допомогти учаснику оцінити великі перепади висот. Значення висоти слід наносити на потовщену горизонталь у місцях, де воно не заважатиме сприйняттю інших деталей. Верх цифр має бути зорієнтований в гору по схилу.</translation>
     </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished">Лінія форми рельєфу</translation>
+            <translation>Допоміжна горизонталь</translation>
     </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished">Лінії форми рельєфу використовують у випадках, коли для показу форм рельєфу необхідно передати додаткову інформацію. Лінії форм рельєфу додають лише там, де зображення форм рельєфу було б неповним при використанні лише горизонталей. Між сусідніми горизонталями може бути використана тільки одна лінія форми рельєфу. Важливо, щоб лінія форми рельєфу доречно вписувалася в систему горизонталей, тому її початок і кінець мають бути паралельними суміжним горизонталям. Розриви між штрихами мають бути розміщені на достатньо прямих ділянках лінії форми рельєфу. Лінії форми рельєфу можуть бути використані, щоб відрізнити пологі горби та западини від більш чітких.</translation>
+            <translation>Допоміжні горизонталі використовують у випадках, коли для показу форм рельєфу необхідно передати додаткову інформацію. Допоміжні горизонталі додають тільки там, де зображення форм рельєфу було б неповним при використанні лише горизонталей. Між сусідніми горизонталями може бути проведена лише одна допоміжна горизонталь. Важливо, щоб форма допоміжної горизонталі доречно вписувалася в систему горизонталей, тому її початок і кінець мають бути паралельними суміжним горизонталям. Розриви між штрихами мають бути розміщені на достатньо прямих ділянках лінії допоміжної горизонталі. Допоміжні горизонталі можуть бути використані, щоб відрізяити пологі горби та западини від більш чітких.</translation>
     </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished">Бергштрих лінії форми рельєфу</translation>
+            <translation>Берґштрих допоміжної горзонталі</translation>
     </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -211,7 +211,7 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+            <translation>Земляний обрив - це крутий земляний схил, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Вуса обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати вуса, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати вуса. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
     </message>
         <message>
             <source>Earth bank, minimum size</source>
@@ -221,22 +221,22 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+            <translation>Земляний обрив - це крутий земляний схил, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Вуса обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати вуса, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати вуса. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
     </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation>Земляний обрив, брівка</translation>
+            <translation>Земляний обрив, бровка</translation>
     </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+            <translation>Земляний обрив - це крутий земляний схил, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Вуса обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати вуса, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати вуса. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
     </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation>Земляний обрив, зубці</translation>
+            <translation>Земляний обрив, вуса</translation>
     </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
@@ -251,7 +251,7 @@
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation>Земляний обрив - це різка зміна рівня земної поверхні, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Зубці обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати зубці, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати зубці. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
+            <translation>Земляний обрив - це крутий земляний схил, що чітко вирізняється на тлі оточення, наприклад, гравійний або піщаний кар’єр, насип вздовж шосе чи залізниці, дамба. Мінімальна висота: 1 м. Земляний обрив може впливати на прохідність. Вуса обриву зображають його планові розміри. Для довгих обривів дозволяється використовувати вуса, коротші за мінімальну довжину на кінцях. Якщо обриви розташовані близько один до одного, дозволяється не показувати вуса. Непрохідні обриви мають зображуватися знаком 201 (непрохідна скеля).</translation>
     </message>
         <message>
             <source>Earth wall</source>
@@ -288,13 +288,13 @@ Contour lines shall not be broken around this symbol.</source>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation>Маленька промоїна</translation>
+            <translation>Канава</translation>
     </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation>Невелика вимоїна, сухий рів чи траншея. Мінімальна глибина: 0,5 м.
+            <translation>Невелика промоїна, сухий рів чи траншея. Мінімальна глибина: 0,5 м.
 Горизонталі мають бути розірвані при перетині з цим знаком.</translation>
     </message>
         <message>
@@ -342,7 +342,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
-            <translation>Яма чи западина з чітко вираженими крутими стінками, яка не може бути показана в масштабі знаком 104 (земляний обрив). Мінімальна глибина: 1 м. Мінімальна ширина: 1 м. Воронка, більша за 5 м × 5 м, зазвичай, перебільшується та показується знаком 104 (земляний обрив). Воронки із пологими схилами показуються знаком 111 (мала западина). Знак не може торкатися чи накладатися на інші коричневі знаки. Положенню на місцевості відповідає центр ваги знаку, зорієнтованого на північ.</translation>
+            <translation>Ями чи западини з чітко вираженими крутими стінками, які не можуть бути показані в масштабі знаком 104 (земляний обрив). Мінімальна глибина: 1 м. Мінімальна ширина: 1 м. Воронка, більша за 5 м × 5 м, зазвичай, перебільшується та показується знаком 104 (земляний обрив). Воронки із пологими схилами показуються знаком 111 (мала западина). Знак не може торкатися чи накладатися на інші коричневі знаки. Положенню на місцевості відповідає центр ваги знаку, зорієнтованого на північ.</translation>
     </message>
         <message>
             <source>Broken ground</source>
@@ -411,10 +411,10 @@ For vertical rock faces the tags may be omitted if space is short. Ends of the t
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished">Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися. 
-Для вертикальних скельних стін зубчики можуть не зображуватись, якщо простір на карті обмежений. Кінець лінії бровки може бути заокругленим або прямокутним. На кінцях можуть використовуватися коротші зубчики.
+            <translation>Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися. 
+Для вертикальних скельних стін вуса можуть не зображуватись, якщо простір на карті обмежений. Кінці лінії бровки можуть бути заокругленими або прямокутними. На кінцях можуть використовуватися коротші вуса.
 Проміжок між двома непрохідними скелями або між скелями та іншими непрохідними знаками має перевищувати 0,3 мм.
-Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж зубчики мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
+Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж вуса мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
     </message>
         <message>
             <source>Impassable cliff, minimum size</source>
@@ -427,10 +427,10 @@ Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished">Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися. 
-Кінець лінії бровки може бути заокругленим або прямокутним.
+            <translation>Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися. 
+Кінці лінії бровки можуть бути заокругленими або прямокутними. 
 Проміжок між двома непрохідними скелями або між скелями та іншими непрохідними знаками має перевищувати 0,3 мм.
-Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж зубчики мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
+Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж вуса мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
     </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
@@ -443,9 +443,9 @@ For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For 
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished">Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися.
-Для вертикальних скельних стін зубчики можуть не зображуватись, якщо простір на карті обмежений. &lt;b&gt;Для представлення форми в плані мінімальна ширина становить 0,35 мм.&lt;/b&gt; На кінцях можуть використовуватися коротші зубчики.
-Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж зубчики мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
+            <translation>Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися.
+Для вертикальних скельних стін зубчики можуть не зображуватись, якщо простір на карті обмежений. &lt;b&gt;Для представлення форми в плані мінімальна ширина становить 0,35 мм.&lt;/b&gt; На кінцях можуть використовуватися коротші вуса.
+Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж вуса мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
     </message>
         <message>
             <source>Impassable cliff, top line</source>
@@ -455,12 +455,12 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation>Для вертикальних скельних стін зубчики можуть не зображуватись, якщо простір на карті обмежений, наприклад  це вузький прохід між скелями (зображення ширини проходу має сягати 0,3 мм).</translation>
+            <translation>Для вертикальних скельних стін вуса можуть не зображуватись, якщо простір на карті обмежений, наприклад  це вузький прохід між скелями (зображення ширини проходу має сягати 0,3 мм).</translation>
     </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation>Непрохідна скеля, зубчики</translation>
+            <translation>Непрохідна скеля, вуса</translation>
     </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -481,7 +481,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
             <translation>Скельна стіна, кар&apos;єр або земляний обрив, настільки високий та крутий, що неможливо або небезпечно спуститися/піднятися. 
 Кінець лінії бровки може бути заокругленим або прямокутним.
 Проміжок між двома непрохідними скелями або між скелями та іншими непрохідними знаками має перевищувати 0,3 мм на карті.
-Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж зубчики мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
+Коли скеля входить у воду і неможливо пробігти вздовж лінії берегу, останню не малюють або ж вуса мають ясно простягатися через контурну лінію водойми. Непрохідна скеля має узгоджуватися з горизонталями.</translation>
     </message>
         <message>
             <source>Cliff</source>
@@ -514,7 +514,7 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags</source>
             <comment>Name of symbol 202.2</comment>
-            <translation>Скеля з зубчиками</translation>
+            <translation>Скеля з вусами</translation>
     </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -523,14 +523,14 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.2</comment>
             <translation>Прохідна скеля чи кар&apos;єр. Мінімальна висота: 1 м. 
-Якщо напрям схилу стіни незрозумілий із горизонталей, або з метою покращення розбірливості, короткі зубчики мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина зубчиків має показати ширину скелі в плані. 
+Якщо напрям схилу стіни незрозумілий із горизонталей, або з метою покращення розбірливості, короткі вуса мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина вусів має показати ширину скелі в плані. 
 Кінці лінії бровки можуть бути заокругленими або прямокутними. Прохід між двома скелями має перевищувати 0,2 мм. Скеля має узгоджуватися з горизонталями.
 Подолання скелі, як правило, сповільнює рух.</translation>
     </message>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
-            <translation>Скеля з зубчиками, мінімальний розмір</translation>
+            <translation>Скеля з вусами, мінімальний розмір</translation>
     </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -539,14 +539,14 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.3</comment>
             <translation>Прохідна скеля чи кар&apos;єр. Мінімальна висота: 1 м. 
-Якщо напрям схилу стіни незрозумілий із горизонталей, або з метою покращення розбірливості, короткі зубчики мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина зубчиків має показати ширину скелі в плані. 
+Якщо напрям схилу стіни незрозумілий із горизонталей, або з метою покращення розбірливості, короткі вуса мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина вусів має показати ширину скелі в плані. 
 Кінці лінії бровки можуть бути заокругленими або прямокутними. Прохід між двома скелями має перевищувати 0,2 мм. Скеля має узгоджуватися з горизонталями.
 Подолання скелі, як правило, сповільнює рух.</translation>
     </message>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
-            <translation>Скеля з зубчиками, мінімальний розмір (з ISOM2000)</translation>
+            <translation>Скеля з вусами, мінімальний розмір (з ISOM2000)</translation>
     </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
@@ -555,7 +555,7 @@ Ends of the top line may be rounded or square. A passage between two cliffs must
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.9</comment>
             <translation>Прохідна скеля чи кар&apos;єр. Мінімальна висота: 1 м. 
-Якщо напрям схилу стіни незрозумілий із горизонталей, ао з метою покращення розбірливості, короткі зубчики мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина зубчиків має показати ширину скелі в плані. 
+Якщо напрям схилу стіни незрозумілий із горизонталей, або з метою покращення розбірливості, короткі вуса мають вказувати напрямок схилу. Якщо скеля не є вертикальною, довжина вусів має показати ширину скелі в плані. 
 Кінці лінії бровки можуть бути заокругленими або прямокутними. Прохід між двома скелями має перевищувати 0,2 мм. Скеля має узгоджуватися з горизонталями.
 Подолання скелі, як правило, сповільнює рух.</translation>
     </message>
@@ -569,21 +569,21 @@ Crossing a cliff will normally slow progress.</source>
 Location is the centre of gravity of the symbol.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.1</comment>
-            <translation>Скельний отвір, яма, вхід до рудника, який може бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
+            <translation>Скельні отвори, ями, входи до рудників, які можуть бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
 Положенню на місцевості відповідає центр ваги знаку.
 Скельні ями, що перевищують 5 м у діаметрі, слід перебільшувати та зображати знаками скель (201, 202).</translation>
     </message>
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished">Скельна яма чи печера з чітким входом</translation>
+            <translation>Скельна яма чи печера з чітким входом</translation>
     </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.2</comment>
-            <translation>Скельний отвір, яма, вхід до рудника, який може бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
+            <translation>Скельні отвори, ями, входи до рудників, які можуть бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
 Положенню на місцевості відповідає центр ваги знаку.
 Скельні ями, що перевищують 5 м у діаметрі, слід перебільшувати та зображати знаками скель (201, 202).</translation>
     </message>
@@ -597,7 +597,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.9</comment>
-            <translation>Скельний отвір, яма, вхід до рудника, який може бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
+            <translation>Скельні отвори, ями, входи до рудників, які можуть бути небезпечними для спортсмена. Мінімальна глибина: 1 м. 
 Положенню на місцевості відповідає центр ваги знаку.
 Скельні ями, що перевищують 5 м у діаметрі, слід перебільшувати та зображати знаками скель (201, 202).</translation>
     </message>
@@ -3985,7 +3985,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Brown for contours</source>
             <comment>Color 4</comment>
-            <translation>Коричневий для контурів</translation>
+            <translation>Коричневий для горизонталей</translation>
     </message>
         <message>
             <source>Black 50-65% for buildings</source>
@@ -7130,7 +7130,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
             <comment>Description of symbol 103</comment>
-            <translation>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</translation>
+            <translation type="unfinished">An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
@@ -7170,7 +7170,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
             <comment>Description of symbol 113</comment>
-            <translation>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</translation>
+            <translation type="unfinished">A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</translation>
         </message>
         <message>
             <source>Small depression</source>
@@ -7180,7 +7180,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
             <comment>Description of symbol 115</comment>
-            <translation>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</translation>
+            <translation type="unfinished">Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</translation>
         </message>
         <message>
             <source>Pit</source>
@@ -7230,7 +7230,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203</comment>
-            <translation>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
+            <translation type="unfinished">A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
         </message>
         <message>
             <source>Passable rock face, minimum size</source>
@@ -7240,7 +7240,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
             <comment>Description of symbol 203.0.1</comment>
-            <translation>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
+            <translation type="unfinished">A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags</source>
@@ -7250,7 +7250,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1</comment>
-            <translation>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
+            <translation type="unfinished">Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, minimum size</source>
@@ -7260,7 +7260,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
             <comment>Description of symbol 203.1.1</comment>
-            <translation>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
+            <translation type="unfinished">Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</translation>
         </message>
         <message>
             <source>Passable rock face, no tags, rounded</source>
@@ -7915,7 +7915,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished">Лінія, що з&apos;єднує точки однакової висоти. Стандартна відстань між двома горизонталями по висоті - 5 метрів. Найменший вигин горизонталі - 0,25 мм від центра до центра лінії.</translation>
+            <translation>Лінія, що з&apos;єднує точки однакової висоти. Стандартна відстань між двома горизонталями по висоті - 5 метрів. Найменший вигин горизонталі - 0,25 мм від центра до центра лінії.</translation>
         </message>
         <message>
             <source>Contour (narrow)</source>
@@ -7925,7 +7925,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101.1</comment>
-            <translation type="unfinished">Лінія, що з&apos;єднує точки однакової висоти. Стандартна відстань між двома горизонталями по висоті - 5 метрів. Найменший вигин горизонталі - 0,25 мм від центра до центра лінії.</translation>
+            <translation>Лінія, що з&apos;єднує точки однакової висоти. Стандартна відстань між двома горизонталями по висоті - 5 метрів. Найменший вигин горизонталі - 0,25 мм від центра до центра лінії.</translation>
         </message>
         <message>
             <source>Index contour</source>
