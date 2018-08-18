@@ -76,6 +76,7 @@ Symbol::Symbol(Type type) noexcept
 
 Symbol::Symbol(const Symbol& proto)
 : icon { proto.icon }
+, custom_icon { proto.custom_icon }
 , name { proto.name }
 , description { proto.description }
 , number ( proto.number )  // Cannot use {} with Android gcc 4.9
@@ -381,11 +382,23 @@ bool Symbol::containsSymbol(const Symbol* /*symbol*/) const
 
 
 
+void Symbol::setCustomIcon(const QImage& image)
+{
+	resetIcon();  // Cache must become scaled version of custom icon.
+	custom_icon = image;
+}
+
+
 QImage Symbol::getIcon(const Map* map) const
 {
-	if (icon.isNull() && map)
-		icon = createIcon(*map, Settings::getInstance().getSymbolWidgetIconSizePx());
-	
+	if (icon.isNull())
+	{
+		auto size = Settings::getInstance().getSymbolWidgetIconSizePx();
+		if (!custom_icon.isNull())
+			icon = custom_icon.scaled(size, size, Qt::IgnoreAspectRatio);
+		else if (map)
+			icon = createIcon(*map, size);
+	}
 	return icon;
 }
 
