@@ -41,6 +41,15 @@ namespace Ocd
 		quint32 RESERVED_MEMBER;
 	};
 	
+	struct IconV9
+	{
+		quint8  bits[484];
+	};
+	
+	bool operator==(const IconV9& lhs, const IconV9& rhs);
+	
+	inline bool operator!=(const IconV9& lhs, const IconV9& rhs) { return !(lhs == rhs); }
+	
 	struct BaseSymbolV9
 	{
 		using IndexEntryType = SymbolIndexEntry;
@@ -62,7 +71,7 @@ namespace Ocd
 		quint16 num_colors;
 		quint16 colors[14];
 		PascalString<31> description;
-		quint8  icon_bits[484];
+		IconV9  icon;
 	};
 	
 	struct PointSymbolV9

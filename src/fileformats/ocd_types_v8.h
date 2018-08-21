@@ -82,6 +82,15 @@ namespace Ocd
 		SymbolHeaderV8 symbol_header;
 	};
 	
+	struct IconV8
+	{
+		quint8  bits[264];
+	};
+	
+	bool operator==(const IconV8& lhs, const IconV8& rhs);
+	
+	inline bool operator!=(const IconV8& lhs, const IconV8& rhs) { return !(lhs == rhs); }
+	
 	struct BaseSymbolV8
 	{
 		using IndexEntryType = SymbolIndexEntry;
@@ -99,7 +108,7 @@ namespace Ocd
 		qint32  file_pos;
 		quint8  colors[32];
 		PascalString<31> description;
-		quint8  icon_bits[264];
+		IconV8  icon;
 	};
 	
 	struct PointSymbolElementV8

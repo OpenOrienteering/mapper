@@ -1363,17 +1363,7 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 		}
 	}
 	
-	/// \todo Switch to explicit types for icon data
-	switch (std::extent<typename std::remove_pointer<decltype(ocd_base_symbol.icon_bits)>::type>::value)
-	{
-	case 264:
-		exportSymbolIconV6(symbol, ocd_base_symbol.icon_bits);
-		break;
-		
-	case 484:
-		exportSymbolIconV9(symbol, ocd_base_symbol.icon_bits);
-		break;
-	}
+	exportSymbolIcon(symbol, ocd_base_symbol.icon);
 }
 
 
@@ -2358,7 +2348,7 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(quint32 symbol_number, const 
 
 
 
-void OcdFileExport::exportSymbolIconV6(const Symbol* symbol, quint8 icon_bits[])
+void OcdFileExport::exportSymbolIcon(const Symbol* symbol, Ocd::IconV8& icon)
 {
 	// Icon: 22x22 with 4 bit palette color, origin at bottom left
 	constexpr int icon_size = 22;
@@ -2401,6 +2391,7 @@ void OcdFileExport::exportSymbolIconV6(const Symbol* symbol, quint8 icon_bits[])
 		}
 	};
 	
+	auto icon_bits = icon.bits;
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; x += 2)
@@ -2413,7 +2404,7 @@ void OcdFileExport::exportSymbolIconV6(const Symbol* symbol, quint8 icon_bits[])
 	}
 }
 
-void OcdFileExport::exportSymbolIconV9(const Symbol* symbol, quint8 icon_bits[])
+void OcdFileExport::exportSymbolIcon(const Symbol* symbol, Ocd::IconV9& icon)
 {
 	// Icon: 22x22 with 8 bit palette color code, origin at bottom left
 	constexpr int icon_size = 22;
@@ -2430,6 +2421,7 @@ void OcdFileExport::exportSymbolIconV9(const Symbol* symbol, quint8 icon_bits[])
 		return getPaletteColorV9(qRgb(r, g, b));
 	};
 	
+	auto icon_bits = icon.bits;
 	for (int y = icon_size - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon_size; ++x)

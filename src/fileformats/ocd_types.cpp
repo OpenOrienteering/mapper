@@ -50,6 +50,33 @@ namespace Ocd
 	Q_STATIC_ASSERT(sizeof(FormatV12::FileHeader) == 60);
 	
 	
+	// uncompressed IconV8: Compare 11 bytes of each scanline, 12th byte unused.
+	bool operator==(const IconV8& lhs, const IconV8& rhs)
+	{
+		auto equal = [](auto first1, auto last1, auto first2)
+		{
+			while (first1 != last1)
+			{
+				if (!std::equal(first1, first1+11, first2))
+					return false;
+				first1 += 12;
+				first2 += 12;
+			}
+			return true;
+		};
+		using std::begin;
+		using std::end;
+		Q_ASSERT(end(lhs.bits) == begin(lhs.bits)+12*22);
+		return equal(begin(lhs.bits), end(lhs.bits), begin(rhs.bits));
+	}
+	
+	bool operator==(const IconV9& lhs, const IconV9& rhs)
+	{
+		using std::begin;
+		using std::end;
+		return std::equal(begin(lhs.bits), end(lhs.bits), begin(rhs.bits));
+	}
+	
 	
 	const void* getBlockCheckedRaw(const QByteArray& byte_array, quint32 pos, quint32 block_size)
 	{

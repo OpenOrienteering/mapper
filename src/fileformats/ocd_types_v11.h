@@ -49,7 +49,7 @@ namespace Ocd
 		quint16 num_colors;
 		quint16 colors[14];
 		Utf16PascalString<64> description;
-		quint8  icon_bits[484];
+		IconV9  icon;
 		quint16 group[64];
 	};
 	
