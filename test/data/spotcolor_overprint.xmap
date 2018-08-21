@@ -308,11 +308,11 @@
                 </end_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="7" code="106.2" name="Earth bank, tag line">
+        <symbol type="2" id="7" code="104" name="Earth bank, tag line">
             <description>Use this symbol to display the full extent of wide earth banks.</description>
             <line_symbol color="3" line_width="210" minimum_length="750" join_style="1" cap_style="0" pointed_cap_length="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
         </symbol>
-        <symbol type="2" id="8" code="107" name="Earth wall">
+        <symbol type="2" id="8" code="105" name="Earth wall">
             <description>Distinct earth wall. Minimum height is 1 m.</description>
             <line_symbol color="3" line_width="210" minimum_length="0" join_style="2" cap_style="0" pointed_cap_length="1500" segment_length="3750" end_length="1875" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
@@ -322,8 +322,8 @@
                 </mid_symbol>
             </line_symbol>
         </symbol>
-        <symbol type="2" id="9" code="108" name="Ruined earth wall">
-            <description>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</description>
+        <symbol type="2" id="9" code="106" name="Ruined earth wall">
+            <description>A ruined or less distinct earth wall. Minimum height: 0.5 m.</description>
             <line_symbol color="3" line_width="210" minimum_length="0" join_style="1" cap_style="0" pointed_cap_length="1500" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3360" break_length="375" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0">
                 <mid_symbol>
                     <symbol type="1" code="" name="Mid symbol">
