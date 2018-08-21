@@ -610,8 +610,8 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 204</comment>
-            <translation>Виразний камінь (зазвичай вище 1 м), який однозначно визначається на місцевості. Групи каменів зображуються знаком 207 (група каменів) або знаками кам’яного осипу (208, 209). 
-Для забезпечення можливості показати відмінність між сусідніми (до 30 м один від одного) каменями зі значною різницею в розмірі, дозволяється збільшити знак до 0,5 мм для деяких каменів.</translation>
+            <translation>Виразний камінь (зазвичай вище 1 м), який однозначно визначається на місцевості. Скупчення каменів зображуються знаком 207 (група каменів) або знаками кам’яного осипу (208, 209). 
+Для забезпечення можливості показати відмінність між сусідніми (до 30 м один від одного) каменями зі значною різницею в розмірі, дозволяється збільшувати знак до 0,5 мм для деяких каменів.</translation>
     </message>
         <message>
             <source>Boulder or large boulder, different size</source>
@@ -639,7 +639,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation>Особливо великий та помітний камінь. Великий камінь зазвичай вищий за 2 м. Для забезпечення можливості показати відмінність між сусідніми (до 30 м один від одного) каменями зі значною різницею в розмірі, дозволяється зменшити знак до 0,5 мм для деяких каменів.</translation>
+            <translation>Особливо великий та помітний камінь. Великий камінь зазвичай вищий за 2 м. Для забезпечення можливості показати відмінність між сусідніми (до 30 м один від одного) каменями зі значною різницею в розмірі, дозволяється зменшувати розмір знаку до 0,5 мм для деяких каменів.</translation>
     </message>
         <message>
             <source>Gigantic boulder</source>
@@ -651,7 +651,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
             <comment>Description of symbol 206</comment>
             <translation>Кам&apos;яний стовп (останець) або великий валун, настільки високий і крутий, що його неможливо подолати/піднятися на нього. 
-Проміжок на карті між гігантськими каменями або між гігантським каменем та іншими непрохідним знаком має перевищувати 0,3 мм на карті.</translation>
+Проміжок на карті між гігантськими каменями або між гігантським каменем та іншими непрохідними знаками має перевищувати 0,3 мм .</translation>
     </message>
         <message>
             <source>Boulder cluster</source>
@@ -662,7 +662,7 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation>Виразна група каменів, розташованих настільки близько, що їх неможливо зобразити окремо. Камені в групі зазвичай вищі за 1 метр. Група каменів має легко визначатися на місцевості.  
+            <translation>Виразна група каменів, розташованих так близько, що їх неможливо зобразити окремо. Камені в групі зазвичай вищі за 1 метр. Група каменів має легко визначатися на місцевості.  
 Для забезпечення можливості показати відмінність між сусідніми (до 30 м одна від одної) групами каменів зі значною різницею в розмірі, дозволяється збільшити знак на 20% (сторона трикутника 0,96 мм) для деяких груп каменів.</translation>
     </message>
         <message>
@@ -685,9 +685,9 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 208</comment>
-            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, зображується хаотично розташованими та повернутими трикутниками. Зазвичай, кам’яний осип не впливає на прохідність. Якщо прохідність кам’янистого осипу зменшується, слід застосовувати знак 209 (щільний кам’яний осип) або знак має бути поєднаний зі знаком кам&apos;янистого ґрунту. 
+            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, зображується хаотично розташованими та повернутими трикутниками. Зазвичай, кам’яний осип не впливає на прохідність. Якщо прохідність кам’янистого осипу погіршується, слід застосовувати знак 209 (щільний кам’яний осип) або знак має бути поєднаний зі знаком кам&apos;янистого ґрунту. 
 Слід використовувати мінімум два трикутники. Один трикутник може мати місце у поєднанні з іншими скельними знаками (наприклад, безпосередньо під знаком скелі (201, 202), поряд із знаками каменів (204-206) або в поєднанні зі знаком кам&apos;янистого ґрунту (210-212)). 
-Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшити окремі трикутники до 120%.</translation>
+Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшувати деякі трикутники до 120%.</translation>
     </message>
         <message>
             <source>Boulder field, single triangle</source>
@@ -697,7 +697,7 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, зображується хаотично розташованими та повернутими трикутниками із співвідношенням сторін 8:6:5. Слід використовувати мінімум два трикутники. Прохідність визначається щільністю нанесення трикутників. Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшити окремі трикутники до 120%.</translation>
+            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, зображується хаотично розташованими та повернутими трикутниками із співвідношенням сторін 8:6:5. Слід використовувати мінімум два трикутники. Прохідність визначається щільністю нанесення трикутників. Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшувати окремі трикутники до 120%.</translation>
     </message>
         <message>
             <source>Boulder field, single triangle, enlarged</source>
@@ -707,7 +707,7 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.2</comment>
-            <translation>Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшити окремі трикутники на 20%.</translation>
+            <translation>Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшувати окремі трикутники на 20%.</translation>
     </message>
         <message>
             <source>Dense boulder field</source>
@@ -718,8 +718,8 @@ To be able to show obvious height differences within a boulder field, it is perm
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
 Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 209</comment>
-            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, і понижують прохідність, зображується хаотично розташованими та повернутими трикутниками. Необхідно використовувати мінімум два трикутники.
-Щільність: 2-3 знаки/мм2 (31-47%). Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшити окремі трикутники до 120%.</translation>
+            <translation>Ділянка, що вкрита такою кількістю розкиданих каменів, що вони не можуть бути показані окремо, і понижують прохідність, зображується хаотично розташованими та повернутими трикутниками. Слід використовувати мінімум два трикутники.
+Щільність: 2-3 знаки/мм2 (31-47%). Для забезпечення можливості показати явну різницю у висоті каменів у межах кам&apos;яного осипу, дозволяється збільшувати окремі трикутники до 120%.</translation>
     </message>
         <message>
             <source>Stony ground, slow running</source>
@@ -732,10 +732,10 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210</comment>
-            <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної швидкості.
-Точки мають бути розподілені випадковим чином, але не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
+            <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної.
+Точки слід розподіляти випадковим чином, але так, щоб вони не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
 Мінімальна кількість точок - три (проекція 10 м × 10 м).
-Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
+Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не повинні розташовуватися у лінію.</translation>
     </message>
         <message>
             <source>Stony ground, individual dot</source>
@@ -748,10 +748,10 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної швидкості.
-Точки мають бути розподілені випадковим чином, але не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
+            <translation>Скельний або кам&apos;янистий ґрунт, що знижує прохідність до 60-80% від нормальної.
+Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих форм рельєфу та інших об&apos;єктів.
 Мінімальна кількість точок - три (проекція 10 м × 10 м).
-Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
+Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати у лінію.</translation>
     </message>
         <message>
             <source>Stony ground, walk</source>
@@ -765,9 +765,9 @@ The minimum number of dots is three (footprint 8 m x 8 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 211</comment>
             <translation>Скельний або кам&apos;янистий ґрунт, який значно знижує прохідність, (приблизно до 20-60% від нормальної швидкості).
-Точки мають бути розподілені випадковим чином, але не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
+Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих деталей рельєфу та інших об&apos;єктів.
 Мінімальна кількість точок - три (проекція 8 м × 8 м).
-Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
+Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати у лінію.</translation>
     </message>
         <message>
             <source>Stony ground, fight</source>
@@ -781,19 +781,19 @@ The minimum number of dots is three (footprint 7 m x 7 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 212</comment>
             <translation>Важкопрохідний скельний або кам&apos;янистий ґрунт (менше 20% від нормальної швидкості).
-Точки мають бути розподілені випадковим чином, але не заважати сприйняттю важливих форм рельєфу та інших об&apos;єктів.
+Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих деталей рельєфу та інших об&apos;єктів.
 Мінімальна кількість точок - три (проекція 7 м × 7 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
     </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation type="unfinished">Піщаний ґрунт</translation>
+            <translation>Піщаний ґрунт</translation>
     </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
-            <translation>Ділянка пухкого піщаного ґрунту, де швидкість бігу знижується не більше 80% від нормальної.</translation>
+            <translation>Ділянка пухкого піщаного ґрунту, прохідність погіршується менше ніж до 80% від нормальної швидкості.</translation>
     </message>
         <message>
             <source>Bare rock</source>
@@ -821,7 +821,7 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
-            <translation>Скельна тріщина або штучна траншея у скельному ґрунті. Рекомендована мінімальна глибина: 1 м.
+            <translation>Скельна тріщина чи штучна траншея у скельному ґрунті. Рекомендована мінімальна глибина: 1 м.
 Мінімальна довжина: 2 мм (проекція 30 м).
 Коротші траншеї можуть бути перебільшені до мінімального графічного розміру.
 Непрохідні траншеї мають бути зображені знаком 201 (непрохідна скеля). 
@@ -835,7 +835,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation>Чорна берегова лінія підкреслює що об’єкт є непрохідним. Домінуючі ділянки води можуть бути показані 70% кольору. Невеликі площі води та ділянки водойми, що мають вузькі частини, завжди показуються повним кольором.</translation>
+            <translation>Чорна берегова лінія підкреслює що об’єкт є непрохідним. Домінуючі ділянки води можуть бути показані 70% кольору. Невеликі площі води та ділянки водойми, що мають вузькі частини, завжди показуються суцільним кольором.</translation>
     </message>
         <message>
             <source>Uncrossable body of water</source>
@@ -845,7 +845,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation>Чорна берегова лінія підкреслює що об’єкт є непрохідним. Домінуючі ділянки води можуть бути показані 70% кольору. Невеликі площі води та ділянки водойми, що мають вузькі частини, завжди показуються повним кольором.</translation>
+            <translation>Чорна берегова лінія підкреслює що об’єкт є непрохідним. Домінуючі ділянки води можуть бути показані 70% кольору. Невеликі площі води та ділянки водойми, що мають вузькі частини, завжди показуються суцільним кольором.</translation>
     </message>
         <message>
             <source>Uncrossable body of water, bank line</source>
@@ -865,7 +865,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation>Неглибокі сезонні або періодичні водойми можуть бути показані зі штриховою лінією контуру. Малі неглибокі водойми можуть бути показані 100% синім кольором (без лінії контуру).</translation>
+            <translation>Неглибокі сезонні або періодичні водойми можуть бути обведені штриховою контурною лінією. Малі неглибокі водойми можуть зображуватися 100% синім кольором (без контурної лінії).</translation>
     </message>
         <message>
             <source>Shallow body of water</source>
@@ -875,7 +875,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302.1</comment>
-            <translation>Неглибокі сезонні або періодичні водойми можуть бути показані зі штриховою лінією контуру. Малі неглибокі водойми можуть бути показані 100% синім кольором (без лінії контуру).</translation>
+            <translation>Неглибокі сезонні або періодичні водойми можуть бути обведені штриховою контурною лінією. Малі неглибокі водойми можуть зображуватися 100% синім кольором (без контурної лінії).</translation>
     </message>
         <message>
             <source>Shallow body of water, solid outline</source>
@@ -885,7 +885,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>Use this symbol to represent regular outline for shallow body of water.</source>
             <comment>Description of symbol 302.2</comment>
-            <translation>Використовуйте цей знак для показу постійного контуру мілководної ділянки.</translation>
+            <translation>Використовуйте цей знак для показу суцільного контуру мілководної ділянки.</translation>
     </message>
         <message>
             <source>Shallow body of water, dashed outline</source>
@@ -915,7 +915,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
             <comment>Description of symbol 304</comment>
-            <translation type="unfinished">Струмок, мінімум 2 м завширшки. Струмки ширше 5 м слід зображувати в масштабі.</translation>
+            <translation>Струмок, мінімум 2 м завширшки. Струмки ширше 5 м слід зображувати в масштабі.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>
@@ -925,7 +925,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide.</source>
             <comment>Description of symbol 305</comment>
-            <translation type="unfinished">Прохідний струмок (в тому числі і у значній канаві) до 2 м завширшки.</translation>
+            <translation>Прохідний струмок (або великий дренажний канал) до 2 м завширшки.</translation>
     </message>
         <message>
             <source>Minor/seasonal water channel</source>
@@ -945,7 +945,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307</comment>
-            <translation>Болото, що є непрохідним або небезпечним для учасника. Чорний контур підкреслює непрохідність об’єкту. Чорний контур не зображується між знаками непрохідного болота та 301 (непрохідна водойма). Знак може поєднуватись зі знаками відкритих просторів (403, 404) щоб показати відкритість болота. Знак зорієнтований на північ.</translation>
+            <translation>Болото, що є непрохідним або небезпечним для учасника. Чорна контурна лінія підкреслює непрохідність об’єкту. Контурна лінія не зображується між знаками непрохідного болота та 301 (непрохідна водойма). Може поєднуватись зі знаками відкритих просторів (403, 404) щоб показати відкритість болота. Знак зорієнтований на північ.</translation>
     </message>
         <message>
             <source>Uncrossable marsh</source>
@@ -955,7 +955,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307.1</comment>
-            <translation>Болото, що є непрохідним або небезпечним для учасника. Чорний контур підкреслює непрохідність об’єкту. Чорний контур не зображується між знаками непрохідного болота та 301 (непрохідна водойма). Знак може поєднуватись зі знаками відкритих просторів (403, 404) щоб показати відкритість болота. Знак зорієнтований на північ.</translation>
+            <translation>Болото, що є непрохідним або небезпечним для учасника. Чорна контурна лінія підкреслює непрохідність об’єкту. Контурна лінія не зображується між знаками непрохідного болота та 301 (непрохідна водойма). Може поєднуватись зі знаками відкритих просторів (403, 404) щоб показати відкритість болота. Знак зорієнтований на північ.</translation>
     </message>
         <message>
             <source>Uncrossable marsh, border line</source>
@@ -977,8 +977,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308</comment>
-            <translation>Прохідне болото, зазвичай з чіткою межею.
-Знак має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
+            <translation>Прохідне болото, зазвичай з чітким краєм.
+Має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
 Знак зорієнтований на північ.</translation>
     </message>
         <message>
@@ -991,8 +991,8 @@ The symbol is orientated to north.</source>
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308.1</comment>
-            <translation>Прохідне болото, зазвичай з чіткою межею.
-Знак має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
+            <translation>Прохідне болото, зазвичай з чітким краєм.
+Має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
 Знак зорієнтований на північ.</translation>
     </message>
         <message>
@@ -1016,7 +1016,7 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310</comment>
             <translation>Невиразне або сезонне болото чи ділянка поступового переходу від болота до твердої землі, яка є прохідною. Край, зазвичай, нечіткий, а рослинність подібна до рослинності навколо.
-Знак має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
+Має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
 Знак зорієнтований на північ.</translation>
     </message>
         <message>
@@ -1030,7 +1030,7 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310.1</comment>
             <translation>Невиразне або сезонне болото чи ділянка поступового переходу від болота до твердої землі, яка є прохідною. Край, зазвичай, нечіткий, а рослинність подібна до рослинності навколо.
-Знак має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
+Має поєднуватися з іншими знаками, щоб показати прохідність та відкритість.
 Знак зорієнтований на північ.</translation>
     </message>
         <message>
@@ -1077,7 +1077,7 @@ The symbol is orientated to north.</source>
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</source>
             <comment>Description of symbol 401</comment>
             <translation>Відкритий простір із рослинним покривом (трава, мох чи подібна рослинність), який має кращу прохідність ніж звичайний чистий ліс. Якщо ділянки жовтого кольору домінують на карті, дозволяється застосовувати растр (75% замість повного жовтого). 
-Не може поєднуватись з іншими площинними знаками, за винятком знаків 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
+Не може поєднуватись з іншими площинними знаками, за винятком 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
     </message>
         <message>
             <source>Open land with scattered trees</source>
@@ -1088,8 +1088,8 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402</comment>
-            <translation>Ділянки з окремими деревами або кущами на відкритій місцевості можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі. Точки можуть бути білими (окремі дерева) або зеленими (окремі кущі/чагарники). Дозволяється додавати особливі окремі дерева, використовуючи знак 417 (окреме велике дерево). Якщо ділянки жовтого кольору домінують на карті, дозволяється застосовувати растр (75% замість повного жовтого).
-Знак не може поєднуватись з іншими площинними знаками, за винятком знаків 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
+            <translation>Ділянки з окремими деревами або кущами на відкритій місцевості можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому тлі. Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення кущів/гущавини). Дозволяється додавати видатні окремі дерева, використовуючи знак 417 (окреме велике дерево). Якщо ділянки жовтого кольору домінують на карті, дозволяється застосовувати растр (75% замість повного жовтого).
+Знак не може поєднуватись з іншими площинними знаками, за винятком 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
     </message>
         <message>
             <source>Open land with scattered bushes</source>
@@ -1100,13 +1100,13 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402.1</comment>
-            <translation>Ділянки з окремими деревами або кущами на відкритій місцевості можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі. Точки можуть бути білими (окремі дерева) або зеленими (окремі кущі/чагарники). Дозволяється додавати особливі окремі дерева, використовуючи знак 417 (окреме велике дерево). Якщо ділянки жовтого кольору домінують на карті, дозволяється застосовувати растр (75% замість повного жовтого).
-Знак не може поєднуватись з іншими площинними знаками, за винятком знаків 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
+            <translation>Ділянки з окремими деревами або кущами на відкритій місцевості можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому тлі. Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення кущів/гущавини). Дозволяється додавати видатні окремі дерева, використовуючи знак 417 (окреме велике дерево). Якщо ділянки жовтого кольору домінують на карті, дозволяється застосовувати растр (75% замість повного жовтого).
+Знак не може поєднуватись з іншими площинними знаками, за винятком 113 (нерівний ґрунт), 208 (кам’яний осип) а також знаків боліт (308, 310).</translation>
     </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation>Грубий відкритий простір</translation>
+            <translation>Незручний відкритий простір</translation>
     </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1114,13 +1114,13 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be left out, exaggerated or shown using symbol 401 (open land).</source>
             <comment>Description of symbol 403</comment>
             <translation>Трав’яниста рослинність, торфовище, вирубаний ліс, молоді посадки (дерева нижче 1м) або інша здебільшого відкрита місцевість з незручною для бігу землею, рослинністю та високою травою, що має прохідність на рівні з чистим лісом.
-Може поєднуватися зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо пройти, хороша видимість) для показу погіршення прохідності.
+Може поєднуватися зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
 Мінімальна площа: 1 мм × 1 мм (проекція 15 м × 15 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 401 (відкритий простір).</translation>
     </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation>Грубий напіввідкритий простір</translation>
+            <translation>Незручний напіввідкритий простір</translation>
     </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1130,15 +1130,15 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404</comment>
-            <translation>Ділянки з окремими деревами або кущами на грубому відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
-Точки можуть бути білими (окремі дерева) або зеленими (окремі кущі/чагарники). Лише варіант з білими точками може бути поєднаний зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо пройти, хороша видимість) для показу погіршення прохідності.
+            <translation>Ділянки з окремими деревами або кущами на незручному відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
+Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення чагарників/гущавини). Лише варіант з білими точками поєднується зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
 Знак зорієнтований на північ.
 Мінімальна ширина: 1,5 мм (проекція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проекція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
     </message>
         <message>
             <source>Rough open land with scattered bushes</source>
             <comment>Name of symbol 404.1</comment>
-            <translation>Грубий напіввідкритий простір з кущами</translation>
+            <translation>Незручний напіввідкритий простір з кущами</translation>
     </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1148,8 +1148,8 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404.1</comment>
-            <translation>Ділянки з окремими деревами або кущами на грубому відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
-Точки можуть бути білими (окремі дерева) або зеленими (окремі кущі/чагарники). Лише варіант з білими точками може бути поєднаний зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо пройти, хороша видимість) для показу погіршення прохідності.
+            <translation>Ділянки з окремими деревами або кущами на незручному відкритому просторі можуть бути узагальнені використанням регулярного візерунку великих точок на жовтому растрі.
+Точки можуть бути білими (вкраплення дерев) або зеленими (вкраплення чагарників/гущавини). Лише варіант з білими точками поєднується зі знаками 407 (рослинність, що сповільнює біг, хороша видимість) і 409 (рослинність, можливо йти, хороша видимість) для показу погіршення прохідності.
 Знак зорієнтований на північ.
 Мінімальна ширина: 1,5 мм (проекція 22,5 м). Мінімальна площа: 2,5 мм × 2,5 мм (проекція 37,5 м × 37,5 м). Менші ділянки мають бути опущені, перебільшені або показані знаком 403 (грубий відкритий простір).</translation>
     </message>
@@ -1166,7 +1166,7 @@ open land).</source>
         <message>
             <source>Vegetation, slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation>Рослинність, що сповільнює біг</translation>
+            <translation>Рослинність, сповільнює біг</translation>
     </message>
         <message>
             <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
@@ -1186,7 +1186,7 @@ open land).</source>
         <message>
             <source>Vegetation, slow running, good visibility</source>
             <comment>Name of symbol 407</comment>
-            <translation>Рослинність, що сповільнює біг, хороша видимість</translation>
+            <translation>Рослинність, сповільнює біг, хороша видимість</translation>
     </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
