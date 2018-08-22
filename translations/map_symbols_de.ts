@@ -264,14 +264,15 @@
             <translation>Deutlicher Erdwall. Minimale Höhe: 1 m.</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Kleiner Erdwall</translation>
+            <translation type="unfinished">Kleiner Erdwall</translation>
         </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
+            <translation type="unfinished">Ein niedriger oder teilweise zerfallener Erdwall wird mit einer unterbrochenen Linie gezeichnet. Minimale Höhe: 0,5m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
@@ -843,9 +844,10 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <translation>Passierbarer Wasserlauf</translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Ein passierbarer Wasserlauf mit einer minimalen Breite von 2 m. Flüsse mit einer Breite von mehr als 5 m sollen maßstäblich dargestellt werden.</translation>
+            <translation type="unfinished">Ein passierbarer Wasserlauf mit einer minimalen Breite von 2 m. Flüsse mit einer Breite von mehr als 5 m sollen maßstäblich dargestellt werden.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>

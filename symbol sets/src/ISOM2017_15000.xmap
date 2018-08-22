@@ -441,8 +441,9 @@
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="12" code="106" name="Small earth wall">
-                <description>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</description>
+            <symbol type="2" id="12" code="106" name="Ruined earth wall">
+                <description>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</description>
                 <line_symbol color="10" line_width="180" minimum_length="3650" join_style="1" cap_style="0" pointed_cap_length="1000" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="350" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
@@ -2007,7 +2008,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</de
                 </point_symbol>
             </symbol>
             <symbol type="2" id="62" code="304" name="Crossable watercourse">
-                <description>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</description>
+                <description>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</description>
                 <line_symbol color="8" line_width="300" minimum_length="1000" join_style="1" cap_style="0" pointed_cap_length="1000" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="2" id="63" code="305" name="Small crossable watercourse">

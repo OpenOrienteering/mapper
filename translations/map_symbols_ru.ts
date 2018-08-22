@@ -265,14 +265,15 @@
             <translation>Четко видимая земляная насыпь. Высота минимум 1 м.</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Маленький земляной вал</translation>
+            <translation type="unfinished">Маленький земляной вал</translation>
         </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Маленькая или частично разрушенная земляная насыпь показывается прерывистой линией. Минимальная высота 0,5 м.</translation>
+            <translation type="unfinished">Маленькая или частично разрушенная земляная насыпь показывается прерывистой линией. Минимальная высота 0,5 м.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
@@ -876,9 +877,10 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <translation>Преодолимый водный поток</translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
+            <translation type="unfinished">Преодолимая река или канава шириной минимум 2 м. Если ширина больше 5 м, то объект показывается в масштабе карты.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>

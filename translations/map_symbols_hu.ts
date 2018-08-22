@@ -262,17 +262,18 @@
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
             <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
-    </message>
+        </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Kis föld fal, kis töltés sánc</translation>
-    </message>
+            <translation type="unfinished">Kis föld fal, kis töltés sánc</translation>
+        </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
-    </message>
+            <translation type="unfinished">A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
+        </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
@@ -874,12 +875,13 @@ Az áthatolhatatlan árkokat a 201 (áthatolhatatlan sziklafal) jellel kell ábr
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
             <translation>Áthatolható vízfolyás</translation>
-    </message>
+        </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
-    </message>
+            <translation type="unfinished">Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
+        </message>
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>

@@ -149,6 +149,8 @@ void GdalSettingsPage::updateWidgets()
 	auto options = manager.parameterKeys();
 	options.sort();
 	parameters->setRowCount(options.size() + 1);
+	
+	QSignalBlocker block(parameters);
 	auto row = 0;
 	for (const auto& item : qAsConst(options))
 	{
