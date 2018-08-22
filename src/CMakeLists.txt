@@ -87,6 +87,7 @@ set(Mapper_Common_SRCS
   fileformats/ocd_file_format.cpp
   fileformats/ocd_file_import.cpp
   fileformats/ocd_georef_fields.cpp
+  fileformats/ocd_icon.cpp
   fileformats/ocd_types.cpp
   fileformats/xml_file_format.cpp
   

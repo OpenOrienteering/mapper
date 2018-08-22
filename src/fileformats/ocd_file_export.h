@@ -42,13 +42,6 @@
 
 template< class Format > class OcdFile;
 
-namespace Ocd {
-
-struct IconV8;
-struct IconV9;
-
-}  // namespace Ocd 
-
 namespace OpenOrienteering {
 
 class AreaSymbol;
@@ -247,11 +240,6 @@ protected:
 	        const LineSymbol* main_line,
 	        const LineSymbol* framing,
 	        const LineSymbol* double_line );
-	
-	
-	void exportSymbolIcon(const Symbol* symbol, Ocd::IconV8& icon);
-	
-	void exportSymbolIcon(const Symbol* symbol, Ocd::IconV9& icon);
 	
 	
 	template< class Format >
