@@ -264,12 +264,13 @@
             <translation>Чіткий земляний вал. Мінімальна висота: 1 м.</translation>
     </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
             <translation type="unfinished">Маленький земляний вал</translation>
     </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
             <translation type="unfinished">Маленький чи частково зруйнований земляний вал показується пунктирною лінією. Мінімальна висота 0,5 м.</translation>
     </message>
@@ -913,9 +914,10 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <translation>Прохідний струмок</translation>
     </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Струмок, мінімум 2 м завширшки. Струмки ширше 5 м слід зображувати в масштабі.</translation>
+            <translation type="unfinished">Струмок, мінімум 2 м завширшки. Струмки ширше 5 м слід зображувати в масштабі.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>

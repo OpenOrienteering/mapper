@@ -264,14 +264,15 @@
             <translation>Zřetelný zemní val. Minimální výška: 1 m.</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Rozpadlý zemní val</translation>
+            <translation type="unfinished">Rozpadlý zemní val</translation>
         </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Zřícený nebo méně zřetelný zemní val. Minimální výška je 0.5 m.</translation>
+            <translation type="unfinished">Zřícený nebo méně zřetelný zemní val. Minimální výška je 0.5 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
@@ -908,9 +909,10 @@ Zhroucené a snadno překonatelné příkopy by měly být mapovány jako erozn�
             <translation>Překonatelný vodní tok</translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Měl by být nejméně 2 m široký. Vodní toky širší než 5 m by měly být zobrazeny v měřítku mapy.</translation>
+            <translation type="unfinished">Měl by být nejméně 2 m široký. Vodní toky širší než 5 m by měly být zobrazeny v měřítku mapy.</translation>
         </message>
         <message>
             <source>Small crossable watercourse</source>
