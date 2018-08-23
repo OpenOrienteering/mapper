@@ -333,7 +333,8 @@ public:
 	/**
 	 * Sets a custom symbol icon.
 	 * 
-	 * The custom icon takes precedence over the generated one.
+	 * The custom icon takes precedence over the generated one when custom icon
+	 * display is enabled.
 	 * Like the generated icon, it is not part of the symbol state which is
 	 * compared by the `equals` functions.
 	 * However, it is copied when duplicating an icon.
@@ -346,7 +347,7 @@ public:
 	 * Returns the symbol's icon.
 	 * 
 	 * This function returns (a scaled version of) the custom symbol icon if
-	 * it is set, or a generated one.
+	 * it is set and custom icon display is enabled, or a generated one.
 	 * The icon is cached, making repeated calls cheap.
 	 */
 	QImage getIcon(const Map* map) const;

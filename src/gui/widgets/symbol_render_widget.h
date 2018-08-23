@@ -215,6 +215,7 @@ protected slots:
 	void sortByNumber();
 	void sortByColor();
 	void sortByColorPriority();
+	void setCustomIconsVisible(bool checked);
 	
 protected:
 	void resizeEvent(QResizeEvent* event) override;
@@ -361,6 +362,7 @@ private:
 	QAction* select_objects_additionally_action;
 	QAction* deselect_objects_action;
 	QAction* sort_manual_action;
+	QAction* show_custom_icons;
 	
 	SymbolToolTip* tooltip;
 	

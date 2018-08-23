@@ -135,6 +135,9 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	protect_action->setCheckable(true);
 	context_menu->addSeparator();
 	
+	show_custom_icons = context_menu->addAction(tr("Show custom icons"), this, SLOT(setCustomIconsVisible(bool)));
+	show_custom_icons->setCheckable(true);
+	
 	QMenu* select_menu = new QMenu(tr("Select symbols"), context_menu);
 	select_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
 	select_menu->addAction(tr("Select unused"), this, SLOT(selectUnused()));
@@ -1024,6 +1027,17 @@ void SymbolRenderWidget::sortByColorPriority()
 	sort(Symbol::lessByColorPriority);
 }
 
+void SymbolRenderWidget::setCustomIconsVisible(bool checked)
+{
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+	{
+		auto symbol = map->getSymbol(i);
+		if (!symbol->getCustomIcon().isNull())
+			symbol->resetIcon();
+	}
+	Settings::getInstance().setSetting(Settings::SymbolWidget_ShowCustomIcons, checked);
+}
+
 void SymbolRenderWidget::showContextMenu(const QPoint& global_pos)
 {
 	updateContextMenuState();
@@ -1089,6 +1103,8 @@ void SymbolRenderWidget::updateContextMenuState()
 	select_objects_action->setEnabled(have_selection);
 	select_objects_additionally_action->setEnabled(have_selection);
 	deselect_objects_action->setEnabled(have_selection);
+	
+	show_custom_icons->setChecked(Settings::getInstance().getSetting(Settings::SymbolWidget_ShowCustomIcons).toBool());
 }
 
 bool SymbolRenderWidget::newSymbol(Symbol* prototype)

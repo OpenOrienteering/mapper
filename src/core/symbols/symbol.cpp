@@ -40,6 +40,7 @@
 #include <QPointF>
 #include <QRectF>
 #include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -448,8 +449,9 @@ QImage Symbol::getIcon(const Map* map) const
 	if (icon.isNull())
 	{
 		auto size = Settings::getInstance().getSymbolWidgetIconSizePx();
-		if (!custom_icon.isNull())
-			icon = custom_icon.scaled(size, size, Qt::IgnoreAspectRatio);
+		if (Settings::getInstance().getSetting(Settings::SymbolWidget_ShowCustomIcons).toBool()
+		    && !custom_icon.isNull())
+			icon = custom_icon.scaled(size, size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		else if (map)
 			icon = createIcon(*map, size);
 	}
