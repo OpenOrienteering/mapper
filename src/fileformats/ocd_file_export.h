@@ -234,10 +234,19 @@ protected:
 	void exportGenericCombinedSymbol(OcdFile<Format>& file, const CombinedSymbol* combined_symbol);
 	
 	template< class OcdAreaSymbol >
-	QByteArray exportCombinedAreaSymbol(quint32 symbol_number, const AreaSymbol* area_symbol, const LineSymbol* line_symbol);
+	QByteArray exportCombinedAreaSymbol(
+	        quint32 symbol_number,
+	        const CombinedSymbol* combined_symbol,
+	        const AreaSymbol* area_symbol,
+	        const LineSymbol* line_symbol );
 	
 	template< class OcdLineSymbol >
-	QByteArray exportCombinedLineSymbol(quint32 symbol_number, const LineSymbol* main_line, const LineSymbol* framing, const LineSymbol* double_line);
+	QByteArray exportCombinedLineSymbol(
+	        quint32 symbol_number,
+	        const CombinedSymbol* combined_symbol,
+	        const LineSymbol* main_line,
+	        const LineSymbol* framing,
+	        const LineSymbol* double_line );
 	
 	
 	void exportSymbolIcon(const Symbol* symbol, Ocd::IconV8& icon);

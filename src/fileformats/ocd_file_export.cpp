@@ -2169,7 +2169,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			
 			auto copy = duplicate(static_cast<const AreaSymbol&>(*parts[0]));
 			copySymbolHead(*combined_symbol, *copy);
-			file.symbols().insert(exportCombinedAreaSymbol<typename Format::AreaSymbol>(symbol_number, copy.get(), border_symbol));
+			file.symbols().insert(exportCombinedAreaSymbol<typename Format::AreaSymbol>(symbol_number, combined_symbol, copy.get(), border_symbol));
 			return;
 		}
 		
@@ -2209,7 +2209,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 			// Line symbol with framing and/or double line
 			auto copy = duplicate(static_cast<const LineSymbol&>(*main_line));
 			copySymbolHead(*combined_symbol, *copy);
-			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, copy.get(), framing, double_line));
+			file.symbols().insert(exportCombinedLineSymbol<typename Format::LineSymbol>(symbol_number, combined_symbol, copy.get(), framing, double_line));
 			return;
 		}
 		break;
@@ -2293,17 +2293,26 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 
 
 template< >
-QByteArray OcdFileExport::exportCombinedAreaSymbol<Ocd::AreaSymbolV8>(quint32 /*symbol_number*/, const AreaSymbol* /*area_symbol*/, const LineSymbol* /*line_symbol*/)
+QByteArray OcdFileExport::exportCombinedAreaSymbol<Ocd::AreaSymbolV8>(
+        quint32 /*symbol_number*/,
+        const CombinedSymbol* /*combined_symbol*/,
+        const AreaSymbol* /*area_symbol*/,
+        const LineSymbol* /*line_symbol*/)
 {
 	Q_UNREACHABLE();
 }
 
 
 template< class OcdAreaSymbol >
-QByteArray OcdFileExport::exportCombinedAreaSymbol(quint32 symbol_number, const AreaSymbol* area_symbol, const LineSymbol* line_symbol)
+QByteArray OcdFileExport::exportCombinedAreaSymbol(
+        quint32 symbol_number,
+        const CombinedSymbol* combined_symbol,
+        const AreaSymbol* area_symbol,
+        const LineSymbol* line_symbol )
 {
 	auto ocd_symbol = exportAreaSymbol<OcdAreaSymbol>(area_symbol, symbol_number);
 	auto ocd_subsymbol_data = reinterpret_cast<OcdAreaSymbol*>(ocd_symbol.data());
+	exportSymbolIcon(combined_symbol, ocd_subsymbol_data->base.icon);
 	ocd_subsymbol_data->common.border_on_V9 = 1;
 	ocd_subsymbol_data->border_symbol = symbol_numbers[line_symbol];
 	return ocd_symbol;
@@ -2311,11 +2320,18 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol(quint32 symbol_number, const 
 
 
 template< class OcdLineSymbol >
-QByteArray OcdFileExport::exportCombinedLineSymbol(quint32 symbol_number, const LineSymbol* main_line, const LineSymbol* framing, const LineSymbol* double_line)
+QByteArray OcdFileExport::exportCombinedLineSymbol(
+        quint32 symbol_number,
+        const CombinedSymbol* combined_symbol,
+        const LineSymbol* main_line,
+        const LineSymbol* framing,
+        const LineSymbol* double_line )
 {
 	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, symbol_number);
-	auto& ocd_line_common = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data())->common;
+	auto ocd_symbol_data = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data());
+	exportSymbolIcon(combined_symbol, ocd_symbol_data->base.icon);
 	
+	auto& ocd_line_common = ocd_symbol_data->common;
 	if (framing)
 	{
 		ocd_line_common.framing_color = convertColor(framing->getColor());
