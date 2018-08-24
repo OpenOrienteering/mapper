@@ -2850,8 +2850,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Кам&apos;янистий ґрунт</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
             <comment>Description of symbol 210.1</comment>
