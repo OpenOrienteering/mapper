@@ -25,11 +25,14 @@
 #include <cmath>
 #include <cstddef>
 #include <iterator>
-
 #include <memory>
 
 #include <QtGlobal>
+#include <QBuffer>
+#include <QByteArray>
 #include <QCoreApplication>
+#include <QImageReader>
+#include <QImageWriter>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPainter>
@@ -260,6 +263,26 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	if (!description.isEmpty())
 		xml.writeTextElement(QLatin1String("description"), description);
 	saveImpl(xml, map);
+	if (!custom_icon.isNull())
+	{
+		QBuffer buffer;
+		QImageWriter writer{&buffer, QByteArrayLiteral("PNG")};
+		if (writer.write(custom_icon))
+		{
+			auto data = buffer.data().toBase64();
+			// The "data" URL scheme, RFC2397 (https://tools.ietf.org/html/rfc2397)
+			data.insert(0, "data:image/png;base64,");
+			xml.writeCharacters(QLatin1String("\n"));
+			XmlElementWriter icon_element(xml, QLatin1String("icon"));
+			icon_element.writeAttribute(QLatin1String("src"), QString::fromLatin1(data));
+		}
+		else
+		{
+			qDebug("Couldn't save symbol icon '%s': %s",
+			       qPrintable(getPlainTextName()),
+			       qPrintable(writer.errorString()) );
+		}
+	}
 }
 
 std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
@@ -306,7 +329,38 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("description"))
+		{
 			symbol->description = xml.readElementText();
+		}
+		else if (xml.name() == QLatin1String("icon"))
+		{
+			XmlElementReader icon_element(xml);
+			auto data = icon_element.attribute<QStringRef>(QLatin1String("src")).toLatin1();
+			
+			// The "data" URL scheme, RFC2397 (https://tools.ietf.org/html/rfc2397)
+			auto start = data.indexOf(',') + 1;
+			if (start > 0 && data.startsWith("data:image/"))
+			{
+				auto base64 = data.indexOf(";base64");
+				data = data.remove(0, start);
+				if (base64 + 8 == start)
+					data = QByteArray::fromBase64(data);
+			}
+			else
+			{
+				data.clear();  // Ignore unknown data, warning is generated later.
+			}
+			
+			QBuffer buffer{&data};
+			QImageReader reader{&buffer, QByteArrayLiteral("PNG")};
+			auto icon = reader.read();
+			if (!icon.isNull())
+				symbol->setCustomIcon(icon);
+			else
+				qDebug("Couldn't load symbol icon '%s': %s",
+				       qPrintable(symbol->getPlainTextName()),
+				       qPrintable(reader.errorString()) );
+		}
 		else
 		{
 			if (!symbol->loadImpl(xml, map, symbol_dict))
