@@ -174,10 +174,10 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	
 	bool has_curve = false;
 	bool hole = false;
-	bool gap = false;
 	QPainterPath first_subpath;
 	
 	auto i = virtual_path.first_index;
+	bool gap = flags[i].isGapPoint();  // Line may start with a gap
 	path.moveTo(coords[i]);
 	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001, 0.0001);
 	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
