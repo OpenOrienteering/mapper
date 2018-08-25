@@ -186,6 +186,7 @@ private slots:
 	{
 		const auto render_test_files = {
 		    "testdata:symbols/line-symbol-border-variants.omap",
+		    "testdata:symbols/line-symbol-cap-variants.omap",
 		    "testdata:symbols/line-symbol-start-end-symbol.omap",
 		    "testdata:symbols/line-symbol-mid-symbol-variants.omap",
 		};
