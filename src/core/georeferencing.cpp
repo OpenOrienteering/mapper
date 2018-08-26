@@ -508,7 +508,7 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 	}
 }
 
-void Georeferencing::setMapRefPoint(MapCoord point)
+void Georeferencing::setMapRefPoint(const MapCoord& point)
 {
 	if (map_ref_point != point)
 	{

@@ -417,7 +417,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 #endif
 }
 
-void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
+void GeoreferencingDialog::setMapRefPoint(const MapCoord& coords)
 {
 	georef->setMapRefPoint(coords);
 	reset_button->setEnabled(true);

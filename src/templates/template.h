@@ -485,10 +485,10 @@ public:
 	// Transformation of non-georeferenced templates
 	
 	MapCoord templatePosition() const;
-	void setTemplatePosition(MapCoord coord);
+	void setTemplatePosition(const MapCoord& coord);
 	
 	MapCoord templatePositionOffset() const;
-	void setTemplatePositionOffset(MapCoord offset);
+	void setTemplatePositionOffset(const MapCoord& offset);
 	void applyTemplatePositionOffset();
 	void resetTemplatePositionOffset();
 	

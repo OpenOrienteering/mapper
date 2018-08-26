@@ -152,7 +152,7 @@ public:
 	
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	QPointF mapToView(MapCoord coords) const;
+	QPointF mapToView(const MapCoord& coords) const;
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
 	QPointF mapToView(MapCoordF coords) const;
@@ -258,7 +258,7 @@ public:
 	MapCoord center() const;
 	
 	/** Sets the position of the view center. */
-	void setCenter(MapCoord pos);
+	void setCenter(const MapCoord& pos);
 	
 	
 	// Map and template visibilities

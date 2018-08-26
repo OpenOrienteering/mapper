@@ -319,7 +319,7 @@ public:
 	 * 
 	 * This will <b>not</b> update the map and geographic coordinates of the reference point.
 	 */
-	void setMapRefPoint(MapCoord point);
+	void setMapRefPoint(const MapCoord& point);
 	
 	
 	/**

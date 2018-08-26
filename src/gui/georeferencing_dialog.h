@@ -135,7 +135,7 @@ public:
 	/**
 	 * Sets the map coordinates of the reference point
 	 */
-	void setMapRefPoint(MapCoord coords);
+	void setMapRefPoint(const MapCoord& coords);
 	
 	/**
 	 * Activates the "keep projected reference point coordinates on CRS changes" radio button.

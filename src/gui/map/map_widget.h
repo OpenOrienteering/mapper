@@ -186,7 +186,7 @@ public:
 	/** Maps viewport (GUI) coordinates to map coordinates. */
 	MapCoordF viewportToMapF(QPointF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoord input) const;
+	QPointF mapToViewport(const MapCoord& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(MapCoordF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */

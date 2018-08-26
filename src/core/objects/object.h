@@ -180,7 +180,7 @@ public:
 	void move(qint32 dx, qint32 dy);
 	
 	/** Moves the whole object by the given offset. */
-	void move(MapCoord offset);
+	void move(const MapCoord& offset);
 	
 	/** Scales all coordinates, with the given scaling center */
 	virtual void scale(MapCoordF center, double factor);
@@ -510,15 +510,15 @@ public:
 	MapCoord& getCoordinate(MapCoordVector::size_type pos);
 	
 	/** Replaces the i-th coordinate with c. */
-	void setCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void setCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the given index. */
-	void addCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void addCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the end, optionally starting a new part.
 	 *  If starting a new part, make sure that the last coord of the old part
 	 *  has the hole point flag! */
-	void addCoordinate(MapCoord c, bool start_new_part = false);
+	void addCoordinate(const MapCoord& c, bool start_new_part = false);
 	
 	/**
 	 * Deletes a coordinate from the path.
@@ -896,7 +896,7 @@ protected:
 	 * on it and replaces the coord at the given index by it.
 	 * TODO: make separate methods? Setting coords exists already.
 	 */
-	void setClosingPoint(MapCoordVector::size_type index, MapCoord coord);
+	void setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord);
 	
 	void updateEvent() const override;
 	
@@ -976,7 +976,7 @@ public:
 	void setPosition(qint32 x, qint32 y);
 	
 	/** Changes the point's position. */
-	void setPosition(MapCoord coord);
+	void setPosition(const MapCoord& coord);
 	
 	/** Changes the point's position. */
 	void setPosition(MapCoordF coord);

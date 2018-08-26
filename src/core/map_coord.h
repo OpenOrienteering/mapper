@@ -494,7 +494,7 @@ public:
 	constexpr MapCoordF(qreal x, qreal y) noexcept;
 	
 	/** Creates a MapCoordF from a MapCoord, dropping its flags. */
-	explicit constexpr MapCoordF(MapCoord coord) noexcept;
+	explicit constexpr MapCoordF(const MapCoord& coord) noexcept;
 	
 	/** Copy constructor. */
 	constexpr MapCoordF(const MapCoordF&) noexcept = default;
@@ -1004,7 +1004,7 @@ constexpr MapCoordF::MapCoordF(qreal x, qreal y) noexcept
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(MapCoord coord) noexcept
+constexpr MapCoordF::MapCoordF(const MapCoord& coord) noexcept
  : QPointF { coord.x(), coord.y() }
 {
 	// Nothing else

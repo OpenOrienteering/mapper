@@ -214,7 +214,7 @@ MapCoordF MapView::viewToMapF(double x, double y) const
 	                 view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
 }
 
-QPointF MapView::mapToView(MapCoord coords) const
+QPointF MapView::mapToView(const MapCoord& coords) const
 {
 	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
 	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
@@ -332,7 +332,7 @@ void MapView::setRotation(double value)
 	emit viewChanged(RotationChange);
 }
 
-void MapView::setCenter(MapCoord pos)
+void MapView::setCenter(const MapCoord& pos)
 {
 	center_pos = pos;
 	updateTransform();

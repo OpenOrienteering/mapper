@@ -516,7 +516,7 @@ void Object::move(qint32 dx, qint32 dy)
 	setOutputDirty();
 }
 
-void Object::move(MapCoord offset)
+void Object::move(const MapCoord& offset)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -2775,7 +2775,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 	}
 }
 
-void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::setCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos < getCoordinateCount());
 	
@@ -2789,7 +2789,7 @@ void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::addCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos <= coords.size());
 	
@@ -2821,7 +2821,7 @@ void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoord c, bool start_new_part)
+void PathObject::addCoordinate(const MapCoord& c, bool start_new_part)
 {
 	if (coords.empty())
 	{
@@ -3067,12 +3067,13 @@ void PathObject::recalculateParts()
 	}
 }
 
-void PathObject::setClosingPoint(MapCoordVector::size_type index, MapCoord coord)
+void PathObject::setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord)
 {
-	coord.setCurveStart(false);
-	coord.setHolePoint(true);
-	coord.setClosePoint(true);
-	coords[index] = coord;
+	auto& out_coord = coords[index];
+	out_coord = coord;
+	out_coord.setCurveStart(false);
+	out_coord.setHolePoint(true);
+	out_coord.setClosePoint(true);
 }
 
 void PathObject::updateEvent() const
@@ -3128,7 +3129,7 @@ void PointObject::setPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void PointObject::setPosition(MapCoord coord)
+void PointObject::setPosition(const MapCoord& coord)
 {
 	coords[0] = coord;
 }

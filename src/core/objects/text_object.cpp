@@ -175,7 +175,7 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoord coord)
+void TextObject::setAnchorPosition(const MapCoord& coord)
 {
 	has_single_anchor = true;
 	coords[0] = coord;
