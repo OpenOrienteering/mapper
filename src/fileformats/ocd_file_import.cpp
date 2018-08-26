@@ -1030,6 +1030,13 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 		symbol->pointed_cap_length = convertLength(ocd_length);
 		symbol->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
 	}
+	else if (attributes.dist_from_start > 0 || attributes.dist_from_end > 0)
+	{
+		addSymbolWarning(symbol,
+		                 tr("Distances from start (%1 mm) or end (%2 mm) are not supported.")
+		                 .arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
+		                      locale.toString(0.001f * convertLength(attributes.dist_from_end))) );
+	}
 	
 	// Handle the dash pattern
 	if (attributes.main_gap || attributes.sec_gap)
