@@ -146,7 +146,7 @@ public:
 	 * Note: Since QObjects may not be copied, this is better understood as
 	 * creating a new object with the same settings.
 	 */
-	Georeferencing(const Georeferencing& georeferencing);
+	Georeferencing(const Georeferencing& other);
 	
 	/** 
 	 * Cleans up memory allocated by the georeferencing 
@@ -267,7 +267,7 @@ public:
 	 * 
 	 * This will also affect the grivation value and the transformations.
 	 */
-	void setDeclination(double declination);
+	void setDeclination(double value);
 	
 	
 	/**
@@ -306,7 +306,7 @@ public:
 	 * 
 	 * This will also affect the declination value and the transformations.
 	 */
-	void setGrivation(double grivation);
+	void setGrivation(double value);
 	
 	
 	/**

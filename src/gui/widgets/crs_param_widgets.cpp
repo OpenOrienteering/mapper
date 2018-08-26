@@ -59,15 +59,15 @@ UTMZoneEdit::UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent)
 	
 	line_edit = new QLineEdit();
 	line_edit->setValidator(new QRegExpValidator(zone_regexp, line_edit));
-	QCompleter* completer = new QCompleter(zone_list, line_edit);
+	auto completer = new QCompleter(zone_list, line_edit);
 	completer->setMaxVisibleItems(4);
 	line_edit->setCompleter(completer);
 	connect(line_edit, &QLineEdit::textChanged, this, &UTMZoneEdit::textEdited);
 	
-	QPushButton* button = new QPushButton(tr("Calculate"));
+	auto button = new QPushButton(tr("Calculate"));
 	connect(button, &QPushButton::clicked, this, &UTMZoneEdit::calculateValue);
 	
-	QHBoxLayout* layout = new QHBoxLayout();
+	auto layout = new QHBoxLayout();
 	layout->setMargin(0);
 	layout->addWidget(line_edit, 1);
 	layout->addWidget(button, 0);
@@ -86,9 +86,9 @@ QString UTMZoneEdit::text() const
 	return line_edit->text();
 }
 
-void UTMZoneEdit::setText(const QString& value)
+void UTMZoneEdit::setText(const QString& text)
 {
-	line_edit->setText(value);
+	line_edit->setText(text);
 }
 
 bool UTMZoneEdit::calculateValue()

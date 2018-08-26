@@ -102,8 +102,8 @@ CRSTemplateRegistry::TemplateList defaultList()
 
 // ### TextParameter ###
 
-TextParameter::TextParameter(const QString& key, const QString& name)
- : CRSTemplateParameter(key, name)
+TextParameter::TextParameter(const QString& id, const QString& name)
+ : CRSTemplateParameter(id, name)
 {
 	// nothing
 }
@@ -135,8 +135,8 @@ void TextParameter::setValue(QWidget* edit_widget, const QString& value)
 
 // ### FullSpecParameter ###
 
-FullSpecParameter::FullSpecParameter(const QString& key, const QString& name)
- : TextParameter(key, name)
+FullSpecParameter::FullSpecParameter(const QString& id, const QString& name)
+ : TextParameter(id, name)
 {
 	// nothing
 }
@@ -164,8 +164,8 @@ void FullSpecParameter::setValue(QWidget* edit_widget, const QString& value)
 
 // ### UTMZoneParameter ###
 
-UTMZoneParameter::UTMZoneParameter(const QString& key, const QString& name)
- : CRSTemplateParameter(key, name)
+UTMZoneParameter::UTMZoneParameter(const QString& id, const QString& name)
+ : CRSTemplateParameter(id, name)
 {
 	// nothing
 }
@@ -233,14 +233,14 @@ QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
 
 // ### IntRangeParameter ###
 
-IntRangeParameter::IntRangeParameter(const QString& key, const QString& name, int min_value, int max_value)
- : IntRangeParameter(key, name, min_value, max_value, { {1, 0} })
+IntRangeParameter::IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value)
+ : IntRangeParameter(id, name, min_value, max_value, { {1, 0} })
 {
 	// nothing
 }
 
-IntRangeParameter::IntRangeParameter(const QString& key, const QString& name, int min_value, int max_value, OutputList&& outputs)
- : CRSTemplateParameter(key, name)
+IntRangeParameter::IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value, OutputList&& outputs)
+ : CRSTemplateParameter(id, name)
  , min_value(min_value)
  , max_value(max_value)
  , outputs(std::move(outputs))
