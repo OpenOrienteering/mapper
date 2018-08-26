@@ -72,10 +72,10 @@ protected:
 	void objectSelectionChangedImpl() override;
 	
 	// MapEditorTool input event handlers
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	void leaveEvent(QEvent* event) override;
 	void focusOutEvent(QFocusEvent* event) override;
 	
@@ -91,7 +91,7 @@ protected:
 	
 	// Functions for splitting lines
 	void startCuttingLine(const ObjectPathCoord& point);
-	void updateCuttingLine(MapCoordF cursor_pos);
+	void updateCuttingLine(const MapCoordF& cursor_pos);
 	void finishCuttingLine();
 	
 	// Functions for splitting areas
@@ -106,8 +106,8 @@ protected:
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	// State 
-	void updateHoverState(MapCoordF cursor_pos);
-	ObjectPathCoord findEditPoint(MapCoordF cursor_pos_map, int with_type, int without_type) const;
+	void updateHoverState(const MapCoordF& cursor_pos);
+	ObjectPathCoord findEditPoint(const MapCoordF& cursor_pos_map, int with_type, int without_type) const;
 	
 	/**
 	 * Replaces the given object in the map with the replacement objects.

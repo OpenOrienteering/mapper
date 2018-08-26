@@ -33,7 +33,6 @@
 #include <QString>
 
 #include "core/map.h"
-#include "core/map_coord.h"
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
@@ -73,7 +72,7 @@ CutHoleTool::~CutHoleTool()
 	delete path_tool;
 }
 
-bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutHoleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mousePressEvent(event, map_coord, widget);
@@ -108,7 +107,7 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return true;
 }
 
-bool CutHoleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutHoleTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseMoveEvent(event, map_coord, widget);
@@ -116,7 +115,7 @@ bool CutHoleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWid
 	return false;
 }
 
-bool CutHoleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutHoleTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseReleaseEvent(event, map_coord, widget);
@@ -124,7 +123,7 @@ bool CutHoleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	return false;
 }
 
-bool CutHoleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutHoleTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseDoubleClickEvent(event, map_coord, widget);

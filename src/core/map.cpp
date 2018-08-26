@@ -2158,7 +2158,7 @@ void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 }
 
 void Map::findObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2170,7 +2170,7 @@ void Map::findObjectsAt(
 }
 
 void Map::findAllObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2183,8 +2183,8 @@ void Map::findAllObjectsAt(
 }
 
 void Map::findObjectsAtBox(
-        MapCoordF corner1,
-        MapCoordF corner2,
+        const MapCoordF& corner1,
+        const MapCoordF& corner2,
         bool include_hidden_objects,
         bool include_protected_objects,
         std::vector< Object* >& out ) const

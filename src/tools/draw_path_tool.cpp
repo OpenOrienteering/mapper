@@ -124,7 +124,7 @@ const QCursor& DrawPathTool::getCursor() const
 	return cursor;
 }
 
-bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	cur_map_widget = widget;
 	created_point_at_last_mouse_press = false;
@@ -269,7 +269,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return false;
 }
 
-bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
@@ -342,7 +342,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return true;
 }
 
-bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (!isDrawingButton(event->button()))
 		return false;
@@ -424,11 +424,8 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	return true;
 }
 
-bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
-	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -1022,7 +1019,7 @@ void DrawPathTool::updateAngleHelper()
 		angle_helper->addDefaultAnglesDeg(angle * 180 / M_PI);
 }
 
-bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
+bool DrawPathTool::pickAngle(const MapCoordF& coord, MapWidget* widget)
 {
 	MapCoord snap_position;
 	bool picked = snap_helper->snapToDirection(coord, widget, angle_helper.get(), &snap_position);
@@ -1127,7 +1124,7 @@ void DrawPathTool::finishFollowing()
 	updateAngleHelper();
 }
 
-qreal DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map) const
+qreal DrawPathTool::calculateRotation(QPoint mouse_pos, const MapCoordF& mouse_pos_map) const
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());

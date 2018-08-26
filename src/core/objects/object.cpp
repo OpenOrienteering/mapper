@@ -526,7 +526,7 @@ void Object::move(const MapCoord& offset)
 	setOutputDirty();
 }
 
-void Object::scale(MapCoordF center, double factor)
+void Object::scale(const MapCoordF& center, double factor)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -548,7 +548,7 @@ void Object::scale(double factor_x, double factor_y)
 	setOutputDirty();
 }
 
-void Object::rotateAround(MapCoordF center, qreal angle)
+void Object::rotateAround(const MapCoordF& center, qreal angle)
 {
 	auto sin_angle = std::sin(angle);
 	auto cos_angle = std::cos(angle);
@@ -607,7 +607,7 @@ void Object::rotate(qreal angle)
 }
 
 
-int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
 	auto contained_types = symbol->getContainedTypes();
@@ -2414,7 +2414,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	return Symbol::NoSymbol;
 }
 
-bool PathObject::isPointInsideArea(MapCoordF coord) const
+bool PathObject::isPointInsideArea(const MapCoordF& coord) const
 {
 	update();
 	bool inside = false;
@@ -3134,7 +3134,7 @@ void PointObject::setPosition(const MapCoord& coord)
 	coords[0] = coord;
 }
 
-void PointObject::setPosition(MapCoordF coord)
+void PointObject::setPosition(const MapCoordF& coord)
 {
 	coords[0].setX(coord.x());
 	coords[0].setY(coord.y());
@@ -3174,7 +3174,7 @@ void PointObject::setRotation(qreal new_rotation)
 	}
 }
 
-void PointObject::setRotation(MapCoordF vector)
+void PointObject::setRotation(const MapCoordF& vector)
 {
 	setRotation(atan2(vector.x(), vector.y()));
 }

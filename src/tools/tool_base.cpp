@@ -154,7 +154,7 @@ const QCursor& MapEditorToolBase::getCursor() const
 
 
 
-void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	active_modifiers = event->modifiers();
 	cur_pos = event->pos();
@@ -180,7 +180,7 @@ void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coo
 }
 
 
-bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -200,7 +200,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	}
 }
 
-bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -223,7 +223,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	}
 }
 
-bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	

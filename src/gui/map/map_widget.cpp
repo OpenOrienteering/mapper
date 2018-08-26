@@ -245,7 +245,7 @@ QPointF MapWidget::mapToViewport(const MapCoord& input) const
 	return viewToViewport(view->mapToView(input));
 }
 
-QPointF MapWidget::mapToViewport(MapCoordF input) const
+QPointF MapWidget::mapToViewport(const MapCoordF& input) const
 {
 	return viewToViewport(view->mapToView(input));
 }
@@ -591,7 +591,7 @@ void MapWidget::setCoordsDisplay(CoordsType type)
 	updateCursorposLabel(last_cursor_pos);
 }
 
-void MapWidget::updateCursorposLabel(const MapCoordF pos)
+void MapWidget::updateCursorposLabel(const MapCoordF& pos)
 {
 	last_cursor_pos = pos;
 	

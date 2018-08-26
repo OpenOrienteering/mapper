@@ -94,7 +94,7 @@ public:
 signals:
 	/// Is emitted whenever a new position update happens.
 	/// If the accuracy is unknown, -1 will be given.
-	void mapPositionUpdated(MapCoordF coord, float accuracy);
+	void mapPositionUpdated(const MapCoordF& coord, float accuracy);
 	
 	/// Like mapPositionUpdated(), but gives the values as
 	/// latitude / longitude in degrees and also gives altitude

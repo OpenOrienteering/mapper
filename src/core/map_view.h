@@ -155,7 +155,7 @@ public:
 	QPointF mapToView(const MapCoord& coords) const;
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	QPointF mapToView(MapCoordF coords) const;
+	QPointF mapToView(const MapCoordF& coords) const;
 	
 	
 	/**

@@ -343,7 +343,7 @@ void PointSymbolEditorWidget::setVisible(bool visible)
 	QWidget::setVisible(visible);
 }
 
-bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
+bool PointSymbolEditorWidget::changeCurrentCoordinate(const MapCoordF& new_coord)
 {
 	Object* object = getCurrentElementObject();
 	if (object == midpoint_object)
@@ -379,7 +379,7 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 	return true;
 }
 
-bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
+bool PointSymbolEditorWidget::addCoordinate(const MapCoordF& new_coord)
 {
 	Object* object = getCurrentElementObject();
 	if (object == midpoint_object)
@@ -988,7 +988,7 @@ void PointSymbolEditorTool::init()
 	MapEditorTool::init();
 }
 
-bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)
+bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* map_widget)
 {
 	Q_UNUSED(map_widget);
 	if (event->button() == Qt::LeftButton)

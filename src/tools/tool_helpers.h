@@ -226,7 +226,7 @@ public:
 	 * 
 	 * TODO: widget parameter is only used for getMapView(). Replace by view parameter?
 	 */
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr);
+	MapCoord snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr);
 	
 	/**
 	 * Checks for existing objects in map at position and if one is found,
@@ -234,7 +234,7 @@ public:
 	 * Internally remembers the position so the next call to draw() will
 	 * draw the snap mark there.
 	 */
-	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
+	bool snapToDirection(const MapCoordF& position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
 	
 	/** Draws the snap mark which was last returned by snapToObject(). */
 	void draw(QPainter* painter, MapWidget* widget);

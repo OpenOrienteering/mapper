@@ -873,7 +873,7 @@ public:
 	 *     important for combined symbols, which can be found from a line or
 	 *     an area.
 	 */
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
@@ -882,7 +882,7 @@ public:
 	 * 
 	 * @see Map::findObjectsAt
 	 */
-	void findAllObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findAllObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
@@ -895,7 +895,7 @@ public:
 	 * @param include_protected_objects Set to true if you want to find protected objects.
 	 * @param out Output parameter. Will be filled with an object list.
 	 */
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
+	void findObjectsAtBox(const MapCoordF& corner1, const MapCoordF& corner2,
 		bool include_hidden_objects, bool include_protected_objects,
 		std::vector<Object*>& out) const;
 	

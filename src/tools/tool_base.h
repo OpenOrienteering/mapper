@@ -137,11 +137,11 @@ public:
 	 * This function is called by the other mouse*Event handlers of this class.
 	 * Derived classes which override the handlers may wish to call this, too.
 	 */
-	void mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	void mousePositionEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	bool keyPressEvent(QKeyEvent* event) override;
 	bool keyReleaseEvent(QKeyEvent* event) override;

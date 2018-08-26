@@ -108,7 +108,7 @@ const QCursor& DrawRectangleTool::getCursor() const
 	return cursor;
 }
 
-bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// Adjust flags to have possibly more recent state
 	auto modifiers = event->modifiers();
@@ -199,7 +199,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	return true;
 }
 
-bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawRectangleTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -240,7 +240,7 @@ void DrawRectangleTool::updateHover(bool mouse_down)
 	}
 }
 
-bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
@@ -285,11 +285,8 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 	return result;
 }
 
-bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
-	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -554,7 +551,7 @@ void DrawRectangleTool::undoLastPoint()
 	updateRectangle();
 }
 
-void DrawRectangleTool::pickDirection(MapCoordF coord, MapWidget* widget)
+void DrawRectangleTool::pickDirection(const MapCoordF& coord, MapWidget* widget)
 {
 	MapCoord snap_position;
 	snap_helper->snapToDirection(coord, widget, angle_helper.data(), &snap_position);

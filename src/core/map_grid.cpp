@@ -176,8 +176,10 @@ MapCoordF MapGrid::getClosestPointOnGrid(MapCoordF position, Map* map) const
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
 	position.rotate(final_rotation - M_PI / 2);
-	return MapCoordF(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset,
-					 qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset).rotated(-1 * (final_rotation - M_PI / 2));
+	position.setX(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset);
+	position.setY(qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset);
+	position.rotate(M_PI / 2 - final_rotation);
+	return position;
 }
 
 

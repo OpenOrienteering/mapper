@@ -128,7 +128,7 @@ void CutTool::objectSelectionChangedImpl()
 
 
 
-bool CutTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mousePressEvent(event, map_coord, widget);
@@ -144,7 +144,7 @@ bool CutTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget
 }
 
 
-bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseMoveEvent(event, map_coord, widget);
@@ -160,7 +160,7 @@ bool CutTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget*
 }
 
 
-bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseReleaseEvent(event, map_coord, widget);
@@ -175,7 +175,7 @@ bool CutTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 }
 
 
-bool CutTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool CutTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (path_tool)
 		return path_tool->mouseDoubleClickEvent(event, map_coord, widget);
@@ -293,7 +293,7 @@ void CutTool::startCuttingLine(const ObjectPathCoord& point)
 }
 
 
-void CutTool::updateCuttingLine(MapCoordF cursor_pos)
+void CutTool::updateCuttingLine(const MapCoordF& cursor_pos)
 {
 	Q_ASSERT(editingInProgress());
 	
@@ -639,7 +639,7 @@ void CutTool::drawImpl(QPainter* painter, MapWidget* widget)
 
 
 
-void CutTool::updateHoverState(MapCoordF cursor_pos)
+void CutTool::updateHoverState(const MapCoordF& cursor_pos)
 {
 	auto new_hover_state = HoverState { HoverFlag::OverNothing };
 	PathObject* new_hover_object = nullptr;
@@ -691,7 +691,7 @@ void CutTool::updateHoverState(MapCoordF cursor_pos)
 }
 
 
-ObjectPathCoord CutTool::findEditPoint(MapCoordF cursor_pos_map, int with_type, int without_type) const
+ObjectPathCoord CutTool::findEditPoint(const MapCoordF& cursor_pos_map, int with_type, int without_type) const
 {
 	ObjectPathCoord result;
 	if (hover_state == HoverFlag::OverObjectNode

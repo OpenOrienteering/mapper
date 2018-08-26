@@ -86,7 +86,7 @@ EditLineTool::~EditLineTool()
 	delete highlight_object;
 }
 
-bool EditLineTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -98,7 +98,7 @@ bool EditLineTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
-bool EditLineTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -110,7 +110,7 @@ bool EditLineTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
-bool EditLineTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -541,7 +541,7 @@ void EditLineTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditLineTool::updateHoverState(MapCoordF cursor_pos)
+void EditLineTool::updateHoverState(const MapCoordF& cursor_pos)
 {
 	HoverState new_hover_state = OverNothing;
 	const PathObject* new_hover_object = nullptr;

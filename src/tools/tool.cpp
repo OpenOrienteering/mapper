@@ -123,22 +123,22 @@ void MapEditorTool::draw(QPainter* /*painter*/, MapWidget* /*widget*/)
 }
 
 
-bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }

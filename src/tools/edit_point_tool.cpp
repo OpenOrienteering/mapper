@@ -105,7 +105,7 @@ bool EditPointTool::addDashPointDefault() const
 	         hover_object->getSymbol()->asLine()->getDashSymbol() != nullptr );
 }
 
-bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mousePressEvent(event, map_coord, widget))
@@ -121,7 +121,7 @@ bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
-bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mouseMoveEvent(event, map_coord, widget))
@@ -137,7 +137,7 @@ bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
-bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mouseReleaseEvent(event, map_coord, widget))
@@ -768,7 +768,7 @@ void EditPointTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditPointTool::updateHoverState(MapCoordF cursor_pos)
+void EditPointTool::updateHoverState(const MapCoordF& cursor_pos)
 {
 	HoverState new_hover_state = OverNothing;
 	const Object* new_hover_object = nullptr;

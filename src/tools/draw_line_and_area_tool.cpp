@@ -31,7 +31,6 @@
 #include <QPoint>
 
 #include "core/map.h"
-#include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
@@ -127,7 +126,7 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	}
 }
 
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int points_index)
+void DrawLineAndAreaTool::setPreviewPointsPosition(const MapCoordF& map_coord, int points_index)
 {
 	const auto& preview_point_vector = preview_points[std::size_t(points_index)];
 	for (auto* preview_point : preview_point_vector)

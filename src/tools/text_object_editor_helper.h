@@ -230,9 +230,9 @@ public:
 	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
 	bool inputMethodEvent(QInputMethodEvent* event);
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
 	
 	bool keyPressEvent(QKeyEvent* event);
 	bool keyReleaseEvent(QKeyEvent* event);
@@ -279,7 +279,7 @@ private:
 	/**
 	 * Adjusts the selection while dragging.
 	 */
-	void updateDragging(MapCoordF map_coord);
+	void updateDragging(const MapCoordF& map_coord);
 	
 	/**
 	 * Returns the area occupied by the text cursor.

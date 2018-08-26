@@ -55,7 +55,7 @@ public:
 	~DrawPointGPSTool() override;
 	
 public slots:
-	void newGPSPosition(MapCoordF coord, float accuracy);
+	void newGPSPosition(const MapCoordF& coord, float accuracy);
 	
 protected slots:
 	void activeSymbolChanged(const Symbol* symbol);

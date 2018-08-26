@@ -188,7 +188,7 @@ public:
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(const MapCoord& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoordF input) const;
+	QPointF mapToViewport(const MapCoordF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(const QPointF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
@@ -463,7 +463,7 @@ private:
 	 */
 	void updateZoomDisplay();
 	/** Updates the content of the cursorpos label, set by setCursorposLabel(). */
-	void updateCursorposLabel(const MapCoordF pos);
+	void updateCursorposLabel(const MapCoordF& pos);
 	
 	MapView* view;
 	MapEditorTool* tool;
