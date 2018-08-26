@@ -280,12 +280,12 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 			QCoreApplication::translate("QCocoaMenuItem", "Select All")
 		};
 		const auto menubar_actions = menuBar()->actions();
-		for (auto menubar_action : menubar_actions)
+		for (const auto* menubar_action : menubar_actions)
 		{
-			if (const auto menu = menubar_action->menu())
+			if (const auto* menu = menubar_action->menu())
 			{
 				const auto menu_actions = menu->actions();
-				for (auto action : menu_actions)
+				for (const auto* action : menu_actions)
 				{
 					if (action->menuRole() != QAction::TextHeuristicRole
 						|| action->isSeparator())

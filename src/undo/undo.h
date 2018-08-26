@@ -167,7 +167,7 @@ public:
 	 * 
 	 * @see saveImpl()
 	 */
-	void save(QXmlStreamWriter& xml);
+	void save(QXmlStreamWriter& xml) const;
 	
 protected:	
 	/**

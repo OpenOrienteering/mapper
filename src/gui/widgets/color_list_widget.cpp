@@ -430,7 +430,7 @@ void ColorListWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	const auto color = map->getColor(row);
+	const auto* color = map->getColor(row);
 	auto color_with_opacity = colorWithOpacity(*color);
 	
 	// Color preview

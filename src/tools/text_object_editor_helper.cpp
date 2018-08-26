@@ -754,8 +754,8 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->matches(QKeySequence::Paste))
 	{
-		const auto clipboard = QGuiApplication::clipboard();
-		const auto mime_data = clipboard->mimeData();
+		const auto* clipboard = QGuiApplication::clipboard();
+		const auto* mime_data = clipboard->mimeData();
 		
 		if (mime_data->hasText())
 			replaceSelectionText(clipboard->text());
@@ -886,7 +886,7 @@ void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::func
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
 	{
-		const auto line_info = text_object->getLineInfo(line);
+		const auto* line_info = text_object->getLineInfo(line);
 		if (line_info->end_index + 1 < begin)
 			continue;
 		if (end < line_info->start_index)

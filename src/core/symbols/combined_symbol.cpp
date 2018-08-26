@@ -249,7 +249,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("parts"), QString::number(num_parts));
 	
 	auto is_private = begin(private_parts);
-	for (const auto subsymbol : parts)
+	for (const auto* subsymbol : parts)
 	{
 		xml.writeStartElement(QString::fromLatin1("part"));
 		if (*is_private)

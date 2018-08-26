@@ -404,7 +404,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		auto original_icon = QImage{};
 		auto original_string = QString{};
 		auto compatible_symbols = Symbol::TypeCombination(Symbol::AllSymbols);
-		const auto replacement_symbol = item.symbol;
+		const auto* replacement_symbol = item.symbol;
 		
 		if (item.query.getOperator() == ObjectQuery::OperatorSymbol
 		    && item.query.symbolOperand())

@@ -157,7 +157,7 @@ void ObjectRenderables::draw(int map_color, const QColor& color, QPainter* paint
 		if (!state.activate(painter, current_clip, config, color, initial_clip))
 			continue;
 		
-		for (const auto renderable : config_renderables.second)
+		for (const auto* renderable : config_renderables.second)
 		{
 			if (renderable->intersects(config.bounding_box))
 			{
@@ -289,7 +289,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
 				    continue;
 				
-				for (const auto renderable : renderables.second)
+				for (const auto* renderable : renderables.second)
 				{
 #ifdef Q_OS_ANDROID
 					const QRectF& extent = renderable->getExtent();
@@ -559,7 +559,7 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				
 				// For each renderable that uses the current painter configuration...
 				// Render the renderable
-				for (const auto renderable : renderables.second)
+				for (const auto* renderable : renderables.second)
 				{
 					if (renderable->intersects(config.bounding_box))
 					{
@@ -603,7 +603,7 @@ void MapRenderables::removeRenderablesOfObject(const Object* object, bool mark_a
 					// ... because here it gets expensive
 					for (const auto& renderables : *obj->second)
 					{
-						for (const auto renderable : renderables.second)
+						for (const auto* renderable : renderables.second)
 						{
 							extent = extent.isValid() ? extent.united(renderable->getExtent()) : renderable->getExtent();
 						}
@@ -627,7 +627,7 @@ void MapRenderables::clear(bool mark_area_as_dirty)
 			{
 				for (const auto& renderables : *object.second)
 				{
-					for (const auto renderable : renderables.second)
+					for (const auto* renderable : renderables.second)
 					{
 						map->setObjectAreaDirty(renderable->getExtent());
 					}

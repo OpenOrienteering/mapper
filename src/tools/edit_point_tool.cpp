@@ -622,7 +622,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 			
 			if (num_selected_objects <= max_objects_for_handle_display)
 			{
-				for (const auto object: map()->selectedObjects())
+				for (const auto* object: map()->selectedObjects())
 				{
 					auto active = hover_state.testFlag(OverObjectNode) && hover_object == object;
 					auto hover_point = active ? this->hover_point : no_point;
@@ -786,7 +786,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 		{
 			// Try to find object node.
 			auto best_distance_sq = std::numeric_limits<double>::max();
-			for (const auto object : map()->selectedObjects())
+			for (const auto* object : map()->selectedObjects())
 			{
 				MapCoordF handle_pos;
 				auto hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), cur_map_widget, object, true, &handle_pos);

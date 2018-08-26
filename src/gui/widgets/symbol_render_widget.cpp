@@ -831,7 +831,7 @@ void SymbolRenderWidget::deleteSymbols()
 	}
 	
 	// delete symbols in order
-	for (const auto symbol : saved_selection)
+	for (auto* symbol : saved_selection)
 	{
 		if (map->existsObjectWithSymbol(symbol))
 		{

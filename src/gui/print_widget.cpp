@@ -519,7 +519,7 @@ void PrintWidget::setActive(bool active)
 void PrintWidget::updateTargets()
 {
 	QVariant current_target = target_combo->itemData(target_combo->currentIndex());
-	const auto saved_printer = map_printer->getTarget();
+	const auto* saved_printer = map_printer->getTarget();
 	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString{};
 	int saved_target_index = -1;
 	int default_printer_index = -1;

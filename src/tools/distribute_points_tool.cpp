@@ -57,7 +57,7 @@ bool DistributePointsTool::showSettingsDialog(
 }
 
 void DistributePointsTool::execute(
-        PathObject* path,
+        const PathObject* path,
         PointSymbol* point,
         const DistributePointsTool::Settings& settings,
         std::vector<PointObject*>& out_objects )
@@ -65,7 +65,7 @@ void DistributePointsTool::execute(
 	path->update();
 	
 	// This places the points only on the first part.
-	PathPart& part = path->parts().front();
+	const auto& part = path->parts().front();
 	
 	// Check how to distribute the points over the part length
 	int total, start, end;

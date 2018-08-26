@@ -1049,7 +1049,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 			quint16 number = 0;
 			for (auto i = 0; i < num_colors; ++i)
 			{
-				const auto current = map->getColor(i);
+				const auto* current = map->getColor(i);
 				if (current == color)
 					break;
 				if (current->getSpotColorMethod() == MapColor::SpotColor)
@@ -1086,7 +1086,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto color = map->getColor(i);
+			const auto* color = map->getColor(i);
 			const auto& cmyk = color->getCmyk();
 			// OC*D stores CMYK values as integers from 0-200.
 			auto ocd_cmyk = Ocd::CmykV8 {
@@ -1228,7 +1228,7 @@ void OcdFileExport::exportSetup()
 		SpotColorComponents all_spot_colors;
 		for (int i = 0; i < num_colors; ++i)
 		{
-			const auto color = map->getColor(i);
+			const auto* color = map->getColor(i);
 			if (color->getSpotColorMethod() == MapColor::SpotColor)
 			{
 				all_spot_colors.push_back({color, 1});
@@ -1243,7 +1243,7 @@ void OcdFileExport::exportSetup()
 	
 	for (int i = 0; i < num_colors; ++i)
 	{
-		const auto color = map->getColor(i);
+		const auto* color = map->getColor(i);
 		if (color->getSpotColorMethod() == MapColor::SpotColor)
 		{
 			addParameterString(10, stringForSpotColor(spot_number++, *color));
@@ -1267,7 +1267,7 @@ void OcdFileExport::exportSymbols(OcdFile<Format>& file)
 	// First pass: Collect unique symbol numbers (i.e. skip duplicates)
 	for (int i = 0; i < num_symbols; ++i)
 	{
-		const auto symbol = map->getSymbol(i);
+		const auto* symbol = map->getSymbol(i);
 		auto number = makeSymbolNumber(symbol, Format::BaseSymbol::symbol_number_factor);
 		auto matches_symbol_number = [number](const auto& entry) { return number == entry.second; };
 		if (!std::any_of(begin(symbol_numbers), end(symbol_numbers), matches_symbol_number))
@@ -1277,7 +1277,7 @@ void OcdFileExport::exportSymbols(OcdFile<Format>& file)
 	// Second pass: Turn duplicate symbol numbers into unique numbers
 	for (int i = 0; i < num_symbols; ++i)
 	{
-		const auto symbol = map->getSymbol(i);
+		const auto* symbol = map->getSymbol(i);
 		if (symbol_numbers.find(symbol) != end(symbol_numbers))
 			continue;
 			
@@ -1290,7 +1290,7 @@ void OcdFileExport::exportSymbols(OcdFile<Format>& file)
 	{
 		QByteArray ocd_symbol;
 		
-		const auto symbol = map->getSymbol(i);
+		const auto* symbol = map->getSymbol(i);
 		switch(symbol->getType())
 		{
 		case Symbol::Point:
@@ -2719,7 +2719,7 @@ void OcdFileExport::exportTemplates()
 {
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
-		const auto temp = map->getTemplate(i);
+		const auto* temp = map->getTemplate(i);
 		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0
 		    || QFileInfo(temp->getTemplatePath()).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
 		{

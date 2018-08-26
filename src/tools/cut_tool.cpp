@@ -114,7 +114,7 @@ void CutTool::updateStatusText()
 
 void CutTool::objectSelectionChangedImpl()
 {
-	for (const auto object : map()->selectedObjects())
+	for (const auto* object : map()->selectedObjects())
 	{
 		if (object->getSymbol()->getContainedTypes() & (Symbol::Line | Symbol::Area))
 		{
@@ -590,7 +590,7 @@ int CutTool::updateDirtyRectImpl(QRectF& rect)
 	}
 	else if (map->selectedObjects().size() <= max_objects_for_handle_display)
 	{
-		for (const auto object : map->selectedObjects())
+		for (const auto* object : map->selectedObjects())
 			object->includeControlPointsRect(rect);
 	}
 	
@@ -612,7 +612,7 @@ void CutTool::drawImpl(QPainter* painter, MapWidget* widget)
 	}
 	else if (map->selectedObjects().size() <= max_objects_for_handle_display)
 	{
-		for (const auto object: map->selectedObjects())
+		for (const auto* object: map->selectedObjects())
 		{
 			auto hover_point = MapCoordVector::size_type { hover_object == object ? this->hover_point : no_point };
 			pointHandles().draw(painter, widget, object, hover_point, false);
@@ -658,7 +658,7 @@ void CutTool::updateHoverState(MapCoordF cursor_pos)
 	else if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 	{
 		auto best_distance_sq = std::numeric_limits<double>::max();
-		for (const auto object : map()->selectedObjects())
+		for (auto* object : map()->selectedObjects())
 		{
 			if (object->getType() != Object::Path)
 				continue;
@@ -705,7 +705,7 @@ ObjectPathCoord CutTool::findEditPoint(MapCoordF cursor_pos_map, int with_type, 
 		// Check if a line segment was clicked
 		const auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		auto min_distance_sq = float(qMin(999999.9, click_tolerance_map * click_tolerance_map));
-		for (const auto object : map()->selectedObjects())
+		for (auto* object : map()->selectedObjects())
 		{
 			if (object->getType() != Object::Path
 			    || !(object->getSymbol()->getContainedTypes() & with_type)

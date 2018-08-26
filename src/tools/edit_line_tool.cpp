@@ -470,7 +470,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 		
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
-			for (const auto object: map()->selectedObjects())
+			for (const auto* object: map()->selectedObjects())
 			{
 				auto hover_point = std::numeric_limits<MapCoordVector::size_type>::max();
 				pointHandles().draw(painter, widget, object, hover_point, false, PointHandles::DisabledHandleState);

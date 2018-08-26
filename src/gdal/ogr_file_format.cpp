@@ -383,7 +383,7 @@ namespace {
 		style.reserve(200);
 		for (auto i = combined_symbol->getNumParts() - 1; i >= 0; i--)
 		{
-			const auto subsymbol = combined_symbol->getPart(i);
+			const auto* subsymbol = combined_symbol->getPart(i);
 			if (subsymbol)
 			{
 				switch (subsymbol->getType())
@@ -1665,23 +1665,23 @@ bool OgrFileExport::exportImplementation()
 	populateStyleTable(symbols);
 
 	auto is_point_object = [](const Object* object) {
-		const auto symbol = object->getSymbol();
+		const auto* symbol = object->getSymbol();
 		return symbol && symbol->getContainedTypes() & Symbol::Point;
 	};
 
 	auto is_text_object = [](const Object* object) {
-		const auto symbol = object->getSymbol();
+		const auto* symbol = object->getSymbol();
 		return symbol && symbol->getContainedTypes() & Symbol::Text;
 	};
 
 	auto is_line_object = [](const Object* object) {
-		const auto symbol = object->getSymbol();
+		const auto* symbol = object->getSymbol();
 		return symbol && (symbol->getType() == Symbol::Line
 		                  || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)));
 	};
 
 	auto is_area_object = [](const Object* object) {
-		const auto symbol = object->getSymbol();
+		const auto* symbol = object->getSymbol();
 		return symbol && symbol->getContainedTypes() & Symbol::Area;
 	};
 
@@ -1731,7 +1731,7 @@ bool OgrFileExport::exportImplementation()
 				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 				if (layer != nullptr)
 					addPointsToLayer(layer, [&symbol](const Object* object) {
-						const auto sym = object->getSymbol();
+						const auto* sym = object->getSymbol();
 						return sym == symbol;
 					});
 			}
@@ -1740,7 +1740,7 @@ bool OgrFileExport::exportImplementation()
 				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
 				if (layer != nullptr)
 					addTextToLayer(layer, [&symbol](const Object* object) {
-						const auto sym = object->getSymbol();
+						const auto* sym = object->getSymbol();
 						return sym == symbol;
 					});
 			}
@@ -1755,7 +1755,7 @@ bool OgrFileExport::exportImplementation()
 				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
 				if (layer != nullptr)
 					addLinesToLayer(layer, [&symbol](const Object* object) {
-						const auto sym = object->getSymbol();
+						const auto* sym = object->getSymbol();
 						return sym == symbol;
 					});
 			}
@@ -1769,7 +1769,7 @@ bool OgrFileExport::exportImplementation()
 				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
 				if (layer != nullptr)
 					addAreasToLayer(layer, [&symbol](const Object* object) {
-						const auto sym = object->getSymbol();
+						const auto* sym = object->getSymbol();
 						return sym == symbol;
 					});
 			}
@@ -1982,8 +1982,8 @@ void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (c
 	const auto& georef = map->getGeoreferencing();
 
 	auto add_feature = [&](const Object* object) {
-		const auto symbol = object->getSymbol();
-		const auto path = object->asPath();
+		const auto* symbol = object->getSymbol();
+		const auto* path = object->asPath();
 		if (path->parts().size() < 1)
 			return;
 
@@ -2023,8 +2023,8 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 	const auto& georef = map->getGeoreferencing();
 
 	auto add_feature = [&](const Object* object) {
-		const auto symbol = object->getSymbol();
-		const auto path = object->asPath();
+		const auto* symbol = object->getSymbol();
+		const auto* path = object->asPath();
 		if (path->parts().size() < 1)
 			return;
 
