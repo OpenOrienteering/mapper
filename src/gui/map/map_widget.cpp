@@ -245,7 +245,7 @@ QPointF MapWidget::mapToViewport(const MapCoord& input) const
 	return viewToViewport(view->mapToView(input));
 }
 
-QPointF MapWidget::mapToViewport(const MapCoordF& input) const
+QPointF MapWidget::mapToViewport(const QPointF& input) const
 {
 	return viewToViewport(view->mapToView(input));
 }
