@@ -20,10 +20,8 @@
 
 #include "georeferencing.h"
 
-#include <cstddef>
 #include <algorithm>
 #include <iterator>
-#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>

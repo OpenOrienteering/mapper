@@ -20,8 +20,6 @@
 
 #include "file_format.h"
 
-#include <QCoreApplication>
-
 #include "file_import_export.h"
 
 
