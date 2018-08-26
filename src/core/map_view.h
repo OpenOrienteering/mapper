@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2016  Kai Pastor
+ *    Copyright 2014-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -138,14 +138,8 @@ public:
 	void updateAllMapWidgets();
 	
 	
-	/** Converts x, y (with origin at the center of the view) to map coordinates */
-	MapCoord viewToMap(double x, double y) const;
-	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
 	MapCoord viewToMap(const QPointF& point) const;
-	
-	/** Converts x, y (with origin at the center of the view) to map coordinates */
-	MapCoordF viewToMapF(double x, double y) const;
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
 	MapCoordF viewToMapF(const QPointF& point) const;
@@ -409,7 +403,6 @@ private:
 	
 	QTransform view_to_map;
 	QTransform map_to_view;
-	QTransform world_transform;
 	
 	TemplateVisibility map_visibility;
 	TemplateVisibilityVector template_visibilities;
@@ -445,19 +438,19 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 inline
 MapCoord MapView::viewToMap(const QPointF& point) const
 {
-	return viewToMap(point.x(), point.y());
+	return MapCoord(view_to_map.map(point));
 }
 
 inline
 MapCoordF MapView::viewToMapF(const QPointF& point) const
 {
-	return viewToMapF(point.x(), point.y());
+	return MapCoordF(view_to_map.map(point));
 }
 
 inline
 const QTransform& MapView::worldTransform() const
 {
-	return world_transform;
+	return map_to_view;
 }
 
 inline

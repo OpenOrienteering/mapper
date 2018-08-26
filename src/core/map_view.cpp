@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2016  Kai Pastor
+ *    Copyright 2014-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -202,28 +202,14 @@ void MapView::updateAllMapWidgets()
 	emit visibilityChanged(MultipleFeatures, true);
 }
 
-MapCoord MapView::viewToMap(double x, double y) const
-{
-	return MapCoord(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
-}
-
-MapCoordF MapView::viewToMapF(double x, double y) const
-{
-	return MapCoordF(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                 view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
-}
-
 QPointF MapView::mapToView(const MapCoord& coords) const
 {
-	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
-	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
+	return map_to_view.map(MapCoordF(coords));
 }
 
 QPointF MapView::mapToView(const QPointF& coords) const
 {
-	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
-	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
+	return map_to_view.map(coords);
 }
 
 qreal MapView::lengthToPixel(qreal length) const
@@ -348,11 +334,11 @@ void MapView::updateTransform()
 	auto center_y = center_pos.y();
 	
 	// Create map_to_view
-	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * center_x + final_zoom_sinr * center_y,
-	                      final_zoom_sinr,  final_zoom_cosr, -final_zoom_sinr * center_x - final_zoom_cosr * center_y,
-	                      0, 0, 1);
-	view_to_map     = map_to_view.inverted();
-	world_transform = map_to_view.transposed();
+	map_to_view = { final_zoom_cosr,  final_zoom_sinr,
+	                -final_zoom_sinr, final_zoom_cosr,
+	                -final_zoom_cosr * center_x + final_zoom_sinr * center_y,
+	                -final_zoom_sinr * center_x - final_zoom_cosr * center_y };
+	view_to_map = map_to_view.inverted();
 }
 
 
