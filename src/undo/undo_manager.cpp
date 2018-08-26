@@ -26,6 +26,7 @@
 #include <limits>
 #include <set>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QFlags>
 #include <QIODevice>

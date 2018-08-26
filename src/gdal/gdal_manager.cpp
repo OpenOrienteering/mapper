@@ -19,6 +19,8 @@
 
 #include "gdal_manager.h"
 
+#include <cstddef>
+
 #include <cpl_conv.h>
 #include <gdal.h> // IWYU pragma: keep
 #include <ogr_api.h>
