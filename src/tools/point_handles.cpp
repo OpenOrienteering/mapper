@@ -105,14 +105,14 @@ void PointHandles::draw(
 		painter->setBrush(Qt::NoBrush); // for handle lines
 		for (const auto& part : object->asPath()->parts())
 		{
-			auto path = part.path;
+			const auto* path = part.path;
 
 			bool have_curve = part.isClosed() && part.size() > 3 && path->getCoordinate(part.last_index - 3).isCurveStart();
 			PointHandleType handle_type = NormalHandle;
 			
 			for (auto i = part.first_index; i <= part.last_index; ++i)
 			{
-				MapCoord coord = path->getCoordinate(i);
+				const MapCoord& coord = path->getCoordinate(i);
 				if (coord.isClosePoint())
 					continue;
 				QPointF point = widget->mapToViewport(coord);

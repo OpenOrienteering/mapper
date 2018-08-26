@@ -366,7 +366,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			}
 			else if (object->getType() == Object::Path)
 			{
-				PathObject* path = object->asPath();
+				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
 					PathCoord path_coord;

@@ -297,7 +297,7 @@ MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const Ma
 	}
 	else if (object->getType() == Object::Path)
 	{
-		const PathObject* path = reinterpret_cast<const PathObject*>(object);
+		const auto* path = static_cast<const PathObject*>(object);
 		auto size = path->getCoordinateCount();
 		
 		auto best_dist_sq = click_tolerance_squared;

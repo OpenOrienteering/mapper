@@ -145,7 +145,7 @@ void EditTool::setupAngleHelperFromEditedObjects()
 		}
 		else if (object->getType() == Object::Path)
 		{
-			auto path = object->asPath();
+			const auto* path = object->asPath();
 			// Maps angles to the path distance covered by them
 			std::map<qreal, qreal> path_directions;
 			

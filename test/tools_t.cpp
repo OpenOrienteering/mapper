@@ -178,8 +178,8 @@ void ToolsTest::editTool()
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object
-	MapWidget* map_widget = editor.map_widget;
-	PathObject* object = map.line_object;
+	const MapWidget* map_widget = editor.map_widget;
+	const PathObject* object = map.line_object;
 	
 	const MapCoord& coord = object->getCoordinate(0);
 	QPointF drag_start_pos = map_widget->mapToViewport(coord);

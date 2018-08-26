@@ -189,9 +189,7 @@ void EditPointTool::clickPress()
 			hover_point = path->subdivide(path_coord);
 			if (addDashPointDefault() ^ switch_dash_points)
 			{
-				MapCoord point = path->getCoordinate(hover_point);
-				point.setDashPoint(true);
-				path->setCoordinate(hover_point, point);
+				path->getCoordinate(hover_point).setDashPoint(true);
 				map()->emitSelectionEdited();
 			}
 			startEditingSetup();

@@ -53,6 +53,7 @@
 #include "gui/widgets/key_button_bar.h"
 #include "tools/tool.h"
 #include "tools/tool_helpers.h"
+#include "util/backports.h"
 #include "util/util.h"
 
 
@@ -156,7 +157,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			
 			// Add new point
 			auto cur_point_index = angles.size();
-			if (!preview_path->getCoordinate(cur_point_index).isPositionEqualTo(preview_path->getCoordinate(cur_point_index - 1)))
+			if (!qAsConst(preview_path)->getCoordinate(cur_point_index).isPositionEqualTo(qAsConst(preview_path)->getCoordinate(cur_point_index - 1)))
 			{
 				MapCoord coord = MapCoord(cur_pos_map);
 				coord.setDashPoint(draw_dash_points);
@@ -168,6 +169,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 				}
 				angles.push_back(0);
 				
+				// preview_path was modified. Non-const getCoordinate is fine.
 				angle_helper->setActive(true, MapCoordF(preview_path->getCoordinate(cur_point_index)));
 				angle_helper->clearAngles();
 				angle_helper->addAngles(angles[0], M_PI/4);
@@ -182,6 +184,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	}
 	else if (event->button() == Qt::RightButton && editingInProgress())
 	{
+		// preview_path is going to be modified. Non-const getCoordinate is fine.
 		constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 		undoLastPoint();
 		if (editingInProgress()) // despite undoLastPoint()
@@ -270,6 +273,7 @@ bool DrawRectangleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coor
 		{
 			if (!dragging)
 			{
+				// preview_path is going to be modified. Non-const getCoordinate is fine.
 				constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 				undoLastPoint();
 			}
@@ -307,6 +311,7 @@ bool DrawRectangleTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_
 		}
 		else
 		{
+			// preview_path is going to be modified. Non-const getCoordinate is fine.
 			constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 			undoLastPoint();
 			finishDrawing();
@@ -329,6 +334,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 			}
 			else
 			{
+				// preview_path is going to be modified. Non-const getCoordinate is fine.
 				constrained_pos_map = MapCoordF(preview_path->getCoordinate(angles.size() - 1));
 				undoLastPoint();
 				finishDrawing();
@@ -371,7 +377,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		{
 			angle_helper->clearAngles();
 			angle_helper->addDefaultAnglesDeg(0);
-			angle_helper->setActive(true, MapCoordF(preview_path->getCoordinate(0)));
+			angle_helper->setActive(true, MapCoordF(qAsConst(preview_path)->getCoordinate(0)));
 			if (dragging)
 				updateRectangle();
 		}
@@ -542,6 +548,7 @@ void DrawRectangleTool::undoLastPoint()
 	forward_vector = MapCoordF(1, 0);
 	forward_vector.rotate(-angles[angles.size() - 1]);
 	
+	// preview_path was modified. Non-const getCoordinate is fine.
 	angle_helper->setCenter(MapCoordF(preview_path->getCoordinate(angles.size() - 1)));
 	
 	updateRectangle();
@@ -570,7 +577,7 @@ MapCoordF DrawRectangleTool::calculateClosingVector() const
 	close_vector.rotate(-angles[0]);
 	if (drawingParallelTo(angles[0]))
 		close_vector = close_vector.perpRight();
-	if (MapCoordF::dotProduct(close_vector, MapCoordF(preview_path->getCoordinate(0) - preview_path->getCoordinate(cur_point_index - 1))) < 0)
+	if (MapCoordF::dotProduct(close_vector, MapCoordF(qAsConst(preview_path)->getCoordinate(0) - qAsConst(preview_path)->getCoordinate(cur_point_index - 1))) < 0)
 		close_vector = -close_vector;
 	return close_vector;
 }
@@ -593,6 +600,7 @@ void DrawRectangleTool::updateRectangle()
 	if (angles.size() == 1)
 	{
 		// Update vectors and angles
+		// preview_path is going to be modified. Non-const getCoordinate is fine.
 		forward_vector = constrained_pos_map - MapCoordF(preview_path->getCoordinate(0));
 		forward_vector.normalize();
 		
@@ -614,6 +622,7 @@ void DrawRectangleTool::updateRectangle()
 		auto cur_point_index = angles.size();
 		deleteClosePoint();
 		
+		// preview_path was be modified. Non-const getCoordinate is fine.
 		auto forward_dist = MapCoordF::dotProduct(forward_vector, constrained_pos_map - MapCoordF(preview_path->getCoordinate(cur_point_index - 1)));
 		MapCoord coord = preview_path->getCoordinate(cur_point_index - 1) + MapCoord(forward_dist * forward_vector);
 		

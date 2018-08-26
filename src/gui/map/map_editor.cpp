@@ -2920,19 +2920,19 @@ void MapEditorController::switchDashesClicked()
 }
 
 /// \todo Review use of container API
-float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObject* a, int a_index, PathPartVector::size_type path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
+float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, const PathObject* a, int a_index, PathPartVector::size_type path_part_a, bool path_part_a_begin, PathObject** out_b, int* out_b_index, int* out_path_part_b, bool* out_path_part_b_begin)
 {
 	float best_dist_sq = std::numeric_limits<float>::max();
 	for (int i = a_index; i < (int)objects.size(); ++i)
 	{
-		PathObject* b = reinterpret_cast<PathObject*>(objects[i]);
+		const auto* b = static_cast<const PathObject*>(objects[i]);
 		if (b->getSymbol() != a->getSymbol())
 			continue;
 		
 		auto num_parts = b->parts().size();
 		for (PathPartVector::size_type path_part_b = (a == b) ? path_part_a : 0; path_part_b < num_parts; ++path_part_b)
 		{
-			PathPart& part = b->parts()[path_part_b];
+			const PathPart& part = b->parts()[path_part_b];
 			if (!part.isClosed())
 			{
 				for (int begin = 0; begin < 2; ++begin)
@@ -2941,13 +2941,13 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, PathObjec
 					if (a == b && path_part_a == path_part_b && path_part_a_begin == path_part_b_begin)
 						continue;
 					
-					MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
-					MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
+					const MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
+					const MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
 					float distance_sq = coord_a.distanceSquaredTo(coord_b);
 					if (distance_sq < best_dist_sq)
 					{
 						best_dist_sq = distance_sq;
-						*out_b = b;
+						*out_b = const_cast<PathObject*>(b);  // = /* non-const */ object[i]
 						*out_b_index = i;
 						*out_path_part_b = path_part_b;
 						*out_path_part_b_begin = path_part_b_begin;

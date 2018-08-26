@@ -368,10 +368,9 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		auto coord_index = MapCoordVector::size_type(table_row);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
 		
-		MapCoord coord = path->getCoordinate(coord_index);
+		MapCoord& coord = path->getCoordinate(coord_index);
 		coord.setX(new_coord.x());
 		coord.setY(new_coord.y() - offset_y);
-		path->setCoordinate(coord_index, coord);
 	}
 	
 	updateCoordsTable();
@@ -669,6 +668,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	Q_ASSERT(object->getType() == Object::Path);
 	auto path = static_cast<PathObject*>(object);
 	
+	// path is likely to be modified. Non-const getCoordinate is fine.
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
 		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
 	
@@ -710,6 +710,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		{
 			auto path = static_cast<PathObject*>(object);
 			Q_ASSERT(coord_index < path->getCoordinateCount());
+			// path is going to be modified. Non-const getCoordinate is fine.
 			coord = path->getCoordinate(coord_index);
 		}
 		
@@ -749,9 +750,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		Q_ASSERT(object->getType() == Object::Path);
 		auto path = static_cast<PathObject*>(object);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
-		MapCoord coord = path->getCoordinate(coord_index);
-		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
-		path->setCoordinate(coord_index, coord);
+		path->getCoordinate(coord_index).setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		
 		updateCoordsTable();
 		map->updateAllObjectsWithSymbol(symbol);
@@ -881,9 +880,9 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	
 	MapCoordF coordF(0, 0);
 	if (object->getType() == Object::Point)
-		coordF = static_cast<PointObject*>(object)->getCoordF();
+		coordF = static_cast<const PointObject*>(object)->getCoordF();
 	else if (object->getType() == Object::Path)
-		coordF = MapCoordF(static_cast<PathObject*>(object)->getCoordinate(coord_index));
+		coordF = MapCoordF(static_cast<const PathObject*>(object)->getCoordinate(coord_index));
 	
 	QLocale locale;
 	coords_table->item(row, 0)->setText(locale.toString(coordF.x(), 'f', 3));
@@ -891,7 +890,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	
 	if (object->getType() == Object::Path)
 	{
-		auto path = static_cast<PathObject*>(object);
+		auto path = static_cast<const PathObject*>(object);
 		bool has_curve_start_box = coord_index+3 < path->getCoordinateCount()
 		                           && (!path->getCoordinate(coord_index+1).isCurveStart() && !path->getCoordinate(coord_index+2).isCurveStart())
 		                           && (row <= 0 || !path->getCoordinate(coord_index-1).isCurveStart())
@@ -917,7 +916,7 @@ void PointSymbolEditorWidget::updateDeleteCoordButton()
 	
 	if (!is_point)
 	{
-		auto path = static_cast<PathObject*>(getCurrentElementObject());
+		auto path = static_cast<const PathObject*>(getCurrentElementObject());
 		for (int i = 1; i < 4; i++)
 		{
 			int row = coords_table->currentRow() - i;
