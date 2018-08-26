@@ -264,7 +264,7 @@ QRectF MapView::calculateViewBoundingBox(QRectF rect) const
 	return rect;
 }
 
-void MapView::setPanOffset(QPoint offset)
+void MapView::setPanOffset(const QPoint& offset)
 {
 	if (offset != pan_offset)
 	{
@@ -273,7 +273,7 @@ void MapView::setPanOffset(QPoint offset)
 	}
 }
 
-void MapView::finishPanning(QPoint offset)
+void MapView::finishPanning(const QPoint& offset)
 {
 	setPanOffset({0,0});
 	try

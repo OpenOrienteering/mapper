@@ -72,9 +72,9 @@ struct TestMapEditor
 	TestMapEditor& operator=(const TestMapEditor&) = delete;
 	~TestMapEditor();
 	
-	void simulateClick(QPoint pos);
+	void simulateClick(const QPoint& pos);
 	void simulateClick(const QPointF& pos);
-	void simulateDrag(QPoint start_pos, QPoint end_pos);
+	void simulateDrag(const QPoint& start_pos, const QPoint& end_pos);
 	void simulateDrag(const QPointF& start_pos, const QPointF& end_pos);
 };
 
@@ -131,7 +131,7 @@ TestMapEditor::~TestMapEditor()
 	window->deleteLater();
 }
 
-void TestMapEditor::simulateClick(QPoint pos)
+void TestMapEditor::simulateClick(const QPoint& pos)
 {
 	QTest::mouseClick(map_widget, Qt::LeftButton, nullptr, pos);
 }
@@ -141,7 +141,7 @@ void TestMapEditor::simulateClick(const QPointF& pos)
 	simulateClick(pos.toPoint());
 }
 
-void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
+void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 {
 	QTest::mousePress(map_widget, Qt::LeftButton, nullptr, start_pos);
 	

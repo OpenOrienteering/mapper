@@ -70,8 +70,8 @@ public:
 	
 	inline TemplateAdjustDockWidget* getDockWidget() const {return dock;}
 	
-	static void drawCross(QPainter* painter, QPoint midpoint, QColor color);
-	static int findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src);
+	static void drawCross(QPainter* painter, const QPoint& midpoint, QColor color);
+	static int findHoverPoint(Template* temp, const QPoint& mouse_pos, MapWidget* widget, bool& point_src);
 	static bool calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
@@ -161,7 +161,7 @@ public:
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	void findHoverPoint(QPoint mouse_pos, MapWidget* map_widget);
+	void findHoverPoint(const QPoint& mouse_pos, MapWidget* map_widget);
 	
 	int active_point;			// -1 if no point active
 	bool active_point_is_src;

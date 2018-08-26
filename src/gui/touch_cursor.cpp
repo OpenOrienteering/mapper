@@ -171,7 +171,7 @@ void TouchCursor::paint(QPainter* painter)
 	painter->drawEllipse(cursor_pos + QPointF(0, touchPosOffsetPx()), controlRingRadiusPx(), controlRingRadiusPx());
 }
 
-bool TouchCursor::touchedControl(QPoint pos, TouchCursor::ControlID* out_id)
+bool TouchCursor::touchedControl(const QPoint& pos, TouchCursor::ControlID* out_id)
 {
 	QPointF cursor_pos = map_widget->mapToViewport(cursor_coord);
 	QPointF control_ring_center = cursor_pos + QPointF(0, touchPosOffsetPx());

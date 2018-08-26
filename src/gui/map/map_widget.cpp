@@ -190,7 +190,7 @@ QRectF MapWidget::viewportToView(const QRect& input) const
 	return QRectF(input.left() - 0.5*width() - pan_offset.x(), input.top() - 0.5*height() - pan_offset.y(), input.width(), input.height());
 }
 
-QPointF MapWidget::viewportToView(QPoint input) const
+QPointF MapWidget::viewportToView(const QPoint& input) const
 {
 	return QPointF(input.x() - 0.5*width() - pan_offset.x(), input.y() - 0.5*height() - pan_offset.y());
 }
@@ -212,7 +212,7 @@ QRectF MapWidget::viewToViewport(const QRect& input) const
 	return QRectF(input.left() + 0.5*width() + pan_offset.x(), input.top() + 0.5*height() + pan_offset.y(), input.width(), input.height());
 }
 
-QPointF MapWidget::viewToViewport(QPoint input) const
+QPointF MapWidget::viewToViewport(const QPoint& input) const
 {
 	return QPointF(input.x() + 0.5*width() + pan_offset.x(), input.y() + 0.5*height() + pan_offset.y());
 }
@@ -225,12 +225,12 @@ QPointF MapWidget::viewToViewport(QPointF input) const
 }
 
 
-MapCoord MapWidget::viewportToMap(QPoint input) const
+MapCoord MapWidget::viewportToMap(const QPoint& input) const
 {
 	return view->viewToMap(viewportToView(input));
 }
 
-MapCoordF MapWidget::viewportToMapF(QPoint input) const
+MapCoordF MapWidget::viewportToMapF(const QPoint& input) const
 {
 	return view->viewToMapF(viewportToView(input));
 }
@@ -272,13 +272,13 @@ void MapWidget::viewChanged(MapView::ChangeFlags changes)
 		updateZoomDisplay();
 }
 
-void MapWidget::setPanOffset(QPoint offset)
+void MapWidget::setPanOffset(const QPoint& offset)
 {
 	pan_offset = offset;
 	update();
 }
 
-void MapWidget::startDragging(QPoint cursor_pos)
+void MapWidget::startDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(!dragging);
 	Q_ASSERT(!pinching);
@@ -288,13 +288,13 @@ void MapWidget::startDragging(QPoint cursor_pos)
 	setCursor(Qt::ClosedHandCursor);
 }
 
-void MapWidget::updateDragging(QPoint cursor_pos)
+void MapWidget::updateDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(dragging);
 	view->setPanOffset(cursor_pos - drag_start_pos);
 }
 
-void MapWidget::finishDragging(QPoint cursor_pos)
+void MapWidget::finishDragging(const QPoint& cursor_pos)
 {
 	Q_ASSERT(dragging);
 	dragging = false;
@@ -309,7 +309,7 @@ void MapWidget::cancelDragging()
 	setCursor(normal_cursor);
 }
 
-qreal MapWidget::startPinching(QPoint center)
+qreal MapWidget::startPinching(const QPoint& center)
 {
 	Q_ASSERT(!dragging);
 	Q_ASSERT(!pinching);
@@ -320,7 +320,7 @@ qreal MapWidget::startPinching(QPoint center)
 	return pinching_factor;
 }
 
-void MapWidget::updatePinching(QPoint center, qreal factor)
+void MapWidget::updatePinching(const QPoint& center, qreal factor)
 {
 	Q_ASSERT(pinching);
 	pinching_center = center;
@@ -329,7 +329,7 @@ void MapWidget::updatePinching(QPoint center, qreal factor)
 	update();
 }
 
-void MapWidget::finishPinching(QPoint center, qreal factor)
+void MapWidget::finishPinching(const QPoint& center, qreal factor)
 {
 	pinching = false;
 	view->finishPanning(center - drag_start_pos);

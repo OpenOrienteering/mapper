@@ -158,7 +158,7 @@ void PieMenu::setActiveAction(QAction* action)
 	}
 }
 
-void PieMenu::popup(const QPoint pos)
+void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
 	

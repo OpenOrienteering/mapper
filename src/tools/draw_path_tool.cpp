@@ -1124,7 +1124,7 @@ void DrawPathTool::finishFollowing()
 	updateAngleHelper();
 }
 
-qreal DrawPathTool::calculateRotation(QPoint mouse_pos, const MapCoordF& mouse_pos_map) const
+qreal DrawPathTool::calculateRotation(const QPoint& mouse_pos, const MapCoordF& mouse_pos_map) const
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());

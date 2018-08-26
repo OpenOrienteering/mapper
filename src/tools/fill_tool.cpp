@@ -346,7 +346,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	}
 }
 
-int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary)
+int FillTool::traceBoundary(const QImage& image, const QPoint& free_pixel, const QPoint& boundary_pixel, std::vector<QPoint>& out_boundary)
 {
 	Q_ASSERT(image.pixel(free_pixel) == background);
 	Q_ASSERT(image.pixel(boundary_pixel) != background);

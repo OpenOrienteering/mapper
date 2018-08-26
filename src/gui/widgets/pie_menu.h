@@ -114,7 +114,7 @@ public:
 	
 	/** Shows the menu at the given absolute position.
 	 *  @see QMenu::popup */
-	void popup(const QPoint pos);
+	void popup(const QPoint& pos);
 	
 signals:
 	/** This signal is emitted just before the menu is shown.

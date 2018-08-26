@@ -93,14 +93,14 @@ void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void TemplateAdjustActivity::drawCross(QPainter* painter, QPoint midpoint, QColor color)
+void TemplateAdjustActivity::drawCross(QPainter* painter, const QPoint& midpoint, QColor color)
 {
 	painter->setPen(color);
 	painter->drawLine(midpoint + QPoint(0, -TemplateAdjustActivity::cross_radius), midpoint + QPoint(0, TemplateAdjustActivity::cross_radius));
 	painter->drawLine(midpoint + QPoint(-TemplateAdjustActivity::cross_radius, 0), midpoint + QPoint(TemplateAdjustActivity::cross_radius, 0));
 }
 
-int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src)
+int TemplateAdjustActivity::findHoverPoint(Template* temp, const QPoint& mouse_pos, MapWidget* widget, bool& point_src)
 {
 	bool adjusted = temp->isAdjustmentApplied();
 	const float hover_distance_sq = 10*10;
@@ -548,7 +548,7 @@ void TemplateAdjustEditTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_widget)
+void TemplateAdjustEditTool::findHoverPoint(const QPoint& mouse_pos, MapWidget* map_widget)
 {
 	bool adjusted = this->widget->getTemplate()->isAdjustmentApplied();
 	bool new_active_point_is_src;

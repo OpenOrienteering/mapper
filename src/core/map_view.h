@@ -198,14 +198,14 @@ public:
 	QPoint panOffset() const;
 	
 	/** Sets the current pan offset while the map is being dragged. */
-	void setPanOffset(QPoint offset);
+	void setPanOffset(const QPoint& offset);
 	
 	/**
 	 * Finishes panning the map.
 	 * 
 	 * @param offset The final offset, relative to the start of the operation.
 	 */
-	void finishPanning(QPoint offset);
+	void finishPanning(const QPoint& offset);
 	
 	
 	/** Returns the map this view is defined on. */
@@ -338,7 +338,7 @@ signals:
 	/**
 	 * Indicates a change of the pan offset.
 	 */
-	void panOffsetChanged(QPoint offset);
+	void panOffsetChanged(const QPoint& offset);
 	
 	/**
 	 * Indicates a particular change of visibility.
