@@ -425,12 +425,12 @@ public:
 		return MapCoordF(map_to_template_other.get(0, 0) * coords.x() + map_to_template_other.get(0, 1) * coords.y() + map_to_template_other.get(0, 2),
 		                 map_to_template_other.get(1, 0) * coords.x() + map_to_template_other.get(1, 1) * coords.y() + map_to_template_other.get(1, 2));
 	}
-	inline MapCoordF templateToMap(QPointF coords) const
+	inline MapCoordF templateToMap(const QPointF& coords) const
 	{
 		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
 		                 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
 	}
-	inline MapCoordF templateToMapOther(QPointF coords) const	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF templateToMapOther(const QPointF& coords) const	// normally not needed - this uses the other transformation parameters
 	{
 		Q_ASSERT(!is_georeferenced);
 		return MapCoordF(template_to_map_other.get(0, 0) * coords.x() + template_to_map_other.get(0, 1) * coords.y() + template_to_map_other.get(0, 2),

@@ -184,13 +184,13 @@ public:
 	/** Maps viewport (GUI) coordinates to map coordinates. */
 	MapCoordF viewportToMapF(QPoint input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPointF input) const;
+	MapCoordF viewportToMapF(const QPointF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(const MapCoord& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QPointF mapToViewport(MapCoordF input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(QPointF input) const;
+	QPointF mapToViewport(const QPointF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QRectF mapToViewport(const QRectF& input) const;
 	
@@ -567,7 +567,7 @@ bool MapWidget::gesturesEnabled() const
 }
 
 inline
-QPointF MapWidget::mapToViewport(QPointF input) const
+QPointF MapWidget::mapToViewport(const QPointF& input) const
 {
 	// This is a convenience method for situations when we have got a plain QPointF.
 	// We rely on MapCoordF adding nothing but functions to its base, QPointF.

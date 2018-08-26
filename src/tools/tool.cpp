@@ -266,7 +266,7 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 
 
 
-MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
+MapCoordVector::size_type MapEditorTool::findHoverPoint(const QPointF& cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
 	const auto click_tolerance_squared = click_tolerance * click_tolerance;
 	auto best_index = std::numeric_limits<MapCoordVector::size_type>::max();

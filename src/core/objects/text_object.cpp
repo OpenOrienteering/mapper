@@ -339,7 +339,7 @@ int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
-int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
+int TextObject::calcTextPositionAt(const QPointF& point, bool find_line_only) const
 {
 	auto click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	

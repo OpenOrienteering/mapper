@@ -79,7 +79,7 @@ void EditTool::createReplaceUndoStep(Object* object)
 }
 
 
-bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
+bool EditTool::pointOverRectangle(const QPointF& point, const QRectF& rect) const
 {
 	auto click_tolerance = clickTolerance();
 	if (point.x() < rect.left() - click_tolerance) return false;

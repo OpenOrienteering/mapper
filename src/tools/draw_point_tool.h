@@ -79,7 +79,7 @@ protected:
 	 * Return 0 if the user didn't dragged the mouse away the minimum distance
 	 * from the click point.
 	 */
-	double calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const;
+	double calculateRotation(const QPointF& mouse_pos, MapCoordF mouse_pos_map) const;
 
 	void leaveEvent(QEvent* event) override;
 	void mouseMove() override;

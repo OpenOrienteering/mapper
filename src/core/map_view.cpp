@@ -291,7 +291,7 @@ void MapView::finishPanning(QPoint offset)
 	}
 }
 
-void MapView::zoomSteps(double num_steps, QPointF cursor_pos_view)
+void MapView::zoomSteps(double num_steps, const QPointF& cursor_pos_view)
 {
 	auto zoom_to = getZoom() * pow(sqrt(2.0), num_steps);
 	setZoom(zoom_to, cursor_pos_view);
@@ -303,7 +303,7 @@ void MapView::zoomSteps(double num_steps)
 	setZoom(zoom_to);
 }
 
-void MapView::setZoom(double value, QPointF center)
+void MapView::setZoom(double value, const QPointF& center)
 {
 	auto pos = this->center();
 	auto zoom_pos = viewToMap(center);

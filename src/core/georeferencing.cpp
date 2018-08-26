@@ -517,7 +517,7 @@ void Georeferencing::setMapRefPoint(const MapCoord& point)
 	}
 }
 
-void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
+void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_grivation)
 {
 	if (projected_ref_point != point || state == Normal)
 	{

@@ -249,7 +249,7 @@ MapCoord MapCoord::load(qreal x, qreal y, Flags flags)
 	return MapCoord { static_cast<qint32>(x64), static_cast<qint32>(y64), flags };
 }
 
-MapCoord MapCoord::load(QPointF p, MapCoord::Flags flags)
+MapCoord MapCoord::load(const QPointF& p, MapCoord::Flags flags)
 {
 	return MapCoord::load(p.x(), p.y(), flags);
 }

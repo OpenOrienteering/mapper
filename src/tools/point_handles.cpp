@@ -165,7 +165,7 @@ void PointHandles::draw(
 }
 
 
-void PointHandles::draw(QPainter* painter, QPointF position, PointHandleType type, PointHandleState state) const
+void PointHandles::draw(QPainter* painter, const QPointF& position, PointHandleType type, PointHandleState state) const
 {
 	auto width = int(scale_factor) * 11;  // = displayRadius() * 2 - 1
 	auto offset = (width - 1) / 2;

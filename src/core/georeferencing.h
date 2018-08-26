@@ -333,7 +333,7 @@ public:
 	 * This may trigger changes of the geographic coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setProjectedRefPoint(QPointF point, bool update_grivation = true);
+	void setProjectedRefPoint(const QPointF& point, bool update_grivation = true);
 	
 	
 	/**

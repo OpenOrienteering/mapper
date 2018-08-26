@@ -105,14 +105,14 @@ inline double fmod_pos(double x, double y)
  * 
  * \see QRectF::isValid()
  */
-void rectInclude(QRectF& rect, QPointF point);
+void rectInclude(QRectF& rect, const QPointF& point);
 
 /**
  * Enlarges the rect to include the given point.
  * 
  * If the given rect isn't valid, width and height are set to a small positive value.
  */
-void rectIncludeSafe(QRectF& rect, QPointF point);
+void rectIncludeSafe(QRectF& rect, const QPointF& point);
 
 /**
  * Enlarges the rect to include the given other_rect.

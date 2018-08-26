@@ -305,7 +305,7 @@ public:
 	 *  Returns -1 if the coordinate is not at a text position.
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(QPointF coord, bool find_line_only) const;
+	int calcTextPositionAt(const QPointF& coord, bool find_line_only) const;
 
 	/** Returns the line number for a particular index in the text.
 	 */

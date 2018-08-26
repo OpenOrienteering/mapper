@@ -39,10 +39,10 @@ namespace {
 struct ProcessLine
 {
 	QPainter* painter;
-	void processLine(QPointF a, QPointF b);
+	void processLine(const QPointF& a, const QPointF& b);
 };
 
-void ProcessLine::processLine(QPointF a, QPointF b)
+void ProcessLine::processLine(const QPointF& a, const QPointF& b)
 {
 	painter->drawLine(a, b);
 }

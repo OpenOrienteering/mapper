@@ -142,13 +142,13 @@ public:
 	MapCoord viewToMap(double x, double y) const;
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
-	MapCoord viewToMap(QPointF point) const;
+	MapCoord viewToMap(const QPointF& point) const;
 	
 	/** Converts x, y (with origin at the center of the view) to map coordinates */
 	MapCoordF viewToMapF(double x, double y) const;
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
-	MapCoordF viewToMapF(QPointF point) const;
+	MapCoordF viewToMapF(const QPointF& point) const;
 	
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
@@ -222,7 +222,7 @@ public:
 	 * @param cursor_pos_view The cursor position in view coordinates, must be
 	 *     set if preserve_cursor_pos is used.
 	 */
-	void zoomSteps(double num_steps, QPointF cursor_pos_view);
+	void zoomSteps(double num_steps, const QPointF& cursor_pos_view);
 	
 	/**
 	 * Zooms the maps (in steps), preserving the center of the view.
@@ -241,7 +241,7 @@ public:
 	double getZoom() const;
 	
 	/** Sets the zoom factor relative to the given point.*/
-	void setZoom(double value, QPointF center);
+	void setZoom(double value, const QPointF& center);
 	
 	/** Sets the zoom factor. */
 	void setZoom(double value);
@@ -443,13 +443,13 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 // ### MapView inline code ###
 
 inline
-MapCoord MapView::viewToMap(QPointF point) const
+MapCoord MapView::viewToMap(const QPointF& point) const
 {
 	return viewToMap(point.x(), point.y());
 }
 
 inline
-MapCoordF MapView::viewToMapF(QPointF point) const
+MapCoordF MapView::viewToMapF(const QPointF& point) const
 {
 	return viewToMapF(point.x(), point.y());
 }

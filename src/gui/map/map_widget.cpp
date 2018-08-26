@@ -197,7 +197,9 @@ QPointF MapWidget::viewportToView(QPoint input) const
 
 QPointF MapWidget::viewportToView(QPointF input) const
 {
-	return QPointF(input.x() - 0.5*width() - pan_offset.x(), input.y() - 0.5*height() - pan_offset.y());
+	input.rx() -= 0.5*width() + pan_offset.x();
+	input.ry() -= 0.5*height() + pan_offset.y();
+	return input;
 }
 
 QRectF MapWidget::viewToViewport(const QRectF& input) const
@@ -217,7 +219,9 @@ QPointF MapWidget::viewToViewport(QPoint input) const
 
 QPointF MapWidget::viewToViewport(QPointF input) const
 {
-	return QPointF(input.x() + 0.5*width() + pan_offset.x(), input.y() + 0.5*height() + pan_offset.y());
+	input.rx() += 0.5*width() + pan_offset.x();
+	input.ry() += 0.5*height() + pan_offset.y();
+	return input;
 }
 
 
@@ -231,7 +235,7 @@ MapCoordF MapWidget::viewportToMapF(QPoint input) const
 	return view->viewToMapF(viewportToView(input));
 }
 
-MapCoordF MapWidget::viewportToMapF(QPointF input) const
+MapCoordF MapWidget::viewportToMapF(const QPointF& input) const
 {
 	return view->viewToMapF(viewportToView(input));
 }

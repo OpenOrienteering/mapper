@@ -314,7 +314,7 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 	return result;
 }
 
-double DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const
+double DrawPointTool::calculateRotation(const QPointF& mouse_pos, MapCoordF mouse_pos_map) const
 {
 	double result = 0.0;
 	if (isDragging())

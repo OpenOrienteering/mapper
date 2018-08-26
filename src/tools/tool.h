@@ -338,7 +338,7 @@ protected:
 	 * 
 	 * Returns no_point if not hovering over a point.
 	 */
-	MapCoordVector::size_type findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
+	MapCoordVector::size_type findHoverPoint(const QPointF& cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
 	
 	
 	/**
