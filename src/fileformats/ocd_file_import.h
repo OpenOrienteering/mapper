@@ -245,7 +245,7 @@ protected:
 	template< class S >
 	Symbol* importLineSymbol(const S& ocd_symbol);
 	
-	OcdImportedLineSymbol* importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes);
+	void importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes);
 	
 	void setupLineSymbolFraming(OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line);
 	

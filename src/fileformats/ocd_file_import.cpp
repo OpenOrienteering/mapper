@@ -1095,8 +1095,9 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
 	// Import a main line.
-	auto main_line = importLineSymbolBase(ocd_symbol.common);
+	auto main_line = new OcdImportedLineSymbol();
 	setupBaseSymbol(main_line, ocd_symbol.base);
+	importLineSymbolBase(main_line, ocd_symbol.common);
 	setupLineSymbolPointSymbols(main_line, ocd_symbol.common, ocd_symbol.begin_of_elements);
 	
 	// Import a 'framing' line?
@@ -1149,12 +1150,11 @@ Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 	return combined_line;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes)
+void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes)
 {
 	using LineStyle = Ocd::LineSymbolCommonV8;
 	
 	// Basic line options
-	auto symbol = new OcdImportedLineSymbol();
 	symbol->line_width = convertLength(attributes.line_width);
 	symbol->color = symbol->line_width ? convertColor(attributes.line_color) : nullptr;
 	
@@ -1297,8 +1297,6 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 		symbol->segment_length = convertLength(attributes.main_length);
 		symbol->end_length = convertLength(attributes.end_length);
 	}
-	
-	return symbol;
 }
 
 void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
