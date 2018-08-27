@@ -91,7 +91,7 @@ protected:
 	 * @param points_index The index of the points set; there are two sets,
 	 *     so the preview points can be displayed at two positions at the same time.
 	 */
-	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
+	void setPreviewPointsPosition(const MapCoordF& map_coord, int points_index = 0);
 	
 	/** Hides all preview points. */
 	void hidePreviewPoints();

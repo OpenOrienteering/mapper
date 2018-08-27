@@ -64,10 +64,10 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	void leaveEvent(QEvent* event) override;
 	
 	bool keyPressEvent(QKeyEvent* event) override;
@@ -85,7 +85,6 @@ public slots:
 protected:
 	void updateStatusText();
 	void updateDirtyRect(const QRectF* path_rect = nullptr);
-	void updateDragging(MapCoordF cursor_pos_map, MapWidget* widget);
 	
 	CutHoleTool::HoleType hole_type;
 	DrawLineAndAreaTool* path_tool;

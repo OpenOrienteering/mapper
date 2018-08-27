@@ -319,7 +319,7 @@ public:
 	 * 
 	 * This will <b>not</b> update the map and geographic coordinates of the reference point.
 	 */
-	void setMapRefPoint(MapCoord point);
+	void setMapRefPoint(const MapCoord& point);
 	
 	
 	/**
@@ -333,7 +333,7 @@ public:
 	 * This may trigger changes of the geographic coordinates of the reference
 	 * point, the convergence, the grivation and the transformations.
 	 */
-	void setProjectedRefPoint(QPointF point, bool update_grivation = true);
+	void setProjectedRefPoint(const QPointF& point, bool update_grivation = true);
 	
 	
 	/**

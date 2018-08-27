@@ -119,7 +119,7 @@ public:
 	
 	bool intersectsBox(const QRectF& box) const;
 	
-	bool isPointInside(MapCoordF coord) const;
+	bool isPointInside(const MapCoordF& coord) const;
 	
 private:
 	/**
@@ -235,7 +235,7 @@ public:
 	
 	bool intersectsBox(const QRectF& box) const;
 	
-	bool isPointInside(MapCoordF coord) const;
+	bool isPointInside(const MapCoordF& coord) const;
 	
 	PathCoord findClosestPointTo(
 	        MapCoordF coord,
@@ -414,7 +414,7 @@ bool VirtualPath::intersectsBox(const QRectF& box) const
 }
 
 inline
-bool VirtualPath::isPointInside(MapCoordF coord) const
+bool VirtualPath::isPointInside(const MapCoordF& coord) const
 {
 	return path_coords.isPointInside(coord);
 }

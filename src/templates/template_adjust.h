@@ -70,8 +70,8 @@ public:
 	
 	inline TemplateAdjustDockWidget* getDockWidget() const {return dock;}
 	
-	static void drawCross(QPainter* painter, QPoint midpoint, QColor color);
-	static int findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src);
+	static void drawCross(QPainter* painter, const QPoint& midpoint, QColor color);
+	static int findHoverPoint(Template* temp, const QPoint& mouse_pos, MapWidget* widget, bool& point_src);
 	static bool calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
@@ -110,7 +110,7 @@ public:
 	TemplateAdjustWidget(Template* temp, MapEditorController* controller, QWidget* parent = nullptr);
 	~TemplateAdjustWidget() override;
 	
-	void addPassPoint(MapCoordF src, MapCoordF dest);
+	void addPassPoint(const MapCoordF& src, const MapCoordF& dest);
 	void deletePassPoint(int number);
 	void stopTemplateAdjust();	// disables the georeferencing tools, if active
 	
@@ -161,7 +161,7 @@ public:
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	void findHoverPoint(QPoint mouse_pos, MapWidget* map_widget);
+	void findHoverPoint(const QPoint& mouse_pos, MapWidget* map_widget);
 	
 	int active_point;			// -1 if no point active
 	bool active_point_is_src;
@@ -179,14 +179,14 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	bool keyPressEvent(QKeyEvent* event) override;
 	
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	void setDirtyRect(MapCoordF mouse_pos);
+	void setDirtyRect(const MapCoordF& mouse_pos);
 	
 	bool first_point_set;
 	MapCoordF first_point;
@@ -205,15 +205,15 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	static QCursor* cursor;
 	static QCursor* cursor_invisible;
 	
 protected:
-	void setActivePointPosition(MapCoordF map_coord);
+	void setActivePointPosition(const MapCoordF& map_coord);
 	
 	bool dragging;
 	MapCoordF dragging_offset;	// offset from cursor pos to dragged point center
@@ -226,8 +226,8 @@ Q_OBJECT
 public:
 	TemplateAdjustDeleteTool(MapEditorController* editor, QAction* tool_action, TemplateAdjustWidget* widget);
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	void init() override;
 	const QCursor& getCursor() const override;

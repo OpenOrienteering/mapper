@@ -214,7 +214,7 @@ bool PathCoordVector::intersectsBox(const QRectF& box) const
 	return result;
 }
 
-bool PathCoordVector::isPointInside(MapCoordF coord) const
+bool PathCoordVector::isPointInside(const MapCoordF& coord) const
 {
 	bool inside = false;
 	if (size() > 2)

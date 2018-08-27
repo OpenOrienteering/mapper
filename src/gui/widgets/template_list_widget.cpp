@@ -529,7 +529,7 @@ void TemplateListWidget::duplicateTemplate()
 	int pos = posFromRow(row);
 	Q_ASSERT(pos >= 0);
 	
-	const auto prototype = map->getTemplate(pos);
+	const auto* prototype = map->getTemplate(pos);
 	const auto visibility = main_view->getTemplateVisibility(prototype);
 	
 	auto new_template = prototype->duplicate();

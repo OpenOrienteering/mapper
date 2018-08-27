@@ -62,6 +62,7 @@
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 #include "undo/object_undo.h"
+#include "util/backports.h"
 
 
 namespace OpenOrienteering {
@@ -123,7 +124,7 @@ const QCursor& DrawPathTool::getCursor() const
 	return cursor;
 }
 
-bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	cur_map_widget = widget;
 	created_point_at_last_mouse_press = false;
@@ -247,7 +248,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		}
 		else
 		{
-			if (preview_path->getCoordinateCount() == 0 || !preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).isPositionEqualTo(coord))
+			if (preview_path->getCoordinateCount() == 0 || !qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 1).isPositionEqualTo(coord))
 			{
 				preview_path->addCoordinate(coord);
 				updatePreviewPath();
@@ -268,7 +269,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return false;
 }
 
-bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	cur_pos = event->pos();
 	cur_pos_map = map_coord;
@@ -341,7 +342,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return true;
 }
 
-bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (!isDrawingButton(event->button()))
 		return false;
@@ -423,11 +424,8 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	return true;
 }
 
-bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawPathTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
-	Q_UNUSED(map_coord);
-	Q_UNUSED(widget);
-	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -604,8 +602,8 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 		
 		if (azimuth_info_pending && preview_path && preview_path->getCoordinateCount() >= 2)
 		{
-			auto start_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 2)};
-			auto end_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 1)};
+			auto start_pos = MapCoordF{qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 2)};
+			auto end_pos = MapCoordF{qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 1)};
 			azimuth_helper->draw(painter, widget, map(), start_pos, end_pos);
 			azimuth_info_pending = false;
 		}
@@ -697,9 +695,10 @@ void DrawPathTool::createPreviewCurve(MapCoord position, qreal direction)
 	}
 	
 	// Adjust the preview curve
+	// preview_path is going to be modified. Non-const getCoordinate is fine.
 	auto last = preview_path->getCoordinateCount() - 1;
-	MapCoord previous_point = preview_path->getCoordinate(last - 3);
-	MapCoord last_point = preview_path->getCoordinate(last);
+	const MapCoord& previous_point = preview_path->getCoordinate(last - 3);
+	const MapCoord& last_point = preview_path->getCoordinate(last);
 	
 	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.distanceTo(last_point);
 	
@@ -722,6 +721,7 @@ void DrawPathTool::undoLastPoint()
 	
 	auto& part = preview_path->parts().back();
 	auto last_index = part.last_index;
+	// preview_path is going to be modified. Non-const getCoordinate is fine.
 	auto prev_coord_index = part.prevCoordIndex(part.last_index);
 	auto prev_coord = preview_path->getCoordinate(prev_coord_index);
 	
@@ -750,7 +750,7 @@ void DrawPathTool::undoLastPoint()
 	if (prev_coord.isCurveStart())
 	{
 		// Removing last point of a curve, no re-adding of preview point.
-		MapCoord prev_drag = preview_path->getCoordinate(prev_coord_index+1);
+		const MapCoord& prev_drag = preview_path->getCoordinate(prev_coord_index+1);
 		previous_point_direction = -atan2(prev_drag.x() - prev_coord.x(), prev_coord.y() - prev_drag.y());
 		previous_pos_map = MapCoordF(prev_coord);
 		previous_drag_map = MapCoordF((prev_coord.x() + prev_drag.x()) / 2, (prev_coord.y() + prev_drag.y()) / 2);
@@ -854,6 +854,7 @@ void DrawPathTool::closeDrawing()
 	if (preview_path->getCoordinateCount() <= 1)
 		return;
 	
+	// preview_path is going to be modified. Non-const getCoordinate is fine.
 	if (previous_point_is_curve_point && preview_path->getCoordinate(0).isCurveStart())
 	{
 		// Finish with a curve
@@ -862,8 +863,8 @@ void DrawPathTool::closeDrawing()
 		if (dragging)
 			previous_point_direction = -atan2(cur_pos_map.x() - click_pos_map.x(), click_pos_map.y() - cur_pos_map.y());
 		
-		MapCoord first = preview_path->getCoordinate(0);
-		MapCoord second = preview_path->getCoordinate(1);
+		const MapCoord& first = preview_path->getCoordinate(0);
+		const MapCoord& second = preview_path->getCoordinate(1);
 		createPreviewCurve(first, -atan2(second.x() - first.x(), first.y() - second.y()));
 		path_has_preview_point = false;
 	}
@@ -1018,7 +1019,7 @@ void DrawPathTool::updateAngleHelper()
 		angle_helper->addDefaultAnglesDeg(angle * 180 / M_PI);
 }
 
-bool DrawPathTool::pickAngle(MapCoordF coord, MapWidget* widget)
+bool DrawPathTool::pickAngle(const MapCoordF& coord, MapWidget* widget)
 {
 	MapCoord snap_position;
 	bool picked = snap_helper->snapToDirection(coord, widget, angle_helper.get(), &snap_position);
@@ -1077,7 +1078,7 @@ void DrawPathTool::updateFollowing()
 {
 	PathCoord path_coord;
 	float distance_sq;
-	const auto followed_object = follow_helper->followed_object();
+	const auto* followed_object = follow_helper->followed_object();
 	const auto& part = followed_object->parts()[follow_helper->partIndex()];
 	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
 	auto followed_path = follow_helper->updateFollowing(path_coord);
@@ -1112,8 +1113,8 @@ void DrawPathTool::finishFollowing()
 	previous_point_is_curve_point = (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart());
 	if (previous_point_is_curve_point)
 	{
-		MapCoord first = preview_path->getCoordinate(last - 1);
-		MapCoord second = preview_path->getCoordinate(last);
+		const MapCoord& first = qAsConst(preview_path)->getCoordinate(last - 1);
+		const MapCoord& second = qAsConst(preview_path)->getCoordinate(last);
 		
 		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
 		previous_pos_map = MapCoordF(second);
@@ -1123,7 +1124,7 @@ void DrawPathTool::finishFollowing()
 	updateAngleHelper();
 }
 
-qreal DrawPathTool::calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map) const
+qreal DrawPathTool::calculateRotation(const QPoint& mouse_pos, const MapCoordF& mouse_pos_map) const
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());

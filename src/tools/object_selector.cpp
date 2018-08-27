@@ -28,7 +28,6 @@
 #include <QRectF>
 
 #include "core/map.h"
-#include "core/map_coord.h"
 #include "core/objects/object.h"
 
 
@@ -42,7 +41,7 @@ ObjectSelector::ObjectSelector(Map* map)
 
 
 
-bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
+bool ObjectSelector::selectAt(const MapCoordF& position, double tolerance, bool toggle)
 {
 	bool selection_changed;
 	
@@ -132,7 +131,7 @@ bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 }
 
 
-bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle)
+bool ObjectSelector::selectBox(const MapCoordF& corner1, const MapCoordF& corner2, bool toggle)
 {
 	bool selection_changed = false;
 	

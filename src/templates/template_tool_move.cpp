@@ -58,7 +58,7 @@ const QCursor& TemplateMoveTool::getCursor() const
 	return cursor;
 }
 
-bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -69,7 +69,7 @@ bool TemplateMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, 
 	click_pos_map = map_coord;
 	return true;
 }
-bool TemplateMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateMoveTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -79,7 +79,7 @@ bool TemplateMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 	updateDragging(map_coord);
 	return true;
 }
-bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateMoveTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -98,7 +98,7 @@ void TemplateMoveTool::templateDeleted(int index, const Template* temp)
 		deactivate();
 }
 
-void TemplateMoveTool::updateDragging(MapCoordF mouse_pos_map)
+void TemplateMoveTool::updateDragging(const MapCoordF& mouse_pos_map)
 {
 	auto move = MapCoord { mouse_pos_map - click_pos_map };
 	click_pos_map = mouse_pos_map;

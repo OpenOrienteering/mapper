@@ -126,7 +126,7 @@ void DrawPointTool::symbolDeleted(int /*unused*/, const Symbol* symbol)
 		deactivate();
 }
 
-void DrawPointTool::updatePreviewObject(MapCoordF pos)
+void DrawPointTool::updatePreviewObject(const MapCoordF& pos)
 {
 	renderables->removeRenderablesOfObject(preview_object.get(), false);
 	preview_object->setPosition(pos);
@@ -314,7 +314,7 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 	return result;
 }
 
-double DrawPointTool::calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const
+double DrawPointTool::calculateRotation(const QPointF& mouse_pos, const MapCoordF& mouse_pos_map) const
 {
 	double result = 0.0;
 	if (isDragging())

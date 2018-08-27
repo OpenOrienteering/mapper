@@ -74,9 +74,9 @@ public:
 	 */
 	bool addDashPointDefault() const;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	void mouseMove() override;
 	void clickPress() override;
@@ -113,7 +113,7 @@ protected:
 	/** 
 	 * Updates hover_state, hover_object and hover_point.
 	 */
-	void updateHoverState(MapCoordF cursor_pos);
+	void updateHoverState(const MapCoordF& cursor_pos);
 	
 	/**
 	 * Sets up the angle tool helper for the object currently hovered over.

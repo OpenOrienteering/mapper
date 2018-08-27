@@ -57,7 +57,7 @@ public:
 	void paint(QPainter* painter);
 	
 public slots:
-	void newGPSPosition(MapCoordF coord, float accuracy);
+	void newGPSPosition(const MapCoordF& coord, float accuracy);
 	
 private:
 	void updateMapWidget();

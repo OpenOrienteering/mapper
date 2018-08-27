@@ -135,7 +135,7 @@ public:
 	/**
 	 * Sets the map coordinates of the reference point
 	 */
-	void setMapRefPoint(MapCoord coords);
+	void setMapRefPoint(const MapCoord& coords);
 	
 	/**
 	 * Activates the "keep projected reference point coordinates on CRS changes" radio button.
@@ -310,13 +310,13 @@ public:
 	/** 
 	 * Consumes left and right clicks. They are handled in mouseReleaseEvent.
 	 */
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/** 
 	 * Reacts to the user activity by sending the reference point coordinates
 	 * to the dialog (on left click) and reactivating the dialog.
 	 */
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/**
 	 * Returns the mouse cursor that will be shown when the tool is active.

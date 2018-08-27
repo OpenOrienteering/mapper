@@ -132,7 +132,7 @@ void PointSymbol::createRenderables(
 	}
 }
 
-void PointSymbol::createRenderablesScaled(MapCoordF coord, qreal rotation, ObjectRenderables& output, qreal coord_scale) const
+void PointSymbol::createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale) const
 {
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coord));
@@ -177,7 +177,7 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, qreal rotation, Objec
 }
 
 
-void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfCenterInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (outline->contains(point_coord))
 	{
@@ -236,7 +236,7 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 }
 
 
-void PointSymbol::createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfCompletelyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -264,7 +264,7 @@ void PointSymbol::createPrimitivesIfCompletelyInside(MapCoordF point_coord, cons
 }
 
 
-void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfCompletelyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	createPrimitivesIfCompletelyInside(point_coord, outline, output);
 	
@@ -323,7 +323,7 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 }
 
 
-void PointSymbol::createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfPartiallyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -351,7 +351,7 @@ void PointSymbol::createPrimitivesIfPartiallyInside(MapCoordF point_coord, const
 }
 
 
-void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfPartiallyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	createPrimitivesIfPartiallyInside(point_coord, outline, output);
 	

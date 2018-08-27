@@ -1328,7 +1328,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		if (out[c])
 			continue;
 		
-		const auto color = getColor(int(c));
+		const auto* color = getColor(int(c));
 		if (color->getSpotColorMethod() != MapColor::SpotColor)
 			continue;
 		
@@ -1337,7 +1337,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 			if (!out[o])
 				continue;
 			
-			const auto other = getColor(int(o));
+			const auto* other = getColor(int(o));
 			if (other->getSpotColorMethod() != MapColor::CustomColor)
 				continue;
 			
@@ -1422,14 +1422,14 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 	// Add the created symbols
 	if (insert_pos < 0)
 		insert_pos = getNumSymbols();
-	for (const auto symbol : created_symbols)
+	for (auto* symbol : created_symbols)
 	{
 		addSymbol(symbol, insert_pos);
 		++insert_pos;
 	}
 	
 	// Notify the created symbols of the new context (mind combined symbols)
-	for (const auto symbol : created_symbols)
+	for (auto* symbol : created_symbols)
 	{
 		for (auto it = out_pointermap.constBegin(); it != out_pointermap.constEnd(); ++it)
 		{
@@ -1728,7 +1728,7 @@ void Map::updateSymbolIconZoom()
 	// the mean of the line symbol widths.
 	auto values = std::vector<qreal>();
 	values.reserve(symbols.size());
-	for (const auto symbol : symbols)
+	for (const auto* symbol : symbols)
 	{
 		if (symbol->isHelperSymbol())
 			continue;
@@ -1756,7 +1756,7 @@ void Map::updateSymbolIconZoom()
 	if (!qFuzzyCompare(new_scale, symbol_icon_scale))
 	{
 		symbol_icon_scale = new_scale;
-		for (const auto symbol : symbols)
+		for (auto* symbol : symbols)
 			symbol->resetIcon();
 		emit symbolIconZoomChanged();
 	}
@@ -2158,7 +2158,7 @@ void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 }
 
 void Map::findObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2170,7 +2170,7 @@ void Map::findObjectsAt(
 }
 
 void Map::findAllObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2183,8 +2183,8 @@ void Map::findAllObjectsAt(
 }
 
 void Map::findObjectsAtBox(
-        MapCoordF corner1,
-        MapCoordF corner2,
+        const MapCoordF& corner1,
+        const MapCoordF& corner2,
         bool include_hidden_objects,
         bool include_protected_objects,
         std::vector< Object* >& out ) const

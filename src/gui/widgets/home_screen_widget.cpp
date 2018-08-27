@@ -490,7 +490,7 @@ QWidget* HomeScreenWidgetMobile::makeFileListWidget(HomeScreenController* contro
 	
 	// Look for map files at device-specific locations
 #ifdef Q_OS_ANDROID
-	const auto style = file_list->style();
+	const auto* style = file_list->style();
 	StorageLocation::refresh();
 	const auto locations = StorageLocation::knownLocations();
 	for (const auto& location : *locations)

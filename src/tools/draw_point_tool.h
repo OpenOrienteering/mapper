@@ -69,7 +69,7 @@ protected:
 	 */
 	void symbolDeleted(int pos, const Symbol* symbol);
 	
-	void updatePreviewObject(MapCoordF pos);
+	void updatePreviewObject(const MapCoordF& pos);
 	
 	void createObject();
 	
@@ -79,7 +79,7 @@ protected:
 	 * Return 0 if the user didn't dragged the mouse away the minimum distance
 	 * from the click point.
 	 */
-	double calculateRotation(QPointF mouse_pos, MapCoordF mouse_pos_map) const;
+	double calculateRotation(const QPointF& mouse_pos, const MapCoordF& mouse_pos_map) const;
 
 	void leaveEvent(QEvent* event) override;
 	void mouseMove() override;

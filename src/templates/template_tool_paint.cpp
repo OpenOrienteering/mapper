@@ -22,6 +22,7 @@
 #include "template_tool_paint.h"
 
 #include <cstddef>
+#include <memory>
 
 #include <Qt>
 #include <QtMath>
@@ -205,7 +206,7 @@ void PaintOnTemplateTool::redoSelected()
 }
 
 
-bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* /*widget*/)
+bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* /*widget*/)
 {
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
@@ -219,7 +220,7 @@ bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coor
 	return false;
 }
 
-bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* widget)
+bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (dragging && temp)
 	{
@@ -237,7 +238,7 @@ bool PaintOnTemplateTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF map_c
 	return false;
 }
 
-bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF map_coord, MapWidget* /*widget*/)
+bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoordF& map_coord, MapWidget* /*widget*/)
 {
 	if (dragging && temp)
 	{

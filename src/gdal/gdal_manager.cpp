@@ -312,7 +312,7 @@ private:
 		    { "OSM_USE_CUSTOM_INDEXING", "NO"  },
 		    { "GPX_ELE_AS_25D",          "YES" },
 		};
-		for (const auto setting : defaults)
+		for (const auto* setting : defaults)
 		{
 			const auto key = QString::fromLatin1(setting[0]);
 			if (!settings.contains(key))

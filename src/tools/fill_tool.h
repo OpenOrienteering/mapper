@@ -96,7 +96,7 @@ protected:
 	 *  0 if the tracing fails because the start is not included in the shape,
 	 *  1 if the tracing succeeds.
 	 */
-	int traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary);
+	int traceBoundary(const QImage& image, const QPoint& free_pixel, const QPoint& boundary_pixel, std::vector<QPoint>& out_boundary);
 	
 	/**
 	 * Creates a fill object for the given image, boundary vector (of pixel positions) and transform.

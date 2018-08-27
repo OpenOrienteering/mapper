@@ -48,7 +48,7 @@ void blockSignalsRecursively(QObject* obj, bool block)
 
 
 
-void rectInclude(QRectF& rect, QPointF point)
+void rectInclude(QRectF& rect, const QPointF& point)
 {
 	if (point.x() < rect.left())
 		rect.setLeft(point.x());
@@ -61,7 +61,7 @@ void rectInclude(QRectF& rect, QPointF point)
 		rect.setBottom(point.y());
 }
 
-void rectIncludeSafe(QRectF& rect, QPointF point)
+void rectIncludeSafe(QRectF& rect, const QPointF& point)
 {
 	if (rect.isValid())
 		rectInclude(rect, point);
@@ -81,6 +81,7 @@ void rectInclude(QRectF& rect, const QRectF& other_rect)
 	if (other_rect.bottom() > rect.bottom())
 		rect.setBottom(other_rect.bottom());
 }
+
 void rectIncludeSafe(QRectF& rect, const QRectF& other_rect)
 {
 	if (other_rect.isValid())

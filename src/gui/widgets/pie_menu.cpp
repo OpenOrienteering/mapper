@@ -76,7 +76,7 @@ void PieMenu::setMinimumActionCount(int count)
 int PieMenu::visibleActionCount() const
 {
 	const auto actions = this->actions();
-	return int(std::count_if(actions.begin(), actions.end(), [](const auto action) {
+	return int(std::count_if(actions.begin(), actions.end(), [](const auto* action) {
 		return action->isVisible() && !action->isSeparator();
 	}));
 }
@@ -158,7 +158,7 @@ void PieMenu::setActiveAction(QAction* action)
 	}
 }
 
-void PieMenu::popup(const QPoint pos)
+void PieMenu::popup(const QPoint& pos)
 {
 	updateCachedState(); // We need the current total_radius.
 	

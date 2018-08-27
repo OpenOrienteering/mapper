@@ -41,6 +41,7 @@
 #include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
+#include "util/backports.h"
 #include "util/util.h"
 
 
@@ -538,10 +539,10 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 		{
 			// Same original part
 			auto cur_coord_index = cur_info.second->index;
-			MapCoord& cur_coord = cur_info.first->path->getCoordinate(cur_coord_index);
+			MapCoord& cur_coord = qAsConst(cur_info.first->path)->getCoordinate(cur_coord_index);
 			
 			auto new_coord_index = new_info.second->index;
-			MapCoord& new_coord = new_info.first->path->getCoordinate(new_coord_index);
+			MapCoord& new_coord = qAsConst(new_info.first)->path->getCoordinate(new_coord_index);
 			
 			auto cur_coord_index_adjusted = cur_coord_index;
 			if (cur_coord_index_adjusted == new_info.first->first_index)
@@ -972,7 +973,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 	
 	PathCoordInfo start_info = polymap.value(polygon.at(start_index));
 	PathCoordInfo end_info = polymap.value(polygon.at(end_index));
-	PathObject* original = end_info.first->path;
+	const PathObject* original = end_info.first->path;
 	
 	bool coords_increasing;
 	bool is_curve;
@@ -1040,7 +1041,7 @@ void BooleanTool::rebuildCoordinate(
 	if (polymap.contains(polygon.at(index)))
 	{
 		PathCoordInfo info = polymap.value(polygon.at(index));
-		MapCoord& original = info.first->path->getCoordinate(info.second->index);
+		MapCoord& original = qAsConst(info.first->path)->getCoordinate(info.second->index);
 		
 		if (original.isDashPoint())
 			coord.setDashPoint(true);

@@ -78,9 +78,9 @@ void resetActivationWindow()
 	
 	if (!app->closingDown())
 	{
-		const auto old_window = app->activationWindow();
+		const auto* old_window = app->activationWindow();
 		const auto top_level_widgets = app->topLevelWidgets();
-		for (const auto widget : top_level_widgets)
+		for (auto* widget : top_level_widgets)
 		{	
 			auto new_window = qobject_cast<MainWindow*>(widget);
 			if (new_window && new_window != old_window)

@@ -109,7 +109,7 @@ void GPSTemporaryMarkers::paint(QPainter* painter)
 	painter->restore();
 }
 
-void GPSTemporaryMarkers::newGPSPosition(MapCoordF coord, float accuracy)
+void GPSTemporaryMarkers::newGPSPosition(const MapCoordF& coord, float accuracy)
 {
 	Q_UNUSED(accuracy);
 

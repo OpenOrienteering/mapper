@@ -200,7 +200,7 @@ void CombinedSymbolSettings::numberChanged(int value)
 
 void CombinedSymbolSettings::symbolChanged()
 {
-	const auto edit = sender();
+	const auto* edit = sender();
 	auto widget = std::find_if(begin(widgets), end(widgets), [edit](const auto& w) {
 		return w.edit == edit;
 	});
@@ -250,7 +250,7 @@ void CombinedSymbolSettings::symbolChanged()
 
 void CombinedSymbolSettings::editButtonClicked()
 {
-	const auto button = sender();
+	const auto* button = sender();
 	auto widget = std::find_if(begin(widgets), end(widgets), [button](const auto& w) {
 		return w.button == button;
 	});

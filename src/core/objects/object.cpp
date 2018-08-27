@@ -516,7 +516,7 @@ void Object::move(qint32 dx, qint32 dy)
 	setOutputDirty();
 }
 
-void Object::move(MapCoord offset)
+void Object::move(const MapCoord& offset)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -526,7 +526,7 @@ void Object::move(MapCoord offset)
 	setOutputDirty();
 }
 
-void Object::scale(MapCoordF center, double factor)
+void Object::scale(const MapCoordF& center, double factor)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -548,7 +548,7 @@ void Object::scale(double factor_x, double factor_y)
 	setOutputDirty();
 }
 
-void Object::rotateAround(MapCoordF center, qreal angle)
+void Object::rotateAround(const MapCoordF& center, qreal angle)
 {
 	auto sin_angle = std::sin(angle);
 	auto cos_angle = std::cos(angle);
@@ -607,7 +607,7 @@ void Object::rotate(qreal angle)
 }
 
 
-int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
 	auto contained_types = symbol->getContainedTypes();
@@ -2414,7 +2414,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	return Symbol::NoSymbol;
 }
 
-bool PathObject::isPointInsideArea(MapCoordF coord) const
+bool PathObject::isPointInsideArea(const MapCoordF& coord) const
 {
 	update();
 	bool inside = false;
@@ -2775,7 +2775,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 	}
 }
 
-void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::setCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos < getCoordinateCount());
 	
@@ -2789,7 +2789,7 @@ void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::addCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos <= coords.size());
 	
@@ -2821,7 +2821,7 @@ void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoord c, bool start_new_part)
+void PathObject::addCoordinate(const MapCoord& c, bool start_new_part)
 {
 	if (coords.empty())
 	{
@@ -3067,12 +3067,13 @@ void PathObject::recalculateParts()
 	}
 }
 
-void PathObject::setClosingPoint(MapCoordVector::size_type index, MapCoord coord)
+void PathObject::setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord)
 {
-	coord.setCurveStart(false);
-	coord.setHolePoint(true);
-	coord.setClosePoint(true);
-	coords[index] = coord;
+	auto& out_coord = coords[index];
+	out_coord = coord;
+	out_coord.setCurveStart(false);
+	out_coord.setHolePoint(true);
+	out_coord.setClosePoint(true);
 }
 
 void PathObject::updateEvent() const
@@ -3128,12 +3129,12 @@ void PointObject::setPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void PointObject::setPosition(MapCoord coord)
+void PointObject::setPosition(const MapCoord& coord)
 {
 	coords[0] = coord;
 }
 
-void PointObject::setPosition(MapCoordF coord)
+void PointObject::setPosition(const MapCoordF& coord)
 {
 	coords[0].setX(coord.x());
 	coords[0].setY(coord.y());
@@ -3173,7 +3174,7 @@ void PointObject::setRotation(qreal new_rotation)
 	}
 }
 
-void PointObject::setRotation(MapCoordF vector)
+void PointObject::setRotation(const MapCoordF& vector)
 {
 	setRotation(atan2(vector.x(), vector.y()));
 }

@@ -64,7 +64,7 @@ bool anyEqualPixel(const QImage& image, const quint32 value, int x0, int y0, int
 {
 	for (int y = y0; y < y1; ++y)
 	{
-		const auto scanline = reinterpret_cast<const quint32*>(image.scanLine(y));
+		const auto* scanline = reinterpret_cast<const quint32*>(image.scanLine(y));
 		for (int x = x0; x < x1; ++x)
 		{
 			if (value == scanline[x])
@@ -85,8 +85,8 @@ bool fuzzyEqual(const QImage& lhs, const QImage& rhs)
 	
 	for (auto y = 0; y < lhs.height(); ++y)
 	{
-		const auto left = reinterpret_cast<const quint32*>(lhs.scanLine(y));
-		const auto right = reinterpret_cast<const quint32*>(rhs.scanLine(y));
+		const auto* left = reinterpret_cast<const quint32*>(lhs.scanLine(y));
+		const auto* right = reinterpret_cast<const quint32*>(rhs.scanLine(y));
 		for (auto x = 0; x < lhs.width(); ++x)
 		{
 			if (Q_UNLIKELY(left[x] != right[x])
@@ -256,7 +256,7 @@ private slots:
 		
 		for (int i = 0; i < map.getNumSymbols(); ++i)
 		{
-			const auto symbol = map.getSymbol(i);
+			const auto* symbol = map.getSymbol(i);
 			
 			MapColor color;
 			QVERIFY(!symbol->containsColor(&color));

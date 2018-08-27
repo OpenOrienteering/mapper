@@ -175,14 +175,14 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoord coord)
+void TextObject::setAnchorPosition(const MapCoord& coord)
 {
 	has_single_anchor = true;
 	coords[0] = coord;
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoordF coord)
+void TextObject::setAnchorPosition(const MapCoordF& coord)
 {
 	has_single_anchor = true;
 	coords[0].setX(coord.x());
@@ -251,7 +251,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 
 
 
-void TextObject::scale(MapCoordF center, double factor)
+void TextObject::scale(const MapCoordF& center, double factor)
 {
 	coords.front() = MapCoord{center + (MapCoordF{coords.front()} - center) * factor};
 	if (!has_single_anchor)
@@ -333,13 +333,13 @@ bool TextObject::intersectsBox(const QRectF& box) const
 	return getExtent().intersects(box);
 }
 
-int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
+int TextObject::calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
-int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
+int TextObject::calcTextPositionAt(const QPointF& point, bool find_line_only) const
 {
 	auto click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	

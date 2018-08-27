@@ -180,10 +180,10 @@ public:
 	void move(qint32 dx, qint32 dy);
 	
 	/** Moves the whole object by the given offset. */
-	void move(MapCoord offset);
+	void move(const MapCoord& offset);
 	
 	/** Scales all coordinates, with the given scaling center */
-	virtual void scale(MapCoordF center, double factor);
+	virtual void scale(const MapCoordF& center, double factor);
 	
 	/** Scales all coordinates, with the center (0, 0).
 	 * @param factor_x horizontal scaling factor
@@ -193,7 +193,7 @@ public:
 	
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
-	void rotateAround(MapCoordF center, qreal angle);
+	void rotateAround(const MapCoordF& center, qreal angle);
 	
 	/** Rotates the whole object around the center (0, 0).
 	 *  The angle must be given in radians. */
@@ -215,7 +215,7 @@ public:
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
 	 */
-	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
+	int isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
@@ -510,15 +510,15 @@ public:
 	MapCoord& getCoordinate(MapCoordVector::size_type pos);
 	
 	/** Replaces the i-th coordinate with c. */
-	void setCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void setCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the given index. */
-	void addCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void addCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the end, optionally starting a new part.
 	 *  If starting a new part, make sure that the last coord of the old part
 	 *  has the hole point flag! */
-	void addCoordinate(MapCoord c, bool start_new_part = false);
+	void addCoordinate(const MapCoord& c, bool start_new_part = false);
 	
 	/**
 	 * Deletes a coordinate from the path.
@@ -799,7 +799,7 @@ public:
 	 * Returns true if the given coordinate is inside the area
 	 * defined by this object, which must be closed.
 	 */
-	bool isPointInsideArea(MapCoordF coord) const;
+	bool isPointInsideArea(const MapCoordF& coord) const;
 	
 	/**
 	 * Calculates the maximum distance of the given coord ranges of two objects.
@@ -896,7 +896,7 @@ protected:
 	 * on it and replaces the coord at the given index by it.
 	 * TODO: make separate methods? Setting coords exists already.
 	 */
-	void setClosingPoint(MapCoordVector::size_type index, MapCoord coord);
+	void setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord);
 	
 	void updateEvent() const override;
 	
@@ -976,10 +976,10 @@ public:
 	void setPosition(qint32 x, qint32 y);
 	
 	/** Changes the point's position. */
-	void setPosition(MapCoord coord);
+	void setPosition(const MapCoord& coord);
 	
 	/** Changes the point's position. */
-	void setPosition(MapCoordF coord);
+	void setPosition(const MapCoordF& coord);
 	
 	/** Returns the point's position as MapCoordF. */
 	MapCoordF getCoordF() const;
@@ -1006,7 +1006,7 @@ public:
 	/**
 	 * Sets the point object's rotation according to the given vector.
 	 */
-	void setRotation(MapCoordF vector);
+	void setRotation(const MapCoordF& vector);
 	
 	/**
 	 * Returns the point object's rotation (in radians). This is only used
@@ -1061,7 +1061,7 @@ struct ObjectPathCoord : public PathCoord
 	 * 
 	 * \see PathObject::calcClosestPointOnPath
 	 */
-	float findClosestPointTo(MapCoordF map_coord);
+	float findClosestPointTo(const MapCoordF& map_coord);
 };
 
 
@@ -1277,7 +1277,7 @@ ObjectPathCoord::ObjectPathCoord(PathObject* object, MapCoordVector::size_type i
 
 
 inline
-float ObjectPathCoord::findClosestPointTo(MapCoordF map_coord)
+float ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
 {
 	float distance_sq;
 	object->calcClosestPointOnPath(map_coord, distance_sq, *this);

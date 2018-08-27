@@ -231,7 +231,7 @@ void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol
 }
 
 void MapPart::findObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -254,8 +254,8 @@ void MapPart::findObjectsAt(
 }
 
 void MapPart::findObjectsAtBox(
-        MapCoordF corner1,
-        MapCoordF corner2,
+        const MapCoordF& corner1,
+        const MapCoordF& corner2,
         bool include_hidden_objects,
         bool include_protected_objects,
         std::vector< Object* >& out ) const
@@ -291,7 +291,7 @@ int MapPart::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidde
 QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 {
 	QRectF rect;
-	for (const auto object : objects)
+	for (const auto* object : objects)
 	{
 		if (!object->getSymbol()->isHidden()
 		    && (include_helper_symbols || !object->getSymbol()->isHelperSymbol()) )

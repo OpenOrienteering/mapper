@@ -323,7 +323,7 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
+MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
 	auto snap_distance = widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx() / 1000);
 	auto closest_distance_sq = float(snap_distance * snap_distance); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
@@ -366,7 +366,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			}
 			else if (object->getType() == Object::Path)
 			{
-				PathObject* path = object->asPath();
+				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
 					PathCoord path_coord;
@@ -440,7 +440,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	return result_position;
 }
 
-bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position)
+bool SnappingToolHelper::snapToDirection(const MapCoordF& position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position)
 {
 	// As getting a direction from the map grid is not supported, remove grid from filter
 	int filter_grid = filter & GridCorners;

@@ -115,7 +115,7 @@ protected:
 	/**
 	 * Returns if the point is inside the click_tolerance from the rect's border.
 	 */
-	bool pointOverRectangle(QPointF point, const QRectF& rect) const;
+	bool pointOverRectangle(const QPointF& point, const QRectF& rect) const;
 	
 	/**
 	 * Returns the point on the rect which is closest to the given point.

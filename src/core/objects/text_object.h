@@ -174,12 +174,12 @@ public:
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
 	 */
-	void setAnchorPosition(MapCoord coord);
+	void setAnchorPosition(const MapCoord& coord);
 	
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
 	 */
-	void setAnchorPosition(MapCoordF coord);
+	void setAnchorPosition(const MapCoordF& coord);
 	
 	/** Returns the coordinates of the anchor point or midpoint */
 	MapCoordF getAnchorCoordF() const;
@@ -225,7 +225,7 @@ public:
 	/**
 	 * Scales position and box, with the given scaling center.
 	 */
-	void scale(MapCoordF center, double factor) override;
+	void scale(const MapCoordF& center, double factor) override;
 	
 	/**
 	 * Scales position and box, with the center (0, 0).
@@ -299,13 +299,13 @@ public:
 	 *  Returns -1 if the coordinate is not at a text position. 
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(MapCoordF coord, bool find_line_only) const;
+	int calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const;
 	
 	/** Return the index of the character or the line number corresponding to a particular text coordinate.
 	 *  Returns -1 if the coordinate is not at a text position.
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(QPointF coord, bool find_line_only) const;
+	int calcTextPositionAt(const QPointF& coord, bool find_line_only) const;
 
 	/** Returns the line number for a particular index in the text.
 	 */

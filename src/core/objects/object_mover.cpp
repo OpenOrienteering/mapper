@@ -28,6 +28,7 @@
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "util/backports.h"
 
 
 namespace OpenOrienteering {
@@ -70,7 +71,7 @@ void ObjectMover::addLine(PathObject* object, MapCoordVector::size_type start_po
 	auto index_set = insertPointObject(object);
 	index_set->insert(start_point_index);
 	index_set->insert(start_point_index + 1);
-	if (object->getCoordinate(start_point_index).isCurveStart())
+	if (qAsConst(object)->getCoordinate(start_point_index).isCurveStart())
 	{
 		index_set->insert(start_point_index + 2);
 		index_set->insert(start_point_index + 3);
@@ -116,10 +117,9 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 		PathObject* path = item.first;
 		for (auto index : item.second)
 		{
-			auto coord = path->getCoordinate(index);
+			auto& coord = path->getCoordinate(index);
 			coord.setNativeX(coord.nativeX() + dx);
 			coord.setNativeY(coord.nativeY() + dy);
-			path->setCoordinate(index, coord);
 		}
 	}
 	
@@ -128,6 +128,7 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 	{
 		for (auto& constraint : handle_constraints)
 		{
+			// constraint.object is going to be modified. Non-const getCoordinate is fine.
 			MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
 			MapCoordF to_hover_point = MapCoordF(constraint.object->getCoordinate(constraint.moved_handle_index) - anchor_point);
 			to_hover_point.normalize();
@@ -197,7 +198,7 @@ void ObjectMover::calculateConstraints()
 	// Points
 	for (auto& item : points)
 	{
-		PathObject* path = item.first;
+		const PathObject* path = item.first;
 		auto& point_set = item.second;
 		
 		// If end points of closed paths are contained in the move set,
@@ -265,7 +266,7 @@ void ObjectMover::calculateConstraints()
 				    path->getCoordinate(part.prevCoordIndex(curve_anchor_index)).isCurveStart())
 				{
 					OppositeHandleConstraint constraint;
-					constraint.object = path;
+					constraint.object = const_cast<PathObject*>(path);  // = item.first
 					constraint.moved_handle_index = index;
 					constraint.curve_anchor_index = index - 1;
 					constraint.opposite_handle_index = curve_anchor_index - 1;
@@ -285,7 +286,7 @@ void ObjectMover::calculateConstraints()
 				    path->getCoordinate(curve_anchor_index).isCurveStart())
 				{
 					OppositeHandleConstraint constraint;
-					constraint.object = path;
+					constraint.object = const_cast<PathObject*>(path);  // = item.first
 					constraint.moved_handle_index = index;
 					constraint.curve_anchor_index = curve_anchor_index;
 					constraint.opposite_handle_index = curve_anchor_index + 1;

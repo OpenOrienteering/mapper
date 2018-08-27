@@ -855,7 +855,7 @@ MapCoord Template::templatePosition() const
 }
 
 
-void Template::setTemplatePosition(MapCoord coord)
+void Template::setTemplatePosition(const MapCoord& coord)
 {
 	transform.template_x = coord.nativeX();
 	transform.template_y = coord.nativeY();
@@ -867,7 +867,7 @@ MapCoord Template::templatePositionOffset() const
 	return accounted_offset;
 }
 
-void Template::setTemplatePositionOffset(MapCoord offset)
+void Template::setTemplatePositionOffset(const MapCoord& offset)
 {
 	const auto move = accounted_offset - offset;
 	if (move != MapCoord{})

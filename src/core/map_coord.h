@@ -196,13 +196,13 @@ public:
 	MapCoord(qreal x, qreal y, int flags) = delete;
 	
 	/** Creates a MapCoord with the position taken from a QPointF. */
-	explicit constexpr MapCoord(QPointF point) noexcept;
+	explicit constexpr MapCoord(const QPointF& point) noexcept;
 	
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
-	constexpr MapCoord(QPointF point, Flags flags) noexcept;
+	constexpr MapCoord(const QPointF& point, Flags flags) noexcept;
 	
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
-	constexpr MapCoord(QPointF point, Flag flag) noexcept;
+	constexpr MapCoord(const QPointF& point, Flag flag) noexcept;
 	
 	MapCoord(QPointF point, int flags) = delete;
 	
@@ -424,9 +424,9 @@ public:
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
-	static MapCoord load(QPointF p, MapCoord::Flags flags);
+	static MapCoord load(const QPointF& p, MapCoord::Flags flags);
 	
-	static MapCoord load(QPointF p, int flags) = delete;
+	static MapCoord load(const QPointF& p, int flags) = delete;
 	
 	
 	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
@@ -494,7 +494,7 @@ public:
 	constexpr MapCoordF(qreal x, qreal y) noexcept;
 	
 	/** Creates a MapCoordF from a MapCoord, dropping its flags. */
-	explicit constexpr MapCoordF(MapCoord coord) noexcept;
+	explicit constexpr MapCoordF(const MapCoord& coord) noexcept;
 	
 	/** Copy constructor. */
 	constexpr MapCoordF(const MapCoordF&) noexcept = default;
@@ -707,19 +707,19 @@ constexpr MapCoord::MapCoord(qreal x, qreal y, Flag flag) noexcept
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point) noexcept
  : MapCoord { point.x(), point.y() }
 {
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point, Flags flags) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point, Flags flags) noexcept
  : MapCoord { point.x(), point.y(), flags }
 {
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point, Flag flag) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point, Flag flag) noexcept
  : MapCoord { point.x(), point.y(), flag }
 {
 	// nothing else
@@ -1004,7 +1004,7 @@ constexpr MapCoordF::MapCoordF(qreal x, qreal y) noexcept
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(MapCoord coord) noexcept
+constexpr MapCoordF::MapCoordF(const MapCoord& coord) noexcept
  : QPointF { coord.x(), coord.y() }
 {
 	// Nothing else

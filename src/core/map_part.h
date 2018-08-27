@@ -182,14 +182,14 @@ public:
 	/**
 	 * @see Map::findObjectsAt().
 	 */
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
 	/**
 	 * @see Map::findObjectsAtBox().
 	 */
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
+	void findObjectsAtBox(const MapCoordF& corner1, const MapCoordF& corner2,
 		bool include_hidden_objects, bool include_protected_objects,
 		std::vector<Object*>& out) const;
 	

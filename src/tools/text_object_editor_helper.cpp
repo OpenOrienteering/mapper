@@ -45,7 +45,6 @@
 #include <QVariant>
 #include <QWidget>
 
-#include "core/map_coord.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
@@ -518,7 +517,7 @@ bool TextObjectEditorHelper::sendMouseEventToInputContext(QEvent* event, const M
 }
 
 
-bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
@@ -558,7 +557,7 @@ bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 }
 
 
-bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	updateCursor(widget, text_object->calcTextPositionAt(map_coord, true));
 	
@@ -577,7 +576,7 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 }
 
 
-bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
@@ -754,8 +753,8 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->matches(QKeySequence::Paste))
 	{
-		const auto clipboard = QGuiApplication::clipboard();
-		const auto mime_data = clipboard->mimeData();
+		const auto* clipboard = QGuiApplication::clipboard();
+		const auto* mime_data = clipboard->mimeData();
 		
 		if (mime_data->hasText())
 			replaceSelectionText(clipboard->text());
@@ -860,7 +859,7 @@ void TextObjectEditorHelper::updateCursor(QWidget* widget, int position)
 
 
 
-void TextObjectEditorHelper::updateDragging(MapCoordF map_coord)
+void TextObjectEditorHelper::updateDragging(const MapCoordF& map_coord)
 {
 	Q_ASSERT(batch_editing);
 	const auto drag_position = text_object->calcTextPositionAt(map_coord, false);
@@ -886,7 +885,7 @@ void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::func
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
 	{
-		const auto line_info = text_object->getLineInfo(line);
+		const auto* line_info = text_object->getLineInfo(line);
 		if (line_info->end_index + 1 < begin)
 			continue;
 		if (end < line_info->start_index)

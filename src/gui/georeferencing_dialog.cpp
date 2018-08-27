@@ -417,7 +417,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 #endif
 }
 
-void GeoreferencingDialog::setMapRefPoint(MapCoord coords)
+void GeoreferencingDialog::setMapRefPoint(const MapCoord& coords)
 {
 	georef->setMapRefPoint(coords);
 	reset_button->setEnabled(true);
@@ -727,7 +727,7 @@ void GeoreferencingTool::init()
 	MapEditorTool::init();
 }
 
-bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	bool handled = false;
 	switch (event->button())
@@ -743,7 +743,7 @@ bool GeoreferencingTool::mousePressEvent(QMouseEvent* event, MapCoordF /*map_coo
 	return handled;
 }
 
-bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* /*widget*/)
+bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* /*widget*/)
 {
 	bool handled = false;
 	switch (event->button())

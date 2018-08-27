@@ -75,12 +75,12 @@ public:
 	/** Add a coordinate to the current element.
 	 *  @return true if successful
 	 */
-	bool addCoordinate(MapCoordF new_coord);
+	bool addCoordinate(const MapCoordF& new_coord);
 	
 	/** Change the current coordinate of the current element.
 	 *  @return true if successful
 	 */
-	bool changeCurrentCoordinate(MapCoordF new_coord);
+	bool changeCurrentCoordinate(const MapCoordF& new_coord);
 	
 	/** Activate the editor in the map preview. */
 	void setEditorActive(bool active);
@@ -190,7 +190,7 @@ public:
 	~PointSymbolEditorTool() override;
 	
 	void init() override;
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* map_widget) override;
 	const QCursor& getCursor() const override;
 	
 private:

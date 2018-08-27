@@ -97,7 +97,7 @@ public:
 	 * them to the map.
 	 */
 	static void execute(
-	        PathObject* path,
+	        const PathObject* path,
 	        PointSymbol* point,
 	        const DistributePointsTool::Settings& settings,
 	        std::vector<PointObject*>& out_objects

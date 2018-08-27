@@ -23,7 +23,6 @@
 #define OPENORIENTEERING_MAP_WIDGET_H
 
 #include <functional>
-#include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
@@ -167,7 +166,7 @@ public:
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
 	QRectF viewportToView(const QRect& input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
-	QPointF viewportToView(QPoint input) const;
+	QPointF viewportToView(const QPoint& input) const;
 	/** Maps viewport (GUI) coordinates to view coordinates (see MapView). */
 	QPointF viewportToView(QPointF input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
@@ -175,22 +174,20 @@ public:
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
 	QRectF viewToViewport(const QRect& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
-	QPointF viewToViewport(QPoint input) const;
+	QPointF viewToViewport(const QPoint& input) const;
 	/** Maps view coordinates (see MapView) to viewport (GUI) coordinates. */
 	QPointF viewToViewport(QPointF input) const;
 	
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoord viewportToMap(QPoint input) const;
+	MapCoord viewportToMap(const QPoint& input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPoint input) const;
+	MapCoordF viewportToMapF(const QPoint& input) const;
 	/** Maps viewport (GUI) coordinates to map coordinates. */
-	MapCoordF viewportToMapF(QPointF input) const;
+	MapCoordF viewportToMapF(const QPointF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoord input) const;
+	QPointF mapToViewport(const MapCoord& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(MapCoordF input) const;
-	/** Maps map coordinates to viewport (GUI) coordinates. */
-	QPointF mapToViewport(QPointF input) const;
+	QPointF mapToViewport(const QPointF& input) const;
 	/** Maps map coordinates to viewport (GUI) coordinates. */
 	QRectF mapToViewport(const QRectF& input) const;
 	
@@ -207,7 +204,7 @@ public:
 	/** 
 	 * Sets the current offset (in pixel) during a map pan operation.
 	 */
-	void setPanOffset(QPoint offset);
+	void setPanOffset(const QPoint& offset);
 	
 	
 	/**
@@ -432,21 +429,21 @@ private:
 	void moveDirtyRect(QRect& dirty_rect, qreal x, qreal y);
 	
 	/** Starts a dragging interaction at the given cursor position. */
-	void startDragging(QPoint cursor_pos);
+	void startDragging(const QPoint& cursor_pos);
 	/** Submits a new cursor position during a dragging interaction. */
-	void updateDragging(QPoint cursor_pos);
+	void updateDragging(const QPoint& cursor_pos);
 	/** Ends a dragging interaction at the given cursor position. */
-	void finishDragging(QPoint cursor_pos);
+	void finishDragging(const QPoint& cursor_pos);
 	/** Cancels a dragging interaction. */
 	void cancelDragging();
 	
 	/** Starts a pinching interaction at the given cursor position.
 	 *  Returns the initial zoom factor. */
-	qreal startPinching(QPoint center);
+	qreal startPinching(const QPoint& center);
 	/** Updates a pinching interaction at the given cursor position. */
-	void updatePinching(QPoint center, qreal factor);
+	void updatePinching(const QPoint& center, qreal factor);
 	/** Ends a pinching interaction at the given cursor position. */
-	void finishPinching(QPoint center, qreal factor);
+	void finishPinching(const QPoint& center, qreal factor);
 	/** Cancels a pinching interaction. */
 	void cancelPinching();
 	
@@ -463,7 +460,7 @@ private:
 	 */
 	void updateZoomDisplay();
 	/** Updates the content of the cursorpos label, set by setCursorposLabel(). */
-	void updateCursorposLabel(const MapCoordF pos);
+	void updateCursorposLabel(const MapCoordF& pos);
 	
 	MapView* view;
 	MapEditorTool* tool;
@@ -564,20 +561,6 @@ inline
 bool MapWidget::gesturesEnabled() const
 {
 	return gestures_enabled;
-}
-
-inline
-QPointF MapWidget::mapToViewport(QPointF input) const
-{
-	// This is a convenience method for situations when we have got a plain QPointF.
-	// We rely on MapCoordF adding nothing but functions to its base, QPointF.
-	static_assert(std::is_base_of<QPointF, MapCoordF>::value,
-	              "MapCoordF must be derived from QPointF");
-	static_assert(!std::has_virtual_destructor<MapCoordF>::value,
-	              "MapCoordF and its base must not have virtual members");
-	static_assert(sizeof(QPointF) == sizeof(MapCoordF),
-	              "MapCoordF must have the same size as QPointF");
-	return mapToViewport(static_cast<MapCoordF>(input));
 }
 
 inline

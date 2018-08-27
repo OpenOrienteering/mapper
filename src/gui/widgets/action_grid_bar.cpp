@@ -160,9 +160,9 @@ bool ActionGridBar::compareItemPtrId(ActionGridBar::GridItem* a, ActionGridBar::
 void ActionGridBar::overflowActionClicked()
 {
 	overflow_menu->clear();
-	for (const auto source_bar : include_overflow_from_list)
+	for (const auto* source_bar : include_overflow_from_list)
 	{
-		for (const auto hidden_item : source_bar->hidden_items)
+		for (const auto* hidden_item : source_bar->hidden_items)
 			overflow_menu->addAction(hidden_item->action);
 	}
 	if (overflow_button)
