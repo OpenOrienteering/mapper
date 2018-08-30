@@ -800,17 +800,11 @@ public:
 	void setCurrentPartIndex(std::size_t index);
 	
 	/**
-	 * Moves all specified objects from the source to the destination map part.
-	 * 
-	 * The objects will be continuously located at the end to the objects in the target part.
-	 * Source object which were selected will be removed from the object selection.
-	 * 
-	 * @return The index of the first object which has been reassigned.
-	 */
-	std::size_t reassignObjectsToMapPart(std::set<Object*>::const_iterator first, std::set<Object*>::const_iterator last, std::size_t source, std::size_t destination);
-	
-	/**
 	 * Moves all specified objects from the source to the target map part.
+	 * 
+	 * Objects are processed one by one. This means that processing one object
+	 * changes the index of following objects. Thus the given indices must
+	 * normally be in descending order.
 	 * 
 	 * The objects will be continuously located at the end to the objects in the target part.
 	 * Source object which were selected will be removed from the object selection.

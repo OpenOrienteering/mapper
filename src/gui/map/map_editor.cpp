@@ -3668,7 +3668,13 @@ void MapEditorController::changeMapPart(int index)
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
 	auto current = map->getCurrentPartIndex();
-	auto first   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto* current_part = map->getPart(current);
+	std::vector<int> objects(map->selectedObjects().size());
+	std::transform(map->selectedObjectsBegin(), map->selectedObjectsEnd(), begin(objects), [current_part](auto* object) {
+		return current_part->findObjectIndex(object);
+	});
+	std::sort(objects.rbegin(), objects.rend());
+	auto first = map->reassignObjectsToMapPart(begin(objects), end(objects), current, target);
 	
 	auto undo = new SwitchPartUndoStep(map, target, current);
 	for (std::size_t i = first, last = map->getPart(target)->getNumObjects(); i < last; ++i)
