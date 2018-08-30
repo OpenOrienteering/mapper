@@ -2239,7 +2239,7 @@ void Map::setCurrentPartIndex(std::size_t index)
 	}
 }
 
-std::size_t Map::reassignObjectsToMapPart(std::set<Object*>::const_iterator begin, std::set<Object*>::const_iterator end, std::size_t source, std::size_t destination)
+std::size_t Map::reassignObjectsToMapPart(std::set<Object*>::const_iterator first, std::set<Object*>::const_iterator last, std::size_t source, std::size_t destination)
 {
 	Q_ASSERT(source < parts.size());
 	Q_ASSERT(destination < parts.size());
@@ -2247,7 +2247,7 @@ std::size_t Map::reassignObjectsToMapPart(std::set<Object*>::const_iterator begi
 	std::size_t count = 0;
 	MapPart* const source_part = parts[source];
 	MapPart* const target_part = parts[destination];
-	for (auto it = begin; it != end; ++it)
+	for (auto it = first; it != last; ++it)
 	{
 		Object* const object = *it;
 		source_part->deleteObject(object, true);
@@ -2283,7 +2283,7 @@ std::size_t Map::reassignObjectsToMapPart(std::set<Object*>::const_iterator begi
 	return target_begin;
 }
 
-std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator begin, std::vector<int>::const_iterator end, std::size_t source, std::size_t destination)
+std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::vector<int>::const_iterator last, std::size_t source, std::size_t destination)
 {
 	Q_ASSERT(source < parts.size());
 	Q_ASSERT(destination < parts.size());
@@ -2293,7 +2293,7 @@ std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator begin
 	std::size_t count = 0;
 	MapPart* const source_part = parts[source];
 	MapPart* const target_part = parts[destination];
-	for (auto it = begin; it != end; ++it)
+	for (auto it = first; it != last; ++it)
 	{
 		Object* const object = source_part->getObject(*it);
 		

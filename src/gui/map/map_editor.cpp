@@ -3668,10 +3668,10 @@ void MapEditorController::changeMapPart(int index)
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
 	auto current = map->getCurrentPartIndex();
-	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto first   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
 	
 	auto undo = new SwitchPartUndoStep(map, target, current);
-	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
+	for (std::size_t i = first, last = map->getPart(target)->getNumObjects(); i < last; ++i)
 		undo->addObject(i);
 	map->push(undo);
 }
@@ -3696,10 +3696,10 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		auto source = map->getCurrentPartIndex();
 		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
 		
-		auto begin  = map->mergeParts(source, target);
+		auto first  = map->mergeParts(source, target);
 		
 		auto switch_part_undo = new SwitchPartUndoStep(map, target, source);
-		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
+		for (std::size_t i = first, last = target_part->getNumObjects(); i < last; ++i)
 			switch_part_undo->addObject(i);
 		
 		auto undo = new CombinedUndoStep(map);
@@ -3731,9 +3731,9 @@ void MapEditorController::mergeAllMapParts()
 		for (auto i = map->getNumParts() - 1; i > 0; --i)
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
-			auto begin = map->mergeParts(i, 0);
+			auto first = map->mergeParts(i, 0);
 			auto switch_part_undo = new SwitchPartUndoStep(map, 0, i);
-			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
+			for (std::size_t j = first, last = target_part->getNumObjects(); j < last; ++j)
 				switch_part_undo->addObject(j);
 			undo->push(switch_part_undo);
 			undo->push(add_part_step);
