@@ -3751,10 +3751,16 @@ void MapEditorController::changeMapPart(int index)
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
 	auto current = map->getCurrentPartIndex();
-	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto* current_part = map->getPart(current);
+	std::vector<int> objects(map->selectedObjects().size());
+	std::transform(map->selectedObjectsBegin(), map->selectedObjectsEnd(), begin(objects), [current_part](auto* object) {
+		return current_part->findObjectIndex(object);
+	});
+	std::sort(objects.rbegin(), objects.rend());
+	map->reassignObjectsToMapPart(begin(objects), end(objects), current, target);
 	
 	auto undo = new SwitchPartUndoStep(map, target, current);
-	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
+	for (auto i : objects)
 		undo->addObject(i);
 	map->push(undo);
 }
@@ -3779,11 +3785,11 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		auto source = map->getCurrentPartIndex();
 		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
 		
-		auto begin  = map->mergeParts(source, target);
+		auto first  = map->mergeParts(source, target);
 		
 		auto switch_part_undo = new SwitchPartUndoStep(map, target, source);
-		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
-			switch_part_undo->addObject(i);
+		for (auto i = target_part->getNumObjects(); i > first; --i)
+			switch_part_undo->addObject(0);
 		
 		auto undo = new CombinedUndoStep(map);
 		undo->push(switch_part_undo);
@@ -3814,10 +3820,10 @@ void MapEditorController::mergeAllMapParts()
 		for (auto i = map->getNumParts() - 1; i > 0; --i)
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
-			auto begin = map->mergeParts(i, 0);
+			auto first = map->mergeParts(i, 0);
 			auto switch_part_undo = new SwitchPartUndoStep(map, 0, i);
-			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
-				switch_part_undo->addObject(j);
+			for (auto j = target_part->getNumObjects(); j > first; --j)
+				switch_part_undo->addObject(0);
 			undo->push(switch_part_undo);
 			undo->push(add_part_step);
 		}

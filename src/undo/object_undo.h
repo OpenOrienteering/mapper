@@ -310,11 +310,15 @@ private:
 class SwitchPartUndoStep : public ObjectModifyingUndoStep
 {
 public:
-	SwitchPartUndoStep(Map* map, std::size_t source_index, std::size_t target_index);
+	SwitchPartUndoStep(Map* map, int source_index, int target_index);
 	
 	SwitchPartUndoStep(Map* map);
 	
 	~SwitchPartUndoStep() override;
+	
+	bool getModifiedParts(PartSet& out) const override;
+	
+	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
 	UndoStep* undo() override;
 	
@@ -324,7 +328,9 @@ protected:
 	
 	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
 	
-	std::size_t source_index;
+	int source_index;
+	
+	bool reverse = false;
 };
 
 
