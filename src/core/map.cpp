@@ -2239,7 +2239,7 @@ void Map::setCurrentPartIndex(std::size_t index)
 	}
 }
 
-std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::vector<int>::const_iterator last, std::size_t source, std::size_t destination)
+int Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::vector<int>::const_iterator last, std::size_t source, std::size_t destination)
 {
 	Q_ASSERT(source < parts.size());
 	Q_ASSERT(destination < parts.size());
@@ -2268,16 +2268,16 @@ std::size_t Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first
 	return first_object;
 }
 
-std::size_t Map::mergeParts(std::size_t source, std::size_t destination)
+int Map::mergeParts(std::size_t source, std::size_t destination)
 {
 	Q_ASSERT(source < parts.size());
 	Q_ASSERT(destination < parts.size());
 	
-	std::size_t count = 0;
+	int count = 0;
 	MapPart* const source_part = parts[source];
 	MapPart* const target_part = parts[destination];
 	// Preserve order (but not efficient)
-	for (std::size_t i = source_part->getNumObjects(); i > 0 ; --i)
+	for (auto i = source_part->getNumObjects(); i > 0 ; --i)
 	{
 		Object* object = source_part->getObject(0);
 		source_part->deleteObject(0, true);

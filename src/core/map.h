@@ -811,7 +811,7 @@ public:
 	 * 
 	 * @return The index of the first object which has been reassigned.
 	 */
-	std::size_t reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::vector<int>::const_iterator last, std::size_t source, std::size_t destination);
+	int reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::vector<int>::const_iterator last, std::size_t source, std::size_t destination);
 	
 	/**
 	 * Merges the source part with the destination part.
@@ -825,7 +825,7 @@ public:
 	 * 
 	 * @return The index of the first object which has been reassigned.
 	 */
-	std::size_t mergeParts(std::size_t source, std::size_t destination);
+	int mergeParts(std::size_t source, std::size_t destination);
 	
 	
 	// Objects
