@@ -181,8 +181,7 @@ void ToolsTest::editTool()
 	const MapWidget* map_widget = editor.map_widget;
 	const PathObject* object = map.line_object;
 	
-	const MapCoord& coord = object->getCoordinate(0);
-	QPointF drag_start_pos = map_widget->mapToViewport(coord);
+	QPointF drag_start_pos = map_widget->mapToViewport(object->getCoordinate(0));
 	QPointF drag_end_pos = drag_start_pos + QPointF(0, -50);
 	
 	// Clear selection.
@@ -197,7 +196,7 @@ void ToolsTest::editTool()
 	editor.simulateDrag(drag_start_pos, drag_end_pos);
 	
 	// Check position deviation
-	QPointF difference = map_widget->mapToViewport(coord) - drag_end_pos;
+	QPointF difference = map_widget->mapToViewport(object->getCoordinate(0)) - drag_end_pos;
 	QCOMPARE(qMax(qAbs(difference.x()), 0.1), 0.1);
 	QCOMPARE(qMax(qAbs(difference.y()), 0.1), 0.1);
 	

@@ -1282,7 +1282,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	if (did_connect_path)
 	{
 		// Copy over all remaining parts of the other object
-		getCoordinate(getCoordinateCount() - 1).setHolePoint(true);
+		getCoordinateRef(getCoordinateCount() - 1).setHolePoint(true);
 		for (std::size_t i = 0; i < num_other_parts; ++i)
 		{
 			if (other_parts[i])

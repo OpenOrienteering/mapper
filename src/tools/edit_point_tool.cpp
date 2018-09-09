@@ -189,7 +189,9 @@ void EditPointTool::clickPress()
 			hover_point = path->subdivide(path_coord);
 			if (addDashPointDefault() ^ switch_dash_points)
 			{
-				path->getCoordinate(hover_point).setDashPoint(true);
+				auto point = path->getCoordinate(hover_point);
+				point.setDashPoint(true);
+				path->setCoordinate(hover_point, point);
 				map()->emitSelectionEdited();
 			}
 			startEditingSetup();
@@ -210,8 +212,9 @@ void EditPointTool::clickPress()
 			// Switch point between dash / normal point
 			createReplaceUndoStep(hover_object);
 			
-			MapCoord& hover_coord = hover_object->getCoordinate(hover_point);
+			auto hover_coord = hover_object->getCoordinate(hover_point);
 			hover_coord.setDashPoint(!hover_coord.isDashPoint());
+			hover_object->setCoordinate(hover_point, hover_coord);
 			hover_object->update();
 			updateDirtyRect();
 			waiting_for_mouse_release = true;

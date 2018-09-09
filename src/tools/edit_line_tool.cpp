@@ -140,7 +140,7 @@ void EditLineTool::clickPress()
 		createReplaceUndoStep(hover_object);
 		
 		// hover_object is going to be modified. Non-const getCoordinate is fine.
-		MapCoord& start_coord = hover_object->getCoordinate(hover_line);
+		MapCoord& start_coord = hover_object->getCoordinateRef(hover_line);
 		if (start_coord.isCurveStart())
 		{
 			// Convert to straight segment

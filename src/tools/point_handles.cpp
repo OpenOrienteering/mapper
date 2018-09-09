@@ -112,7 +112,7 @@ void PointHandles::draw(
 			
 			for (auto i = part.first_index; i <= part.last_index; ++i)
 			{
-				const MapCoord& coord = path->getCoordinate(i);
+				const MapCoord coord = path->getCoordinate(i);
 				if (coord.isClosePoint())
 					continue;
 				QPointF point = widget->mapToViewport(coord);

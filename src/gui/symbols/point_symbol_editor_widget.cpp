@@ -368,9 +368,10 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(const MapCoordF& new_coord
 		auto coord_index = MapCoordVector::size_type(table_row);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
 		
-		MapCoord& coord = path->getCoordinate(coord_index);
+		auto coord = path->getCoordinate(coord_index);
 		coord.setX(new_coord.x());
 		coord.setY(new_coord.y() - offset_y);
+		path->setCoordinate(coord_index, coord);
 	}
 	
 	updateCoordsTable();
@@ -668,9 +669,8 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	Q_ASSERT(object->getType() == Object::Path);
 	auto path = static_cast<PathObject*>(object);
 	
-	// path is likely to be modified. Non-const getCoordinate is fine.
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
-		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
+		path->getCoordinateRef(path->getCoordinateCount() - 4).setCurveStart(false);
 	
 	Q_ASSERT(!path->parts().empty());
 	path->parts().front().setClosed(checked, true);
@@ -708,9 +708,8 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		}
 		else if (object->getType() == Object::Path)
 		{
-			auto path = static_cast<PathObject*>(object);
+			auto path = static_cast<const PathObject*>(object);
 			Q_ASSERT(coord_index < path->getCoordinateCount());
-			// path is going to be modified. Non-const getCoordinate is fine.
 			coord = path->getCoordinate(coord_index);
 		}
 		
@@ -750,7 +749,9 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		Q_ASSERT(object->getType() == Object::Path);
 		auto path = static_cast<PathObject*>(object);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
-		path->getCoordinate(coord_index).setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
+		auto coord = path->getCoordinate(coord_index);
+		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
+		path->setCoordinate(coord_index, coord);
 		
 		updateCoordsTable();
 		map->updateAllObjectsWithSymbol(symbol);
