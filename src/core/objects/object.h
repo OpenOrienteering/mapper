@@ -504,9 +504,16 @@ public:
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
 	MapCoordVector::size_type getCoordinateCount() const;
+	
 	/** Returns the i-th coordinate. */
 	const MapCoord& getCoordinate(MapCoordVector::size_type pos) const;
-	/** Returns the i-th coordinate. */
+	
+	/** Returns a non-const reference to the i-th coordinate.
+	 * 
+	 * Normally you should modify coordinates via PathObject::setCoordinate.
+	 * Unlike that function, modifying a coordinate directly via the reference
+	 * will not keep the first and last point of a closed path in sync.
+	 */
 	MapCoord& getCoordinate(MapCoordVector::size_type pos);
 	
 	/** Replaces the i-th coordinate with c. */

@@ -117,9 +117,10 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 		PathObject* path = item.first;
 		for (auto index : item.second)
 		{
-			auto& coord = path->getCoordinate(index);
+			auto coord = qAsConst(path)->getCoordinate(index);
 			coord.setNativeX(coord.nativeX() + dx);
 			coord.setNativeY(coord.nativeY() + dy);
+			path->setCoordinate(index, coord);
 		}
 	}
 	
