@@ -368,7 +368,7 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		auto coord_index = MapCoordVector::size_type(table_row);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
 		
-		auto coord = qAsConst(path)->getCoordinate(coord_index);
+		auto coord = path->getCoordinate(coord_index);
 		coord.setX(new_coord.x());
 		coord.setY(new_coord.y() - offset_y);
 		path->setCoordinate(coord_index, coord);
@@ -670,7 +670,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	auto path = static_cast<PathObject*>(object);
 	
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
-		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
+		path->getCoordinateRef(path->getCoordinateCount() - 4).setCurveStart(false);
 	
 	Q_ASSERT(!path->parts().empty());
 	path->parts().front().setClosed(checked, true);
@@ -749,7 +749,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		Q_ASSERT(object->getType() == Object::Path);
 		auto path = static_cast<PathObject*>(object);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
-		auto coord = qAsConst(path)->getCoordinate(coord_index);
+		auto coord = path->getCoordinate(coord_index);
 		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		path->setCoordinate(coord_index, coord);
 		

@@ -503,10 +503,14 @@ public:
 	// Coordinate access methods
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
-	MapCoordVector::size_type getCoordinateCount() const;
+	MapCoordVector::size_type getCoordinateCount() const { return coords.size(); }
 	
 	/** Returns the i-th coordinate. */
-	const MapCoord& getCoordinate(MapCoordVector::size_type pos) const;
+	MapCoord getCoordinate(MapCoordVector::size_type pos) const
+	{
+		Q_ASSERT(pos < coords.size());
+		return coords[pos];
+	}
 	
 	/** Returns a non-const reference to the i-th coordinate.
 	 * 
@@ -514,18 +518,23 @@ public:
 	 * Unlike that function, modifying a coordinate directly via the reference
 	 * will not keep the first and last point of a closed path in sync.
 	 */
-	MapCoord& getCoordinate(MapCoordVector::size_type pos);
+	MapCoord& getCoordinateRef(MapCoordVector::size_type pos)
+	{
+		Q_ASSERT(pos < coords.size());
+		setOutputDirty();
+		return coords[pos];
+	}
 	
 	/** Replaces the i-th coordinate with c. */
-	void setCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void setCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the given index. */
-	void addCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void addCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the end, optionally starting a new part.
 	 *  If starting a new part, make sure that the last coord of the old part
 	 *  has the hole point flag! */
-	void addCoordinate(MapCoord c, bool start_new_part = false);
+	void addCoordinate(const MapCoord& c, bool start_new_part = false);
 	
 	/**
 	 * Deletes a coordinate from the path.
@@ -1179,27 +1188,6 @@ PathPart& PathPart::operator=(const PathPart& rhs)
 
 
 //### PathObject inline code ###
-
-inline
-MapCoordVector::size_type PathObject::getCoordinateCount() const
-{
-	return coords.size();
-}
-
-inline
-const MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos) const
-{
-	Q_ASSERT(pos < coords.size());
-	return coords[pos];
-}
-
-inline
-MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos)
-{
-	Q_ASSERT(pos < coords.size());
-	setOutputDirty();
-	return coords[pos];
-}
 
 inline
 const PathPartVector& PathObject::parts() const

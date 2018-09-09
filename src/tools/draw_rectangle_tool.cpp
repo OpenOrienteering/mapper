@@ -53,7 +53,6 @@
 #include "gui/widgets/key_button_bar.h"
 #include "tools/tool.h"
 #include "tools/tool_helpers.h"
-#include "util/backports.h"
 #include "util/util.h"
 
 
@@ -157,7 +156,7 @@ bool DrawRectangleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 			
 			// Add new point
 			auto cur_point_index = angles.size();
-			if (!qAsConst(preview_path)->getCoordinate(cur_point_index).isPositionEqualTo(qAsConst(preview_path)->getCoordinate(cur_point_index - 1)))
+			if (!preview_path->getCoordinate(cur_point_index).isPositionEqualTo(preview_path->getCoordinate(cur_point_index - 1)))
 			{
 				MapCoord coord = MapCoord(cur_pos_map);
 				coord.setDashPoint(draw_dash_points);
@@ -377,7 +376,7 @@ bool DrawRectangleTool::keyPressEvent(QKeyEvent* event)
 		{
 			angle_helper->clearAngles();
 			angle_helper->addDefaultAnglesDeg(0);
-			angle_helper->setActive(true, MapCoordF(qAsConst(preview_path)->getCoordinate(0)));
+			angle_helper->setActive(true, MapCoordF(preview_path->getCoordinate(0)));
 			if (dragging)
 				updateRectangle();
 		}
@@ -577,7 +576,7 @@ MapCoordF DrawRectangleTool::calculateClosingVector() const
 	close_vector.rotate(-angles[0]);
 	if (drawingParallelTo(angles[0]))
 		close_vector = close_vector.perpRight();
-	if (MapCoordF::dotProduct(close_vector, MapCoordF(qAsConst(preview_path)->getCoordinate(0) - qAsConst(preview_path)->getCoordinate(cur_point_index - 1))) < 0)
+	if (MapCoordF::dotProduct(close_vector, MapCoordF(preview_path->getCoordinate(0) - preview_path->getCoordinate(cur_point_index - 1))) < 0)
 		close_vector = -close_vector;
 	return close_vector;
 }

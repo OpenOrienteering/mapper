@@ -2941,8 +2941,8 @@ float connectPaths_FindClosestEnd(const std::vector<Object*>& objects, const Pat
 					if (a == b && path_part_a == path_part_b && path_part_a_begin == path_part_b_begin)
 						continue;
 					
-					const MapCoord& coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
-					const MapCoord& coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
+					const MapCoord coord_a = a->getCoordinate(path_part_a_begin ? a->parts()[path_part_a].first_index : (a->parts()[path_part_a].last_index));
+					const MapCoord coord_b = b->getCoordinate(path_part_b_begin ? b->parts()[path_part_b].first_index : (b->parts()[path_part_b].last_index));
 					float distance_sq = coord_a.distanceSquaredTo(coord_b);
 					if (distance_sq < best_dist_sq)
 					{
@@ -3079,7 +3079,7 @@ void MapEditorController::connectPathsClicked()
 		if (best_object_a != best_object_b)
 		{
 			// Copy all remaining parts of object b over to a
-			best_object_a->getCoordinate(best_object_a->getCoordinateCount() - 1).setHolePoint(true);
+			best_object_a->getCoordinateRef(best_object_a->getCoordinateCount() - 1).setHolePoint(true);
 			for (auto i = PathPartVector::size_type { 0 }; i < best_object_b->parts().size(); ++i)
 			{
 				if (i != best_part_b)

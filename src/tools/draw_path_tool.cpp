@@ -62,7 +62,6 @@
 #include "tools/tool_helpers.h"
 #include "util/util.h"
 #include "undo/object_undo.h"
-#include "util/backports.h"
 
 
 namespace OpenOrienteering {
@@ -248,7 +247,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 		}
 		else
 		{
-			if (preview_path->getCoordinateCount() == 0 || !qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 1).isPositionEqualTo(coord))
+			if (preview_path->getCoordinateCount() == 0 || !preview_path->getCoordinate(preview_path->getCoordinateCount() - 1).isPositionEqualTo(coord))
 			{
 				preview_path->addCoordinate(coord);
 				updatePreviewPath();
@@ -605,8 +604,8 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 		
 		if (azimuth_info_pending && preview_path && preview_path->getCoordinateCount() >= 2)
 		{
-			auto start_pos = MapCoordF{qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 2)};
-			auto end_pos = MapCoordF{qAsConst(preview_path)->getCoordinate(preview_path->getCoordinateCount() - 1)};
+			auto start_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 2)};
+			auto end_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 1)};
 			azimuth_helper->draw(painter, widget, map(), start_pos, end_pos);
 			azimuth_info_pending = false;
 		}
@@ -685,7 +684,7 @@ void DrawPathTool::createPreviewCurve(MapCoord position, qreal direction)
 	if (!path_has_preview_point)
 	{
 		auto last = preview_path->getCoordinateCount() - 1;
-		(preview_path->getCoordinate(last)).setCurveStart(true);
+		(preview_path->getCoordinateRef(last)).setCurveStart(true);
 		
 		preview_path->addCoordinate(MapCoord(0, 0));
 		preview_path->addCoordinate(MapCoord(0, 0));
@@ -700,8 +699,8 @@ void DrawPathTool::createPreviewCurve(MapCoord position, qreal direction)
 	// Adjust the preview curve
 	// preview_path is going to be modified. Non-const getCoordinate is fine.
 	auto last = preview_path->getCoordinateCount() - 1;
-	const MapCoord& previous_point = preview_path->getCoordinate(last - 3);
-	const MapCoord& last_point = preview_path->getCoordinate(last);
+	const MapCoord previous_point = preview_path->getCoordinate(last - 3);
+	const MapCoord last_point = preview_path->getCoordinate(last);
 	
 	double bezier_handle_distance = BEZIER_HANDLE_DISTANCE * previous_point.distanceTo(last_point);
 	
@@ -753,7 +752,7 @@ void DrawPathTool::undoLastPoint()
 	if (prev_coord.isCurveStart())
 	{
 		// Removing last point of a curve, no re-adding of preview point.
-		const MapCoord& prev_drag = preview_path->getCoordinate(prev_coord_index+1);
+		const MapCoord prev_drag = preview_path->getCoordinate(prev_coord_index+1);
 		previous_point_direction = -atan2(prev_drag.x() - prev_coord.x(), prev_coord.y() - prev_drag.y());
 		previous_pos_map = MapCoordF(prev_coord);
 		previous_drag_map = MapCoordF((prev_coord.x() + prev_drag.x()) / 2, (prev_coord.y() + prev_drag.y()) / 2);
@@ -866,8 +865,8 @@ void DrawPathTool::closeDrawing()
 		if (dragging)
 			previous_point_direction = -atan2(cur_pos_map.x() - click_pos_map.x(), click_pos_map.y() - cur_pos_map.y());
 		
-		const MapCoord& first = preview_path->getCoordinate(0);
-		const MapCoord& second = preview_path->getCoordinate(1);
+		const MapCoord first = preview_path->getCoordinate(0);
+		const MapCoord second = preview_path->getCoordinate(1);
 		createPreviewCurve(first, -atan2(second.x() - first.x(), first.y() - second.y()));
 		path_has_preview_point = false;
 	}
@@ -1116,8 +1115,8 @@ void DrawPathTool::finishFollowing()
 	previous_point_is_curve_point = (last >= 3 && preview_path->getCoordinate(last - 3).isCurveStart());
 	if (previous_point_is_curve_point)
 	{
-		const MapCoord& first = qAsConst(preview_path)->getCoordinate(last - 1);
-		const MapCoord& second = qAsConst(preview_path)->getCoordinate(last);
+		const MapCoord first = preview_path->getCoordinate(last - 1);
+		const MapCoord second = preview_path->getCoordinate(last);
 		
 		previous_point_direction = -atan2(second.x() - first.x(), first.y() - second.y());
 		previous_pos_map = MapCoordF(second);

@@ -1282,7 +1282,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	if (did_connect_path)
 	{
 		// Copy over all remaining parts of the other object
-		getCoordinate(getCoordinateCount() - 1).setHolePoint(true);
+		getCoordinateRef(getCoordinateCount() - 1).setHolePoint(true);
 		for (std::size_t i = 0; i < num_other_parts; ++i)
 		{
 			if (other_parts[i])
@@ -2775,7 +2775,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 	}
 }
 
-void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::setCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos < getCoordinateCount());
 	
@@ -2789,7 +2789,7 @@ void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::addCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos <= coords.size());
 	
@@ -2821,7 +2821,7 @@ void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoord c, bool start_new_part)
+void PathObject::addCoordinate(const MapCoord& c, bool start_new_part)
 {
 	if (coords.empty())
 	{
