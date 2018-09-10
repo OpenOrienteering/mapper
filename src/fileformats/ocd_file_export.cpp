@@ -2725,8 +2725,34 @@ void OcdFileExport::exportTemplates()
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
 		const auto* temp = map->getTemplate(i);
-		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0
-		    || QFileInfo(temp->getTemplatePath()).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
+		QString template_path = temp->getTemplatePath();
+		
+		auto supported_by_ocd = false;
+		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0)
+		{
+			supported_by_ocd = true;
+			
+			if (temp->isTemplateGeoreferenced())
+			{
+				if (temp->getTemplateState() == Template::Unloaded)
+				{
+					// Try to load the template, so that the positioning gets set.
+					const_cast<Template*>(temp)->loadTemplateFile(false);
+				}
+				
+				if (temp->getTemplateState() != Template::Loaded)
+				{
+					addWarning(tr("Unable to save correct position of missing template: \"%1\"")
+					           .arg(temp->getTemplateFilename()));
+				}
+			}
+		}
+		else if (QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
+		{
+			supported_by_ocd = true;
+		}
+		
+		if (supported_by_ocd)
 		{
 			addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
 		}
