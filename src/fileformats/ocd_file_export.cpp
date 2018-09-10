@@ -2700,7 +2700,12 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 	Q_ASSERT(data.size() == header_size + items_size);
 	
 	entry.size = decltype(entry.size)((Ocd::addPadding(data).size()));
-	if (ocd_version < 11)
+	// According to OCD format 8 documentation, size (aka len) is in bytes
+	// for OCD version 6 and 7 files.
+	// However, in contrast to OCD format 9...12 documentation, size seems to be
+	// in bytes again since version 9, and doing as documented would make files
+	// unusable (due to "damaged objects") in OCD 9 and 10 software.
+	if (ocd_version == 8)
 		entry.size = (entry.size - decltype(entry.size)(header_size)) / sizeof(Ocd::OcdPoint32);
 	
 	return data;
