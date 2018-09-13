@@ -259,7 +259,7 @@ protected:
 	
 	template< class OcdObject >
 	void handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry);
-
+	
 	template< class OcdObject >
 	QByteArray exportPointObject(const PointObject* point, typename OcdObject::IndexEntryType& entry);
 	
@@ -291,9 +291,11 @@ protected:
 	
 	quint16 exportCoordinates(const MapCoordVector& coords, const Symbol* symbol, QByteArray& byte_array);
 	
-	quint16 exportTextCoordinatesSingle(const TextObject* object, QByteArray& byte_array);
+	quint16 exportCoordinates(const MapCoordVector& coords, const Symbol* symbol, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right);
 	
-	quint16 exportTextCoordinatesBox(const TextObject* object, QByteArray& byte_array);
+	quint16 exportTextCoordinatesSingle(const TextObject* object, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right);
+	
+	quint16 exportTextCoordinatesBox(const TextObject* object, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right);
 	
 	QByteArray exportTextData(const TextObject* object, int chunk_size, int max_chunks);
 	

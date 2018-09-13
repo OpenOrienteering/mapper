@@ -2647,8 +2647,7 @@ QByteArray OcdFileExport::exportTextObject(const TextObject* text, typename OcdO
 template< class OcdObject >
 QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
 {
-	
-	auto& coords = object->getRawCoordinateVector();
+	const auto& coords = object->getRawCoordinateVector();
 	QByteArray text_data;
 	switch(ocd_object.type)
 	{
@@ -2672,10 +2671,11 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 		ocd_object.num_items = decltype(ocd_object.num_items)(coords.size());
 	}
 	
-	entry.bottom_left_bound = convertPoint(MapCoord(object->getExtent().bottomLeft()));
-	entry.top_right_bound = convertPoint(MapCoord(object->getExtent().topRight()));
 	handleObjectExtras(object, ocd_object, entry);
-
+	
+	auto bottom_left = MapCoord(object->getExtent().bottomLeft());
+	auto top_right = MapCoord(object->getExtent().topRight());
+	
 	auto header_size = int(sizeof(OcdObject) - sizeof(Ocd::OcdPoint32));
 	auto items_size = int((ocd_object.num_items + ocd_object.num_text) * sizeof(Ocd::OcdPoint32));
 	
@@ -2687,19 +2687,21 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 		switch(ocd_object.type)
 		{
 		case 4:
-			exportTextCoordinatesSingle(static_cast<const TextObject*>(object), data);
+			exportTextCoordinatesSingle(static_cast<const TextObject*>(object), data, bottom_left, top_right);
 			data.append(text_data);
 			break;
 		case 5:
-			exportTextCoordinatesBox(static_cast<const TextObject*>(object), data);
+			exportTextCoordinatesBox(static_cast<const TextObject*>(object), data, bottom_left, top_right);
 			data.append(text_data);
 			break;
 		default:
-			exportCoordinates(coords, object->getSymbol(), data);
+			exportCoordinates(coords, object->getSymbol(), data, bottom_left, top_right);
 		}
 	}
 	Q_ASSERT(data.size() == header_size + items_size);
 	
+	entry.bottom_left_bound = convertPoint(bottom_left);
+	entry.top_right_bound = convertPoint(top_right);
 	entry.size = decltype(entry.size)((Ocd::addPadding(data).size()));
 	// According to OCD format 8 documentation, size (aka len) is in bytes
 	// for OCD version 6 and 7 files.
@@ -2815,12 +2817,28 @@ quint16 OcdFileExport::getPointSymbolExtent(const PointSymbol* symbol) const
 
 quint16 OcdFileExport::exportCoordinates(const MapCoordVector& coords, const Symbol* symbol, QByteArray& byte_array)
 {
+	MapCoord bottom_left{};  // unused
+	MapCoord top_right{};    // unused
+	return exportCoordinates(coords, symbol, byte_array, bottom_left, top_right);
+}
+
+quint16 OcdFileExport::exportCoordinates(const MapCoordVector& coords, const Symbol* symbol, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right)
+{
 	quint16 num_points = 0;
 	bool curve_start = false;
 	bool hole_point = false;
 	bool curve_continue = false;
 	for (const auto& point : coords)
 	{
+		if (point.nativeX() < bottom_left.nativeX())
+			bottom_left.setNativeX(point.nativeX());
+		else if (point.nativeX() > top_right.nativeX())
+			top_right.setNativeX(point.nativeX());
+		if (point.nativeY() > bottom_left.nativeY())
+			bottom_left.setNativeY(point.nativeY());
+		else if (point.nativeY() < top_right.nativeY())
+			top_right.setNativeY(point.nativeY());
+		
 		auto p = convertPoint(point);
 		if (point.isDashPoint())
 		{
@@ -2853,7 +2871,7 @@ quint16 OcdFileExport::exportCoordinates(const MapCoordVector& coords, const Sym
 }
 
 
-quint16 OcdFileExport::exportTextCoordinatesSingle(const TextObject* object, QByteArray& byte_array)
+quint16 OcdFileExport::exportTextCoordinatesSingle(const TextObject* object, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right)
 {
 	if (object->getNumLines() == 0)
 		return 0;
@@ -2871,10 +2889,6 @@ quint16 OcdFileExport::exportTextCoordinatesSingle(const TextObject* object, QBy
 	auto anchor = QPointF(object->getAnchorCoordF());
 	auto anchor_text = map_to_text.map(anchor);
 	
-	auto line0 = object->getLineInfo(0);
-	auto p = convertPoint(MapCoord(text_to_map.map(QPointF(anchor_text.x(), line0->line_y))));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	
 	QRectF bounding_box_text;
 	for (int i = 0; i < object->getNumLines(); ++i)
 	{
@@ -2883,20 +2897,33 @@ quint16 OcdFileExport::exportTextCoordinatesSingle(const TextObject* object, QBy
 		rectIncludeSafe(bounding_box_text, QPointF(info->line_x + info->width, info->line_y + info->descent));
 	}
 	
-	p = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomLeft())));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(text_to_map.map(bounding_box_text.bottomRight())));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topRight())));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(text_to_map.map(bounding_box_text.topLeft())));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
+	MapCoord coords[5] = {
+	    MapCoord(text_to_map.map(QPointF(anchor_text.x(), object->getLineInfo(0)->line_y))),
+	    MapCoord(text_to_map.map(bounding_box_text.bottomLeft())),
+	    MapCoord(text_to_map.map(bounding_box_text.bottomRight())),
+	    MapCoord(text_to_map.map(bounding_box_text.topRight())),
+	    MapCoord(text_to_map.map(bounding_box_text.topLeft()))
+	};
+	for (const auto& point : coords)
+	{
+		if (point.nativeX() < bottom_left.nativeX())
+			bottom_left.setNativeX(point.nativeX());
+		else if (point.nativeX() > top_right.nativeX())
+			top_right.setNativeX(point.nativeX());
+		if (point.nativeY() > bottom_left.nativeY())
+			bottom_left.setNativeY(point.nativeY());
+		else if (point.nativeY() < top_right.nativeY())
+			top_right.setNativeY(point.nativeY());
+		
+		const auto p = convertPoint(point);
+		byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
+	}
 	
 	return 5;
 }
 
 
-quint16 OcdFileExport::exportTextCoordinatesBox(const TextObject* object, QByteArray& byte_array)
+quint16 OcdFileExport::exportTextCoordinatesBox(const TextObject* object, QByteArray& byte_array, MapCoord& bottom_left, MapCoord& top_right)
 {
 	if (object->getNumLines() == 0)
 		return 0;
@@ -2914,14 +2941,26 @@ quint16 OcdFileExport::exportTextCoordinatesBox(const TextObject* object, QByteA
 	
 	QTransform transform;
 	transform.rotate(-qRadiansToDegrees(object->getRotation()));
-	auto p = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
-	p = convertPoint(MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()));
-	byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
+	MapCoord coords[4] = {
+	    MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()),
+	    MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, object->getBoxHeight() / 2)) + object->getAnchorCoordF()),
+	    MapCoord(transform.map(QPointF(object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF()),
+	    MapCoord(transform.map(QPointF(-object->getBoxWidth() / 2, new_top)) + object->getAnchorCoordF())
+	};
+	for (const auto& point : coords)
+	{
+		if (point.nativeX() < bottom_left.nativeX())
+			bottom_left.setNativeX(point.nativeX());
+		else if (point.nativeX() > top_right.nativeX())
+			top_right.setNativeX(point.nativeX());
+		if (point.nativeY() > bottom_left.nativeY())
+			bottom_left.setNativeY(point.nativeY());
+		else if (point.nativeY() < top_right.nativeY())
+			top_right.setNativeY(point.nativeY());
+		
+		const auto p = convertPoint(point);
+		byte_array.append(reinterpret_cast<const char*>(&p), sizeof(p));
+	}
 	
 	return 4;
 }
