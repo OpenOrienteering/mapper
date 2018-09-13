@@ -258,6 +258,9 @@ protected:
 	void exportObjects(OcdFile<Format>& file);
 	
 	template< class OcdObject >
+	void handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry);
+
+	template< class OcdObject >
 	QByteArray exportPointObject(const PointObject* point, typename OcdObject::IndexEntryType& entry);
 	
 	template< class Format >

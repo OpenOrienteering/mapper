@@ -2500,16 +2500,17 @@ void OcdFileExport::exportObjects(OcdFile<Format>& file)
  * Object setup which depends on the type features, not on minor type variations of members.
  */
 template< class OcdObject >
-void handleObjectExtras(OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
+void OcdFileExport::handleObjectExtras(const Object* object, OcdObject& ocd_object, typename OcdObject::IndexEntryType& entry)
 {
 	// Extra entry members since V9
 	entry.type = ocd_object.type;
 	entry.status = Ocd::ObjectNormal;
+	entry.color = convertColor(object->getSymbol()->guessDominantColor());
 }
 
 
 template< >
-void handleObjectExtras<Ocd::ObjectV8>(Ocd::ObjectV8& ocd_object, typename Ocd::ObjectV8::IndexEntryType& /*entry*/)
+void OcdFileExport::handleObjectExtras<Ocd::ObjectV8>(const Object* /*object*/, Ocd::ObjectV8& ocd_object, typename Ocd::ObjectV8::IndexEntryType& /*entry*/)
 {
 	switch (ocd_object.type)
 	{
@@ -2599,7 +2600,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 				
 				exported_ocd_object.symbol = entry.symbol = decltype(entry.symbol)(breakdown->number);
 				exported_ocd_object.type = decltype(exported_ocd_object.type)(breakdown->type);
-				handleObjectExtras(exported_ocd_object, entry);  // update entry.type if it exists
+				handleObjectExtras(path, exported_ocd_object, entry);  // update entry.type if it exists
 				file.objects().insert(data, entry);
 			}
 			
@@ -2673,7 +2674,7 @@ QByteArray OcdFileExport::exportObjectCommon(const Object* object, OcdObject& oc
 	
 	entry.bottom_left_bound = convertPoint(MapCoord(object->getExtent().bottomLeft()));
 	entry.top_right_bound = convertPoint(MapCoord(object->getExtent().topRight()));
-	handleObjectExtras(ocd_object, entry);
+	handleObjectExtras(object, ocd_object, entry);
 
 	auto header_size = int(sizeof(OcdObject) - sizeof(Ocd::OcdPoint32));
 	auto items_size = int((ocd_object.num_items + ocd_object.num_text) * sizeof(Ocd::OcdPoint32));
