@@ -243,4 +243,40 @@ OcdIcon::operator Ocd::IconV9() const
 }
 
 
+// static
+QImage OcdIcon::toQImage(const Ocd::IconV8& icon)
+{
+	static const auto palette = icon.palette<QColor>();
+	const auto* icon_bits = icon.bits;
+	auto image = QImage{icon.width(), icon.height(), QImage::Format_ARGB32_Premultiplied};
+	for (int y = icon.height() - 1; y >= 0; --y)
+	{
+		for (int x = 0; x < icon.width(); x += 2)
+		{
+			image.setPixelColor(x, y, palette[(*icon_bits) >> 4]);
+			image.setPixelColor(x+1, y, palette[*(icon_bits++) & 0xf]);
+		}
+		icon_bits++;
+	}
+	return image;
+}
+
+
+// static
+QImage OcdIcon::toQImage(const Ocd::IconV9& icon)
+{
+	static const auto palette = icon.palette<QColor>();
+	const auto* icon_bits = icon.bits;
+	auto image = QImage{icon.width(), icon.height(), QImage::Format_ARGB32_Premultiplied};
+	for (int y = icon.height() - 1; y >= 0; --y)
+	{
+		for (int x = 0; x < icon.width(); ++x)
+		{
+			image.setPixelColor(x, y, palette[std::min(*(icon_bits++), quint8(124))]);
+		}
+	}
+	return image;
+}
+
+
 }  // namespace OpenOrienteering
