@@ -37,6 +37,10 @@
 #include "fileformats/ocd_types_v9.h"
 
 
+template std::array<QColor, 16> Ocd::IconV8::palette<QColor>();
+template std::array<QColor, 125> Ocd::IconV9::palette<QColor>();
+
+
 namespace OpenOrienteering {
 
 namespace {
@@ -135,8 +139,23 @@ quint8 getPaletteColorV9(QRgb rgb)
 		int r;
 		int g;
 		int b;
+		static PaletteColor fromQColor(const QColor& color)
+		{
+			return { color.red(), color.green(), color.blue() };
+		}
 	};
-	static const auto palette = Ocd::IconV9::palette<PaletteColor>();
+	// While one could simply call
+	//     static const auto palette = Ocd::IconV9::palette<PaletteColor>();
+	// we chose to pay a one-time overhead at runtime instead of an additional
+	// expansion of function template Ocd::IconV9::palette<RBG>().
+	static const auto palette = []() {
+		std::array<PaletteColor, 125> palette_rgb;
+		const auto palette_qcolor = Ocd::IconV9::palette<QColor>();
+		std::transform(begin(palette_qcolor), end(palette_qcolor), begin(palette_rgb), [](auto& rgb){
+			return PaletteColor::fromQColor(rgb);
+		});
+		return palette_rgb;
+	}();
 	
 	auto r = qRed(rgb);
 	auto g = qGreen(rgb);
