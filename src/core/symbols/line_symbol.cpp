@@ -302,16 +302,9 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		
 		if (create_border || cap_style == PointedCap)
 		{
-			auto last = path.coords.size();
-			auto part_start = MapCoordVector::size_type { 0 };
-			auto next_part_start = last; //path_coords.update(part_start);
-			
-			bool has_start = !(part_start == 0 && path_closed);
-			bool has_end = !(next_part_start == last && path_closed);
-			
 			auto start = SplitPathCoord::begin(path.path_coords);
 			auto end   = SplitPathCoord::end(path.path_coords);
-			processContinuousLine(path, start, end, has_start, has_end, false,
+			processContinuousLine(path, start, end, !path_closed, !path_closed, false,
 			                      processed_flags, processed_coords, output);
 		}
 		else if (color)
