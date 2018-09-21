@@ -217,28 +217,44 @@ private slots:
 	
 	void renderTest_data()
 	{
-		const auto render_test_files = {
-		    "testdata:symbols/line-symbol-border-variants.omap",
-		    "testdata:symbols/line-symbol-cap-variants.omap",
-		    "testdata:symbols/line-symbol-start-end-symbol.omap",
-		    "testdata:symbols/line-symbol-mid-symbol-variants.omap",
+		struct
+		{
+			const char* path;
+			qreal pixel_per_mm;
+		} const render_test_files[] = {
+		    { "testdata:symbols/line-symbol-border-variants.omap", 50 },
+		    { "testdata:symbols/line-symbol-cap-variants.omap", 50 },
+		    { "testdata:symbols/line-symbol-start-end-symbol.omap", 50 },
+		    { "testdata:symbols/line-symbol-mid-symbol-variants.omap", 50 },
+		    { "data:examples/complete map.omap", 5 },
+		    { "data:examples/forest sample.omap", 10 },
 		};
 		QTest::addColumn<QString>("map_filename");
-		for (auto raw_path : render_test_files)
+		QTest::addColumn<qreal>("pixel_per_mm");
+		for (auto test_file : render_test_files)
 		{
-			QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
+			QTest::newRow(test_file.path) << QString::fromUtf8(test_file.path) << test_file.pixel_per_mm;
 		}
 	}
 	
 	void renderTest()
 	{
 		QFETCH(QString, map_filename);
+		QFETCH(qreal, pixel_per_mm);
 		
 		Map map;
 		QVERIFY(map.loadFrom(map_filename));
 		
+		// Don' test text symbols: text rendering requires more Qt GUI,
+		// and it depends on fonts and platforms.
+		for (auto i = 0; i < map.getNumSymbols(); ++i)
+		{
+			auto* symbol = map.getSymbol(i);
+			if (symbol && symbol->getType() == Symbol::Text)
+				symbol->setIsHelperSymbol(true);
+		}
+		
 		const auto extent = map.calculateExtent().toAlignedRect().adjusted(-1, -1, +1, +1);
-		constexpr auto pixel_per_mm = 50;
 		
 		auto image = QImage{pixel_per_mm * extent.size(), QImage::Format_ARGB32_Premultiplied};
 		image.fill(QColor(Qt::white));
