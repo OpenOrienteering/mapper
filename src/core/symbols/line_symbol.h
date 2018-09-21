@@ -285,6 +285,8 @@ protected:
 	 */
 	void createBorderLines(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        ObjectRenderables& output
 	) const;
 	
@@ -330,6 +332,8 @@ protected:
 	 */
 	void processDashedLine(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords,
@@ -380,6 +384,8 @@ protected:
 	 */
 	void createMidSymbolRenderables(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        ObjectRenderables& output
 	) const;

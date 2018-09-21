@@ -280,6 +280,8 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	}
 	
 	// The line itself
+	auto start = SplitPathCoord::begin(path.path_coords);
+	auto end   = SplitPathCoord::end(path.path_coords);
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
@@ -289,21 +291,19 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		if (dash_length <= 0)
 			return;
 		
-		processDashedLine(path, path_closed, processed_flags, processed_coords, output);
+		processDashedLine(path, start, end, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
 		// Symbols?
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createMidSymbolRenderables(path, path_closed, output);
+			createMidSymbolRenderables(path, start, end, path_closed, output);
 		
 		if (line_width == 0)
 			return;
 		
 		if (create_border || cap_style == PointedCap)
 		{
-			auto start = SplitPathCoord::begin(path.path_coords);
-			auto end   = SplitPathCoord::end(path.path_coords);
 			processContinuousLine(path, start, end, !path_closed, !path_closed, false,
 			                      processed_flags, processed_coords, output);
 		}
@@ -322,14 +322,22 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	VirtualPath processed_path = { processed_flags, processed_coords };
 	processed_path.path_coords.update(path.first_index);
 	if (color)
+	{
 		output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
+	}
 	if (create_border)
-		createBorderLines(processed_path, output);
+	{
+		const auto processed_start = SplitPathCoord::begin(processed_path.path_coords);
+		const auto processed_end = SplitPathCoord::end(processed_path.path_coords);
+		createBorderLines(processed_path, processed_start, processed_end, output);
+	}
 }
 
 
 void LineSymbol::createBorderLines(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         ObjectRenderables& output) const
 {
 	const auto main_shift = 0.0005 * line_width;
@@ -356,7 +364,7 @@ void LineSymbol::createBorderLines(
 		if (border_dashed)
 		{
 			// Left border is dashed
-			border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
+			border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			shiftCoordinates({dashed_flags, dashed_coords}, -main_shift, border_flags, border_coords);
 		}
@@ -385,7 +393,7 @@ void LineSymbol::createBorderLines(
 				// Right border is dashed, but different from left border
 				dashed_flags.clear();
 				dashed_coords.clear();
-				border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
+				border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			}
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			shiftCoordinates({dashed_flags, dashed_coords}, main_shift, border_flags, border_coords);
@@ -955,6 +963,8 @@ void LineSymbol::createPointedLineCap(
 
 void LineSymbol::processDashedLine(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         bool path_closed,
         MapCoordVector& out_flags,
         MapCoordVectorF& out_coords,
@@ -967,20 +977,13 @@ void LineSymbol::processDashedLine(
 	out_flags.reserve(out_coords_size);
 	out_coords.reserve(out_coords_size);
 	
-	auto last = path.last_index;
-	
-	auto groups_start = SplitPathCoord::begin(path_coords);
+	auto groups_start = start;
 	auto line_start   = groups_start;
-	for (bool is_part_end = false; !is_part_end; )
+	for (auto is_part_start = true, is_part_end = false; !is_part_end; is_part_start = false)
 	{
 		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
-		auto groups_end_index = path_coords[groups_end_path_coord_index].index;
-		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
-		
-		// Intentionally look at groups_start (current node),
-		// not line_start (where to continue drawing)!
-		bool is_part_start = (groups_start.index == path.first_index);
-		is_part_end = (groups_end_index == last);
+		is_part_end = path.path_coords[groups_end_path_coord_index].clen >= end.clen;
+		auto groups_end = is_part_end ? end : SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		line_start = createDashGroups(path, path_closed,
 		                              line_start, groups_start, groups_end,
@@ -1271,6 +1274,8 @@ void LineSymbol::createDashSymbolRenderables(
 
 void LineSymbol::createMidSymbolRenderables(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         bool path_closed,
         ObjectRenderables& output) const
 {
@@ -1289,20 +1294,20 @@ void LineSymbol::createMidSymbolRenderables(
 	auto& path_coords = path.path_coords;
 	Q_ASSERT(!path_coords.empty());
 	
-	auto groups_start = SplitPathCoord::begin(path_coords);
 	if (end_length == 0 && !path_closed)
 	{
 		// Insert point at start coordinate
 		if (mid_symbol_rotatable)
-			orientation = groups_start.tangentVector().angle();
-		mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
+			orientation = start.tangentVector().angle();
+		mid_symbol->createRenderablesScaled(start.pos, orientation, output);
 	}
 	
-	auto part_end = path.last_index;
-	while (groups_start.index != part_end)
+	auto groups_start = start;
+	for (auto is_part_end = false; !is_part_end; )
 	{
 		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
-		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
+		is_part_end = path.path_coords[groups_end_path_coord_index].clen >= end.clen;
+		auto groups_end = is_part_end ? end : SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		// The total length of the current continuous part
 		auto length = groups_end.clen - groups_start.clen;
