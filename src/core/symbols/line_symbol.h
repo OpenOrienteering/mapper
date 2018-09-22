@@ -307,8 +307,6 @@ protected:
 	        const VirtualPath& path,
 	        const SplitPathCoord& start,
 	        const SplitPathCoord& end,
-	        bool has_start,
-	        bool has_end,
 	        bool set_mid_symbols,
 	        MapCoordVector& processed_flags,
 	        MapCoordVectorF& processed_coords,

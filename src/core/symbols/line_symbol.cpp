@@ -310,6 +310,31 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	// Later we create the line renderable and border.
 	auto start = SplitPathCoord::begin(path.path_coords);
 	auto end   = SplitPathCoord::end(path.path_coords);
+	
+	if (use_pointed_cap)
+	{
+		// Create pointed line ends
+		auto effective_cap_length = length_type(0.001) * pointed_cap_length;
+		auto max_effective_cap_length = (end.clen - start.clen) / 2;
+		bool line_too_short = effective_cap_length >= max_effective_cap_length;
+		if (line_too_short)
+			effective_cap_length = max_effective_cap_length;
+		
+		auto split = SplitPathCoord::at(start.clen + effective_cap_length, start);
+		createPointedLineCap(path, start, split, false, output);
+		start = split;
+		
+		split = SplitPathCoord::at(end.clen - effective_cap_length, split);
+		if (end.is_curve_end)
+			// Get updated curve end
+			end = SplitPathCoord::at(end.clen, split);
+		createPointedLineCap(path, split, end, true, output);
+		end = split;
+		
+		if (line_too_short)
+			return;
+	}
+	
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
 	if (dashed)
@@ -325,7 +350,7 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 			createMidSymbolRenderables(path, start, end, path_closed, output);
 		
 		if (line_width > 0)
-			processContinuousLine(path, start, end, !path_closed, !path_closed, false,
+			processContinuousLine(path, start, end, false,
 			                      processed_flags, processed_coords, output);
 	}
 	
@@ -710,96 +735,47 @@ void LineSymbol::processContinuousLine(
         const VirtualPath& path,
         const SplitPathCoord& start,
         const SplitPathCoord& end,
-        bool has_start,
-        bool has_end,
         bool set_mid_symbols,
         MapCoordVector& processed_flags,
         MapCoordVectorF& processed_coords,
         ObjectRenderables& output ) const
 {
-	bool create_line = true;
-	auto effective_cap_length = length_type(0);
-	if (cap_style == PointedCap && (has_start || has_end))
-	{
-		effective_cap_length = length_type(0.001) * pointed_cap_length;
-		int num_caps = 2 - (has_end ? 0 : 1) - (has_start ? 0 : 1);
-		auto max_effective_cap_length = (end.clen - start.clen) / num_caps;
-		if (effective_cap_length >= max_effective_cap_length)
-		{
-			create_line = false;
-			effective_cap_length = max_effective_cap_length;
-		}
-	}
+	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
+	auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
+	auto effective_end_length = end.clen;
 	
-	auto split      = start;
-	auto next_split = SplitPathCoord();
+	auto split = start;
 	
-	if (has_start && effective_cap_length > 0)
+	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
+	if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
 	{
-		// Create pointed line cap start
-		next_split = SplitPathCoord::at(start.clen + effective_cap_length, start);
-		createPointedLineCap(path, split, next_split, false, output);
-		split = next_split;
-	}
-	
-	if (create_line)
-	{
-		// Add line to processed_coords/flags
-		
-		auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
-		auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
-		auto effective_end_length = end.clen;
-		if (has_end)
-		{
-			effective_end_length -= effective_cap_length;
-		}
-		
-		set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
-		if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
-		{
-			auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
-			next_split   = SplitPathCoord::at(mid_position, split);
-			path.copy(split, next_split, processed_flags, processed_coords);
-			split = next_split;
-			
-			auto orientation = qreal(0);
-			bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
-			for (auto i = mid_symbols_per_spot; i > 0; --i)
-			{
-				if (mid_symbol_rotatable)
-					orientation = split.tangentVector().angle();
-				mid_symbol->createRenderablesScaled(split.pos, orientation, output);
-				
-				if (i > 1)
-				{
-					mid_position += mid_symbol_distance_f;
-					next_split = SplitPathCoord::at(mid_position, split);
-					path.copy(split, next_split, processed_flags, processed_coords);
-					split = next_split;
-				}
-			}
-		}
-		
-		// End position
-		next_split = SplitPathCoord::at(effective_end_length, split);
+		auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
+		auto next_split = SplitPathCoord::at(mid_position, split);
 		path.copy(split, next_split, processed_flags, processed_coords);
 		split = next_split;
 		
-		processed_flags.back().setGapPoint(true);
-		Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
+		auto orientation = qreal(0);
+		bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
+		for (auto i = mid_symbols_per_spot; i > 0; --i)
+		{
+			if (mid_symbol_rotatable)
+				orientation = split.tangentVector().angle();
+			mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+			
+			if (i > 1)
+			{
+				mid_position += mid_symbol_distance_f;
+				next_split = SplitPathCoord::at(mid_position, split);
+				path.copy(split, next_split, processed_flags, processed_coords);
+				split = next_split;
+			}
+		}
 	}
 	
-	if (has_end && effective_cap_length > 0)
-	{
-		// Create pointed line cap end
-		next_split = end;
-		if (end.is_curve_end)
-		{
-			// Get updated curve end
-			next_split = SplitPathCoord::at(end.clen, split);
-		}
-		createPointedLineCap(path, split, next_split, true, output);
-	}
+	path.copy(split, end, processed_flags, processed_coords);
+	
+	processed_flags.back().setGapPoint(true);
+	Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 }
 
 void LineSymbol::createPointedLineCap(
@@ -1112,7 +1088,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 		{
 			// Can't be handled correctly by the next round of dash groups drawing:
 			// Just draw a continuous line.
-			processContinuousLine(path, line_start, end, !half_first_group, !half_last_group, set_mid_symbols,
+			processContinuousLine(path, line_start, end, set_mid_symbols,
 			                      out_flags, out_coords, output);
 		}
 		else
@@ -1199,7 +1175,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				}
 				
 				SplitPathCoord dash_end = SplitPathCoord::at(cur_length + cur_dash_length, dash_start);
-				processContinuousLine(path, dash_start, dash_end, has_start, has_end, set_mid_symbols,
+				processContinuousLine(path, dash_start, dash_end, set_mid_symbols,
 				                      out_flags, out_coords, output);
 				cur_length += cur_dash_length;
 				dash_start = dash_end;
