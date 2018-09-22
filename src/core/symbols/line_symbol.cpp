@@ -279,19 +279,44 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		createDashSymbolRenderables(path, path_closed, output);
 	}
 	
-	// The line itself
+	auto create_line = color && line_width > 0;
+	auto create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
+	auto use_pointed_cap = (!path.isClosed() && cap_style == PointedCap && pointed_cap_length > 0);
+	if (!use_pointed_cap && !dashed)
+	{
+		// This is a simple plain line (no pointed line ends, no dashes).
+		// It may be drawn directly from the given path.
+		if (create_line)
+			output.insertRenderable(new LineRenderable(this, path, path_closed));
+		
+		auto create_mid_symbols = mid_symbol && !mid_symbol->isEmpty() && segment_length > 0;
+		if (create_mid_symbols || create_border)
+		{
+			auto start = SplitPathCoord::begin(path.path_coords);
+			auto end   = SplitPathCoord::end(path.path_coords);
+			
+			if (create_mid_symbols)
+				createMidSymbolRenderables(path, start, end, path_closed, output);
+			
+			if (create_border)
+				createBorderLines(path, start, end, output);
+		}
+		
+		return;
+	}
+	
+	// This is a non-trivial line symbol.
+	// First we preprocess coordinates and handle mid symbols.
+	// Later we create the line renderable and border.
 	auto start = SplitPathCoord::begin(path.path_coords);
 	auto end   = SplitPathCoord::end(path.path_coords);
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
-	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
 	if (dashed)
 	{
 		// Dashed lines
-		if (dash_length <= 0)
-			return;
-		
-		processDashedLine(path, start, end, path_closed, processed_flags, processed_coords, output);
+		if (dash_length > 0)
+			processDashedLine(path, start, end, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
@@ -299,37 +324,27 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
 			createMidSymbolRenderables(path, start, end, path_closed, output);
 		
-		if (line_width == 0)
-			return;
-		
-		if (create_border || cap_style == PointedCap)
-		{
+		if (line_width > 0)
 			processContinuousLine(path, start, end, !path_closed, !path_closed, false,
 			                      processed_flags, processed_coords, output);
-		}
-		else if (color)
-		{
-			output.insertRenderable(new LineRenderable(this, path, path_closed));
-		}
-		
 	}
-	
-	if (processed_coords.empty() || (!color && !create_border))
-		return;
 	
 	Q_ASSERT(processed_coords.size() != 1);
 	
-	VirtualPath processed_path = { processed_flags, processed_coords };
-	processed_path.path_coords.update(path.first_index);
-	if (color)
+	if ((create_line || create_border) && processed_coords.size() > 1)
 	{
-		output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
-	}
-	if (create_border)
-	{
-		const auto processed_start = SplitPathCoord::begin(processed_path.path_coords);
-		const auto processed_end = SplitPathCoord::end(processed_path.path_coords);
-		createBorderLines(processed_path, processed_start, processed_end, output);
+		VirtualPath processed_path = { processed_flags, processed_coords };
+		processed_path.path_coords.update(path.first_index);
+		if (create_line)
+		{
+			output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
+		}
+		if (create_border)
+		{
+			const auto processed_start = SplitPathCoord::begin(processed_path.path_coords);
+			const auto processed_end = SplitPathCoord::end(processed_path.path_coords);
+			createBorderLines(processed_path, processed_start, processed_end, output);
+		}
 	}
 }
 
