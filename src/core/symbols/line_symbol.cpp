@@ -141,7 +141,8 @@ LineSymbol::LineSymbol() noexcept
 , color ( nullptr )
 , line_width ( 0 )
 , minimum_length ( 0 )
-, pointed_cap_length ( 1000 )
+, start_offset ( 0 )
+, end_offset ( 0 )
 , mid_symbols_per_spot ( 1 )
 , mid_symbol_distance ( 0 )
 , minimum_mid_symbol_count ( 0 )
@@ -177,7 +178,8 @@ LineSymbol::LineSymbol(const LineSymbol& proto)
 , color ( proto.color )
 , line_width ( proto.line_width )
 , minimum_length ( proto.minimum_length )
-, pointed_cap_length ( proto.pointed_cap_length )
+, start_offset ( proto.start_offset )
+, end_offset ( proto.end_offset )
 , mid_symbols_per_spot ( proto.mid_symbols_per_spot )
 , mid_symbol_distance ( proto.mid_symbol_distance )
 , minimum_mid_symbol_count ( proto.minimum_mid_symbol_count )
@@ -281,8 +283,8 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	
 	auto create_line = color && line_width > 0;
 	auto create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
-	auto use_pointed_cap = (!path.isClosed() && cap_style == PointedCap && pointed_cap_length > 0);
-	if (!use_pointed_cap && !dashed)
+	auto use_offset = !path.isClosed() && (start_offset > 0 || end_offset > 0);
+	if (!use_offset && !dashed)
 	{
 		// This is a simple plain line (no pointed line ends, no dashes).
 		// It may be drawn directly from the given path.
@@ -311,28 +313,46 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	auto start = SplitPathCoord::begin(path.path_coords);
 	auto end   = SplitPathCoord::end(path.path_coords);
 	
-	if (use_pointed_cap)
+	if (use_offset)
 	{
-		// Create pointed line ends
-		auto effective_cap_length = length_type(0.001) * pointed_cap_length;
-		auto max_effective_cap_length = (end.clen - start.clen) / 2;
-		bool line_too_short = effective_cap_length >= max_effective_cap_length;
-		if (line_too_short)
-			effective_cap_length = max_effective_cap_length;
+		// Create offset at line ends, or pointed line ends
+		auto effective_start_offset = length_type(0.001) * std::max(0, start_offset);
+		auto effective_end_offset = length_type(0.001) * std::max(0, end_offset);
+		auto total_offset = effective_start_offset + effective_end_offset;
+		auto available_length = std::max(length_type(0), end.clen - start.clen);
 		
-		auto split = SplitPathCoord::at(start.clen + effective_cap_length, start);
-		createPointedLineCap(path, start, split, false, output);
-		start = split;
+		if (total_offset > available_length)
+		{
+			create_line = false;
+			effective_start_offset *= available_length / total_offset;
+			effective_end_offset *= available_length / total_offset;
+		}
 		
-		split = SplitPathCoord::at(end.clen - effective_cap_length, split);
-		if (end.is_curve_end)
-			// Get updated curve end
-			end = SplitPathCoord::at(end.clen, split);
-		createPointedLineCap(path, split, end, true, output);
-		end = split;
-		
-		if (line_too_short)
+		if (effective_start_offset > 0)
+		{
+			auto split = SplitPathCoord::at(start.clen + effective_start_offset, start);
+			if (cap_style == PointedCap)
+			{
+				createPointedLineCap(path, start, split, false, output);
+			}
+			start = split;
+		}
+		if (effective_end_offset > 0)
+		{
+			auto split = SplitPathCoord::at(end.clen - effective_end_offset, start);
+			if (cap_style == PointedCap)
+			{
+				// Get updated curve end
+				if (end.is_curve_end)
+					end = SplitPathCoord::at(end.clen, split);
+				createPointedLineCap(path, split, end, true, output);
+			}
+			end = split;
+		}
+		if (!create_line)
+		{
 			return;
+		}
 	}
 	
 	MapCoordVector processed_flags;
@@ -789,7 +809,7 @@ void LineSymbol::createPointedLineCap(
 	area_symbol.setColor(color);
 	
 	auto line_half_width = length_type(0.0005) * line_width;
-	auto cap_length = length_type(0.001) * pointed_cap_length;
+	auto cap_length = length_type(0.001) * (is_end ? end_offset : start_offset);
 	auto tan_angle = qreal(line_half_width / cap_length);
 	
 	MapCoordVector cap_flags;
@@ -1579,7 +1599,8 @@ void LineSymbol::scale(double factor)
 	line_width = qRound(factor * line_width);
 	
 	minimum_length = qRound(factor * minimum_length);
-	pointed_cap_length = qRound(factor * pointed_cap_length);
+	start_offset = qRound(factor * start_offset);
+	end_offset = qRound(factor * end_offset);
 	
 	if (start_symbol)
 		start_symbol->scale(factor);
@@ -1731,7 +1752,14 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("minimum_length"), QString::number(minimum_length));
 	xml.writeAttribute(QString::fromLatin1("join_style"), QString::number(join_style));
 	xml.writeAttribute(QString::fromLatin1("cap_style"), QString::number(cap_style));
-	xml.writeAttribute(QString::fromLatin1("pointed_cap_length"), QString::number(pointed_cap_length));
+	if (cap_style == LineSymbol::PointedCap)
+	{
+		// Deprecated, only for backwards compatibility.
+		/// \todo Remove "pointed_cap_length" in Mapper 1.0
+		xml.writeAttribute(QString::fromLatin1("pointed_cap_length"), QString::number(qRound((start_offset+end_offset)/2.0)));
+	}
+	xml.writeAttribute(QString::fromLatin1("start_offset"), QString::number(start_offset));
+	xml.writeAttribute(QString::fromLatin1("end_offset"), QString::number(end_offset));
 	
 	if (dashed)
 		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
@@ -1811,7 +1839,17 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	minimum_length = attributes.value(QLatin1String("minimum_length")).toInt();
 	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value(QLatin1String("join_style")).toInt());
 	cap_style = static_cast<LineSymbol::CapStyle>(attributes.value(QLatin1String("cap_style")).toInt());
-	pointed_cap_length = attributes.value(QLatin1String("pointed_cap_length")).toInt();
+	if (attributes.hasAttribute(QLatin1String("start_offset")) || attributes.hasAttribute(QLatin1String("end_offset")))
+	{
+		// since version 8
+		start_offset = attributes.value(QLatin1String("start_offset")).toInt();
+		end_offset = attributes.value(QLatin1String("end_offset")).toInt();
+	}
+	else if (cap_style == LineSymbol::PointedCap)
+	{
+		// until version 7
+		start_offset = end_offset = attributes.value(QLatin1String("pointed_cap_length")).toInt();
+	}
 	
 	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
 	segment_length = attributes.value(QLatin1String("segment_length")).toInt();
@@ -1912,7 +1950,8 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		if ((cap_style != line->cap_style) ||
 			(join_style != line->join_style))
 			return false;
-		if (cap_style == PointedCap && (pointed_cap_length != line->pointed_cap_length))
+		
+		if (start_offset != line->start_offset || end_offset != line->end_offset)
 			return false;
 		
 		if (dashed != line->dashed)

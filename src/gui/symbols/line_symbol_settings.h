@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -111,7 +111,8 @@ protected slots:
 	void minimumDimensionsEdited();
 	void lineCapChanged(int index);
 	void lineJoinChanged(int index);
-	void pointedLineCapLengthChanged(double value);
+	void startOffsetChanged(double value);
+	void endOffsetChanged(double value);
 	void dashedChanged(bool checked);
 	void segmentLengthChanged(double value);
 	void endLengthChanged(double value);
@@ -148,8 +149,10 @@ private:
 	std::vector<QWidget*> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
-	QLabel* pointed_cap_length_label;
-	QDoubleSpinBox* pointed_cap_length_edit;
+	QLabel* start_offset_label;
+	QDoubleSpinBox* start_offset_edit;
+	QLabel* end_offset_label;
+	QDoubleSpinBox* end_offset_edit;
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol

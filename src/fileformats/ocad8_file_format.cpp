@@ -444,13 +444,14 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 			main_line->join_style = LineSymbol::MiterJoin;
 		}
 
+		main_line->start_offset = convertSize(ocad_symbol->bdist);
+		main_line->end_offset = convertSize(ocad_symbol->edist);
 		if (main_line->cap_style == LineSymbol::PointedCap)
 		{
-			if (ocad_symbol->bdist != ocad_symbol->edist)
-				addWarning(tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
-			main_line->pointed_cap_length = convertSize((ocad_symbol->bdist + ocad_symbol->edist) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
-			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OCAD always draws round joins if the line cap is pointed!
+			// Note: While the property in the file may be different
+			// (cf. what is set in the first place), OC*D always
+			// draws round joins if the line cap is pointed!
+			main_line->join_style = LineSymbol::RoundJoin;
 		}
 		
 		// Handle the dash pattern
@@ -2235,11 +2236,8 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 			ocad_symbol->ends = 0;
 	}
 	
-	if (line->getCapStyle() == LineSymbol::PointedCap)
-	{
-		ocad_symbol->bdist = convertSize(line->getPointedCapLength());
-		ocad_symbol->edist = convertSize(line->getPointedCapLength());
-	}
+	ocad_symbol->bdist = convertSize(line->startOffset());
+	ocad_symbol->edist = convertSize(line->endOffset());
 	
 	// Dash pattern
 	if (line->isDashed())

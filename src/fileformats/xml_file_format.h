@@ -93,6 +93,8 @@ public:
 
 \subsection version-8 Version 8
 
+- 2018-09-16 Added `start_offset` and `end_offset` attributes to the `line_symbol`
+             element, replacing the now deprecated `pointed_cap_length` attribute.
 - 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
 
 

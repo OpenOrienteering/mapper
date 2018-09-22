@@ -453,7 +453,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 			}
 			else if (line->getCapStyle() == LineSymbol::PointedCap)
 			{
-				line_length_half = std::max(line_length_half, 0.0012 * line->getPointedCapLength());
+				line_length_half = std::max(line_length_half, 0.0006 * (line->startOffset() + line->endOffset()));
 			}
 			
 			if (line->getDashSymbol() && !line->getDashSymbol()->isEmpty())
