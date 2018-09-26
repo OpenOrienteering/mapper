@@ -217,6 +217,8 @@ void MapColorTest::spotColorTest()
 	spot_cyan.setSpotColorName(QString::fromLatin1("CYAN"));
 	QCOMPARE(spot_cyan.getSpotColorMethod(), MapColor::SpotColor);
 	QCOMPARE(spot_cyan.getSpotColorName(), QString(QString::fromLatin1("CYAN")));
+	QCOMPARE(spot_cyan.getScreenAngle(), 0.0);
+	QVERIFY(spot_cyan.getScreenFrequency() <= 0);
 	
 	spot_cyan.setCmyk(MapColorCmyk(1.0, 0.0, 0.0, 0.0));
 	QCOMPARE(spot_cyan.getSpotColorMethod(), MapColor::SpotColor);  // unchanged
@@ -303,6 +305,30 @@ void MapColorTest::spotColorTest()
 	QCOMPARE(*duplicate, spot_cyan_copy);
 	spot_cyan_copy.setKnockout(!spot_cyan_copy.getKnockout());
 	QVERIFY(spot_cyan_copy != *duplicate);
+	
+	// Test MapColor::equals() with cloned spot color screens.
+	{
+		auto actual = spot_cyan;
+		QCOMPARE(actual, spot_cyan);
+		auto expected = spot_cyan;
+		QCOMPARE(actual, expected);
+		
+		// Undefined screen must not affect equality.
+		actual.setScreenAngle(45);
+		QCOMPARE(actual, expected);
+		actual.setScreenFrequency(150);
+		QCOMPARE(actual, expected);
+		expected.setScreenAngle(45);
+		QCOMPARE(actual, expected);
+		
+		// If both screens are defined, equals() must take them into account.
+		expected.setScreenFrequency(200);
+		QVERIFY(actual != expected);
+		actual.setScreenFrequency(200);
+		QCOMPARE(actual, expected);
+		actual.setScreenAngle(50);
+		QVERIFY(actual != expected);
+	}
 }
 
 void MapColorTest::miscTest()
