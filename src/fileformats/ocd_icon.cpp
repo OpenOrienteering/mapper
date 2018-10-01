@@ -27,10 +27,12 @@
 #include <cstdlib>
 #include <iterator>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QColor>
 #include <QImage>
 #include <QRgb>
+#include <QSize>
 
 #include "core/symbols/symbol.h"
 #include "fileformats/ocd_types_v8.h"
@@ -47,7 +49,12 @@ namespace {
 
 QImage iconForExport(const Map& map, const Symbol& symbol, int width, int height)
 {
-	auto image = symbol.createIcon(map, std::max(width, height), true);
+	auto image = symbol.getCustomIcon();
+	if (image.isNull())
+		image = symbol.createIcon(map, std::max(width, height), true);
+	else if (image.size() != QSize{width, height})
+		image = image.scaled(width, height, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+	
 	if (image.format() != QImage::Format_ARGB32_Premultiplied)
 		image = image.convertToFormat(QImage::Format_ARGB32_Premultiplied);
 	return image;

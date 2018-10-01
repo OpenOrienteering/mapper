@@ -38,6 +38,7 @@ class QWidget;
 
 namespace OpenOrienteering {
 
+class IconPropertiesWidget;
 class Symbol;
 class SymbolSettingDialog;
 
@@ -105,6 +106,8 @@ protected:
 	QLineEdit* name_edit;
 	QTextEdit* description_edit;
 	QCheckBox* helper_symbol_check;
+	
+	IconPropertiesWidget* icon_widget;
 };
 
 

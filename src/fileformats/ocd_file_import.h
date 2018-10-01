@@ -282,6 +282,16 @@ protected:
 	template< class OcdBaseSymbol >
 	void setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
 	
+	/** Drop the symbol's custom icon if it can be reproduced by Mapper.
+	 * 
+	 * Mapper normally generates symbol icons in the required size, but OCD
+	 * format carries user-defined rastern icons. These imported low resolution
+	 * icons needs to be kept and used only if they are really different from
+	 * the default icons generatored by Mapper.
+	 */
+	template< class OcdBaseSymbol >
+	void dropRedundantIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
+	
 	void setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements);
 	
 	

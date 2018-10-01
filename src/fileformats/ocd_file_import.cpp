@@ -39,6 +39,7 @@
 #include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
+#include <QImage>
 #include <QImageReader>
 #include <QLatin1Char>
 #include <QLatin1String>
@@ -65,6 +66,7 @@
 #include "fileformats/file_format.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
+#include "fileformats/ocd_icon.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v10.h"
@@ -800,6 +802,13 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		symbol_index[ocd_symbol.number] = symbol;
 	}
 	resolveSubsymbols();
+	
+	for (auto ocd_symbol_entry : file.symbols())
+	{
+		auto& ocd_symbol = *ocd_symbol_entry.entity;
+		if (symbol_index.contains(ocd_symbol.number))
+			dropRedundantIcon(symbol_index[ocd_symbol.number], ocd_symbol);
+	}
 }
 
 void OcdFileImport::resolveSubsymbols()
@@ -1076,6 +1085,32 @@ void OcdFileImport::setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_bas
 	symbol->setIsHelperSymbol(false);
 	symbol->setProtected(ocd_base_symbol.status & Ocd::SymbolProtected);
 	symbol->setHidden(ocd_base_symbol.status & Ocd::SymbolHidden);
+	
+	if (ocd_version == 8 && ocd_base_symbol.flags & 0x02)
+	{
+		auto warning = tr("In symbol symbol %1 '%2': %3").
+		               arg(symbol->getNumberAsString(), symbol->getName(),
+			               tr("Unsupported compressed icon"));
+		addWarning(warning);
+	}
+	else
+	{
+		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+	}
+}
+
+
+template<class OcdBaseSymbol>
+void OcdFileImport::dropRedundantIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
+{
+	const auto imported = symbol->getCustomIcon();
+	if (imported.isNull())
+		return;
+	
+	// The comparison is done in OCD format, due to the limited color palette.
+	symbol->setCustomIcon({});
+	if (ocd_base_symbol.icon != OcdIcon{*map, *symbol})
+		symbol->setCustomIcon(imported);
 }
 
 

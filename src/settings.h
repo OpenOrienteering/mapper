@@ -57,6 +57,7 @@ public:
 		RectangleTool_PreviewLineWidth,
 		Templates_KeepSettingsOfClosed,
 		SymbolWidget_IconSizeMM,
+		SymbolWidget_ShowCustomIcons,
 		ActionGridBar_ButtonSizeMM,
 		General_RetainCompatiblity,
 		General_SaveUndoRedo,

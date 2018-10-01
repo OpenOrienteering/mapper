@@ -326,10 +326,29 @@ public:
 	
 	
 	/**
+	 * Returns the custom symbol icon. 
+	 */
+	QImage getCustomIcon() const { return custom_icon; }
+	
+	/**
+	 * Sets a custom symbol icon.
+	 * 
+	 * The custom icon takes precedence over the generated one when custom icon
+	 * display is enabled.
+	 * Like the generated icon, it is not part of the symbol state which is
+	 * compared by the `equals` functions.
+	 * However, it is copied when duplicating an icon.
+	 * 
+	 * To clear the custom icon, this function can be called with a null QImage.
+	 */
+	void setCustomIcon(const QImage& image);
+	
+	/**
 	 * Returns the symbol's icon.
 	 * 
-	 * This icon uses a default size and zoom, and it is cached, making
-	 * repeated calls cheap.
+	 * This function returns (a scaled version of) the custom symbol icon if
+	 * it is set and custom icon display is enabled, or a generated one.
+	 * The icon is cached, making repeated calls cheap.
 	 */
 	QImage getIcon(const Map* map) const;
 	
@@ -345,7 +364,9 @@ public:
 	/**
 	 * Clear the symbol's cached icon.
 	 * 
-	 * It will be recreated the next time getIcon() gets called.
+	 * Call this function after changes to the symbol definition, custom icon,
+	 * or general size/zoom/visibility settings.
+	 * The cached icon will be recreated the next time getIcon() gets called.
 	 */
 	void resetIcon();
 	
@@ -542,7 +563,8 @@ protected:
 	
 	
 private:
-	mutable QImage icon;
+	mutable QImage icon;  ///< Cached symbol icon
+	QImage custom_icon;   ///< Custom symbol icon
 	QString name;
 	QString description;
 	std::array<int, number_components> number;

@@ -121,6 +121,7 @@ set(Mapper_Common_SRCS
   
   gui/symbols/area_symbol_settings.cpp
   gui/symbols/combined_symbol_settings.cpp
+  gui/symbols/icon_properties_widget.cpp
   gui/symbols/line_symbol_settings.cpp
   gui/symbols/point_symbol_editor_widget.cpp
   gui/symbols/point_symbol_settings.cpp
