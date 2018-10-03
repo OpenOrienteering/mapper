@@ -1103,7 +1103,7 @@ QByteArray OcdFileExport::exportPointSymbol(const PointSymbol* point_symbol)
 	if (ocd_symbol.base.extent <= 0)
 		ocd_symbol.base.extent = 100;
 	if (point_symbol->isRotatable())
-		ocd_symbol.base.flags |= 1;
+		ocd_symbol.base.flags |= Ocd::SymbolRotatable;
 	
 	auto pattern_size = getPatternSize(point_symbol);
 	auto header_size = int(sizeof(OcdPointSymbol) - sizeof(typename OcdPointSymbol::Element));
@@ -1278,7 +1278,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 					ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(convertSize(pattern.line_spacing));
 				ocd_area_common.hatch_angle_1 = decltype(ocd_area_common.hatch_angle_1)(convertRotation(pattern.angle));
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::HatchSingle:
 				if (ocd_area_common.hatch_color == convertColor(pattern.line_color))
@@ -1291,7 +1291,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 						ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing)) / 2;
 					ocd_area_common.hatch_angle_2 = decltype(ocd_area_common.hatch_angle_2)(convertRotation(pattern.angle));
 					if (pattern.rotatable())
-						flags |= 1;
+						flags |= Ocd::SymbolRotatable;
 					break;
 				}
 				// fall through
@@ -1310,7 +1310,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				ocd_area_common.structure_angle = decltype(ocd_area_common.structure_angle)(convertRotation(pattern.angle));
 				pattern_symbol = pattern.point;
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::StructureAlignedRows:
 				ocd_area_common.structure_mode = Ocd::StructureShiftedRows;

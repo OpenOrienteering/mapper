@@ -1094,7 +1094,7 @@ template< >
 void OcdFileImport::setupIcon<Ocd::BaseSymbolV8>(Symbol* symbol, const Ocd::BaseSymbolV8& ocd_base_symbol)
 try
 {
-	if (ocd_base_symbol.flags & 0x02)
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
 		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon.uncompress()));
 	else
 		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
@@ -1122,7 +1122,7 @@ try
 	// The comparison is done in OCD format, due to the limited color palette.
 	symbol->setCustomIcon({});
 	auto ocd_icon = OcdIcon{*map, *symbol};
-	if (ocd_base_symbol.flags & 0x02)
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
 	{
 		if (ocd_base_symbol.icon.uncompress() != ocd_icon)
 			symbol->setCustomIcon(imported);
@@ -1160,7 +1160,7 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
 	auto symbol = new OcdImportedPointSymbol();
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
-	symbol->setRotatable(ocd_symbol.base.flags & 1);
+	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }
 
