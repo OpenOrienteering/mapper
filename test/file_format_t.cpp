@@ -21,8 +21,11 @@
 #include "file_format_t.h"
 
 #include <algorithm>
+#include <iterator>
 #include <limits>
 #include <memory>
+#include <numeric>
+#include <stdexcept>
 
 #include <Qt>
 #include <QtGlobal>
@@ -62,6 +65,8 @@
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_types_v8.h"
+#include "fileformats/ocd_types_v9.h"
 #include "fileformats/xml_file_format.h"
 #include "templates/template.h"
 #include "undo/undo.h"
@@ -516,6 +521,52 @@ void FileFormatTest::issue_513_high_coordinates()
 	QVERIFY2(print_area.left()   > -1000000.0, "extent.left() outside printable range");
 	QVERIFY2(print_area.bottom() > -1000000.0, "extent.bottom() outside printable range");
 	QVERIFY2(print_area.right()  <  1000000.0, "extent.right() outside printable range");
+}
+
+
+
+void FileFormatTest::compressedOcdIconTest()
+{
+	using std::begin;
+	using std::end;
+	
+	{
+		Ocd::IconV9 icon;
+		
+		// White background
+		std::fill(begin(icon.bits), end(icon.bits), 124);
+		QCOMPARE(icon.compress().uncompress(), icon);
+		
+		// Black bar on white background
+		std::fill(begin(icon.bits)+44, begin(icon.bits)+88, 0);
+		QCOMPARE(icon.compress().uncompress(), icon);
+		
+		// 250 non-repeating bytes of input, followed by white
+		// => cannot compress to less than 256 bytes
+		std::iota(begin(icon.bits), begin(icon.bits)+125, 0);
+		std::transform(begin(icon.bits), begin(icon.bits)+63, begin(icon.bits)+125, [](auto value) {
+			return value * 2;
+		});
+		std::transform(begin(icon.bits), begin(icon.bits)+62, begin(icon.bits)+188, [](auto value) {
+			return value * 2 + 1;
+		});
+		QVERIFY_EXCEPTION_THROWN(icon.compress(), std::length_error);
+		
+		// 197 non-repeating bytes of input, followed by white
+		// => cannot compress to less than 256 bytes
+		std::fill(begin(icon.bits)+197, end(icon.bits), 124);
+		QVERIFY_EXCEPTION_THROWN(icon.compress(), std::length_error);
+		
+		// 196 non-repeating bytes of input, followed by white
+		std::fill(begin(icon.bits)+196, end(icon.bits), 124);
+		QCOMPARE(icon.compress().uncompress(), icon);
+		
+		QCOMPARE(int(*std::max_element(begin(icon.bits), end(icon.bits))), 124);
+	}		
+	{
+		Ocd::IconV8 icon {};
+		QVERIFY_EXCEPTION_THROWN(icon.uncompress(), std::domain_error);
+	}
 }
 
 
