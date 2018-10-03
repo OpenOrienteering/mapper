@@ -166,7 +166,7 @@ namespace Ocd
 		template<class T, unsigned N = std::extent<T>::value>
 		CodeStreamImplementation(T& data) noexcept : data{data}, end_pos(N) { Q_STATIC_ASSERT(N != 0); }
 		
-		bool atEnd() const noexcept { return byte_pos >= end_pos; }
+		bool atEnd() const noexcept { return byte_pos + 1 >= end_pos; } // One code word takes two bytes.
 		
 		unsigned pos() const noexcept { return byte_pos; }
 		
@@ -187,7 +187,7 @@ namespace Ocd
 	quint16 CodeStreamImplementation<Byte>::get()
 	{
 		// We are going to access two bytes of input.
-		if (Q_UNLIKELY(byte_pos + 1 >= end_pos))
+		if (Q_UNLIKELY(atEnd()))
 			throw std::length_error("Premature end of input data");
 		
 		quint16 code = data[byte_pos] >> bit_pos;
@@ -208,7 +208,7 @@ namespace Ocd
 	void CodeStreamImplementation<Byte>::put(quint16 code)
 	{
 		// We are going to access two bytes of output.
-		if (Q_UNLIKELY(byte_pos + 1 >= end_pos))
+		if (Q_UNLIKELY(atEnd()))
 			throw std::length_error("Too much output data");
 		
 		data[byte_pos] += (code << bit_pos) & 0xff;
