@@ -44,6 +44,7 @@ namespace Ocd
 	struct IconV9
 	{
 		quint8  bits[484];
+		static constexpr unsigned length() { return 484; }
 		
 		static constexpr int height() { return 22; }
 		static constexpr int width() { return 22; }
@@ -178,6 +179,8 @@ namespace Ocd
 				RGB{ 255, 255, 255 },
 			};
 		}
+		
+		IconV8 compress() const;  // may throw
 	};
 	
 	bool operator==(const IconV9& lhs, const IconV9& rhs);

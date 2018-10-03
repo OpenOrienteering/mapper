@@ -282,6 +282,9 @@ protected:
 	template< class OcdBaseSymbol >
 	void setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
 	
+	template< class OcdBaseSymbol >
+	void setupIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol);
+	
 	/** Drop the symbol's custom icon if it can be reproduced by Mapper.
 	 * 
 	 * Mapper normally generates symbol icons in the required size, but OCD

@@ -27,6 +27,7 @@
 #include <iterator>
 #include <memory>
 #include <utility>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -1067,6 +1068,25 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 		}
 	}
 	
+	setupIcon(symbol, ocd_base_symbol);
+}
+
+
+template< >
+void OcdFileExport::setupIcon<Ocd::BaseSymbolV8>(const Symbol* symbol, Ocd::BaseSymbolV8& ocd_base_symbol)
+try {
+	ocd_base_symbol.icon = Ocd::IconV9(OcdIcon{*map, *symbol}).compress();
+	ocd_base_symbol.flags |= 0x02;
+}
+catch (std::logic_error& e)
+{
+	addWarning(tr(e.what()));
+	ocd_base_symbol.icon = OcdIcon{*map, *symbol};
+}
+
+template< class OcdBaseSymbol >
+void OcdFileExport::setupIcon(const Symbol* symbol, OcdBaseSymbol& ocd_base_symbol)
+{
 	ocd_base_symbol.icon = OcdIcon{*map, *symbol};
 }
 
@@ -1083,7 +1103,7 @@ QByteArray OcdFileExport::exportPointSymbol(const PointSymbol* point_symbol)
 	if (ocd_symbol.base.extent <= 0)
 		ocd_symbol.base.extent = 100;
 	if (point_symbol->isRotatable())
-		ocd_symbol.base.flags |= 1;
+		ocd_symbol.base.flags |= Ocd::SymbolRotatable;
 	
 	auto pattern_size = getPatternSize(point_symbol);
 	auto header_size = int(sizeof(OcdPointSymbol) - sizeof(typename OcdPointSymbol::Element));
@@ -1210,7 +1230,7 @@ QByteArray OcdFileExport::exportAreaSymbol(const AreaSymbol* area_symbol, quint3
 	OcdAreaSymbol ocd_symbol = {};
 	setupBaseSymbol<typename OcdAreaSymbol::BaseSymbol>(area_symbol, symbol_number, ocd_symbol.base);
 	ocd_symbol.base.type = Ocd::SymbolTypeArea;
-	ocd_symbol.base.flags = exportAreaSymbolCommon(area_symbol, ocd_symbol.common, pattern_symbol);
+	ocd_symbol.base.flags |= exportAreaSymbolCommon(area_symbol, ocd_symbol.common, pattern_symbol);
 	exportAreaSymbolSpecial<OcdAreaSymbol>(area_symbol, ocd_symbol);
 	
 	auto pattern_size = getPatternSize(pattern_symbol);
@@ -1258,7 +1278,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 					ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(convertSize(pattern.line_spacing));
 				ocd_area_common.hatch_angle_1 = decltype(ocd_area_common.hatch_angle_1)(convertRotation(pattern.angle));
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::HatchSingle:
 				if (ocd_area_common.hatch_color == convertColor(pattern.line_color))
@@ -1271,7 +1291,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 						ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing)) / 2;
 					ocd_area_common.hatch_angle_2 = decltype(ocd_area_common.hatch_angle_2)(convertRotation(pattern.angle));
 					if (pattern.rotatable())
-						flags |= 1;
+						flags |= Ocd::SymbolRotatable;
 					break;
 				}
 				// fall through
@@ -1290,7 +1310,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				ocd_area_common.structure_angle = decltype(ocd_area_common.structure_angle)(convertRotation(pattern.angle));
 				pattern_symbol = pattern.point;
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::StructureAlignedRows:
 				ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
@@ -2016,7 +2036,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol(
 {
 	auto ocd_symbol = exportAreaSymbol<OcdAreaSymbol>(area_symbol, symbol_number);
 	auto ocd_subsymbol_data = reinterpret_cast<OcdAreaSymbol*>(ocd_symbol.data());
-	ocd_subsymbol_data->base.icon = OcdIcon{*map, *combined_symbol};
+	setupIcon(combined_symbol, ocd_subsymbol_data->base);
 	ocd_subsymbol_data->common.border_on_V9 = 1;
 	ocd_subsymbol_data->border_symbol = symbol_numbers[line_symbol];
 	return ocd_symbol;
@@ -2033,7 +2053,7 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 {
 	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, symbol_number);
 	auto ocd_symbol_data = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data());
-	ocd_symbol_data->base.icon = OcdIcon{*map, *combined_symbol};
+	setupIcon(combined_symbol, ocd_symbol_data->base);
 	
 	auto& ocd_line_common = ocd_symbol_data->common;
 	if (framing)

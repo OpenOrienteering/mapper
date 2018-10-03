@@ -27,6 +27,7 @@
 #include <iterator>
 #include <limits>
 #include <memory>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
@@ -1085,20 +1086,59 @@ void OcdFileImport::setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_bas
 	symbol->setIsHelperSymbol(false);
 	symbol->setProtected(ocd_base_symbol.status & Ocd::SymbolProtected);
 	symbol->setHidden(ocd_base_symbol.status & Ocd::SymbolHidden);
+	setupIcon(symbol, ocd_base_symbol);
+}
+
+
+template< >
+void OcdFileImport::setupIcon<Ocd::BaseSymbolV8>(Symbol* symbol, const Ocd::BaseSymbolV8& ocd_base_symbol)
+try
+{
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
+		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon.uncompress()));
+	else
+		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+}
+catch (std::logic_error& e)
+{
+	addWarning(tr(e.what()));
+}
+
+template< class OcdBaseSymbol >
+void OcdFileImport::setupIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
+{
+	symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+}
+
+
+template<>
+void OcdFileImport::dropRedundantIcon<Ocd::BaseSymbolV8>(Symbol* symbol, const Ocd::BaseSymbolV8& ocd_base_symbol)
+try
+{
+	const auto imported = symbol->getCustomIcon();
+	if (imported.isNull())
+		return;
 	
-	if (ocd_version == 8 && ocd_base_symbol.flags & 0x02)
+	// The comparison is done in OCD format, due to the limited color palette.
+	symbol->setCustomIcon({});
+	auto ocd_icon = OcdIcon{*map, *symbol};
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
 	{
-		auto warning = tr("In symbol symbol %1 '%2': %3").
-		               arg(symbol->getNumberAsString(), symbol->getName(),
-			               tr("Unsupported compressed icon"));
-		addWarning(warning);
+		if (ocd_base_symbol.icon.uncompress() != ocd_icon)
+			symbol->setCustomIcon(imported);
 	}
 	else
 	{
-		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+		if (ocd_base_symbol.icon != ocd_icon)
+			symbol->setCustomIcon(imported);
 	}
 }
-
+catch (std::logic_error&)
+{
+	// In general, ocd_base_symbol.icon.uncompress() can throw. But here,
+	// it is called after successful icon import - which indicates that
+	// uncompress() does not fail for ocd_base_symbol.icon.
+}
 
 template<class OcdBaseSymbol>
 void OcdFileImport::dropRedundantIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
@@ -1120,7 +1160,7 @@ PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
 	auto symbol = new OcdImportedPointSymbol();
 	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
-	symbol->setRotatable(ocd_symbol.base.flags & 1);
+	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }
 
