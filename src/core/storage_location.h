@@ -31,6 +31,18 @@
 
 namespace OpenOrienteering {
 
+namespace Android {
+
+/**
+ * Tells the media scanner to register the given file or folder.
+ * 
+ * This is required to make files quickly available for transfer via MTP.
+ */
+void mediaScannerScanFile(const QString& path);
+
+}
+
+
 // noexcept since Qt 5.5
 constexpr bool qstring_is_nothrow_copy_constructible = std::is_nothrow_copy_constructible<QString>::value;
 constexpr bool qstring_is_nothrow_move_constructible = std::is_nothrow_move_constructible<QString>::value;
