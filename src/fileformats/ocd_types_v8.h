@@ -27,6 +27,30 @@ namespace Ocd
 	
 #pragma pack(push, 1)
 	
+	// Not found in OCD >= V9.
+	// Common default values, not preserved on import.
+	struct CmykScreenV8
+	{
+		quint16 cyan_freq     = 1500;
+		quint16 cyan_angle    =  150;
+		quint16 magenta_freq  = 1500;
+		quint16 magenta_angle =  750;
+		quint16 yellow_freq   = 1500;
+		quint16 yellow_angle  =    0;
+		quint16 black_freq    = 1500;
+		quint16 black_angle   =  450;
+	};
+	
+	inline bool operator==(const CmykScreenV8& lhs, const CmykScreenV8& rhs)
+	{
+		return 0 == memcmp(&lhs, &rhs, sizeof(CmykScreenV8));
+	}
+	
+	inline bool operator!=(const CmykScreenV8& lhs, const CmykScreenV8& rhs)
+	{
+		return !(lhs == rhs);
+	}
+	
 	struct CmykV8
 	{
 		quint8 cyan;
@@ -56,14 +80,7 @@ namespace Ocd
 	{
 		quint16 num_colors;
 		quint16 num_separations;
-		quint16 cyan_freq;
-		quint16 cyan_angle;
-		quint16 magenta_freq;
-		quint16 magenta_angle;
-		quint16 yellow_freq;
-		quint16 yellow_angle;
-		quint16 black_freq;
-		quint16 black_angle;
+		CmykScreenV8 cmyk_screen;
 		quint16 RESERVED_MEMBER[2];
 		ColorInfoV8 color_info[256];
 		SeparationInfoV8 separation_info[32];

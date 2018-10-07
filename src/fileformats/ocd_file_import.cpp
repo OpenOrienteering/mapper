@@ -440,6 +440,11 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	
+	if (symbol_header.cmyk_screen != Ocd::CmykScreenV8{})
+	{
+		qDebug("Ignoring unusual CMYK configuration");
+	}
+	
 	auto num_separations = qMin(quint16(24), symbol_header.num_separations);
 	if (num_separations > 0)
 	{
