@@ -1283,28 +1283,14 @@ void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Oc
 		break;
 	}
 	
+	symbol->start_offset = std::max(0, convertLength(attributes.dist_from_start));
+	symbol->end_offset = std::max(0, convertLength(attributes.dist_from_end));
 	if (symbol->cap_style == LineSymbol::PointedCap)
 	{
-		auto ocd_length = attributes.dist_from_start;
-		if (attributes.dist_from_start != attributes.dist_from_end)
-		{
-			// FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
-			ocd_length = (attributes.dist_from_start + attributes.dist_from_end) / 2;
-			addSymbolWarning( symbol,
-			  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
-			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
-			      locale.toString(0.001f * convertLength(attributes.dist_from_end)),
-			      locale.toString(0.001f * convertLength(ocd_length))) );
-		}
-		symbol->pointed_cap_length = convertLength(ocd_length);
-		symbol->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
-	}
-	else if (attributes.dist_from_start > 0 || attributes.dist_from_end > 0)
-	{
-		addSymbolWarning(symbol,
-		                 tr("Distances from start (%1 mm) or end (%2 mm) are not supported.")
-		                 .arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
-		                      locale.toString(0.001f * convertLength(attributes.dist_from_end))) );
+		// Note: While the property in the file may be different
+		// (cf. what is set in the first place), OC*D always
+		// draws round joins if the line cap is pointed!
+		symbol->join_style = LineSymbol::RoundJoin;
 	}
 	
 	// Handle the dash pattern

@@ -141,7 +141,8 @@ LineSymbol::LineSymbol() noexcept
 , color ( nullptr )
 , line_width ( 0 )
 , minimum_length ( 0 )
-, pointed_cap_length ( 1000 )
+, start_offset ( 0 )
+, end_offset ( 0 )
 , mid_symbols_per_spot ( 1 )
 , mid_symbol_distance ( 0 )
 , minimum_mid_symbol_count ( 0 )
@@ -177,7 +178,8 @@ LineSymbol::LineSymbol(const LineSymbol& proto)
 , color ( proto.color )
 , line_width ( proto.line_width )
 , minimum_length ( proto.minimum_length )
-, pointed_cap_length ( proto.pointed_cap_length )
+, start_offset ( proto.start_offset )
+, end_offset ( proto.end_offset )
 , mid_symbols_per_spot ( proto.mid_symbols_per_spot )
 , mid_symbol_distance ( proto.mid_symbol_distance )
 , minimum_mid_symbol_count ( proto.minimum_mid_symbol_count )
@@ -279,64 +281,123 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 		createDashSymbolRenderables(path, path_closed, output);
 	}
 	
-	// The line itself
+	auto create_line = color && line_width > 0;
+	auto create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
+	auto use_offset = !path.isClosed() && (start_offset > 0 || end_offset > 0);
+	if (!use_offset && !dashed)
+	{
+		// This is a simple plain line (no pointed line ends, no dashes).
+		// It may be drawn directly from the given path.
+		if (create_line)
+			output.insertRenderable(new LineRenderable(this, path, path_closed));
+		
+		auto create_mid_symbols = mid_symbol && !mid_symbol->isEmpty() && segment_length > 0;
+		if (create_mid_symbols || create_border)
+		{
+			auto start = SplitPathCoord::begin(path.path_coords);
+			auto end   = SplitPathCoord::end(path.path_coords);
+			
+			if (create_mid_symbols)
+				createMidSymbolRenderables(path, start, end, path_closed, output);
+			
+			if (create_border)
+				createBorderLines(path, start, end, output);
+		}
+		
+		return;
+	}
+	
+	// This is a non-trivial line symbol.
+	// First we preprocess coordinates and handle mid symbols.
+	// Later we create the line renderable and border.
+	auto start = SplitPathCoord::begin(path.path_coords);
+	auto end   = SplitPathCoord::end(path.path_coords);
+	
+	if (use_offset)
+	{
+		// Create offset at line ends, or pointed line ends
+		auto effective_start_offset = length_type(0.001) * std::max(0, start_offset);
+		auto effective_end_offset = length_type(0.001) * std::max(0, end_offset);
+		auto total_offset = effective_start_offset + effective_end_offset;
+		auto available_length = std::max(length_type(0), end.clen - start.clen);
+		
+		if (total_offset > available_length)
+		{
+			create_line = false;
+			effective_start_offset *= available_length / total_offset;
+			effective_end_offset *= available_length / total_offset;
+		}
+		
+		if (effective_start_offset > 0)
+		{
+			auto split = SplitPathCoord::at(start.clen + effective_start_offset, start);
+			if (cap_style == PointedCap)
+			{
+				createPointedLineCap(path, start, split, false, output);
+			}
+			start = split;
+		}
+		if (effective_end_offset > 0)
+		{
+			auto split = SplitPathCoord::at(end.clen - effective_end_offset, start);
+			if (cap_style == PointedCap)
+			{
+				// Get updated curve end
+				if (end.is_curve_end)
+					end = SplitPathCoord::at(end.clen, split);
+				createPointedLineCap(path, split, end, true, output);
+			}
+			end = split;
+		}
+		if (!create_line)
+		{
+			return;
+		}
+	}
+	
 	MapCoordVector processed_flags;
 	MapCoordVectorF processed_coords;
-	bool create_border = have_border_lines && (border.isVisible() || right_border.isVisible());
 	if (dashed)
 	{
 		// Dashed lines
-		if (dash_length <= 0)
-			return;
-		
-		processDashedLine(path, path_closed, processed_flags, processed_coords, output);
+		if (dash_length > 0)
+			processDashedLine(path, start, end, path_closed, processed_flags, processed_coords, output);
 	}
 	else
 	{
 		// Symbols?
 		if (mid_symbol && !mid_symbol->isEmpty() && segment_length > 0)
-			createMidSymbolRenderables(path, path_closed, output);
+			createMidSymbolRenderables(path, start, end, path_closed, output);
 		
-		if (line_width == 0)
-			return;
-		
-		if (create_border || cap_style == PointedCap)
-		{
-			auto last = path.coords.size();
-			auto part_start = MapCoordVector::size_type { 0 };
-			auto next_part_start = last; //path_coords.update(part_start);
-			
-			bool has_start = !(part_start == 0 && path_closed);
-			bool has_end = !(next_part_start == last && path_closed);
-			
-			auto start = SplitPathCoord::begin(path.path_coords);
-			auto end   = SplitPathCoord::end(path.path_coords);
-			processContinuousLine(path, start, end, has_start, has_end, false,
+		if (line_width > 0)
+			processContinuousLine(path, start, end, false,
 			                      processed_flags, processed_coords, output);
-		}
-		else if (color)
-		{
-			output.insertRenderable(new LineRenderable(this, path, path_closed));
-		}
-		
 	}
-	
-	if (processed_coords.empty() || (!color && !create_border))
-		return;
 	
 	Q_ASSERT(processed_coords.size() != 1);
 	
-	VirtualPath processed_path = { processed_flags, processed_coords };
-	processed_path.path_coords.update(path.first_index);
-	if (color)
-		output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
-	if (create_border)
-		createBorderLines(processed_path, output);
+	if ((create_line || create_border) && processed_coords.size() > 1)
+	{
+		VirtualPath processed_path = { processed_flags, processed_coords };
+		processed_path.path_coords.update(path.first_index);
+		if (create_line)
+		{
+			output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
+		}
+		if (create_border)
+		{
+			const auto processed_start = SplitPathCoord::begin(processed_path.path_coords);
+			const auto processed_end = SplitPathCoord::end(processed_path.path_coords);
+			createBorderLines(processed_path, processed_start, processed_end, output);
+		}
+	}
 }
 
 
 void LineSymbol::createBorderLines(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         ObjectRenderables& output) const
 {
 	const auto main_shift = 0.0005 * line_width;
@@ -363,7 +424,7 @@ void LineSymbol::createBorderLines(
 		if (border_dashed)
 		{
 			// Left border is dashed
-			border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
+			border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			shiftCoordinates({dashed_flags, dashed_coords}, -main_shift, border_flags, border_coords);
 		}
@@ -375,7 +436,7 @@ void LineSymbol::createBorderLines(
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
 		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
-		border_symbol.createSinglePathRenderables(border_path, path_closed, output);
+		output.insertRenderable(new LineRenderable(&border_symbol, border_path, path_closed));
 	}
 		
 	if (right_border.isVisible())
@@ -392,7 +453,7 @@ void LineSymbol::createBorderLines(
 				// Right border is dashed, but different from left border
 				dashed_flags.clear();
 				dashed_coords.clear();
-				border_symbol.processDashedLine(path, path_closed, dashed_flags, dashed_coords, output);
+				border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			}
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
 			shiftCoordinates({dashed_flags, dashed_coords}, main_shift, border_flags, border_coords);
@@ -405,7 +466,7 @@ void LineSymbol::createBorderLines(
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
 		Q_ASSERT(last+1 == border_coords.size()); Q_UNUSED(last);
-		border_symbol.createSinglePathRenderables(border_path, path_closed, output);
+		output.insertRenderable(new LineRenderable(&border_symbol, border_path, path_closed));
 	}
 }
 
@@ -694,96 +755,47 @@ void LineSymbol::processContinuousLine(
         const VirtualPath& path,
         const SplitPathCoord& start,
         const SplitPathCoord& end,
-        bool has_start,
-        bool has_end,
         bool set_mid_symbols,
         MapCoordVector& processed_flags,
         MapCoordVectorF& processed_coords,
         ObjectRenderables& output ) const
 {
-	bool create_line = true;
-	auto effective_cap_length = length_type(0);
-	if (cap_style == PointedCap && (has_start || has_end))
-	{
-		effective_cap_length = length_type(0.001) * pointed_cap_length;
-		int num_caps = 2 - (has_end ? 0 : 1) - (has_start ? 0 : 1);
-		auto max_effective_cap_length = (end.clen - start.clen) / num_caps;
-		if (effective_cap_length >= max_effective_cap_length)
-		{
-			create_line = false;
-			effective_cap_length = max_effective_cap_length;
-		}
-	}
+	auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
+	auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
+	auto effective_end_length = end.clen;
 	
-	auto split      = start;
-	auto next_split = SplitPathCoord();
+	auto split = start;
 	
-	if (has_start && effective_cap_length > 0)
+	set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
+	if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
 	{
-		// Create pointed line cap start
-		next_split = SplitPathCoord::at(start.clen + effective_cap_length, start);
-		createPointedLineCap(path, split, next_split, false, output);
-		split = next_split;
-	}
-	
-	if (create_line)
-	{
-		// Add line to processed_coords/flags
-		
-		auto mid_symbol_distance_f = length_type(0.001) * mid_symbol_distance;
-		auto mid_symbols_length   = (qMax(1, mid_symbols_per_spot) - 1) * mid_symbol_distance_f;
-		auto effective_end_length = end.clen;
-		if (has_end)
-		{
-			effective_end_length -= effective_cap_length;
-		}
-		
-		set_mid_symbols = set_mid_symbols && mid_symbol && !mid_symbol->isEmpty() && mid_symbols_per_spot;
-		if (set_mid_symbols && mid_symbols_length <= effective_end_length - split.clen)
-		{
-			auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
-			next_split   = SplitPathCoord::at(mid_position, split);
-			path.copy(split, next_split, processed_flags, processed_coords);
-			split = next_split;
-			
-			auto orientation = qreal(0);
-			bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
-			for (auto i = mid_symbols_per_spot; i > 0; --i)
-			{
-				if (mid_symbol_rotatable)
-					orientation = split.tangentVector().angle();
-				mid_symbol->createRenderablesScaled(split.pos, orientation, output);
-				
-				if (i > 1)
-				{
-					mid_position += mid_symbol_distance_f;
-					next_split = SplitPathCoord::at(mid_position, split);
-					path.copy(split, next_split, processed_flags, processed_coords);
-					split = next_split;
-				}
-			}
-		}
-		
-		// End position
-		next_split = SplitPathCoord::at(effective_end_length, split);
+		auto mid_position = (split.clen + effective_end_length - mid_symbols_length) / 2;
+		auto next_split = SplitPathCoord::at(mid_position, split);
 		path.copy(split, next_split, processed_flags, processed_coords);
 		split = next_split;
 		
-		processed_flags.back().setGapPoint(true);
-		Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
+		auto orientation = qreal(0);
+		bool mid_symbol_rotatable = bool(mid_symbol) && mid_symbol->isRotatable();
+		for (auto i = mid_symbols_per_spot; i > 0; --i)
+		{
+			if (mid_symbol_rotatable)
+				orientation = split.tangentVector().angle();
+			mid_symbol->createRenderablesScaled(split.pos, orientation, output);
+			
+			if (i > 1)
+			{
+				mid_position += mid_symbol_distance_f;
+				next_split = SplitPathCoord::at(mid_position, split);
+				path.copy(split, next_split, processed_flags, processed_coords);
+				split = next_split;
+			}
+		}
 	}
 	
-	if (has_end && effective_cap_length > 0)
-	{
-		// Create pointed line cap end
-		next_split = end;
-		if (end.is_curve_end)
-		{
-			// Get updated curve end
-			next_split = SplitPathCoord::at(end.clen, split);
-		}
-		createPointedLineCap(path, split, next_split, true, output);
-	}
+	path.copy(split, end, processed_flags, processed_coords);
+	
+	processed_flags.back().setGapPoint(true);
+	Q_ASSERT(!processed_flags[processed_flags.size()-2].isCurveStart());
 }
 
 void LineSymbol::createPointedLineCap(
@@ -797,7 +809,7 @@ void LineSymbol::createPointedLineCap(
 	area_symbol.setColor(color);
 	
 	auto line_half_width = length_type(0.0005) * line_width;
-	auto cap_length = length_type(0.001) * pointed_cap_length;
+	auto cap_length = length_type(0.001) * (is_end ? end_offset : start_offset);
 	auto tan_angle = qreal(line_half_width / cap_length);
 	
 	MapCoordVector cap_flags;
@@ -962,6 +974,8 @@ void LineSymbol::createPointedLineCap(
 
 void LineSymbol::processDashedLine(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         bool path_closed,
         MapCoordVector& out_flags,
         MapCoordVectorF& out_coords,
@@ -974,20 +988,13 @@ void LineSymbol::processDashedLine(
 	out_flags.reserve(out_coords_size);
 	out_coords.reserve(out_coords_size);
 	
-	auto last = path.last_index;
-	
-	auto groups_start = SplitPathCoord::begin(path_coords);
+	auto groups_start = start;
 	auto line_start   = groups_start;
-	for (bool is_part_end = false; !is_part_end; )
+	for (auto is_part_start = true, is_part_end = false; !is_part_end; is_part_start = false)
 	{
 		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
-		auto groups_end_index = path_coords[groups_end_path_coord_index].index;
-		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
-		
-		// Intentionally look at groups_start (current node),
-		// not line_start (where to continue drawing)!
-		bool is_part_start = (groups_start.index == path.first_index);
-		is_part_end = (groups_end_index == last);
+		is_part_end = path.path_coords[groups_end_path_coord_index].clen >= end.clen;
+		auto groups_end = is_part_end ? end : SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		line_start = createDashGroups(path, path_closed,
 		                              line_start, groups_start, groups_end,
@@ -1101,7 +1108,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 		{
 			// Can't be handled correctly by the next round of dash groups drawing:
 			// Just draw a continuous line.
-			processContinuousLine(path, line_start, end, !half_first_group, !half_last_group, set_mid_symbols,
+			processContinuousLine(path, line_start, end, set_mid_symbols,
 			                      out_flags, out_coords, output);
 		}
 		else
@@ -1188,7 +1195,7 @@ SplitPathCoord LineSymbol::createDashGroups(
 				}
 				
 				SplitPathCoord dash_end = SplitPathCoord::at(cur_length + cur_dash_length, dash_start);
-				processContinuousLine(path, dash_start, dash_end, has_start, has_end, set_mid_symbols,
+				processContinuousLine(path, dash_start, dash_end, set_mid_symbols,
 				                      out_flags, out_coords, output);
 				cur_length += cur_dash_length;
 				dash_start = dash_end;
@@ -1278,6 +1285,8 @@ void LineSymbol::createDashSymbolRenderables(
 
 void LineSymbol::createMidSymbolRenderables(
         const VirtualPath& path,
+        const SplitPathCoord& start,
+        const SplitPathCoord& end,
         bool path_closed,
         ObjectRenderables& output) const
 {
@@ -1296,20 +1305,20 @@ void LineSymbol::createMidSymbolRenderables(
 	auto& path_coords = path.path_coords;
 	Q_ASSERT(!path_coords.empty());
 	
-	auto groups_start = SplitPathCoord::begin(path_coords);
 	if (end_length == 0 && !path_closed)
 	{
 		// Insert point at start coordinate
 		if (mid_symbol_rotatable)
-			orientation = groups_start.tangentVector().angle();
-		mid_symbol->createRenderablesScaled(groups_start.pos, orientation, output);
+			orientation = start.tangentVector().angle();
+		mid_symbol->createRenderablesScaled(start.pos, orientation, output);
 	}
 	
-	auto part_end = path.last_index;
-	while (groups_start.index != part_end)
+	auto groups_start = start;
+	for (auto is_part_end = false; !is_part_end; )
 	{
 		auto groups_end_path_coord_index = path_coords.findNextDashPoint(groups_start.path_coord_index);
-		auto groups_end = SplitPathCoord::at(path_coords, groups_end_path_coord_index);
+		is_part_end = path.path_coords[groups_end_path_coord_index].clen >= end.clen;
+		auto groups_end = is_part_end ? end : SplitPathCoord::at(path_coords, groups_end_path_coord_index);
 		
 		// The total length of the current continuous part
 		auto length = groups_end.clen - groups_start.clen;
@@ -1590,7 +1599,8 @@ void LineSymbol::scale(double factor)
 	line_width = qRound(factor * line_width);
 	
 	minimum_length = qRound(factor * minimum_length);
-	pointed_cap_length = qRound(factor * pointed_cap_length);
+	start_offset = qRound(factor * start_offset);
+	end_offset = qRound(factor * end_offset);
 	
 	if (start_symbol)
 		start_symbol->scale(factor);
@@ -1742,7 +1752,14 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("minimum_length"), QString::number(minimum_length));
 	xml.writeAttribute(QString::fromLatin1("join_style"), QString::number(join_style));
 	xml.writeAttribute(QString::fromLatin1("cap_style"), QString::number(cap_style));
-	xml.writeAttribute(QString::fromLatin1("pointed_cap_length"), QString::number(pointed_cap_length));
+	if (cap_style == LineSymbol::PointedCap)
+	{
+		// Deprecated, only for backwards compatibility.
+		/// \todo Remove "pointed_cap_length" in Mapper 1.0
+		xml.writeAttribute(QString::fromLatin1("pointed_cap_length"), QString::number(qRound((start_offset+end_offset)/2.0)));
+	}
+	xml.writeAttribute(QString::fromLatin1("start_offset"), QString::number(start_offset));
+	xml.writeAttribute(QString::fromLatin1("end_offset"), QString::number(end_offset));
 	
 	if (dashed)
 		xml.writeAttribute(QString::fromLatin1("dashed"), QString::fromLatin1("true"));
@@ -1822,7 +1839,17 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	minimum_length = attributes.value(QLatin1String("minimum_length")).toInt();
 	join_style = static_cast<LineSymbol::JoinStyle>(attributes.value(QLatin1String("join_style")).toInt());
 	cap_style = static_cast<LineSymbol::CapStyle>(attributes.value(QLatin1String("cap_style")).toInt());
-	pointed_cap_length = attributes.value(QLatin1String("pointed_cap_length")).toInt();
+	if (attributes.hasAttribute(QLatin1String("start_offset")) || attributes.hasAttribute(QLatin1String("end_offset")))
+	{
+		// since version 8
+		start_offset = attributes.value(QLatin1String("start_offset")).toInt();
+		end_offset = attributes.value(QLatin1String("end_offset")).toInt();
+	}
+	else if (cap_style == LineSymbol::PointedCap)
+	{
+		// until version 7
+		start_offset = end_offset = attributes.value(QLatin1String("pointed_cap_length")).toInt();
+	}
 	
 	dashed = (attributes.value(QLatin1String("dashed")) == QLatin1String("true"));
 	segment_length = attributes.value(QLatin1String("segment_length")).toInt();
@@ -1923,7 +1950,8 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		if ((cap_style != line->cap_style) ||
 			(join_style != line->join_style))
 			return false;
-		if (cap_style == PointedCap && (pointed_cap_length != line->pointed_cap_length))
+		
+		if (start_offset != line->start_offset || end_offset != line->end_offset)
 			return false;
 		
 		if (dashed != line->dashed)

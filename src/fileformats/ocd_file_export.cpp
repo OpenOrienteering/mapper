@@ -1444,11 +1444,8 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 			ocd_line_common.line_style = 0;
 	}
 	
-	if (line_symbol->getCapStyle() == LineSymbol::PointedCap)
-	{
-		ocd_line_common.dist_from_start = convertSize(line_symbol->getPointedCapLength());
-		ocd_line_common.dist_from_end = convertSize(line_symbol->getPointedCapLength());
-	}
+	ocd_line_common.dist_from_start = convertSize(line_symbol->startOffset());
+	ocd_line_common.dist_from_end = convertSize(line_symbol->endOffset());
 	
 	// Dash pattern
 	if (line_symbol->isDashed())

@@ -212,8 +212,13 @@ public:
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
 	inline void setJoinStyle(JoinStyle style) {join_style = style;}
-	inline int getPointedCapLength() const {return pointed_cap_length;}
-	inline void setPointedCapLength(int value) {pointed_cap_length = value;}
+	
+	int startOffset() const { return start_offset; }
+	void setStartOffset(int value) { start_offset = value; }
+	
+	int endOffset() const { return end_offset; }
+	void setEndOffset(int value) { end_offset = value; }
+	
 	inline bool isDashed() const {return dashed;}
 	inline void setDashed(bool value) {dashed = value;}
 	
@@ -285,6 +290,8 @@ protected:
 	 */
 	void createBorderLines(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        ObjectRenderables& output
 	) const;
 	
@@ -305,8 +312,6 @@ protected:
 	        const VirtualPath& path,
 	        const SplitPathCoord& start,
 	        const SplitPathCoord& end,
-	        bool has_start,
-	        bool has_end,
 	        bool set_mid_symbols,
 	        MapCoordVector& processed_flags,
 	        MapCoordVectorF& processed_coords,
@@ -330,6 +335,8 @@ protected:
 	 */
 	void processDashedLine(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords,
@@ -380,6 +387,8 @@ protected:
 	 */
 	void createMidSymbolRenderables(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        ObjectRenderables& output
 	) const;
@@ -414,7 +423,8 @@ protected:
 	const MapColor* color;
 	int line_width;		// in 1/1000 mm
 	int minimum_length;
-	int pointed_cap_length;
+	int start_offset;
+	int end_offset;
 	
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;

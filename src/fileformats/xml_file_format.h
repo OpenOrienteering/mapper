@@ -95,6 +95,8 @@ public:
 
 - 2018-10-08 Added `screen_angle` and `screen_frequency` attributes to element
              `color/spotcolors/namedcolor` element.
+- 2018-09-16 Added `start_offset` and `end_offset` attributes to the `line_symbol`
+             element, replacing the now deprecated `pointed_cap_length` attribute.
 - 2018-08-25 Added optional `icon` element to symbol `element`.
 - 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
 

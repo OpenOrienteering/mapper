@@ -516,13 +516,16 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 		if (type == Line)
 		{
 			auto line = static_cast<const LineSymbol*>(this);
-			if (line->getCapStyle() == LineSymbol::RoundCap)
+			if (!line->isDashed() || line->getBreakLength() <= 0)
 			{
-				offset.setNativeX(-line->getLineWidth()/3);
-			}
-			else if (line->getCapStyle() == LineSymbol::PointedCap)
-			{
-				line_length_half = std::max(line_length_half, 0.0012 * line->getPointedCapLength());
+				if (line->getCapStyle() == LineSymbol::RoundCap)
+				{
+					offset.setNativeX(-line->getLineWidth()/3);
+				}
+				else if (line->getCapStyle() == LineSymbol::PointedCap)
+				{
+					line_length_half = std::max(line_length_half, 0.0006 * (line->startOffset() + line->endOffset()));
+				}
 			}
 			
 			if (line->getDashSymbol() && !line->getDashSymbol()->isEmpty())
@@ -562,7 +565,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 			{
 				auto ideal_length = 2 * line->getDashesInGroup() * line->getDashLength()
 				                    + 2 * (line->getDashesInGroup() - 1) * line->getInGroupBreakLength()
-				                    + line->getBreakLength();
+				                    + 3 * line->getBreakLength() / 2;
 				if (max_ideal_length < ideal_length)
 					max_ideal_length = ideal_length;
 			}
@@ -585,21 +588,38 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 			}
 			if (max_ideal_length > 0)
 			{
+				auto cap_length = 0;
+				auto offset_factor = qreal(0);
 				auto ideal_length_half = qreal(max_ideal_length) / 2000;
+				
+				if (line->getCapStyle() == LineSymbol::PointedCap)
+				{
+					offset_factor = 1;
+					ideal_length_half += qreal(line->startOffset() + line->endOffset()) / 2000;
+				}
+				else if (line->getCapStyle() != LineSymbol::FlatCap)
+				{
+					cap_length = line->getLineWidth();
+					ideal_length_half += qreal(cap_length) / 1000;
+				}
+				
 				auto factor = qMin(qreal(0.5), line_length_half / qMax(qreal(0.001), ideal_length_half));
+				offset_factor *= factor;
 				
 				if (!symbol_copy)
 					symbol_copy = duplicate(*line);
 				
 				auto icon_line = static_cast<LineSymbol*>(symbol_copy.get());
 				icon_line->setDashLength(qRound(factor * icon_line->getDashLength()));
-				icon_line->setBreakLength(qRound(factor * icon_line->getBreakLength()));
+				icon_line->setBreakLength(cap_length + qRound(factor * (icon_line->getBreakLength() - cap_length)));
 				icon_line->setInGroupBreakLength(qRound(factor * icon_line->getInGroupBreakLength()));
 				icon_line->setShowAtLeastOneSymbol(true);
 				icon_line->getBorder().dash_length *= factor;
 				icon_line->getBorder().break_length *= factor;
 				icon_line->getRightBorder().dash_length *= factor;
 				icon_line->getRightBorder().break_length *= factor;
+				icon_line->setStartOffset(qRound(offset_factor * icon_line->startOffset()));
+				icon_line->setEndOffset(qRound(offset_factor * icon_line->endOffset()));
 			}
 		}
 		else if (type == Combined)
