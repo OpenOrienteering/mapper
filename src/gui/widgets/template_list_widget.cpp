@@ -221,12 +221,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
-	// TODO: Fix string
-	georef_button = newToolButton(QIcon(QString::fromLatin1(":/images/grid.png")), tr("Georeferenced: %1").remove(QLatin1String(": %1")));
-	georef_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	georef_button->setCheckable(true);
-	georef_button->setChecked(true);
-	georef_button->setEnabled(false); // TODO
 	move_by_hand_action = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
@@ -238,6 +232,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
+	georef_action = edit_menu->addAction(tr("Release georeference"), this, SLOT(releaseGeorefClicked()));
 	
 	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
 	                            ::OpenOrienteering::MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
@@ -252,7 +247,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	list_buttons_layout->addLayout(up_down_layout);
 	list_buttons_layout->addWidget(adjust_button);
 	list_buttons_layout->addWidget(move_by_hand_button);
-	list_buttons_layout->addWidget(georef_button);
 	list_buttons_layout->addWidget(edit_button);
 	
 	list_buttons_group = new QWidget();
@@ -806,7 +800,9 @@ void TemplateListWidget::updateButtons()
 		if (temp->isTemplateGeoreferenced())
 		{
 			georef_visible = true;
-			georef_active  = true;
+			// Unsafe to release unloaded template
+			// See comment in Template::releaseGeoref().
+			georef_active = main_view->getTemplateVisibility(temp).visible;
 		}
 		else
 		{
@@ -821,8 +817,6 @@ void TemplateListWidget::updateButtons()
 		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
 	}
 	
-	georef_button->setVisible(georef_visible);
-	georef_button->setChecked(georef_active);
 	move_by_hand_button->setEnabled(custom_active);
 	move_by_hand_button->setVisible(custom_visible);
 	adjust_button->setEnabled(custom_active);
@@ -830,6 +824,8 @@ void TemplateListWidget::updateButtons()
 	position_action->setEnabled(custom_active);
 	position_action->setVisible(custom_visible);
 	import_action->setVisible(import_active);
+	georef_action->setVisible(georef_visible);
+	georef_action->setEnabled(georef_active);
 	
 /*	if (enable_active_buttons)
 	{
@@ -1062,6 +1058,27 @@ void TemplateListWidget::importClicked()
 		map_visibility.visible = true;
 		updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
 	}
+}
+
+void TemplateListWidget::releaseGeorefClicked()
+{
+	auto temp = getCurrentTemplate();
+	if (!temp || !temp->isTemplateGeoreferenced())
+		return;
+	
+	temp->releaseGeoreference();
+	georef_action->setEnabled(false);
+	georef_action->setVisible(false);
+
+	// Do not enable edit actions unless template is visible.
+	// XXX Releasing georeferencing on a non-visible template image
+	// resets the position to the default (0,0,1,1,0). Should be fixed.
+	bool active = main_view->getTemplateVisibility(temp).visible;
+	
+	move_by_hand_button->setEnabled(active);
+	move_by_hand_button->setVisible(true);
+	position_action->setEnabled(active);
+	position_action->setVisible(true);
 }
 
 void TemplateListWidget::moreActionClicked(QAction* action)

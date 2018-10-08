@@ -604,6 +604,18 @@ void Template::unloadTemplateFile()
 	emit templateStateChanged();
 }
 
+void Template::releaseGeoreference()
+{
+	// Calling this method on an unloaded template results in
+	// the template position being set to (0, 0, 1, 1, 0).
+	// XXX This assert is insufficient. FIXME!!!
+	Q_ASSERT(template_state == Loaded);
+
+	is_georeferenced = false;
+
+	setHasUnsavedChanges(true);
+}
+
 void Template::applyTemplateTransform(QPainter* painter) const
 {
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);

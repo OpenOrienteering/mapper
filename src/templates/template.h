@@ -308,6 +308,11 @@ public:
 	 */
 	void unloadTemplateFile();
 	
+	/**
+	 * Release georeferencing flag for the template file.
+	 * Must not be called before the original georeferencing information is available.
+	 */
+	void releaseGeoreference();
 	
 	/** 
 	 * Draws the template using the given painter with the given opacity.
