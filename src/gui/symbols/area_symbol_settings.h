@@ -116,6 +116,8 @@ private:
 	QDoubleSpinBox* pattern_pointdist_edit;
 	
 	QComboBox*      pattern_clipping_edit;
+	
+	int             first_pattern_tab;
 };
 
 

@@ -236,8 +236,18 @@ namespace Ocd
 		SymbolTypeArea         = 3,
 		SymbolTypeText         = 4,
 		SymbolTypeRectangle_V8 = 5, /// Until V8
-		SymbolTypeLineText  = 6, /// \since V9
+		SymbolTypeLineText     = 6, /// \since V9
 		SymbolTypeRectangle_V9 = 7  /// \since V9
+	};
+	
+	/**
+	 * General flags for symbols.
+	 */
+	enum SymbolFlags
+	{
+		SymbolRotatable        = 0x01,
+		SymbolIconCompressedV8 = 0x02, /// Only in V8
+		SymbolFavorite         = 0x04, /// \since V9
 	};
 	
 	/**

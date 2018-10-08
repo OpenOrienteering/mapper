@@ -20,6 +20,8 @@
 #ifndef OPENORIENTEERING_OCD_TYPES_V8_H
 #define OPENORIENTEERING_OCD_TYPES_V8_H
 
+#include <array>
+
 #include "ocd_types.h"
 
 namespace Ocd
@@ -82,9 +84,40 @@ namespace Ocd
 		SymbolHeaderV8 symbol_header;
 	};
 	
+	
+	struct IconV9;
+	
 	struct IconV8
 	{
 		quint8  bits[264];
+		static constexpr unsigned length() { return 264; }
+		
+		static constexpr int height() { return 22; }
+		static constexpr int width() { return 22; }
+		
+		template<typename RGB>
+		static std::array<RGB, 16> palette() {
+			return {
+				RGB{   0,   0,   0 },
+				RGB{ 128,   0,   0 },
+				RGB{ 0,   128,   0 },
+				RGB{ 128, 128,   0 },
+				RGB{   0,   0, 128 },
+				RGB{ 128,   0, 128 },
+				RGB{   0, 128, 128 },
+				RGB{ 128, 128, 128 },
+				RGB{ 192, 192, 192 },
+				RGB{ 255,   0,   0 },
+				RGB{   0, 255,   0 },
+				RGB{ 255, 255,   0 },
+				RGB{   0,   0, 255 },
+				RGB{ 255,   0, 255 },
+				RGB{   0, 255, 255 },
+				RGB{ 255, 255, 255 }
+			};
+		}
+		
+		IconV9 uncompress() const;  // may throw
 	};
 	
 	bool operator==(const IconV8& lhs, const IconV8& rhs);

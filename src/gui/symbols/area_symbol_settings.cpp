@@ -267,6 +267,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 		emit propertiesModified();
 	});
 	
+	first_pattern_tab = count();
+	
 	updateAreaGeneral();
 	updatePatternWidgets();
 	loadPatterns();
@@ -305,7 +307,7 @@ void AreaSymbolSettings::clearPatterns()
 	for (const auto& pattern : symbol->patterns)
 	{
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
-			removePropertiesGroup(2);
+			removePropertiesGroup(first_pattern_tab);
 	}
 }
 
@@ -313,7 +315,6 @@ void AreaSymbolSettings::clearPatterns()
 void AreaSymbolSettings::loadPatterns()
 {
 	Q_ASSERT(pattern_list->count() == 0);
-	Q_ASSERT(count() == 2); // General + Area tab
 	
 	for (const auto& pattern : symbol->patterns)
 	{
@@ -337,12 +338,13 @@ void AreaSymbolSettings::updatePatternNames()
 	{
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
+			auto pattern_tab = first_pattern_tab + point_pattern_num;
 			++point_pattern_num;
 			QString name = tr("Pattern fill %1").arg(point_pattern_num);
 			pattern.name = name;
 			pattern.point->setName(name);
 			pattern_list->item(i)->setText(name);
-			renamePropertiesGroup(point_pattern_num + 1, name);
+			renamePropertiesGroup(pattern_tab, name);
 		}
 		else
 		{

@@ -41,6 +41,7 @@
 
 #include "core/map.h"
 #include "core/symbols/symbol.h"
+#include "gui/symbols/icon_properties_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "util/translation_util.h"
 #include "util/backports.h"
@@ -77,6 +78,9 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	auto description_label = new QLabel(tr("Description:"));
 	description_edit = new QTextEdit();
 	helper_symbol_check = new QCheckBox(tr("Helper symbol (not shown in finished map)"));
+	
+	icon_widget = new IconPropertiesWidget(symbol, dialog);  // before reset()
+	
 	SymbolPropertiesWidget::reset(symbol);
 
 	for (auto editor : number_editors)
@@ -124,6 +128,9 @@ SymbolPropertiesWidget::SymbolPropertiesWidget(Symbol* symbol, SymbolSettingDial
 	layout->addWidget(helper_symbol_check, row, col, 1, num_col);
 	
 	addPropertiesGroup(tr("General"), generalTab);
+	
+	connect(icon_widget, &IconPropertiesWidget::iconModified, this, &SymbolPropertiesWidget::propertiesModified);
+	addPropertiesGroup(tr("Icon"), icon_widget);
 }
 
 
@@ -337,6 +344,8 @@ void SymbolPropertiesWidget::reset(Symbol* symbol)
 	}
 	updateTextEdits();
 	helper_symbol_check->setChecked(symbol->isHelperSymbol());
+	
+	icon_widget->reset(symbol);
 }
 
 

@@ -62,6 +62,11 @@ private slots:
 	void issue_513_high_coordinates_data();
 	
 	/**
+	 * Tests basic properties of OCD V8 icon compression.
+	 */
+	void compressedOcdIconTest();
+	
+	/**
 	 * Tests that maps contain the same information before and after saving
      * them and loading them again.
      */
@@ -69,7 +74,7 @@ private slots:
 	void saveAndLoad_data();
 	
 	/**
-	 * Test saving and loading a map which is created in memory and does not go
+	 * Tests saving and loading a map which is created in memory and does not go
 	 * through an implicit export-import-cycle before the test.
 	 */
 	void pristineMapTest();

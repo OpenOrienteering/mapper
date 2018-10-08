@@ -24,29 +24,26 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <cstdlib>
 #include <iterator>
 #include <memory>
 #include <utility>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QColor>
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
-#include <QImage>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPoint>
 #include <QPointF>
 #include <QRectF>
-#include <QRgb>
 #include <QString>
 #include <QTextCodec>
 #include <QTextDecoder>
@@ -76,6 +73,7 @@
 #include "fileformats/file_import_export.h"
 #include "fileformats/ocd_file_format.h"
 #include "fileformats/ocd_georef_fields.h"
+#include "fileformats/ocd_icon.h"
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
@@ -290,299 +288,6 @@ constexpr qint32 convertSize(qint64 size)
 int convertRotation(qreal angle)
 {
 	return qRound(10 * qRadiansToDegrees(angle));
-}
-
-
-int getPaletteColorV6(QRgb rgb)
-{
-	Q_ASSERT(qAlpha(rgb) == 255);
-	
-	// Quickly return for most frequent value
-	if (rgb == qRgb(255, 255, 255))
-		return 15;
-	
-	auto color = QColor(rgb).toHsv();
-	if (color.hue() == -1 || color.saturation() < 32)
-	{
-		auto gray = qGray(rgb);  // qGray is used for dithering
-		if (gray >= 192)
-			return 8;
-		if (gray >= 128)
-			return 7;
-		return 0;
-	}
-	
-	struct PaletteColor
-	{
-		int hue;
-		int saturation;
-		int value;
-	};
-	static const PaletteColor palette[16] = {
-	    {  -1,   0,   0 },
-	    {   0, 255, 128 },
-	    { 120, 255, 128 },
-	    {  60, 255, 128 },
-	    { 240, 255, 128 },
-	    { 300, 255, 128 },
-	    { 180, 255, 128 },
-	    {  -1,   0, 128 },
-	    {  -1,   0, 192 },
-	    {   0, 255, 255 },
-	    { 120, 255, 255 },
-	    {  60, 255, 255 },
-	    { 240, 255, 255 },
-	    { 300, 255, 255 },
-	    { 180, 255, 255 },
-	    {  -1,   0, 255 },
-	};
-	
-#if 0
-	// This is how `palette` is generated.
-	static auto generate = true;
-	if (generate)
-	{
-		static const QColor original_palette[16] = {
-			QColor(  0,   0,   0).toHsv(),
-			QColor(128,   0,   0).toHsv(),
-			QColor(0,   128,   0).toHsv(),
-			QColor(128, 128,   0).toHsv(),
-			QColor(  0,   0, 128).toHsv(),
-			QColor(128,   0, 128).toHsv(),
-			QColor(  0, 128, 128).toHsv(),
-			QColor(128, 128, 128).toHsv(),
-			QColor(192, 192, 192).toHsv(),
-			QColor(255,   0,   0).toHsv(),
-			QColor(  0, 255,   0).toHsv(),
-			QColor(255, 255,   0).toHsv(),
-			QColor(  0,   0, 255).toHsv(),
-			QColor(255,   0, 255).toHsv(),
-			QColor(  0, 255, 255).toHsv(),
-			QColor(255, 255, 255).toHsv()
-		};
-		
-		for (auto& c : original_palette)
-		{
-			qDebug("		{ %3d, %3d, %3d },", c.hue(), c.saturation(), c.value());
-		}
-		generate = false;
-	}
-#endif
-	
-	int best_index = 0;
-	auto best_distance = 2100000;  // > 6 * (10*sq(180) + sq(128) + sq(64))
-	auto sq = [](int n) { return n*n; };
-	for (auto i : { 1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13, 14 })
-	{
-		// True color
-		const auto& palette_color = palette[i];
-		auto hue_dist = std::abs(color.hue() - palette_color.hue);
-		auto distance = 10 * sq(std::min(hue_dist, 360 - hue_dist))
-		                + sq(color.saturation() - palette_color.saturation)
-		                + sq(color.value() - palette_color.value);
-		
-		// (Too much) manual tweaking for orienteering colors
-		if (i == 1)
-			distance *= 3;	// Dark red
-		else if (i == 3)
-			distance *= 4;		// Olive
-		else if (i == 11)
-			distance *= 4;		// Yellow
-		else if (i == 9)
-			distance *= 6;		// Red is unlikely
-		else
-			distance *= 2;
-		
-		if (distance < best_distance)
-		{
-			best_distance = distance;
-			best_index = i;
-		}
-	}
-	return best_index;
-}
-
-
-quint8 getPaletteColorV9(QRgb rgb)
-{
-	Q_ASSERT(qAlpha(rgb) == 255);
-	
-	// Quickly return most frequent value
-	if (rgb == qRgb(255, 255, 255))
-		return 124;
-	
-	struct PaletteColor
-	{
-		int r;
-		int g;
-		int b;
-	};
-	static const PaletteColor palette[125] = {
-	    {   0,   0,   0 },
-	    {   0,   0,  64 },
-	    {   0,   0, 128 },
-	    {   0,   0, 192 },
-	    {   0,   0, 255 },
-	    {   0,  64,   0 },
-	    {   0,  64,  64 },
-	    {   0,  64, 128 },
-	    {   0,  64, 192 },
-	    {   0,  64, 255 },
-	    {   0, 128,   0 },
-	    {   0, 128,  64 },
-	    {   0, 128, 128 },
-	    {   0, 128, 192 },
-	    {   0, 128, 255 },
-	    {   0, 192,   0 },
-	    {   0, 192,  64 },
-	    {   0, 192, 128 },
-	    {   0, 192, 192 },
-	    {   0, 192, 255 },
-	    {   0, 255,   0 },
-	    {   0, 255,  64 },
-	    {   0, 255, 128 },
-	    {   0, 255, 192 },
-	    {   0, 255, 255 },
-	    {  64,   0,   0 },
-	    {  64,   0,  64 },
-	    {  64,   0, 128 },
-	    {  64,   0, 192 },
-	    {  64,   0, 255 },
-	    {  64,  64,   0 },
-	    {  64,  64,  64 },
-	    {  64,  64, 128 },
-	    {  64,  64, 192 },
-	    {  64,  64, 255 },
-	    {  64, 128,   0 },
-	    {  64, 128,  64 },
-	    {  64, 128, 128 },
-	    {  64, 128, 192 },
-	    {  64, 128, 255 },
-	    {  64, 192,   0 },
-	    {  64, 192,  64 },
-	    {  64, 192, 128 },
-	    {  64, 192, 192 },
-	    {  64, 192, 255 },
-	    {  64, 255,   0 },
-	    {  64, 255,  64 },
-	    {  64, 255, 128 },
-	    {  64, 255, 192 },
-	    {  64, 255, 255 },
-	    { 128,   0,   0 },
-	    { 128,   0,  64 },
-	    { 128,   0, 128 },
-	    { 128,   0, 192 },
-	    { 128,   0, 255 },
-	    { 128,  64,   0 },
-	    { 128,  64,  64 },
-	    { 128,  64, 128 },
-	    { 128,  64, 192 },
-	    { 128,  64, 255 },
-	    { 128, 128,   0 },
-	    { 128, 128,  64 },
-	    { 128, 128, 128 },
-	    { 128, 128, 192 },
-	    { 128, 128, 255 },
-	    { 128, 192,   0 },
-	    { 128, 192,  64 },
-	    { 128, 192, 128 },
-	    { 128, 192, 192 },
-	    { 128, 192, 255 },
-	    { 128, 255,   0 },
-	    { 128, 255,  64 },
-	    { 128, 255, 128 },
-	    { 128, 255, 192 },
-	    { 128, 255, 255 },
-	    { 192,   0,   0 },
-	    { 192,   0,  64 },
-	    { 192,   0, 128 },
-	    { 192,   0, 192 },
-	    { 192,   0, 255 },
-	    { 192,  64,   0 },
-	    { 192,  64,  64 },
-	    { 192,  64, 128 },
-	    { 192,  64, 192 },
-	    { 192,  64, 255 },
-	    { 192, 128,   0 },
-	    { 192, 128,  64 },
-	    { 192, 128, 128 },
-	    { 192, 128, 192 },
-	    { 192, 128, 255 },
-	    { 192, 192,   0 },
-	    { 192, 192,  64 },
-	    { 192, 192, 128 },
-	    { 192, 192, 192 },
-	    { 192, 192, 255 },
-	    { 192, 255,   0 },
-	    { 192, 255,  64 },
-	    { 192, 255, 128 },
-	    { 192, 255, 192 },
-	    { 192, 255, 255 },
-	    { 255,   0,   0 },
-	    { 255,   0,  64 },
-	    { 255,   0, 128 },
-	    { 255,   0, 192 },
-	    { 255,   0, 255 },
-	    { 255,  64,   0 },
-	    { 255,  64,  64 },
-	    { 255,  64, 128 },
-	    { 255,  64, 192 },
-	    { 255,  64, 255 },
-	    { 255, 128,   0 },
-	    { 255, 128,  64 },
-	    { 255, 128, 128 },
-	    { 255, 128, 192 },
-	    { 255, 128, 255 },
-	    { 255, 192,   0 },
-	    { 255, 192,  64 },
-	    { 255, 192, 128 },
-	    { 255, 192, 192 },
-	    { 255, 192, 255 },
-	    { 255, 255,   0 },
-	    { 255, 255,  64 },
-	    { 255, 255, 128 },
-	    { 255, 255, 192 },
-	    { 255, 255, 255 },
-	};
-	
-#if 0
-	// This is how `palette` is generated.
-	static auto generate = true;
-	if (generate)
-	{
-		static const int color_levels[5] = { 0x00, 0x40, 0x80, 0xc0, 0xff };
-		for (auto r : color_levels)
-		{
-			for (auto g : color_levels)
-			{
-				for (auto b : color_levels)
-				{
-					qDebug("		{ %3d, %3d, %3d },", r, g, b);
-				}
-			}
-		}
-		generate = false;
-	}
-#endif
-	
-	auto r = qRed(rgb);
-	auto g = qGreen(rgb);
-	auto b = qBlue(rgb);
-	auto sq = [](int n) { return n*n; };
-
-	quint8 best_index = 0;
-	auto best_distance = 10000; // > (2 + 3 + 4) * sq(32)
-	for (quint8 i = 0; i < 125; ++i)
-	{
-		auto palette_color = palette[i];
-		auto distance = 2 * sq(r - palette_color.r) + 4 * sq(g - palette_color.g) + 3 * sq(b - palette_color.b);
-		if (distance < best_distance)
-		{
-			best_distance = distance;
-			best_index = i;
-		}
-	}
-	return best_index;
 }
 
 
@@ -1363,7 +1068,26 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 		}
 	}
 	
-	exportSymbolIcon(symbol, ocd_base_symbol.icon);
+	setupIcon(symbol, ocd_base_symbol);
+}
+
+
+template< >
+void OcdFileExport::setupIcon<Ocd::BaseSymbolV8>(const Symbol* symbol, Ocd::BaseSymbolV8& ocd_base_symbol)
+try {
+	ocd_base_symbol.icon = Ocd::IconV9(OcdIcon{*map, *symbol}).compress();
+	ocd_base_symbol.flags |= 0x02;
+}
+catch (std::logic_error& e)
+{
+	addWarning(tr(e.what()));
+	ocd_base_symbol.icon = OcdIcon{*map, *symbol};
+}
+
+template< class OcdBaseSymbol >
+void OcdFileExport::setupIcon(const Symbol* symbol, OcdBaseSymbol& ocd_base_symbol)
+{
+	ocd_base_symbol.icon = OcdIcon{*map, *symbol};
 }
 
 
@@ -1379,7 +1103,7 @@ QByteArray OcdFileExport::exportPointSymbol(const PointSymbol* point_symbol)
 	if (ocd_symbol.base.extent <= 0)
 		ocd_symbol.base.extent = 100;
 	if (point_symbol->isRotatable())
-		ocd_symbol.base.flags |= 1;
+		ocd_symbol.base.flags |= Ocd::SymbolRotatable;
 	
 	auto pattern_size = getPatternSize(point_symbol);
 	auto header_size = int(sizeof(OcdPointSymbol) - sizeof(typename OcdPointSymbol::Element));
@@ -1506,7 +1230,7 @@ QByteArray OcdFileExport::exportAreaSymbol(const AreaSymbol* area_symbol, quint3
 	OcdAreaSymbol ocd_symbol = {};
 	setupBaseSymbol<typename OcdAreaSymbol::BaseSymbol>(area_symbol, symbol_number, ocd_symbol.base);
 	ocd_symbol.base.type = Ocd::SymbolTypeArea;
-	ocd_symbol.base.flags = exportAreaSymbolCommon(area_symbol, ocd_symbol.common, pattern_symbol);
+	ocd_symbol.base.flags |= exportAreaSymbolCommon(area_symbol, ocd_symbol.common, pattern_symbol);
 	exportAreaSymbolSpecial<OcdAreaSymbol>(area_symbol, ocd_symbol);
 	
 	auto pattern_size = getPatternSize(pattern_symbol);
@@ -1554,7 +1278,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 					ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(convertSize(pattern.line_spacing));
 				ocd_area_common.hatch_angle_1 = decltype(ocd_area_common.hatch_angle_1)(convertRotation(pattern.angle));
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::HatchSingle:
 				if (ocd_area_common.hatch_color == convertColor(pattern.line_color))
@@ -1567,7 +1291,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 						ocd_area_common.hatch_dist = decltype(ocd_area_common.hatch_dist)(ocd_area_common.hatch_dist + convertSize(pattern.line_spacing)) / 2;
 					ocd_area_common.hatch_angle_2 = decltype(ocd_area_common.hatch_angle_2)(convertRotation(pattern.angle));
 					if (pattern.rotatable())
-						flags |= 1;
+						flags |= Ocd::SymbolRotatable;
 					break;
 				}
 				// fall through
@@ -1586,7 +1310,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				ocd_area_common.structure_angle = decltype(ocd_area_common.structure_angle)(convertRotation(pattern.angle));
 				pattern_symbol = pattern.point;
 				if (pattern.rotatable())
-					flags |= 1;
+					flags |= Ocd::SymbolRotatable;
 				break;
 			case Ocd::StructureAlignedRows:
 				ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
@@ -2312,7 +2036,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol(
 {
 	auto ocd_symbol = exportAreaSymbol<OcdAreaSymbol>(area_symbol, symbol_number);
 	auto ocd_subsymbol_data = reinterpret_cast<OcdAreaSymbol*>(ocd_symbol.data());
-	exportSymbolIcon(combined_symbol, ocd_subsymbol_data->base.icon);
+	setupIcon(combined_symbol, ocd_subsymbol_data->base);
 	ocd_subsymbol_data->common.border_on_V9 = 1;
 	ocd_subsymbol_data->border_symbol = symbol_numbers[line_symbol];
 	return ocd_symbol;
@@ -2329,7 +2053,7 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 {
 	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, symbol_number);
 	auto ocd_symbol_data = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data());
-	exportSymbolIcon(combined_symbol, ocd_symbol_data->base.icon);
+	setupIcon(combined_symbol, ocd_symbol_data->base);
 	
 	auto& ocd_line_common = ocd_symbol_data->common;
 	if (framing)
@@ -2360,91 +2084,6 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 	}
 	
 	return ocd_symbol;
-}
-
-
-
-void OcdFileExport::exportSymbolIcon(const Symbol* symbol, Ocd::IconV8& icon)
-{
-	// Icon: 22x22 with 4 bit palette color, origin at bottom left
-	constexpr int icon_size = 22;
-	QImage image = symbol->createIcon(*map, icon_size, false)
-	               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
-	
-	auto process_pixel = [&image](int x, int y)->int {
-		// Apply premultiplied pixel on white background
-		auto premultiplied = image.pixel(x, y);
-		auto alpha = qAlpha(premultiplied);
-		auto r = 255 - alpha + qRed(premultiplied);
-		auto g = 255 - alpha + qGreen(premultiplied);
-		auto b = 255 - alpha + qBlue(premultiplied);
-		auto pixel = qRgb(r, g, b);
-		
-		// Ordered dithering 2x2 threshold matrix, adjusted for o-map halftones
-		static int threshold[4] = { 24, 192, 136, 80 };
-		auto palette_color = getPaletteColorV6(pixel);
-		switch (palette_color)
-		{
-		case 0:
-			// Black to gray (50%)
-			return  qGray(pixel) < 128-threshold[(x%2 + 2*(y%2))]/2 ? 0 : 7;
-			
-		case 7:
-			// Gray (50%) to light gray 
-			return  qGray(pixel) < 192-threshold[(x%2 + 2*(y%2))]/4 ? 7 : 8;
-			
-		case 8:
-			// Light gray to white
-			return  qGray(pixel) < 256-threshold[(x%2 + 2*(y%2))]/4 ? 8 : 15;
-			
-		case 15:
-			// Pure white
-			return palette_color;
-			
-		default:
-			// Color to white
-			return  QColor(pixel).saturation() >= threshold[(x%2 + 2*(y%2))] ? palette_color : 15;
-		}
-	};
-	
-	auto icon_bits = icon.bits;
-	for (int y = icon_size - 1; y >= 0; --y)
-	{
-		for (int x = 0; x < icon_size; x += 2)
-		{
-			auto first = process_pixel(x, y);
-			auto second = process_pixel(x+1, y);
-			*(icon_bits++) = quint8((first << 4) + second);
-		}
-		icon_bits++;
-	}
-}
-
-void OcdFileExport::exportSymbolIcon(const Symbol* symbol, Ocd::IconV9& icon)
-{
-	// Icon: 22x22 with 8 bit palette color code, origin at bottom left
-	constexpr int icon_size = 22;
-	QImage image = symbol->createIcon(*map, icon_size, true)
-	               .convertToFormat(QImage::Format_ARGB32_Premultiplied);
-	
-	auto process_pixel = [&image](int x, int y)->quint8 {
-		// Apply premultiplied pixel on white background
-		auto premultiplied = image.pixel(x, y);
-		auto alpha = qAlpha(premultiplied);
-		auto r = 255 - alpha + qRed(premultiplied);
-		auto g = 255 - alpha + qGreen(premultiplied);
-		auto b = 255 - alpha + qBlue(premultiplied);
-		return getPaletteColorV9(qRgb(r, g, b));
-	};
-	
-	auto icon_bits = icon.bits;
-	for (int y = icon_size - 1; y >= 0; --y)
-	{
-		for (int x = 0; x < icon_size; ++x)
-		{
-			*(icon_bits++) = process_pixel(x, y);
-		}
-	}
 }
 
 
