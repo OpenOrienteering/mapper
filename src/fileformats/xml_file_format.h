@@ -93,6 +93,8 @@ public:
 
 \subsection version-8 Version 8
 
+- 2018-10-08 Added `screen_angle` and `screen_frequency` attributes to element
+             `color/spotcolors/namedcolor` element.
 - 2018-08-25 Added optional `icon` element to symbol `element`.
 - 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
 

@@ -367,8 +367,8 @@ QString stringForSpotColor(int i, const MapColor& color)
 	    << "\tm" << qRound(cmyk.m * 200)/2.0
 	    << "\ty" << qRound(cmyk.y * 200)/2.0
 	    << "\tk" << qRound(cmyk.k * 200)/2.0
-	    << "\tf" << 1500.0
-	    << "\ta" << 45.0;
+	    << "\tf" << color.getScreenFrequency() * 10
+	    << "\ta" << color.getScreenAngle();
 	return string_10;
 }
 
@@ -805,8 +805,8 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 			{
 				separation_info->name = toOcdString(color->getSpotColorName());
 				separation_info->cmyk = ocd_cmyk;
-				separation_info->raster_freq = 1500;  /// \todo Spot color raster frequency
-				separation_info->raster_angle = 450;  /// \todo Spot color raster angle
+				separation_info->raster_freq = quint16(qRound(10 * color->getScreenFrequency()));
+				separation_info->raster_angle = quint16(qRound(10 * color->getScreenAngle()));
 				++separation_info;
 				
 				if (ocd_number >= begin_of_spot_colors)

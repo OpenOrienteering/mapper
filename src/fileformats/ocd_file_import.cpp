@@ -443,6 +443,11 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
 	
+	if (symbol_header.cmyk_screen != Ocd::CmykScreenV8{})
+	{
+		qDebug("Ignoring unusual CMYK configuration");
+	}
+	
 	auto num_separations = qMin(quint16(24), symbol_header.num_separations);
 	if (num_separations > 0)
 	{
@@ -461,7 +466,8 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 			  0.005f * separation_info.cmyk.black );
 			color->setCmyk(cmyk);
 			color->setOpacity(1.0f);
-			/// \todo raster frequency and angle
+			color->setScreenAngle(0.1 * separation_info.raster_angle);
+			color->setScreenFrequency(0.1 * separation_info.raster_freq);
 			spot_colors.push_back(color);
 		}
 	}
@@ -561,6 +567,8 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 	int number = -1;
 	bool number_ok = false;
 	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
+	double screen_angle = 45;
+	double screen_frequency = 150;
 	
 	SpotColorComponents components;
 	
@@ -604,8 +612,14 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 				cmyk.k = 0.01f * f_value;
 			break;
 		case 'f':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0)
+				screen_frequency = 0.1 * double(f_value);
+			break;
 		case 'a':
-			/// \todo Spot color frequency and angle
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0)
+				screen_angle = double(f_value);
 			break;
 		default:
 			; // nothing
@@ -619,6 +633,8 @@ void OcdFileImport::importSpotColor(const QString& param_string)
 	auto color = new MapColor(name, number);
 	color->setSpotColorName(name);
 	color->setCmyk(cmyk);
+	color->setScreenAngle(screen_angle);
+	color->setScreenFrequency(screen_frequency);
 	spot_colors.push_back(color);
 }
 
