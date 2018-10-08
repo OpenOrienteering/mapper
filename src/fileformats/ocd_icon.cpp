@@ -25,7 +25,6 @@
 #include <algorithm>
 #include <array>
 #include <cstdlib>
-#include <iterator>
 
 #include <Qt>
 #include <QtGlobal>
@@ -39,13 +38,16 @@
 #include "fileformats/ocd_types_v9.h"
 
 
-template std::array<QColor, 16> Ocd::IconV8::palette<QColor>();
-template std::array<QColor, 125> Ocd::IconV9::palette<QColor>();
-
-
 namespace OpenOrienteering {
 
 namespace {
+
+struct ConstructibleQRgb
+{
+	QRgb qrgb;
+	constexpr ConstructibleQRgb(int r, int g, int b) noexcept : qrgb(qRgb(r, g, b)) {}
+};
+
 
 QImage iconForExport(const Map& map, const Symbol& symbol, int width, int height)
 {
@@ -85,19 +87,16 @@ quint8 getPaletteColorV8(QRgb rgb)
 		int hue;
 		int saturation;
 		int value;
-		static PaletteColor fromQColor(const QColor& color)
-		{
-			return { color.hue(), color.saturation(), color.value() };
-		}
+		PaletteColor(QColor color) noexcept
+		: hue(color.hue())
+		, saturation(color.saturation())
+		, value(color.value())
+		{}
+		PaletteColor(int r, int g, int b) noexcept
+		: PaletteColor(QColor(r, g, b).toHsv())
+		{}
 	};
-	static const auto palette = []() {
-		std::array<PaletteColor, 16> palette_hsv;
-		const auto palette_rgb = Ocd::IconV8::palette<QColor>();
-		std::transform(begin(palette_rgb), end(palette_rgb), begin(palette_hsv), [](auto& rgb){
-			return PaletteColor::fromQColor(rgb.toHsv());
-		});
-		return palette_hsv;
-	}();
+	static const auto palette = Ocd::IconV8::palette<PaletteColor>();
 	
 	quint8 best_index = 0;
 	auto best_distance = 2100000;  // > 6 * (10*sq(180) + sq(128) + sq(64))
@@ -133,12 +132,10 @@ quint8 getPaletteColorV8(QRgb rgb)
 }
 
 
-quint8 getPaletteColorV9(QRgb rgb)
+quint8 getPaletteColorV9(int r, int g, int b)
 {
-	Q_ASSERT(qAlpha(rgb) == 255);
-	
 	// Quickly return most frequent value
-	if (rgb == qRgb(255, 255, 255))
+	if (r == 255 && g == 255 && b == 255)
 		return 124;
 	
 	struct PaletteColor
@@ -146,27 +143,9 @@ quint8 getPaletteColorV9(QRgb rgb)
 		int r;
 		int g;
 		int b;
-		static PaletteColor fromQColor(const QColor& color)
-		{
-			return { color.red(), color.green(), color.blue() };
-		}
 	};
-	// While one could simply call
-	//     static const auto palette = Ocd::IconV9::palette<PaletteColor>();
-	// we chose to pay a one-time overhead at runtime instead of an additional
-	// expansion of function template Ocd::IconV9::palette<RBG>().
-	static const auto palette = []() {
-		std::array<PaletteColor, 125> palette_rgb;
-		const auto palette_qcolor = Ocd::IconV9::palette<QColor>();
-		std::transform(begin(palette_qcolor), end(palette_qcolor), begin(palette_rgb), [](auto& rgb){
-			return PaletteColor::fromQColor(rgb);
-		});
-		return palette_rgb;
-	}();
+	static const auto palette = Ocd::IconV9::palette<PaletteColor>();
 	
-	auto r = qRed(rgb);
-	auto g = qGreen(rgb);
-	auto b = qBlue(rgb);
 	auto sq = [](int n) { return n*n; };
 
 	quint8 best_index = 0;
@@ -254,7 +233,7 @@ OcdIcon::operator Ocd::IconV9() const
 		auto r = 255 - alpha + qRed(premultiplied);
 		auto g = 255 - alpha + qGreen(premultiplied);
 		auto b = 255 - alpha + qBlue(premultiplied);
-		return getPaletteColorV9(qRgb(r, g, b));
+		return getPaletteColorV9(r, g, b);
 	};
 	
 	auto icon_bits = icon.bits;
@@ -272,15 +251,15 @@ OcdIcon::operator Ocd::IconV9() const
 // static
 QImage OcdIcon::toQImage(const Ocd::IconV8& icon)
 {
-	static const auto palette = icon.palette<QColor>();
+	static const auto palette = icon.palette<ConstructibleQRgb>();
 	const auto* icon_bits = icon.bits;
 	auto image = QImage{icon.width(), icon.height(), QImage::Format_ARGB32_Premultiplied};
 	for (int y = icon.height() - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon.width(); x += 2)
 		{
-			image.setPixelColor(x, y, palette[(*icon_bits) >> 4]);
-			image.setPixelColor(x+1, y, palette[*(icon_bits++) & 0xf]);
+			image.setPixel(x, y, palette[(*icon_bits) >> 4].qrgb);
+			image.setPixel(x+1, y, palette[*(icon_bits++) & 0xf].qrgb);
 		}
 		icon_bits++;
 	}
@@ -291,14 +270,14 @@ QImage OcdIcon::toQImage(const Ocd::IconV8& icon)
 // static
 QImage OcdIcon::toQImage(const Ocd::IconV9& icon)
 {
-	static const auto palette = icon.palette<QColor>();
+	static const auto palette = icon.palette<ConstructibleQRgb>();
 	const auto* icon_bits = icon.bits;
 	auto image = QImage{icon.width(), icon.height(), QImage::Format_ARGB32_Premultiplied};
 	for (int y = icon.height() - 1; y >= 0; --y)
 	{
 		for (int x = 0; x < icon.width(); ++x)
 		{
-			image.setPixelColor(x, y, palette[std::min(*(icon_bits++), quint8(124))]);
+			image.setPixel(x, y, palette[std::min(*(icon_bits++), quint8(124))].qrgb);
 		}
 	}
 	return image;
