@@ -48,6 +48,10 @@
 using namespace OpenOrienteering;
 
 
+// Uncomment to enable tests which produce unstable results,
+// depending on architecture, compiler, Qt.
+// #define ENABLE_VOLATILE_RENDER_TESTS
+
 namespace
 {
 
@@ -226,8 +230,10 @@ private slots:
 		    { "testdata:symbols/line-symbol-cap-variants.omap", 50 },
 		    { "testdata:symbols/line-symbol-start-end-symbol.omap", 50 },
 		    { "testdata:symbols/line-symbol-mid-symbol-variants.omap", 50 },
+#ifdef ENABLE_VOLATILE_RENDER_TESTS
 		    { "data:examples/complete map.omap", 5 },
 		    { "data:examples/forest sample.omap", 10 },
+#endif  // ENABLE_VOLATILE_RENDER_TESTS
 		};
 		QTest::addColumn<QString>("map_filename");
 		QTest::addColumn<qreal>("pixel_per_mm");
