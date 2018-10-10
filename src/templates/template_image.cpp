@@ -306,11 +306,64 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 	return center;
 }
 
+
+bool TemplateImage::canChangeTemplateGeoreferenced()
+{
+	return isTemplateGeoreferenced()
+	       || available_georef != Georeferencing_None;
+}
+
+bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent)
+{
+	if (canChangeTemplateGeoreferenced()
+	    && isTemplateGeoreferenced() != value)
+	{
+		// Loaded state is implied by canChangeTemplateGeoreferenced().
+		Q_ASSERT(getTemplateState() == Template::Loaded);
+		
+		if (value && temp_crs_spec.isEmpty())
+		{
+			// Cf. postLoadConfiguration
+			if (available_georef == Georeferencing_WorldFile)
+			{
+				// Let user select the coordinate reference system, as this is not specified in world files
+				SelectCRSDialog dialog(
+				            map->getGeoreferencing(),
+				            dialog_parent,
+				            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
+				            tr("Select the coordinate reference system of the coordinates in the world file") );
+				if (dialog.exec() == QDialog::Rejected)
+					return is_georeferenced;
+				temp_crs_spec = dialog.currentCRSSpec();
+			}
+			else
+			{
+				return is_georeferenced;
+			}
+		}
+		
+		if (value)
+		{
+			setTemplateAreaDirty();
+			is_georeferenced = true;
+			calculateGeoreferencing();
+			setTemplateAreaDirty();
+		}
+		else
+		{
+			is_georeferenced = false;
+		}
+		setHasUnsavedChanges(true);
+	}
+	return is_georeferenced;
+}
+
 void TemplateImage::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 		updatePosFromGeoreferencing();
 }
+
 
 Template* TemplateImage::duplicateImpl() const
 {

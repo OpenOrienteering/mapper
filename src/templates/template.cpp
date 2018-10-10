@@ -604,6 +604,20 @@ void Template::unloadTemplateFile()
 	emit templateStateChanged();
 }
 
+
+// virtual
+bool Template::canChangeTemplateGeoreferenced()
+{
+	return false;
+}
+
+// virtual
+bool Template::trySetTemplateGeoreferenced(bool /*value*/, QWidget* /*dialog_parent*/)
+{
+	return is_georeferenced;
+}
+
+
 void Template::applyTemplateTransform(QPainter* painter) const
 {
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);
