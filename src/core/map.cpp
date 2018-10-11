@@ -78,6 +78,10 @@
 
 // IWYU pragma: no_forward_declare QRectF
 
+#ifdef Q_OS_ANDROID
+#include "core/storage_location.h"
+#endif
+
 
 namespace OpenOrienteering {
 
@@ -694,6 +698,15 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 		}
 		
 		success = file.commit();
+#ifdef Q_OS_ANDROID
+		if (success)
+		{
+			// Make the MediaScanner aware of the *updated* file. This is an
+			// attempt to resolve issues with files being transferred
+			// incompletely to the PC (#1115).
+			Android::mediaScannerScanFile(path);
+		}
+#endif
 	}
 	
 	if (!success)

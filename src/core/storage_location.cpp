@@ -48,12 +48,8 @@ namespace Android {
  */
 static std::shared_ptr<const std::vector<StorageLocation>> locations_cache;
 
-/**
- * Tells the media scanner to register the given file or folder.
- * 
- * This is required to make files quickly available for transfer via MTP.
- */
-void mediaScannerScanFile(const QString path)
+
+void mediaScannerScanFile(const QString& path)
 {
 	static const auto ACTION_MEDIA_SCANNER_SCAN_FILE = 
 	        QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent",
