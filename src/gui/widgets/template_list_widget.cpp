@@ -21,24 +21,64 @@
 
 #include "template_list_widget.h"
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QAbstractButton>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QBoxLayout>
+#include <QBrush>
+#include <QByteArray>
 #include <QCheckBox>
+#include <QColor>
+#include <QCoreApplication>
+#include <QDialog>
+#include <QDir>
+#include <QEvent>
+#include <QEventLoop>
+#include <QFileInfo>
+#include <QFlags>
+#include <QHBoxLayout>
 #include <QHeaderView>
+#include <QIcon>
 #include <QInputDialog>
+#include <QItemSelectionModel>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QList>
+#include <QLocale>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPalette>
+#include <QPixmap>
+#include <QRect>
+#include <QRectF>
 #include <QScroller>
 #include <QSettings>
 #include <QSignalBlocker>
+#include <QSize>
+#include <QSlider>
+#include <QStringList>
+#include <QStyle>
+#include <QStyleOption>
+#include <QStyleOptionButton>
+#include <QStyleOptionViewItem>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QToolButton>
 #include <QToolTip>
+#include <QVBoxLayout>
+#include <QVariant>
 
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/object.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -46,6 +86,7 @@
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_editor_activity.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "templates/template.h"
@@ -206,7 +247,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), (tr("Remove"), tr("Close"))); /// \todo Use "Remove instead of "Close"
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
 	
 	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
@@ -655,7 +696,7 @@ void TemplateListWidget::cellChange(int row, int column)
 	
 	if (state != Template::Invalid)
 	{
-		auto setAreaDirty = [this, pos, temp]()
+		auto setAreaDirty = [this, pos]()
 		{ 
 			if (pos >= 0)
 			{
@@ -725,7 +766,7 @@ void TemplateListWidget::cellChange(int row, int column)
 					visibility.opacity = qBound(0.0f, opacity, 1.0f);
 					updateVisibility(temp, visibility);
 					setAreaDirty();
-					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, visibility.opacity));
+					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, qreal(visibility.opacity)));
 				}
 			}
 			break;
@@ -903,7 +944,7 @@ void TemplateListWidget::adjustWindowClosed()
 	if (!current_template)
 		return;
 	
-	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
+	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == current_template)
 		adjust_button->setChecked(false);
 }
 
@@ -976,9 +1017,9 @@ void TemplateListWidget::importClicked()
 		if (!prototype->isTemplateGeoreferenced())
 			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
 		
-		double nominal_scale = (double)template_map.getScaleDenominator() / (double)map->getScaleDenominator();
-		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
-		double scale = 1.0;
+		auto nominal_scale = double(template_map.getScaleDenominator()) / map->getScaleDenominator();
+		auto current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
+		auto scale = 1.0;
 		QStringList scale_options;
 		if (qAbs(nominal_scale - 1.0) > 0.009)
 			scale_options.append(tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)));
@@ -1202,7 +1243,7 @@ void TemplateListWidget::updateRow(int row)
 		if (vis.visible)
 		{
 			check_state   = Qt::Checked;
-			opacity_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis.opacity);
+			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, qreal(vis.opacity));
 			text_color    = QPalette().color(color_group, QPalette::Foreground);
 			if (!mobile_mode)
 			{
@@ -1332,13 +1373,13 @@ void TemplateListWidget::showOpacitySlider(int row)
 	slider->setMinimumWidth(geometry.width());
 	
 	auto opacity_item = template_table->item(row, 1);
-	slider->setValue(opacity_item->data(Qt::DisplayRole).toFloat() * 20);
+	slider->setValue(qRound(opacity_item->data(Qt::DisplayRole).toFloat() * 20));
 	connect(slider, &QSlider::valueChanged, [opacity_item](int value) {
 		opacity_item->setData(Qt::DisplayRole, 0.05f * value);
 	} );
 	
 	auto close_button = new QToolButton();
-	close_button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton, 0, this));
+	close_button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton, nullptr, this));
 	close_button->setAutoRaise(true);
 	connect(close_button, &QToolButton::clicked, &dialog, &QDialog::accept);
 	

@@ -76,6 +76,7 @@ PATTERN=" \
   symbol_t.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
+  template_list_widget.cpp \
   template_tool \
   text_brwoser_dialog \
   undo_manager.cpp \
