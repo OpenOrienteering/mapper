@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -225,8 +225,10 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
+	move_by_hand_button->setVisible(!mobile_mode);
 	adjust_button = newToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
 	adjust_button->setCheckable(true);
+	adjust_button->setVisible(!mobile_mode);
 	
 	auto edit_menu = new QMenu(this);
 	georef_action = edit_menu->addAction(tr("Georeferenced"), this, SLOT(changeGeorefClicked()));
@@ -241,6 +243,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	edit_button->setPopupMode(QToolButton::InstantPopup);
 	edit_button->setMenu(edit_menu);
+	edit_button->setVisible(!mobile_mode);
 	
 	// The buttons row layout
 	auto list_buttons_layout = new QHBoxLayout();
@@ -784,66 +787,42 @@ void TemplateListWidget::updateButtons()
 	delete_button->setEnabled(single_template_selected);	/// \todo Make it possible to delete multiple templates at once
 	move_up_button->setEnabled(single_row_selected && !first_row_selected);
 	move_down_button->setEnabled(single_row_selected && !last_row_selected);
-	edit_button->setEnabled(single_template_selected);
 	
-	bool georef_visible = false;
-	bool georef_active  = false;
-	bool custom_visible = false;
-	bool custom_active  = false;
-	bool import_active  = false;
-	if (mobile_mode)
+	if (!mobile_mode)
 	{
-		// Leave most buttons invisible
-		edit_button->setVisible(false);
-	}
-	else if (single_template_selected)
-	{
-		auto temp = map->getTemplate(posFromRow(visited_row));
-		auto is_georeferenced = temp->isTemplateGeoreferenced();
-		auto is_visible = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
+		// Update and show other buttons
 		
+		bool is_georeferenced = false;
+		bool edit_enabled   = false;
+		bool georef_enabled = false;
+		bool custom_enabled = false;
+		bool import_enabled = false;
+		if (single_template_selected)
+		{
+			auto temp = map->getTemplate(posFromRow(visited_row));
+			is_georeferenced = temp->isTemplateGeoreferenced();
+			if (template_table->item(visited_row, 0)->checkState() == Qt::Checked)
+			{
+				edit_enabled   = true;
+				georef_enabled = temp->canChangeTemplateGeoreferenced();
+				custom_enabled = !is_georeferenced;
+				import_enabled = bool(qobject_cast<TemplateMap*>(getCurrentTemplate()));
+			}
+		}
+		else if (single_row_selected)
+		{
+			Q_ASSERT(map_row_selected);
+			is_georeferenced = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
+		}
+		
+		edit_button->setEnabled(edit_enabled);
 		georef_action->setChecked(is_georeferenced);
-		georef_visible = true;
-		georef_active = is_visible && temp->canChangeTemplateGeoreferenced();
-		
-		custom_visible = !is_georeferenced || temp->canChangeTemplateGeoreferenced();
-		custom_active = !is_georeferenced && is_visible;
-		
-		import_active = is_visible && bool(qobject_cast<TemplateMap*>(getCurrentTemplate()));
+		georef_action->setEnabled(georef_enabled);
+		move_by_hand_button->setEnabled(custom_enabled);
+		adjust_button->setEnabled(custom_enabled);
+		position_action->setEnabled(custom_enabled);
+		import_action->setEnabled(import_enabled);
 	}
-	else if (single_row_selected)
-	{
-		georef_visible = true;
-		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
-	}
-	
-	georef_action->setVisible(georef_visible);
-	georef_action->setEnabled(georef_active);
-	move_by_hand_button->setEnabled(custom_active);
-	move_by_hand_button->setVisible(custom_visible);
-	adjust_button->setEnabled(custom_active);
-	adjust_button->setVisible(custom_visible);
-	position_action->setEnabled(custom_active);
-	position_action->setVisible(custom_visible);
-	import_action->setVisible(import_active);
-	
-/*	if (enable_active_buttons)
-	{
-		// TODO: Implement and enable buttons again
-		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		//more_button->setEnabled(false); // !multiple_rows_selected);
-	} */
-	
-// 	if (multiple_rows_selected)
-// 	{
-// 		adjust_button->setChecked(false);
-// 		position_button->setChecked(false);
-// 	}
-// 	else
-// 	{
-// 		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
-// 		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
-// 	}
 }
 
 void TemplateListWidget::cellClicked(int row, int column)
