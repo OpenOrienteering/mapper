@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_GPS_DISPLAY_H
 #define OPENORIENTEERING_GPS_DISPLAY_H
 
+#include <QtGlobal>
 #include <QObject>
 #if defined(QT_POSITIONING_LIB)
 #  include <QGeoPositionInfo>  // IWYU pragma: keep
@@ -33,6 +34,7 @@ class QGeoPositionInfoSource;  // IWYU pragma: keep
 #include "core/map_coord.h"
 
 class QPainter;
+class QTimerEvent;
 
 namespace OpenOrienteering {
 
@@ -91,6 +93,19 @@ public:
 	/// Returns the accuracy of the latest received GPS coord, or -1 if unknown. Check hasValidPosition() beforehand!
 	float getLatestGPSCoordAccuracy() const { return latest_gps_coord_accuracy; }
 	
+	/// Starts quick blinking for one or more seconds.
+	void startBlinking(int seconds);
+	
+	/// Stops blinking.
+	void stopBlinking();
+	
+	/// Returns true while blinking is active.
+	bool isBlinking() const { return blink_count > 0; }
+	
+protected:
+	/// Handles blinking.
+	void timerEvent(QTimerEvent* e) override;
+	
 signals:
 	/// Is emitted whenever a new position update happens.
 	/// If the accuracy is unknown, -1 will be given.
@@ -118,6 +133,36 @@ private:
 	MapCoordF calcLatestGPSCoord(bool& ok);
 	void updateMapWidget();
 	
+	/**
+	 * A lightweight utility for sinusoidal pulsating opacity.
+	 * 
+	 * This class depends on another object's QObject::timerEvent() override
+	 * to advance the pulsation state and eventually stop the activity.
+	 * 
+	 * \see QBasicTimer
+	 */
+	class PulsatingOpacity
+	{
+	public:
+		/// Returns true when the pulsation is active.
+		bool isActive() const { return bool(timer_id); }
+		/// Starts a timer on the given object.
+		void start(QObject& object);
+		/// Stops the timer on the given object.
+		void stop(QObject& object);
+		/// Returns the ID of the active timer.
+		int timerId() const { return timer_id; }
+		
+		/// Advances the pulsation state.
+		bool advance();
+		/// Returns the current opacity.
+		qreal current() const;
+		
+	private:
+		int timer_id = 0;
+		quint8 index = 0;
+	};
+	
 	MapWidget* widget;
 	const Georeferencing& georeferencing;
 	QGeoPositionInfoSource* source = nullptr;
@@ -126,6 +171,8 @@ private:
 #endif
 	MapCoordF latest_gps_coord;
 	float latest_gps_coord_accuracy = 0;
+	PulsatingOpacity pulsating_opacity;
+	int blink_count = 0;
 	bool tracking_lost             = false;
 	bool has_valid_position        = false;
 	bool gps_updated               = false;

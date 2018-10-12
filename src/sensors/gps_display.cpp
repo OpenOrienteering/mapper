@@ -29,6 +29,9 @@
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep
 #endif
 
+#include <algorithm>
+#include <type_traits>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
@@ -39,6 +42,7 @@
 #include <QPointF>
 #include <QTime>
 #include <QTimer>  // IWYU pragma: keep
+#include <QTimerEvent>
 
 #include "core/georeferencing.h"
 #include "core/latlon.h"
@@ -50,6 +54,48 @@
 
 
 namespace OpenOrienteering {
+
+namespace {
+
+// Opacities as understood by QPainter::setOpacity().
+static qreal opacity_curve[] = { 0.8, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.5 };
+
+}  // namespace
+
+
+void GPSDisplay::PulsatingOpacity::start(QObject& object)
+{
+	if (!timer_id)
+		timer_id = object.startTimer(1000 / std::extent<decltype(opacity_curve)>::value);
+}
+
+void GPSDisplay::PulsatingOpacity::stop(QObject& object)
+{
+	if (timer_id)
+	{
+		object.killTimer(timer_id);
+		*this = {};
+	}
+}
+
+bool GPSDisplay::PulsatingOpacity::advance()
+{
+	if (isActive())
+	{
+		++index;
+		if (index < std::extent<decltype(opacity_curve)>::value)
+			return true;
+		index = 0;
+	}
+	return false;
+}
+
+qreal GPSDisplay::PulsatingOpacity::current() const
+{
+	return opacity_curve[index];
+}
+
+
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
  : QObject(parent)
@@ -178,7 +224,7 @@ void GPSDisplay::paint(QPainter* painter)
 	const auto flags = painter->renderHints();
 	painter->setRenderHints(flags | QPainter::Antialiasing);
 	const auto opacity = painter->opacity();
-	painter->setOpacity(0.75 * opacity);
+	painter->setOpacity(pulsating_opacity.current() * opacity);
 	
 	// Highlight markers by white framing.
 	const auto framing = QColor(Qt::white);
@@ -253,6 +299,34 @@ void GPSDisplay::paint(QPainter* painter)
 	painter->setOpacity(opacity);
 	painter->setRenderHints(QPainter::Antialiasing);
 }
+
+
+void GPSDisplay::startBlinking(int seconds)
+{
+	blink_count = std::max(1, seconds);
+	pulsating_opacity.start(*this);
+}
+
+void GPSDisplay::stopBlinking()
+{
+	blink_count = 0;
+	pulsating_opacity.stop(*this);
+}
+
+void GPSDisplay::timerEvent(QTimerEvent* e)
+{
+	if (e->timerId() == pulsating_opacity.timerId())
+	{
+		if (!pulsating_opacity.advance())
+		{
+			--blink_count;
+			if (blink_count <= 0)
+				stopBlinking();
+		}
+		updateMapWidget();
+	}
+}
+
 
 #if defined(QT_POSITIONING_LIB)
 void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
