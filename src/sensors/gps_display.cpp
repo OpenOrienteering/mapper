@@ -188,7 +188,7 @@ void GPSDisplay::paint(QPainter* painter)
 			QPointF(0, -2.5 * base_length_unit),
 			QPointF(base_length_unit, base_length_unit),
 			QPointF(0, 0),
-			QPointF(base_length_unit, base_length_unit)
+			QPointF(-base_length_unit, base_length_unit)
 		};
 		painter->drawPolygon(arrow_points, 4);
 		
