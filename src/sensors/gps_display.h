@@ -27,7 +27,6 @@
 #  include <QGeoPositionInfo>  // IWYU pragma: keep
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep
 #else
-class QGeoPositionInfo;
 class QGeoPositionInfoSource;  // IWYU pragma: keep
 #endif
 
@@ -43,6 +42,8 @@ class MapWidget;
 
 /**
  * Retrieves the GPS position and displays a marker at this position on a MapWidget.
+ * 
+ * \todo Use qreal instead of float (in all sensor code) for consistency with Qt.
  */
 class GPSDisplay : public QObject
 {
@@ -54,15 +55,14 @@ public:
 	~GPSDisplay() override;
 	
 	/**
-	 * @brief Checks if GPS is enabled and may guide the user to the device settings.
+	 * Checks if GPS is enabled, and may guide the user to the device settings.
 	 * 
-	 * Checks if GPS is enabled in the device settings. If this is not the case,
-	 * it asks the user whether he wishes to open the device's location settings
-	 * dialog.
+	 * If GPS is not enabled in the device settings, it asks the user whether he
+	 * wishes to open the device's location settings dialog.
+	 * (At the moment, this is implemented for Android only.)
 	 * 
-	 * Returns true if GPS is enabled. Must return true also if the settings
-	 * dialog remains open when returning from this function (i.e. the final
-	 * result is not known. May return false if GPS remains disabled.
+	 * Returns true if GPS is enabled, but also when the settings dialog remains
+	 * open when returning from this function and the final setting is unknown.
 	 */
 	bool checkGPSEnabled();
 	
@@ -74,7 +74,7 @@ public:
 	/// Sets GPS marker visibility (true by default)
 	void setVisible(bool visible);
 	/// Returns GPS marker visibility
-	inline bool isVisible() const {return visible;}
+	bool isVisible() const { return visible; }
 	
 	/// Sets whether distance rings are drawn
 	void enableDistanceRings(bool enable);
@@ -85,11 +85,11 @@ public:
 	void paint(QPainter* painter);
 	
 	/// Returns if a valid position was received since the last call to startUpdates().
-	inline bool hasValidPosition() const {return has_valid_position;}
+	bool hasValidPosition() const { return has_valid_position; }
 	/// Returns the latest received GPS coord. Check hasValidPosition() beforehand!
-	const MapCoordF& getLatestGPSCoord() const {return latest_gps_coord;}
+	const MapCoordF& getLatestGPSCoord() const { return latest_gps_coord; }
 	/// Returns the accuracy of the latest received GPS coord, or -1 if unknown. Check hasValidPosition() beforehand!
-	float getLatestGPSCoordAccuracy() const {return latest_gps_coord_accuracy;}
+	float getLatestGPSCoordAccuracy() const { return latest_gps_coord_accuracy; }
 	
 signals:
 	/// Is emitted whenever a new position update happens.
@@ -120,18 +120,18 @@ private:
 	
 	MapWidget* widget;
 	const Georeferencing& georeferencing;
-	QGeoPositionInfoSource* source;
+	QGeoPositionInfoSource* source = nullptr;
 #if defined(QT_POSITIONING_LIB)
 	QGeoPositionInfo latest_pos_info;
 #endif
 	MapCoordF latest_gps_coord;
-	float latest_gps_coord_accuracy;
-	bool tracking_lost;
-	bool has_valid_position;
-	bool gps_updated;
-	bool visible;
-	bool distance_rings_enabled;
-	bool heading_indicator_enabled;
+	float latest_gps_coord_accuracy = 0;
+	bool tracking_lost             = false;
+	bool has_valid_position        = false;
+	bool gps_updated               = false;
+	bool visible                   = false;
+	bool distance_rings_enabled    = false;
+	bool heading_indicator_enabled = false;
 };
 
 
