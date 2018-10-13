@@ -174,6 +174,8 @@ void GPSDisplay::paint(QPainter* painter)
 	const auto one_mm = Util::mmToPixelLogical(1);
 	const auto mmToPixelLogical = [one_mm](qreal mm) { return mm * one_mm; };
 	
+	// Highlight markers by white framing.
+	const auto framing = QColor(Qt::white);
 	const auto foreground = QColor(tracking_lost ? Qt::gray : Qt::red);
 	
 	// Draw center dot or arrow
@@ -195,7 +197,7 @@ void GPSDisplay::paint(QPainter* painter)
 		    { 0, 0 },
 		    { mmToPixelLogical(-0.6), mmToPixelLogical(0.6) }
 		};
-		painter->setPen(Qt::NoPen);
+		painter->setPen(QPen{framing, mmToPixelLogical(0.25)});
 		painter->setBrush(foreground);
 		painter->drawPolygon(arrow_points, std::extent<decltype(arrow_points)>::value);
 		
@@ -209,7 +211,7 @@ void GPSDisplay::paint(QPainter* painter)
 	else
 	{
 		const auto dot_radius = mmToPixelLogical(0.5);
-		painter->setPen(Qt::NoPen);
+		painter->setPen(QPen{framing, mmToPixelLogical(0.25)});
 		painter->setBrush(foreground);
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
 	}
@@ -235,8 +237,10 @@ void GPSDisplay::paint(QPainter* painter)
 	if (latest_gps_coord_accuracy >= 0)
 	{
 		const auto accuracy_pixels = qreal(latest_gps_coord_accuracy) * meters_to_pixels;
-		painter->setPen(QPen(foreground, mmToPixelLogical(0.2)));
 		painter->setBrush(Qt::NoBrush);
+		painter->setPen(QPen(framing, mmToPixelLogical(0.7)));
+		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.2)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
 }
