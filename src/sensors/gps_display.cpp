@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014, 2016 Kai Pastor
+ *    Copyright 2014, 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,7 +32,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QBrush>
+#include <QColor>
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
@@ -171,13 +171,14 @@ void GPSDisplay::paint(QPainter* painter)
 		return;
 	QPointF gps_pos = widget->mapToViewport(gps_coord);
 	
+	const auto one_mm = Util::mmToPixelLogical(1);
+	const auto mmToPixelLogical = [one_mm](qreal mm) { return mm * one_mm; };
+	
+	const auto foreground = QColor(tracking_lost ? Qt::gray : Qt::red);
+	
 	// Draw center dot or arrow
-	painter->setPen(Qt::NoPen);
-	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
 	if (heading_indicator_enabled)
 	{
-		const qreal base_length_unit = Util::mmToPixelLogical(0.6);
-
 		// For heading indicator, get azimuth from compass and calculate
 		// the relative rotation to map view rotation, clockwise.
 		const auto heading_rotation_deg = qreal(Compass::getInstance().getCurrentAzimuth())
@@ -189,23 +190,27 @@ void GPSDisplay::paint(QPainter* painter)
 		
 		// Draw arrow
 		static const QPointF arrow_points[4] = {
-		    { 0, -2.5 * base_length_unit },
-		    { base_length_unit, base_length_unit },
+		    { 0, mmToPixelLogical(-1.5) },
+		    { mmToPixelLogical(0.6), mmToPixelLogical(0.6) },
 		    { 0, 0 },
-		    { -base_length_unit, base_length_unit }
+		    { mmToPixelLogical(-0.6), mmToPixelLogical(0.6) }
 		};
+		painter->setPen(Qt::NoPen);
+		painter->setBrush(foreground);
 		painter->drawPolygon(arrow_points, std::extent<decltype(arrow_points)>::value);
 		
 		// Draw heading line
-		painter->setPen(QPen(Qt::gray, base_length_unit / 6));
+		painter->setPen(QPen(Qt::gray, mmToPixelLogical(0.1)));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawLine(QPointF(0, 0), QPointF(0, -10000 * base_length_unit)); // very long
+		painter->drawLine(QPointF(0, 0), QPointF(0, mmToPixelLogical(-500))); // very long
 		
 		painter->restore();
 	}
 	else
 	{
-		const auto dot_radius = Util::mmToPixelLogical(0.5);
+		const auto dot_radius = mmToPixelLogical(0.5);
+		painter->setPen(Qt::NoPen);
+		painter->setBrush(foreground);
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
 	}
 	
@@ -216,7 +221,7 @@ void GPSDisplay::paint(QPainter* painter)
 		const auto num_distance_rings = 2;
 		const auto distance_ring_radius_meters = 10;
 		const auto distance_ring_radius_pixels = distance_ring_radius_meters * meters_to_pixels;
-		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1)));
+		painter->setPen(QPen(Qt::gray, mmToPixelLogical(0.1)));
 		painter->setBrush(Qt::NoBrush);
 		auto radius = distance_ring_radius_pixels;
 		for (int i = 0; i < num_distance_rings; ++i)
@@ -230,7 +235,7 @@ void GPSDisplay::paint(QPainter* painter)
 	if (latest_gps_coord_accuracy >= 0)
 	{
 		const auto accuracy_pixels = qreal(latest_gps_coord_accuracy) * meters_to_pixels;
-		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2)));
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.2)));
 		painter->setBrush(Qt::NoBrush);
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
