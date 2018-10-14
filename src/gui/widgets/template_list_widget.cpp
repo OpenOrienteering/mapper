@@ -221,12 +221,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
-	// TODO: Fix string
-	georef_button = newToolButton(QIcon(QString::fromLatin1(":/images/grid.png")), tr("Georeferenced: %1").remove(QLatin1String(": %1")));
-	georef_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	georef_button->setCheckable(true);
-	georef_button->setChecked(true);
-	georef_button->setEnabled(false); // TODO
 	move_by_hand_action = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
@@ -235,8 +229,11 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	adjust_button->setCheckable(true);
 	
 	auto edit_menu = new QMenu(this);
+	georef_action = edit_menu->addAction(tr("Georeferenced"), this, SLOT(changeGeorefClicked()));
+	georef_action->setCheckable(true);
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
+	edit_menu->addSeparator();
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
 	
 	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
@@ -252,7 +249,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	list_buttons_layout->addLayout(up_down_layout);
 	list_buttons_layout->addWidget(adjust_button);
 	list_buttons_layout->addWidget(move_by_hand_button);
-	list_buttons_layout->addWidget(georef_button);
 	list_buttons_layout->addWidget(edit_button);
 	
 	list_buttons_group = new QWidget();
@@ -803,17 +799,17 @@ void TemplateListWidget::updateButtons()
 	else if (single_template_selected)
 	{
 		auto temp = map->getTemplate(posFromRow(visited_row));
-		if (temp->isTemplateGeoreferenced())
-		{
-			georef_visible = true;
-			georef_active  = true;
-		}
-		else
-		{
-			custom_visible = true;
-			custom_active = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
-		}
-		import_active = qobject_cast<TemplateMap*>(getCurrentTemplate());
+		auto is_georeferenced = temp->isTemplateGeoreferenced();
+		auto is_visible = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
+		
+		georef_action->setChecked(is_georeferenced);
+		georef_visible = true;
+		georef_active = is_visible && temp->canChangeTemplateGeoreferenced();
+		
+		custom_visible = !is_georeferenced || temp->canChangeTemplateGeoreferenced();
+		custom_active = !is_georeferenced && is_visible;
+		
+		import_active = is_visible && bool(qobject_cast<TemplateMap*>(getCurrentTemplate()));
 	}
 	else if (single_row_selected)
 	{
@@ -821,8 +817,8 @@ void TemplateListWidget::updateButtons()
 		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
 	}
 	
-	georef_button->setVisible(georef_visible);
-	georef_button->setChecked(georef_active);
+	georef_action->setVisible(georef_visible);
+	georef_action->setEnabled(georef_active);
 	move_by_hand_button->setEnabled(custom_active);
 	move_by_hand_button->setVisible(custom_visible);
 	adjust_button->setEnabled(custom_active);
@@ -1061,6 +1057,31 @@ void TemplateListWidget::importClicked()
 	{
 		map_visibility.visible = true;
 		updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
+	}
+}
+
+void TemplateListWidget::changeGeorefClicked()
+{
+	auto* templ = getCurrentTemplate();
+	if (templ && templ->canChangeTemplateGeoreferenced())
+	{
+		auto new_value = !templ->isTemplateGeoreferenced();
+		if (new_value)
+		{
+			// Properly tear down positioning activities
+			if (move_by_hand_action->isChecked())
+				move_by_hand_action->trigger();
+			if (adjust_button->isChecked())
+				adjust_button->click();
+			if (position_action->isChecked())
+				position_action->trigger();
+		}
+		if (templ->trySetTemplateGeoreferenced(new_value, this) != new_value)
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Cannot change the georeferencing state."));
+			georef_action->setChecked(false);
+		}
+		updateButtons();
 	}
 }
 
