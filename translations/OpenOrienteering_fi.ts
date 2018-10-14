@@ -4926,7 +4926,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustakartan sijainnin tallennus epäonnistui: taustakartta &quot;%1&quot; puuttuu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>

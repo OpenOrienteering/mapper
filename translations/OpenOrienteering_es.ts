@@ -4988,7 +4988,7 @@ zoom usando la rueda del ratón, si dispone de esos elementos.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>No se puede guardar la posición correcta de la plantilla perdida: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>
