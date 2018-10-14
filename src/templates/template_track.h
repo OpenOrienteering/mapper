@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -119,6 +119,8 @@ protected:
 	QString projected_crs_spec;
 	friend class OgrTemplate; // for migration
 	std::unique_ptr<Georeferencing> preserved_georef;
+	
+	bool fixed_size_pen = false;
 	
 private:
 	Q_DISABLE_COPY(TemplateTrack)

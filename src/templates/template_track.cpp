@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,6 +32,9 @@
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
+#ifdef MAPPER_USE_GDAL
+#  include "gdal/gdal_manager.h"
+#endif
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/task_dialog.h"
@@ -300,7 +303,7 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 	
 	// Tracks
 	QPen pen(qRgb(212, 0, 244));
-	if (on_screen)
+	if (on_screen && !fixed_size_pen)
 		pen.setCosmetic(true);
 	else
 		pen.setWidthF(0.1); // = 0.1 mm at 100%
@@ -538,6 +541,9 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 void TemplateTrack::configureForGPSTrack()
 {
 	is_georeferenced = true;
+#ifdef MAPPER_USE_GDAL
+	fixed_size_pen = GdalManager().isFormatEnabled(GdalManager::GPX);
+#endif
 	
 	track_crs_spec = Georeferencing::geographic_crs_spec;
 	Georeferencing* track_crs = new Georeferencing();
