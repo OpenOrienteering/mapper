@@ -77,13 +77,21 @@ public:
 	/** Returns the path of this location. */
 	QString path() const;
 	
-	/** Returns the hint for this location. */
+	/**
+	 * Returns the hint for this location.
+	 * 
+	 * This function returns an empty string for HintNormal.
+	 */
 	Hint hint() const;
 	
 	/** Returns the text representing the hint for this location. */
 	QString hintText() const;
 	
-	/** Returns a text template for giving the hint for the given path. */
+	/**
+	 * Returns a text template for giving the hint for the given path.
+	 * 
+	 * This function returns an empty string for HintNormal.
+	 */
 	static QString fileHintTextTemplate(Hint hint);
 	
 	
@@ -124,12 +132,6 @@ inline
 StorageLocation::Hint StorageLocation::hint() const
 {
 	return m_hint;
-}
-
-inline
-QString StorageLocation::hintText() const
-{
-	return fileHintTextTemplate(hint()).arg(path());
 }
 
 

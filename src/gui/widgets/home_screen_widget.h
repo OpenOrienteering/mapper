@@ -23,6 +23,7 @@
 
 #include <vector>
 
+#include <QIcon>
 #include <QObject>
 #include <QPixmap>
 #include <QString>
@@ -31,6 +32,7 @@
 
 class QAbstractButton;
 class QCheckBox;
+class QFileInfo;
 class QIcon;
 class QLabel;
 class QListWidget;
@@ -43,6 +45,7 @@ class QStackedLayout;
 namespace OpenOrienteering {
 
 class HomeScreenController;
+class StorageLocation;
 
 
 /**
@@ -88,6 +91,8 @@ protected:
 	 *  for triggering a top level activity in the home screen. */
 	QAbstractButton* makeButton(const QString& text, const QIcon& icon, QWidget* parent = nullptr) const;
 	
+	/** Returns the role to be used for storing paths. */
+	constexpr static int pathRole() { return Qt::UserRole; }
 	
 	HomeScreenController* controller;
 };
@@ -175,18 +180,13 @@ public slots:
 	 *  sets the "checked" state of the control for displaying the tip. */
 	void setTipsVisible(bool state) override;
 	
-	/** Adds the examples to the list of files
-	 *  if they are not already there. */
-	void showExamples();
-	
 	/** Shows the settings dialog, adjusted for small screens. */
 	void showSettings();
 	
-protected slots:
+protected:
 	/** Opens a file when its is list item is clicked. */
 	void fileClicked(QListWidgetItem* item);
 	
-protected:
 	/** Triggers title image adjustment on resize events. */
 	void resizeEvent(QResizeEvent* event) override;
 	
@@ -194,17 +194,25 @@ protected:
 	void adjustTitlePixmapSize();
 	
 	/** Creates the file list widget. */
-	QWidget* makeFileListWidget(HomeScreenController* controller, QWidget* parent = nullptr);
+	QListWidget* makeFileListWidget();
 	
-	/** Iterates over all files at the given path and adds all map files to the list */
-	void addFilesToFileList(QListWidget* file_list, const QString& path);
+	/** Updates the file list widget. */
+	void updateFileListWidget();
+	
+	/** Add a single file or dir item to the file list. */
+	void addItemToFileList(const QFileInfo& file_info, int hint = 0, const QIcon& icon = {});
+	
+	/** Add a single item to the file list, using a custom display name. */
+	void addItemToFileList(const QString& label, const QFileInfo& file_info, int hint = 0, const QIcon& icon = {});
+	
+	/** Returns the role to be used for storing hints (number or text). */
+	constexpr static int hintRole() { return Qt::UserRole + 1; }
 	
 private:
 	QPixmap title_pixmap;
 	QLabel* title_label;
-	QStackedLayout* file_list_stack;
-	QListWidget* file_list;
-	QPushButton* examples_button;
+	QListWidget* file_list_widget;
+	std::vector<StorageLocation> history;
 };
 
 

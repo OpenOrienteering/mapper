@@ -281,7 +281,7 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 	switch (hint)
 	{
 	case HintNormal:
-		return tr("'%1' is stored in a regular location.");
+		return {};  // No text for a regular location.
 		
 	case HintApplication:
 		return tr("'%1' is located in app storage. The files will be removed when uninstalling the app.");
@@ -294,6 +294,12 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 	}
 	
 	Q_UNREACHABLE();
+}
+
+
+QString OpenOrienteering::StorageLocation::hintText() const
+{
+	return hint() == HintNormal ? QString{} : fileHintTextTemplate(hint()).arg(path());
 }
 
 
