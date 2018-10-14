@@ -39,6 +39,7 @@
 #include <QFlags>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
 #include <QPointF>
 #include <QTime>
 #include <QTimer>  // IWYU pragma: keep
@@ -267,6 +268,20 @@ void GPSDisplay::paint(QPainter* painter)
 		painter->setPen(QPen{framing, mmToPixelLogical(0.3)});
 		painter->setBrush(foreground);
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
+		
+		const auto five_mm = mmToPixelLogical(5);
+		const auto ten_mm = 2 * five_mm;
+		const auto draw_crosshairs = [painter, gps_pos, five_mm, ten_mm]() {
+			painter->drawLine(gps_pos - QPointF{five_mm, 0}, gps_pos - QPointF{ten_mm, 0});
+			painter->drawLine(gps_pos + QPointF{five_mm, 0}, gps_pos + QPointF{ten_mm, 0});
+			painter->drawLine(gps_pos - QPointF{0, five_mm}, gps_pos - QPointF{0, ten_mm});
+			painter->drawLine(gps_pos + QPointF{0, five_mm}, gps_pos + QPointF{0, ten_mm});
+		};
+		painter->setBrush(Qt::NoBrush);
+		painter->setPen(QPen(framing, mmToPixelLogical(1)));
+		draw_crosshairs();
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.5)));
+		draw_crosshairs();
 	}
 	
 	auto meters_to_pixels = widget->getMapView()->lengthToPixel(qreal(1000000) / georeferencing.getScaleDenominator());
