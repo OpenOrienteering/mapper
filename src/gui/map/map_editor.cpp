@@ -3321,18 +3321,18 @@ void MapEditorController::enableGPSDisplay(bool enable)
 					// There is a template for this track.
 					new_template = false;
 					track = qobject_cast<TemplateTrack*>(temp);
-					if (!track)
-					{
-						// Need to replace the template at template_index
-						map->setTemplateAreaDirty(template_index);
-						map->deleteTemplate(template_index);
-					}
 					break;
 				}
 			}
 			
 			if (!track)
 			{
+				if (!new_template)
+				{
+					// Need to replace the template at template_index
+					map->setTemplateAreaDirty(template_index);
+					map->deleteTemplate(template_index);
+				}
 				track = new TemplateTrack(gpx_file_path, map);
 				map->addTemplate(track, template_index);
 			}
