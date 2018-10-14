@@ -27,10 +27,25 @@ OpenOrienteering Mapper for Android will create these folders when they are miss
 You can transfer files from and to a PC via a USB cable. Android supports multiple file transfer protocols.
 
 - MTP is the preferred method now. There is hardly any interference for apps while the device is connected to the PC.
-  Via MTP, Android will only show files which are known to its Media Scanner. If you cannot find a file such a recorded GPX track, a reboot of the device could trigger a rescan.
+  Via MTP, Android will only show files which are known to its Media Scanner.  
 
 - Mass Storage makes the storage unavailable for apps for the duration of the connection with the PC.
   (Android also needs to terminate apps which are stored on the volume which is provided as mass storage.)
   Unlike MTP, mass storage does not depend on the media scanner, so all files are always visible.
 
-In some cases, users suffered from files being damaged during transfer. This can be worked around by choosing another method for file transfer. Remember to keep backups and to verify transferred files.
+Note that after mapping, you might want to transfer back not only the modified map but also GPX tracks and templates you painted on.
+
+
+## Data loss prevention and recovery
+
+*Remember to keep backups and to verify transferred files.*
+
+If a file appears to be corrupted after transfer back to PC, or you cannot find
+a new file such as a recorded GPX track, a reboot of the Android device could
+solve the issue. After the reboot, Android's media scanner will take notice of
+new files and changed file sizes. However, Mapper v0.8.3 is expected to bring a
+solution to this issue.
+
+In some situations, the Mapper app might not be able to properly save data and
+shutdown as quickly as requested by the Android operating system, for example
+when you start other apps or when the device runs out of power.

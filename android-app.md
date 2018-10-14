@@ -127,9 +127,28 @@ Note that the temporary trace is not saved in the map.
 This removes the temporay traces and position markers. (They will also be discarded when closing the map file.)
 
 
+#### ![ ](../mapper-images/pencil.png) Paint on template
+
+By this tool, mapper supports free-hand drawing onto image templates. There is
+a small selection of colors for drawing. White is used for corrections to
+previous drawings. There is also a dedicated undo/redo feature.
+
+This tool is an convenient alternative when you want to do only (or mostly)
+drafting in the field, but draw the final version of the map at home on a PC.
+It does not create new map objects but only alters the template you draw on.
+This may help to deal with low processing power or battery runtime on mobile
+devices.
+
+Please note that direct drawing onto base map images is *not* recommended:
+First, the eraser tool would also erase the base map. Second, these images
+usually are in the lossy JPEG format which will introduce visible artifacts
+when saving the file and loading it repeatedly.
+
+
 #### ![ ](../mapper-images/paint-on-template-settings.png) Paint-on-template settings
 
-This button allows to select the active image for scribbling (using the symbol above it).
+This button allows to select an image template for scribbling,
+or to add a new one covering the vicinity of your position.
 
 
 -----
