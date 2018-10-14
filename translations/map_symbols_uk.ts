@@ -4543,7 +4543,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Кам&apos;янистий ґрунт</translation>
         </message>
         <message>
             <source>An area of stony or rocky ground which reduces runnability. The dots shall be randomly distributed with density according to the amount of rock. A minimum of three dots shall be used.</source>
@@ -4852,7 +4852,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
+            <translation>Чистий ліс</translation>
         </message>
         <message>
             <source>An area of typical open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
@@ -4862,7 +4862,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished"></translation>
+            <translation>Середньопрохідна рослинність</translation>
         </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.
@@ -5867,7 +5867,7 @@ North lines may be broken where they obscure small features such as boulders, kn
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Розмічені ділянки дистанції зображуються на карті штриховою лінією.</translation>
         </message>
         <message>
             <source>Finish</source>
@@ -8352,22 +8352,22 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Forest: easy running</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
+            <translation>Чистий ліс</translation>
         </message>
         <message>
             <source>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
             <comment>Description of symbol 405</comment>
-            <translation type="unfinished"></translation>
+            <translation>Типовий для певного типу місцевості чистий прохідний ліс. Якщо на місцевості відсутній чистий прохідний ліс, на карті не повинно бути білого кольору.</translation>
         </message>
         <message>
             <source>Forest: slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished"></translation>
+            <translation>Середньопрохідна рослинність</translation>
         </message>
         <message>
             <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation type="unfinished"></translation>
+            <translation>Площа з густими деревами (низька  видимість), де швидкість бігу знижується до 60 - 80% від нормальної.</translation>
         </message>
         <message>
             <source>Orchard</source>
@@ -8533,12 +8533,12 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>High stone wall</source>
             <comment>Name of symbol 521</comment>
-            <translation type="unfinished"></translation>
+            <translation>Високий кам’яний мур</translation>
         </message>
         <message>
             <source>A stone wall higher than ca 1.5 m, not crossable to the average orienteer.</source>
             <comment>Description of symbol 521</comment>
-            <translation type="unfinished"></translation>
+            <translation>Мурована стіна вище 1,5 м, нездоланна для спортсмена середнього зросту.</translation>
         </message>
         <message>
             <source>Fence</source>
@@ -8568,7 +8568,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (519) or a fence (522) or a pipeline (534).</source>
             <comment>Description of symbol 525</comment>
-            <translation type="unfinished"></translation>
+            <translation>Всі шляхи крізь високі огорожі або стіни повинні бути зображені. Знак може також показувати хвіртку або перелаз через тин (522), мур (519), іншу огорожу (534).</translation>
         </message>
         <message>
             <source>Building</source>
@@ -8663,7 +8663,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>A pipeline which cannot be crossed.</source>
             <comment>Description of symbol 534</comment>
-            <translation type="unfinished"></translation>
+            <translation>Трубопровід, що не може бути подоланим.</translation>
         </message>
         <message>
             <source>High tower</source>
@@ -9001,7 +9001,7 @@ that it is more clearly visible in the track network.</source>
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Розмічені ділянки дистанції зображуються на карті штриховою лінією.</translation>
         </message>
         <message>
             <source>Finish</source>
@@ -9045,7 +9045,11 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена для бігу територія (див. також знак 528) зображується вертикальними лініями пурпурного кольору.
+Якщо  немає природного кордону, креслиться гранична лінія в наступних випадках:
+    - суцільна лінія вказує, що межу розмічено по контуру (маркіровкою, стрічкою) на місцевості;
+    - штрихова лінія вказує, що на місцевості кордон розмічено переривчато;
+    - відсутність лінії вказує, що на місцевості кордон не розмічено.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
@@ -9244,7 +9248,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Stony ground, small</source>
             <comment>Name of symbol 210</comment>
-            <translation type="unfinished"></translation>
+            <translation>Кам’янистий ґрунт</translation>
         </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -9254,7 +9258,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Stony ground</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Кам&apos;янистий ґрунт</translation>
         </message>
         <message>
             <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -9289,7 +9293,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished"></translation>
+            <translation>Коли озеро чи ставок займає на карті площу менш ніж 1 мм² в масштабі видання, берегова лінія опускається.</translation>
         </message>
         <message>
             <source>Waterhole</source>
@@ -9339,7 +9343,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished"></translation>
+            <translation>Болото, що непрохідне або небезпечне для спортсмена. Знак оточує чорна лінія.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, border line</source>
@@ -9349,7 +9353,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Чорна лінія оточує знак непрохідного болота.</translation>
         </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
@@ -9783,7 +9787,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A marked route is shown on the map with a dashed line.</source>
             <comment>Description of symbol 705</comment>
-            <translation type="unfinished"></translation>
+            <translation>Розмічені ділянки дистанції зображуються на карті штриховою лінією.</translation>
         </message>
         <message>
             <source>Finish</source>
@@ -9827,7 +9831,11 @@ A bounding line may be drawn if there is no natural boundary, as follows:
 - a dashed line indicates intermittent marking on the ground,
 - no line indicates no marking on the ground.</source>
             <comment>Description of symbol 709</comment>
-            <translation type="unfinished"></translation>
+            <translation>Заборонена для бігу територія (див. також знак 528) зображується вертикальними лініями пурпурного кольору.
+Якщо  немає природного кордону, креслиться гранична лінія в наступних випадках:
+    - суцільна лінія вказує, що межу розмічено по контуру (маркіровкою, стрічкою) на місцевості;
+    - штрихова лінія вказує, що на місцевості кордон розмічено переривчато;
+    - відсутність лінії вказує, що на місцевості кордон не розмічено.</translation>
         </message>
         <message>
             <source>Out-of-bounds area, solid boundary</source>
