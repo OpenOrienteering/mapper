@@ -241,29 +241,30 @@ void GPSDisplay::paint(QPainter* painter)
 		painter->save();
 		painter->translate(gps_pos);
 		painter->rotate(heading_rotation_deg);
+		painter->scale(one_mm, one_mm);
 		
 		// Draw arrow
 		static const QPointF arrow_points[4] = {
-		    { 0, mmToPixelLogical(-1.5) },
-		    { mmToPixelLogical(0.6), mmToPixelLogical(0.6) },
+		    { 0, -2.5 },
+		    { 1, 1 },
 		    { 0, 0 },
-		    { mmToPixelLogical(-0.6), mmToPixelLogical(0.6) }
+		    { -1, 1 }
 		};
-		painter->setPen(QPen{framing, mmToPixelLogical(0.25)});
+		painter->setPen(QPen{framing, mmToPixelLogical(0.1)});
 		painter->setBrush(foreground);
 		painter->drawPolygon(arrow_points, std::extent<decltype(arrow_points)>::value);
 		
 		// Draw heading line
-		painter->setPen(QPen(Qt::gray, mmToPixelLogical(0.1)));
+		painter->setPen(QPen(Qt::gray, 0.2));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawLine(QPointF(0, 0), QPointF(0, mmToPixelLogical(-500))); // very long
+		painter->drawLine(QPointF(0, 0), QPointF(0, -500)); // very long
 		
 		painter->restore();
 	}
 	else
 	{
-		const auto dot_radius = mmToPixelLogical(0.5);
-		painter->setPen(QPen{framing, mmToPixelLogical(0.25)});
+		const auto dot_radius = mmToPixelLogical(0.6);
+		painter->setPen(QPen{framing, mmToPixelLogical(0.3)});
 		painter->setBrush(foreground);
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
 	}
@@ -290,9 +291,9 @@ void GPSDisplay::paint(QPainter* painter)
 	{
 		const auto accuracy_pixels = qreal(latest_gps_coord_accuracy) * meters_to_pixels;
 		painter->setBrush(Qt::NoBrush);
-		painter->setPen(QPen(framing, mmToPixelLogical(0.7)));
+		painter->setPen(QPen(framing, mmToPixelLogical(1)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
-		painter->setPen(QPen(foreground, mmToPixelLogical(0.2)));
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.5)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
 	
