@@ -3325,6 +3325,11 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				}
 			}
 			
+			// Derive new visibility from previous/default one.
+			auto visibility = main_view->getTemplateVisibility(track);
+			visibility.opacity = std::max(0.5f, visibility.opacity);
+			visibility.visible = true;
+			
 			if (!track)
 			{
 				if (!new_template)
@@ -3341,14 +3346,16 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				track->loadTemplateFile(false);
 			}
 			track->configureForGPSTrack();
-			map->setTemplateAreaDirty(template_index);
 			if (new_template)
 			{
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
 				map->setTemplatesDirty();
 			}
-				
+			
+			main_view->setTemplateVisibility(track, visibility);
+			map->setTemplateAreaDirty(template_index);
+			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
 	}
