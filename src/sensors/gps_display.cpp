@@ -33,6 +33,7 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QColor>
+#include <QFlags>
 #include <QPainter>
 #include <QPen>
 #include <QPointF>
@@ -174,6 +175,11 @@ void GPSDisplay::paint(QPainter* painter)
 	const auto one_mm = Util::mmToPixelLogical(1);
 	const auto mmToPixelLogical = [one_mm](qreal mm) { return mm * one_mm; };
 	
+	const auto flags = painter->renderHints();
+	painter->setRenderHints(flags | QPainter::Antialiasing);
+	const auto opacity = painter->opacity();
+	painter->setOpacity(0.75 * opacity);
+	
 	// Highlight markers by white framing.
 	const auto framing = QColor(Qt::white);
 	const auto foreground = QColor(tracking_lost ? Qt::gray : Qt::red);
@@ -243,6 +249,9 @@ void GPSDisplay::paint(QPainter* painter)
 		painter->setPen(QPen(foreground, mmToPixelLogical(0.2)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
+	
+	painter->setOpacity(opacity);
+	painter->setRenderHints(QPainter::Antialiasing);
 }
 
 #if defined(QT_POSITIONING_LIB)
