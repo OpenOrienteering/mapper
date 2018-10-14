@@ -2665,7 +2665,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
@@ -6247,7 +6247,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
@@ -6257,7 +6257,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
@@ -8055,7 +8055,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
@@ -8065,7 +8065,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
