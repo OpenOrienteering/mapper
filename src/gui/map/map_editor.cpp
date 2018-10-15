@@ -2226,7 +2226,11 @@ void MapEditorController::selectedSymbolsChanged()
 		}
 		else //if (symbol_widget->getNumSelectedSymbols() == 1)
 		{
-			auto image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
+			auto image = symbol->getCustomIcon();
+			if (image.isNull())
+				image = symbol->createIcon(*map, qMin(icon_size.width(), icon_size.height()));
+			else
+				image = image.scaled(icon_size.width(), icon_size.height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 			if (symbol->isHidden() || symbol->isProtected())
 			{
 				QPainter p(&image);
