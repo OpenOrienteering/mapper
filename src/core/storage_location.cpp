@@ -48,12 +48,8 @@ namespace Android {
  */
 static std::shared_ptr<const std::vector<StorageLocation>> locations_cache;
 
-/**
- * Tells the media scanner to register the given file or folder.
- * 
- * This is required to make files quickly available for transfer via MTP.
- */
-void mediaScannerScanFile(const QString path)
+
+void mediaScannerScanFile(const QString& path)
 {
 	static const auto ACTION_MEDIA_SCANNER_SCAN_FILE = 
 	        QAndroidJniObject::getStaticObjectField<jstring>("android/content/Intent",
@@ -285,7 +281,7 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 	switch (hint)
 	{
 	case HintNormal:
-		return tr("'%1' is stored in a regular location.");
+		return {};  // No text for a regular location.
 		
 	case HintApplication:
 		return tr("'%1' is located in app storage. The files will be removed when uninstalling the app.");
@@ -298,6 +294,12 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 	}
 	
 	Q_UNREACHABLE();
+}
+
+
+QString OpenOrienteering::StorageLocation::hintText() const
+{
+	return hint() == HintNormal ? QString{} : fileHintTextTemplate(hint()).arg(path());
 }
 
 

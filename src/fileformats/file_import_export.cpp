@@ -37,6 +37,7 @@
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
+#include "core/storage_location.h"  // IWYU pragma: keep
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -290,6 +291,14 @@ bool Exporter::doExport()
 			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, managed_file->errorString()));
 			return false;
 		}
+#ifdef Q_OS_ANDROID
+		// Make the MediaScanner aware of the *updated* file.
+		if (auto* file_device = qobject_cast<QFileDevice*>(device_))
+		{
+			const auto file_info = QFileInfo(file_device->fileName());
+			Android::mediaScannerScanFile(file_info.absolutePath());
+		}
+#endif
 	}
 	catch (std::exception &e)
 	{

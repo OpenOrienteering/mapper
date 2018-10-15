@@ -4768,7 +4768,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно сохранить корректное положение отсутствующей подложки: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>

@@ -56,6 +56,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "core/storage_location.h"  // IWYU pragma: keep
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/util_gui.h"
@@ -99,7 +100,12 @@ TemplateImage::~TemplateImage()
 
 bool TemplateImage::saveTemplateFile() const
 {
-	return image.save(template_path);
+	const auto result = image.save(template_path);
+#ifdef Q_OS_ANDROID
+	// Make the MediaScanner aware of the *updated* file.
+	Android::mediaScannerScanFile(template_path);
+#endif
+	return result;
 }
 
 

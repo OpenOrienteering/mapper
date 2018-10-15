@@ -4767,7 +4767,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо зберегти коректне положення втраченої підложки: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>
@@ -7062,8 +7062,8 @@ to jump over the lazy dog
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
         <translation>Завантаження зображення GIF як підложки.
-Збереження файлів GIF не підтримується. Це означає що зображення зцієї підложки не буде збережено!
-Це не проблема, якщо ви &lt;b&gt;не&lt;/b&gt; плануєте малювати з цієї підложки у майбутньому.</translation>
+Збереження файлів GIF не підтримується. Це означає все що буде намальовано на цій підложці не буде збережено!
+Це не проблема, якщо ви не плануєте малювати на цій підложці у майбутньому.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="244"/>
