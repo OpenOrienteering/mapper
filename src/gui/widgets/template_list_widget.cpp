@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,24 +21,64 @@
 
 #include "template_list_widget.h"
 
+#include <vector>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QAbstractButton>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QBoxLayout>
+#include <QBrush>
+#include <QByteArray>
 #include <QCheckBox>
+#include <QColor>
+#include <QCoreApplication>
+#include <QDialog>
+#include <QDir>
+#include <QEvent>
+#include <QEventLoop>
+#include <QFileInfo>
+#include <QFlags>
+#include <QHBoxLayout>
 #include <QHeaderView>
+#include <QIcon>
 #include <QInputDialog>
+#include <QItemSelectionModel>
 #include <QKeyEvent>
 #include <QLabel>
+#include <QLatin1Char>
+#include <QLatin1String>
+#include <QList>
+#include <QLocale>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPalette>
+#include <QPixmap>
+#include <QRect>
+#include <QRectF>
 #include <QScroller>
 #include <QSettings>
 #include <QSignalBlocker>
+#include <QSize>
+#include <QSlider>
+#include <QStringList>
+#include <QStyle>
+#include <QStyleOption>
+#include <QStyleOptionButton>
+#include <QStyleOptionViewItem>
 #include <QTableWidget>
+#include <QTableWidgetItem>
 #include <QToolButton>
 #include <QToolTip>
+#include <QVBoxLayout>
+#include <QVariant>
 
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/objects/object.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -46,6 +86,7 @@
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
+#include "gui/map/map_editor_activity.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "templates/template.h"
@@ -206,7 +247,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
-	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), (tr("Remove"), tr("Close"))); /// \todo Use "Remove instead of "Close"
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
 	
 	auto add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
@@ -221,22 +262,21 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
-	// TODO: Fix string
-	georef_button = newToolButton(QIcon(QString::fromLatin1(":/images/grid.png")), tr("Georeferenced: %1").remove(QLatin1String(": %1")));
-	georef_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-	georef_button->setCheckable(true);
-	georef_button->setChecked(true);
-	georef_button->setEnabled(false); // TODO
 	move_by_hand_action = new QAction(QIcon(QString::fromLatin1(":/images/move.png")), tr("Move by hand"), this);
 	move_by_hand_action->setCheckable(true);
 	move_by_hand_button = newToolButton(move_by_hand_action->icon(), move_by_hand_action->text());
 	move_by_hand_button->setDefaultAction(move_by_hand_action);
+	move_by_hand_button->setVisible(!mobile_mode);
 	adjust_button = newToolButton(QIcon(QString::fromLatin1(":/images/georeferencing.png")), tr("Adjust..."));
 	adjust_button->setCheckable(true);
+	adjust_button->setVisible(!mobile_mode);
 	
 	auto edit_menu = new QMenu(this);
+	georef_action = edit_menu->addAction(tr("Georeferenced"), this, SLOT(changeGeorefClicked()));
+	georef_action->setCheckable(true);
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
+	edit_menu->addSeparator();
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
 	
 	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
@@ -244,6 +284,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 	edit_button->setPopupMode(QToolButton::InstantPopup);
 	edit_button->setMenu(edit_menu);
+	edit_button->setVisible(!mobile_mode);
 	
 	// The buttons row layout
 	auto list_buttons_layout = new QHBoxLayout();
@@ -252,7 +293,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	list_buttons_layout->addLayout(up_down_layout);
 	list_buttons_layout->addWidget(adjust_button);
 	list_buttons_layout->addWidget(move_by_hand_button);
-	list_buttons_layout->addWidget(georef_button);
 	list_buttons_layout->addWidget(edit_button);
 	
 	list_buttons_group = new QWidget();
@@ -656,7 +696,7 @@ void TemplateListWidget::cellChange(int row, int column)
 	
 	if (state != Template::Invalid)
 	{
-		auto setAreaDirty = [this, pos, temp]()
+		auto setAreaDirty = [this, pos]()
 		{ 
 			if (pos >= 0)
 			{
@@ -726,7 +766,7 @@ void TemplateListWidget::cellChange(int row, int column)
 					visibility.opacity = qBound(0.0f, opacity, 1.0f);
 					updateVisibility(temp, visibility);
 					setAreaDirty();
-					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0f, 0.0f, 0.0f, visibility.opacity));
+					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, qreal(visibility.opacity)));
 				}
 			}
 			break;
@@ -788,66 +828,42 @@ void TemplateListWidget::updateButtons()
 	delete_button->setEnabled(single_template_selected);	/// \todo Make it possible to delete multiple templates at once
 	move_up_button->setEnabled(single_row_selected && !first_row_selected);
 	move_down_button->setEnabled(single_row_selected && !last_row_selected);
-	edit_button->setEnabled(single_template_selected);
 	
-	bool georef_visible = false;
-	bool georef_active  = false;
-	bool custom_visible = false;
-	bool custom_active  = false;
-	bool import_active  = false;
-	if (mobile_mode)
+	if (!mobile_mode)
 	{
-		// Leave most buttons invisible
-		edit_button->setVisible(false);
-	}
-	else if (single_template_selected)
-	{
-		auto temp = map->getTemplate(posFromRow(visited_row));
-		if (temp->isTemplateGeoreferenced())
+		// Update and show other buttons
+		
+		bool is_georeferenced = false;
+		bool edit_enabled   = false;
+		bool georef_enabled = false;
+		bool custom_enabled = false;
+		bool import_enabled = false;
+		if (single_template_selected)
 		{
-			georef_visible = true;
-			georef_active  = true;
+			auto temp = map->getTemplate(posFromRow(visited_row));
+			is_georeferenced = temp->isTemplateGeoreferenced();
+			if (template_table->item(visited_row, 0)->checkState() == Qt::Checked)
+			{
+				edit_enabled   = true;
+				georef_enabled = temp->canChangeTemplateGeoreferenced();
+				custom_enabled = !is_georeferenced;
+				import_enabled = bool(qobject_cast<TemplateMap*>(getCurrentTemplate()));
+			}
 		}
-		else
+		else if (single_row_selected)
 		{
-			custom_visible = true;
-			custom_active = template_table->item(visited_row, 0)->checkState() == Qt::Checked;
+			Q_ASSERT(map_row_selected);
+			is_georeferenced = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
 		}
-		import_active = qobject_cast<TemplateMap*>(getCurrentTemplate());
+		
+		edit_button->setEnabled(edit_enabled);
+		georef_action->setChecked(is_georeferenced);
+		georef_action->setEnabled(georef_enabled);
+		move_by_hand_button->setEnabled(custom_enabled);
+		adjust_button->setEnabled(custom_enabled);
+		position_action->setEnabled(custom_enabled);
+		import_action->setEnabled(import_enabled);
 	}
-	else if (single_row_selected)
-	{
-		georef_visible = true;
-		georef_active = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
-	}
-	
-	georef_button->setVisible(georef_visible);
-	georef_button->setChecked(georef_active);
-	move_by_hand_button->setEnabled(custom_active);
-	move_by_hand_button->setVisible(custom_visible);
-	adjust_button->setEnabled(custom_active);
-	adjust_button->setVisible(custom_visible);
-	position_action->setEnabled(custom_active);
-	position_action->setVisible(custom_visible);
-	import_action->setVisible(import_active);
-	
-/*	if (enable_active_buttons)
-	{
-		// TODO: Implement and enable buttons again
-		//group_button->setEnabled(false); //multiple_rows_selected || (!multiple_rows_selected && map->getTemplate(posFromRow(current_row))->getTemplateGroup() >= 0));
-		//more_button->setEnabled(false); // !multiple_rows_selected);
-	} */
-	
-// 	if (multiple_rows_selected)
-// 	{
-// 		adjust_button->setChecked(false);
-// 		position_button->setChecked(false);
-// 	}
-// 	else
-// 	{
-// 		adjust_button->setChecked(temp && controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)temp);
-// 		position_button->setChecked(temp && controller->existsTemplatePositionDockWidget(temp));
-// 	}
 }
 
 void TemplateListWidget::cellClicked(int row, int column)
@@ -928,7 +944,7 @@ void TemplateListWidget::adjustWindowClosed()
 	if (!current_template)
 		return;
 	
-	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == (void*)current_template)
+	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == current_template)
 		adjust_button->setChecked(false);
 }
 
@@ -1001,9 +1017,9 @@ void TemplateListWidget::importClicked()
 		if (!prototype->isTemplateGeoreferenced())
 			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
 		
-		double nominal_scale = (double)template_map.getScaleDenominator() / (double)map->getScaleDenominator();
-		double current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
-		double scale = 1.0;
+		auto nominal_scale = double(template_map.getScaleDenominator()) / map->getScaleDenominator();
+		auto current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
+		auto scale = 1.0;
 		QStringList scale_options;
 		if (qAbs(nominal_scale - 1.0) > 0.009)
 			scale_options.append(tr("Scale by nominal map scale ratio (%1 %)").arg(locale().toString(nominal_scale * 100.0, 'f', 1)));
@@ -1061,6 +1077,31 @@ void TemplateListWidget::importClicked()
 	{
 		map_visibility.visible = true;
 		updateRow(map->getNumTemplates() - map->getFirstFrontTemplate());
+	}
+}
+
+void TemplateListWidget::changeGeorefClicked()
+{
+	auto* templ = getCurrentTemplate();
+	if (templ && templ->canChangeTemplateGeoreferenced())
+	{
+		auto new_value = !templ->isTemplateGeoreferenced();
+		if (new_value)
+		{
+			// Properly tear down positioning activities
+			if (move_by_hand_action->isChecked())
+				move_by_hand_action->trigger();
+			if (adjust_button->isChecked())
+				adjust_button->click();
+			if (position_action->isChecked())
+				position_action->trigger();
+		}
+		if (templ->trySetTemplateGeoreferenced(new_value, this) != new_value)
+		{
+			QMessageBox::warning(this, tr("Error"), tr("Cannot change the georeferencing state."));
+			georef_action->setChecked(false);
+		}
+		updateButtons();
 	}
 }
 
@@ -1202,7 +1243,7 @@ void TemplateListWidget::updateRow(int row)
 		if (vis.visible)
 		{
 			check_state   = Qt::Checked;
-			opacity_color = QColor::fromCmykF(0.0f, 0.0f, 0.0f, vis.opacity);
+			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, qreal(vis.opacity));
 			text_color    = QPalette().color(color_group, QPalette::Foreground);
 			if (!mobile_mode)
 			{
@@ -1332,13 +1373,13 @@ void TemplateListWidget::showOpacitySlider(int row)
 	slider->setMinimumWidth(geometry.width());
 	
 	auto opacity_item = template_table->item(row, 1);
-	slider->setValue(opacity_item->data(Qt::DisplayRole).toFloat() * 20);
+	slider->setValue(qRound(opacity_item->data(Qt::DisplayRole).toFloat() * 20));
 	connect(slider, &QSlider::valueChanged, [opacity_item](int value) {
 		opacity_item->setData(Qt::DisplayRole, 0.05f * value);
 	} );
 	
 	auto close_button = new QToolButton();
-	close_button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton, 0, this));
+	close_button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton, nullptr, this));
 	close_button->setAutoRaise(true);
 	connect(close_button, &QToolButton::clicked, &dialog, &QDialog::accept);
 	

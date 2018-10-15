@@ -102,6 +102,7 @@ protected slots:
 	//void groupClicked();
 	void positionClicked(bool checked);
 	void importClicked();
+	void changeGeorefClicked();
 	void moreActionClicked(QAction* action);
 	
 	void templateAdded(int pos, const Template* temp);
@@ -140,13 +141,13 @@ private:
 	QAction* move_by_hand_action;
 	QAction* position_action;
 	QAction* import_action;
+	QAction* georef_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;
 	QToolButton* delete_button;
 	QToolButton* move_up_button;
 	QToolButton* move_down_button;
-	QToolButton* georef_button;
 	QToolButton* move_by_hand_button;
 	QToolButton* adjust_button;
 	QToolButton* edit_button;

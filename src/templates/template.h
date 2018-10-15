@@ -308,7 +308,6 @@ public:
 	 */
 	void unloadTemplateFile();
 	
-	
 	/** 
 	 * Draws the template using the given painter with the given opacity.
 	 * 
@@ -480,7 +479,27 @@ public:
 	void setHasUnsavedChanges(bool value);
 	
 	inline bool isTemplateGeoreferenced() const {return is_georeferenced;}
-	inline void setTemplateGeoreferenced(bool value) {is_georeferenced = value;}
+	
+	/**
+	 * Returns if the template allows the georefencing state to be changed at all.
+	 * 
+	 * The default implementation returns false.
+	 */
+	virtual bool canChangeTemplateGeoreferenced();
+	
+	/**
+	 * Tries to change the usage of georeferencing data.
+	 * 
+	 * If supported by the actual template, this function tries to switch the
+	 * state between non-georeferenced and georeferenced. It returns the final
+	 * state which may be the same as before if the change is not implemented
+	 * or fails for other reasons.
+	 * 
+	 * The default implementation changes nothing, and it just returns the
+	 * current state.
+	 */
+	virtual bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent);
+	
 	
 	// Transformation of non-georeferenced templates
 	

@@ -106,6 +106,10 @@ public:
 	 */
 	inline GeoreferencingType getAvailableGeoreferencing() const {return available_georef;}
 	
+	bool canChangeTemplateGeoreferenced() override;
+	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
+	
+	
 public slots:
 	void updateGeoreferencing();
 	
