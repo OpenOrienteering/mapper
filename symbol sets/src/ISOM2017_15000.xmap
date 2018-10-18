@@ -5,12 +5,12 @@
         <projected_crs id="Local"/>
     </georeferencing>
     <colors count="28">
-        <color priority="0" name="Purple" c="0.200" m="1.000" y="0.000" k="0.000" opacity="1.000">
+        <color priority="0" name="Purple" c="0.350" m="0.850" y="0.000" k="0.000" opacity="1.000">
             <spotcolors>
                 <namedcolor>PURPLE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.800" g="0.000" b="1.000"/>
+            <rgb method="cmyk" r="0.650" g="0.150" b="1.000"/>
         </color>
         <color priority="1" name="Black" c="0.000" m="0.000" y="0.000" k="1.000" opacity="1.000">
             <spotcolors knockout="true">
