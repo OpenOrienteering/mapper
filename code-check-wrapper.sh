@@ -55,6 +55,7 @@ PATTERN=" \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
   gdal_manager.cpp \
+  gps_display.cpp \
   key_button_bar.cpp \
   line_symbol.cpp \
   /map.cpp \

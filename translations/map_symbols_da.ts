@@ -754,7 +754,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1558,7 +1558,7 @@ If it is forbidden to run along the railway, it shall be combined with the overp
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1645,7 +1645,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
             <translation type="unfinished"></translation>
         </message>

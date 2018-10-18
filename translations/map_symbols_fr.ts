@@ -873,9 +873,9 @@ Densité : 10 à 12 points/mm2 (31 -38 %).
 Pour éviter toute confusion avec le symbole 416 (limite nette de végétation), les points ne doivent pas être positionnés de façon à former une ligne.</translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Terrain découvert sablonneux</translation>
+            <translation type="unfinished">Terrain découvert sablonneux</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -1817,9 +1817,9 @@ S’il est interdit de courir le long de la voie ferrée, le symbole doit être 
 Longueur minimum (isolée) : 2 tirets (4 mm - 60 m au sol).</translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Ligne électrique, câble porteur, ou téléski</translation>
+            <translation>Ligne électrique, téléphérique ou remonte-pente</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -1912,9 +1912,9 @@ Hauteur minimum : 1 m.
 Longueur minimum (isolé) : 2 mm (30 m au sol).</translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Mur en ruine</translation>
+            <translation type="unfinished">Mur en ruine</translation>
         </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>

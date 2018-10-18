@@ -783,7 +783,7 @@ Minimální počet teček jsou tři (stopa 7 m × 7 m).
 K zamezení záměny se značkou 416 (zřetelná hranice vegetace) by tečky neměly být uspořádány tak, aby tvořily linii.</translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
             <translation>Písčitý povrch</translation>
         </message>
@@ -1638,7 +1638,7 @@ If it is forbidden to run along the railway, it shall be combined with the overp
 Pokud je zakázáno běžet podél železnice, musí být kombinována se značkou 711 (nepřístupná trasa). Je-li zakázáno křížit železnici, musí být kombinována se značkou 520 (oblast se zákazem vstupu) nebo 709 (nepřístupná oblast).</translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
             <translation>Elektrické vedení, lanovka nebo lyžařský vlek</translation>
         </message>
@@ -1732,7 +1732,7 @@ Poznámka: Je-li tok širší než 0.25 mm, je třeba upravit tuto značku tak, 
             <translation>Významná zeď z kamene, betonu, dřeva nebo jiných materiálů. Minimální výška 1 m.</translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
             <translation>Rozpadlá zeď</translation>
         </message>
@@ -10036,9 +10036,9 @@ A bounding line may be drawn if there is no natural boundary, as follows:
  - The height climb is given in metres rounded to the nearest 5 m.</source>
             <comment>Description of symbol 99.2</comment>
             <translation>Tento blok popisuje hlavní parametry tratě. Jeho účelem je pomoci pochopit stupeň obtížnosti.
-  - schéma: Kód tratě / Délka / Převýšení
+  - schéma: Kód tratě / Délka / Převýšení
   - Délka tratě je udávána v kilometrech zaokrouhlených na nejbližších 0,1 km.
-  - Převýšení je uvedeno v metrech zaokrouhlených na nejbližších 5 m.</translation>
+  - Převýšení je uvedeno v metrech zaokrouhlených na nejbližších 5 m.</translation>
         </message>
         <message>
             <source>Description of individual control</source>
