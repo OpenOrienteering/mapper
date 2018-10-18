@@ -786,12 +786,12 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
 Точки слід розподіляти випадковим чином, але так, щоб вони не заважали сприйняттю важливих деталей рельєфу та інших об&apos;єктів.
 Мінімальна кількість точок - три (проекція 7 м × 7 м).
 Щоб уникнути плутанини зі знаком 416 (чіткий контур рослинності), точки не слід розташовувати в лінію.</translation>
-    </message>
+        </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Піщаний ґрунт</translation>
-    </message>
+            <translation type="unfinished">Піщаний ґрунт</translation>
+        </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
@@ -1644,9 +1644,9 @@ If it is forbidden to run along the railway, it shall be combined with the overp
 Якщо біг вздовж залізниці заборонений, знак має бути поєднаний зі знаком 711 (заборонений шлях). Якщо заборонено перетинати залізницю, знак має бути поєднаний зі знаком 520 (територія з обмеженим доступом) або 709 (заборонена територія).</translation>
     </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Лінія електропередачі</translation>
+            <translation type="unfinished">Лінія електропередачі</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -1736,12 +1736,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>A significant wall of stone, concrete, wood or other materials. Minimum height: 1 m.</source>
             <comment>Description of symbol 513</comment>
             <translation>Виразна стіна з каменю, бетону, дерева або інших матеріалів. Мінімальна висота: 1 м.</translation>
-    </message>
+        </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Зруйнований мур</translation>
-    </message>
+            <translation type="unfinished">Зруйнований мур</translation>
+        </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
             <comment>Description of symbol 514</comment>
@@ -5187,7 +5187,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Лінія електропередачі</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.

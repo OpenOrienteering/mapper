@@ -788,9 +788,9 @@ El número mínimo de puntos es tres (huella 7 m x 7 m).
 Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Terreno despejado y arenoso</translation>
+            <translation type="unfinished">Terreno despejado y arenoso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -1647,9 +1647,9 @@ If it is forbidden to run along the railway, it shall be combined with the overp
 Si está prohibido correr sobre la vía férrea, se debe combinar con el símbolo sobreimpreso para ruta prohibida. Si está prohibido cruzar la vía férrea, se debe conbinar con un símbolo de área prohibida.</translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Tendido eléctrico</translation>
+            <translation type="unfinished">Tendido eléctrico</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -1741,9 +1741,9 @@ Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que s
             <translation>Un muro identificable de piedra, hormigón, madera u otros materiales. Altura mínima: 1 m.</translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Muro de piedra en ruinas</translation>
+            <translation type="unfinished">Muro de piedra en ruinas</translation>
         </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
@@ -5178,7 +5178,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Tendido eléctrico</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.

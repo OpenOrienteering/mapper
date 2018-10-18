@@ -753,10 +753,10 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Nyílt homokos talaj</translation>
-    </message>
+            <translation type="unfinished">Nyílt homokos talaj</translation>
+        </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
@@ -1627,12 +1627,12 @@ If it is forbidden to run along the railway, it shall be combined with the overp
 Amennyiben tilos a sínpálya mentén futni, a 711 (Tiltott útvonal) térképjellel együtt kell használni. Abban az esetben, ha tilos a sínpályát keresztezni, az 520 (Tiltott terület) vagy a 709 (Tiltott terület) térképjelekkel együtt kell alkalmazni.
 Minimális hosszúság: 5 mm (terepi méret 75 m).
 Színe: fekete.</translation>
-    </message>
+        </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Légvezeték, villamos távvezeték, vagy sílift</translation>
-    </message>
+            <translation>Légvezeték, kötélpálya vagy sílift</translation>
+        </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
             <comment>Description of symbol 510</comment>
@@ -1722,10 +1722,10 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Romos kőfal</translation>
-    </message>
+            <translation type="unfinished">Romos kőfal</translation>
+        </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
             <comment>Description of symbol 514</comment>
