@@ -3322,34 +3322,42 @@ void MapEditorController::enableGPSDisplay(bool enable)
 					// There is a template for this track.
 					new_template = false;
 					track = qobject_cast<TemplateTrack*>(temp);
-					if (!track)
-					{
-						// Need to replace the template at template_index
-						map->setTemplateAreaDirty(template_index);
-						map->deleteTemplate(template_index);
-					}
 					break;
 				}
 			}
 			
+			// Derive new visibility from previous/default one.
+			auto visibility = main_view->getTemplateVisibility(track);
+			visibility.opacity = std::max(0.5f, visibility.opacity);
+			visibility.visible = true;
+			
 			if (!track)
 			{
+				if (!new_template)
+				{
+					// Need to replace the template at template_index
+					map->setTemplateAreaDirty(template_index);
+					map->deleteTemplate(template_index);
+				}
 				track = new TemplateTrack(gpx_file_path, map);
+				// This will set the state to 'Loaded', so we need to reset it
+				// to `Unloaded` to allow for loading the file when it becomes
+				// visible for the first time.
+				track->configureForGPSTrack();
+				if (QFileInfo::exists(gpx_file_path))
+				{
+					track->unloadTemplateFile();
+					track->loadTemplateFile(false);
+				}
 				map->addTemplate(track, template_index);
-			}
-			if (track->getTemplateState() != Template::Loaded)
-			{
-				track->loadTemplateFile(false);
-			}
-			track->configureForGPSTrack();
-			map->setTemplateAreaDirty(template_index);
-			if (new_template)
-			{
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
 				map->setTemplatesDirty();
 			}
-				
+			
+			main_view->setTemplateVisibility(track, visibility);
+			map->setTemplateAreaDirty(template_index);
+			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
 	}
