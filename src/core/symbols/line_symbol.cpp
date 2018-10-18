@@ -316,30 +316,37 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	if (use_offset)
 	{
 		// Create offset at line ends, or pointed line ends
-		auto effective_start_offset = length_type(0.001) * std::max(0, start_offset);
-		auto effective_end_offset = length_type(0.001) * std::max(0, end_offset);
-		auto total_offset = effective_start_offset + effective_end_offset;
-		auto available_length = std::max(length_type(0), end.clen - start.clen);
-		
-		if (total_offset > available_length)
+		auto effective_start_len = start.clen;
+		auto effective_end_len = end.clen;
 		{
-			create_line = false;
-			effective_start_offset *= available_length / total_offset;
-			effective_end_offset *= available_length / total_offset;
+			auto effective_start_offset = length_type(0.001) * std::max(0, start_offset);
+			auto effective_end_offset = length_type(0.001) * std::max(0, end_offset);
+			auto total_offset = effective_start_offset + effective_end_offset;
+			auto available_length = std::max(length_type(0), end.clen - start.clen);
+			
+			if (total_offset > available_length)
+			{
+				create_line = false;
+				effective_start_offset *= available_length / total_offset;
+				effective_end_offset *= available_length / total_offset;
+			}
+			effective_start_len += effective_start_offset;
+			effective_end_len -= effective_end_offset;
+			// Safeguard against floating point quirks
+			effective_end_len = std::max(effective_start_len, effective_end_len);
 		}
-		
-		if (effective_start_offset > 0)
+		if (start_offset > 0)
 		{
-			auto split = SplitPathCoord::at(start.clen + effective_start_offset, start);
+			auto split = SplitPathCoord::at(effective_start_len, start);
 			if (cap_style == PointedCap)
 			{
 				createPointedLineCap(path, start, split, false, output);
 			}
 			start = split;
 		}
-		if (effective_end_offset > 0)
+		if (end_offset > 0)
 		{
-			auto split = SplitPathCoord::at(end.clen - effective_end_offset, start);
+			auto split = SplitPathCoord::at(effective_end_len, start);
 			if (cap_style == PointedCap)
 			{
 				// Get updated curve end
