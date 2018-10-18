@@ -1788,6 +1788,7 @@ void MapEditorController::moveToGpsPos()
 		return;
 	auto cur_gps_pos = gps_display->getLatestGPSCoord();
 	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
+	gps_display->startBlinking(3);
 }
 
 void MapEditorController::zoomIn()
