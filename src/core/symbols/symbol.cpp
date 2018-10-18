@@ -724,6 +724,9 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 	auto w = std::max(std::abs(extent.left()), std::abs(extent.right()));
 	auto h = std::max(std::abs(extent.top()), std::abs(extent.bottom()));
 	auto real_icon_mm_half = std::max(w, h);
+	if (real_icon_mm_half <= 0)
+		return image;
+	
 	auto final_zoom = side_length * zoom * std::min(qreal(1), max_icon_mm_half / real_icon_mm_half);
 	painter.scale(final_zoom, final_zoom);
 	
