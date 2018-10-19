@@ -47,9 +47,6 @@ Q_DECLARE_METATYPE(QGeoPositionInfo)  // QTBUG-65937
 #include <QPen>
 #include <QPoint>
 #include <QPointF>
-#if MAPPER_DEVELOPMENT_BUILD
-#  include <QTime>
-#endif
 #include <QTimer>  // IWYU pragma: keep
 #include <QTimerEvent>
 
@@ -62,6 +59,9 @@ Q_DECLARE_METATYPE(QGeoPositionInfo)  // QTBUG-65937
 #include "sensors/compass.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
+#if defined(MAPPER_USE_FAKE_POSITION_PLUGIN)
+#include "sensors/fake_position_source.h"
+#endif
 
 namespace OpenOrienteering {
 
@@ -118,6 +118,13 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 	Q_UNUSED(register_metatype)
 #endif
 	
+#if defined(MAPPER_USE_FAKE_POSITION_PLUGIN)
+	{
+		auto const ref = georeferencing.getGeographicRefPoint();
+		FakePositionSource::setReferencePoint({ref.latitude(), ref.longitude(), 400});
+	}
+#endif
+	
 	auto const & settings = Settings::getInstance();
 	auto const nmea_serialport = settings.nmeaSerialPort();
 	if (!nmea_serialport.isEmpty())
@@ -145,12 +152,6 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 	connect(source, &QGeoPositionInfoSource::positionUpdated, this, &GPSDisplay::positionUpdated, Qt::QueuedConnection);
 	connect(source, QOverload<QGeoPositionInfoSource::Error>::of(&QGeoPositionInfoSource::error), this, &GPSDisplay::error);
 	connect(source, &QGeoPositionInfoSource::updateTimeout, this, &GPSDisplay::updateTimeout);
-#elif defined(MAPPER_DEVELOPMENT_BUILD)
-	// DEBUG
-	auto* debug_timer = new QTimer(this);
-	connect(debug_timer, &QTimer::timeout, this, &GPSDisplay::debugPositionUpdate);
-	debug_timer->start(500);
-	visible = true;
 #endif
 
 	widget->setGPSDisplay(this);
@@ -421,39 +422,6 @@ void GPSDisplay::updateTimeout()
 		emit positionUpdatesInterrupted();
 		updateMapWidget();
 	}
-}
-
-void GPSDisplay::debugPositionUpdate()
-{
-#if MAPPER_DEVELOPMENT_BUILD
-	if (!visible)
-		return;
-	
-	QTime now = QTime::currentTime();
-	const auto offset = now.msecsSinceStartOfDay() / qreal(10 * 1000);
-	const auto accuracy = float(12 + 7 * qSin(2 + offset));
-	const auto altitude = 400 + 10 * qSin(1 + offset / 10);
-	
-	const auto coord = MapCoordF(30 * qSin(0.5 * offset), 30 * qCos(0.53 * offset));
-	emit mapPositionUpdated(coord, accuracy);
-	
-	if (georeferencing.isValid() && ! georeferencing.isLocal())
-	{
-		bool ok;
-		LatLon latLon = georeferencing.toGeographicCoords(coord, &ok);
-		if (ok)
-		{
-			emit latLonUpdated(latLon.latitude(), latLon.longitude(), altitude, accuracy);
-		}
-	}
-	
-	gps_updated = true;
-	tracking_lost = false;
-	has_valid_position = true;
-	latest_gps_coord = coord;
-	latest_gps_coord_accuracy = accuracy;
-	updateMapWidget();
-#endif
 }
 
 MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)

@@ -1,0 +1,9 @@
+{
+    "Keys":      ["fake"],
+    "Provider":  "Fake position",
+    "Position":  true,
+    "Satellite": false,
+    "Monitor":   false,
+    "Priority":  900,
+    "Testable":  true
+}

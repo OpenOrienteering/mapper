@@ -62,6 +62,10 @@
 using namespace OpenOrienteering;
 
 
+#if defined(MAPPER_USE_FAKE_POSITION_PLUGIN)
+Q_IMPORT_PLUGIN(FakePositionPlugin)
+#endif
+
 #if defined(Q_OS_WIN) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
 Q_IMPORT_PLUGIN(PowershellPositionPlugin)
 #endif

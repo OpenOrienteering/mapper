@@ -38,6 +38,14 @@ using namespace OpenOrienteering;
 #include <QGeoPositionInfoSource>
 #endif
 
+#ifdef MAPPER_USE_FAKE_POSITION_PLUGIN
+#include <QGeoCoordinate>           // IWYU pragma: keep
+#include <QNmeaPositionInfoSource>  // IWYU pragma: keep
+#include "sensors/fake_position_plugin.h"
+#include "sensors/fake_position_source.h"
+Q_IMPORT_PLUGIN(FakePositionPlugin)
+#endif
+
 #ifdef MAPPER_USE_NMEA_POSITION_PLUGIN
 #include <QNmeaPositionInfoSource>  // IWYU pragma: keep
 #include "sensors/nmea_position_plugin.h"
@@ -59,6 +67,42 @@ private slots:
 	{
 		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 	}
+	
+	
+#if defined(MAPPER_USE_FAKE_POSITION_PLUGIN)
+	void fakePositionSourcePluginTest()
+	{
+		auto sources = QGeoPositionInfoSource::availableSources();
+		QVERIFY(sources.contains(QStringLiteral("Fake position")));
+	}
+	
+	void fakePositionSourceSimulatedTest()
+	{
+		auto const reference = QGeoCoordinate{10, 20, 100};
+		FakePositionSource::setReferencePoint(reference);
+		
+		auto* source = QGeoPositionInfoSource::createSource(QStringLiteral("Fake position"), this);
+		QVERIFY(source);
+		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
+		
+		QSignalSpy source_spy(source, &QGeoPositionInfoSource::positionUpdated);
+		QVERIFY(source_spy.isValid());
+		
+		source->startUpdates();
+		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
+		QVERIFY(source_spy.wait());
+		
+		auto last = source->lastKnownPosition(true);
+		QVERIFY(last.isValid());
+		QVERIFY(qAbs(last.coordinate().latitude() - reference.latitude()) < 0.002);
+		QVERIFY(qAbs(last.coordinate().longitude() - reference.longitude()) < 0.002);
+		QVERIFY(qAbs(last.coordinate().altitude() - reference.altitude()) < 20);
+		
+		source->stopUpdates();
+		delete source;
+	}
+#endif  // MAPPER_USE_FAKE_POSITION_PLUGIN
+	
 	
 #if defined(MAPPER_USE_NMEA_POSITION_PLUGIN)
 	void nmeaPositionSourcePluginTest()
