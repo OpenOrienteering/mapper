@@ -23,6 +23,7 @@
 
 #include <vector>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QPointF>
 
@@ -41,7 +42,7 @@ class GPSTemporaryMarkers : public QObject
 {
 Q_OBJECT
 public:
-	GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display);
+	GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display, QObject* parent = nullptr);
 	~GPSTemporaryMarkers() override;
 	
 	/** Returns false if no point was added due to not having a valid position yet. */
@@ -62,11 +63,11 @@ public slots:
 private:
 	void updateMapWidget();
 	
-	bool recording_path;
 	std::vector< QPointF > points;
 	std::vector< std::vector< QPointF > > paths;
 	GPSDisplay* gps_display;
 	MapWidget* widget;
+	bool recording_path = false;
 };
 
 
