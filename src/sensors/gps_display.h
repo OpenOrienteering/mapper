@@ -24,17 +24,11 @@
 
 #include <QtGlobal>
 #include <QObject>
-#include <QString>
-
-#if defined(QT_POSITIONING_LIB)
-#  include <QGeoPositionInfo>  // IWYU pragma: keep
-#  include <QGeoPositionInfoSource>  // IWYU pragma: keep
-#else
-class QGeoPositionInfoSource;  // IWYU pragma: keep
-#endif
 
 #include "core/map_coord.h"
 
+class QGeoPositionInfo;
+class QGeoPositionInfoSource;
 class QPainter;
 class QTimerEvent;
 
@@ -124,11 +118,9 @@ signals:
 	void positionUpdatesInterrupted();
 	
 private slots:
-#if defined(QT_POSITIONING_LIB)
     void positionUpdated(const QGeoPositionInfo& info);
-	void error(QGeoPositionInfoSource::Error positioningError);
+	void error();
 	void updateTimeout();
-#endif
 	void debugPositionUpdate();
 	
 private:
@@ -168,9 +160,6 @@ private:
 	MapWidget* widget;
 	const Georeferencing& georeferencing;
 	QGeoPositionInfoSource* source = nullptr;
-#if defined(QT_POSITIONING_LIB)
-	QGeoPositionInfo latest_pos_info;
-#endif
 	MapCoordF latest_gps_coord;
 	float latest_gps_coord_accuracy = 0;
 	PulsatingOpacity pulsating_opacity;
