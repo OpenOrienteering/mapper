@@ -25,8 +25,8 @@
 
 #ifdef QT_SENSORS_LIB
 
+#include <array>
 #include <cmath>
-#include <cstring>
 
 #include <Qt>
 #include <QtMath>
@@ -64,49 +64,68 @@ namespace OpenOrienteering {
 namespace {
 
 namespace SensorHelpers {
-	
-	void matrixMultiplication(const qreal* const A, const qreal* B, qreal* result)
+
+	using Vector = std::array<qreal, 3>;
+	using Quaternion = std::array<qreal, 4>;
+	/**
+	 * A 3x3 matrix, with values in row-major order.
+	 * 
+	 * / R[ 0] R[ 1] R[ 2] \
+	 * | R[ 3] R[ 4] R[ 5] |
+	 * \ R[ 6] R[ 7] R[ 8] /
+	 */
+	using Matrix = std::array<qreal, 9>;
+
+	template<class Reading>
+	Vector toVector(const Reading& reading)
 	{
-		result[0] = A[0] * B[0] + A[1] * B[3] + A[2] * B[6];
-		result[1] = A[0] * B[1] + A[1] * B[4] + A[2] * B[7];
-		result[2] = A[0] * B[2] + A[1] * B[5] + A[2] * B[8];
+		return Vector {
+			reading.x(),
+			reading.y(),
+			reading.z()
+		};
+	}
+	
+	constexpr Matrix operator*(const Matrix& A, const Matrix& B)
+	{
+		return {
+			A[0] * B[0] + A[1] * B[3] + A[2] * B[6],
+			A[0] * B[1] + A[1] * B[4] + A[2] * B[7],
+			A[0] * B[2] + A[1] * B[5] + A[2] * B[8],
 
-		result[3] = A[3] * B[0] + A[4] * B[3] + A[5] * B[6];
-		result[4] = A[3] * B[1] + A[4] * B[4] + A[5] * B[7];
-		result[5] = A[3] * B[2] + A[4] * B[5] + A[5] * B[8];
+			A[3] * B[0] + A[4] * B[3] + A[5] * B[6],
+			A[3] * B[1] + A[4] * B[4] + A[5] * B[7],
+			A[3] * B[2] + A[4] * B[5] + A[5] * B[8],
 
-		result[6] = A[6] * B[0] + A[7] * B[3] + A[8] * B[6];
-		result[7] = A[6] * B[1] + A[7] * B[4] + A[8] * B[7];
-		result[8] = A[6] * B[2] + A[7] * B[5] + A[8] * B[8];
+			A[6] * B[0] + A[7] * B[3] + A[8] * B[6],
+			A[6] * B[1] + A[7] * B[4] + A[8] * B[7],
+			A[6] * B[2] + A[7] * B[5] + A[8] * B[8]
+		};
 	}
 
 	/**
-	 * Ported from android.hardware.SensorManager.getOrientation().
-	 * 
 	 * Computes the device's orientation based on the rotation matrix.
-	 * <p> When it returns, the array values is filled with the result:
-	 * <ul>
-	 * <li>values[0]: <i>azimuth</i>, rotation around the Z axis.</li>
-	 * <li>values[1]: <i>pitch</i>, rotation around the X axis.</li>
-	 * <li>values[2]: <i>roll</i>, rotation around the Y axis.</li>
-	 * </ul>
-	 * <p>
+	 * 
+	 * Ported from android.hardware.SensorManager.getOrientation().
+	 * The members of the returned vector have the following meaning:
+	 * 
+	 * - First:  azimuth, rotation around the Z axis.
+	 * - Second: pitch, rotation around the X axis.
+	 * - Third:  roll, rotation around the Y axis.
 	 */
-	void getOrientation(const qreal* const R, qreal* values)
+	Vector getOrientation(const Matrix& R)
 	{
-		/*
-		* / R[ 0] R[ 1] R[ 2] \
-		* | R[ 3] R[ 4] R[ 5] |
-		* \ R[ 6] R[ 7] R[ 8] /
-		*/
-		values[0] = atan2(R[1], R[4]);
-		values[1] = asin(-R[7]);
-		values[2] = atan2(-R[6], R[8]);
+		return {
+			atan2(R[1], R[4]),  // azimuth
+			asin(-R[7]),        // pitch
+			atan2(-R[6], R[8])  // rotation
+		};
 	}
 	
-	/** From http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/2/
-	 *  Should be optimized ... */
-	void getRotationMatrixFromOrientation(const qreal* const orientation, qreal* result)
+	/**
+	 * Cf. http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/2/
+	 */
+	Matrix getRotationMatrixFromOrientation(const Vector& orientation)
 	{
 		const auto sinX = qSin(orientation[1]);
 		const auto cosX = qCos(orientation[1]);
@@ -116,40 +135,41 @@ namespace SensorHelpers {
 		const auto cosZ = qCos(orientation[0]);
 
 		// rotation about x-axis (pitch)
-		const qreal xM[9] = {
+		const auto xM = Matrix {
 		    1,   0,    0,
 		    0,  cosX, sinX,
 		    0, -sinX, cosX
 		};
 
 		// rotation about y-axis (roll)
-		const qreal yM[9] = {
+		const auto yM = Matrix {
 		     cosY,  0,  sinY,
 		       0,   1,   0,
 		    -sinY,  0,  cosY
 		};
 
 		// rotation about z-axis (azimuth)
-		const qreal zM[9] = {
+		const auto zM = Matrix {
 		     cosZ,  sinZ,  0,
 		    -sinZ,  cosZ,  0,
 		       0,     0,   1
 		};
 
 		// rotation order is y, x, z (roll, pitch, azimuth)
-		qreal temp[9];
-		matrixMultiplication(xM, yM, temp);
-		matrixMultiplication(zM, temp, result);
+		return zM * (xM * yM);
 	}
 	
 	/**
-	 * Ported from android.hardware.SensorManager.getRotationMatrix().
+	 * Computes the rotation matrix transforming a vector from the
+	 * device coordinate system to the world's coordinate system.
 	 * 
-	 * Computes the inclination matrix <b>I</b> as well as the rotation
-	 * matrix <b>R</b> transforming a vector from the
-	 * device coordinate system to the world's coordinate system [...]
+	 * In atypical situations (free fall; close to magnetic north pole), the
+	 * returned result isn't valid. This is indicated by return NaN in the
+	 * first element of the matrix.
+	 * 
+	 * Ported from android.hardware.SensorManager.getRotationMatrix().
 	 */
-	bool getRotationMatrix(qreal* R, const qreal* const gravity, const qreal* const geomagnetic)
+	Matrix getRotationMatrix(const Vector& gravity, const Vector& geomagnetic)
 	{
 		auto Ax = gravity[0];
 		auto Ay = gravity[1];
@@ -164,36 +184,41 @@ namespace SensorHelpers {
 		auto Hy = Ez*Ax - Ex*Az;
 		auto Hz = Ex*Ay - Ey*Ax;
 		const auto normH = sqrt(Hx*Hx + Hy*Hy + Hz*Hz);
-		if (normH < 0.1) {
+		if (normH < 0.1)
+		{
 			// device is close to free fall (or in space?), or close to
 			// magnetic north pole. Typical values are > 100.
-			return false;
+			Hx = qQNaN();
 		}
-		const auto invH = 1 / normH;
-		Hx *= invH;
-		Hy *= invH;
-		Hz *= invH;
-		const auto invA = 1 / sqrt(Ax*Ax + Ay*Ay + Az*Az);
-		Ax *= invA;
-		Ay *= invA;
-		Az *= invA;
+		else
+		{
+			// okay
+			const auto invH = 1 / normH;
+			Hx *= invH;
+			Hy *= invH;
+			Hz *= invH;
+			const auto invA = 1 / sqrt(Ax*Ax + Ay*Ay + Az*Az);
+			Ax *= invA;
+			Ay *= invA;
+			Az *= invA;
+		}
+		
 		const auto Mx = Ay*Hz - Az*Hy;
 		const auto My = Az*Hx - Ax*Hz;
 		const auto Mz = Ax*Hy - Ay*Hx;
-		
-		R[0] = Hx; R[1] = Hy; R[2] = Hz;
-		R[3] = Mx; R[4] = My; R[5] = Mz;
-		R[6] = Ax; R[7] = Ay; R[8] = Az;
-		
-		return true;
+		return {
+			Hx, Hy, Hz,
+			Mx, My, Mz,
+			Ax, Ay, Az,
+		};
 	}
 	
 	/**
-	 * Ported from android.hardware.SensorManager.getRotationMatrixFromVector().
-	 * 
 	 * Helper function to convert a rotation vector to a rotation matrix.
+	 * 
+	 * Ported from android.hardware.SensorManager.getRotationMatrixFromVector().
 	 */
-	void getRotationMatrixFromVector(qreal* R, const qreal* const rotationVector)
+	constexpr Matrix getRotationMatrixFromVector(const Quaternion& rotationVector)
 	{
 		const auto q0 = rotationVector[3];  // !
 		const auto q1 = rotationVector[0];
@@ -210,21 +235,18 @@ namespace SensorHelpers {
 		const auto q2_q3 = 2 * q2 * q3;
 		const auto q1_q0 = 2 * q1 * q0;
 
-		R[0] = 1 - sq_q2 - sq_q3;
-		R[1] = q1_q2 - q3_q0;
-		R[2] = q1_q3 + q2_q0;
-
-		R[3] = q1_q2 + q3_q0;
-		R[4] = 1 - sq_q1 - sq_q3;
-		R[5] = q2_q3 - q1_q0;
-
-		R[6] = q1_q3 - q2_q0;
-		R[7] = q2_q3 + q1_q0;
-		R[8] = 1 - sq_q1 - sq_q2;
-	}
+		return {
+			1 - sq_q2 - sq_q3,     q1_q2 - q3_q0,     q1_q3 + q2_q0,
+			    q1_q2 + q3_q0, 1 - sq_q1 - sq_q3,     q2_q3 - q1_q0,
+			    q1_q3 - q2_q0,     q2_q3 + q1_q0, 1 - sq_q1 - sq_q2
+		};
+    }
 	
 	
 }  // namespace SensorHelpers
+
+
+using SensorHelpers::operator*;
 
 }  // namespace
 
@@ -323,20 +345,18 @@ public:
 			const auto thetaOverTwo = omegaMagnitude * dt / 2;
 			const auto sinThetaOverTwo = qSin(thetaOverTwo);
 			const auto cosThetaOverTwo = qCos(thetaOverTwo);
-			qreal deltaRotationVector[4];
-			deltaRotationVector[0] = sinThetaOverTwo * axisX;
-			deltaRotationVector[1] = sinThetaOverTwo * axisY;
-			deltaRotationVector[2] = sinThetaOverTwo * axisZ;
-			deltaRotationVector[3] = cosThetaOverTwo;
+			const auto deltaRotationVector = SensorHelpers::Quaternion {
+			    sinThetaOverTwo * axisX,
+			    sinThetaOverTwo * axisY,
+			    sinThetaOverTwo * axisZ,
+			    cosThetaOverTwo
+			};
 			
-			qreal R[9];
-			SensorHelpers::getRotationMatrixFromVector(R, deltaRotationVector);
+			const auto R = SensorHelpers::getRotationMatrixFromVector(deltaRotationVector);
 			
-			qreal temp[9];
 			gyro_mutex.lock();
-			SensorHelpers::matrixMultiplication(gyro_rotation_matrix, R, temp);
-			memcpy(gyro_rotation_matrix, temp, 9 * sizeof(float));
-			SensorHelpers::getOrientation(gyro_rotation_matrix, gyro_orientation);
+			gyro_rotation_matrix = gyro_rotation_matrix * R;
+			gyro_orientation = SensorHelpers::getOrientation(gyro_rotation_matrix);
 			gyro_mutex.unlock();
 		}
 		
@@ -357,7 +377,7 @@ private:
 			// nothing else
 		}
 		
-		qreal fuseOrientationCoefficient(qreal gyro, qreal acc_mag)
+		static qreal fuseOrientationCoefficient(qreal gyro, qreal acc_mag)
 		{
 			const auto FILTER_COEFFICIENT = qreal(0.98);
 			const auto ONE_MINUS_COEFF = 1 - FILTER_COEFFICIENT;
@@ -386,25 +406,15 @@ private:
 			
 			// Make copies of the sensor readings (and hope that the reading thread
 			// does not overwrite parts of them while they are being copied)
-			const qreal acceleration[3] = {
-				p->accelerometer.reading()->x(),
-				p->accelerometer.reading()->y(),
-				p->accelerometer.reading()->z()
-			};
-			const qreal geomagnetic[3] = {
-				p->magnetometer.reading()->x(),
-				p->magnetometer.reading()->y(),
-				p->magnetometer.reading()->z()
-			};
+			const auto acceleration = SensorHelpers::toVector(*p->accelerometer.reading());
+			const auto geomagnetic = SensorHelpers::toVector(*p->magnetometer.reading());
 			
 			// Calculate orientation from accelerometer and magnetometer (acc_mag_orientation)
-			qreal R[9];
-			bool ok = SensorHelpers::getRotationMatrix(R, acceleration, geomagnetic);
-			if (!ok)
+			const auto R = SensorHelpers::getRotationMatrix(acceleration, geomagnetic);
+			if (qIsNaN(R[0]))
 				return;
 			
-			qreal acc_mag_orientation[3];
-			SensorHelpers::getOrientation(R, acc_mag_orientation);
+			const auto acc_mag_orientation = SensorHelpers::getOrientation(R);
 			
 			// If gyro not initialized yet (or we do not have a gyro):
 			// use acc_mag_orientation (and initialize gyro if present)
@@ -413,8 +423,8 @@ private:
 			{
 				if (p->gyro_available)
 				{
-					memcpy(p->gyro_orientation, acc_mag_orientation, 3 * sizeof(float));
-					SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation, p->gyro_rotation_matrix);
+					p->gyro_orientation = acc_mag_orientation;
+					p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
 					p->gyro_orientation_initialized = true;
 				}
 				
@@ -424,14 +434,14 @@ private:
 			{
 				// Filter acc_mag_orientation and gyro_orientation to fused_orientation
 				p->gyro_mutex.lock();
-				qreal fused_orientation[3];
+				SensorHelpers::Vector fused_orientation;
 				fused_orientation[0] = fuseOrientationCoefficient(p->gyro_orientation[0], acc_mag_orientation[0]);
 				fused_orientation[1] = fuseOrientationCoefficient(p->gyro_orientation[1], acc_mag_orientation[1]);
 				fused_orientation[2] = fuseOrientationCoefficient(p->gyro_orientation[2], acc_mag_orientation[2]);
 				
 				// Write back fused_orientation to gyro_orientation
-				SensorHelpers::getRotationMatrixFromOrientation(fused_orientation, p->gyro_rotation_matrix);
-				memcpy(p->gyro_orientation, fused_orientation, 3 * sizeof(float));
+				p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(fused_orientation);
+				p->gyro_orientation = fused_orientation;
 				p->gyro_mutex.unlock();
 				
 				azimuth = fused_orientation[0];
@@ -499,8 +509,8 @@ private:
 	QGyroscope gyroscope;
 	QMutex gyro_mutex;
 	quint64 last_gyro_timestamp;
-	qreal gyro_rotation_matrix[9];
-	qreal gyro_orientation[3];
+	SensorHelpers::Matrix gyro_rotation_matrix;
+	SensorHelpers::Vector gyro_orientation;
 	qreal latest_azimuth = -1;
 	bool gyro_available;
 	bool gyro_orientation_initialized;
