@@ -184,17 +184,6 @@ namespace SensorHelpers {
 		R[3] = Mx; R[4] = My; R[5] = Mz;
 		R[6] = Ax; R[7] = Ay; R[8] = Az;
 		
-// 		if (I != null) {
-// 			// compute the inclination matrix by projecting the geomagnetic
-// 			// vector onto the Z (gravity) and X (horizontal component
-// 			// of geomagnetic vector) axes.
-// 			const float invE = 1.0f / (float)std::sqrt(Ex*Ex + Ey*Ey + Ez*Ez);
-// 			const float c = (Ex*Mx + Ey*My + Ez*Mz) * invE;
-// 			const float s = (Ex*Ax + Ey*Ay + Ez*Az) * invE;
-// 			I[0] = 1; I[1] = 0; I[2] = 0;
-// 			I[3] = 0; I[4] = c; I[5] = s;
-// 			I[6] = 0; I[7] =-s; I[8] = c;
-// 		}
 		return true;
 	}
 	
@@ -205,17 +194,10 @@ namespace SensorHelpers {
 	 */
     void getRotationMatrixFromVector(float* R, float* rotationVector)
 	{
-        float q0;
+        float q0 = rotationVector[3];  // !
         float q1 = rotationVector[0];
         float q2 = rotationVector[1];
         float q3 = rotationVector[2];
-
-//        if (rotationVector.length == 4) {
-            q0 = rotationVector[3];
-//        } else {
-//            q0 = 1 - q1*q1 - q2*q2 - q3*q3;
-//            q0 = (q0 > 0) ? (float)std::sqrt(q0) : 0;
-//        }
 
         float sq_q1 = 2 * q1 * q1;
         float sq_q2 = 2 * q2 * q2;
