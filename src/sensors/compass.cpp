@@ -243,6 +243,28 @@ namespace SensorHelpers {
     }
 	
 	
+	qreal fuseOrientationCoefficient(qreal gyro, qreal mag)
+	{
+		constexpr auto gyro_coefficient = qreal(0.98);
+		
+		// Correctly handle wrap-around
+		if (gyro < -0.5 * M_PI && mag > 0.0)
+			gyro += 2 * M_PI;
+		else if (mag < -0.5 * M_PI && gyro > 0.0)
+			mag += 2 * M_PI;
+		auto result = gyro_coefficient * gyro + (1 - gyro_coefficient) * mag;
+		return (result > M_PI)? result - 2.0 * M_PI : result;
+	}
+	
+	Vector fuseOrientationCoefficient(const Vector& gyro, const Vector& mag)
+	{
+		return {
+			fuseOrientationCoefficient(gyro[0], mag[0]),
+			fuseOrientationCoefficient(gyro[1], mag[1]),
+			fuseOrientationCoefficient(gyro[2], mag[2])
+		};
+	}
+	
 }  // namespace SensorHelpers
 
 
@@ -377,27 +399,6 @@ private:
 			// nothing else
 		}
 		
-		static qreal fuseOrientationCoefficient(qreal gyro, qreal acc_mag)
-		{
-			const auto FILTER_COEFFICIENT = qreal(0.98);
-			const auto ONE_MINUS_COEFF = 1 - FILTER_COEFFICIENT;
-			
-			qreal result;
-			// Correctly handle wrap-around
-			if (gyro < -0.5 * M_PI && acc_mag > 0.0) {
-				result = FILTER_COEFFICIENT * (gyro + 2.0 * M_PI) + ONE_MINUS_COEFF * acc_mag;
-				result -= (result > M_PI) ? 2.0 * M_PI : 0;
-			}
-			else if (acc_mag < -0.5 * M_PI && gyro > 0.0) {
-				result = FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * (acc_mag + 2.0 * M_PI);
-				result -= (result > M_PI)? 2.0 * M_PI : 0;
-			}
-			else {
-				result = FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * acc_mag;
-			}
-			return result;
-		}
-		
 		void filter()
 		{
 			if (p->accelerometer.reading() == nullptr ||
@@ -434,10 +435,7 @@ private:
 			{
 				// Filter acc_mag_orientation and gyro_orientation to fused_orientation
 				p->gyro_mutex.lock();
-				SensorHelpers::Vector fused_orientation;
-				fused_orientation[0] = fuseOrientationCoefficient(p->gyro_orientation[0], acc_mag_orientation[0]);
-				fused_orientation[1] = fuseOrientationCoefficient(p->gyro_orientation[1], acc_mag_orientation[1]);
-				fused_orientation[2] = fuseOrientationCoefficient(p->gyro_orientation[2], acc_mag_orientation[2]);
+				const auto fused_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
 				
 				// Write back fused_orientation to gyro_orientation
 				p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(fused_orientation);
