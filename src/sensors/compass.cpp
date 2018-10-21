@@ -108,10 +108,6 @@ namespace SensorHelpers {
 	 *  Should be optimized ... */
 	void getRotationMatrixFromOrientation(const qreal* const orientation, qreal* result)
 	{
-		qreal xM[9];
-		qreal yM[9];
-		qreal zM[9];
-
 		const auto sinX = qSin(orientation[1]);
 		const auto cosX = qCos(orientation[1]);
 		const auto sinY = qSin(orientation[2]);
@@ -120,19 +116,25 @@ namespace SensorHelpers {
 		const auto cosZ = qCos(orientation[0]);
 
 		// rotation about x-axis (pitch)
-		xM[0] = 1; xM[1] =     0; xM[2] =    0;
-		xM[3] = 0; xM[4] =  cosX; xM[5] = sinX;
-		xM[6] = 0; xM[7] = -sinX; xM[8] = cosX;
+		const qreal xM[9] = {
+		    1,   0,    0,
+		    0,  cosX, sinX,
+		    0, -sinX, cosX
+		};
 
 		// rotation about y-axis (roll)
-		yM[0] =  cosY; yM[1] = 0; yM[2] = sinY;
-		yM[3] =     0; yM[4] = 1; yM[5] =    0;
-		yM[6] = -sinY; yM[7] = 0; yM[8] = cosY;
+		const qreal yM[9] = {
+		     cosY,  0,  sinY,
+		       0,   1,   0,
+		    -sinY,  0,  cosY
+		};
 
 		// rotation about z-axis (azimuth)
-		zM[0] =  cosZ; zM[1] = sinZ; zM[2] = 0;
-		zM[3] = -sinZ; zM[4] = cosZ; zM[5] = 0;
-		zM[6] =     0; zM[7] =    0; zM[8] = 1;
+		const qreal zM[9] = {
+		     cosZ,  sinZ,  0,
+		    -sinZ,  cosZ,  0,
+		       0,     0,   1
+		};
 
 		// rotation order is y, x, z (roll, pitch, azimuth)
 		qreal temp[9];
