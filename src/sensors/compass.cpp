@@ -401,8 +401,8 @@ private:
 		
 		void filter()
 		{
-			if (p->accelerometer.reading() == nullptr ||
-				p->magnetometer.reading() == nullptr)
+			if (p->accelerometer.reading() == nullptr
+			    || p->magnetometer.reading() == nullptr)
 				return;
 			
 			// Make copies of the sensor readings (and hope that the reading thread
@@ -416,27 +416,27 @@ private:
 				return;
 			
 			const auto acc_mag_orientation = SensorHelpers::getOrientation(R);
-			
-			// If gyro not initialized yet (or we do not have a gyro):
-			// use acc_mag_orientation (and initialize gyro if present)
-			if (! p->gyro_available || ! p->gyro_orientation_initialized)
+			if (p->gyro_available)
 			{
-				if (p->gyro_available)
+				if (Q_LIKELY(p->gyro_orientation_initialized))
 				{
+					p->gyro_mutex.lock();
+					p->gyro_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
+					p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
+					p->gyro_mutex.unlock();
+				}
+				else
+				{
+					// Initialize gyro from acc_mag_orientation.
 					p->gyro_orientation = acc_mag_orientation;
 					p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
 					p->gyro_orientation_initialized = true;
 				}
-				p->latest_azimuth = qRadiansToDegrees(acc_mag_orientation[0]);
+				p->latest_azimuth = qRadiansToDegrees(p->gyro_orientation[0]);
 			}
 			else
 			{
-				// Filter acc_mag_orientation and gyro_orientation to fused orientation
-				p->gyro_mutex.lock();
-				p->gyro_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
-				p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
-				p->gyro_mutex.unlock();
-				p->latest_azimuth = qRadiansToDegrees(p->gyro_orientation[0]);
+				p->latest_azimuth = qRadiansToDegrees(acc_mag_orientation[0]);
 			}
 			
 #ifdef Q_OS_ANDROID
