@@ -47,14 +47,17 @@ set(MAPPER_SENSORS_SOURCES
 )
 
 
-if(TARGET Qt5::Positioning)
+if(TARGET Qt5::Positioning OR TARGET Qt5::Sensors)
 	option(Mapper_FAKE_POSITION_SOURCE "Use a fake position source" OFF)
-	if(Mapper_FAKE_POSITION_SOURCE)
-		list(APPEND MAPPER_SENSORS_SOURCES fake_position_info_source.cpp)
-		list(APPEND MAPPER_SENSORS_DEFINITIONS PRIVATE MAPPER_FAKE_POSITION_SOURCE)
-	endif()
 else()
 	set(Mapper_FAKE_POSITION_SOURCE OFF)
+endif()
+
+if(Mapper_FAKE_POSITION_SOURCE)
+	list(APPEND MAPPER_SENSORS_DEFINITIONS PRIVATE MAPPER_FAKE_POSITION_SOURCE)
+	if(TARGET Qt5::Positioning)
+		list(APPEND MAPPER_SENSORS_SOURCES fake_position_info_source.cpp)
+	endif()
 endif()
 
 
