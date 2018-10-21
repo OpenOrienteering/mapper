@@ -50,7 +50,6 @@ public:
 	enum FileFormat
 	{
 		GPX,
-		OSM
 	};
 
 	enum ExportOption

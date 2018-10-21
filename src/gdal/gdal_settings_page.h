@@ -55,7 +55,6 @@ protected:
 	
 private:
 	QCheckBox* import_gpx;
-	QCheckBox* import_osm;
 	QCheckBox* view_hatch;
 	QCheckBox* view_baseline;
 	QCheckBox* export_one_layer_per_symbol;

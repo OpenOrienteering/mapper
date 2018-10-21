@@ -44,7 +44,7 @@ namespace OpenOrienteering {
 
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
-	static std::vector<QByteArray> extensions = { "gpx", "osm" };
+	static std::vector<QByteArray> extensions = { "gpx" };
 	return extensions;
 }
 
