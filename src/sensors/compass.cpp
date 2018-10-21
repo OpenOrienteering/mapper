@@ -419,7 +419,6 @@ private:
 			
 			// If gyro not initialized yet (or we do not have a gyro):
 			// use acc_mag_orientation (and initialize gyro if present)
-			qreal azimuth;
 			if (! p->gyro_available || ! p->gyro_orientation_initialized)
 			{
 				if (p->gyro_available)
@@ -428,24 +427,18 @@ private:
 					p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
 					p->gyro_orientation_initialized = true;
 				}
-				
-				azimuth = acc_mag_orientation[0];
+				p->latest_azimuth = qRadiansToDegrees(acc_mag_orientation[0]);
 			}
 			else
 			{
-				// Filter acc_mag_orientation and gyro_orientation to fused_orientation
+				// Filter acc_mag_orientation and gyro_orientation to fused orientation
 				p->gyro_mutex.lock();
-				const auto fused_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
-				
-				// Write back fused_orientation to gyro_orientation
-				p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(fused_orientation);
-				p->gyro_orientation = fused_orientation;
+				p->gyro_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
+				p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
 				p->gyro_mutex.unlock();
-				
-				azimuth = fused_orientation[0];
+				p->latest_azimuth = qRadiansToDegrees(p->gyro_orientation[0]);
 			}
 			
-			p->latest_azimuth = qRadiansToDegrees(azimuth);
 #ifdef Q_OS_ANDROID
 			// Adjust for display rotation
 			jint orientation = QAndroidJniObject::callStaticMethod<jint>(
