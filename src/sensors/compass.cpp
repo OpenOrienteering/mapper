@@ -1,5 +1,6 @@
 /*
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,29 +20,39 @@
 
 #include "compass.h"
 
-#include <cmath>
-
-#include <QtMath>  // IWYU pragma: keep
-#include <QtGlobal>  // IWYU pragma: keep
+#include <QtGlobal>
 #include <QMetaMethod>
 #include <QMetaObject>
-#include <QMutex>  // IWYU pragma: keep
-#include <QTime>
 
 #ifdef QT_SENSORS_LIB
 
+#include <cmath>
+#include <cstring>
+
+#include <Qt>
+#include <QtMath>
+#include <QAccelerometer>
+#include <QAccelerometerReading>
+#include <QGyroscope>
+#include <QGyroscopeFilter>
+#include <QGyroscopeReading>
+#include <QList>
+#include <QMagnetometer>
+#include <QMagnetometerReading>
+#include <QMutex>
+#include <QSensor>
 #include <QThread>
-#include <QDebug>
 #include <QWaitCondition>
-#include <QtSensors/QAccelerometer>
-#include <QtSensors/QMagnetometer>
-#include <QtSensors/QGyroscope>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
-#endif  // # QT_SENSORS_LIB
+#else  // no Qt Sensors lib
+
+#include <QTime>
+
+#endif  // QT_SENSORS_LIB
 
 
 // clazy:excludeall=missing-qobject-macro
@@ -50,7 +61,9 @@
 namespace OpenOrienteering {
 
 #ifdef QT_SENSORS_LIB
-	
+
+namespace {
+
 namespace SensorHelpers {
 	
 	void matrixMultiplication(float* A, float* B, float* result)
@@ -228,7 +241,9 @@ namespace SensorHelpers {
     }
 	
 	
-}  // namespace OpenOrienteering
+}  // namespace SensorHelpers
+
+}  // namespace
 
 
 
@@ -236,10 +251,9 @@ class CompassPrivate : public QGyroscopeFilter
 {
 public:
 	CompassPrivate(Compass* compass)
-	 : thread(this)
-	 , compass(compass)
-	 , enabled(false)
-	 , latest_azimuth(-1)
+	: thread(this)
+	, compass(compass)
+	, gyro_available(QSensor::sensorsForType(QGyroscope::type).empty())
 	{
 		// Try to filter out non-gravity sources of acceleration
 		accelerometer.setAccelerationMode(QAccelerometer::Gravity);
@@ -248,7 +262,6 @@ public:
 		magnetometer.setReturnGeoValues(true);
 		
 		// Check if a gyroscope is available
-		gyro_available = ! QSensor::sensorsForType(QGyroscope::type).empty();
 		if (gyro_available)
 			gyroscope.addFilter(this);
 		
@@ -357,9 +370,9 @@ private:
 	//Q_OBJECT
 	public:
 		SensorThread(CompassPrivate* p)
-		 : keep_running(true)
-		 , p(p)
+		: p(p)
 		{
+			// nothing else
 		}
 		
 		float fuseOrientationCoefficient(float gyro, float acc_mag)
@@ -493,45 +506,37 @@ private:
 		
 		QMutex wait_mutex;
 		QWaitCondition condition;
-		bool keep_running;
 		CompassPrivate* p;
+		bool keep_running = true;
 	};
 	
+	SensorThread thread;
 	QAccelerometer accelerometer;
 	QMagnetometer magnetometer;
-	QGyroscope gyroscope;
-	bool gyro_available;
-	float gyro_orientation[3];
-	float gyro_rotation_matrix[9];
-	quint64 last_gyro_timestamp;
-	bool gyro_orientation_initialized;
-	QMutex gyro_mutex;
-	
-	SensorThread thread;
 	Compass* compass;
-	
-	bool enabled;
-	float latest_azimuth;
+	QGyroscope gyroscope;
+	QMutex gyro_mutex;
+	quint64 last_gyro_timestamp;
+	float gyro_rotation_matrix[9];
+	float gyro_orientation[3];
+	float latest_azimuth = -1;
+	bool gyro_available;
+	bool gyro_orientation_initialized;
+	bool enabled = false;
 };
+#else
+class CompassPrivate {};
 #endif
 
 
 Compass::Compass(): QObject()
 {
-	reference_counter = 0;
 #ifdef QT_SENSORS_LIB
-	p = new CompassPrivate(this);
-#else
-	p = nullptr;
+	p.reset(new CompassPrivate(this));
 #endif
 }
 
-Compass::~Compass()
-{
-#ifdef QT_SENSORS_LIB
-	delete p;
-#endif
-}
+Compass::~Compass() = default;
 
 Compass& Compass::getInstance()
 {

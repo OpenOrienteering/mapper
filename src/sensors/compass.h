@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_COMPASS_H
 #define OPENORIENTEERING_COMPASS_H
 
+#include <memory>
+
 #include <QObject>
 
 class QMetaMethod;
@@ -35,9 +37,12 @@ class Compass : public QObject
 {
 Q_OBJECT
 friend class CompassPrivate;
-public:
+
+private:
+	Compass();
 	~Compass() override;
-	
+
+public:
 	/** Singleton accessor method. Constructs the object on first use. */
 	static Compass& getInstance();
 	
@@ -70,12 +75,10 @@ protected:
 	void disconnectNotify(const QMetaMethod& signal) override;
 	
 private:
-	Compass();
-	
 	void emitAzimuthChanged(float value);
 	
-	int reference_counter;
-	CompassPrivate* p;
+	std::unique_ptr<CompassPrivate> p;
+	int reference_counter = 0;
 };
 
 
