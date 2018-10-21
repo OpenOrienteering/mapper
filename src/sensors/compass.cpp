@@ -192,22 +192,22 @@ namespace SensorHelpers {
 	 * 
 	 * Helper function to convert a rotation vector to a rotation matrix.
 	 */
-    void getRotationMatrixFromVector(float* R, float* rotationVector)
+	void getRotationMatrixFromVector(float* R, float* rotationVector)
 	{
-        float q0 = rotationVector[3];  // !
-        float q1 = rotationVector[0];
-        float q2 = rotationVector[1];
-        float q3 = rotationVector[2];
+		float q0 = rotationVector[3];  // !
+		float q1 = rotationVector[0];
+		float q2 = rotationVector[1];
+		float q3 = rotationVector[2];
 
-        float sq_q1 = 2 * q1 * q1;
-        float sq_q2 = 2 * q2 * q2;
-        float sq_q3 = 2 * q3 * q3;
-        float q1_q2 = 2 * q1 * q2;
-        float q3_q0 = 2 * q3 * q0;
-        float q1_q3 = 2 * q1 * q3;
-        float q2_q0 = 2 * q2 * q0;
-        float q2_q3 = 2 * q2 * q3;
-        float q1_q0 = 2 * q1 * q0;
+		float sq_q1 = 2 * q1 * q1;
+		float sq_q2 = 2 * q2 * q2;
+		float sq_q3 = 2 * q3 * q3;
+		float q1_q2 = 2 * q1 * q2;
+		float q3_q0 = 2 * q3 * q0;
+		float q1_q3 = 2 * q1 * q3;
+		float q2_q0 = 2 * q2 * q0;
+		float q2_q3 = 2 * q2 * q3;
+		float q1_q0 = 2 * q1 * q0;
 
 		R[0] = 1 - sq_q2 - sq_q3;
 		R[1] = q1_q2 - q3_q0;
@@ -220,7 +220,7 @@ namespace SensorHelpers {
 		R[6] = q1_q3 - q2_q0;
 		R[7] = q2_q3 + q1_q0;
 		R[8] = 1 - sq_q1 - sq_q2;
-    }
+	}
 	
 	
 }  // namespace SensorHelpers
@@ -364,18 +364,18 @@ private:
 			
 			float result;
 			// Correctly handle wrap-around
-            if (gyro < -0.5 * M_PI && acc_mag > 0.0) {
-            	result = (float) (FILTER_COEFFICIENT * (gyro + 2.0 * M_PI) + ONE_MINUS_COEFF * acc_mag);
-        		result -= (result > M_PI) ? 2.0 * M_PI : 0;
-            }
-            else if (acc_mag < -0.5 * M_PI && gyro > 0.0) {
-            	result = (float) (FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * (acc_mag + 2.0 * M_PI));
-            	result -= (result > M_PI)? 2.0 * M_PI : 0;
-            }
-            else {
-            	result = FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * acc_mag;
-            }
-            return result;
+			if (gyro < -0.5 * M_PI && acc_mag > 0.0) {
+				result = (float) (FILTER_COEFFICIENT * (gyro + 2.0 * M_PI) + ONE_MINUS_COEFF * acc_mag);
+				result -= (result > M_PI) ? 2.0 * M_PI : 0;
+			}
+			else if (acc_mag < -0.5 * M_PI && gyro > 0.0) {
+				result = (float) (FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * (acc_mag + 2.0 * M_PI));
+				result -= (result > M_PI)? 2.0 * M_PI : 0;
+			}
+			else {
+				result = FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * acc_mag;
+			}
+			return result;
 		}
 		
 		void filter()
@@ -441,8 +441,8 @@ private:
 #ifdef Q_OS_ANDROID
 			// Adjust for display rotation
 			jint orientation = QAndroidJniObject::callStaticMethod<jint>(
-			                    "org/openorienteering/mapper/MapperActivity",
-                                "getDisplayRotation");
+			                       "org/openorienteering/mapper/MapperActivity",
+			                       "getDisplayRotation");
 			switch (orientation)
 			{
 			case 1:
