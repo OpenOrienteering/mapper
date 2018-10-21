@@ -39,6 +39,7 @@
 #include <QMagnetometer>
 #include <QMagnetometerReading>
 #include <QMutex>
+#include <QMutexLocker>
 #include <QSensor>
 #include <QThread>
 #include <QWaitCondition>
@@ -313,10 +314,9 @@ public:
 			magnetometer.start();
 			gyroscope.start();
 			
-			thread.wait_mutex.lock();
+			QMutexLocker locker(&thread.wait_mutex);
 			this->enabled = true;
 			thread.condition.wakeAll();
-			thread.wait_mutex.unlock();
 		}
 		else
 		{
@@ -376,10 +376,9 @@ public:
 			
 			const auto R = SensorHelpers::getRotationMatrixFromVector(deltaRotationVector);
 			
-			gyro_mutex.lock();
+			QMutexLocker locker(&gyro_mutex);
 			gyro_rotation_matrix = gyro_rotation_matrix * R;
 			gyro_orientation = SensorHelpers::getOrientation(gyro_rotation_matrix);
-			gyro_mutex.unlock();
 		}
 		
 		last_gyro_timestamp = reading->timestamp();
@@ -420,10 +419,9 @@ private:
 			{
 				if (Q_LIKELY(p->gyro_orientation_initialized))
 				{
-					p->gyro_mutex.lock();
+					QMutexLocker locker(&p->gyro_mutex);
 					p->gyro_orientation = SensorHelpers::fuseOrientationCoefficient(p->gyro_orientation, acc_mag_orientation);
 					p->gyro_rotation_matrix = SensorHelpers::getRotationMatrixFromOrientation(p->gyro_orientation);
-					p->gyro_mutex.unlock();
 				}
 				else
 				{
@@ -473,12 +471,9 @@ private:
 			{
 				if (! p->enabled)
 				{
-					wait_mutex.lock();
+					QMutexLocker locker(&wait_mutex);
 					if (! p->enabled)
 						condition.wait(&wait_mutex);
-					wait_mutex.unlock();
-					
-					// May do initializations after (re-)enabling here
 				}
 				
 				filter();
