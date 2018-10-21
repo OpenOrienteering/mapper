@@ -704,7 +704,7 @@ bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
 			// Make the MediaScanner aware of the *updated* file. This is an
 			// attempt to resolve issues with files being transferred
 			// incompletely to the PC (#1115).
-			Android::mediaScannerScanFile(path);
+			Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
 		}
 #endif
 	}
