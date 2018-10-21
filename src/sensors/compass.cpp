@@ -20,7 +20,6 @@
 
 #include "compass.h"
 
-#include <QtGlobal>
 #include <QMetaMethod>
 #include <QMetaObject>
 
@@ -66,7 +65,7 @@ namespace {
 
 namespace SensorHelpers {
 	
-	void matrixMultiplication(float* A, float* B, float* result)
+	void matrixMultiplication(const qreal* const A, const qreal* B, qreal* result)
 	{
 		result[0] = A[0] * B[0] + A[1] * B[3] + A[2] * B[6];
 		result[1] = A[0] * B[1] + A[1] * B[4] + A[2] * B[7];
@@ -93,50 +92,50 @@ namespace SensorHelpers {
 	 * </ul>
 	 * <p>
 	 */
-	void getOrientation(float* R, float* values)
+	void getOrientation(const qreal* const R, qreal* values)
 	{
 		/*
 		* / R[ 0] R[ 1] R[ 2] \
 		* | R[ 3] R[ 4] R[ 5] |
 		* \ R[ 6] R[ 7] R[ 8] /
 		*/
-		values[0] = (float)atan2(R[1], R[4]);
-		values[1] = (float)asin(-R[7]);
-		values[2] = (float)atan2(-R[6], R[8]);
+		values[0] = atan2(R[1], R[4]);
+		values[1] = asin(-R[7]);
+		values[2] = atan2(-R[6], R[8]);
 	}
 	
 	/** From http://www.thousand-thoughts.com/2012/03/android-sensor-fusion-tutorial/2/
 	 *  Should be optimized ... */
-	void getRotationMatrixFromOrientation(float* orientation, float* result)
+	void getRotationMatrixFromOrientation(const qreal* const orientation, qreal* result)
 	{
-		float xM[9];
-		float yM[9];
-		float zM[9];
+		qreal xM[9];
+		qreal yM[9];
+		qreal zM[9];
 
-		float sinX = (float)qSin(orientation[1]);
-		float cosX = (float)qCos(orientation[1]);
-		float sinY = (float)qSin(orientation[2]);
-		float cosY = (float)qCos(orientation[2]);
-		float sinZ = (float)qSin(orientation[0]);
-		float cosZ = (float)qCos(orientation[0]);
+		const auto sinX = qSin(orientation[1]);
+		const auto cosX = qCos(orientation[1]);
+		const auto sinY = qSin(orientation[2]);
+		const auto cosY = qCos(orientation[2]);
+		const auto sinZ = qSin(orientation[0]);
+		const auto cosZ = qCos(orientation[0]);
 
 		// rotation about x-axis (pitch)
-		xM[0] = 1.0f; xM[1] = 0.0f; xM[2] = 0.0f;
-		xM[3] = 0.0f; xM[4] = cosX; xM[5] = sinX;
-		xM[6] = 0.0f; xM[7] = -sinX; xM[8] = cosX;
+		xM[0] = 1; xM[1] =     0; xM[2] =    0;
+		xM[3] = 0; xM[4] =  cosX; xM[5] = sinX;
+		xM[6] = 0; xM[7] = -sinX; xM[8] = cosX;
 
 		// rotation about y-axis (roll)
-		yM[0] = cosY; yM[1] = 0.0f; yM[2] = sinY;
-		yM[3] = 0.0f; yM[4] = 1.0f; yM[5] = 0.0f;
-		yM[6] = -sinY; yM[7] = 0.0f; yM[8] = cosY;
+		yM[0] =  cosY; yM[1] = 0; yM[2] = sinY;
+		yM[3] =     0; yM[4] = 1; yM[5] =    0;
+		yM[6] = -sinY; yM[7] = 0; yM[8] = cosY;
 
 		// rotation about z-axis (azimuth)
-		zM[0] = cosZ; zM[1] = sinZ; zM[2] = 0.0f;
-		zM[3] = -sinZ; zM[4] = cosZ; zM[5] = 0.0f;
-		zM[6] = 0.0f; zM[7] = 0.0f; zM[8] = 1.0f;
+		zM[0] =  cosZ; zM[1] = sinZ; zM[2] = 0;
+		zM[3] = -sinZ; zM[4] = cosZ; zM[5] = 0;
+		zM[6] =     0; zM[7] =    0; zM[8] = 1;
 
 		// rotation order is y, x, z (roll, pitch, azimuth)
-		float temp[9];
+		qreal temp[9];
 		matrixMultiplication(xM, yM, temp);
 		matrixMultiplication(zM, temp, result);
 	}
@@ -148,37 +147,37 @@ namespace SensorHelpers {
 	 * matrix <b>R</b> transforming a vector from the
 	 * device coordinate system to the world's coordinate system [...]
 	 */
-	bool getRotationMatrix(float* R, float* gravity, float* geomagnetic)
+	bool getRotationMatrix(qreal* R, const qreal* const gravity, const qreal* const geomagnetic)
 	{
-		float Ax = gravity[0];
-		float Ay = gravity[1];
-		float Az = gravity[2];
+		auto Ax = gravity[0];
+		auto Ay = gravity[1];
+		auto Az = gravity[2];
 		// Change relative to Android version: scale values from teslas to microteslas
-		const float to_micro = 1000*1000;
-		const float Ex = to_micro * geomagnetic[0];
-		const float Ey = to_micro * geomagnetic[1];
-		const float Ez = to_micro * geomagnetic[2];
+		const auto to_micro = qreal(1000*1000);
+		const auto Ex = to_micro * geomagnetic[0];
+		const auto Ey = to_micro * geomagnetic[1];
+		const auto Ez = to_micro * geomagnetic[2];
 		
-		float Hx = Ey*Az - Ez*Ay;
-		float Hy = Ez*Ax - Ex*Az;
-		float Hz = Ex*Ay - Ey*Ax;
-		const float normH = (float)sqrt(Hx*Hx + Hy*Hy + Hz*Hz);
-		if (normH < 0.1f) {
+		auto Hx = Ey*Az - Ez*Ay;
+		auto Hy = Ez*Ax - Ex*Az;
+		auto Hz = Ex*Ay - Ey*Ax;
+		const auto normH = sqrt(Hx*Hx + Hy*Hy + Hz*Hz);
+		if (normH < 0.1) {
 			// device is close to free fall (or in space?), or close to
 			// magnetic north pole. Typical values are > 100.
 			return false;
 		}
-		const float invH = 1.0f / normH;
+		const auto invH = 1 / normH;
 		Hx *= invH;
 		Hy *= invH;
 		Hz *= invH;
-		const float invA = 1.0f / (float)sqrt(Ax*Ax + Ay*Ay + Az*Az);
+		const auto invA = 1 / sqrt(Ax*Ax + Ay*Ay + Az*Az);
 		Ax *= invA;
 		Ay *= invA;
 		Az *= invA;
-		const float Mx = Ay*Hz - Az*Hy;
-		const float My = Az*Hx - Ax*Hz;
-		const float Mz = Ax*Hy - Ay*Hx;
+		const auto Mx = Ay*Hz - Az*Hy;
+		const auto My = Az*Hx - Ax*Hz;
+		const auto Mz = Ax*Hy - Ay*Hx;
 		
 		R[0] = Hx; R[1] = Hy; R[2] = Hz;
 		R[3] = Mx; R[4] = My; R[5] = Mz;
@@ -192,22 +191,22 @@ namespace SensorHelpers {
 	 * 
 	 * Helper function to convert a rotation vector to a rotation matrix.
 	 */
-	void getRotationMatrixFromVector(float* R, float* rotationVector)
+	void getRotationMatrixFromVector(qreal* R, const qreal* const rotationVector)
 	{
-		float q0 = rotationVector[3];  // !
-		float q1 = rotationVector[0];
-		float q2 = rotationVector[1];
-		float q3 = rotationVector[2];
+		const auto q0 = rotationVector[3];  // !
+		const auto q1 = rotationVector[0];
+		const auto q2 = rotationVector[1];
+		const auto q3 = rotationVector[2];
 
-		float sq_q1 = 2 * q1 * q1;
-		float sq_q2 = 2 * q2 * q2;
-		float sq_q3 = 2 * q3 * q3;
-		float q1_q2 = 2 * q1 * q2;
-		float q3_q0 = 2 * q3 * q0;
-		float q1_q3 = 2 * q1 * q3;
-		float q2_q0 = 2 * q2 * q0;
-		float q2_q3 = 2 * q2 * q3;
-		float q1_q0 = 2 * q1 * q0;
+		const auto sq_q1 = 2 * q1 * q1;
+		const auto sq_q2 = 2 * q2 * q2;
+		const auto sq_q3 = 2 * q3 * q3;
+		const auto q1_q2 = 2 * q1 * q2;
+		const auto q3_q0 = 2 * q3 * q0;
+		const auto q1_q3 = 2 * q1 * q3;
+		const auto q2_q0 = 2 * q2 * q0;
+		const auto q2_q3 = 2 * q2 * q3;
+		const auto q1_q0 = 2 * q1 * q0;
 
 		R[0] = 1 - sq_q2 - sq_q3;
 		R[1] = q1_q2 - q3_q0;
@@ -282,7 +281,7 @@ public:
 		}
 	}
 	
-	float getLatestAzimuth()
+	qreal getLatestAzimuth()
 	{
 		return latest_azimuth;
 	}
@@ -296,18 +295,17 @@ public:
 		if (last_gyro_timestamp > 0)
 		{
 			// Calculate rotation matrix from gyro reading according to Android developer documentation
-			const float EPSILON = 1e-9f;
+			const auto EPSILON = qreal(1e-9);
 			
-			const float microseconds_to_seconds = 1.0f / (1000*1000);
-			const float dt = (reading->timestamp() - last_gyro_timestamp) * microseconds_to_seconds;
+			const auto microseconds_to_seconds = 1 / qreal(1000*1000);
+			const auto dt = (reading->timestamp() - last_gyro_timestamp) * microseconds_to_seconds;
 			// Axis of the rotation sample, not normalized yet.
-			const float deg_to_rad = M_PI / 180.0f;
-			float axisX = deg_to_rad * reading->x();
-			float axisY = deg_to_rad * reading->y();
-			float axisZ = deg_to_rad * reading->z();
+			auto axisX = qDegreesToRadians(reading->x());
+			auto axisY = qDegreesToRadians(reading->y());
+			auto axisZ = qDegreesToRadians(reading->z());
 
 			// Calculate the angular speed of the sample
-			float omegaMagnitude = sqrt(axisX*axisX + axisY*axisY + axisZ*axisZ);
+			const auto omegaMagnitude = sqrt(axisX*axisX + axisY*axisY + axisZ*axisZ);
 
 			// Normalize the rotation vector if it's big enough to get the axis
 			if (omegaMagnitude > EPSILON) {
@@ -320,19 +318,19 @@ public:
 			// in order to get a delta rotation from this sample over the timestep
 			// We will convert this axis-angle representation of the delta rotation
 			// into a quaternion before turning it into the rotation matrix.
-			float thetaOverTwo = omegaMagnitude * dt / 2.0f;
-			float sinThetaOverTwo = qSin(thetaOverTwo);
-			float cosThetaOverTwo = qCos(thetaOverTwo);
-			float deltaRotationVector[4];
+			const auto thetaOverTwo = omegaMagnitude * dt / 2;
+			const auto sinThetaOverTwo = qSin(thetaOverTwo);
+			const auto cosThetaOverTwo = qCos(thetaOverTwo);
+			qreal deltaRotationVector[4];
 			deltaRotationVector[0] = sinThetaOverTwo * axisX;
 			deltaRotationVector[1] = sinThetaOverTwo * axisY;
 			deltaRotationVector[2] = sinThetaOverTwo * axisZ;
 			deltaRotationVector[3] = cosThetaOverTwo;
 			
-			float R[9];
+			qreal R[9];
 			SensorHelpers::getRotationMatrixFromVector(R, deltaRotationVector);
 			
-			float temp[9];
+			qreal temp[9];
 			gyro_mutex.lock();
 			SensorHelpers::matrixMultiplication(gyro_rotation_matrix, R, temp);
 			memcpy(gyro_rotation_matrix, temp, 9 * sizeof(float));
@@ -357,19 +355,19 @@ private:
 			// nothing else
 		}
 		
-		float fuseOrientationCoefficient(float gyro, float acc_mag)
+		qreal fuseOrientationCoefficient(qreal gyro, qreal acc_mag)
 		{
-			const float FILTER_COEFFICIENT = 0.98f;
-			const float ONE_MINUS_COEFF = 1.0f - FILTER_COEFFICIENT;
+			const auto FILTER_COEFFICIENT = qreal(0.98);
+			const auto ONE_MINUS_COEFF = 1 - FILTER_COEFFICIENT;
 			
-			float result;
+			qreal result;
 			// Correctly handle wrap-around
 			if (gyro < -0.5 * M_PI && acc_mag > 0.0) {
-				result = (float) (FILTER_COEFFICIENT * (gyro + 2.0 * M_PI) + ONE_MINUS_COEFF * acc_mag);
+				result = FILTER_COEFFICIENT * (gyro + 2.0 * M_PI) + ONE_MINUS_COEFF * acc_mag;
 				result -= (result > M_PI) ? 2.0 * M_PI : 0;
 			}
 			else if (acc_mag < -0.5 * M_PI && gyro > 0.0) {
-				result = (float) (FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * (acc_mag + 2.0 * M_PI));
+				result = FILTER_COEFFICIENT * gyro + ONE_MINUS_COEFF * (acc_mag + 2.0 * M_PI);
 				result -= (result > M_PI)? 2.0 * M_PI : 0;
 			}
 			else {
@@ -386,29 +384,29 @@ private:
 			
 			// Make copies of the sensor readings (and hope that the reading thread
 			// does not overwrite parts of them while they are being copied)
-			float acceleration[3] = {
-				(float) p->accelerometer.reading()->x(),
-				(float) p->accelerometer.reading()->y(),
-				(float) p->accelerometer.reading()->z()
+			const qreal acceleration[3] = {
+				p->accelerometer.reading()->x(),
+				p->accelerometer.reading()->y(),
+				p->accelerometer.reading()->z()
 			};
-			float geomagnetic[3] = {
-				(float) p->magnetometer.reading()->x(),
-				(float) p->magnetometer.reading()->y(),
-				(float) p->magnetometer.reading()->z()
+			const qreal geomagnetic[3] = {
+				p->magnetometer.reading()->x(),
+				p->magnetometer.reading()->y(),
+				p->magnetometer.reading()->z()
 			};
 			
 			// Calculate orientation from accelerometer and magnetometer (acc_mag_orientation)
-			float R[9];
+			qreal R[9];
 			bool ok = SensorHelpers::getRotationMatrix(R, acceleration, geomagnetic);
 			if (!ok)
 				return;
 			
-			float acc_mag_orientation[3];
+			qreal acc_mag_orientation[3];
 			SensorHelpers::getOrientation(R, acc_mag_orientation);
 			
 			// If gyro not initialized yet (or we do not have a gyro):
 			// use acc_mag_orientation (and initialize gyro if present)
-			float azimuth;
+			qreal azimuth;
 			if (! p->gyro_available || ! p->gyro_orientation_initialized)
 			{
 				if (p->gyro_available)
@@ -424,7 +422,7 @@ private:
 			{
 				// Filter acc_mag_orientation and gyro_orientation to fused_orientation
 				p->gyro_mutex.lock();
-				float fused_orientation[3];
+				qreal fused_orientation[3];
 				fused_orientation[0] = fuseOrientationCoefficient(p->gyro_orientation[0], acc_mag_orientation[0]);
 				fused_orientation[1] = fuseOrientationCoefficient(p->gyro_orientation[1], acc_mag_orientation[1]);
 				fused_orientation[2] = fuseOrientationCoefficient(p->gyro_orientation[2], acc_mag_orientation[2]);
@@ -437,7 +435,7 @@ private:
 				azimuth = fused_orientation[0];
 			}
 			
-			p->latest_azimuth = 180 * azimuth / M_PI;
+			p->latest_azimuth = qRadiansToDegrees(azimuth);
 #ifdef Q_OS_ANDROID
 			// Adjust for display rotation
 			jint orientation = QAndroidJniObject::callStaticMethod<jint>(
@@ -499,9 +497,9 @@ private:
 	QGyroscope gyroscope;
 	QMutex gyro_mutex;
 	quint64 last_gyro_timestamp;
-	float gyro_rotation_matrix[9];
-	float gyro_orientation[3];
-	float latest_azimuth = -1;
+	qreal gyro_rotation_matrix[9];
+	qreal gyro_orientation[3];
+	qreal latest_azimuth = -1;
 	bool gyro_available;
 	bool gyro_orientation_initialized;
 	bool enabled = false;
@@ -544,23 +542,23 @@ void Compass::stopUsage()
 #endif
 }
 
-float Compass::getCurrentAzimuth()
+qreal Compass::getCurrentAzimuth()
 {
 #ifdef QT_SENSORS_LIB
 	return p->getLatestAzimuth();
 #elif MAPPER_DEVELOPMENT_BUILD
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();
-	return 360 * (now.msecsSinceStartOfDay() % (10 * 1000)) / (float)(10 * 1000);
+	return 360 * (now.msecsSinceStartOfDay() % (10 * 1000)) / qreal(10 * 1000);
 #else
-	return 0.0f;
+	return 0;
 #endif
 }
 
 void Compass::connectToAzimuthChanges(const QObject* receiver, const char* slot)
 {
 #ifdef QT_SENSORS_LIB
-	connect(this, SIGNAL(azimuthChanged(float)), receiver, slot, Qt::QueuedConnection);
+	connect(this, SIGNAL(azimuthChanged(qreal)), receiver, slot, Qt::QueuedConnection);
 #else
 	Q_UNUSED(receiver);
 	Q_UNUSED(slot);
@@ -588,7 +586,7 @@ void Compass::disconnectNotify(const QMetaMethod& signal)
 	    stopUsage();
 }
 
-void Compass::emitAzimuthChanged(float value)
+void Compass::emitAzimuthChanged(qreal value)
 {
 	emit azimuthChanged(value);
 }
