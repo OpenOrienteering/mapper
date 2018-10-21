@@ -18,9 +18,7 @@
 
 
 find_package(Qt5Network REQUIRED)
-find_package(Qt5Positioning)
 find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Sensors)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
