@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QFileInfo>
 #include <QHash>
 #include <QMessageBox>
 #include <QXmlStreamReader>
@@ -223,7 +224,7 @@ bool Track::saveTo(const QString& path) const
 	file.close();
 #ifdef Q_OS_ANDROID
 	// Make the MediaScanner aware of the *updated* file.
-	Android::mediaScannerScanFile(path);
+	Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
 #endif
 	return true;
 }
