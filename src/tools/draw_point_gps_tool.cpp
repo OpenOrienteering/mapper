@@ -23,6 +23,7 @@
 
 #include <Qt>
 #include <QtGlobal>
+#include <QtNumeric>
 #include <QCursor>
 #include <QKeyEvent>
 #include <QLabel>
@@ -88,11 +89,14 @@ void DrawPointGPSTool::newGPSPosition(const MapCoordF& coord, float accuracy)
 	auto point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	
 	// Calculate weight from accuracy. This is arbitrarily chosen.
-	float weight;
-	if (accuracy < 0)
-		weight = 1; // accuracy unknown
-	else
-		weight = 1.0f / qMax(0.5f, accuracy);
+	const auto weight = [](auto a) -> qreal {
+		if (qIsNaN(a))
+			return 1;
+		else if (a < 0.5f)
+			return 2;
+		else
+			return 1 / static_cast<qreal>(a);
+	}(accuracy);
 	
 	if (! preview_object)
 	{
