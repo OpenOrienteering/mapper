@@ -2269,7 +2269,7 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="95"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="90"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="91"/>
         <source>OpenOrienteering Mapper</source>
         <translation>OpenOrienteering Mapper</translation>
     </message>
@@ -2298,13 +2298,13 @@
         <translation>%1 coordonnées attendues, %2 trouvées.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="981"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="982"/>
         <source>Error while loading the printing configuration at %1:%2: %3</source>
         <translation>Erreur lors du chargement de la configuration de l&apos;imprimante en %1:%2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1000"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="1020"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1001"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="1021"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
         <translation>Erreur lors du chargement des scripts &apos;undo/redo&apos; à %1:%2: %3</translation>
     </message>
@@ -2380,13 +2380,13 @@
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="139"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="509"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="510"/>
         <source>Invalid file format version.</source>
         <translation>Format du fichier invalide.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="143"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="511"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="512"/>
         <source>Unsupported old file format version. Please use an older program version to load and update the file.</source>
         <translation>Ce fichier est plus supporté (ancien format). Veuillez utiliser le logiciel dans une version plus ancienne pour charger et remettre à jour ce fichier.</translation>
     </message>
@@ -2437,12 +2437,12 @@
         <translation>Impossible de lire le fichier suivant: %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="503"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="504"/>
         <source>Unsupported file format.</source>
         <translation>Format de fichier non supporté.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="513"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="514"/>
         <source>Unsupported new file format version. Some map features will not be loaded or saved by this version of the program.</source>
         <translation>Format de fichier trop récent. Certains éléments de la carte ne seront pas chargés ou sauvegardés avec cette version du logiciel.</translation>
     </message>
@@ -4928,68 +4928,73 @@ utiliser la molette de la souris pour zoomer.</translation>
         <translation>Impossible d&apos;exporter un motif pour un objet surface</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1866"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
+        <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>Impossible d&apos;exporter le modèle: le type du fichier (%1) n&apos;est pas encore supporté</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1889"/>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1900"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1914"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1925"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
         <translation>Les coordonnées sont ajustées pour être compatible avec la surface de dessin d&apos;OCAD 8 (-2m .... 2m).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1911"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
         <translation>Des coordonnées sont en dehors de la surface de dessin d&apos;OCAD8. Elles ne seront pas accessibles dans OCAD.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2182"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2207"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>Pour le symbole ligne &quot;%1&quot;,impossible de dessiner la combinaison entre l&apos;extrémité et la jointure.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2206"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2231"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>Pour le symbole ligne &quot;%1&quot;, le groupe de pointillés a été ignoré.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2217"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2242"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>Pour le symbole ligne &quot;%1&quot;, le nombre de pointillés par groupe a été réduit à 2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2273"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2298"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation>Pour le symbole ligne &quot;%1&quot;, impossible d&apos;exporter correctement les bordures.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2332"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2357"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>Pour le symbole surface &quot;%1&quot;, un motif a été ignoré.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2379"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2404"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>Pour le symbole surface &quot;%1&quot;, les motifs en rangées sont supposés être décalés. Ceci peut se révéler correct tout comme incorrect.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2418"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2443"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>Pour le symbole texte &quot;%1&quot;: un espacement personnalisé a été choisi entre les caractères, ceci peut être incompatible avec les fonctions d&apos;Ocad</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2425"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2450"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>Pour le symbole texte &quot;%1&quot;, le soulignement a été ignoré</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2427"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2452"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>Pour le symbole texte &quot;%1&quot;, le crénage a été ignoré</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2851"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="2876"/>
         <source>String truncated (truncation marked with three &apos;|&apos;): %1</source>
         <translation>Chaîne de caractère tronquée (Les retraits sont marqués par trois &apos;|&apos;): %1</translation>
     </message>
@@ -8029,28 +8034,28 @@ La version maximale supportée est la version %2.</translation>
 <context>
     <name>OpenOrienteering::UndoManager</name>
     <message>
-        <location filename="../src/undo/undo_manager.cpp" line="148"/>
-        <location filename="../src/undo/undo_manager.cpp" line="193"/>
+        <location filename="../src/undo/undo_manager.cpp" line="155"/>
+        <location filename="../src/undo/undo_manager.cpp" line="200"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../src/undo/undo_manager.cpp" line="148"/>
+        <location filename="../src/undo/undo_manager.cpp" line="155"/>
         <source>Cannot undo because the last undo step became invalid. This can for example happen if you change the symbol of an object to another and then delete the old symbol.</source>
         <translation>Impossible d&apos;annuler car la dernière action &quot;Annuler&quot; deviendrait alors invalide. Cela peut arriver par exemple lorsque vous changez le symbole d&apos;un objet par un autre et qu&apos;ensuite vous supprimez l&apos;ancien symbole.</translation>
     </message>
     <message>
-        <location filename="../src/undo/undo_manager.cpp" line="155"/>
+        <location filename="../src/undo/undo_manager.cpp" line="162"/>
         <source>Confirmation</source>
         <translation>Confirmation</translation>
     </message>
     <message>
-        <location filename="../src/undo/undo_manager.cpp" line="155"/>
+        <location filename="../src/undo/undo_manager.cpp" line="162"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
         <translation>Annuler cette action vous ramènera dans l&apos;état ANTÉRIEUR au chargement de ce fichier. Êtes vous sûr de vouloir annuler ?</translation>
     </message>
     <message>
-        <location filename="../src/undo/undo_manager.cpp" line="193"/>
+        <location filename="../src/undo/undo_manager.cpp" line="200"/>
         <source>Cannot redo because the first redo step became invalid. This can for example happen if you delete the symbol of an object you have drawn.</source>
         <translation>Impossible d&apos;annuler la dernière action car elle deviendrait invalide. Cela peut arriver par exemple lorsque vous supprimez le symbole d&apos;un objet que vous avez dessiné.</translation>
     </message>
@@ -8116,7 +8121,7 @@ La version maximale supportée est la version %2.</translation>
 <context>
     <name>OpenOrienteering::XMLFileExporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="208"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="209"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
         <translation>Les anciennes versions de Mapper ne supportent pas les cartes ayant plusieurs parties. Pour sauvegarder la carte dans un mode compatible, vous devez d&apos;abord réunir les parties entre elles.</translation>
     </message>
@@ -8124,69 +8129,69 @@ La version maximale supportée est la version %2.</translation>
 <context>
     <name>OpenOrienteering::XMLFileImporter</name>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="492"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="493"/>
         <source>Unsupported element: %1 (line %2 column %3)</source>
         <translation>Élément non supporté: %1 (ligne %2 colonne %3)</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="523"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="524"/>
         <source>Some coordinates were out of bounds for printing. Map content was adjusted.</source>
         <translation>Des coordonnées étaient en dehors des limites d&apos;impression. Le contenu de la carte a été ajusté.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="573"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
         <source>unknown</source>
         <translation>inconnu</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="574"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="575"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
         <translation>Les différentes parties du fichier ne peut pas être lu par cette version de Mapper. Ma version minimale requise est : %1</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="608"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="609"/>
         <source>Error at line %1 column %2: %3</source>
         <translation>Erreur à la ligne %1 colonne %2: %3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="620"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="877"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="621"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="878"/>
         <source>Some invalid characters had to be removed.</source>
         <translation>Des caractères non-valides ont été supprimés.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="638"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="639"/>
         <source>Unknown error</source>
         <translation>Erreur inconnu</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="639"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="640"/>
         <source>Unsupported or invalid georeferencing specification &apos;%1&apos;: %2</source>
         <translation>Spécification de géoréférencement &apos;%1&apos; ,non supportée ou inconnue: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="770"/>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="823"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="771"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="824"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
         <translation>Impossible de définir la propriété &quot;knockout&quot; pour la couleur &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="783"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="784"/>
         <source>Expected %1 colors, found %2.</source>
         <translation>%1 couleurs attendues, %2 trouvées.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="799"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="800"/>
         <source>Spot color %1 not found while processing %2 (%3).</source>
         <translation>Ton direct %1 non trouvé lors du calcul %2 (%3).</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="855"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="856"/>
         <source>Expected %1 symbols, found %2.</source>
         <translation>%1 symboles attendus, %2 trouvés.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/xml_file_format.cpp" line="894"/>
+        <location filename="../src/fileformats/xml_file_format.cpp" line="895"/>
         <source>Expected %1 map parts, found %2.</source>
         <translation>%1 parties de carte attendues, %2 trouvées.</translation>
     </message>

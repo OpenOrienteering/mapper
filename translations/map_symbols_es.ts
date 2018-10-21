@@ -264,15 +264,17 @@
             <translation>Muro de tierra perceptible. La altura mínima es 1 m.</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Muro de tierra pequeño</translation>
-        </message>
+            <translation>Muro de tierra en ruinas</translation>
+    </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Un muro de tierra pequeño o parcialmente derruido se debe mostrar con una línea discontinua. La altura mínima es 0,5 m.</translation>
-        </message>
+            <translation>Un muro de tierra parcialmente derruido o poco visible. Altura mínima: 0,5 m.
+Longitud mínima: dos rayas (huella 55 m). Si el elemento es más corto, el símbolo debe exagerarse a la longitud mínima o cambiarse por el símbolo 105 (muro de tierra).</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
@@ -786,9 +788,9 @@ El número mínimo de puntos es tres (huella 7 m x 7 m).
 Para evitar confusión con el símbolo 416 (límite de vegetación distinguible), los puntos no deben estar dispuestos formando una línea.</translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Terreno despejado y arenoso</translation>
+            <translation type="unfinished">Terreno despejado y arenoso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -913,10 +915,12 @@ Las trincheras colapsadas y fácilmente superables deberían representarse como 
             <translation>Cauce vadeable</translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Una corriente de agua vadeable, de 2 m de ancho como mínimo. La amplitud de cauces superior a 5 m debería representarse a escala.</translation>
-        </message>
+            <translation>Debe tener un mínimo de 2 m de anchura.
+Longitud mínima (aislado): huella 15 m.</translation>
+    </message>
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>
@@ -940,28 +944,28 @@ Las trincheras colapsadas y fácilmente superables deberían representarse como 
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 307</comment>
-            <translation>Ciénaga no vadeable, con línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307</comment>
-            <translation>Un terreno pantanoso que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre ciénagas no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
-        </message>
+            <translation>Un humedal que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre humedales no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 307.1</comment>
-            <translation>Ciénaga no vadeable</translation>
-        </message>
+            <translation>Humedal no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307.1</comment>
-            <translation>Un terreno pantanoso que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre ciénagas no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
-        </message>
+            <translation>Un humedal que no es vadeable o es peligroso para el competidor. La línea negra de contorno enfatiza que el elemento no es vadeable. La línea negra de contorno se omite para límites entre humedales no vadeables y el símbolo 301 (balsa de agua no vadeable). El símbolo se puede combinar con un símbolo de terreno despejado (403, 404) para indicar que es más o menos abierto. El símbolo está orientado al norte.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 307.2</comment>
-            <translation>Ciénaga no vadeable, línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol 307.</source>
             <comment>Description of symbol 307.2</comment>
@@ -970,69 +974,69 @@ Las trincheras colapsadas y fácilmente superables deberían representarse como 
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Ciénaga</translation>
-        </message>
+            <translation>Humedal</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308</comment>
-            <translation>Un terreno pantanoso vadeable, normalmente con un borde distinguible.
+            <translation>Un humedal vadeable, normalmente con un borde distinguible.
 El símbolo debe combinarse con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
 El símbolo está orientado al norte.</translation>
-        </message>
+    </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
-            <translation>Ciénaga, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal, tamaño mínimo</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308.1</comment>
-            <translation>Un terreno pantanoso vadeable, normalmente con un borde distinguible.
+            <translation>Un humedal vadeable, normalmente con un borde distinguible.
 El símbolo debe combinarse con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
 El símbolo está orientado al norte.</translation>
-        </message>
+    </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation>Ciénaga estrecha</translation>
-        </message>
+            <translation>Humedal estrecho</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation>Un terreno pantanoso o una filtración de agua que son demasiado estrechos (menor de 5 m de anchura) para representarse con el símbolo de ciénaga.</translation>
-        </message>
+            <translation>Un humedal o un pequeño afloramiento de agua que son demasiado estrechos (menores de 5 m de anchura) para representarse con el símbolo de humedal.</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Ciénaga difusa</translation>
-        </message>
+            <translation>Humedal difuso</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310</comment>
-            <translation>Un terreno pantanoso poco definido, estacional o una zona de transición gradual desde una ciénaga a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
+            <translation>Un humedal poco definido, estacional o una zona de transición gradual de humedal a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
 El símbolo se debe combinar con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
 El símbolo está orientado al norte.</translation>
-        </message>
+    </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Ciénaga difusa, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal difuso, tamaño mínimo</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310.1</comment>
-            <translation>Un terreno pantanoso poco definido, estacional o una zona de transición gradual desde una ciénaga a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
+            <translation>Un humedal poco definido, estacional o una zona de transición gradual de humedal a tierra firme, que es vadeable. El borde es generalmente difuso y su vegetación similar a la del terreno que lo rodea.
 El símbolo se debe combinar con otros símbolos para indicar la velocidad de carrera que permite y la densidad de la vegetación.
 El símbolo está orientado al norte.</translation>
-        </message>
+    </message>
         <message>
             <source>Well, fountain or water tank</source>
             <comment>Name of symbol 311</comment>
@@ -1077,8 +1081,8 @@ El símbolo está orientado al norte.</translation>
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</source>
             <comment>Description of symbol 401</comment>
             <translation>Terreno despejado con una cobertura (hierba, musgo o similar) que permite mayor velocidad de carrera que el típico bosque abierto. Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar amarillo sólido).
-No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) y símbolos de ciénaga (308, 310).</translation>
-        </message>
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) y símbolos de humedales (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
@@ -1089,8 +1093,8 @@ No se puede combinar con otros símbolos de área excepto los símbolos 113 (ter
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402</comment>
             <translation>Las zonas con árboles dispersos o arbustos en terreno despejado y liso se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Se pueden incluir individualmente árboles prominentes utilizando el símbolo 417 (árbol grande y prominente). Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar de amarillo sólido).
-No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de ciénaga (308, 310).</translation>
-        </message>
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de humedales (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered bushes</source>
             <comment>Name of symbol 402.1</comment>
@@ -1101,8 +1105,8 @@ No se puede combinar con otros símbolos de área excepto los símbolos 113 (ter
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402.1</comment>
             <translation>Las zonas con árboles dispersos o arbustos en terreno despejado y liso se pueden generalizar utilizando un patrón regular de grandes puntos dentro de la trama amarilla. Los puntos pueden ser blancos (árboles dispersos) o verdes (arbustos/matorrales dispersos). Se pueden incluir individualmente árboles prominentes utilizando el símbolo 417 (árbol grande y prominente). Si las áreas coloreadas de amarillo son dominantes, se puede utilizar una trama (75% en lugar de amarillo sólido).
-No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de ciénaga (308, 310).</translation>
-        </message>
+No se puede combinar con otros símbolos de área excepto los símbolos 113 (terreno accidentado), 208 (peñascal) o símbolos de humedales (308, 310).</translation>
+    </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
@@ -1643,9 +1647,9 @@ If it is forbidden to run along the railway, it shall be combined with the overp
 Si está prohibido correr sobre la vía férrea, se debe combinar con el símbolo sobreimpreso para ruta prohibida. Si está prohibido cruzar la vía férrea, se debe conbinar con un símbolo de área prohibida.</translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Tendido eléctrico</translation>
+            <translation type="unfinished">Tendido eléctrico</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -1737,9 +1741,9 @@ Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que s
             <translation>Un muro identificable de piedra, hormigón, madera u otros materiales. Altura mínima: 1 m.</translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Muro de piedra en ruinas</translation>
+            <translation type="unfinished">Muro de piedra en ruinas</translation>
         </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
@@ -2651,8 +2655,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
@@ -2661,7 +2665,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
@@ -2961,8 +2965,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Ciénaga estrecha</translation>
-        </message>
+            <translation>Humedal estrecho</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
@@ -2971,8 +2975,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation>Ciénaga no vadeable</translation>
-        </message>
+            <translation>Humedal no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
@@ -2981,8 +2985,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation>Ciénaga no vadeable, línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
@@ -2991,13 +2995,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation>Ciénaga no vadeable, con línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Ciénaga</translation>
-        </message>
+            <translation>Humedal</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
@@ -3006,13 +3010,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Ciénaga, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation>Ciénaga difusa</translation>
-        </message>
+            <translation>Humedal difuso</translation>
+    </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
@@ -3021,8 +3025,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation>Ciénaga difusa, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal difuso, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
@@ -4692,8 +4696,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Ciénaga estrecha</translation>
-        </message>
+            <translation>Humedal estrecho</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol marsh (310).</source>
             <comment>Description of symbol 308</comment>
@@ -4735,8 +4739,8 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Ciénaga</translation>
-        </message>
+            <translation>Humedal</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness. 
 
@@ -4747,13 +4751,13 @@ Minimum size: not less than 2 lines, 5 mm long.</source>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Ciénaga, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation>Ciénaga difusa</translation>
-        </message>
+            <translation>Humedal difuso</translation>
+    </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.
 
@@ -4764,8 +4768,8 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation>Ciénaga difusa, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal difuso, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Small fountain or well</source>
             <comment>Name of symbol 312</comment>
@@ -5174,7 +5178,7 @@ Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (mi
         <message>
             <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 516</comment>
-            <translation type="unfinished"></translation>
+            <translation type="unfinished">Tendido eléctrico</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.
@@ -6243,7 +6247,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
@@ -6253,7 +6257,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
@@ -6417,8 +6421,8 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation>Ciénaga no vadeable</translation>
-        </message>
+            <translation>Humedal no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
@@ -6427,18 +6431,18 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation>Ciénaga no vadeable, línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation>Ciénaga no vadeable, con línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Ciénaga</translation>
-        </message>
+            <translation>Humedal</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
@@ -6447,8 +6451,8 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Ciénaga, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Special water feature</source>
             <comment>Name of symbol 314</comment>
@@ -7372,8 +7376,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Ciénaga estrecha</translation>
-        </message>
+            <translation>Humedal estrecho</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
@@ -7382,8 +7386,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation>Ciénaga difusa</translation>
-        </message>
+            <translation>Humedal difuso</translation>
+    </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
@@ -7392,8 +7396,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation>Ciénaga difusa, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal difuso, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>
@@ -8051,7 +8055,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, minimum size</source>
@@ -8061,7 +8065,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
             <comment>Description of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un acantilado, cantera o banco de tierra infranqueable (ver 106) se muestra con una línea de 0,35 mm y etiquetas hacia abajo que muestran su extensión total desde la línea superior hasta el pie. En las paredes de roca verticales, las marcas pueden omitirse si el espacio es corto, por ejemplo, en pasajes estrechos entre acantilados (el pasaje debe trazarse con una anchura de al menos 0,3 mm). Las etiquetas pueden extenderse sobre un símbolo de área que represente detalles inmediatamente debajo de la pared rocosa. Cuando una cara de roca cae directamente al agua haciendo imposible pasar bajo el acantilado a lo largo del borde del agua, la línea de la orilla se omite o las marcas deben extenderse claramente sobre la línea de la orilla.</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags</source>
@@ -9308,8 +9312,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation>Ciénaga estrecha</translation>
-        </message>
+            <translation>Humedal estrecho</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
             <comment>Description of symbol 308</comment>
@@ -9318,8 +9322,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation>Ciénaga no vadeable</translation>
-        </message>
+            <translation>Humedal no vadeable</translation>
+    </message>
         <message>
             <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
             <comment>Description of symbol 309</comment>
@@ -9328,8 +9332,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 309.1</comment>
-            <translation>Ciénaga no vadeable, línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, línea de orilla</translation>
+    </message>
         <message>
             <source>A black line surrounds the symbol.</source>
             <comment>Description of symbol 309.1</comment>
@@ -9338,13 +9342,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Uncrossable marsh, with border line</source>
             <comment>Name of symbol 309.2</comment>
-            <translation>Ciénaga no vadeable, con línea de orilla</translation>
-        </message>
+            <translation>Humedal no vadeable, con línea de orilla</translation>
+    </message>
         <message>
             <source>Marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation>Ciénaga</translation>
-        </message>
+            <translation>Humedal</translation>
+    </message>
         <message>
             <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
             <comment>Description of symbol 310</comment>
@@ -9353,13 +9357,13 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation>Ciénaga, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation>Ciénaga difusa</translation>
-        </message>
+            <translation>Humedal difuso</translation>
+    </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
             <comment>Description of symbol 311</comment>
@@ -9368,8 +9372,8 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation>Ciénaga difusa, tamaño mínimo</translation>
-        </message>
+            <translation>Humedal difuso, tamaño mínimo</translation>
+    </message>
         <message>
             <source>Well</source>
             <comment>Name of symbol 312</comment>

@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QFileInfo>
 #include <QHash>
 #include <QMessageBox>
 #include <QXmlStreamReader>
@@ -30,6 +31,7 @@
 // IWYU pragma: no_include <qxmlstream.h>
 
 #include "core/georeferencing.h"
+#include "core/storage_location.h"  // IWYU pragma: keep
 #include "templates/template_track.h"
 #include "util/dxfparser.h"
 
@@ -220,6 +222,10 @@ bool Track::saveTo(const QString& path) const
 	stream.writeEndDocument();
 	
 	file.close();
+#ifdef Q_OS_ANDROID
+	// Make the MediaScanner aware of the *updated* file.
+	Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
+#endif
 	return true;
 }
 

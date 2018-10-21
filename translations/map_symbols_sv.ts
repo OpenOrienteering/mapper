@@ -288,14 +288,15 @@ För långa skärningar är det tillåtet att använda kortare taggar vid ändpu
             <translation>Tydligt jordvall. Lägsta höjd: 1 m.</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Otydligt jordvall</translation>
+            <translation type="unfinished">Otydligt jordvall</translation>
         </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
+            <translation type="unfinished">Otydligt eller raserad jordvall. Lägsta höjd: 0,5 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
@@ -804,9 +805,9 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Sandområde</translation>
+            <translation type="unfinished">Sandområde</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -933,7 +934,8 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1615,7 +1617,7 @@ If it is forbidden to run along the railway, it shall be combined with the overp
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1702,7 +1704,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
             <translation type="unfinished"></translation>
         </message>

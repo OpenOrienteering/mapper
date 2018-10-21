@@ -1788,6 +1788,7 @@ void MapEditorController::moveToGpsPos()
 		return;
 	auto cur_gps_pos = gps_display->getLatestGPSCoord();
 	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
+	gps_display->startBlinking(3);
 }
 
 void MapEditorController::zoomIn()
@@ -3321,34 +3322,42 @@ void MapEditorController::enableGPSDisplay(bool enable)
 					// There is a template for this track.
 					new_template = false;
 					track = qobject_cast<TemplateTrack*>(temp);
-					if (!track)
-					{
-						// Need to replace the template at template_index
-						map->setTemplateAreaDirty(template_index);
-						map->deleteTemplate(template_index);
-					}
 					break;
 				}
 			}
 			
+			// Derive new visibility from previous/default one.
+			auto visibility = main_view->getTemplateVisibility(track);
+			visibility.opacity = std::max(0.5f, visibility.opacity);
+			visibility.visible = true;
+			
 			if (!track)
 			{
+				if (!new_template)
+				{
+					// Need to replace the template at template_index
+					map->setTemplateAreaDirty(template_index);
+					map->deleteTemplate(template_index);
+				}
 				track = new TemplateTrack(gpx_file_path, map);
+				// This will set the state to 'Loaded', so we need to reset it
+				// to `Unloaded` to allow for loading the file when it becomes
+				// visible for the first time.
+				track->configureForGPSTrack();
+				if (QFileInfo::exists(gpx_file_path))
+				{
+					track->unloadTemplateFile();
+					track->loadTemplateFile(false);
+				}
 				map->addTemplate(track, template_index);
-			}
-			if (track->getTemplateState() != Template::Loaded)
-			{
-				track->loadTemplateFile(false);
-			}
-			track->configureForGPSTrack();
-			map->setTemplateAreaDirty(template_index);
-			if (new_template)
-			{
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
 				map->setTemplatesDirty();
 			}
-				
+			
+			main_view->setTemplateVisibility(track, visibility);
+			map->setTemplateAreaDirty(template_index);
+			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
 	}
@@ -3668,10 +3677,16 @@ void MapEditorController::changeMapPart(int index)
 void MapEditorController::reassignObjectsToMapPart(int target)
 {
 	auto current = map->getCurrentPartIndex();
-	auto begin   = map->reassignObjectsToMapPart(map->selectedObjectsBegin(), map->selectedObjectsEnd(), current, target);
+	auto* current_part = map->getPart(current);
+	std::vector<int> objects(map->selectedObjects().size());
+	std::transform(map->selectedObjectsBegin(), map->selectedObjectsEnd(), begin(objects), [current_part](auto* object) {
+		return current_part->findObjectIndex(object);
+	});
+	std::sort(objects.rbegin(), objects.rend());
+	map->reassignObjectsToMapPart(begin(objects), end(objects), current, target);
 	
 	auto undo = new SwitchPartUndoStep(map, target, current);
-	for (std::size_t i = begin, end = map->getPart(target)->getNumObjects(); i < end; ++i)
+	for (auto i : objects)
 		undo->addObject(i);
 	map->push(undo);
 }
@@ -3696,11 +3711,11 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		auto source = map->getCurrentPartIndex();
 		UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, source);
 		
-		auto begin  = map->mergeParts(source, target);
+		auto first  = map->mergeParts(source, target);
 		
 		auto switch_part_undo = new SwitchPartUndoStep(map, target, source);
-		for (std::size_t i = begin, end = target_part->getNumObjects(); i < end; ++i)
-			switch_part_undo->addObject(i);
+		for (auto i = target_part->getNumObjects(); i > first; --i)
+			switch_part_undo->addObject(0);
 		
 		auto undo = new CombinedUndoStep(map);
 		undo->push(switch_part_undo);
@@ -3731,10 +3746,10 @@ void MapEditorController::mergeAllMapParts()
 		for (auto i = map->getNumParts() - 1; i > 0; --i)
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
-			auto begin = map->mergeParts(i, 0);
+			auto first = map->mergeParts(i, 0);
 			auto switch_part_undo = new SwitchPartUndoStep(map, 0, i);
-			for (std::size_t j = begin, end = target_part->getNumObjects(); j < end; ++j)
-				switch_part_undo->addObject(j);
+			for (auto j = target_part->getNumObjects(); j > first; --j)
+				switch_part_undo->addObject(0);
 			undo->push(switch_part_undo);
 			undo->push(add_part_step);
 		}

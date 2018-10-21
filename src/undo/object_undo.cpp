@@ -35,6 +35,7 @@ namespace literal
 {
 	const QLatin1String source("source");
 	const QLatin1String part("part");
+	const QLatin1String reverse("reverse");
 }
 
 
@@ -443,7 +444,7 @@ bool AddObjectsUndoStep::sortOrder(const std::pair< int, int >& a, const std::pa
 
 // ### SwitchPartUndoStep ###
 
-SwitchPartUndoStep::SwitchPartUndoStep(Map *map, std::size_t source, std::size_t target_index)
+SwitchPartUndoStep::SwitchPartUndoStep(Map *map, int source, int target_index)
 : ObjectModifyingUndoStep(SwitchPartUndoStepType, map, target_index)
 , source_index(source)
 {
@@ -458,25 +459,73 @@ SwitchPartUndoStep::SwitchPartUndoStep(Map *map)
 }
 
 // virtual
-SwitchPartUndoStep::~SwitchPartUndoStep()
+SwitchPartUndoStep::~SwitchPartUndoStep() = default;
+
+
+// virtual
+bool SwitchPartUndoStep::getModifiedParts(UndoStep::PartSet& out) const
 {
-	// nothing
+	out.insert(source_index);
+	return ObjectModifyingUndoStep::getModifiedParts(out);
+}
+
+// virtual
+void SwitchPartUndoStep::getModifiedObjects(int part_index, UndoStep::ObjectSet& out) const
+{
+	if (!reverse)
+	{
+		ObjectModifyingUndoStep::getModifiedObjects(part_index, out);
+	}
+	else if (part_index == source_index)
+	{
+		MapPart* const map_part = map->getPart(source_index);
+		auto object_index = map_part->getNumObjects();
+		for (auto&& counter : modified_objects)
+		{
+			Q_UNUSED(counter)
+			Q_ASSERT(object_index > 0);
+			if (auto* object = map_part->getObject(--object_index))
+				out.insert(object);
+		}
+	}
 }
 
 // virtual
 UndoStep* SwitchPartUndoStep::undo()
 {
-	std::size_t begin = map->reassignObjectsToMapPart(modified_objects.begin(), modified_objects.end(), source_index, getPartIndex());
+	auto selection_size = map->selectedObjects().size();
 	
-	ObjectList::iterator it = modified_objects.begin();
-	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, getPartIndex(), source_index);
-	for (std::size_t i = begin, end = map->getPart(getPartIndex())->getNumObjects(); i < end; ++i)
+	auto source = map->getPart(source_index);
+	auto target = map->getPart(getPartIndex());
+	SwitchPartUndoStep* undo = new SwitchPartUndoStep(map, source_index, getPartIndex());
+	undo->modified_objects = modified_objects;
+	if (reverse)
 	{
-		undo->addObject(i);
-		// Save indices from target part (needed for getModifiedObjects())
-		*it = i;
-		++it;
+		std::for_each(begin(modified_objects), end(modified_objects), [this, source, target](auto i) {
+			auto object = target->getObject(i);
+			if (map->getCurrentPart() == target && map->isObjectSelected(object))
+				map->removeObjectFromSelection(object, false);
+			target->deleteObject(i, true);
+			source->addObject(object);
+		});
 	}
+	else
+	{
+		undo->reverse = true;
+		auto i = source->getNumObjects();
+		std::for_each(modified_objects.rbegin(), modified_objects.rend(), [this, source, target, &i](auto j) {
+			--i;
+			auto object = source->getObject(i);
+			if (map->getCurrentPart() == source && map->isObjectSelected(object))
+				map->removeObjectFromSelection(object, false);
+			source->deleteObject(i, true);
+			target->addObject(object, j);
+		});
+	}
+	
+	if (map->selectedObjects().size() != selection_size)
+		map->emitSelectionChanged();
+	
 	return undo;
 }
 
@@ -497,6 +546,7 @@ void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
 	ObjectModifyingUndoStep::saveImpl(xml);
 	XmlElementWriter source_element(xml, literal::source);
 	source_element.writeAttribute(literal::part, source_index);
+	source_element.writeAttribute(literal::reverse, reverse);
 }
 
 // virtual
@@ -505,7 +555,8 @@ void SwitchPartUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbo
 	if (xml.name() == literal::source)
 	{
 		XmlElementReader source_element(xml);
-		source_index = source_element.attribute<std::size_t>(literal::part);
+		source_index = source_element.attribute<int>(literal::part);
+		reverse = source_element.attribute<bool>(literal::reverse);
 	}
 	else
 		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);

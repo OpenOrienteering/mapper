@@ -29,6 +29,7 @@
 #include <QAbstractButton>
 #include <QByteArray>
 #include <QDebug>
+#include <QFileInfo>
 #include <QFlags>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -56,6 +57,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "core/storage_location.h"  // IWYU pragma: keep
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/util_gui.h"
@@ -99,7 +101,12 @@ TemplateImage::~TemplateImage()
 
 bool TemplateImage::saveTemplateFile() const
 {
-	return image.save(template_path);
+	const auto result = image.save(template_path);
+#ifdef Q_OS_ANDROID
+	// Make the MediaScanner aware of the *updated* file.
+	Android::mediaScannerScanFile(QFileInfo(template_path).absolutePath());
+#endif
+	return result;
 }
 
 

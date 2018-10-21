@@ -512,9 +512,9 @@ bool TextSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		bold != text->bold ||
 		italic != text->italic ||
 		underline != text->underline ||
-		line_spacing != text->line_spacing ||
+		qAbs(line_spacing - text->line_spacing) > 0.0005f ||
 		paragraph_spacing != text->paragraph_spacing ||
-		character_spacing != text->character_spacing ||
+		qAbs(character_spacing - text->character_spacing) > 0.0005f ||
 		kerning != text->kerning ||
 		line_below != text->line_below ||
 		framing != text->framing)
@@ -536,8 +536,6 @@ bool TextSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 			line_below_distance != text->line_below_distance)
 			return false;
 	}
-	if (tab_interval != text->tab_interval)
-		return false;
 	if (custom_tabs.size() != text->custom_tabs.size())
 		return false;
 	for (size_t i = 0, end = custom_tabs.size(); i < end; ++i)

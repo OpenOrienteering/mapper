@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014, 2016 Kai Pastor
+ *    Copyright 2014, 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,37 +20,88 @@
 
 #include "gps_display.h"
 
-#if defined(QT_POSITIONING_LIB)
-#  include <QtPositioning/QGeoPositionInfoSource>  // IWYU pragma: keep
-#endif
 #if defined(Q_OS_ANDROID)
 #  include <jni.h>
-#  include <QtAndroidExtras/QAndroidJniObject>
+#  include <QAndroidJniObject>
 #endif
+#if defined(QT_POSITIONING_LIB)
+#  include <QGeoCoordinate>
+#  include <QGeoPositionInfoSource>  // IWYU pragma: keep
+#endif
+
+#include <algorithm>
+#include <type_traits>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QtMath>
+#include <QColor>
+#include <QFlags>
 #include <QPainter>
+#include <QPen>
+#include <QPoint>
+#include <QPointF>
+#include <QTime>
 #include <QTimer>  // IWYU pragma: keep
+#include <QTimerEvent>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
+#include "core/map_view.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_widget.h"
 #include "sensors/compass.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {
+
+namespace {
+
+// Opacities as understood by QPainter::setOpacity().
+static qreal opacity_curve[] = { 0.8, 1.0, 0.8, 0.5, 0.2, 0.0, 0.2, 0.5 };
+
+}  // namespace
+
+
+void GPSDisplay::PulsatingOpacity::start(QObject& object)
+{
+	if (!timer_id)
+		timer_id = object.startTimer(1000 / std::extent<decltype(opacity_curve)>::value);
+}
+
+void GPSDisplay::PulsatingOpacity::stop(QObject& object)
+{
+	if (timer_id)
+	{
+		object.killTimer(timer_id);
+		*this = {};
+	}
+}
+
+bool GPSDisplay::PulsatingOpacity::advance()
+{
+	if (isActive())
+	{
+		++index;
+		if (index < std::extent<decltype(opacity_curve)>::value)
+			return true;
+		index = 0;
+	}
+	return false;
+}
+
+qreal GPSDisplay::PulsatingOpacity::current() const
+{
+	return opacity_curve[index];
+}
+
+
 
 GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, QObject* parent)
  : QObject(parent)
  , widget(widget)
  , georeferencing(georeferencing)
- , source(nullptr)
- , tracking_lost(false)
- , has_valid_position(false)
- , gps_updated(false)
- , visible(false)
- , distance_rings_enabled(false)
- , heading_indicator_enabled(false)
 {
 #if defined(QT_POSITIONING_LIB)
 	source = QGeoPositionInfoSource::createDefaultSource(this);
@@ -67,7 +118,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 	connect(source, &QGeoPositionInfoSource::updateTimeout, this, &GPSDisplay::updateTimeout);
 #elif defined(MAPPER_DEVELOPMENT_BUILD)
 	// DEBUG
-	QTimer* debug_timer = new QTimer(this);
+	auto* debug_timer = new QTimer(this);
 	connect(debug_timer, &QTimer::timeout, this, &GPSDisplay::debugPositionUpdate);
 	debug_timer->start(500);
 	visible = true;
@@ -168,52 +219,79 @@ void GPSDisplay::paint(QPainter* painter)
 		return;
 	QPointF gps_pos = widget->mapToViewport(gps_coord);
 	
+	const auto one_mm = Util::mmToPixelLogical(1);
+	const auto mmToPixelLogical = [one_mm](qreal mm) { return mm * one_mm; };
+	
+	const auto flags = painter->renderHints();
+	painter->setRenderHints(flags | QPainter::Antialiasing);
+	const auto opacity = painter->opacity();
+	painter->setOpacity(pulsating_opacity.current() * opacity);
+	
+	// Highlight markers by white framing.
+	const auto framing = QColor(Qt::white);
+	const auto foreground = QColor(tracking_lost ? Qt::gray : Qt::red);
+	
 	// Draw center dot or arrow
-	painter->setPen(Qt::NoPen);
-	painter->setBrush(QBrush(tracking_lost ? Qt::gray : Qt::red));
 	if (heading_indicator_enabled)
 	{
-		const qreal base_length_unit = Util::mmToPixelLogical(0.6);
-
 		// For heading indicator, get azimuth from compass and calculate
 		// the relative rotation to map view rotation, clockwise.
-		qreal heading_rotation_deg = Compass::getInstance().getCurrentAzimuth() + qRadiansToDegrees(widget->getMapView()->getRotation());
+		const auto heading_rotation_deg = qreal(Compass::getInstance().getCurrentAzimuth())
+		                                  + qRadiansToDegrees(widget->getMapView()->getRotation());
 		
 		painter->save();
 		painter->translate(gps_pos);
 		painter->rotate(heading_rotation_deg);
+		painter->scale(one_mm, one_mm);
 		
 		// Draw arrow
 		static const QPointF arrow_points[4] = {
-			QPointF(0, -2.5 * base_length_unit),
-			QPointF(base_length_unit, base_length_unit),
-			QPointF(0, 0),
-			QPointF(base_length_unit, base_length_unit)
+		    { 0, -2.5 },
+		    { 1, 1 },
+		    { 0, 0 },
+		    { -1, 1 }
 		};
-		painter->drawPolygon(arrow_points, 4);
+		painter->setPen(QPen{framing, mmToPixelLogical(0.1)});
+		painter->setBrush(foreground);
+		painter->drawPolygon(arrow_points, std::extent<decltype(arrow_points)>::value);
 		
 		// Draw heading line
-		painter->setPen(QPen(Qt::gray, base_length_unit / 6));
+		painter->setPen(QPen(Qt::gray, 0.2));
 		painter->setBrush(Qt::NoBrush);
-		painter->drawLine(QPointF(0, 0), QPointF(0, -10000 * base_length_unit)); // very long
+		painter->drawLine(QPointF(0, 0), QPointF(0, -500)); // very long
 		
 		painter->restore();
 	}
 	else
 	{
-		const qreal dot_radius = Util::mmToPixelLogical(0.5f);
+		const auto dot_radius = mmToPixelLogical(0.6);
+		painter->setPen(QPen{framing, mmToPixelLogical(0.3)});
+		painter->setBrush(foreground);
 		painter->drawEllipse(gps_pos, dot_radius, dot_radius);
+		
+		const auto five_mm = mmToPixelLogical(5);
+		const auto ten_mm = 2 * five_mm;
+		const auto draw_crosshairs = [painter, gps_pos, five_mm, ten_mm]() {
+			painter->drawLine(gps_pos - QPointF{five_mm, 0}, gps_pos - QPointF{ten_mm, 0});
+			painter->drawLine(gps_pos + QPointF{five_mm, 0}, gps_pos + QPointF{ten_mm, 0});
+			painter->drawLine(gps_pos - QPointF{0, five_mm}, gps_pos - QPointF{0, ten_mm});
+			painter->drawLine(gps_pos + QPointF{0, five_mm}, gps_pos + QPointF{0, ten_mm});
+		};
+		painter->setBrush(Qt::NoBrush);
+		painter->setPen(QPen(framing, mmToPixelLogical(1)));
+		draw_crosshairs();
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.5)));
+		draw_crosshairs();
 	}
 	
 	auto meters_to_pixels = widget->getMapView()->lengthToPixel(qreal(1000000) / georeferencing.getScaleDenominator());
 	// Draw distance circles
 	if (distance_rings_enabled)
 	{
-		const int num_distance_rings = 2;
-		const qreal distance_ring_radius_meters = 10;
-		
-		auto distance_ring_radius_pixels = distance_ring_radius_meters * meters_to_pixels;
-		painter->setPen(QPen(Qt::gray, Util::mmToPixelLogical(0.1)));
+		const auto num_distance_rings = 2;
+		const auto distance_ring_radius_meters = 10;
+		const auto distance_ring_radius_pixels = distance_ring_radius_meters * meters_to_pixels;
+		painter->setPen(QPen(Qt::gray, mmToPixelLogical(0.1)));
 		painter->setBrush(Qt::NoBrush);
 		auto radius = distance_ring_radius_pixels;
 		for (int i = 0; i < num_distance_rings; ++i)
@@ -226,19 +304,49 @@ void GPSDisplay::paint(QPainter* painter)
 	// Draw accuracy circle
 	if (latest_gps_coord_accuracy >= 0)
 	{
-		auto accuracy_pixels = latest_gps_coord_accuracy * meters_to_pixels;
-		
-		painter->setPen(QPen(tracking_lost ? Qt::gray : Qt::red, Util::mmToPixelLogical(0.2f)));
+		const auto accuracy_pixels = qreal(latest_gps_coord_accuracy) * meters_to_pixels;
 		painter->setBrush(Qt::NoBrush);
+		painter->setPen(QPen(framing, mmToPixelLogical(1)));
+		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
+		painter->setPen(QPen(foreground, mmToPixelLogical(0.5)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
 	}
+	
+	painter->setOpacity(opacity);
+	painter->setRenderHints(QPainter::Antialiasing);
 }
+
+
+void GPSDisplay::startBlinking(int seconds)
+{
+	blink_count = std::max(1, seconds);
+	pulsating_opacity.start(*this);
+}
+
+void GPSDisplay::stopBlinking()
+{
+	blink_count = 0;
+	pulsating_opacity.stop(*this);
+}
+
+void GPSDisplay::timerEvent(QTimerEvent* e)
+{
+	if (e->timerId() == pulsating_opacity.timerId())
+	{
+		if (!pulsating_opacity.advance())
+		{
+			--blink_count;
+			if (blink_count <= 0)
+				stopBlinking();
+		}
+		updateMapWidget();
+	}
+}
+
 
 #if defined(QT_POSITIONING_LIB)
 void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 {
-	Q_UNUSED(info);
-
 	gps_updated = true;
 	tracking_lost = false;
 	has_valid_position = true;
@@ -291,11 +399,11 @@ void GPSDisplay::debugPositionUpdate()
 		return;
 	
 	QTime now = QTime::currentTime();
-	float offset = now.msecsSinceStartOfDay() / (float)(10 * 1000);
-	float accuracy = 12 + 7 * qSin(2 + offset);
-	float altitude = 400 + 10 * qSin(1 + 0.1f * offset);
+	const auto offset = now.msecsSinceStartOfDay() / qreal(10 * 1000);
+	const auto accuracy = float(12 + 7 * qSin(2 + offset));
+	const auto altitude = 400 + 10 * qSin(1 + offset / 10);
 	
-	MapCoordF coord(30 * qSin(0.5f * offset), 30 * qCos(0.53f * offset));
+	const auto coord = MapCoordF(30 * qSin(0.5 * offset), 30 * qCos(0.53 * offset));
 	emit mapPositionUpdated(coord, accuracy);
 	
 	if (georeferencing.isValid() && ! georeferencing.isLocal())
@@ -332,7 +440,9 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 	}
 	
 	latest_pos_info = source->lastKnownPosition(true);
-	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy) ? latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy) : -1;
+	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy)
+	                            ? float(latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy))
+	                            : -1;
 	
 	QGeoCoordinate qgeo_coord = latest_pos_info.coordinate();
 	if (!qgeo_coord.isValid())

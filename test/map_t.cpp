@@ -61,7 +61,7 @@ void MapTest::initTestCase()
 	Map map;
 	
 	// Accept any message boxes
-	connect(qApp, &QApplication::focusChanged, [](QWidget*, QWidget* w) {
+	connect(qApp, &QApplication::focusChanged, qApp, [](QWidget*, QWidget* w) {
 		if (w && qobject_cast<QMessageBox*>(w->window()))
 			QTimer::singleShot(0, w->window(), SLOT(accept()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
 	});

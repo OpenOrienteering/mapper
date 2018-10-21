@@ -295,14 +295,15 @@ Longueur minimum : 0,6 mm (9 m au sol).</translation>
 Longueur minimum : 2 mm (30 m au sol).</translation>
         </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Levée de terre en ruine</translation>
+            <translation type="unfinished">Levée de terre en ruine</translation>
         </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Une levée de terre en ruine ou moins facile à distinguer. 
+            <translation type="unfinished">Une levée de terre en ruine ou moins facile à distinguer.
 Hauteur minimum 0,5 m.
 Longueur minimum : 2 tirets (3,65 mm - 55m au sol).
 Si la levée de terre est plus courte le dessin doit l’exagérer pour atteindre la longueur minimum ou il faut utiliser le symbole 105 (levée de terre).</translation>
@@ -872,9 +873,9 @@ Densité : 10 à 12 points/mm2 (31 -38 %).
 Pour éviter toute confusion avec le symbole 416 (limite nette de végétation), les points ne doivent pas être positionnés de façon à former une ligne.</translation>
         </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Terrain découvert sablonneux</translation>
+            <translation type="unfinished">Terrain découvert sablonneux</translation>
         </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -1003,9 +1004,10 @@ Emprise au sol : 10,5 m x 12 m.</translation>
             <translation>Cours d’eau franchissable</translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation>Sa largeur devrait être d’au moins 2 m.
+            <translation type="unfinished">Sa largeur devrait être d’au moins 2 m.
 Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         </message>
         <message>
@@ -1815,9 +1817,9 @@ S’il est interdit de courir le long de la voie ferrée, le symbole doit être 
 Longueur minimum (isolée) : 2 tirets (4 mm - 60 m au sol).</translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
-            <translation>Ligne électrique, câble porteur, ou téléski</translation>
+            <translation>Ligne électrique, téléphérique ou remonte-pente</translation>
         </message>
         <message>
             <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -1910,9 +1912,9 @@ Hauteur minimum : 1 m.
 Longueur minimum (isolé) : 2 mm (30 m au sol).</translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation>Mur en ruine</translation>
+            <translation type="unfinished">Mur en ruine</translation>
         </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
