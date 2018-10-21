@@ -37,6 +37,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QtNumeric>
 #include <QColor>
 #include <QFlags>
 #include <QPainter>
@@ -301,9 +302,9 @@ void GPSDisplay::paint(QPainter* painter)
 	}
 	
 	// Draw accuracy circle
-	if (latest_gps_coord_accuracy >= 0)
+	if (!qIsNaN(latest_gps_coord_accuracy))
 	{
-		const auto accuracy_pixels = qreal(latest_gps_coord_accuracy) * meters_to_pixels;
+		const auto accuracy_pixels = static_cast<qreal>(latest_gps_coord_accuracy) * meters_to_pixels;
 		painter->setBrush(Qt::NoBrush);
 		painter->setPen(QPen(framing, mmToPixelLogical(1)));
 		painter->drawEllipse(gps_pos, accuracy_pixels, accuracy_pixels);
@@ -358,7 +359,7 @@ void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 		emit latLonUpdated(
 			info.coordinate().latitude(),
 			info.coordinate().longitude(),
-			(info.coordinate().type() == QGeoCoordinate::Coordinate3D) ? info.coordinate().altitude() : -9999,
+			info.coordinate().altitude(),
 			latest_gps_coord_accuracy
 		);
 	}
@@ -408,9 +409,7 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 	}
 	
 	const auto latest_pos_info = source->lastKnownPosition(true);
-	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy)
-	                            ? float(latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy))
-	                            : -1;
+	latest_gps_coord_accuracy = static_cast<float>(latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy));
 	
 	QGeoCoordinate qgeo_coord = latest_pos_info.coordinate();
 	if (!qgeo_coord.isValid())
