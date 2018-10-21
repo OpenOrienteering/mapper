@@ -46,6 +46,18 @@ set(MAPPER_SENSORS_SOURCES
   gps_temporary_markers.cpp
 )
 
+
+if(TARGET Qt5::Positioning)
+	option(Mapper_FAKE_POSITION_SOURCE "Use a fake position source" OFF)
+	if(Mapper_FAKE_POSITION_SOURCE)
+		list(APPEND MAPPER_SENSORS_SOURCES fake_position_info_source.cpp)
+		list(APPEND MAPPER_SENSORS_DEFINITIONS PRIVATE MAPPER_FAKE_POSITION_SOURCE)
+	endif()
+else()
+	set(Mapper_FAKE_POSITION_SOURCE OFF)
+endif()
+
+
 mapper_translations_sources(${MAPPER_SENSORS_HEADERS} ${MAPPER_SENSORS_SOURCES})
 
 add_library(mapper-sensors STATIC ${MAPPER_SENSORS_HEADERS} ${MAPPER_SENSORS_SOURCES})

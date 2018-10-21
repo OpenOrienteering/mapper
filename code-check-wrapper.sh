@@ -49,6 +49,7 @@ PATTERN=" \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   duplicate_equals_t.cpp \
+  fake_position_info_source.cpp \
   file_dialog.cpp \
   /file_format.cpp \
   file_format_t.cpp \
