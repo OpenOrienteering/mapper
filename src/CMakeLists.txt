@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -19,8 +19,6 @@
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Sensors)
-find_package(Qt5Positioning)
 
 if(ANDROID)
 	find_package(Qt5AndroidExtras REQUIRED)
@@ -156,10 +154,6 @@ set(Mapper_Common_SRCS
   gui/widgets/text_alignment_widget.cpp
   gui/widgets/text_browser.cpp
   
-  sensors/compass.cpp
-  sensors/gps_display.cpp
-  sensors/gps_temporary_markers.cpp
-  
   templates/template.cpp
   templates/template_adjust.cpp
   templates/template_dialog_reopen.cpp
@@ -269,11 +263,10 @@ target_link_libraries(Mapper_Common
 )
 foreach(lib
   mapper-gdal
+  mapper-sensors
   printsupport
   Qt5::AndroidExtras
   Qt5::Network
-  Qt5::Positioning
-  Qt5::Sensors
 )
 	if(TARGET ${lib})
 		target_link_libraries(Mapper_Common ${lib})

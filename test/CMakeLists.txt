@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,9 +18,7 @@
 
 
 find_package(Qt5Network REQUIRED)
-find_package(Qt5Positioning)
 find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Sensors)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
