@@ -50,9 +50,6 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	
 	form_layout->addRow(Util::Headline::create(tr("Import with GDAL/OGR:")));
 	
-	import_dxf = new QCheckBox(tr("DXF"));
-	form_layout->addRow(import_dxf);
-	
 	import_gpx = new QCheckBox(tr("GPX"));
 	form_layout->addRow(import_gpx);
 	
@@ -111,7 +108,6 @@ QString GdalSettingsPage::title() const
 void GdalSettingsPage::apply()
 {
 	GdalManager manager;
-	manager.setFormatEnabled(GdalManager::DXF, import_dxf->isChecked());
 	manager.setFormatEnabled(GdalManager::GPX, import_gpx->isChecked());
 	manager.setFormatEnabled(GdalManager::OSM, import_osm->isChecked());
 	manager.setAreaHatchingEnabled(view_hatch->isChecked());
@@ -157,7 +153,6 @@ void GdalSettingsPage::reset()
 void GdalSettingsPage::updateWidgets()
 {
 	GdalManager manager;
-	import_dxf->setChecked(manager.isFormatEnabled(GdalManager::DXF));
 	import_gpx->setChecked(manager.isFormatEnabled(GdalManager::GPX));
 	import_osm->setChecked(manager.isFormatEnabled(GdalManager::OSM));
 	view_hatch->setChecked(manager.isAreaHatchingEnabled());

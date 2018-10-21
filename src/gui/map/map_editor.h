@@ -531,7 +531,7 @@ public slots:
 	        bool merge_duplicate_symbols = true
 	);
 	
-	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
+	/** Imports a track file (GPX, OSM, ...) into the map */
 	bool importGeoFile(const QString& filename);
 	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename, bool show_errors);

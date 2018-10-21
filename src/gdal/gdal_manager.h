@@ -49,7 +49,6 @@ private:
 public:
 	enum FileFormat
 	{
-		DXF,
 		GPX,
 		OSM
 	};

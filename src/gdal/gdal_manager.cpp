@@ -51,7 +51,6 @@ public:
 	const QString gdal_configuration_group{ QStringLiteral("GdalConfiguration") };
 
 	// Enabled formats
-	const QString gdal_dxf_key{ QStringLiteral("dxf") };
 	const QString gdal_gpx_key{ QStringLiteral("gpx") };
 	const QString gdal_osm_key{ QStringLiteral("osm") };
 	
@@ -105,10 +104,6 @@ public:
 		QString key;
 		switch (format)
 		{
-		case GdalManager::DXF:
-			key = gdal_dxf_key;
-			break;
-			
 		case GdalManager::GPX:
 			key = gdal_gpx_key;
 			break;
@@ -127,10 +122,6 @@ public:
 		bool default_value = true;
 		switch (format)
 		{
-		case GdalManager::DXF:
-			key = gdal_dxf_key;
-			break;
-			
 		case GdalManager::GPX:
 			key = gdal_gpx_key;
 			default_value = false;
@@ -272,8 +263,6 @@ private:
 				auto extension = extensions.mid(start, pos - start);
 				if (extension.isEmpty())
 					continue;
-				if (extension == "dxf" && !settings.value(gdal_dxf_key, true).toBool())
-					continue;
 				if (extension == "gpx" && !settings.value(gdal_gpx_key, false).toBool())
 					continue;
 				if (extension == "osm" && !settings.value(gdal_osm_key, true).toBool())
@@ -286,7 +275,7 @@ private:
 		// GDAL < 2.0 does not provide the supported extensions
 		static const std::vector<QByteArray> default_extensions = {
 		    "shp", "dbf",
-		    /* "dxf", */
+		    "dxf",
 		    /* "gpx", */
 		    /* "osm", */ "pbf",
 		};
@@ -294,8 +283,6 @@ private:
 		enabled_vector_import_extensions = default_extensions;
 
 		settings.beginGroup(gdal_manager_group);
-		if (settings.value(gdal_dxf_key, true).toBool())
-			enabled_vector_import_extensions.push_back("dxf");
 		if (settings.value(gdal_gpx_key, false).toBool())
 			enabled_vector_import_extensions.push_back("gpx");
 		if (settings.value(gdal_osm_key, true).toBool())

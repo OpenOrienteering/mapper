@@ -33,7 +33,6 @@
 #include "core/georeferencing.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
 #include "templates/template_track.h"
-#include "util/dxfparser.h"
 
 
 namespace OpenOrienteering {
@@ -162,11 +161,6 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
 		if (!loadFromGPX(&file, project_points, dialog_parent))
-			return false;
-	}
-	else if (path.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive))
-	{
-		if (!loadFromDXF(&file, project_points, dialog_parent))
 			return false;
 	}
 	else if (path.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
@@ -410,73 +404,6 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		segment_starts.back() == (int)segment_points.size())
 	{
 		segment_starts.pop_back();
-	}
-	
-	return true;
-}
-
-bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent)
-{
-	DXFParser* parser = new DXFParser();
-	parser->setData(file);
-	QString result = parser->parse();
-	if (!result.isEmpty())
-	{
-		QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error reading"), OpenOrienteering::TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
-		delete parser;
-		return false;
-	}
-	QList<DXFPath> paths = parser->getData();
-	delete parser;
-	
-	// TODO: Re-implement the possibility to load degree values somewhere else.
-	//       It does not fit here as this method is called again every time a map
-	//       containing a track is re-loaded, and in this case the question should
-	//       not be asked again.
-	//int res = QMessageBox::question(dialog_parent, OpenOrienteering::TemplateTrack::tr("Question"), OpenOrienteering::TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
-	for (auto&& path : paths)
-	{
-		if (path.type == POINT)
-		{
-			if(path.coords.size() < 1)
-				continue;
-			TrackPoint point = TrackPoint(LatLon(path.coords.at(0).y, path.coords.at(0).x));
-			if (project_points)
-				point.map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(point.gps_coord)); // TODO: check for errors
-			waypoints.push_back(point);
-			waypoint_names.push_back(path.layer);
-		}
-		if (path.type == LINE ||
-			path.type == SPLINE	)
-		{
-			if (path.coords.size() < 1)
-				continue;
-			segment_starts.push_back(segment_points.size());
-			segment_names.push_back(path.layer);
-			int i = 0;
-			for (auto&& coord : path.coords)
-			{
-				TrackPoint point = TrackPoint(LatLon(coord.y, coord.x), QDateTime());
-				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(point.gps_coord)); // TODO: check for errors
-				if (path.type == SPLINE &&
-					i % 3 == 0 &&
-					i < path.coords.size() - 3)
-					point.is_curve_start = true;
-					
-				segment_points.push_back(point);
-				++i;
-			}
-			if (path.closed && !segment_points.empty())
-			{
-				const TrackPoint& start = segment_points[segment_starts.back()];
-				if (start.gps_coord != segment_points.back().gps_coord)
-				{
-					segment_points.push_back(start);
-					segment_points.back().is_curve_start = false;
-				}
-			}
-		}
 	}
 	
 	return true;
