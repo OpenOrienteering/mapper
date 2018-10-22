@@ -47,7 +47,6 @@ struct TrackPoint
 {
 	LatLon gps_coord;
 	MapCoordF map_coord;
-	bool is_curve_start;
 	
 	QDateTime datetime;		// QDateTime() if invalid
 	float elevation;		// -9999 if invalid
