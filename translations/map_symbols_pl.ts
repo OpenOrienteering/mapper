@@ -6,13 +6,13 @@
         <message>
             <source>Purple</source>
             <comment>Color 0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Purpurowy</translation>
+    </message>
         <message>
             <source>Black</source>
             <comment>Color 1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Czarny</translation>
+    </message>
         <message>
             <source>Opaque White below Black</source>
             <comment>Color 2</comment>
@@ -21,18 +21,18 @@
         <message>
             <source>Black 65%</source>
             <comment>Color 3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Czarny 65%</translation>
+    </message>
         <message>
             <source>Black 20%</source>
             <comment>Color 4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Czarny 20%</translation>
+    </message>
         <message>
             <source>Brown 50%</source>
             <comment>Color 5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Brązowy 50%</translation>
+    </message>
         <message>
             <source>Black below light browns</source>
             <comment>Color 6</comment>
