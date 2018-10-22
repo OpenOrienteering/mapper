@@ -23,7 +23,7 @@
 
 #include <QApplication>
 #include <QFile>
-#include <QFileInfo>
+#include <QFileInfo>  // IWYU pragma: keep
 #include <QHash>
 #include <QMessageBox>
 #include <QXmlStreamReader>
