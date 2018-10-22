@@ -45,7 +45,6 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
 {
 	gps_coord = coord;
-	is_curve_start = false;
 	this->datetime = datetime;
 	this->elevation = elevation;
 	this->num_satellites = num_satellites;
