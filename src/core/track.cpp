@@ -90,8 +90,6 @@ Track::Track(const Track& other)
 	
 	current_segment_finished = other.current_segment_finished;
 	
-	element_tags   = other.element_tags;
-	
 	map_georef = other.map_georef;
 	
 	if (other.track_crs)
@@ -121,8 +119,6 @@ Track& Track::operator=(const Track& rhs)
 	
 	current_segment_finished = rhs.current_segment_finished;
 	
-	element_tags   = rhs.element_tags;
-	
 	map_georef = rhs.map_georef;
 	
 	if (rhs.track_crs)
@@ -141,7 +137,6 @@ void Track::clear()
 	segment_starts.clear();
 	segment_names.clear();
 	current_segment_finished = true;
-	element_tags.clear();
 	delete track_crs;
 	track_crs = nullptr;
 }
