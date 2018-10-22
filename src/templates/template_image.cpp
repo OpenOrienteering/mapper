@@ -29,7 +29,7 @@
 #include <QAbstractButton>
 #include <QByteArray>
 #include <QDebug>
-#include <QFileInfo>
+#include <QFileInfo>  // IWYU pragma: keep
 #include <QFlags>
 #include <QHBoxLayout>
 #include <QIcon>
