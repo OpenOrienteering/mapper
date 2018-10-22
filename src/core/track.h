@@ -25,7 +25,6 @@
 #include <vector>
 
 #include <QDateTime>
-#include <QHash>
 #include <QString>
 
 #include "core/georeferencing.h"
@@ -130,15 +129,6 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
-	/** A collection of key:value tags. Cf. Object::Tags. */
-	typedef QHash<QString, QString> Tags;
-	
-	/** A mapping of an element name to a tags collection. */
-	typedef QHash<QString, Tags> ElementTags;
-	
-	/** Returns the mapping of element names to tag collections. */
-	const ElementTags& tags() const;
-
 	/** Assigns a copy of another Track's data to this object. */
 	Track& operator=(const Track& rhs);
 	
@@ -147,9 +137,6 @@ private:
 	
 	void projectPoints();
 	
-	
-	/** A mapping of element id to tags. */
-	ElementTags element_tags; 
 	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
@@ -164,15 +151,6 @@ private:
 	Georeferencing* track_crs;
 	Georeferencing map_georef;
 };
-
-
-// ### Track inline code ###
-
-inline
-const Track::ElementTags& Track::tags() const
-{
-	return element_tags;
-}
 
 
 }  // namespace OpenOrienteering
