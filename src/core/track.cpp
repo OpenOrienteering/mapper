@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,7 +19,7 @@
  */
 
 
-#include "gps_track.h"
+#include "track.h"
 
 #include <QApplication>
 #include <QFile>

@@ -29,8 +29,8 @@
 #include <QRectF>
 #include <QString>
 
+#include "core/track.h"
 #include "templates/template.h"
-#include "sensors/gps_track.h"
 
 class QByteArray;
 class QPainter;

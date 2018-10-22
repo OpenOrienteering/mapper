@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2017, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,8 +19,8 @@
  */
 
 
-#ifndef OPENORIENTEERING_GPS_TRACK_H
-#define OPENORIENTEERING_GPS_TRACK_H
+#ifndef OPENORIENTEERING_TRACK_H
+#define OPENORIENTEERING_TRACK_H
 
 #include <vector>
 
@@ -179,4 +180,4 @@ const Track::ElementTags& Track::tags() const
 
 }  // namespace OpenOrienteering
 
-#endif
+#endif  // OPENORIENTEERING_TRACK_H

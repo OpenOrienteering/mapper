@@ -58,6 +58,7 @@ set(Mapper_Common_SRCS
   core/map_view.cpp
   core/path_coord.cpp
   core/storage_location.cpp
+  core/track.cpp
   core/virtual_coord_vector.cpp
   core/virtual_path.cpp
   
@@ -158,7 +159,6 @@ set(Mapper_Common_SRCS
   sensors/compass.cpp
   sensors/gps_display.cpp
   sensors/gps_temporary_markers.cpp
-  sensors/gps_track.cpp
   sensors/gps_track_recorder.cpp
   
   templates/template.cpp
