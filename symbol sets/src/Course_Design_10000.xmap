@@ -10387,7 +10387,7 @@ The orientation of the symbol indicates the direction in which the corner points
         </templates>
         <view>
             <grid color="#c0c0c0" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="3" v_spacing="3" h_offset="0" v_offset="0" snapping_enabled="true"/>
-            <map_view zoom="1.01678" rotation="0" position_x="19572" position_y="30080" grid="true">
+            <map_view zoom="1.01678" position_x="19572" position_y="30080" grid="true">
                 <map opacity="1" visible="true"/>
                 <templates count="1">
                     <ref template="0" visible="true" opacity="1"/>

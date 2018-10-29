@@ -7552,7 +7552,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         </templates>
         <view>
             <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-            <map_view zoom="11.6582" rotation="0" position_x="0" position_y="0" grid="true" overprinting_simulation_enabled="true">
+            <map_view zoom="11.6582" position_x="0" position_y="0" grid="true" overprinting_simulation_enabled="true">
                 <map opacity="1" visible="true"/>
                 <templates count="0"/>
             </map_view>

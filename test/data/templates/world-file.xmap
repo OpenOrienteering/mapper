@@ -77,7 +77,7 @@
         </templates>
         <view>
             <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-            <map_view zoom="13.9626" rotation="0" position_x="-204636" position_y="-398649">
+            <map_view zoom="13.9626" position_x="-204636" position_y="-398649">
                 <map opacity="1" visible="true"/>
                 <templates count="1">
                     <ref template="0" visible="true" opacity="1"/>

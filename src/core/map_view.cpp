@@ -101,8 +101,9 @@ void MapView::load(QIODevice* file, int version)
 {
 	qint64 center_x, center_y;
 	int unused;
+	double unused_double;
 	file->read((char*)&zoom, sizeof(double));
-	file->read((char*)&rotation, sizeof(double));
+	file->read((char*)&unused_double /*rotation*/, sizeof(double));
 	file->read((char*)&center_x, sizeof(qint64));
 	file->read((char*)&center_y, sizeof(qint64));
 	file->read((char*)&unused /*view_x*/, sizeof(int));
@@ -154,9 +155,9 @@ void MapView::load(QIODevice* file, int version)
 
 void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
+	// We do not save transient attributes such as rotation (for compass) or pan offset.
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
-	mapview_element.writeAttribute(literal::rotation, rotation);
 	mapview_element.writeAttribute(literal::position_x, center_pos.nativeX());
 	mapview_element.writeAttribute(literal::position_y, center_pos.nativeY());
 	mapview_element.writeAttribute(literal::grid, grid_visible);
@@ -187,11 +188,11 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 
 void MapView::load(QXmlStreamReader& xml)
 {
+	// We do not load transient attributes such as rotation (for compass) or pan offset.
 	XmlElementReader mapview_element(xml);
 	zoom = qMin(mapview_element.attribute<double>(literal::zoom), zoom_in_limit);
 	if (zoom < zoom_out_limit)
 		zoom = 1.0;
-	rotation = mapview_element.attribute<double>(literal::rotation);
 	
 	auto center_x = mapview_element.attribute<qint64>(literal::position_x);
 	auto center_y = mapview_element.attribute<qint64>(literal::position_y);
