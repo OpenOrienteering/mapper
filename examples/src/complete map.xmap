@@ -74838,7 +74838,7 @@ do not assume any liability!</text>
         </templates>
         <view>
             <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0"/>
-            <map_view zoom="0.707107" rotation="0" position_x="-2902" position_y="-1183">
+            <map_view zoom="0.707107" position_x="-2902" position_y="-1183">
                 <map opacity="1" visible="true"/>
                 <templates hidden="true" count="0"/>
             </map_view>

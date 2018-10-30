@@ -59,6 +59,7 @@
 #include "fileformats/xml_file_format_p.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
+#include "undo/map_part_undo.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
@@ -718,6 +719,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 			// Import parts like this:
 			//  - if the other map has only one part, import it into the current part
 			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			auto* undo_step = new CombinedUndoStep(this);
 			for (const auto* part_to_import : imported_map.parts)
 			{
 				MapPart* dest_part = nullptr;
@@ -740,6 +742,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);
 						addPart(dest_part, 0);
+						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
 				}
 				
@@ -748,12 +751,16 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 				current_part_index = std::size_t(findPartIndex(dest_part));
 				
 				bool select_and_center_objects = dest_part == temp_current_part;
-				dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects);
-				if (select_and_center_objects)
-					ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				if (auto import_undo = dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects))
+				{
+					undo_step->push(import_undo.release());
+					if (select_and_center_objects)
+						ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				}
 				
 				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
+			push(undo_step);
 		}
 	}
 	

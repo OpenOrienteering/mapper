@@ -98,9 +98,9 @@ MapView::~MapView()
 
 void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
+	// We do not save transient attributes such as rotation (for compass) or pan offset.
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
-	mapview_element.writeAttribute(literal::rotation, rotation);
 	mapview_element.writeAttribute(literal::position_x, center_pos.nativeX());
 	mapview_element.writeAttribute(literal::position_y, center_pos.nativeY());
 	mapview_element.writeAttribute(literal::grid, grid_visible);
@@ -131,11 +131,11 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 
 void MapView::load(QXmlStreamReader& xml)
 {
+	// We do not load transient attributes such as rotation (for compass) or pan offset.
 	XmlElementReader mapview_element(xml);
 	zoom = qMin(mapview_element.attribute<double>(literal::zoom), zoom_in_limit);
 	if (zoom < zoom_out_limit)
 		zoom = 1.0;
-	rotation = mapview_element.attribute<double>(literal::rotation);
 	
 	auto center_x = mapview_element.attribute<qint64>(literal::position_x);
 	auto center_y = mapview_element.attribute<qint64>(literal::position_y);
