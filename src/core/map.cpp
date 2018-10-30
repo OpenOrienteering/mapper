@@ -70,6 +70,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/text_browser_dialog.h"
 #include "templates/template.h"
+#include "undo/map_part_undo.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
@@ -992,6 +993,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);
 						addPart(dest_part, 0);
+						push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
 				}
 				
