@@ -329,10 +329,14 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	default_pen_color->setRgbFromCmyk();
 	map->addColor(default_pen_color, 0);
 	
-	auto default_brush_color = new MapColor(default_pen_color->getName() + QLatin1String(" 50%"), 0);
-	default_brush_color->setSpotColorComposition({ {default_pen_color, 0.5f} });
+	// 50% opacity of 80% Purple should result in app. 40% Purple (on white) in
+	// normal view and in an opaque Purple slightly lighter than lines and
+	// points in overprinting simulation mode.
+	auto default_brush_color = new MapColor(default_pen_color->getName() + QLatin1String(" 40%"), 0);
+	default_brush_color->setSpotColorComposition({ {default_pen_color, 0.8f} });
 	default_brush_color->setCmykFromSpotColors();
 	default_brush_color->setRgbFromSpotColors();
+	default_brush_color->setOpacity(0.5f);
 	map->addColor(default_brush_color, 1);
 	
 	default_point_symbol = new PointSymbol();
