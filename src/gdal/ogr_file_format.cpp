@@ -323,9 +323,9 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	setOption(QLatin1String{ "Separate layers" }, QVariant{ false });
 	
 	// OGR feature style defaults
-	default_pen_color = new MapColor(tr("Purple"), 0); 
+	default_pen_color = new MapColor(QLatin1String{"Purple"}, 0); 
 	default_pen_color->setSpotColorName(QLatin1String{"PURPLE"});
-	default_pen_color->setCmyk({0.2f, 1.0, 0.0, 0.0});
+	default_pen_color->setCmyk({0.35f, 0.85f, 0.0, 0.0});
 	default_pen_color->setRgbFromCmyk();
 	map->addColor(default_pen_color, 0);
 	
