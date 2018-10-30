@@ -215,10 +215,10 @@ bool MapPart::deleteObject(Object* object, bool remove_only)
 	return false;
 }
 
-void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
+std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)
 {
 	if (other->getNumObjects() == 0)
-		return;
+		return {};
 	
 	bool first_objects = map->getNumObjects() == 0;
 	auto undo_step = new DeleteObjectsUndoStep(map);
@@ -242,7 +242,6 @@ void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol
 			map->addObjectToSelection(new_object, false);
 	}
 	
-	map->push(undo_step);
 	map->setObjectsDirty();
 	if (select_new_objects)
 	{
@@ -252,6 +251,8 @@ void MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol
 	}
 	if (first_objects)
 		map->updateAllMapWidgets();
+	
+	return std::unique_ptr<UndoStep>{undo_step};
 }
 
 void MapPart::findObjectsAt(
