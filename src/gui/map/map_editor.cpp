@@ -1082,6 +1082,7 @@ void MapEditorController::createMenuAndToolbars()
 	view_menu->addSeparator();
 	view_menu->addAction(fullscreen_act);
 	view_menu->addSeparator();
+	toolbars_menu = view_menu->addMenu(tr("Toolbars"));
 	view_menu->addAction(tags_window_act);
 	view_menu->addAction(color_window_act);
 	view_menu->addAction(symbol_window_act);
@@ -1269,6 +1270,13 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_advanced_editing->addAction(boolean_difference_act);
 	toolbar_advanced_editing->addAction(boolean_xor_act);
 	toolbar_advanced_editing->addAction(boolean_merge_holes_act);
+	
+	toolbars_menu->addAction(main_toolbar->toggleViewAction());
+	toolbars_menu->addAction(toolbar_view->toggleViewAction());
+	toolbars_menu->addAction(toolbar_mapparts->toggleViewAction());
+	toolbars_menu->addAction(toolbar_drawing->toggleViewAction());
+	toolbars_menu->addAction(toolbar_editing->toggleViewAction());
+	toolbars_menu->addAction(toolbar_advanced_editing->toggleViewAction());
 	
 	QWidget* context_menu = map_widget->getContextMenu();
 	context_menu->addAction(edit_tool_act);
