@@ -33,6 +33,7 @@
 #include <QLatin1String>
 #include <QPoint>
 #include <QPointF>
+#include <QSaveFile>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
@@ -128,7 +129,7 @@ bool Track::loadFrom(const QString& path, bool project_points)
 	clear();
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		if (!loadFromGPX(&file, project_points))
+		if (!loadGpxFrom(file, project_points))
 			return false;
 	}
 	else
@@ -140,13 +141,27 @@ bool Track::loadFrom(const QString& path, bool project_points)
 
 bool Track::saveTo(const QString& path) const
 {
-	QFile file(path);
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-		return false;
+	QSaveFile file(path);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)
+	    && saveGpxTo(file)
+	    && file.commit())
+	{
+#ifdef Q_OS_ANDROID
+		// Make the MediaScanner aware of the *updated* file.
+		Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
+#endif
+		return true;  // NOLINT : redundant boolean literal in conditional return statement
+	}
 	
+	return false;
+}
+
+
+bool Track::saveGpxTo(QIODevice& device) const
+{
 	static const auto newline = QString::fromLatin1("\n");
 	
-	QXmlStreamWriter stream(&file);
+	QXmlStreamWriter stream(&device);
 	stream.writeStartDocument();
 	stream.writeCharacters(newline);
 	stream.writeStartElement(QString::fromLatin1("gpx"));
@@ -188,13 +203,7 @@ bool Track::saveTo(const QString& path) const
 	stream.writeCharacters(newline);
 	stream.writeEndElement();
 	stream.writeEndDocument();
-	
-	file.close();
-#ifdef Q_OS_ANDROID
-	// Make the MediaScanner aware of the *updated* file.
-	Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
-#endif
-	return true;
+	return !stream.hasError();
 }
 
 void Track::appendTrackPoint(const TrackPoint& point)
@@ -292,12 +301,12 @@ LatLon Track::calcAveragePosition() const
 				  (num_samples > 0) ? (avg_longitude / num_samples) : 0);
 }
 
-bool Track::loadFromGPX(QFile* file, bool project_points)
+bool Track::loadGpxFrom(QIODevice& device, bool project_points)
 {
 	TrackPoint point;
 	QString point_name;
 
-	QXmlStreamReader stream(file);
+	QXmlStreamReader stream(&device);
 	while (!stream.atEnd())
 	{
 		stream.readNext();
@@ -352,7 +361,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points)
 		segment_starts.pop_back();
 	}
 	
-	return true;
+	return !stream.hasError();
 }
 
 void Track::projectPoints()
