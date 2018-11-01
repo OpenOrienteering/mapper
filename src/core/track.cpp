@@ -180,8 +180,11 @@ bool Track::saveTo(const QString& path) const
 	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
 		return false;
 	
+	static const auto newline = QString::fromLatin1("\n");
+	
 	QXmlStreamWriter stream(&file);
 	stream.writeStartDocument();
+	stream.writeCharacters(newline);
 	stream.writeStartElement(QString::fromLatin1("gpx"));
 	stream.writeAttribute(QString::fromLatin1("version"), QString::fromLatin1("1.1"));
 	stream.writeAttribute(QString::fromLatin1("creator"), qApp->applicationDisplayName());
@@ -189,6 +192,7 @@ bool Track::saveTo(const QString& path) const
 	int size = getNumWaypoints();
 	for (int i = 0; i < size; ++i)
 	{
+		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("wpt"));
 		const TrackPoint& point = getWaypoint(i);
 		point.save(&stream);
@@ -196,22 +200,28 @@ bool Track::saveTo(const QString& path) const
 		stream.writeEndElement();
 	}
 	
+	stream.writeCharacters(newline);
 	stream.writeStartElement(QStringLiteral("trk"));
 	for (int i = 0; i < getNumSegments(); ++i)
 	{
+		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("trkseg"));
 		size = getSegmentPointCount(i);
 		for (int k = 0; k < size; ++k)
 		{
+			stream.writeCharacters(newline);
 			stream.writeStartElement(QStringLiteral("trkpt"));
 			const TrackPoint& point = getSegmentPoint(i, k);
 			point.save(&stream);
 			stream.writeEndElement();
 		}
+		stream.writeCharacters(newline);
 		stream.writeEndElement();
 	}
+	stream.writeCharacters(newline);
 	stream.writeEndElement();
 	
+	stream.writeCharacters(newline);
 	stream.writeEndElement();
 	stream.writeEndDocument();
 	
