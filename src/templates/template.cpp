@@ -34,6 +34,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map_view.h"
 #include "core/map.h"
 #include "fileformats/file_format.h"

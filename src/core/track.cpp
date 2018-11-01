@@ -21,8 +21,6 @@
 
 #include "track.h"
 
-#include <memory>
-
 #include <Qt>
 #include <QtGlobal>
 #include <QtNumeric>
@@ -31,8 +29,6 @@
 #include <QFileInfo>  // IWYU pragma: keep
 #include <QIODevice>
 #include <QLatin1String>
-#include <QPoint>
-#include <QPointF>
 #include <QSaveFile>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
@@ -40,7 +36,6 @@
 #include <QXmlStreamWriter>
 // IWYU pragma: no_include <qxmlstream.h>
 
-#include "core/georeferencing.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
 
 
@@ -68,7 +63,6 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 		       || qFuzzyCompare(a, b);
 	};
 	return lhs.latlon == rhs.latlon
-	       && lhs.map_coord == rhs.map_coord
 	       && lhs.datetime == rhs.datetime
 	       && fuzzyCompare(lhs.elevation, rhs.elevation)
 	       && fuzzyCompare(lhs.hDOP, rhs.hDOP);
@@ -77,12 +71,6 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 
 
 // ### Track ###
-
-Track::Track(const Georeferencing& map_georef)
-: map_georef(map_georef)
-{
-	// nothing else
-}
 
 Track::Track(const Track& other)
 {
@@ -106,8 +94,6 @@ Track& Track::operator=(const Track& rhs)
 	
 	current_segment_finished = rhs.current_segment_finished;
 	
-	map_georef = rhs.map_georef;
-	
 	return *this;
 }
 
@@ -120,7 +106,7 @@ void Track::clear()
 	current_segment_finished = true;
 }
 
-bool Track::loadFrom(const QString& path, bool project_points)
+bool Track::loadFrom(const QString& path)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -129,7 +115,7 @@ bool Track::loadFrom(const QString& path, bool project_points)
 	clear();
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		if (!loadGpxFrom(file, project_points))
+		if (!loadGpxFrom(file))
 			return false;
 	}
 	else
@@ -209,7 +195,6 @@ bool Track::saveGpxTo(QIODevice& device) const
 void Track::appendTrackPoint(const TrackPoint& point)
 {
 	segment_points.push_back(point);
-	segment_points.back().map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	
 	if (current_segment_finished)
 	{
@@ -225,15 +210,7 @@ void Track::finishCurrentSegment()
 void Track::appendWaypoint(const TrackPoint& point, const QString& name)
 {
 	waypoints.push_back(point);
-	waypoints.back().map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	waypoint_names.push_back(name);
-}
-
-void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef)
-{
-	map_georef = new_map_georef;
-	
-	projectPoints();
 }
 
 int Track::getNumSegments() const
@@ -301,7 +278,7 @@ LatLon Track::calcAveragePosition() const
 				  (num_samples > 0) ? (avg_longitude / num_samples) : 0);
 }
 
-bool Track::loadGpxFrom(QIODevice& device, bool project_points)
+bool Track::loadGpxFrom(QIODevice& device)
 {
 	TrackPoint point;
 	QString point_name;
@@ -318,8 +295,6 @@ bool Track::loadGpxFrom(QIODevice& device, bool project_points)
 			{
 				point = TrackPoint{LatLon{stream.attributes().value(QLatin1String("lat")).toDouble(),
 				                          stream.attributes().value(QLatin1String("lon")).toDouble()}};
-				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(point.latlon); // TODO: check for errors
 				point_name.clear();
 			}
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
@@ -362,15 +337,6 @@ bool Track::loadGpxFrom(QIODevice& device, bool project_points)
 	}
 	
 	return !stream.hasError();
-}
-
-void Track::projectPoints()
-{
-	/// \todo Check for errors from Georeferencing::toMapCoordF()
-	for (auto& waypoint : waypoints)
-		waypoint.map_coord = map_georef.toMapCoordF(waypoint.latlon, nullptr); 
-	for (auto& segment_point : segment_points)
-		segment_point.map_coord = map_georef.toMapCoordF(segment_point.latlon, nullptr); 
 }
 
 

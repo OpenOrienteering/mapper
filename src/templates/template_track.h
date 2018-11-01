@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,8 +26,10 @@
 
 #include <QtGlobal>
 #include <QObject>
+#include <QPainterPath>
 #include <QRectF>
 #include <QString>
+#include <QVarLengthArray>
 
 #include "core/track.h"
 #include "templates/template.h"
@@ -48,7 +50,17 @@ class PathObject;
 class PointObject;
 
 
-/** A template consisting of a set of tracks (polylines) and waypoints */
+/**
+ * A template for displaying a GPX track.
+ * 
+ * A track is a set of track point segments and waypoints.
+ * 
+ * Normally, the geographic data from the track will be projected using the
+ * map's georeferencing (georeferenced mode). However, it is also possible to
+ * use a custom projection (non-georeferenced mode).
+ * 
+ * \see Track
+ */
 class TemplateTrack : public Template
 {
 Q_OBJECT
@@ -102,10 +114,17 @@ protected:
     void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
     bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
-	/// Projects the track in non-georeferenced mode
+	/// Calculates a simple projection for non-georeferenced track usage.
 	QString calculateLocalGeoreferencing() const;
 	
-	void applyProjectedCrsSpec();
+	/// Sets a custom projection, for non-georeferenced track usage.
+	void setCustomProjection(const QString& projected_crs_spec);
+	
+	/// Returns the georeferencing to be used for projecting the track data.
+	const Georeferencing& georeferencing() const;
+	
+	/// Updates the cached projected data from the geographic track data.
+	void projectTrack();
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
@@ -114,9 +133,11 @@ protected:
 	
 	Track track;
 	QString track_crs_spec;
-	QString projected_crs_spec;
+	std::unique_ptr<Georeferencing> projected_georef;
 	friend class OgrTemplate; // for migration
 	std::unique_ptr<Georeferencing> preserved_georef;
+	std::vector<QPointF> waypoints;
+	QVarLengthArray<QPainterPath, 4> track_segments;
 	
 private:
 	Q_DISABLE_COPY(TemplateTrack)
