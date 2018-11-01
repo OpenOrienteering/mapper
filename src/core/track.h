@@ -32,7 +32,7 @@
 #include "core/latlon.h"
 #include "core/map_coord.h"
 
-class QFile;
+class QIODevice;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
@@ -85,8 +85,12 @@ public:
 	/// Attempts to load the track from the given file.
 	/// If you choose not to project_point, you have to call changeProjectionParams() afterwards.
 	bool loadFrom(const QString& path, bool project_points);
+	/// Attempts to load GPX data from the open device.
+	bool loadGpxFrom(QIODevice& device, bool project_points);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path) const;
+	/// Saves the track as GPX data to the open device.
+	bool saveGpxTo(QIODevice& device) const;
 	
 	// Modifiers
 	
@@ -131,8 +135,6 @@ public:
 	Track& operator=(const Track& rhs);
 	
 private:
-	bool loadFromGPX(QFile* file, bool project_points);
-	
 	void projectPoints();
 	
 	
