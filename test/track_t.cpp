@@ -90,7 +90,7 @@ private slots:
 		
 		auto actual_track = Track{};
 		if (!filename_in.isEmpty())
-			QVERIFY(actual_track.loadFrom(filename_in, true));
+			QVERIFY(actual_track.loadFrom(filename_in));
 		
 		const auto waypoint_name = filename_out.right(11);
 		const auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
@@ -123,7 +123,7 @@ private slots:
 		QCOMPARE(raw_tmp, raw_expected);
 		
 		auto expected_track = Track{};
-		QVERIFY(expected_track.loadFrom(filename_out, true));
+		QVERIFY(expected_track.loadFrom(filename_out));
 		QCOMPARE(actual_track, expected_track);
 		
 		QVERIFY(QFile::remove(filename_tmp));
