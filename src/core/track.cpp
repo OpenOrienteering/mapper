@@ -34,8 +34,7 @@
 
 namespace OpenOrienteering {
 
-// There is some (mis?)use of TrackPoint's gps_coord LatLon
-// as sort-of MapCoordF.
+// There is some (mis?)use of TrackPoint's LatLon as sort-of MapCoordF.
 // This function serves both for explicit conversion and highlighting.
 MapCoordF fakeMapCoordF(const LatLon &latlon)
 {
@@ -44,7 +43,7 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 
 TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
 {
-	gps_coord = coord;
+	latlon = coord;
 	this->datetime = datetime;
 	this->elevation = elevation;
 	this->num_satellites = num_satellites;
@@ -52,8 +51,8 @@ TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation,
 }
 void TrackPoint::save(QXmlStreamWriter* stream) const
 {
-	stream->writeAttribute(QStringLiteral("lat"), QString::number(gps_coord.latitude(), 'f', 12));
-	stream->writeAttribute(QStringLiteral("lon"), QString::number(gps_coord.longitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lat"), QString::number(latlon.latitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lon"), QString::number(latlon.longitude(), 'f', 12));
 	
 	if (datetime.isValid())
 		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
@@ -71,7 +70,7 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 		return (qIsNaN(a) && qIsNaN(b))
 		       || qFuzzyCompare(a, b);
 	};
-	return lhs.gps_coord == rhs.gps_coord
+	return lhs.latlon == rhs.latlon
 	       && lhs.map_coord == rhs.map_coord
 	       && lhs.datetime == rhs.datetime
 	       && fuzzyCompare(lhs.elevation, rhs.elevation)
@@ -235,7 +234,7 @@ bool Track::saveTo(const QString& path) const
 
 void Track::appendTrackPoint(TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	segment_points.push_back(point);
 	
 	if (current_segment_finished)
@@ -251,7 +250,7 @@ void Track::finishCurrentSegment()
 
 void Track::appendWaypoint(TrackPoint& point, const QString& name)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
+	point.map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	waypoints.push_back(point);
 	waypoint_names.push_back(name);
 }
@@ -328,8 +327,8 @@ LatLon Track::calcAveragePosition() const
 	for (int i = 0; i < size; ++i)
 	{
 		const TrackPoint& point = getWaypoint(i);
-		avg_latitude += point.gps_coord.latitude();
-		avg_longitude += point.gps_coord.longitude();
+		avg_latitude += point.latlon.latitude();
+		avg_longitude += point.latlon.longitude();
 		++num_samples;
 	}
 	for (int i = 0; i < getNumSegments(); ++i)
@@ -338,8 +337,8 @@ LatLon Track::calcAveragePosition() const
 		for (int k = 0; k < size; ++k)
 		{
 			const TrackPoint& point = getSegmentPoint(i, k);
-			avg_latitude += point.gps_coord.latitude();
-			avg_longitude += point.gps_coord.longitude();
+			avg_latitude += point.latlon.latitude();
+			avg_longitude += point.latlon.longitude();
 			++num_samples;
 		}
 	}
@@ -372,7 +371,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 				point = TrackPoint(LatLon(stream.attributes().value(QLatin1String("lat")).toDouble(),
 				                          stream.attributes().value(QLatin1String("lon")).toDouble()));
 				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(point.gps_coord); // TODO: check for errors
+					point.map_coord = map_georef.toMapCoordF(point.latlon); // TODO: check for errors
 				point_name.clear();
 			}
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
@@ -425,21 +424,21 @@ void Track::projectPoints()
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, nullptr); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].latlon, nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, nullptr); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].latlon, nullptr); // FIXME: check for errors
 	}
 	else
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), nullptr); // FIXME: check for errors
+			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].latlon), nullptr); // FIXME: check for errors
 			
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
+			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].latlon), nullptr); // FIXME: check for errors
 	}
 }
 

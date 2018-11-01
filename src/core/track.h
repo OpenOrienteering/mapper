@@ -44,7 +44,7 @@ namespace OpenOrienteering {
  */
 struct TrackPoint
 {
-	LatLon gps_coord;
+	LatLon latlon;
 	MapCoordF map_coord;
 	
 	QDateTime datetime;		// QDateTime() if invalid
