@@ -1,1 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="TrackTest"><wpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:00:00Z</time><ele>105.000</ele><sat>4</sat><hdop>24.000</hdop><name>track-0.gpx</name></wpt><wpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:01:00Z</time><ele>105.000</ele><sat>4</sat><hdop>24.000</hdop><name>track-1.gpx</name></wpt><trk><trkseg><trkpt lat="50.000000000000" lon="7.000000000000"><time>2010-01-01T00:00:01Z</time><ele>100.000</ele><sat>5</sat></trkpt><trkpt lat="50.100000000000" lon="7.000000000000"><time>2010-01-01T00:00:02Z</time><ele>110.000</ele><hdop>28.000</hdop></trkpt><trkpt lat="50.100000000000" lon="7.100000000000"><time>2010-01-01T00:00:03Z</time><sat>6</sat><hdop>32.000</hdop></trkpt></trkseg><trkseg><trkpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:00:09Z</time><ele>105.000</ele></trkpt></trkseg><trkseg><trkpt lat="50.000000000000" lon="7.000000000000"><time>2010-01-01T00:01:01Z</time><ele>100.000</ele><sat>5</sat></trkpt><trkpt lat="50.100000000000" lon="7.000000000000"><time>2010-01-01T00:01:02Z</time><ele>110.000</ele><hdop>28.000</hdop></trkpt><trkpt lat="50.100000000000" lon="7.100000000000"><time>2010-01-01T00:01:03Z</time><sat>6</sat><hdop>32.000</hdop></trkpt></trkseg><trkseg><trkpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:01:09Z</time><ele>105.000</ele></trkpt></trkseg></trk></gpx>
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="TrackTest">
+<wpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:00:00Z</time><ele>105.000</ele><sat>4</sat><hdop>24.000</hdop><name>track-0.gpx</name></wpt>
+<wpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:01:00Z</time><ele>105.000</ele><sat>4</sat><hdop>24.000</hdop><name>track-1.gpx</name></wpt>
+<trk>
+<trkseg>
+<trkpt lat="50.000000000000" lon="7.000000000000"><time>2010-01-01T00:00:01Z</time><ele>100.000</ele><sat>5</sat></trkpt>
+<trkpt lat="50.100000000000" lon="7.000000000000"><time>2010-01-01T00:00:02Z</time><ele>110.000</ele><hdop>28.000</hdop></trkpt>
+<trkpt lat="50.100000000000" lon="7.100000000000"><time>2010-01-01T00:00:03Z</time><sat>6</sat><hdop>32.000</hdop></trkpt>
+</trkseg>
+<trkseg>
+<trkpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:00:09Z</time><ele>105.000</ele></trkpt>
+</trkseg>
+<trkseg>
+<trkpt lat="50.000000000000" lon="7.000000000000"><time>2010-01-01T00:01:01Z</time><ele>100.000</ele><sat>5</sat></trkpt>
+<trkpt lat="50.100000000000" lon="7.000000000000"><time>2010-01-01T00:01:02Z</time><ele>110.000</ele><hdop>28.000</hdop></trkpt>
+<trkpt lat="50.100000000000" lon="7.100000000000"><time>2010-01-01T00:01:03Z</time><sat>6</sat><hdop>32.000</hdop></trkpt>
+</trkseg>
+<trkseg>
+<trkpt lat="50.000000000000" lon="7.100000000000"><time>2010-01-01T00:01:09Z</time><ele>105.000</ele></trkpt>
+</trkseg>
+</trk>
+</gpx>
