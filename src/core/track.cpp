@@ -65,6 +65,20 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 		stream->writeTextElement(QStringLiteral("hdop"), QString::number(hDOP, 'f', 3));
 }
 
+bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
+{
+	auto fuzzyCompare =[](auto a, auto b) {
+		return (qIsNaN(a) && qIsNaN(b))
+		       || qFuzzyCompare(a, b);
+	};
+	return lhs.gps_coord == rhs.gps_coord
+	       && lhs.map_coord == rhs.map_coord
+	       && lhs.datetime == rhs.datetime
+	       && fuzzyCompare(lhs.elevation, rhs.elevation)
+	       && lhs.num_satellites == rhs.num_satellites
+	       && fuzzyCompare(lhs.hDOP, rhs.hDOP);
+}
+
 
 
 // ### Track ###
@@ -417,6 +431,16 @@ void Track::projectPoints()
 		for (int i = 0; i < size; ++i)
 			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
 	}
+}
+
+
+bool operator==(const Track& lhs, const Track& rhs)
+{
+	return lhs.waypoints == rhs.waypoints
+	       && lhs.waypoint_names == rhs.waypoint_names
+	       && lhs.segment_points == rhs.segment_points
+	       && lhs.segment_starts == rhs.segment_starts
+	       && lhs.current_segment_finished == rhs.current_segment_finished;
 }
 
 
