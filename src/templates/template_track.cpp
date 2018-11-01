@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -80,11 +80,11 @@ void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 	xml.writeStartElement(QString::fromLatin1("crs_spec"));
 	xml.writeCharacters(track_crs_spec);
 	xml.writeEndElement(/*crs_spec*/);
-	if (!projected_crs_spec.isEmpty())
+	if (projected_georef)
 	{
 		Q_ASSERT(!is_georeferenced);
 		xml.writeStartElement(QString::fromLatin1("projected_crs_spec"));
-		xml.writeCharacters(projected_crs_spec);
+		xml.writeCharacters(projected_georef->getProjectedCRSSpec());
 		xml.writeEndElement(/*crs_spec*/);
 	}
 }
@@ -99,7 +99,8 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	else if (xml.name() == QLatin1String("projected_crs_spec"))
 	{
 		Q_ASSERT(!is_georeferenced);
-		projected_crs_spec = xml.readElementText();
+		setCustomProjection(xml.readElementText());
+		
 	}
 	else if (xml.name() == QLatin1String("georeferencing"))
 	{
@@ -135,21 +136,21 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
-	if (!track.loadFrom(template_path, false))
+	if (!track.loadFrom(template_path))
 		return false;
 	
 	if (!configuring)
 	{
 		if (!is_georeferenced)
 		{
-			if (projected_crs_spec.isEmpty())
-				projected_crs_spec = calculateLocalGeoreferencing();
-			applyProjectedCrsSpec();
+			if (!projected_georef)
+				setCustomProjection(calculateLocalGeoreferencing());
+			projectTrack();
 		}
 		else
 		{
-			projected_crs_spec.clear();
-			track.changeMapGeoreferencing(map->getGeoreferencing());
+			projected_georef.reset();
+			projectTrack();
 		}
 	}
 	
@@ -201,14 +202,14 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	// the map coords for the track coordinates have to be calculated
 	if (!is_georeferenced)
 	{
-		if (projected_crs_spec.isEmpty())
-			projected_crs_spec = calculateLocalGeoreferencing();
-		applyProjectedCrsSpec();
+		if (!projected_georef)
+			setCustomProjection(calculateLocalGeoreferencing());
+		projectTrack();
 	}
 	else
 	{
-		projected_crs_spec.clear();
-		track.changeMapGeoreferencing(map->getGeoreferencing());
+		projected_georef.reset();
+		projectTrack();
 	}
 	
 	return true;
@@ -217,6 +218,8 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 void TemplateTrack::unloadTemplateFileImpl()
 {
 	track.clear();
+	waypoints.clear();
+	track_segments.clear();
 }
 
 void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
@@ -246,22 +249,8 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	
-	// TODO: could speed that up by storing the template coords of the GPS points in a separate vector or caching the painter paths
-	for (int i = 0; i < track.getNumSegments(); ++i)
-	{
-		QPainterPath path;
-		int size = track.getSegmentPointCount(i);
-		for (int k = 0; k < size; ++k)
-		{
-			const TrackPoint& point = track.getSegmentPoint(i, k);
-			
-			if (k > 0)
-				path.lineTo(point.map_coord.x(), point.map_coord.y());
-			else
-				path.moveTo(point.map_coord.x(), point.map_coord.y());
-		}
+	for (const auto& path : track_segments)
 		painter->drawPath(path);
-	}
 	
 	painter->restore();
 }
@@ -279,20 +268,21 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 	painter->setFont(font);
 	int height = painter->fontMetrics().height();
 	
-	int size = track.getNumWaypoints();
-	for (int i = 0; i < size; ++i)
+	auto waypoint = begin(waypoints);
+	int size = std::min(track.getNumWaypoints(), int(waypoints.size()));
+	for (int i = 0; i < size; ++i, ++waypoint)
 	{
-		const TrackPoint& point = track.getWaypoint(i);
 		const QString& point_name = track.getWaypointName(i);
 		
 		double const radius = 0.25;
-		painter->drawEllipse(point.map_coord, radius, radius);
+		painter->drawEllipse(*waypoint, radius, radius);
+		
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(point.map_coord.x() - 0.5*width,
-			                        point.map_coord.y() - height,
+			painter->drawText(QRect(waypoint->x() - 0.5*width,
+			                        waypoint->y() - height,
 			                        width,
 			                        height),
 			                  Qt::AlignCenter,
@@ -312,13 +302,15 @@ QRectF TemplateTrack::getTemplateExtent() const
 
 QRectF TemplateTrack::calculateTemplateBoundingBox() const
 {
+	const auto& georef = georeferencing();
+	
 	QRectF bbox;
 	
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
 	{
 		const TrackPoint& track_point = track.getWaypoint(i);
-		MapCoordF point = track_point.map_coord;
+		const auto point = georef.toMapCoordF(track_point.latlon);
 		rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 	}
 	for (int i = 0; i < track.getNumSegments(); ++i)
@@ -327,7 +319,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 		for (int k = 0; k < size; ++k)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, k);
-			MapCoordF point = track_point.map_coord;
+			const auto point = georef.toMapCoordF(track_point.latlon);
 			rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 		}
 	}
@@ -353,6 +345,10 @@ Template* TemplateTrack::duplicateImpl() const
 {
 	TemplateTrack* copy = new TemplateTrack(template_path, map);
 	copy->track = track;
+	if (projected_georef)
+		copy->projected_georef.reset(new Georeferencing(*projected_georef));
+	copy->waypoints = waypoints;
+	copy->track_segments = track_segments;
 	return copy;
 }
 
@@ -394,19 +390,27 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	
 	map->clearObjectSelection(false);
 	
+	const auto& georef = georeferencing();
+	
 	if (track.getNumWaypoints() > 0)
 	{
 		int res = QMessageBox::question(dialog_parent, tr("Question"), tr("Should the waypoints be imported as a line going through all points?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
 		if (res == QMessageBox::No)
 		{
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				result.push_back(importWaypoint(templateToMap(track.getWaypoint(i).map_coord), track.getWaypointName(i)));
+			{
+				const auto projected = georef.toMapCoordF(track.getWaypoint(i).latlon);
+				result.push_back(importWaypoint(templateToMap(projected), track.getWaypointName(i)));
+			}
 		}
 		else
 		{
 			PathObject* path = importPathStart();
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				path->addCoordinate(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
+			{
+				const auto projected = georef.toMapCoordF(track.getWaypoint(i).latlon);
+				path->addCoordinate(MapCoord(templateToMap(projected)));
+			}
 			importPathEnd(path);
 			path->setTag(QStringLiteral("name"), QString{});
 			result.push_back(path);
@@ -427,7 +431,8 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);
-			auto coord = MapCoord { templateToMap(track_point.map_coord) };
+			const auto projected = georef.toMapCoordF(track_point.latlon);
+			auto coord = MapCoord { templateToMap(projected) };
 			path->addCoordinate(coord);
 		}
 		if (track.getSegmentPoint(i, 0).latlon == track.getSegmentPoint(i, segment_size-1).latlon)
@@ -464,8 +469,8 @@ void TemplateTrack::configureForGPSTrack()
 	
 	track_crs_spec = Georeferencing::geographic_crs_spec;
 	
-	projected_crs_spec.clear();
-	track.changeMapGeoreferencing(map->getGeoreferencing());
+	projected_georef.reset();
+	projectTrack();
 	
 	template_state = Template::Loaded;
 }
@@ -474,8 +479,8 @@ void TemplateTrack::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 	{
-		projected_crs_spec.clear();
-		track.changeMapGeoreferencing(map->getGeoreferencing());
+		projected_georef.reset();
+		projectTrack();
 		map->updateAllMapWidgets();
 	}
 }
@@ -489,13 +494,41 @@ QString TemplateTrack::calculateLocalGeoreferencing() const
 	
 }
 
-void TemplateTrack::applyProjectedCrsSpec()
+void TemplateTrack::setCustomProjection(const QString& projected_crs_spec)
 {
-	Georeferencing georef;
-	georef.setScaleDenominator(int(map->getScaleDenominator()));
-	georef.setProjectedCRS(QString{}, projected_crs_spec);
-	georef.setProjectedRefPoint({});
-	track.changeMapGeoreferencing(georef);
+	projected_georef.reset(new Georeferencing);
+	projected_georef->setScaleDenominator(int(map->getScaleDenominator()));
+	projected_georef->setProjectedCRS(QString{}, projected_crs_spec);
+	projected_georef->setProjectedRefPoint({});
+}
+
+const Georeferencing& TemplateTrack::georeferencing() const
+{
+	return projected_georef ? *projected_georef : map->getGeoreferencing();
+}
+
+void TemplateTrack::projectTrack()
+{
+	const auto& georef = georeferencing();
+	
+	waypoints.clear();
+	waypoints.reserve(decltype(waypoints)::size_type(track.getNumWaypoints()));
+	for (int i = 0; i < track.getNumWaypoints(); ++i)
+		waypoints.push_back(georef.toMapCoordF(track.getWaypoint(i).latlon));
+	
+	track_segments.resize(track.getNumSegments());
+	for (int i = 0; i < track.getNumSegments(); ++i)
+	{
+		auto& painter_path = track_segments[i];
+		painter_path = {};
+		auto segment_length = track.getSegmentPointCount(i);
+		if (segment_length > 0)
+		{
+		    painter_path.moveTo(georef.toMapCoordF(track.getSegmentPoint(i, 0).latlon));
+			for (int j = 1; j < segment_length; ++j)
+				painter_path.lineTo(georef.toMapCoordF(track.getSegmentPoint(i, j).latlon));
+		}
+	}
 }
 
 

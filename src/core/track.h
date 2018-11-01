@@ -28,9 +28,7 @@
 #include <QDateTime>
 #include <QString>
 
-#include "core/georeferencing.h"
 #include "core/latlon.h"
-#include "core/map_coord.h"
 
 class QIODevice;
 class QXmlStreamWriter;
@@ -49,7 +47,6 @@ struct TrackPoint
 	QDateTime datetime;             // QDateTime() if invalid
 	float elevation     = NAN;      // NaN if invalid
 	float hDOP          = NAN;      // NaN if invalid
-	MapCoordF map_coord;
 	
 	// Default special member functions are fine.
 	
@@ -73,20 +70,18 @@ public:
 	/// Constructs an empty track
 	Track() = default;
 	
-	Track(const Georeferencing& map_georef);
 	/// Duplicates a track
 	Track(const Track& other);
 	
 	~Track();
 	
-	/// Deletes all data of the track, except the projection parameters
+	/// Deletes all data of the track
 	void clear();
 	
 	/// Attempts to load the track from the given file.
-	/// If you choose not to project_point, you have to call changeProjectionParams() afterwards.
-	bool loadFrom(const QString& path, bool project_points);
+	bool loadFrom(const QString& path);
 	/// Attempts to load GPX data from the open device.
-	bool loadGpxFrom(QIODevice& device, bool project_points);
+	bool loadGpxFrom(QIODevice& device);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path) const;
 	/// Saves the track as GPX data to the open device.
@@ -94,30 +89,18 @@ public:
 	
 	// Modifiers
 	
-	/**
-	 * @brief Appends the point and updates the point's map coordinates.
-	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
-	 * according to the map's georeferencing.
-	 */
+	/// Appends a track point to the current segment.
 	void appendTrackPoint(const TrackPoint& point);
 	
 	/**
-	 * Marks the current track segment as finished, so the next added point
-	 * will define the start of a new track segment.
+	 * Ends the current track segment, so that a new segment will be started
+	 * when the next track point is added.
 	 */
 	void finishCurrentSegment();
 	
-	/**
-	 * @brief Appends the waypoint and updates the point's map coordinates.
-	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
-	 * according to the map's georeferencing.
-	 */
+	/// Appends a waypoint.
 	void appendWaypoint(const TrackPoint& point, const QString& name);
 	
-	/** Updates the map positions of all points based on the new georeferencing. */
-	void changeMapGeoreferencing(const Georeferencing& new_map_georef);
 	
 	// Getters
 	int getNumSegments() const;
@@ -135,9 +118,6 @@ public:
 	Track& operator=(const Track& rhs);
 	
 private:
-	void projectPoints();
-	
-	
 	std::vector<TrackPoint> waypoints;
 	std::vector<QString> waypoint_names;
 	
@@ -147,18 +127,11 @@ private:
 	
 	bool current_segment_finished = true;
 	
-	Georeferencing map_georef;
-	
 	friend bool operator==(const Track& lhs, const Track& rhs);
 };
 
 /**
  * Compares waypoints, segments, and track points for equality.
- * 
- * This operator does not (explicitly) compare the tracks' map georeferencing.
- * When this feature is actually used, it affects the projection to map
- * coordinates, and so its effects are recorded in the waypoints and track
- * points.
  */
 bool operator==(const Track& lhs, const Track& rhs);
 
