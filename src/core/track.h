@@ -57,6 +57,12 @@ struct TrackPoint
 	void save(QXmlStreamWriter* stream) const;
 };
 
+bool operator==(const TrackPoint& lhs, const TrackPoint& rhs);
+
+inline bool operator!=(const TrackPoint& lhs, const TrackPoint& rhs) { return !(lhs==rhs); }
+
+
+
 /**
  * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
  * Can optionally store a track coordinate reference system in track_georef;
@@ -148,7 +154,21 @@ private:
 	
 	Georeferencing* track_crs;
 	Georeferencing map_georef;
+	
+	friend bool operator==(const Track& lhs, const Track& rhs);
 };
+
+/**
+ * Compares waypoints, segments, and track points for equality.
+ * 
+ * This operator does not (explicitly) compare the tracks' data CRS or map
+ * georeferencing. When these features are actually used, they affect the
+ * projection to map coordinates, and so their effects are recorded in the
+ * waypoints and track points.
+ */
+bool operator==(const Track& lhs, const Track& rhs);
+
+inline bool operator!=(const Track& lhs, const Track& rhs) { return !(lhs==rhs); }
 
 
 }  // namespace OpenOrienteering
