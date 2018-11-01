@@ -46,7 +46,7 @@ namespace OpenOrienteering {
  */
 struct TrackPoint
 {
-	LatLon gps_coord;
+	LatLon latlon;
 	QDateTime datetime;             // QDateTime() if invalid
 	float elevation     = NAN;      // NaN if invalid
 	float hDOP          = NAN;      // NaN if invalid

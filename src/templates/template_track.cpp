@@ -480,7 +480,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 			auto coord = MapCoord { templateToMap(track_point.map_coord) };
 			path->addCoordinate(coord);
 		}
-		if (track.getSegmentPoint(i, 0).gps_coord == track.getSegmentPoint(i, segment_size-1).gps_coord)
+		if (track.getSegmentPoint(i, 0).latlon == track.getSegmentPoint(i, segment_size-1).latlon)
 		{
 			path->closeAllParts();
 		}
