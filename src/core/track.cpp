@@ -35,14 +35,6 @@
 
 namespace OpenOrienteering {
 
-// There is some (mis?)use of TrackPoint's LatLon as sort-of MapCoordF.
-// This function serves both for explicit conversion and highlighting.
-MapCoordF fakeMapCoordF(const LatLon &latlon)
-{
-	return MapCoordF(latlon.longitude(), latlon.latitude());
-}
-
-
 // ### TrackPoint ###
 
 void TrackPoint::save(QXmlStreamWriter* stream) const
@@ -75,12 +67,12 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 
 // ### Track ###
 
-Track::Track() : track_crs(nullptr)
+Track::Track()
 {
 	current_segment_finished = true;
 }
 
-Track::Track(const Georeferencing& map_georef) : track_crs(nullptr), map_georef(map_georef)
+Track::Track(const Georeferencing& map_georef) : map_georef(map_georef)
 {
 	current_segment_finished = true;
 }
@@ -96,17 +88,9 @@ Track::Track(const Track& other)
 	current_segment_finished = other.current_segment_finished;
 	
 	map_georef = other.map_georef;
-	
-	if (other.track_crs)
-	{
-		track_crs = new Georeferencing(*other.track_crs);
-	}
 }
 
-Track::~Track()
-{
-	delete track_crs;
-}
+Track::~Track() = default;
 
 Track& Track::operator=(const Track& rhs)
 {
@@ -125,11 +109,6 @@ Track& Track::operator=(const Track& rhs)
 	
 	map_georef = rhs.map_georef;
 	
-	if (rhs.track_crs)
-	{
-		track_crs = new Georeferencing(*rhs.track_crs);
-	}
-	
 	return *this;
 }
 
@@ -140,8 +119,6 @@ void Track::clear()
 	segment_points.clear();
 	segment_starts.clear();
 	current_segment_finished = true;
-	delete track_crs;
-	track_crs = nullptr;
 }
 
 bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
@@ -252,14 +229,6 @@ void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef)
 	projectPoints();
 }
 
-void Track::setTrackCRS(Georeferencing* track_crs)
-{
-	delete this->track_crs;
-	this->track_crs = track_crs;
-	
-	projectPoints();
-}
-
 int Track::getNumSegments() const
 {
 	return (int)segment_starts.size();
@@ -329,10 +298,6 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 {
 	Q_UNUSED(dialog_parent);
 	
-	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
-	track_crs->setTransformationDirectly(QTransform());
-	
 	TrackPoint point;
 	QString point_name;
 
@@ -396,7 +361,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 
 void Track::projectPoints()
 {
-	if (track_crs->getProjectedCRSSpec() == Georeferencing::geographic_crs_spec)
+	// if (true) // condition removed
 	{
 		int size = waypoints.size();
 		for (int i = 0; i < size; ++i)
@@ -405,16 +370,6 @@ void Track::projectPoints()
 		size = segment_points.size();
 		for (int i = 0; i < size; ++i)
 			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].latlon, nullptr); // FIXME: check for errors
-	}
-	else
-	{
-		int size = waypoints.size();
-		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].latlon), nullptr); // FIXME: check for errors
-			
-		size = segment_points.size();
-		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].latlon), nullptr); // FIXME: check for errors
 	}
 }
 
