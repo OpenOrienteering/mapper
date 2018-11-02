@@ -17,6 +17,8 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <cmath>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtTest>
@@ -91,18 +93,18 @@ private slots:
 			QVERIFY(actual_track.loadFrom(filename_in, true));
 		
 		const auto waypoint_name = filename_out.right(11);
-		TrackPoint wp0{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
+		auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
 		actual_track.appendWaypoint(wp0, waypoint_name);
 		
-		TrackPoint tp0{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
+		auto tp0 = TrackPoint{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
 		actual_track.appendTrackPoint(tp0);
-		TrackPoint tp1{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
+		auto tp1 = TrackPoint{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
 		actual_track.appendTrackPoint(tp1);
-		TrackPoint tp2{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), -9999, 32 };
+		auto tp2 = TrackPoint{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), NAN, 32 };
 		actual_track.appendTrackPoint(tp2);
 		actual_track.finishCurrentSegment();
 		
-		TrackPoint tp3{ {50.0, 7.1}, base_datetime.addSecs(offset + 9), 105 };
+		auto tp3 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 9), 105 };
 		actual_track.appendTrackPoint(tp3);
 		actual_track.finishCurrentSegment();
 		
