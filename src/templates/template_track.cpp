@@ -474,9 +474,6 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 		
 		PathObject* path = importPathStart();
-		QString name = track.getSegmentName(i);
-		path->setTag(QStringLiteral("name"), name);
-		
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);

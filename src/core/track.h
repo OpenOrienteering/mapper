@@ -117,7 +117,6 @@ public:
 	int getNumSegments() const;
 	int getSegmentPointCount(int segment_number) const;
 	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const;
-	const QString& getSegmentName(int segment_number) const;
 	
 	int getNumWaypoints() const;
 	const TrackPoint& getWaypoint(int number) const;
@@ -144,7 +143,6 @@ private:
 	std::vector<TrackPoint> segment_points;
 	// The indices of the first points of every track segment in this track
 	std::vector<int> segment_starts;
-	std::vector<QString> segment_names;
 	
 	bool current_segment_finished;
 	
