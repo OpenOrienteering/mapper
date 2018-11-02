@@ -54,12 +54,12 @@ GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* targe
 
 void GPSTrackRecorder::newPosition(double latitude, double longitude, double altitude, float accuracy)
 {
-	TrackPoint new_point(
+	auto new_point = TrackPoint {
 		LatLon(latitude, longitude),
 		QDateTime::currentDateTimeUtc(),
-		altitude,
+		static_cast<float>(altitude),
 		accuracy
-	);
+	};
 	target_template->getTrack().appendTrackPoint(new_point);
 	target_template->setHasUnsavedChanges(true);
 	track_changed_since_last_update = true;
