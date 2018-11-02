@@ -309,8 +309,8 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 	int size = track.getNumWaypoints();
 	for (int i = 0; i < size; ++i)
 	{
-		const TrackPoint& track_point = track.getWaypoint(i);
-		const auto point = georef.toMapCoordF(track_point.latlon);
+		const auto& way_point = track.getWaypoint(i);
+		const auto point = georef.toMapCoordF(way_point.latlon);
 		rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
 	}
 	for (int i = 0; i < track.getNumSegments(); ++i)
@@ -399,8 +399,9 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		{
 			for (int i = 0; i < track.getNumWaypoints(); i++)
 			{
-				const auto projected = georef.toMapCoordF(track.getWaypoint(i).latlon);
-				result.push_back(importWaypoint(templateToMap(projected), track.getWaypoint(i).name));
+				const auto& way_point = track.getWaypoint(i);
+				const auto projected = georef.toMapCoordF(way_point.latlon);
+				result.push_back(importWaypoint(templateToMap(projected), way_point.name));
 			}
 		}
 		else
@@ -408,7 +409,8 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 			PathObject* path = importPathStart();
 			for (int i = 0; i < track.getNumWaypoints(); i++)
 			{
-				const auto projected = georef.toMapCoordF(track.getWaypoint(i).latlon);
+				const auto& way_point = track.getWaypoint(i);
+				const auto projected = georef.toMapCoordF(way_point.latlon);
 				path->addCoordinate(MapCoord(templateToMap(projected)));
 			}
 			importPathEnd(path);

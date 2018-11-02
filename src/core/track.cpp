@@ -21,6 +21,10 @@
 
 #include "track.h"
 
+#include <algorithm>
+#include <iterator>
+#include <numeric>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtNumeric>
@@ -84,28 +88,44 @@ Track::~Track() = default;
 
 Track& Track::operator=(const Track& rhs)
 {
-	if (this == &rhs)
-		return *this;
-	
-	clear();
-	
-	waypoints = rhs.waypoints;
-	
-	segment_points = rhs.segment_points;
-	segment_starts = rhs.segment_starts;
-	
-	current_segment_finished = rhs.current_segment_finished;
-	
+	if (this != &rhs)
+	{
+		waypoints = rhs.waypoints;
+		segments = rhs.segments;
+		current_segment_finished = rhs.current_segment_finished;
+	}
 	return *this;
+}
+
+bool Track::empty() const
+{
+	return waypoints.empty() 
+	       && std::all_of(begin(segments), end(segments), [](const auto& s) { return s.empty(); });
 }
 
 void Track::clear()
 {
 	waypoints.clear();
-	segment_points.clear();
-	segment_starts.clear();
+	segments.clear();
+	segments.squeeze();  // QVarLengthArray: reset to local storage
 	current_segment_finished = true;
 }
+
+void Track::squeeze()
+{
+	if (segments.size() > 1)
+	{
+		auto current = segments.end() - 1;
+		if (current->empty())
+		{
+			auto previous = current - 1;
+			*current = *previous;
+			previous->swap(*current);
+			current->clear();
+		}
+	}
+}
+
 
 bool Track::loadFrom(const QString& path)
 {
@@ -155,29 +175,25 @@ bool Track::saveGpxTo(QIODevice& device) const
 	stream.writeAttribute(QString::fromLatin1("version"), QString::fromLatin1("1.1"));
 	stream.writeAttribute(QString::fromLatin1("creator"), qApp->applicationDisplayName());
 	
-	int size = getNumWaypoints();
-	for (int i = 0; i < size; ++i)
+	for (const auto& waypoint : waypoints)
 	{
 		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("wpt"));
-		const TrackPoint& point = getWaypoint(i);
-		point.save(&stream);
+		waypoint.save(&stream);
 		stream.writeEndElement();
 	}
 	
 	stream.writeCharacters(newline);
 	stream.writeStartElement(QStringLiteral("trk"));
-	for (int i = 0; i < getNumSegments(); ++i)
+	for (const auto& segment : segments)
 	{
 		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("trkseg"));
-		size = getSegmentPointCount(i);
-		for (int k = 0; k < size; ++k)
+		for (const auto& trackPoint : segment)
 		{
 			stream.writeCharacters(newline);
 			stream.writeStartElement(QStringLiteral("trkpt"));
-			const TrackPoint& point = getSegmentPoint(i, k);
-			point.save(&stream);
+			trackPoint.save(&stream);
 			stream.writeEndElement();
 		}
 		stream.writeCharacters(newline);
@@ -194,14 +210,17 @@ bool Track::saveGpxTo(QIODevice& device) const
 
 void Track::appendTrackPoint(const TrackPoint& point)
 {
-	segment_points.push_back(point);
-	
-	if (current_segment_finished)
+	if (Q_UNLIKELY(current_segment_finished))
 	{
-		segment_starts.push_back(segment_points.size() - 1);
+		segments.push_back({});
+		squeeze();
 		current_segment_finished = false;
 	}
+	
+	Q_ASSERT(!segments.empty());
+	segments.back().push_back(point);
 }
+
 void Track::finishCurrentSegment()
 {
 	current_segment_finished = true;
@@ -214,62 +233,56 @@ void Track::appendWaypoint(const TrackPoint& point)
 
 int Track::getNumSegments() const
 {
-	return (int)segment_starts.size();
+	return static_cast<int>(segments.size());
+}
+
+const TrackSegment& Track::getSegment(int segment_number) const
+{
+	return segments[segment_number];
 }
 
 int Track::getSegmentPointCount(int segment_number) const
 {
-	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
-	if (segment_number == (int)segment_starts.size() - 1)
-		return segment_points.size() - segment_starts[segment_number];
-	else
-		return segment_starts[segment_number + 1] - segment_starts[segment_number];
+	return static_cast<int>(segments[segment_number].size());
 }
 
 const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) const
 {
-	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
-	return segment_points[segment_starts[segment_number] + point_number];
+	return segments[segment_number][static_cast<TrackSegment::size_type>(point_number)];
+}
+
+const TrackSegment&Track::getWaypoints() const
+{
+	return waypoints;
 }
 
 int Track::getNumWaypoints() const
 {
-	return waypoints.size();
+	return static_cast<int>(waypoints.size());
 }
 
 const TrackPoint& Track::getWaypoint(int number) const
 {
-	return waypoints[number];
+	return waypoints[static_cast<TrackSegment::size_type>(number)];
 }
 
 LatLon Track::calcAveragePosition() const
 {
-	double avg_latitude = 0;
-	double avg_longitude = 0;
-	int num_samples = 0;
-	
-	int size = getNumWaypoints();
-	for (int i = 0; i < size; ++i)
+	auto num_samples = waypoints.size();
+	auto acc = std::accumulate(begin(waypoints), end(waypoints), LatLon{}, [](LatLon a, const TrackPoint& t) {
+		return LatLon{a.latitude() + t.latlon.latitude(), a.longitude() + t.latlon.longitude()};
+	});
+	for (const auto& segment : segments)
 	{
-		const TrackPoint& point = getWaypoint(i);
-		avg_latitude += point.latlon.latitude();
-		avg_longitude += point.latlon.longitude();
-		++num_samples;
+		num_samples += segment.size();
+		acc = std::accumulate(begin(segment), end(segment), acc, [](const LatLon& a, const TrackPoint& t) {
+			return LatLon{a.latitude() + t.latlon.latitude(), a.longitude() + t.latlon.longitude()};
+		});
 	}
-	for (int i = 0; i < getNumSegments(); ++i)
-	{
-		size = getSegmentPointCount(i);
-		for (int k = 0; k < size; ++k)
-		{
-			const TrackPoint& point = getSegmentPoint(i, k);
-			avg_latitude += point.latlon.latitude();
-			avg_longitude += point.latlon.longitude();
-			++num_samples;
-		}
-	}
+	if (num_samples == 0)
+		num_samples = 1;
 	
-	return LatLon((num_samples > 0) ? (avg_latitude / num_samples) : 0,
-				  (num_samples > 0) ? (avg_longitude / num_samples) : 0);
+	return { acc.latitude() / num_samples, acc.longitude() / num_samples };
 }
 
 bool Track::loadGpxFrom(QIODevice& device)
@@ -291,11 +304,8 @@ bool Track::loadGpxFrom(QIODevice& device)
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rte"), Qt::CaseInsensitive) == 0)
 			{
-				if (segment_starts.empty()
-				    || segment_starts.back() < (int)segment_points.size())
-				{
-					segment_starts.push_back(segment_points.size());
-				}
+				segments.push_back({});
+				squeeze();
 			}
 			else if (stream.name().compare(QLatin1String("ele"), Qt::CaseInsensitive) == 0)
 				point.elevation = stream.readElementText().toFloat();
@@ -315,16 +325,15 @@ bool Track::loadGpxFrom(QIODevice& device)
 			else if (stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
-				segment_points.push_back(point);
+				/// \todo Don't load route points as track points.
+				if (Q_UNLIKELY(segments.empty()))
+					segments.push_back({});
+				segments.back().push_back(point);
 			}
 		}
 	}
 	
-	if (!segment_starts.empty()
-	    && segment_starts.back() == (int)segment_points.size())
-	{
-		segment_starts.pop_back();
-	}
+	current_segment_finished = true;
 	
 	return !stream.hasError();
 }
@@ -333,9 +342,7 @@ bool Track::loadGpxFrom(QIODevice& device)
 bool operator==(const Track& lhs, const Track& rhs)
 {
 	return lhs.waypoints == rhs.waypoints
-	       && lhs.segment_points == rhs.segment_points
-	       && lhs.segment_starts == rhs.segment_starts
-	       && lhs.current_segment_finished == rhs.current_segment_finished;
+	       && lhs.segments == rhs.segments;
 }
 
 
