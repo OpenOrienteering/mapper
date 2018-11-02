@@ -58,7 +58,6 @@ void GPSTrackRecorder::newPosition(double latitude, double longitude, double alt
 		LatLon(latitude, longitude),
 		QDateTime::currentDateTimeUtc(),
 		altitude,
-		-1,
 		accuracy
 	);
 	target_template->getTrack().appendTrackPoint(new_point);

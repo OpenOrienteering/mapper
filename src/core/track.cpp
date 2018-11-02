@@ -42,12 +42,11 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 	return MapCoordF(latlon.longitude(), latlon.latitude());
 }
 
-TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
+TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, float hDOP)
 {
 	gps_coord = coord;
 	this->datetime = datetime;
 	this->elevation = elevation;
-	this->num_satellites = num_satellites;
 	this->hDOP = hDOP;
 }
 void TrackPoint::save(QXmlStreamWriter* stream) const
@@ -59,8 +58,6 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
 	if (elevation > -9999)
 		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
-	if (num_satellites >= 0)
-		stream->writeTextElement(QStringLiteral("sat"), QString::number(num_satellites));
 	if (hDOP >= 0)
 		stream->writeTextElement(QStringLiteral("hdop"), QString::number(hDOP, 'f', 3));
 }
@@ -75,7 +72,6 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 	       && lhs.map_coord == rhs.map_coord
 	       && lhs.datetime == rhs.datetime
 	       && fuzzyCompare(lhs.elevation, rhs.elevation)
-	       && lhs.num_satellites == rhs.num_satellites
 	       && fuzzyCompare(lhs.hDOP, rhs.hDOP);
 }
 
@@ -373,8 +369,6 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 				point.elevation = stream.readElementText().toFloat();
 			else if (stream.name().compare(QLatin1String("time"), Qt::CaseInsensitive) == 0)
 				point.datetime = QDateTime::fromString(stream.readElementText(), Qt::ISODate);
-			else if (stream.name().compare(QLatin1String("sat"), Qt::CaseInsensitive) == 0)
-				point.num_satellites = stream.readElementText().toInt();
 			else if (stream.name().compare(QLatin1String("hdop"), Qt::CaseInsensitive) == 0)
 				point.hDOP = stream.readElementText().toFloat();
 			else if (stream.name().compare(QLatin1String("name"), Qt::CaseInsensitive) == 0)

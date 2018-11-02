@@ -40,7 +40,7 @@ namespace OpenOrienteering {
 
 /**
  * A point in a track or a waypoint, which stores position on ellipsoid and
- * map and more attributes (e.g. number of satellites)
+ * map and more attributes.
  */
 struct TrackPoint
 {
@@ -49,11 +49,10 @@ struct TrackPoint
 	
 	QDateTime datetime;		// QDateTime() if invalid
 	float elevation;		// -9999 if invalid
-	int num_satellites;		// -1 if invalid
 	float hDOP;				// -1 if invalid
 	
 	TrackPoint(LatLon coord = LatLon(), const QDateTime& datetime = QDateTime(),
-			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
+			   float elevation = -9999, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
 
