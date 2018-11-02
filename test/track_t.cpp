@@ -30,8 +30,10 @@
 #include <QFileInfo>
 #include <QIODevice>
 #include <QLatin1String>
+#include <QList>
 #include <QObject>
 #include <QString>
+#include <QVariant>
 
 #include "global.h"
 #include "test_config.h"
@@ -88,7 +90,7 @@ private slots:
 		QFETCH(QString, filename_in);
 		QFETCH(int, offset);
 		
-		auto actual_track = Track{};
+		Track actual_track;
 		QVERIFY(actual_track.empty());
 		
 		if (!filename_in.isEmpty())
@@ -97,22 +99,34 @@ private slots:
 			QVERIFY(!actual_track.empty());
 		}
 		
+		QSignalSpy signal_spy{&actual_track, &Track::trackChanged};
+		
 		const auto waypoint_name = filename_out.right(11);
 		const auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24, waypoint_name};
 		actual_track.appendWaypoint(wp0);
 		QVERIFY(!actual_track.empty());
+		QCOMPARE(signal_spy.count(), 1);
+		QCOMPARE(signal_spy.takeFirst().at(0).toInt(), int(Track::WaypointAppended));
 		
 		const auto tp0 = TrackPoint{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
 		actual_track.appendTrackPoint(tp0);
+		QCOMPARE(signal_spy.count(), 1);
+		QCOMPARE(signal_spy.takeFirst().at(0).toInt(), int(Track::NewSegment));
 		const auto tp1 = TrackPoint{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
 		actual_track.appendTrackPoint(tp1);
+		QCOMPARE(signal_spy.count(), 1);
+		QCOMPARE(signal_spy.takeFirst().at(0).toInt(), int(Track::TrackPointAppended));
 		const auto tp2 = TrackPoint{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), NAN, 32 };
 		actual_track.appendTrackPoint(tp2);
+		QCOMPARE(signal_spy.count(), 1);
+		QCOMPARE(signal_spy.takeFirst().at(0).toInt(), int(Track::TrackPointAppended));
 		actual_track.finishCurrentSegment();
 		
 		const auto tp3 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 9), 105 };
 		actual_track.appendTrackPoint(tp3);
 		actual_track.finishCurrentSegment();
+		
+		QVERIFY(!actual_track.empty());
 		
 		auto filename_tmp = QFileInfo(filename_out).fileName();
 		filename_tmp.insert(filename_tmp.length() - 4, QLatin1String(".tmp"));
@@ -128,7 +142,7 @@ private slots:
 		QVERIFY(!raw_expected.isEmpty());
 		QCOMPARE(raw_tmp, raw_expected);
 		
-		auto expected_track = Track{};
+		Track expected_track;
 		QVERIFY(expected_track.loadFrom(filename_out));
 		QCOMPARE(actual_track, expected_track);
 		

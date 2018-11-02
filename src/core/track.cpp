@@ -80,23 +80,17 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 
 // ### Track ###
 
-Track::Track(const Track& other)
+Track::Track(QObject* parent)
+: QObject(parent)
 {
-	*this = other;
+	// The registered meta types are used by async signal-slot connections.
+	static const auto track_change_id = qRegisterMetaType<TrackChange>("TrackChange");
+	static const auto track_point_id = qRegisterMetaType<TrackPoint>("TrackPoint");
+	Q_UNUSED(track_change_id);
+	Q_UNUSED(track_point_id);
 }
 
 Track::~Track() = default;
-
-Track& Track::operator=(const Track& rhs)
-{
-	if (this != &rhs)
-	{
-		waypoints = rhs.waypoints;
-		segments = rhs.segments;
-		current_segment_finished = rhs.current_segment_finished;
-	}
-	return *this;
-}
 
 bool Track::empty() const
 {
@@ -127,6 +121,14 @@ void Track::squeeze()
 	}
 }
 
+
+void Track::copyFrom(const Track& other)
+{
+	clear();
+	segments = other.segments;
+	waypoints = other.waypoints;
+	current_segment_finished = other.current_segment_finished;
+}
 
 bool Track::loadFrom(const QString& path)
 {
@@ -219,7 +221,10 @@ void Track::appendTrackPoint(const TrackPoint& point)
 	}
 	
 	Q_ASSERT(!segments.empty());
-	segments.back().push_back(point);
+	auto& segment = segments.back();
+	const auto change = segment.empty() ? NewSegment : TrackPointAppended;
+	segment.push_back(point);
+	emit trackChanged(change, point);
 }
 
 void Track::finishCurrentSegment()
@@ -230,6 +235,7 @@ void Track::finishCurrentSegment()
 void Track::appendWaypoint(const TrackPoint& point)
 {
 	waypoints.push_back(point);
+	emit trackChanged(WaypointAppended, point);
 }
 
 int Track::getNumSegments() const
