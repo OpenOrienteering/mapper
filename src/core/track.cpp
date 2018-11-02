@@ -21,10 +21,20 @@
 
 #include "track.h"
 
+#include <memory>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QtNumeric>
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>  // IWYU pragma: keep
+#include <QIODevice>
+#include <QLatin1String>
+#include <QPoint>
+#include <QPointF>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 // IWYU pragma: no_include <qxmlstream.h>
@@ -67,27 +77,15 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 
 // ### Track ###
 
-Track::Track()
+Track::Track(const Georeferencing& map_georef)
+: map_georef(map_georef)
 {
-	current_segment_finished = true;
-}
-
-Track::Track(const Georeferencing& map_georef) : map_georef(map_georef)
-{
-	current_segment_finished = true;
+	// nothing else
 }
 
 Track::Track(const Track& other)
 {
-	waypoints = other.waypoints;
-	waypoint_names = other.waypoint_names;
-	
-	segment_points = other.segment_points;
-	segment_starts = other.segment_starts;
-	
-	current_segment_finished = other.current_segment_finished;
-	
-	map_georef = other.map_georef;
+	*this = other;
 }
 
 Track::~Track() = default;
@@ -121,7 +119,7 @@ void Track::clear()
 	current_segment_finished = true;
 }
 
-bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
+bool Track::loadFrom(const QString& path, bool project_points)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -130,7 +128,7 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 	clear();
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		if (!loadFromGPX(&file, project_points, dialog_parent))
+		if (!loadFromGPX(&file, project_points))
 			return false;
 	}
 	else
@@ -162,7 +160,7 @@ bool Track::saveTo(const QString& path) const
 		stream.writeStartElement(QStringLiteral("wpt"));
 		const TrackPoint& point = getWaypoint(i);
 		point.save(&stream);
-		stream.writeTextElement(QStringLiteral("name"), waypoint_names[i]);
+		stream.writeTextElement(QStringLiteral("name"), getWaypointName(i));
 		stream.writeEndElement();
 	}
 	
@@ -199,10 +197,10 @@ bool Track::saveTo(const QString& path) const
 	return true;
 }
 
-void Track::appendTrackPoint(TrackPoint& point)
+void Track::appendTrackPoint(const TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	segment_points.push_back(point);
+	segment_points.back().map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	
 	if (current_segment_finished)
 	{
@@ -215,10 +213,10 @@ void Track::finishCurrentSegment()
 	current_segment_finished = true;
 }
 
-void Track::appendWaypoint(TrackPoint& point, const QString& name)
+void Track::appendWaypoint(const TrackPoint& point, const QString& name)
 {
-	point.map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	waypoints.push_back(point);
+	waypoints.back().map_coord = map_georef.toMapCoordF(point.latlon, nullptr); // TODO: check for errors
 	waypoint_names.push_back(name);
 }
 
@@ -294,10 +292,8 @@ LatLon Track::calcAveragePosition() const
 				  (num_samples > 0) ? (avg_longitude / num_samples) : 0);
 }
 
-bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent)
+bool Track::loadFromGPX(QFile* file, bool project_points)
 {
-	Q_UNUSED(dialog_parent);
-	
 	TrackPoint point;
 	QString point_name;
 
@@ -309,7 +305,7 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		{
 			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0
 			    || stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
-				|| stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
+			    || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
 				point = TrackPoint{LatLon{stream.attributes().value(QLatin1String("lat")).toDouble(),
 				                          stream.attributes().value(QLatin1String("lon")).toDouble()}};
@@ -320,8 +316,8 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rte"), Qt::CaseInsensitive) == 0)
 			{
-				if (segment_starts.size() == 0 ||
-					segment_starts.back() < (int)segment_points.size())
+				if (segment_starts.empty()
+				    || segment_starts.back() < (int)segment_points.size())
 				{
 					segment_starts.push_back(segment_points.size());
 				}
@@ -350,8 +346,8 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		}
 	}
 	
-	if (segment_starts.size() > 0 &&
-		segment_starts.back() == (int)segment_points.size())
+	if (!segment_starts.empty()
+	    && segment_starts.back() == (int)segment_points.size())
 	{
 		segment_starts.pop_back();
 	}
@@ -361,16 +357,11 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 
 void Track::projectPoints()
 {
-	// if (true) // condition removed
-	{
-		int size = waypoints.size();
-		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].latlon, nullptr); // FIXME: check for errors
-			
-		size = segment_points.size();
-		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].latlon, nullptr); // FIXME: check for errors
-	}
+	/// \todo Check for errors from Georeferencing::toMapCoordF()
+	for (auto& waypoint : waypoints)
+		waypoint.map_coord = map_georef.toMapCoordF(waypoint.latlon, nullptr); 
+	for (auto& segment_point : segment_points)
+		segment_point.map_coord = map_georef.toMapCoordF(segment_point.latlon, nullptr); 
 }
 
 
