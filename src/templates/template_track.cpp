@@ -57,6 +57,8 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
 	connect(&georef, &Georeferencing::stateChanged, this, &TemplateTrack::updateGeoreferencing);
 	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
+	
+	connect(&track, &Track::trackChanged, this, &TemplateTrack::trackChanged);
 }
 
 TemplateTrack::~TemplateTrack()
@@ -344,7 +346,7 @@ bool TemplateTrack::hasAlpha() const
 Template* TemplateTrack::duplicateImpl() const
 {
 	TemplateTrack* copy = new TemplateTrack(template_path, map);
-	copy->track = track;
+	copy->track.copyFrom(track);
 	if (projected_georef)
 		copy->projected_georef.reset(new Georeferencing(*projected_georef));
 	copy->waypoints = waypoints;
@@ -475,6 +477,29 @@ void TemplateTrack::configureForGPSTrack()
 	projectTrack();
 	
 	template_state = Template::Loaded;
+}
+
+void TemplateTrack::trackChanged(Track::TrackChange change, const TrackPoint& point)
+{
+	if (template_state != Template::Loaded)
+		return;
+	
+	const auto& georef = georeferencing();
+	switch (change)
+	{
+	case Track::NewSegment:
+		track_segments.push_back({});
+		track_segments.back().moveTo(georef.toMapCoordF(point.latlon));
+		break;
+	case Track::TrackPointAppended:
+		track_segments.back().lineTo(georef.toMapCoordF(point.latlon));
+		break;
+	case Track::WaypointAppended:
+		waypoints.push_back(georef.toMapCoordF(point.latlon));
+		break;
+	}
+	
+	setHasUnsavedChanges(true);
 }
 
 void TemplateTrack::updateGeoreferencing()

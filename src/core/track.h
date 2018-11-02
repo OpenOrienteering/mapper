@@ -25,7 +25,10 @@
 #include <cmath>
 #include <vector>
 
+#include <QtGlobal>
 #include <QDateTime>
+#include <QMetaType>
+#include <QObject>
 #include <QString>
 #include <QVarLengthArray>
 
@@ -71,18 +74,32 @@ using TrackSegment = std::vector<TrackPoint>;
 
 
 /**
- * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
+ * Stores a set of track point and/or waypoints, e.g. taken from a GPS device.
  * 
+ * This unit is model after the GPX standard.
  * All coordinates are assumed to be geographic WGS84 coordinates.
+ * 
+ * For recording purposes, this class allows to append track segments, track
+ * points and waypoints to the existing data, and it sends signals for such
+ * changes.
  */
-class Track
+class Track : public QObject
 {
-public:
-	/// Constructs an empty track
-	Track() = default;
+	Q_OBJECT
+	Q_DISABLE_COPY(Track)
 	
-	/// Duplicates a track
-	Track(const Track& other);
+public:
+	///  Marks a particular change to the track data.
+	enum TrackChange
+	{
+		NewSegment,         ///< A new segment was started, and a trackpoint was added to it.
+		TrackPointAppended, ///< A track point was appended to the current segment.
+		WaypointAppended,   ///< A waypoint was appended to the track.
+	};
+	
+	
+	/// Constructs an empty track
+	explicit Track(QObject* parent = nullptr);
 	
 	~Track();
 	
@@ -96,6 +113,9 @@ public:
 	/// moves its allocation to the current segment.
 	void squeeze();
    
+	/// Replaces this track's data with the data from the another track.
+	void copyFrom(const Track& other);
+	
 	/// Attempts to load the track from the given file.
 	bool loadFrom(const QString& path);
 	/// Attempts to load GPX data from the open device.
@@ -142,8 +162,20 @@ public:
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
-	/** Assigns a copy of another Track's data to this object. */
-	Track& operator=(const Track& rhs);
+	
+signals:
+	/**
+	 * Signals a change in the track data, as it occurs during recording.
+	 * 
+	 * These signals are emitted by appendTrackPoint() and appendWaypoint().
+	 * 
+	 * @param change         The type of change.
+	 * @param point_number   The index of the changed point.
+	 * @param segment_number The index of the segment of the changed track point.
+	 *                       Not used for Track::WaypointAppended.
+	 */
+	void trackChanged(TrackChange change, const TrackPoint& point);
+	
 	
 private:
 	TrackSegment waypoints;
@@ -162,5 +194,10 @@ inline bool operator!=(const Track& lhs, const Track& rhs) { return !(lhs==rhs);
 
 
 }  // namespace OpenOrienteering
+
+
+Q_DECLARE_METATYPE(OpenOrienteering::TrackPoint)
+Q_DECLARE_METATYPE(OpenOrienteering::Track::TrackChange)
+
 
 #endif  // OPENORIENTEERING_TRACK_H
