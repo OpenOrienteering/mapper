@@ -91,14 +91,14 @@ private slots:
 			QVERIFY(actual_track.loadFrom(filename_in, true));
 		
 		const auto waypoint_name = filename_out.right(11);
-		TrackPoint wp0{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 4, 24};
+		TrackPoint wp0{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
 		actual_track.appendWaypoint(wp0, waypoint_name);
 		
-		TrackPoint tp0{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100, 5};
+		TrackPoint tp0{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
 		actual_track.appendTrackPoint(tp0);
-		TrackPoint tp1{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, -1, 28 };
+		TrackPoint tp1{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
 		actual_track.appendTrackPoint(tp1);
-		TrackPoint tp2{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), -9999, 6, 32 };
+		TrackPoint tp2{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), -9999, 32 };
 		actual_track.appendTrackPoint(tp2);
 		actual_track.finishCurrentSegment();
 		
