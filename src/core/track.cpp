@@ -99,7 +99,6 @@ Track::Track(const Track& other)
 	
 	segment_points = other.segment_points;
 	segment_starts = other.segment_starts;
-	segment_names  = other.segment_names;
 	
 	current_segment_finished = other.current_segment_finished;
 	
@@ -128,7 +127,6 @@ Track& Track::operator=(const Track& rhs)
 	
 	segment_points = rhs.segment_points;
 	segment_starts = rhs.segment_starts;
-	segment_names  = rhs.segment_names;
 	
 	current_segment_finished = rhs.current_segment_finished;
 	
@@ -148,7 +146,6 @@ void Track::clear()
 	waypoint_names.clear();
 	segment_points.clear();
 	segment_starts.clear();
-	segment_names.clear();
 	current_segment_finished = true;
 	delete track_crs;
 	track_crs = nullptr;
@@ -288,18 +285,6 @@ const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) c
 {
 	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
 	return segment_points[segment_starts[segment_number] + point_number];
-}
-
-const QString& Track::getSegmentName(int segment_number) const
-{
-	// NOTE: Segment names not [yet] supported by most track importers.
-	if (segment_names.size() == 0)
-	{
-		static const QString empty_string;
-		return empty_string;
-	}
-	
-	return segment_names[segment_number];
 }
 
 int Track::getNumWaypoints() const
