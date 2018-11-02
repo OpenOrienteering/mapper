@@ -21,6 +21,7 @@
 
 #include "track.h"
 
+#include <QtNumeric>
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>  // IWYU pragma: keep
@@ -41,13 +42,9 @@ MapCoordF fakeMapCoordF(const LatLon &latlon)
 	return MapCoordF(latlon.longitude(), latlon.latitude());
 }
 
-TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, float hDOP)
-{
-	latlon = coord;
-	this->datetime = datetime;
-	this->elevation = elevation;
-	this->hDOP = hDOP;
-}
+
+// ### TrackPoint ###
+
 void TrackPoint::save(QXmlStreamWriter* stream) const
 {
 	stream->writeAttribute(QStringLiteral("lat"), QString::number(latlon.latitude(), 'f', 12));
@@ -55,10 +52,10 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 	
 	if (datetime.isValid())
 		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
-	if (elevation > -9999)
-		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
-	if (hDOP >= 0)
-		stream->writeTextElement(QStringLiteral("hdop"), QString::number(hDOP, 'f', 3));
+	if (!qIsNaN(elevation))
+		stream->writeTextElement(QStringLiteral("ele"), QString::number(static_cast<qreal>(elevation), 'f', 3));
+	if (!qIsNaN(hDOP))
+		stream->writeTextElement(QStringLiteral("hdop"), QString::number(static_cast<qreal>(hDOP), 'f', 3));
 }
 
 bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
@@ -349,8 +346,8 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 			    || stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
 				|| stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
-				point = TrackPoint(LatLon(stream.attributes().value(QLatin1String("lat")).toDouble(),
-				                          stream.attributes().value(QLatin1String("lon")).toDouble()));
+				point = TrackPoint{LatLon{stream.attributes().value(QLatin1String("lat")).toDouble(),
+				                          stream.attributes().value(QLatin1String("lon")).toDouble()}};
 				if (project_points)
 					point.map_coord = map_georef.toMapCoordF(point.latlon); // TODO: check for errors
 				point_name.clear();
