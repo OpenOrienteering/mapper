@@ -93,18 +93,18 @@ private slots:
 			QVERIFY(actual_track.loadFrom(filename_in, true));
 		
 		const auto waypoint_name = filename_out.right(11);
-		auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
+		const auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
 		actual_track.appendWaypoint(wp0, waypoint_name);
 		
-		auto tp0 = TrackPoint{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
+		const auto tp0 = TrackPoint{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
 		actual_track.appendTrackPoint(tp0);
-		auto tp1 = TrackPoint{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
+		const auto tp1 = TrackPoint{ {50.1, 7.0}, base_datetime.addSecs(offset + 2), 110, 28 };
 		actual_track.appendTrackPoint(tp1);
-		auto tp2 = TrackPoint{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), NAN, 32 };
+		const auto tp2 = TrackPoint{ {50.1, 7.1}, base_datetime.addSecs(offset + 3), NAN, 32 };
 		actual_track.appendTrackPoint(tp2);
 		actual_track.finishCurrentSegment();
 		
-		auto tp3 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 9), 105 };
+		const auto tp3 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 9), 105 };
 		actual_track.appendTrackPoint(tp3);
 		actual_track.finishCurrentSegment();
 		
