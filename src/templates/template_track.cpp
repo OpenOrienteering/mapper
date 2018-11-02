@@ -33,9 +33,7 @@
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "gui/georeferencing_dialog.h"
-#include "gui/select_crs_dialog.h"
 #include "gui/task_dialog.h"
-#include "templates/template_positioning_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 
@@ -131,19 +129,18 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
+	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::geographic_crs_spec)
+	{
+		setErrorString(tr("This template must be loaded with GDAL/OGR."));
+		return false;
+	}
+	
 	if (!track.loadFrom(template_path, false))
 		return false;
 	
 	if (!configuring)
 	{
-		Georeferencing* track_crs = new Georeferencing();
-		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS(QString{}, track_crs_spec);
-		track_crs->setTransformationDirectly(QTransform());
-		track.setTrackCRS(track_crs);
-		
-		bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong"));
-		if (!is_georeferenced && crs_is_geographic)
+		if (!is_georeferenced)
 		{
 			if (projected_crs_spec.isEmpty())
 				projected_crs_spec = calculateLocalGeoreferencing();
@@ -163,36 +160,8 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 {
 	is_georeferenced = true;
 	
-	// If no track CRS is given by the template file, ask the user
-	if (!track.hasTrackCRS())
-	{
-		if (map->getGeoreferencing().isLocal())
-		{
-			track_crs_spec.clear();
-		}
-		else
-		{
-			SelectCRSDialog dialog(
-			            map->getGeoreferencing(),
-			            dialog_parent,
-			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Local | SelectCRSDialog::Geographic,
-			            tr("Select the coordinate reference system of the track coordinates") );
-			if (dialog.exec() == QDialog::Rejected)
-				return false;
-			track_crs_spec = dialog.currentCRSSpec();
-		}
-		
-		Georeferencing* track_crs = new Georeferencing();
-		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS(QString{}, track_crs_spec);
-		track_crs->setTransformationDirectly(QTransform());
-		track.setTrackCRS(track_crs);
-	}
-	
 	// If the CRS is geographic, ask if track should be loaded using map georeferencing or ad-hoc georeferencing
-	track_crs_spec = track.getTrackCRS()->getProjectedCRSSpec();
-	bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong")); // TODO: should that be case insensitive?
-	if (crs_is_geographic)
+	/** \todo Remove historical scope */
 	{
 		TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
 			tr("Load the track in georeferenced or non-georeferenced mode?"),
@@ -210,25 +179,6 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			is_georeferenced = false;
 		else // abort
 			return false;
-	}
-	
-	// If the CRS is local, show positioning dialog
-	if (track_crs_spec.isEmpty())
-	{
-		is_georeferenced = false;
-		
-		TemplatePositioningDialog dialog(dialog_parent);
-		if (dialog.exec() == QDialog::Rejected)
-			return false;
-		
-		transform.template_scale_x = dialog.getUnitScale();
-		if (!dialog.useRealCoords())
-		{
-			transform.template_scale_x /= (map->getScaleDenominator() / 1000.0);
-		}
-		transform.template_scale_y = transform.template_scale_x;
-		updateTransformationMatrices();
-		out_center_in_view = dialog.centerOnView();
 	}
 	
 	// If the track is loaded as georeferenced and the transformation parameters
@@ -249,7 +199,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	
 	// If the track is loaded as not georeferenced,
 	// the map coords for the track coordinates have to be calculated
-	if (!is_georeferenced && crs_is_geographic)
+	if (!is_georeferenced)
 	{
 		if (projected_crs_spec.isEmpty())
 			projected_crs_spec = calculateLocalGeoreferencing();
@@ -513,10 +463,6 @@ void TemplateTrack::configureForGPSTrack()
 	is_georeferenced = true;
 	
 	track_crs_spec = Georeferencing::geographic_crs_spec;
-	Georeferencing* track_crs = new Georeferencing();
-	track_crs->setProjectedCRS(QString{}, track_crs_spec);
-	track_crs->setTransformationDirectly(QTransform());
-	track.setTrackCRS(track_crs);
 	
 	projected_crs_spec.clear();
 	track.changeMapGeoreferencing(map->getGeoreferencing());
