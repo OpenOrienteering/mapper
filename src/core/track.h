@@ -27,6 +27,7 @@
 
 #include <QDateTime>
 #include <QString>
+#include <QVarLengthArray>
 
 #include "core/latlon.h"
 
@@ -60,6 +61,15 @@ inline bool operator!=(const TrackPoint& lhs, const TrackPoint& rhs) { return !(
 
 
 
+/** 
+ * A TrackSegment is a continuous span of track data.
+ * 
+ * \see https://www.topografix.com/GPX/1/1/#type_trksegType
+ */
+using TrackSegment = std::vector<TrackPoint>;
+
+
+
 /**
  * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
  * 
@@ -76,9 +86,16 @@ public:
 	
 	~Track();
 	
+	/// Returns true when the track contains no points.
+	bool empty() const;
+	
 	/// Deletes all data of the track
 	void clear();
 	
+	/// If the current segment is empty, squeezes the previous segment, but
+	/// moves its allocation to the current segment.
+	void squeeze();
+   
 	/// Attempts to load the track from the given file.
 	bool loadFrom(const QString& path);
 	/// Attempts to load GPX data from the open device.
@@ -104,12 +121,23 @@ public:
 	
 	
 	// Getters
-	int getNumSegments() const;
-	int getSegmentPointCount(int segment_number) const;
-	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const;
 	
-	int getNumWaypoints() const;
-	const TrackPoint& getWaypoint(int number) const;
+	/// Returns the number of track segments.
+	int getNumSegments() const;
+	
+	/// Returns the given track segment.
+	const TrackSegment& getSegment(int segment_number) const;
+	
+	int getSegmentPointCount(int segment_number) const; /// @deprecated
+	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const; /// @deprecated
+	
+	
+	/// Returns the waypoints.
+	const TrackSegment& getWaypoints() const;
+	
+	int getNumWaypoints() const; /// @deprecated
+	const TrackPoint& getWaypoint(int number) const; /// @deprecated
+	
 	
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
@@ -118,12 +146,8 @@ public:
 	Track& operator=(const Track& rhs);
 	
 private:
-	std::vector<TrackPoint> waypoints;
-	
-	std::vector<TrackPoint> segment_points;
-	// The indices of the first points of every track segment in this track
-	std::vector<int> segment_starts;
-	
+	TrackSegment waypoints;
+	QVarLengthArray<TrackSegment, 8> segments;
 	bool current_segment_finished = true;
 	
 	friend bool operator==(const Track& lhs, const Track& rhs);
