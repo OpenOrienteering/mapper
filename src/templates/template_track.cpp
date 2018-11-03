@@ -272,7 +272,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 	int size = std::min(track.getNumWaypoints(), int(waypoints.size()));
 	for (int i = 0; i < size; ++i, ++waypoint)
 	{
-		const QString& point_name = track.getWaypointName(i);
+		const QString& point_name = track.getWaypoint(i).name;
 		
 		double const radius = 0.25;
 		painter->drawEllipse(*waypoint, radius, radius);
@@ -400,7 +400,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 			for (int i = 0; i < track.getNumWaypoints(); i++)
 			{
 				const auto projected = georef.toMapCoordF(track.getWaypoint(i).latlon);
-				result.push_back(importWaypoint(templateToMap(projected), track.getWaypointName(i)));
+				result.push_back(importWaypoint(templateToMap(projected), track.getWaypoint(i).name));
 			}
 		}
 		else
