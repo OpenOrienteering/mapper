@@ -93,8 +93,8 @@ private slots:
 			QVERIFY(actual_track.loadFrom(filename_in));
 		
 		const auto waypoint_name = filename_out.right(11);
-		const auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24};
-		actual_track.appendWaypoint(wp0, waypoint_name);
+		const auto wp0 = TrackPoint{ {50.0, 7.1}, base_datetime.addSecs(offset + 0), 105, 24, waypoint_name};
+		actual_track.appendWaypoint(wp0);
 		
 		const auto tp0 = TrackPoint{ {50.0, 7.0}, base_datetime.addSecs(offset + 1), 100};
 		actual_track.appendTrackPoint(tp0);
