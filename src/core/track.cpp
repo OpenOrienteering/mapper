@@ -54,6 +54,8 @@ void TrackPoint::save(QXmlStreamWriter* stream) const
 		stream->writeTextElement(QStringLiteral("ele"), QString::number(static_cast<qreal>(elevation), 'f', 3));
 	if (!qIsNaN(hDOP))
 		stream->writeTextElement(QStringLiteral("hdop"), QString::number(static_cast<qreal>(hDOP), 'f', 3));
+	if (!name.isEmpty())
+		stream->writeTextElement(QStringLiteral("name"), name);
 }
 
 bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
@@ -65,7 +67,8 @@ bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
 	return lhs.latlon == rhs.latlon
 	       && lhs.datetime == rhs.datetime
 	       && fuzzyCompare(lhs.elevation, rhs.elevation)
-	       && fuzzyCompare(lhs.hDOP, rhs.hDOP);
+	       && fuzzyCompare(lhs.hDOP, rhs.hDOP)
+	       && lhs.name == rhs.name;
 }
 
 
@@ -87,7 +90,6 @@ Track& Track::operator=(const Track& rhs)
 	clear();
 	
 	waypoints = rhs.waypoints;
-	waypoint_names = rhs.waypoint_names;
 	
 	segment_points = rhs.segment_points;
 	segment_starts = rhs.segment_starts;
@@ -100,7 +102,6 @@ Track& Track::operator=(const Track& rhs)
 void Track::clear()
 {
 	waypoints.clear();
-	waypoint_names.clear();
 	segment_points.clear();
 	segment_starts.clear();
 	current_segment_finished = true;
@@ -161,7 +162,6 @@ bool Track::saveGpxTo(QIODevice& device) const
 		stream.writeStartElement(QStringLiteral("wpt"));
 		const TrackPoint& point = getWaypoint(i);
 		point.save(&stream);
-		stream.writeTextElement(QStringLiteral("name"), getWaypointName(i));
 		stream.writeEndElement();
 	}
 	
@@ -207,10 +207,9 @@ void Track::finishCurrentSegment()
 	current_segment_finished = true;
 }
 
-void Track::appendWaypoint(const TrackPoint& point, const QString& name)
+void Track::appendWaypoint(const TrackPoint& point)
 {
 	waypoints.push_back(point);
-	waypoint_names.push_back(name);
 }
 
 int Track::getNumSegments() const
@@ -241,11 +240,6 @@ int Track::getNumWaypoints() const
 const TrackPoint& Track::getWaypoint(int number) const
 {
 	return waypoints[number];
-}
-
-const QString& Track::getWaypointName(int number) const
-{
-	return waypoint_names[number];
 }
 
 LatLon Track::calcAveragePosition() const
@@ -281,8 +275,6 @@ LatLon Track::calcAveragePosition() const
 bool Track::loadGpxFrom(QIODevice& device)
 {
 	TrackPoint point;
-	QString point_name;
-
 	QXmlStreamReader stream(&device);
 	while (!stream.atEnd())
 	{
@@ -295,7 +287,6 @@ bool Track::loadGpxFrom(QIODevice& device)
 			{
 				point = TrackPoint{LatLon{stream.attributes().value(QLatin1String("lat")).toDouble(),
 				                          stream.attributes().value(QLatin1String("lon")).toDouble()}};
-				point_name.clear();
 			}
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rte"), Qt::CaseInsensitive) == 0)
@@ -313,14 +304,13 @@ bool Track::loadGpxFrom(QIODevice& device)
 			else if (stream.name().compare(QLatin1String("hdop"), Qt::CaseInsensitive) == 0)
 				point.hDOP = stream.readElementText().toFloat();
 			else if (stream.name().compare(QLatin1String("name"), Qt::CaseInsensitive) == 0)
-				point_name = stream.readElementText();
+				point.name = stream.readElementText();
 		}
 		else if (stream.tokenType() == QXmlStreamReader::EndElement)
 		{
 			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0)
 			{
 				waypoints.push_back(point);
-				waypoint_names.push_back(point_name);
 			}
 			else if (stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
@@ -343,7 +333,6 @@ bool Track::loadGpxFrom(QIODevice& device)
 bool operator==(const Track& lhs, const Track& rhs)
 {
 	return lhs.waypoints == rhs.waypoints
-	       && lhs.waypoint_names == rhs.waypoint_names
 	       && lhs.segment_points == rhs.segment_points
 	       && lhs.segment_starts == rhs.segment_starts
 	       && lhs.current_segment_finished == rhs.current_segment_finished;
