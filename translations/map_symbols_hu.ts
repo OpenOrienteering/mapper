@@ -261,24 +261,24 @@
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
-        </message>
+            <translation>Jól látható sánc, töltés. A minimális magasság 1 méter.</translation>
+    </message>
         <message>
             <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Kis föld fal, kis töltés sánc</translation>
-        </message>
+            <translation>Kis vagy romos töltés</translation>
+    </message>
         <message>
             <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Egy kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.
-A minimális hossz: két szakasz (a lábnyoma 55 m). Ha rövidebb, akkor a szimbólumnak a minimális hosszúságot nem éri el akkor a 105 (földfal) szimbólumra  kell cserélni a jelet.</translation>
+            <translation>Egy kis vagy romos földfal, töltés. A minimális magasság 0,5 méter.
+A minimális hossz: két szakasz (a valóságban 55 m). Ha rövidebb, akkor vagy fel kell nagyítani a minimális hosszúságra, vagy ki kell cserélni a 105-ös (földfal) jelre.</translation>
     </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation>Árok, metsződés</translation>
+            <translation>Metsződés</translation>
     </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
@@ -296,19 +296,19 @@ Contour lines shall not be broken around this symbol.</source>
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
             <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0,5 m.
-A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
+A jel körül meg kell szakítani a szintvonalakat.</translation>
     </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation>Kis domb</translation>
+            <translation>Kis domb, kúp</translation>
     </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Jól látható domb vagy kúp, ami nem ábrázolható szintvonallal. Minimális magasság: 1 m.
-A szimbólum nem érinthet vagy fedhet szintvonalat.</translation>
+            <translation>Jól látható domb vagy kúp, amely méretarányosan nem ábrázolható szintvonallal. Minimális magasság: 1 m.
+A térképjel nem érinthet vagy fedhet szintvonalat.</translation>
     </message>
         <message>
             <source>Small elongated knoll</source>
@@ -625,8 +625,8 @@ Annak érdekében, hogy megkülönböztethető legyen a szomszédos (30 métern�
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különösen nagy és szembeötlő szikla. Egy nagy sziklának minimum 2 méter magasnak kell lennie. A szomszédos (30 m-nél közelebbi) sziklák különböző méretének szemléltetése érdekében megengedett a jel méretének 0.5 mm-re csökkentése.</translation>
+    </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
@@ -647,8 +647,9 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Szorosan egymás mellett elhelyezkedő sziklák csoportja, amelyeket nem lehetne egyesével ábrázolni. A sziklák minimális magassága 1 méter. A sziklacsoportnak jól elkülöníthetőnek kell lennie.
+A szomszédos (30 m-nél közelebbi) sziklacsoportok különböző méretének szemléltetése érdekében megengedett a jel méretének 20%-os növelése.</translation>
+    </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
