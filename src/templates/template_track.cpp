@@ -220,25 +220,20 @@ void TemplateTrack::unloadTemplateFileImpl()
 	track_segments.clear();
 }
 
-void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool on_screen, float opacity) const
 {
-	Q_UNUSED(clip_rect);
-	Q_UNUSED(scale);
-	
-	painter->save();
-	painter->setOpacity(static_cast<qreal>(opacity));
-	drawTracks(painter, on_screen);
-	drawWaypoints(painter);
-	painter->restore();
+	drawTracks(painter, on_screen, static_cast<qreal>(opacity));
+	drawWaypoints(painter, static_cast<qreal>(opacity));
 }
 
-void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
+void TemplateTrack::drawTracks(QPainter* painter, bool on_screen, qreal opacity) const
 {
 	painter->save();
+	
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
 	
-	// Tracks
+	painter->setOpacity(opacity);
 	QPen pen(qRgb(212, 0, 244));
 	if (on_screen)
 		pen.setCosmetic(true);
@@ -253,11 +248,12 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 	painter->restore();
 }
 
-void TemplateTrack::drawWaypoints(QPainter* painter) const
+void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 {
 	painter->save();
-	painter->setRenderHint(QPainter::Antialiasing);
 	
+	painter->setOpacity(opacity);
+	painter->setRenderHint(QPainter::Antialiasing);
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(QBrush(qRgb(255, 0, 0)));
 	
