@@ -68,11 +68,9 @@ const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 }
 
 TemplateTrack::TemplateTrack(const QString& path, Map* map)
- : Template(path, map)
+: Template(path, map)
+, track_crs_spec(Georeferencing::geographic_crs_spec)
 {
-	// set default value
-	track_crs_spec = Georeferencing::geographic_crs_spec;
-	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
@@ -89,6 +87,16 @@ TemplateTrack::~TemplateTrack()
 }
 
 
+const char* TemplateTrack::getTemplateType() const
+{
+	return "TemplateTrack";
+}
+
+bool TemplateTrack::isRasterGraphics() const
+{
+	return false;
+}
+
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
@@ -100,15 +108,11 @@ void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 	}
 	
 	// Follow map georeferencing XML structure
-	xml.writeStartElement(QString::fromLatin1("crs_spec"));
-	xml.writeCharacters(track_crs_spec);
-	xml.writeEndElement(/*crs_spec*/);
+	xml.writeTextElement(QString::fromLatin1("crs_spec"), track_crs_spec);
 	if (projected_georef)
 	{
 		Q_ASSERT(!is_georeferenced);
-		xml.writeStartElement(QString::fromLatin1("projected_crs_spec"));
-		xml.writeCharacters(projected_georef->getProjectedCRSSpec());
-		xml.writeEndElement(/*crs_spec*/);
+		xml.writeTextElement(QString::fromLatin1("projected_crs_spec"), projected_georef->getProjectedCRSSpec());
 	}
 }
 
@@ -173,25 +177,22 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_ce
 	is_georeferenced = true;
 	
 	// If the CRS is geographic, ask if track should be loaded using map georeferencing or ad-hoc georeferencing
-	/** \todo Remove historical scope */
-	{
-		TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
-			tr("Load the track in georeferenced or non-georeferenced mode?"),
-			QDialogButtonBox::Abort);
-		QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
-		if (!map->getGeoreferencing().isValid())
-			georef_text += QLatin1Char(' ') + tr("These are not configured yet, so they will be shown as the next step.");
-		QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
-		QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
-		
-		georef_dialog.exec();
-		if (georef_dialog.clickedButton() == georef_button)
-			is_georeferenced = true;
-		else if (georef_dialog.clickedButton() == non_georef_button)
-			is_georeferenced = false;
-		else // abort
-			return false;
-	}
+	TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
+	                         tr("Load the track in georeferenced or non-georeferenced mode?"),
+	                         QDialogButtonBox::Abort);
+	QString georef_text = tr("Positions the track according to the map's georeferencing settings.");
+	if (!map->getGeoreferencing().isValid())
+		georef_text += QLatin1Char(' ') + tr("These are not configured yet, so they will be shown as the next step.");
+	QAbstractButton* georef_button = georef_dialog.addCommandButton(tr("Georeferenced"), georef_text);
+	QAbstractButton* non_georef_button = georef_dialog.addCommandButton(tr("Non-georeferenced"), tr("Projects the track using an orthographic projection with center at the track's coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position."));
+	
+	georef_dialog.exec();
+	if (georef_dialog.clickedButton() == georef_button)
+		is_georeferenced = true;
+	else if (georef_dialog.clickedButton() == non_georef_button)
+		is_georeferenced = false;
+	else // abort
+		return false;
 	
 	// If the track is loaded as georeferenced and the transformation parameters
 	// were not set yet, it must be done now

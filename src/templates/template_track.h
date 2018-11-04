@@ -66,7 +66,9 @@ class PointObject;
  */
 class TemplateTrack : public Template
 {
-Q_OBJECT
+	Q_OBJECT
+	Q_DISABLE_COPY(TemplateTrack)
+	
 public:
 	/**
 	 * Returns the filename extensions supported by this template class.
@@ -74,9 +76,10 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateTrack(const QString& path, Map* map);
-    ~TemplateTrack() override;
-	const char* getTemplateType() const override {return "TemplateTrack";}
-	bool isRasterGraphics() const override {return false;}
+	~TemplateTrack() override;
+	
+	const char* getTemplateType() const override;
+	bool isRasterGraphics() const override;
 	
 	bool saveTemplateFile() const override;
 	
@@ -84,10 +87,10 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
 	QRectF getTemplateExtent() const override;
-    QRectF calculateTemplateBoundingBox() const override;
-    int getTemplateBoundingBoxPixelBorder() override;
+	QRectF calculateTemplateBoundingBox() const override;
+	int getTemplateBoundingBoxPixelBorder() override;
 	
 	bool hasAlpha() const override;
 	
@@ -116,8 +119,8 @@ public slots:
 protected:
 	Template* duplicateImpl() const override;
 	
-    void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
-    bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	/// Calculates a simple projection for non-georeferenced track usage.
 	QString calculateLocalGeoreferencing() const;
@@ -137,15 +140,15 @@ protected:
 	
 	
 	Track track;
-	QString track_crs_spec;
 	std::unique_ptr<Georeferencing> projected_georef;
-	friend class OgrTemplate; // for migration
-	std::unique_ptr<Georeferencing> preserved_georef;
 	std::vector<QPointF> waypoints;
 	QVarLengthArray<QPainterPath, 4> track_segments;
 	
-private:
-	Q_DISABLE_COPY(TemplateTrack)
+	friend class OgrTemplate;                          // for migration
+	
+	// The following attributes might be removed in the future.
+	std::unique_ptr<Georeferencing> preserved_georef;  // legacy
+	QString track_crs_spec;                            // legacy
 };
 
 
