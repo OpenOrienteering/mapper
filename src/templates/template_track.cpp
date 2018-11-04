@@ -163,19 +163,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		return false;
 	
 	if (!configuring)
-	{
-		if (!is_georeferenced)
-		{
-			if (!projected_georef)
-				setCustomProjection(calculateLocalGeoreferencing());
-			projectTrack();
-		}
-		else
-		{
-			projected_georef.reset();
-			projectTrack();
-		}
-	}
+		projectTrack();
 	
 	return true;
 }
@@ -221,20 +209,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_ce
 			return false;
 	}
 	
-	// If the track is loaded as not georeferenced,
-	// the map coords for the track coordinates have to be calculated
-	if (!is_georeferenced)
-	{
-		if (!projected_georef)
-			setCustomProjection(calculateLocalGeoreferencing());
-		projectTrack();
-	}
-	else
-	{
-		projected_georef.reset();
-		projectTrack();
-	}
-	
+	projectTrack();
 	return true;
 }
 
@@ -497,7 +472,6 @@ void TemplateTrack::configureForGPSTrack()
 	
 	track_crs_spec = Georeferencing::geographic_crs_spec;
 	
-	projected_georef.reset();
 	projectTrack();
 	
 	template_state = Template::Loaded;
@@ -530,7 +504,6 @@ void TemplateTrack::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 	{
-		projected_georef.reset();
 		projectTrack();
 		map->updateAllMapWidgets();
 	}
@@ -560,6 +533,11 @@ const Georeferencing& TemplateTrack::georeferencing() const
 
 void TemplateTrack::projectTrack()
 {
+	if (is_georeferenced)
+		projected_georef.reset();
+	else if (!projected_georef)
+		setCustomProjection(calculateLocalGeoreferencing());
+	
 	const auto& georef = georeferencing();
 	
 	waypoints.clear();
