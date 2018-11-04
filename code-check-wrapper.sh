@@ -78,6 +78,7 @@ PATTERN=" \
   tag_select_widget.cpp \
   template_image.cpp \
   template_list_widget.cpp \
+  template_track.cpp \
   template_tool \
   text_brwoser_dialog \
   track_t.cpp \

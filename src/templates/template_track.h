@@ -22,11 +22,13 @@
 #ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
 #define OPENORIENTEERING_TEMPLATE_TRACK_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
 #include <QObject>
 #include <QPainterPath>
+#include <QPointF>
 #include <QRectF>
 #include <QString>
 #include <QVarLengthArray>
@@ -36,6 +38,7 @@
 
 class QByteArray;
 class QPainter;
+// IWYU pragma: no_forward_declare QPointF
 class QRectF;
 class QWidget;
 class QXmlStreamReader;
