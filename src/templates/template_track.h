@@ -88,7 +88,6 @@ public:
 	void unloadTemplateFileImpl() override;
 	
 	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
-	QRectF getTemplateExtent() const override;
 	QRectF calculateTemplateBoundingBox() const override;
 	int getTemplateBoundingBoxPixelBorder() override;
 	
