@@ -289,12 +289,6 @@ void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 	painter->restore();
 }
 
-QRectF TemplateTrack::getTemplateExtent() const
-{
-	// Infinite because the extent of the waypoint texts is unknown
-	return infiniteRectF();
-}
-
 QRectF TemplateTrack::calculateTemplateBoundingBox() const
 {
 	const auto& georef = georeferencing();
