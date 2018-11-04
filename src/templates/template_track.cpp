@@ -21,14 +21,33 @@
 
 #include "template_track.h"
 
+#include <algorithm>
+#include <iterator>
+
+#include <Qt>
+#include <QBrush>
+#include <QByteArray>
 #include <QCommandLinkButton>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFont>
+#include <QFontMetrics>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPen>
+#include <QRect>
+#include <QRgb>
+#include <QStringRef>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -36,6 +55,8 @@
 #include "gui/task_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
+
+class QAbstractButton;
 
 
 namespace OpenOrienteering {
@@ -159,7 +180,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
 	is_georeferenced = true;
 	
@@ -230,7 +251,7 @@ void TemplateTrack::drawTemplate(QPainter* painter, const QRectF& clip_rect, dou
 	Q_UNUSED(scale);
 	
 	painter->save();
-	painter->setOpacity(opacity);
+	painter->setOpacity(static_cast<qreal>(opacity));
 	drawTracks(painter, on_screen);
 	drawWaypoints(painter);
 	painter->restore();
@@ -283,8 +304,8 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(waypoint->x() - 0.5*width,
-			                        waypoint->y() - height,
+			painter->drawText(QRect(static_cast<int>(waypoint->x() - 0.5*width),
+			                        static_cast<int>(waypoint->y() - height),
 			                        width,
 			                        height),
 			                  Qt::AlignCenter,
@@ -345,7 +366,7 @@ bool TemplateTrack::hasAlpha() const
 
 Template* TemplateTrack::duplicateImpl() const
 {
-	TemplateTrack* copy = new TemplateTrack(template_path, map);
+	auto* copy = new TemplateTrack(template_path, map);
 	copy->track.copyFrom(track);
 	if (projected_georef)
 		copy->projected_georef.reset(new Georeferencing(*projected_georef));
@@ -356,7 +377,7 @@ Template* TemplateTrack::duplicateImpl() const
 
 PathObject* TemplateTrack::importPathStart()
 {
-	PathObject* path = new PathObject();
+	auto* path = new PathObject();
 	path->setSymbol(map->getUndefinedLine(), true);
 	return path;
 }
@@ -369,7 +390,7 @@ void TemplateTrack::importPathEnd(PathObject* path)
 
 PointObject* TemplateTrack::importWaypoint(const MapCoordF& position, const QString& name)
 {
-	PointObject* point = new PointObject(map->getUndefinedPoint());
+	auto* point = new PointObject(map->getUndefinedPoint());
 	point->setPosition(position);
 	point->setTag(QStringLiteral("name"), name);
 	map->addObject(point);
@@ -385,7 +406,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		return false;
 	}
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
 	// clazy:excludeall=reserve-candidates
