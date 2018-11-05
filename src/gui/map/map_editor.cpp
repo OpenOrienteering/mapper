@@ -102,6 +102,7 @@
 #include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
+#include "core/track.h"
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
@@ -136,7 +137,6 @@
 #include "sensors/compass.h"
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
-#include "sensors/gps_track_recorder.h"
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
 #include "templates/template_position_dock_widget.h"
@@ -321,7 +321,6 @@ MapEditorController::~MapEditorController()
 	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
 		delete widget;
 	delete gps_display;
-	delete gps_track_recorder;
 	delete compass_display;
 	delete map;
 }
@@ -1567,7 +1566,6 @@ void MapEditorController::detach()
 	
 	delete gps_display;
 	gps_display = nullptr;
-	delete gps_track_recorder;
 	gps_track_recorder = nullptr;
 	delete compass_display;
 	compass_display = nullptr;
@@ -3394,7 +3392,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 		gps_display->startUpdates();
 		
 		// Create gps_track_recorder if we can determine a template track filename
-		constexpr int gps_track_draw_update_interval = 10 * 1000; // in milliseconds
 		if (! window->currentPath().isEmpty())
 		{
 			// Find or create a template for the track with a specific name
@@ -3453,14 +3450,16 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			main_view->setTemplateVisibility(track, visibility);
 			map->setTemplateAreaDirty(template_index);
 			
-			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
+			gps_track_recorder = &track->getTrack();
+			gps_track_recorder->finishCurrentSegment();  // ... and start new one on next update.
+			connect(gps_display, &GPSDisplay::latLonUpdated, gps_track_recorder, &Track::appendCurrentTrackPoint);
+			connect(gps_display, &GPSDisplay::positionUpdatesInterrupted, gps_track_recorder, &Track::finishCurrentSegment);
 		}
 	}
 	else
 	{
+		gps_display->disconnect(gps_track_recorder);
 		gps_display->stopUpdates();
-		
-		delete gps_track_recorder;
 		gps_track_recorder = nullptr;
 	}
 	gps_display->setVisible(enable);
