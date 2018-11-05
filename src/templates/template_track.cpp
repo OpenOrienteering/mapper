@@ -498,12 +498,38 @@ void TemplateTrack::trackChanged(Track::TrackChange change, const TrackPoint& po
 	case Track::NewSegment:
 		track_segments.push_back({});
 		track_segments.back().moveTo(georef.toMapCoordF(point.latlon));
+		// No need for redrawing after QPainterPath::moveTo().
 		break;
 	case Track::TrackPointAppended:
-		track_segments.back().lineTo(georef.toMapCoordF(point.latlon));
+		{
+			auto& segment = track_segments.back();
+			const auto p0 = segment.elementAt(segment.elementCount() - 1);
+			const auto p1 = georef.toMapCoordF(point.latlon);
+			segment.lineTo(p1);
+			const auto bounding_box =
+			        ( is_georeferenced
+			          ? QRectF { p0, p1 }
+			          : QRectF { templateToMap(p0), templateToMap(p1) }
+			        )
+			        .normalized()
+			        .adjusted(-track_line_width, -track_line_width, track_line_width, track_line_width);
+			map->setTemplateAreaDirty(this, bounding_box, 0);
+		}
 		break;
 	case Track::WaypointAppended:
-		waypoints.push_back(georef.toMapCoordF(point.latlon));
+		{
+			const auto p0 = georef.toMapCoordF(point.latlon);
+			waypoints.push_back(p0);
+			const auto p1 = is_georeferenced ? p0 : templateToMap(p0);
+			const auto bounding_box =
+			        ( point.name.isEmpty()
+			          ? QRectF { p1 - QPointF{waypoint_marker_radius, waypoint_marker_radius},
+			                     p1 + QPointF{waypoint_marker_radius, waypoint_marker_radius} }
+			          : QRectF { p1 - QPointF{point.name.length() * half_char_width, line_height},
+			                     p1 + QPointF{point.name.length() * half_char_width, waypoint_marker_radius} }
+			         );
+			map->setTemplateAreaDirty(this, bounding_box, 0);
+		}
 		break;
 	}
 	
