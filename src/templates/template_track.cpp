@@ -37,6 +37,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
 #include <QRect>
 #include <QRgb>
 #include <QStringRef>
@@ -272,7 +273,8 @@ void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 	QFont font = painter->font();
 	font.setPixelSize(waypoint_font_size);
 	painter->setFont(font);
-	int height = painter->fontMetrics().height();
+	line_height = static_cast<qreal>(painter->fontMetrics().height());
+	half_char_width = 0.5 * painter->fontMetrics().maxWidth();
 	
 	auto waypoint = begin(waypoints);
 	int size = std::min(track.getNumWaypoints(), int(waypoints.size()));
@@ -285,11 +287,11 @@ void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
-			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(static_cast<int>(waypoint->x() - 0.5*width),
-			                        static_cast<int>(waypoint->y() - height),
-			                        width,
-			                        height),
+			auto offset = point_name.length() * half_char_width;
+			painter->drawText(QRect(static_cast<int>(waypoint->x() - offset),
+			                        static_cast<int>(waypoint->y() - line_height),
+			                        static_cast<int>(2 * offset),
+			                        static_cast<int>(line_height)),
 			                  Qt::AlignCenter,
 			                  point_name);
 			painter->setPen(Qt::NoPen);
@@ -310,8 +312,19 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 	{
 		const auto& way_point = track.getWaypoint(i);
 		const auto point = georef.toMapCoordF(way_point.latlon);
-		rectIncludeSafe(bbox, is_georeferenced ? point : templateToMap(point));
+		const auto map_coord = is_georeferenced ? point : templateToMap(point);
+		if (way_point.name.isEmpty())
+		{
+			rectIncludeSafe(bbox, map_coord);
+		}
+		else
+		{
+			auto offset = way_point.name.length() * half_char_width;
+			rectIncludeSafe(bbox, map_coord - QPointF{offset, line_height});
+			rectInclude(bbox, map_coord + QPointF{offset, 0});
+		}
 	}
+	
 	for (int i = 0; i < track.getNumSegments(); ++i)
 	{
 		size = track.getSegmentPointCount(i);
@@ -323,14 +336,10 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 		}
 	}
 	
+	// Adjust for line width and for waypoint marker width.
+	Q_STATIC_ASSERT(waypoint_marker_radius >= track_line_width);
+	bbox.adjust(-waypoint_marker_radius, -waypoint_marker_radius, +waypoint_marker_radius, +waypoint_marker_radius);
 	return bbox;
-}
-
-int TemplateTrack::getTemplateBoundingBoxPixelBorder()
-{
-	// As we don't estimate the extent of the widest waypoint text,
-	// return a "very big" number to cover everything
-	return 10e8;
 }
 
 
