@@ -58,7 +58,6 @@ class EditorDockWidget;
 class FileFormat;
 class GPSDisplay;
 class GPSTemporaryMarkers;
-class GPSTrackRecorder;
 class GeoreferencingDialog;
 class MainWindow;
 class MapEditorActivity;
@@ -73,6 +72,7 @@ class SymbolWidget;
 class Template;
 class TemplateListWidget;
 class TemplatePositionDockWidget;
+class Track;
 
 
 /**
@@ -762,7 +762,7 @@ private:
 	QAction* gps_temporary_clear_act;
 	GPSTemporaryMarkers* gps_marker_display;
 	GPSDisplay* gps_display;
-	GPSTrackRecorder* gps_track_recorder;
+	Track* gps_track_recorder;  // not owned, deletion not tracked
 	QAction* compass_action;
 	CompassDisplay* compass_display;
 	QAction* align_map_with_north_act;

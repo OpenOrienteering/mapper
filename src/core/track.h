@@ -130,6 +130,9 @@ public:
 	/// Appends a track point to the current segment.
 	void appendTrackPoint(const TrackPoint& point);
 	
+	/// Appends a track point for the current date and time to the current segment.
+	void appendCurrentTrackPoint(double latitude, double longitude, double altitude, float accuracy);
+	
 	/**
 	 * Ends the current track segment, so that a new segment will be started
 	 * when the next track point is added.

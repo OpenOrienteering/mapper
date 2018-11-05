@@ -159,7 +159,6 @@ set(Mapper_Common_SRCS
   sensors/compass.cpp
   sensors/gps_display.cpp
   sensors/gps_temporary_markers.cpp
-  sensors/gps_track_recorder.cpp
   
   templates/template.cpp
   templates/template_adjust.cpp
