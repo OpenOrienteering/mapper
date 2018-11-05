@@ -226,6 +226,15 @@ void Track::appendTrackPoint(const TrackPoint& point)
 	emit trackChanged(change, point);
 }
 
+void Track::appendCurrentTrackPoint(double latitude, double longitude, double altitude, float accuracy)
+{
+	appendTrackPoint({ LatLon(latitude, longitude),
+	                   QDateTime::currentDateTimeUtc(),
+	                   static_cast<float>(altitude),
+	                   accuracy
+	});
+}
+
 void Track::finishCurrentSegment()
 {
 	current_segment_finished = true;
