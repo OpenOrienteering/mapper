@@ -89,7 +89,6 @@ public:
 	
 	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
 	QRectF calculateTemplateBoundingBox() const override;
-	int getTemplateBoundingBoxPixelBorder() override;
 	
 	bool hasAlpha() const override;
 	
@@ -142,6 +141,11 @@ protected:
 	std::unique_ptr<Georeferencing> projected_georef;
 	std::vector<QPointF> waypoints;
 	QVarLengthArray<QPainterPath, 4> track_segments;
+	
+	/// The height of waypoint labels.
+	mutable qreal line_height = 3;
+	/// A factor which is used to approximate the size of waypoint labels.
+	mutable qreal half_char_width = 2;
 	
 	friend class OgrTemplate;                          // for migration
 	
