@@ -62,6 +62,17 @@ class QAbstractButton;
 
 namespace OpenOrienteering {
 
+namespace {
+
+// Graphic element dimension, in mm at 100%
+constexpr qreal waypoint_marker_radius = 0.25;
+constexpr int   waypoint_font_size     = 2;
+constexpr qreal track_line_width       = 0.1;
+
+}  // namespace
+
+
+
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
 	static std::vector<QByteArray> extensions = { "gpx" };
@@ -240,7 +251,7 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen, qreal opacity)
 	if (on_screen)
 		pen.setCosmetic(true);
 	else
-		pen.setWidthF(0.1); // = 0.1 mm at 100%
+		pen.setWidthF(track_line_width);
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
 	
@@ -260,7 +271,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 	painter->setBrush(QBrush(qRgb(255, 0, 0)));
 	
 	QFont font = painter->font();
-	font.setPixelSize(2); // 2 mm at 100%
+	font.setPixelSize(waypoint_font_size);
 	painter->setFont(font);
 	int height = painter->fontMetrics().height();
 	
@@ -270,8 +281,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter, qreal opacity) const
 	{
 		const QString& point_name = track.getWaypoint(i).name;
 		
-		double const radius = 0.25;
-		painter->drawEllipse(*waypoint, radius, radius);
+		painter->drawEllipse(*waypoint, waypoint_marker_radius, waypoint_marker_radius);
 		
 		if (!point_name.isEmpty())
 		{
