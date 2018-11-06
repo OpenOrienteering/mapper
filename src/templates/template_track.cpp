@@ -368,8 +368,11 @@ Template* TemplateTrack::duplicateImpl() const
 {
 	auto* copy = new TemplateTrack(template_path, map);
 	copy->track.copyFrom(track);
+	copy->track_crs_spec = track_crs_spec;
 	if (projected_georef)
 		copy->projected_georef.reset(new Georeferencing(*projected_georef));
+	if (preserved_georef)
+		copy->preserved_georef.reset(new Georeferencing(*preserved_georef));
 	copy->waypoints = waypoints;
 	copy->track_segments = track_segments;
 	return copy;
