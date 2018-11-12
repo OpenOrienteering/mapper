@@ -54,7 +54,7 @@
             <meta-data android:resource="@layout/splash" android:name="android.app.splash_screen"/>
         </activity>
     </application>
-    <uses-sdk android:targetSdkVersion="19" android:minSdkVersion="9"/>
+    <uses-sdk android:targetSdkVersion="19" android:minSdkVersion="16"/>
     <supports-screens android:largeScreens="true" android:anyDensity="true" android:normalScreens="true" android:smallScreens="true"/>
     <!-- Not used for Mapper: %%INSERT_PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
