@@ -63,9 +63,14 @@ if(NOT ANDROID AND NOT APPLE)
 	  zlib
 	)
 endif()
-if(ANDROID OR MINGW)
+if(MINGW OR CMAKE_ANDROID_STL_TYPE MATCHES "gnustl")
 	list(APPEND third_party_components
 	  gnustl
+	)
+endif()
+if(ANDROID_STL MATCHES "c\\+\\+")
+	list(APPEND third_party_components
+	  libc++
 	)
 endif()
 
