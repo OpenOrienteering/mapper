@@ -838,8 +838,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
-	// The current painter's resolution
-	qreal scale = units_per_mm;
+	
 	
 	/*
 	 * Analyse need for page buffer
@@ -896,8 +895,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	QImage scoped_buffer;
 	if (use_page_buffer && !page_buffer)
 	{
-		int w = qCeil(page_format.paper_dimensions.width() * scale);
-		int h = qCeil(page_format.paper_dimensions.height() * scale);
+		int w = qCeil(page_format.paper_dimensions.width() * units_per_mm);
+		int h = qCeil(page_format.paper_dimensions.height() * units_per_mm);
 #if defined (Q_OS_MACOS)
 		if (device_painter->device()->physicalDpiX() == 0)
 		{
@@ -906,8 +905,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 			// the corresponding QPaintEngine must handle the resolution mapping"
 			// which doesn't seem to happen here.
 			qreal corr = device_painter->device()->logicalDpiX() / 72.0;
-			w = qCeil(page_format.paper_dimensions.width() * scale * corr);
-			h = qCeil(page_format.paper_dimensions.height() * scale * corr);
+			w = qCeil(page_format.paper_dimensions.width() * units_per_mm * corr);
+			h = qCeil(page_format.paper_dimensions.height() * units_per_mm * corr);
 		}
 #endif
 		
@@ -941,13 +940,12 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	 * One-time setup of transformation and clipping
 	 */
 	// Translate for top left page margin 
-	painter->scale(scale, scale);
+	painter->scale(units_per_mm, units_per_mm);
 	painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
 	
 	// Convert native map scale to print scale
 	if (scale_adjustment != 1.0)
 	{
-		scale *= scale_adjustment;
 		painter->scale(scale_adjustment, scale_adjustment);
 	}
 	
@@ -1012,7 +1010,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 			map_painter->setTransform(painter->transform());
 		}
 		
-		RenderConfig config = { map, page_region_used, scale, RenderConfig::NoOptions, 1.0 };
+		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
 		
 		if (rasterModeSelected() && options.simulate_overprinting)
 		{
