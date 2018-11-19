@@ -831,13 +831,28 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 {
 	device_painter->save();
 	
-	device_painter->setRenderHint(QPainter::Antialiasing);
-	device_painter->setRenderHint(QPainter::SmoothPixmapTransform);
-	
 	QPainter* painter = device_painter;
 	
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
+	
+	const auto render_hints = device_painter->renderHints()
+	                          | QPainter::Antialiasing
+	                          | QPainter::SmoothPixmapTransform;
+	
+	// Determine transformation and clipping for page extent and region
+	const auto page_extent_transform = [this, units_per_mm, page_extent]() {
+		// Translate for top left page margin 
+		auto transform = QTransform::fromScale(units_per_mm, units_per_mm);
+		transform.translate(page_format.page_rect.left(), page_format.page_rect.top());
+		// Convert native map scale to print scale
+		transform.scale(scale_adjustment, scale_adjustment);
+		// Translate and clip for margins and print area
+		transform.translate(-page_extent.left(), -page_extent.top());
+		return transform;
+	}();
+	
+	const auto page_region_used = page_extent.intersected(print_area);
 	
 	
 	/*
@@ -921,7 +936,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 		
 		page_buffer = &scoped_buffer;
 		painter = new QPainter(page_buffer);
-		painter->setRenderHints(device_painter->renderHints());
 	}
 	
 	/*
@@ -936,25 +950,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
 	}
 	
-	/*
-	 * One-time setup of transformation and clipping
-	 */
-	// Translate for top left page margin 
-	painter->scale(units_per_mm, units_per_mm);
-	painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
-	
-	// Convert native map scale to print scale
-	if (scale_adjustment != 1.0)
-	{
-		painter->scale(scale_adjustment, scale_adjustment);
-	}
-	
-	// Translate and clip for margins and print area
-	painter->translate(-page_extent.left(), -page_extent.top());
-	
-	QTransform page_extent_transform = painter->transform();
-	
-	QRectF page_region_used(page_extent.intersected(print_area));
+	painter->setRenderHints(render_hints);
+	painter->setTransform(page_extent_transform);
 	painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
 	/*
@@ -980,6 +977,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 		drawBuffer(device_painter, page_buffer);
 		
 		painter = device_painter;
+		painter->setRenderHints(render_hints);
 		painter->setTransform(page_extent_transform);
 		painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	}
