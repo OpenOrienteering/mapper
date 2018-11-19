@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1202,7 +1202,7 @@ void PrintWidget::exportToImage()
 	
 	// Export the map
 	QPainter p(&image);
-	map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true, &image);
+	map_printer->drawPage(&p, map_printer->getPrintArea(), true, &image);
 	p.end();
 	if (!image.save(path))
 	{

@@ -828,7 +828,7 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel
 	device_painter->restore();
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
+void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
 {
 	device_painter->save();
 	
@@ -838,11 +838,11 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	QPainter* painter = device_painter;
 	
 	// Logical units per mm
-	qreal units_per_mm = units_per_inch / 25.4;
+	const qreal units_per_mm = options.resolution / 25.4;
 	// Image pixels per mm
-	qreal pixel_per_mm = options.resolution / 25.4;
+	const qreal pixel_per_mm = options.resolution / 25.4;
 	// Scaling from pixels to logical units
-	qreal pixel2units = units_per_inch / options.resolution;
+	const qreal pixel2units = 1;
 	// The current painter's resolution
 	qreal scale = units_per_mm;
 	
@@ -1095,7 +1095,7 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	device_painter->restore();
 }
 
-void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const
+void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const
 {
 	Q_ASSERT(printer->colorMode() == QPrinter::GrayScale);
 	
@@ -1104,7 +1104,7 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	device_painter->setRenderHint(QPainter::Antialiasing);
 	
 	// Translate for top left page margin 
-	qreal scale = dpi / 25.4; // Dots per mm
+	qreal scale = options.resolution / 25.4; // Dots per mm
 	device_painter->scale(scale, scale);
 	device_painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
 	
@@ -1148,8 +1148,6 @@ bool MapPrinter::printMap(QPrinter* printer)
 	
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
-	
-	auto resolution = float(options.resolution);
 	
 #if defined(Q_OS_WIN)
 	// Workaround for Wine
@@ -1230,8 +1228,8 @@ bool MapPrinter::printMap(QPrinter* printer)
 	{
 		// Preview: work around for offset, maybe related to QTBUG-5363
 		painter.translate(
-		    -page_format.page_rect.left()*resolution / 25.4,
-		    -page_format.page_rect.top()*resolution / 25.4   );
+		    -page_format.page_rect.left() * options.resolution / 25.4,
+		    -page_format.page_rect.top() * options.resolution / 25.4   );
 	}
 #endif
 	
@@ -1277,11 +1275,11 @@ bool MapPrinter::printMap(QPrinter* printer)
 			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
 			if (separationsModeSelected())
 			{
-				drawSeparationPages(printer, &painter, resolution, page_extent);
+				drawSeparationPages(printer, &painter, page_extent);
 			}
 			else
 			{
-				drawPage(&painter, resolution, page_extent, false);
+				drawPage(&painter, page_extent, false);
 			}
 			
 			need_new_page = true;
