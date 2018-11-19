@@ -817,12 +817,11 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 }
 
 // local
-void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel2units)
+void drawBuffer(QPainter* device_painter, const QImage* page_buffer)
 {
 	Q_ASSERT(page_buffer);
 	
 	device_painter->save();
-	device_painter->scale(pixel2units, pixel2units);
 	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 	device_painter->drawImage(0, 0, *page_buffer);
 	device_painter->restore();
@@ -839,10 +838,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
-	// Image pixels per mm
-	const qreal pixel_per_mm = options.resolution / 25.4;
-	// Scaling from pixels to logical units
-	const qreal pixel2units = 1;
 	// The current painter's resolution
 	qreal scale = units_per_mm;
 	
@@ -901,7 +896,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	QImage scoped_buffer;
 	if (use_page_buffer && !page_buffer)
 	{
-		scale = pixel_per_mm;
 		int w = qCeil(page_format.paper_dimensions.width() * scale);
 		int h = qCeil(page_format.paper_dimensions.height() * scale);
 #if defined (Q_OS_MACOS)
@@ -985,7 +979,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	{
 		// Flush the buffer, reset painter
 		delete painter;
-		drawBuffer(device_painter, page_buffer, pixel2units);
+		drawBuffer(device_painter, page_buffer);
 		
 		painter = device_painter;
 		painter->setTransform(transform);
@@ -1090,7 +1084,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 		delete painter;
 		painter = nullptr;
 		device_painter->resetTransform();
-		drawBuffer(device_painter, page_buffer, pixel2units);
+		drawBuffer(device_painter, page_buffer);
 	}
 	device_painter->restore();
 }
