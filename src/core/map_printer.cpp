@@ -952,7 +952,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 	// Translate and clip for margins and print area
 	painter->translate(-page_extent.left(), -page_extent.top());
 	
-	QTransform transform = painter->transform();
+	QTransform page_extent_transform = painter->transform();
 	
 	QRectF page_region_used(page_extent.intersected(print_area));
 	painter->setClipRect(page_region_used, Qt::ReplaceClip);
@@ -980,7 +980,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 		drawBuffer(device_painter, page_buffer);
 		
 		painter = device_painter;
-		painter->setTransform(transform);
+		painter->setTransform(page_extent_transform);
 		painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	}
 	
@@ -1067,7 +1067,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 				page_buffer->fill(QColor(Qt::transparent));
 				painter = new QPainter(page_buffer);
 				painter->setRenderHints(device_painter->renderHints());
-				painter->setTransform(transform);
+				painter->setTransform(page_extent_transform);
 				painter->setClipRect(page_region_used, Qt::ReplaceClip);
 			}
 			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
