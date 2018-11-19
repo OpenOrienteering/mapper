@@ -907,7 +907,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	bool use_page_buffer = use_buffer_for_map ||
 	                       use_buffer_for_background ||
 	                       use_buffer_for_foreground;
-	QImage scoped_buffer;
+	QImage local_page_buffer;
 	if (use_page_buffer && !page_buffer)
 	{
 		int w = qCeil(page_format.paper_dimensions.width() * units_per_mm);
@@ -925,17 +925,17 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		}
 #endif
 		
-		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
-		if (scoped_buffer.isNull())
+		local_page_buffer = QImage(w, h, QImage::Format_RGB32);
+		if (local_page_buffer.isNull())
 		{
 			// Allocation failed
 			device_painter->restore();
 			device_painter->end(); // Signal error
 			return;
 		}
-		scoped_buffer.fill(QColor(Qt::white));
+		local_page_buffer.fill(QColor(Qt::white));
 		
-		page_buffer = &scoped_buffer;
+		page_buffer = &local_page_buffer;
 		painter = new QPainter(page_buffer);
 	}
 	
