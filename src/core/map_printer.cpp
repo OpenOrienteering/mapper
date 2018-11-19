@@ -827,7 +827,7 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer)
 	device_painter->restore();
 }
 
-void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
+void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
 {
 	device_painter->save();
 	
@@ -933,21 +933,10 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, b
 			device_painter->end(); // Signal error
 			return;
 		}
+		scoped_buffer.fill(QColor(Qt::white));
 		
 		page_buffer = &scoped_buffer;
 		painter = new QPainter(page_buffer);
-	}
-	
-	/*
-	 * Prepare the common background
-	 */
-	if (use_page_buffer)
-	{
-		page_buffer->fill(QColor(Qt::white));
-	}
-	else if (white_background)
-	{
-		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
 	}
 	
 	painter->setRenderHints(render_hints);
@@ -1269,7 +1258,7 @@ bool MapPrinter::printMap(QPrinter* printer)
 			}
 			else
 			{
-				drawPage(&painter, page_extent, false);
+				drawPage(&painter, page_extent);
 			}
 			
 			need_new_page = true;

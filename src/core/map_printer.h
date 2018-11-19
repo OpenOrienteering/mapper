@@ -292,7 +292,7 @@ public:
 	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
-	void drawPage(QPainter* device_painter, const QRectF& page_extent, bool white_background, QImage* page_buffer = nullptr) const;
+	void drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer = nullptr) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;

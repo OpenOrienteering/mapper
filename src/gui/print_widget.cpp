@@ -1195,6 +1195,8 @@ void PrintWidget::exportToImage()
 	image.setDotsPerMeterX(dots_per_meter);
 	image.setDotsPerMeterY(dots_per_meter);
 	
+	image.fill(QColor(Qt::white));
+	
 #if 0  // Pointless unless drawPage drives the event loop and sends progress
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Export map ..."));
@@ -1202,7 +1204,7 @@ void PrintWidget::exportToImage()
 	
 	// Export the map
 	QPainter p(&image);
-	map_printer->drawPage(&p, map_printer->getPrintArea(), true, &image);
+	map_printer->drawPage(&p, map_printer->getPrintArea(), &image);
 	p.end();
 	if (!image.save(path))
 	{
