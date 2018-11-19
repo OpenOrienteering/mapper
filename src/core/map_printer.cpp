@@ -829,8 +829,6 @@ void drawBuffer(QPainter* device_painter, const QImage* page_buffer)
 
 void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
 {
-	device_painter->save();
-	
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
 	
@@ -903,6 +901,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	                       use_buffer_for_background ||
 	                       use_buffer_for_foreground;
 	QImage local_page_buffer;
+	QPainter local_page_painter;
 	if (use_page_buffer && !page_buffer)
 	{
 		int w = qCeil(page_format.paper_dimensions.width() * units_per_mm);
@@ -924,25 +923,28 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		if (local_page_buffer.isNull())
 		{
 			// Allocation failed
-			device_painter->restore();
 			device_painter->end(); // Signal error
 			return;
 		}
 		local_page_buffer.fill(QColor(Qt::white));
+		local_page_painter.begin(&local_page_buffer);
 		
 		page_buffer = &local_page_buffer;
-		page_painter = new QPainter(page_buffer);
+		page_painter = &local_page_painter;
 	}
-	
-	page_painter->setRenderHints(render_hints);
-	page_painter->setTransform(page_extent_transform);
-	page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
 	/*
 	 * Draw templates in the background
 	 */
 	if (options.show_templates)
 	{
+		// This is the first output, so it can be drawn directly to page_painter.
+		page_painter->save();
+		
+		page_painter->setRenderHints(render_hints);
+		page_painter->setTransform(page_extent_transform, /*combine*/ true);
+		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
 		map.drawTemplates(page_painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
 		if (vectorModeSelected() && use_buffer_for_foreground)
 		{
@@ -952,18 +954,17 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 					map.drawTemplates(page_painter, page_region_used, i, i, view, false);
 			}
 		}
+		
+		page_painter->restore();
 	}
 	
-	if (use_buffer_for_background && !use_buffer_for_map)
+	if (local_page_painter.isActive() && !use_buffer_for_map)
 	{
 		// Flush the buffer, reset painter
-		delete page_painter;
-		drawBuffer(device_painter, page_buffer);
+		local_page_painter.end();
+		drawBuffer(device_painter, &local_page_buffer);
 		
 		page_painter = device_painter;
-		page_painter->setRenderHints(render_hints);
-		page_painter->setTransform(page_extent_transform);
-		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	}
 	
 	/*
@@ -971,26 +972,31 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 */
 	if (!view || view->effectiveMapVisibility().visible)
 	{
-		QImage map_buffer;
 		QPainter* map_painter = page_painter;
+		
+		QImage map_buffer;
+		QPainter map_buffer_painter;
 		if (use_buffer_for_map)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			if (page_painter == device_painter)
+			map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (map_buffer.isNull())
 			{
-				map_buffer = *page_buffer; // Use existing buffer
-			}
-			else
-			{
-				map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+				// Allocation failed
+				device_painter->end(); // Signal error
+				return;
 			}
 			map_buffer.fill(QColor(Qt::transparent));
-			
-			map_painter = new QPainter(&map_buffer);
-			map_painter->setRenderHints(page_painter->renderHints());
-			map_painter->setTransform(page_painter->transform());
+			map_buffer_painter.begin(&map_buffer);
+			map_painter = &map_buffer_painter;
 		}
+		
+		page_painter->save();  // Modified via map_painter, or when drawing the map_buffer
+		
+		map_painter->setRenderHints(render_hints);
+		map_painter->setTransform(page_extent_transform, /*combine*/ true);
+		map_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 		
 		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
 		
@@ -1006,67 +1012,101 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			map.draw(map_painter, config);
 		}
 			
-		if (map_painter != page_painter)
+		if (map_buffer_painter.isActive())
 		{
 			// Flush the buffer
-			delete map_painter;
-			map_painter = nullptr;
+			map_buffer_painter.end();
 			
-			// Print buffer with map opacity
-			page_painter->save();
-			page_painter->resetTransform();
+			// Draw buffer with map opacity
 			if (view)
 				page_painter->setOpacity(view->effectiveMapVisibility().opacity);
 			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 			page_painter->drawImage(0, 0, map_buffer);
-			page_painter->restore();
 		}
+		
+		page_painter->restore();
 	}
 	
 	/*
 	 * Draw the grid
 	 */
 	if (options.show_grid)
+	{
+		page_painter->save();
+		
+		page_painter->setRenderHints(render_hints);
+		page_painter->setTransform(page_extent_transform, /*combine*/ true);
+		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
 		map.drawGrid(page_painter, print_area, false); // Maybe replace by page_region_used?
+		
+		page_painter->restore();
+	}
 	
 	/*
 	 * Draw the foreground templates
 	 */
 	if (options.show_templates)
 	{
+		QPainter* painter = page_painter;
+		
+		QImage local_buffer;
+		QPainter local_buffer_painter;
+		if (!vectorModeSelected() && use_buffer_for_foreground)
+		{
+			local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (local_buffer.isNull())
+			{
+				// Allocation failed
+				device_painter->end(); // Signal error
+				return;
+			}
+			local_buffer.fill(QColor(Qt::transparent));
+			local_buffer_painter.begin(&local_buffer);
+			painter = &local_buffer_painter;
+		}
+		
+		page_painter->save();  // Modified via painter, or when drawing the local_buffer
+		
+		painter->setRenderHints(render_hints);
+		painter->setTransform(page_extent_transform, /*combine*/ true);
+		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
 		if (vectorModeSelected() && use_buffer_for_foreground)
 		{
 			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
 			{
 				if (!map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(page_painter, page_region_used, i, i, view, false);
+					map.drawTemplates(painter, page_region_used, i, i, view, false);
 			}
 		}
 		else
 		{
-			if (use_buffer_for_foreground && !use_buffer_for_map)
-			{
-				page_buffer->fill(QColor(Qt::transparent));
-				page_painter = new QPainter(page_buffer);
-				page_painter->setRenderHints(device_painter->renderHints());
-				page_painter->setTransform(page_extent_transform);
-				page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
-			}
-			map.drawTemplates(page_painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+			
 		}
+		
+		if (local_buffer_painter.isActive())
+		{
+			// Flush the buffer
+			local_buffer_painter.end();
+			
+			// Draw buffer with map opacity
+			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			page_painter->drawImage(0, 0, local_buffer);
+		}
+		
+		page_painter->restore();
 	}
 
 	/*
 	 * Cleanup: If a temporary buffer has been used, paint it on the device painter
 	 */
-	if (page_painter != device_painter)
+	if (local_page_painter.isActive())
 	{
-		delete page_painter;
-		page_painter = nullptr;
-		device_painter->resetTransform();
-		drawBuffer(device_painter, page_buffer);
+		local_page_painter.end();
+		drawBuffer(device_painter, &local_page_buffer);
 	}
-	device_painter->restore();
 }
 
 void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const
