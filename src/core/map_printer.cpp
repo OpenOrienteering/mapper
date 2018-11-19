@@ -831,8 +831,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 {
 	device_painter->save();
 	
-	QPainter* painter = device_painter;
-	
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
 	
@@ -903,7 +901,10 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		}
 	}
 	
-	// Prepare buffer if required
+	/*
+	 * Use a local "page painter", redirected to a local buffer if needed.
+	 */
+	auto* page_painter = device_painter;
 	bool use_page_buffer = use_buffer_for_map ||
 	                       use_buffer_for_background ||
 	                       use_buffer_for_foreground;
@@ -936,25 +937,25 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		local_page_buffer.fill(QColor(Qt::white));
 		
 		page_buffer = &local_page_buffer;
-		painter = new QPainter(page_buffer);
+		page_painter = new QPainter(page_buffer);
 	}
 	
-	painter->setRenderHints(render_hints);
-	painter->setTransform(page_extent_transform);
-	painter->setClipRect(page_region_used, Qt::ReplaceClip);
+	page_painter->setRenderHints(render_hints);
+	page_painter->setTransform(page_extent_transform);
+	page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
 	/*
 	 * Draw templates in the background
 	 */
 	if (options.show_templates)
 	{
-		map.drawTemplates(painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
+		map.drawTemplates(page_painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
 		if (vectorModeSelected() && use_buffer_for_foreground)
 		{
 			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
 			{
 				if (map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(painter, page_region_used, i, i, view, false);
+					map.drawTemplates(page_painter, page_region_used, i, i, view, false);
 			}
 		}
 	}
@@ -962,13 +963,13 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	if (use_buffer_for_background && !use_buffer_for_map)
 	{
 		// Flush the buffer, reset painter
-		delete painter;
+		delete page_painter;
 		drawBuffer(device_painter, page_buffer);
 		
-		painter = device_painter;
-		painter->setRenderHints(render_hints);
-		painter->setTransform(page_extent_transform);
-		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		page_painter = device_painter;
+		page_painter->setRenderHints(render_hints);
+		page_painter->setTransform(page_extent_transform);
+		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	}
 	
 	/*
@@ -977,12 +978,12 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	if (!view || view->effectiveMapVisibility().visible)
 	{
 		QImage map_buffer;
-		QPainter* map_painter = painter;
+		QPainter* map_painter = page_painter;
 		if (use_buffer_for_map)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			if (painter == device_painter)
+			if (page_painter == device_painter)
 			{
 				map_buffer = *page_buffer; // Use existing buffer
 			}
@@ -993,8 +994,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			map_buffer.fill(QColor(Qt::transparent));
 			
 			map_painter = new QPainter(&map_buffer);
-			map_painter->setRenderHints(painter->renderHints());
-			map_painter->setTransform(painter->transform());
+			map_painter->setRenderHints(page_painter->renderHints());
+			map_painter->setTransform(page_painter->transform());
 		}
 		
 		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
@@ -1011,20 +1012,20 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			map.draw(map_painter, config);
 		}
 			
-		if (map_painter != painter)
+		if (map_painter != page_painter)
 		{
 			// Flush the buffer
 			delete map_painter;
 			map_painter = nullptr;
 			
 			// Print buffer with map opacity
-			painter->save();
-			painter->resetTransform();
+			page_painter->save();
+			page_painter->resetTransform();
 			if (view)
-				painter->setOpacity(view->effectiveMapVisibility().opacity);
-			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-			painter->drawImage(0, 0, map_buffer);
-			painter->restore();
+				page_painter->setOpacity(view->effectiveMapVisibility().opacity);
+			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			page_painter->drawImage(0, 0, map_buffer);
+			page_painter->restore();
 		}
 	}
 	
@@ -1032,7 +1033,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * Draw the grid
 	 */
 	if (options.show_grid)
-		map.drawGrid(painter, print_area, false); // Maybe replace by page_region_used?
+		map.drawGrid(page_painter, print_area, false); // Maybe replace by page_region_used?
 	
 	/*
 	 * Draw the foreground templates
@@ -1044,7 +1045,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
 			{
 				if (!map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(painter, page_region_used, i, i, view, false);
+					map.drawTemplates(page_painter, page_region_used, i, i, view, false);
 			}
 		}
 		else
@@ -1052,22 +1053,22 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			if (use_buffer_for_foreground && !use_buffer_for_map)
 			{
 				page_buffer->fill(QColor(Qt::transparent));
-				painter = new QPainter(page_buffer);
-				painter->setRenderHints(device_painter->renderHints());
-				painter->setTransform(page_extent_transform);
-				painter->setClipRect(page_region_used, Qt::ReplaceClip);
+				page_painter = new QPainter(page_buffer);
+				page_painter->setRenderHints(device_painter->renderHints());
+				page_painter->setTransform(page_extent_transform);
+				page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 			}
-			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+			map.drawTemplates(page_painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
 		}
 	}
 
 	/*
 	 * Cleanup: If a temporary buffer has been used, paint it on the device painter
 	 */
-	if (painter != device_painter)
+	if (page_painter != device_painter)
 	{
-		delete painter;
-		painter = nullptr;
+		delete page_painter;
+		page_painter = nullptr;
 		device_painter->resetTransform();
 		drawBuffer(device_painter, page_buffer);
 	}
