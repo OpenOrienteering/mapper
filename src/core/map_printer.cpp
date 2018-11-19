@@ -877,26 +877,20 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
 	if (view && options.show_templates)
 	{
-		if (!use_buffer_for_background)
+		for (int i = 0; i < map.getFirstFrontTemplate() && !use_buffer_for_background; ++i)
 		{
-			for (int i = 0; i < map.getFirstFrontTemplate() && !use_buffer_for_background; ++i)
+			if (map.getTemplate(i)->isRasterGraphics())
 			{
-				if (map.getTemplate(i)->isRasterGraphics())
-				{
-					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_background = visibility.visible && visibility.opacity < 1.0f;
-				}
+				auto visibility = view->getTemplateVisibility(map.getTemplate(i));
+				use_buffer_for_background = visibility.visible && visibility.opacity < 1;
 			}
 		}
-		if (!use_buffer_for_foreground)
+		for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates() && !use_buffer_for_foreground; ++i)
 		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates() && !use_buffer_for_foreground; ++i)
+			if (map.getTemplate(i)->isRasterGraphics())
 			{
-				if (map.getTemplate(i)->isRasterGraphics())
-				{
-					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_foreground = visibility.visible && visibility.opacity < 1.0f;
-				}
+				auto visibility = view->getTemplateVisibility(map.getTemplate(i));
+				use_buffer_for_foreground = visibility.visible && visibility.opacity < 1;
 			}
 		}
 	}
