@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1222,7 +1222,8 @@ bool MapPrinter::printMap(QPrinter* printer)
 			SetWindowExtEx(dc, hires_width, hires_height, nullptr);
 			SetViewportExtEx(dc, phys_width, phys_height, nullptr);
 			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, nullptr);
-			resolution *= ((double)hires_width / phys_width);
+			const auto hires_scale = static_cast<qreal>(hires_width) / phys_width;
+			painter.scale(hires_scale, hires_scale);
 		}
 	}
 	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
