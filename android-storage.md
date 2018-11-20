@@ -27,7 +27,10 @@ OpenOrienteering Mapper for Android will create these folders when they are miss
 You can transfer files from and to a PC via a USB cable. Android supports multiple file transfer protocols.
 
 - MTP is the preferred method now. There is hardly any interference for apps while the device is connected to the PC.
-  Via MTP, Android will only show files which are known to its Media Scanner.  
+  Via MTP, Android will only show files which are known to its Media Scanner.
+  
+  On macOS, the Android File Transfer software must be installed and used for MTP.
+  This software can be downloaded from https://www.android.com/filetransfer/.
 
 - Mass Storage makes the storage unavailable for apps for the duration of the connection with the PC.
   (Android also needs to terminate apps which are stored on the volume which is provided as mass storage.)
