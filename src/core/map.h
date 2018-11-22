@@ -503,6 +503,11 @@ public:
 	/** Returns true if the map contains spot colors. */
 	bool hasSpotColors() const;
 	
+	/**
+	 * Returns true if any visible object uses a non-opaque color.
+	 */
+	bool hasAlpha() const;
+	
 	
 	// Symbols
 	

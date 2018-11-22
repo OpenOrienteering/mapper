@@ -113,6 +113,11 @@ public:
 	inline QRgb getColor() const {return color;}
 	inline void setColor(QRgb color) {this->color = color;}
 	
+	/**
+	 * Returns true if the grid is not opaque.
+	 */
+	bool hasAlpha() const;
+	
 	inline DisplayMode getDisplayMode() const {return display;}
 	inline void setDisplayMode(DisplayMode mode) {display = mode;}
 	

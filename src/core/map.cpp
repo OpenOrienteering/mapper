@@ -1653,6 +1653,19 @@ bool Map::hasSpotColors() const
 	return false;
 }
 
+bool Map::hasAlpha() const
+{
+	return std::any_of(begin(color_set->colors), end(color_set->colors), [this](const MapColor* color) {
+		const auto opacity = color->getOpacity();
+		return opacity > 0 && opacity < 1
+		       && std::any_of(begin(symbols), end(symbols), [this, color](const Symbol* symbol) {
+			return !symbol->isHidden()
+			       && symbol->containsColor(color)
+			       && this->existsObjectWithSymbol(symbol);
+		});
+	});
+}
+
 
 void Map::setSymbolSetId(const QString& id)
 {

@@ -204,6 +204,14 @@ MapCoordF MapGrid::getClosestPointOnGrid(MapCoordF position, Map* map) const
 }
 
 
+bool MapGrid::hasAlpha() const
+{
+	return [](auto alpha) {
+		return alpha > 0 && alpha < 255;
+	}(qAlpha(color));
+}
+
+
 
 bool operator==(const MapGrid& lhs, const MapGrid& rhs)
 {

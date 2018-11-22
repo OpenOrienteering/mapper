@@ -828,6 +828,15 @@ void Template::setAdjustmentDirty(bool value)
 		map->setTemplatesDirty();
 }
 
+
+
+bool Template::hasAlpha() const
+{
+	return template_state == Template::Loaded;
+}
+
+
+
 const std::vector<QByteArray>& Template::supportedExtensions()
 {
 	static std::vector<QByteArray> extensions;

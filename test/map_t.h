@@ -48,6 +48,9 @@ private slots:
 	void importTest_data();
 	void importTest();
 	
+	/** Tests hasAlpha() functions. */
+	void hasAlpha();
+	
 	/** Basic tests for symbol set replacements. */
 	void crtFileTest();
 	

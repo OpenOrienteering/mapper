@@ -75,6 +75,9 @@ public:
 	QRectF getTemplateExtent() const override;
 	
 	
+	bool hasAlpha() const override;
+	
+	
 	const Map* templateMap() const;
 	
 protected:
