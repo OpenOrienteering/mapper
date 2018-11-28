@@ -40,6 +40,7 @@
 #include <QLatin1String>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPaintEngine>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
@@ -1100,20 +1101,22 @@ void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		const Template* temp = getTemplate(i);
-		bool visible  = temp->getTemplateState() == Template::Loaded;
+		if (temp->getTemplateState() != Template::Loaded)
+			continue;
+		
 		double scale  = std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-		float opacity = 1.0f;
+		auto visibility = TemplateVisibility{ 1, true };
 		if (view)
 		{
-			auto visibility = view->getTemplateVisibility(temp);
-			visible &= visibility.visible;
-			opacity  = visibility.opacity;
-			scale   *= view->getZoom();
+			visibility = view->getTemplateVisibility(temp);
+			visibility.visible &= visibility.opacity > 0;
+			scale *= view->getZoom();
 		}
-		if (visible)
+		if (visibility.visible)
 		{
+			Q_ASSERT(visibility.opacity == 1 || painter->paintEngine()->hasFeature(QPaintEngine::ConstantOpacity));
 			painter->save();
-			temp->drawTemplate(painter, bounding_box, scale, on_screen, opacity);
+			temp->drawTemplate(painter, bounding_box, scale, on_screen, visibility.opacity);
 			painter->restore();
 		}
 	}
