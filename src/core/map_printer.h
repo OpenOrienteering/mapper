@@ -51,6 +51,7 @@ namespace OpenOrienteering {
 
 class Map;
 class MapView;
+class Template;
 
 
 /** The MapPrinterPageFormat is a complete description of page properties. */
@@ -277,6 +278,16 @@ public:
 	 * data actually having alpha.
 	 */
 	bool engineMayRasterize() const;
+	
+	/**
+	 * Returns true when the template will be printed non-opaquely.
+	 * 
+	 * Drawing non-opaque templates might cause rasterization with some Qt
+	 * print engines. This function is used to detect this case. It considers
+	 * the template's state and hasAlpha() property as well the view's
+	 * visibility configuration for the given template.
+	 */
+	bool hasAlpha(const Template* temp) const;
 	
 	
 	/** Creates a printer configured according to the current settings. */

@@ -772,6 +772,19 @@ bool MapPrinter::engineMayRasterize() const
 #endif
 }
 
+bool MapPrinter::hasAlpha(const Template* temp) const
+{
+	if (temp->getTemplateState() != Template::Loaded)
+		return false;
+	
+	if (!view)
+		return temp->hasAlpha();
+	
+	const auto visibility = view->getTemplateVisibility(temp);
+	return visibility.hasAlpha()
+	       || (visibility.visible && temp->hasAlpha());
+}
+
 
 void MapPrinter::updatePageBreaks()
 {
@@ -899,10 +912,10 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * the printer. For the map itself, this may result in loss of sharpness
 	 * and increase in data volume.
 	 * 
-	 * In vector mode, a page buffer (raster image) is used to collect background
-	 * templates and raster foreground templates. After this buffer is sent to
-	 * to the printer, map, grid, and
-	 * non-raster foreground templates are drawn on top of it.
+	 * In vector mode, a page buffer (raster image) is used to collect
+	 * background templates and even lower foreground templates until only
+	 * opaque templates are left in the foreground. Map, grid, and the remaining
+	 * foreground templates are drawn on top of it.
 	 * 
 	 * In raster mode, all map features are drawn to in regular order to
 	 * temporary images first.
@@ -911,25 +924,26 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * resolution.
 	 */
 	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
-	bool use_buffer_for_background = use_buffer_for_map && options.show_templates;
-	bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
-	if (view && options.show_templates)
+	const bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
+	bool use_buffer_for_background = use_buffer_for_foreground;
+	
+	// When we don't use a buffer for the foreground templates,
+	// we may need to put non-opaque foreground templates to the background
+	// in order to avoid rasterization 
+	auto first_front_template = use_buffer_for_foreground ? map.getFirstFrontTemplate() : map.getNumTemplates();
+	if (options.show_templates && engineMayRasterize())
 	{
-		for (int i = 0; i < map.getFirstFrontTemplate() && !use_buffer_for_background; ++i)
+		// Choose the first front template such that no unwanted rasterization
+		// is triggered when drawing the front templates to the device (later).
+		while (first_front_template > map.getFirstFrontTemplate()
+		       && !hasAlpha(map.getTemplate(first_front_template-1)))
 		{
-			if (map.getTemplate(i)->isRasterGraphics())
-			{
-				auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-				use_buffer_for_background = visibility.visible && visibility.opacity < 1;
-			}
+			--first_front_template;
 		}
-		for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates() && !use_buffer_for_foreground; ++i)
+		
+		for (int i = 0; i < first_front_template && !use_buffer_for_background; ++i)
 		{
-			if (map.getTemplate(i)->isRasterGraphics())
-			{
-				auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-				use_buffer_for_foreground = visibility.visible && visibility.opacity < 1;
-			}
+			use_buffer_for_background = hasAlpha(map.getTemplate(i));
 		}
 	}
 	
@@ -985,15 +999,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		page_painter->setTransform(page_extent_transform, /*combine*/ true);
 		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 		
-		map.drawTemplates(page_painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
-		if (vectorModeSelected() && use_buffer_for_foreground)
-		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
-			{
-				if (map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(page_painter, page_region_used, i, i, view, false);
-			}
-		}
+		map.drawTemplates(page_painter, page_region_used, 0, first_front_template - 1, view, false);
 		
 		page_painter->restore();
 	}
@@ -1127,19 +1133,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		painter->setTransform(page_extent_transform, /*combine*/ true);
 		painter->setClipRect(page_region_used, Qt::ReplaceClip);
 		
-		if (vectorModeSelected() && use_buffer_for_foreground)
-		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
-			{
-				if (!map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(painter, page_region_used, i, i, view, false);
-			}
-		}
-		else
-		{
-			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
-			
-		}
+		map.drawTemplates(painter, page_region_used, first_front_template, map.getNumTemplates() - 1, view, false);
 		
 		if (local_buffer_painter.isActive())
 		{
