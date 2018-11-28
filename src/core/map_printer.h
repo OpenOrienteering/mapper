@@ -280,6 +280,16 @@ public:
 	bool engineMayRasterize() const;
 	
 	/**
+	 * Returns true when the Qt print engine will have to rasterize the map.
+	 * 
+	 * Drawing a map with non-opaque colors will cause rasterization with some
+	 * Qt print engines. This functions signals when this rasterization must
+	 * take place (i.e. even when we try to avoid rasterization for templates
+	 * and grid).
+	 */
+	bool engineWillRasterize() const;
+	
+	/**
 	 * Returns true when the template will be printed non-opaquely.
 	 * 
 	 * Drawing non-opaque templates might cause rasterization with some Qt

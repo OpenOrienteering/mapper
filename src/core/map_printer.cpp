@@ -772,6 +772,24 @@ bool MapPrinter::engineMayRasterize() const
 #endif
 }
 
+bool MapPrinter::engineWillRasterize() const
+{
+#ifdef Q_OS_WIN
+	if (!engineMayRasterize())
+		return false;
+	
+	if (!view)
+		return map.hasAlpha();
+	
+	const auto visibility = view->effectiveMapVisibility();
+	return visibility.hasAlpha()
+	       || (visibility.visible && map.hasAlpha());
+#else
+	Q_ASSERT(!engineMayRasterize());
+	return false;
+#endif
+}
+
 bool MapPrinter::hasAlpha(const Template* temp) const
 {
 	if (temp->getTemplateState() != Template::Loaded)
@@ -907,8 +925,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	/*
 	 * Analyse need for page buffer
 	 * 
-	 * Painting raster images with opacity is not supported on print devices.
-	 * This can only be solved by merging the images before sending them to
+	 * Painting with opacity is not supported on some print devices.
+	 * This can only be solved by merging raster images before sending them to
 	 * the printer. For the map itself, this may result in loss of sharpness
 	 * and increase in data volume.
 	 * 
@@ -923,7 +941,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * When the target is an image, use the temporary image to enforce the given
 	 * resolution.
 	 */
-	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
+	const bool use_buffer_for_map = rasterModeSelected() || target == imageTarget() || engineWillRasterize();
 	bool use_page_buffer = use_buffer_for_map;
 	
 	// When we don't use a buffer for the map, i.e. when we draw in vector mode,
@@ -1048,7 +1066,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		}
 		else
 		{
-			if (vectorModeSelected() && view)
+			if (view && !map_buffer_painter.isActive())
 				config.opacity = view->effectiveMapVisibility().opacity;
 		
 			map.draw(map_painter, config);

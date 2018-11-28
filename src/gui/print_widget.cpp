@@ -951,6 +951,15 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	auto scale = int(options.scale);
 	different_scale_edit->setValue(scale);
 	differentScaleEdited(scale);
+	
+	if (options.mode != MapPrinterOptions::Raster
+	    && map_printer->engineWillRasterize())
+	{
+		QMessageBox::warning(this, tr("Error"),
+		                     tr("The map contains transparent elements"
+		                        " which require the raster mode."));
+		map_printer->setMode(MapPrinterOptions::Raster);
+	}
 }
 
 void PrintWidget::onVisibilityChanged()
