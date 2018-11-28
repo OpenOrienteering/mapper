@@ -1078,7 +1078,22 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		page_painter->setTransform(page_extent_transform, /*combine*/ true);
 		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
 		
-		map.drawGrid(page_painter, print_area, false); // Maybe replace by page_region_used?
+		const auto& map_grid = map.getGrid();
+		if (map_grid.hasAlpha() && !use_buffer_for_map && engineMayRasterize())
+		{
+			const auto rgba = map_grid.getColor();
+			const auto alpha = qAlpha(rgba);
+			const auto opaque = [alpha](auto component) {
+				return 255 - alpha * (255 - component) / 255;
+			};
+			auto grid_copy = map_grid;
+			grid_copy.setColor(qRgb(opaque(qRed(rgba)), opaque(qGreen(rgba)), opaque(qBlue(rgba))));
+			grid_copy.draw(page_painter, print_area, &map, false); // Maybe replace by page_region_used?
+		}
+		else
+		{
+			map_grid.draw(page_painter, print_area, &map, false); // Maybe replace by page_region_used?
+		}
 		
 		page_painter->restore();
 	}
