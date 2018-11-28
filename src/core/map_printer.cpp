@@ -733,6 +733,46 @@ bool MapPrinter::isOutputEmpty() const
 	);
 }
 
+
+bool MapPrinter::engineMayRasterize() const
+{
+#ifdef Q_OS_WIN
+	/*
+	 * For Windows, non-opaque drawing to QWin32PrintEngine will trigger internal
+	 * rasterization in Qt (implemented in QAlphaPaintEngine), in order to do care
+	 * for the printing system's incapability to handle alpha. However, this is not
+	 * desired in our map printing where raster output is an explicit option.
+	 * 
+	 * QAlphaPaintEngines rasterizes
+	 * - with the device's logical resolution but at least 300 dpi,
+	 *   cf. QAlphaPaintEnginePrivate::drawAlphaImage(const QRectF &rect)
+	 * - in tiles of 2048x2048 pixels,
+	 *   cf. QAlphaPaintEnginePrivate::drawAlphaImage(const QRectF &rect)
+	 * - when the painter is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 * - when the pen is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 * - when the brush is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 */
+	return !rasterModeSelected()
+	       && target != pdfTarget()
+	       && target != imageTarget();
+#else
+	/*
+	 * For macOS (Cocoa), QMacPrintEngine does not rasterize.
+	 * 
+	 * For Linux (CUPS), QCupsPrintEngine is based on QPdfEngine
+	 * (via QPdfPrintEngine) which does not rasterize. (However, the print
+	 * queue may rasterize, even when *spooling* to a PDF file. The vector
+	 * output is preserved when redirecting the output to a file in
+	 * Print... > Preview... > Print > Output file [...].)
+	 */
+	return false;
+#endif
+}
+
+
 void MapPrinter::updatePageBreaks()
 {
 	Q_ASSERT(print_area.left() <= print_area.right());

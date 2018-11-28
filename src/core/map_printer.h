@@ -267,6 +267,18 @@ public:
 	/** Returns a list of vertical page positions on the map. */
 	const std::vector< qreal >& verticalPagePositions() const;
 	
+	
+	/**
+	 * Returns true when the Qt print engine may rasterize non-opaque data.
+	 * 
+	 * Drawing non-opaque data might cause rasterization with some Qt print
+	 * engines. This function is used to detect configurations where such
+	 * rasterization may happen. The result can be comined with tests for the
+	 * data actually having alpha.
+	 */
+	bool engineMayRasterize() const;
+	
+	
 	/** Creates a printer configured according to the current settings. */
 	std::unique_ptr<QPrinter> makePrinter() const;
 	
