@@ -924,13 +924,12 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * resolution.
 	 */
 	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
-	const bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
-	bool use_buffer_for_background = use_buffer_for_foreground;
+	bool use_page_buffer = use_buffer_for_map;
 	
-	// When we don't use a buffer for the foreground templates,
+	// When we don't use a buffer for the map, i.e. when we draw in vector mode,
 	// we may need to put non-opaque foreground templates to the background
 	// in order to avoid rasterization 
-	auto first_front_template = use_buffer_for_foreground ? map.getFirstFrontTemplate() : map.getNumTemplates();
+	auto first_front_template = use_buffer_for_map ? map.getFirstFrontTemplate() : map.getNumTemplates();
 	if (options.show_templates && engineMayRasterize())
 	{
 		// Choose the first front template such that no unwanted rasterization
@@ -941,9 +940,9 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			--first_front_template;
 		}
 		
-		for (int i = 0; i < first_front_template && !use_buffer_for_background; ++i)
+		for (int i = 0; i < first_front_template && !use_page_buffer; ++i)
 		{
-			use_buffer_for_background = hasAlpha(map.getTemplate(i));
+			use_page_buffer = hasAlpha(map.getTemplate(i));
 		}
 	}
 	
@@ -951,9 +950,6 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	 * Use a local "page painter", redirected to a local buffer if needed.
 	 */
 	auto* page_painter = device_painter;
-	bool use_page_buffer = use_buffer_for_map ||
-	                       use_buffer_for_background ||
-	                       use_buffer_for_foreground;
 	QImage local_page_buffer;
 	QPainter local_page_painter;
 	if (use_page_buffer && !page_buffer)
@@ -1113,7 +1109,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		
 		QImage local_buffer;
 		QPainter local_buffer_painter;
-		if (!vectorModeSelected() && use_buffer_for_foreground)
+		if (!vectorModeSelected() && use_buffer_for_map)
 		{
 			local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
 			if (local_buffer.isNull())
