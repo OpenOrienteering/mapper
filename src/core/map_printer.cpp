@@ -1027,6 +1027,8 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		page_painter = device_painter;
 	}
 	
+	QImage local_buffer;
+	
 	/*
 	 * Draw the map
 	 */
@@ -1034,21 +1036,20 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	{
 		QPainter* map_painter = page_painter;
 		
-		QImage map_buffer;
 		QPainter map_buffer_painter;
 		if (use_buffer_for_map)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
-			if (map_buffer.isNull())
+			local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (local_buffer.isNull())
 			{
 				// Allocation failed
 				device_painter->end(); // Signal error
 				return;
 			}
-			map_buffer.fill(QColor(Qt::transparent));
-			map_buffer_painter.begin(&map_buffer);
+			local_buffer.fill(QColor(Qt::transparent));
+			map_buffer_painter.begin(&local_buffer);
 			map_painter = &map_buffer_painter;
 		}
 		
@@ -1081,7 +1082,7 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			if (view)
 				page_painter->setOpacity(view->effectiveMapVisibility().opacity);
 			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-			page_painter->drawImage(0, 0, map_buffer);
+			page_painter->drawImage(0, 0, local_buffer);
 		}
 		
 		page_painter->restore();
@@ -1125,11 +1126,13 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	{
 		QPainter* painter = page_painter;
 		
-		QImage local_buffer;
 		QPainter local_buffer_painter;
 		if (!vectorModeSelected() && use_buffer_for_map)
 		{
-			local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (local_buffer.isNull())
+			{
+				local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			}
 			if (local_buffer.isNull())
 			{
 				// Allocation failed
@@ -1161,7 +1164,11 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 		
 		page_painter->restore();
 	}
-
+	
+	// Release the second buffer's memory first: The following drawImage()
+	// needs memory to allocate a large QPixmap with QWin32PrintEngine.
+	local_buffer = {};
+	
 	/*
 	 * Cleanup: If a temporary buffer has been used, paint it on the device painter
 	 */
