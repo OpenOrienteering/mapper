@@ -887,23 +887,14 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	}
 }
 
-// local
-void drawBuffer(QPainter* device_painter, const QImage* page_buffer)
-{
-	Q_ASSERT(page_buffer);
-	
-	device_painter->save();
-	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-	device_painter->drawImage(0, 0, *page_buffer);
-	device_painter->restore();
-}
 
 void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
 {
 	// Logical units per mm
 	const qreal units_per_mm = options.resolution / 25.4;
 	
-	const auto render_hints = device_painter->renderHints()
+	const auto saved_hints  = device_painter->renderHints();
+	const auto render_hints = saved_hints
 	                          | QPainter::Antialiasing
 	                          | QPainter::SmoothPixmapTransform;
 	
@@ -1022,7 +1013,9 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	{
 		// Flush the buffer, reset painter
 		local_page_painter.end();
-		drawBuffer(device_painter, &local_page_buffer);
+		
+		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter->drawImage(0, 0, local_page_buffer);
 		
 		page_painter = device_painter;
 	}
@@ -1175,8 +1168,12 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	if (local_page_painter.isActive())
 	{
 		local_page_painter.end();
-		drawBuffer(device_painter, &local_page_buffer);
+		
+		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter->drawImage(0, 0, local_page_buffer);
 	}
+	
+	device_painter->setRenderHints(saved_hints);
 }
 
 void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const
