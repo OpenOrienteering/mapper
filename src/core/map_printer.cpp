@@ -60,8 +60,12 @@
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
 
-namespace literal
-{
+namespace OpenOrienteering {
+
+namespace {
+
+namespace literal {
+
 	static const QLatin1String scale("scale");
 	static const QLatin1String resolution("resolution");
 	static const QLatin1String templates_visible("templates_visible");
@@ -86,11 +90,12 @@ namespace literal
 	static const QLatin1String print_area("print_area");
 	static const QLatin1String center_area("center_area");
 	static const QLatin1String single_page("single_page");
-}
+	
+}  // namespace literal
 
 
+}  // namespace
 
-namespace OpenOrienteering {
 
 // #### MapPrinterPageFormat ###
 
