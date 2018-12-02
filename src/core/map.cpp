@@ -1091,9 +1091,9 @@ void Map::drawColorSeparation(QPainter* painter, const RenderConfig& config, con
 	renderables->drawColorSeparation(painter, config, spot_color, use_color);
 }
 
-void Map::drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen)
+void Map::drawGrid(QPainter* painter, const QRectF& bounding_box)
 {
-	grid.draw(painter, bounding_box, this, on_screen);
+	grid.draw(painter, bounding_box, this);
 }
 
 void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const

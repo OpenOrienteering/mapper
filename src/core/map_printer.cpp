@@ -1109,11 +1109,11 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 			};
 			auto grid_copy = map_grid;
 			grid_copy.setColor(qRgb(opaque(qRed(rgba)), opaque(qGreen(rgba)), opaque(qBlue(rgba))));
-			grid_copy.draw(page_painter, print_area, &map, false); // Maybe replace by page_region_used?
+			grid_copy.draw(page_painter, print_area, &map, scale_adjustment); // Maybe replace by page_region_used?
 		}
 		else
 		{
-			map_grid.draw(page_painter, print_area, &map, false); // Maybe replace by page_region_used?
+			map_grid.draw(page_painter, print_area, &map, scale_adjustment); // Maybe replace by page_region_used?
 		}
 		
 		page_painter->restore();
