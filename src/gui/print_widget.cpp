@@ -31,6 +31,7 @@
 #include <QAbstractButton> // IWYU pragma: keep
 #include <QButtonGroup>
 #include <QCheckBox>
+#include <QColor>
 #include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
