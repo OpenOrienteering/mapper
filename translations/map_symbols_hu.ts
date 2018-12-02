@@ -261,23 +261,24 @@
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation>Megkülönböztethető földfal, töltés. A minimális magasság 1 méter.</translation>
-        </message>
+            <translation>Jól látható sánc, töltés. A minimális magasság 1 méter.</translation>
+    </message>
         <message>
             <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished">Kis föld fal, kis töltés sánc</translation>
-        </message>
+            <translation>Kis vagy romos töltés</translation>
+    </message>
         <message>
             <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished">A kis vagy részben romos földfalat, töltést szaggatott vonallal kell ábrázolni. A minimális magasság 0,5 méter.</translation>
-        </message>
+            <translation>Egy kis vagy romos földfal, töltés. A minimális magasság 0,5 méter.
+A minimális hossz: két szakasz (a valóságban 55 m). Ha rövidebb, akkor vagy fel kell nagyítani a minimális hosszúságra, vagy ki kell cserélni a 105-ös (földfal) jelre.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation>Árok, metsződés</translation>
+            <translation>Metsződés</translation>
     </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
@@ -295,19 +296,19 @@ Contour lines shall not be broken around this symbol.</source>
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
             <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0,5 m.
-A szimbólum körül meg kell szakítani a szintvonalakat.</translation>
+A jel körül meg kell szakítani a szintvonalakat.</translation>
     </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation>Kis domb</translation>
+            <translation>Kis domb, kúp</translation>
     </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation>Jól látható domb vagy kúp, ami nem ábrázolható szintvonallal. Minimális magasság: 1 m.
-A szimbólum nem érinthet vagy fedhet szintvonalat.</translation>
+            <translation>Jól látható domb vagy kúp, amely méretarányosan nem ábrázolható szintvonallal. Minimális magasság: 1 m.
+A térképjel nem érinthet vagy fedhet szintvonalat.</translation>
     </message>
         <message>
             <source>Small elongated knoll</source>
@@ -434,8 +435,11 @@ Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen áthaladni / mászni vagy veszélyes.
+A felső sor végei kerek vagy négyzet alakúak lehetnek.
+A két nem járható szikla vagy a nem járható sziklák és az egyéb nem járható jellemzőjű szimbólumok közötti résnek meg kell haladnia a térképen a 0,3 mm-t.
+ Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a szikla mentén haladni a víz szélén, vagy a letörés jelek egyértelműen a partvonal felé terjednek ki, akkor a partvonal elhagyható. Egy áthatolhatatlan szikla összefonódik a kontúrvonalakkal.</translation>
+    </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
@@ -447,8 +451,8 @@ For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For 
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan szikla, kőbánya vagy földletörés, amely olyan magas és meredek, hogy lehetetlen áthaladni / mászni vagy veszélyes. A függőleges kőzetfelületek esetében a letörés jelek elhagyhatók, ha a rés rövid. &lt;b&gt;A forma alakjának ábrázolásához a legkisebb szélesség 0,35 mm. &lt;/b&gt; A végein rövidebb letörés jelek használhatók. A két nem járható szikla vagy a nem szivárgó sziklák és az egyéb nem járható jellemző szimbólumok közötti résnek meg kell haladnia a térképen a 0,3 mm-t. Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a szikla mentén haladni a víz szélén, vagy a letörés jelek egyértelműen a partvonal felé terjednek ki, akkor a partvonal elhagyható. Egy áthatolhatatlan szikla összefonódik a kontúrvonalakkal.</translation>
+    </message>
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
@@ -480,8 +484,9 @@ Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan szikla, kőbánya vagy földi bank, amely olyan magas és meredek, hogy lehetetlen áthaladni / mászni vagy veszélyes.
+A felső vonal végei kerek vagy négyzet alakúak lehetnek.  A két nem járható szikla vagy a nem áthatolható sziklák és az egyéb nem járható jellemző szimbólumok közötti résnek meg kell haladnia a térképen a 0,3 mm-t. Amikor egy áthatolhatatlan szikla egyenesen a vízbe esik, így lehetetlen a szikla mentén haladni a víz szélén, vagy a letörés jelek egyértelműen a partvonal felé terjednek ki, akkor a partvonal elhagyható. Egy áthatolhatatlan szikla összefonódik a kontúrvonalakkal.</translation>
+    </message>
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
@@ -492,8 +497,10 @@ When an impassable cliff drops straight into water, making it impossible to pass
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy járható, függőleges szikla vagy kőbánya, ahol a sziklák esésének iránya látható a kontúrokból. Minimális magasság: 1 m.
+A felső vonal végei kerek vagy négyzet alakúak lehetnek. A két szikla közötti résnek legalább 0,2 mm-nek kell lennie. A szikláknak össze kell kapcsolódniuk a kontúrvonalakkal.
+A szikla keresztezése általában lassítja a haladást.</translation>
+    </message>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
@@ -504,8 +511,10 @@ Crossing a cliff will normally slow progress.</source>
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy járható, függőleges szikla vagy kőbánya, ahol a sziklák esésének iránya látható a kontúrokból. Minimális magasság: 1 m.
+A felsővonal végei kerek vagy négyzet alakúak lehetnek. A két szikla közötti résnek legalább 0,2 mm-nek kell lennie. A szikláknak össze kell kapcsolódniuk a kontúrvonalakkal.
+A szikla keresztezése általában lassítja a haladást.</translation>
+    </message>
         <message>
             <source>Cliff, with tags</source>
             <comment>Name of symbol 202.2</comment>
@@ -517,8 +526,8 @@ Short tags indicate in the direction of the downslope because the direction of f
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy járható szikla vagy kőfejtő. Minimális magasság: 1 m .A rövid tüskék a lejtő irányába mutatnak, mert a sziklák esésének iránya nem látható a kontúrokból, vagy az olvashatóságot javítja. A nem függőleges sziklák esetében a tüskéket  úgy kell rajzolni, hogy ábrázolja a teljes vízszintes kiterjedését. A felső vonal végei kerek vagy négyzet alakúak lehetnek. A két szikla közötti résnekk legalább 0,2 mm-nek kell lennie. A szikláknak össze kell kapcsolódniuk a kontúrvonalakkal. A szikla keresztezése általában lassítja a haladást.</translation>
+    </message>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
@@ -530,8 +539,8 @@ Short tags indicate in the direction of the downslope because the direction of f
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy járható szikla vagy kőfejtő. Minimális magasság: 1 m .A rövid tüskék a lejtő irányába mutatnak, mert a sziklák esésének iránya nem látható a kontúrokból, vagy az olvashatóságot javítja. A nem függőleges sziklák esetében a tüskéket  úgy kell rajzolni, hogy ábrázolja a teljes vízszintes kiterjedését. A felső vonal végei kerek vagy négyzet alakúak lehetnek. A két szikla közötti résnekk legalább 0,2 mm-nek kell lennie. A szikláknak össze kell kapcsolódniuk a kontúrvonalakkal. A szikla keresztezése általában lassítja a haladást.</translation>
+    </message>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
@@ -543,8 +552,8 @@ Short tags indicate in the direction of the downslope because the direction of f
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy járható szikla vagy kőfejtő. Minimális magasság: 1 m .A rövid tüskék a lejtő irányába mutatnak, mert a sziklák esésének iránya nem látható a kontúrokból, vagy az olvashatóságot javítja. A nem függőleges sziklák esetében a tüskéket  úgy kell rajzolni, hogy ábrázolja a teljes vízszintes kiterjedését. A felső vonal végei kerek vagy négyzet alakúak lehetnek. A két szikla közötti résnekk legalább 0,2 mm-nek kell lennie. A szikláknak össze kell kapcsolódniuk a kontúrvonalakkal. A szikla keresztezése általában lassítja a haladást.</translation>
+    </message>
         <message>
             <source>Rocky pit or cave (without distinct entrance)</source>
             <comment>Name of symbol 203.1</comment>
@@ -555,8 +564,8 @@ Crossing a cliff will normally slow progress.</source>
 Location is the centre of gravity of the symbol.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A sziklás gödrök, lyukak, barlangok vagy bányászati aknák, amelyek veszélyeztethetik a versenyzőt. Minimális mélység: 1 m. A helyszín a szimbólum súlypontja. Az 5 m-nél nagyobb átmérőjű sziklás gödröket túl kell hangsúlyozni, és szikla szimbólumokkal (201, 202) kell ábrázolni.</translation>
+    </message>
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
@@ -567,8 +576,8 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különös bejárattal rendelkező sziklás gödrök, lyukak, barlangok vagy bányabejáratok, amelyek veszélyt jelenthetnek a versenyző számára. Minimális mélység: 1 m. A helyszín a szimbólum súlypontja, és a szimbólumnak a barlangba kell mutatnia. Az 5 m-nél nagyobb átmérőjű sziklás gödröket túl kell hangsúlyozni és szikla szimbólumokkal (201, 202) kell ábrázolni.</translation>
+    </message>
         <message>
             <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
             <comment>Name of symbol 203.9</comment>
@@ -579,8 +588,8 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különös bejárattal rendelkező sziklás gödrök, lyukak, barlangok vagy bányabejáratok, amelyek veszélyt jelenthetnek a versenyző számára. Minimális mélység: 1 m. A helyszín a szimbólum súlypontja, és a szimbólumnak a barlangba kell mutatnia. Az 5 m-nél nagyobb átmérőjű sziklás gödröket túl kell hangsúlyozni és szikla szimbólumokkal (201, 202) kell ábrázolni.</translation>
+    </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
@@ -590,8 +599,9 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 204</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy különálló szikla (1 m-nél nagyobb), amely azonnal azonosítható a talajon. A sziklák csoportjai a 207 szimbólummal (sziklacsoport) vagy egy sziklamező szimbólummal (208, 209) vannak ábrázolva.
+Annak érdekében, hogy megmutassuk különbséget a szomszédos (30 méternél közelebbi) jelentős méretkülönbségű sziklák között, egyes sziklák esetében a szimbólum 0,5 mm-re növelhető.</translation>
+    </message>
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
@@ -604,8 +614,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Olyan szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205). 
+Annak érdekében, hogy megkülönböztethető legyen a szomszédos (30 méternél közelebbi) sziklák (204), amelyek jelentős méretkülönbséggel bírnak, a szimbólum (0,5 mm) a 204 szimbólum nagyításaként használható egyes sziklák esetében.Annak érdekében, hogy a szomszédos (30 méternél közelebbi) nagyméretű sziklák (205) között megkülönböztethető legyen, jelentős méretkülönbséggel rendelkező 205 szimbólumot (0,5 mm) használhatunk a 205  kicsinyítését szimbólumú sziklát.</translation>
+    </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
@@ -614,8 +625,8 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Különösen nagy és szembeötlő szikla. Egy nagy sziklának minimum 2 méter magasnak kell lennie. A szomszédos (30 m-nél közelebbi) sziklák különböző méretének szemléltetése érdekében megengedett a jel méretének 0.5 mm-re csökkentése.</translation>
+    </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
@@ -636,8 +647,9 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Szorosan egymás mellett elhelyezkedő sziklák csoportja, amelyeket nem lehetne egyesével ábrázolni. A sziklák minimális magassága 1 méter. A sziklacsoportnak jól elkülöníthetőnek kell lennie.
+A szomszédos (30 m-nél közelebbi) sziklacsoportok különböző méretének szemléltetése érdekében megengedett a jel méretének 20%-os növelése.</translation>
+    </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
@@ -760,8 +772,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Puha homokos terület, ahol a futhatóság a normál sebesség kevesebb mint 80% -ára csökken.</translation>
+    </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
@@ -772,8 +784,10 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).</source>
             <comment>Description of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy föld és növényzet nélküli szikla futható területe meztelen szikla.
+A fűvel, mohával vagy más alacsony növényzettel borított sziklaterületet nem szabad a csupasz szikla szimbólummal feltüntetni.
+A kevésbé futható csupasz szikla területét kővel borított szimbólummal (210-212) kell feltüntetni.</translation>
+    </message>
         <message>
             <source>Trench</source>
             <comment>Name of symbol 215</comment>
@@ -880,8 +894,9 @@ Az áthatolhatatlan árkokat a 201 (áthatolhatatlan sziklafal) jellel kell ábr
             <source>Should be at least 2 m wide.
 Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
-            <translation type="unfinished">Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.</translation>
-        </message>
+            <translation>Áthatolható vízfolyás, minimum 2m szélességű. Az 5 méternél szélesebb vízfolyásokat méretarányosan kell ábrázolni.
+Minimális hossz (különálló): 1 mm lábnyom 15 m.</translation>
+    </message>
         <message>
             <source>Small crossable watercourse</source>
             <comment>Name of symbol 305</comment>
@@ -910,8 +925,8 @@ Minimum length (isolated): footprint 15 m.</source>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan mocsár, amely a versenyző számára lehetetlen vagy veszélyes. A fekete körvonal hangsúlyozza, hogy a tulajdonság nem keresztezhető. A fekete körvonalak kihagyható a 301 szimbólum (áthatolhatatlan vízfelület) és az áthatolhatatlan mpcsár között. A szimbólum egy durva nyílt terület szimbólummal (403, 404) kombinálható a nyitottság megjelenítéséhez. A szimbólum északi irányba mutat.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh</source>
             <comment>Name of symbol 307.1</comment>
@@ -920,8 +935,8 @@ Minimum length (isolated): footprint 15 m.</source>
         <message>
             <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
             <comment>Description of symbol 307.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Olyan mocsár, amely a versenyző számára lehetetlen vagy veszélyes. A fekete körvonal hangsúlyozza, hogy a tulajdonság nem keresztezhető. A fekete körvonalak kihagyható a 301 szimbólum (áthatolhatatlan vízfelület) és az áthatolhatatlan mpcsár között. A szimbólum egy durva nyílt terület szimbólummal (403, 404) kombinálható a nyitottság megjelenítéséhez. A szimbólum északi irányba mutat.</translation>
+    </message>
         <message>
             <source>Uncrossable marsh, border line</source>
             <comment>Name of symbol 307.2</comment>
@@ -942,8 +957,10 @@ Minimum length (isolated): footprint 15 m.</source>
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átjárható mocsár, általában éles  határral.
+A szimbólumot más szimbólumokkal kell kombinálni a futhatóság és a nyitottság érdekében.
+A szimbólum északi irányba mutat.</translation>
+    </message>
         <message>
             <source>Marsh, minimum size</source>
             <comment>Name of symbol 308.1</comment>
@@ -954,8 +971,10 @@ The symbol is orientated to north.</source>
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 308.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Átjárható mocsár, általában éles  határral.
+A szimbólumot más szimbólumokkal kell kombinálni a futhatóság és a nyitottság érdekében.
+A szimbólum északi irányba mutat.</translation>
+    </message>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
@@ -964,8 +983,8 @@ The symbol is orientated to north.</source>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Egy mocsári vagy keskeny  vízfolyás, amely túl keskeny ahhoz (kevesebb, mint kb. 5 m széles), hogy  a mocsár szimbólummal ábrázolható lenne.</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
@@ -1055,8 +1074,8 @@ A jel nem kombinálható más területi jellel úgymint a 113 (szabdalt terület
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (szétszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered bushes</source>
             <comment>Name of symbol 402.1</comment>
@@ -1313,7 +1332,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 414</comment>
-            <translation>Szőlő</translation>
+            <translation>Szőlőskert vagy hasonló</translation>
     </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
@@ -1750,8 +1769,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <source>A wooden or wire fence less than ca. 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.</source>
             <comment>Description of symbol 516</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A fa- vagy drótkerítés kevesebb mint kb. 1,5 m magas.
+Ha a kerítés zárt területet képez, a tüskéket belülre kell helyezni.</translation>
+    </message>
         <message>
             <source>Ruined fence</source>
             <comment>Name of symbol 517</comment>
