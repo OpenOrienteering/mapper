@@ -136,19 +136,26 @@ if(Mapper_MANUAL_QTHELP)
 	# Qt Help generation
 	#
 	
+	find_package(Qt5Core 5.3 REQUIRED)
+	if (Qt5Core_VERSION VERSION_LESS 5.12)
+		set(qcollectiongenerator_name qcollectiongenerator)
+	else()
+		set(qcollectiongenerator_name qhelpgenerator)
+	endif()
+	
 	# Qt provides a broken Qt5::qcollectiongenerator when crosscompiling.
 	if (CMAKE_CROSSCOMPILING AND NOT TARGET Qt5::qcollectiongenerator)
 		find_program(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE
-		  NAMES qcollectiongenerator-qt5 qcollectiongenerator
-		  DOC "The path of the Qt Assistant executable"
+		  NAMES ${qcollectiongenerator_name}-qt5 ${qcollectiongenerator_name}
+		  DOC "The path of the Qt Help collection generator executable"
 		)
-		add_executable(Qt5::qcollectiongenerator IMPORTED)
-		set_target_properties(Qt5::qcollectiongenerator PROPERTIES
+		add_executable(Qt5::${qcollectiongenerator_name} IMPORTED)
+		set_target_properties(Qt5::${qcollectiongenerator_name} PROPERTIES
 		  IMPORTED_LOCATION ${Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE}
 		)
 	elseif(NOT Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE)
 		find_package(Qt5Help REQUIRED)
-		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::qcollectiongenerator)
+		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::${qcollectiongenerator_name})
 	endif()
 	
 	# Reproducible builds need a modifications to the help collection file.
@@ -265,3 +272,4 @@ if(Mapper_MANUAL_PDF)
 	  DESTINATION "${MAPPER_ABOUT_DESTINATION}"
 	)
 endif()
+

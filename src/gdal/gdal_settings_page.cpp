@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,6 +33,7 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
+#include "settings.h"
 #include "fileformats/file_format_registry.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format.h"
@@ -57,12 +58,24 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	
 	import_osm = new QCheckBox(tr("OSM"));
 	form_layout->addRow(import_osm);
-
+	
+	
+	form_layout->addItem(Util::SpacerItem::create(this));
+	form_layout->addRow(Util::Headline::create(tr("Templates")));
+	
+	view_hatch = new QCheckBox(tr("Hatch areas"));
+	form_layout->addRow(view_hatch);
+	
+	view_baseline = new QCheckBox(tr("Baseline view"));
+	form_layout->addRow(view_baseline);
+	
+	
 	form_layout->addItem(Util::SpacerItem::create(this));
 	form_layout->addRow(Util::Headline::create(tr("Export Options")));
 
 	export_one_layer_per_symbol = new QCheckBox(tr("Create a layer for each symbol"));
 	form_layout->addRow(export_one_layer_per_symbol);
+	
 	
 	form_layout->addItem(Util::SpacerItem::create(this));
 	form_layout->addRow(Util::Headline::create(tr("Configuration")));
@@ -101,6 +114,8 @@ void GdalSettingsPage::apply()
 	manager.setFormatEnabled(GdalManager::DXF, import_dxf->isChecked());
 	manager.setFormatEnabled(GdalManager::GPX, import_gpx->isChecked());
 	manager.setFormatEnabled(GdalManager::OSM, import_osm->isChecked());
+	manager.setAreaHatchingEnabled(view_hatch->isChecked());
+	manager.setBaselineViewEnabled(view_baseline->isChecked());
 	
 	// The file format constructor establishes the extensions.
 	auto format = new OgrFileImportFormat();
@@ -130,6 +145,8 @@ void GdalSettingsPage::apply()
 			manager.unsetParameter(key);
 		}
 	}
+	
+	Settings::getInstance().applySettings();
 }
 
 void GdalSettingsPage::reset()
@@ -143,7 +160,9 @@ void GdalSettingsPage::updateWidgets()
 	import_dxf->setChecked(manager.isFormatEnabled(GdalManager::DXF));
 	import_gpx->setChecked(manager.isFormatEnabled(GdalManager::GPX));
 	import_osm->setChecked(manager.isFormatEnabled(GdalManager::OSM));
-
+	view_hatch->setChecked(manager.isAreaHatchingEnabled());
+	view_baseline->setChecked(manager.isBaselineViewEnabled());
+	
 	export_one_layer_per_symbol->setChecked(manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol));
 	
 	auto options = manager.parameterKeys();
