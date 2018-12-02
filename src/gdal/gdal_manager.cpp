@@ -99,9 +99,7 @@ public:
 			key = gdal_osm_key;
 			break;
 		}
-		QSettings settings;
-		settings.beginGroup(gdal_manager_group);
-		settings.setValue(key, QVariant{ enabled });
+		setSettingsValue(key, enabled);
 		dirty = true;
 	}
 	
@@ -122,9 +120,7 @@ public:
 			key = gdal_osm_key;
 			break;
 		}
-		QSettings settings;
-		settings.beginGroup(gdal_manager_group);
-		return settings.value(key, true).toBool();
+		return settingsValue(key, true).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
