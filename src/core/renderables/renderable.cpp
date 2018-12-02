@@ -727,6 +727,12 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 	}
 	else if (mode == PainterConfig::BrushOnly)
 	{
+		if (pen_width > 0)
+		{
+			auto const width_px = pen_width * config.scaling;
+			if (config.testFlag(RenderConfig::Screen) && width_px < 0.25)
+				return false;
+		}
 		painter->setPen(QPen(Qt::NoPen));
 		painter->setBrush(brush);
 	}
