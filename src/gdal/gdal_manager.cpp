@@ -106,10 +106,12 @@ public:
 	bool isFormatEnabled(FileFormat format) const
 	{
 		QString key;
+		bool default_value = true;
 		switch (format)
 		{
 		case GdalManager::DXF:
 			key = gdal_dxf_key;
+			default_value = false;
 			break;
 			
 		case GdalManager::GPX:
@@ -120,7 +122,7 @@ public:
 			key = gdal_osm_key;
 			break;
 		}
-		return settingsValue(key, true).toBool();
+		return settingsValue(key, default_value).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
@@ -201,7 +203,7 @@ private:
 				auto extension = extensions.mid(start, pos - start);
 				if (extension.isEmpty())
 					continue;
-				if (extension == "dxf" && !settings.value(gdal_dxf_key, true).toBool())
+				if (extension == "dxf" && !settings.value(gdal_dxf_key, false).toBool())
 					continue;
 				if (extension == "gpx" && !settings.value(gdal_gpx_key, true).toBool())
 					continue;
@@ -223,7 +225,7 @@ private:
 		enabled_vector_extensions = default_extensions;
 		
 		settings.beginGroup(gdal_manager_group);
-		if (settings.value(gdal_dxf_key, true).toBool())
+		if (settings.value(gdal_dxf_key, false).toBool())
 			enabled_vector_extensions.push_back("dxf");
 		if (settings.value(gdal_gpx_key, true).toBool())
 			enabled_vector_extensions.push_back("gpx");
