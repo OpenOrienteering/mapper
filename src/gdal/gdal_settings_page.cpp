@@ -33,6 +33,7 @@
 #include <QTableWidgetItem>
 #include <QVBoxLayout>
 
+#include "settings.h"
 #include "fileformats/file_format_registry.h"
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format.h"
