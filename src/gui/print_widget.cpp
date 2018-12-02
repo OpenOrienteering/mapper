@@ -413,11 +413,15 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				
 			case EXPORT_PDF_TASK:
 				map_printer->setTarget(MapPrinter::pdfTarget());
+				if (active)
+					setOptions(map_printer->getOptions());
 				emit taskChanged(tr("PDF export"));
 				break;
 				
 			case EXPORT_IMAGE_TASK:
 				map_printer->setTarget(MapPrinter::imageTarget());
+				if (active)
+					setOptions(map_printer->getOptions());
 				policy = SinglePage;
 				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
 				{
