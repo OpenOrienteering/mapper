@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -57,6 +57,8 @@ private:
 	QCheckBox* import_dxf;
 	QCheckBox* import_gpx;
 	QCheckBox* import_osm;
+	QCheckBox* view_hatch;
+	QCheckBox* view_baseline;
 	QTableWidget* parameters;
 };
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -48,6 +48,8 @@ public:
 	const QString gdal_dxf_key{ QStringLiteral("dxf") };
 	const QString gdal_gpx_key{ QStringLiteral("gpx") };
 	const QString gdal_osm_key{ QStringLiteral("osm") };
+	const QString gdal_hatch_key{ QStringLiteral("area_hatching") };
+	const QString gdal_baseline_key{ QStringLiteral("baseline_view") };
 	
 	GdalManagerPrivate()
 	: dirty{ true }
@@ -63,6 +65,22 @@ public:
 		if (dirty)
 			update();
 	}
+	
+	
+	QVariant settingsValue(const QString& key, const QVariant& default_value) const
+	{
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		return settings.value(key, default_value);
+	}
+
+	void setSettingsValue(const QString& key, const QVariant& value)
+	{
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		settings.setValue(key, value);
+	}
+	
 	
 	void setFormatEnabled(GdalManager::FileFormat format, bool enabled)
 	{
@@ -311,6 +329,28 @@ void GdalManager::configure()
 {
 	p->configure();
 }
+
+
+bool GdalManager::isAreaHatchingEnabled() const
+{
+	return p->settingsValue(p->gdal_hatch_key, false).toBool();
+}
+
+void GdalManager::setAreaHatchingEnabled(bool enabled)
+{
+	p->setSettingsValue(p->gdal_hatch_key, enabled);
+}
+
+bool GdalManager::isBaselineViewEnabled() const
+{
+	return p->settingsValue(p->gdal_baseline_key, false).toBool();
+}
+
+void GdalManager::setBaselineViewEnabled(bool enabled)
+{
+	p->setSettingsValue(p->gdal_baseline_key, enabled);
+}
+
 
 void GdalManager::setFormatEnabled(GdalManager::FileFormat format, bool enabled)
 {

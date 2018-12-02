@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016 Kai Pastor
+ *    Copyright 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -63,6 +63,28 @@ public:
 	 * Sets the GDAL configuration from Mapper's defaults and settings.
 	 */
 	void configure();
+	
+	
+	/**
+	 * Returns the area hatching display setting.
+	 */
+	bool isAreaHatchingEnabled() const;
+	
+	/**
+	 * Sets the area hatching template display setting.
+	 */
+	void setAreaHatchingEnabled(bool enabled);
+	
+	
+	/**
+	 * Returns the baseline view template display setting.
+	 */
+	bool isBaselineViewEnabled() const;
+	
+	/**
+	 * Sets the baseline view template display setting.
+	 */
+	void setBaselineViewEnabled(bool enabled);
 	
 	
 	/**
