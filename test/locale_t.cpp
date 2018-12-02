@@ -53,13 +53,19 @@ void LocaleTest::testEsperantoQLocale()
 {
 	QCOMPARE(QLocale::languageToString(QLocale::Esperanto), QString::fromLatin1("Esperanto"));
 	
+#if QT_VERSION < 0x050c00
 	QEXPECT_FAIL("", "Cannot construct Esperanto QLocale from \"eo\" (issue #792).", Continue);
+#endif
 	QCOMPARE(QLocale(QString::fromLatin1("eo")).language(), QLocale::Esperanto);
 	
+#if QT_VERSION < 0x050c00
 	QEXPECT_FAIL("", "Cannot construct Esperanto QLocale from \"eo_C\".", Continue);
+#endif
 	QCOMPARE(QLocale(QString::fromLatin1("eo_C")).language(), QLocale::Esperanto);
 	
+#if QT_VERSION < 0x050c00
 	QEXPECT_FAIL("", "Cannot construct Esperanto QLocale for AnyScript, AnyCountry.", Continue);
+#endif
 	QCOMPARE(QLocale(QLocale::Esperanto, QLocale::AnyScript, QLocale::AnyCountry).language(), QLocale::Esperanto);
 }
 
