@@ -1089,7 +1089,7 @@ void PrintWidget::showTemplatesClicked(bool checked)
 
 void PrintWidget::checkTemplateConfiguration()
 {
-	bool visibility = vector_mode_button->isChecked() && show_templates_check->isChecked();
+	bool visibility = map_printer->engineMayRasterize() && show_templates_check->isChecked();
 	templates_warning_icon->setVisible(visibility);
 	templates_warning_text->setVisible(visibility);
 }

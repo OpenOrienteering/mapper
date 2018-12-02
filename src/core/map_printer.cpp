@@ -940,18 +940,20 @@ void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, Q
 	const bool use_buffer_for_map = rasterModeSelected() || target == imageTarget() || engineWillRasterize();
 	bool use_page_buffer = use_buffer_for_map;
 	
-	// When we don't use a buffer for the map, i.e. when we draw in vector mode,
-	// we may need to put non-opaque foreground templates to the background
-	// in order to avoid rasterization 
-	auto first_front_template = use_buffer_for_map ? map.getFirstFrontTemplate() : map.getNumTemplates();
+	auto first_front_template = map.getFirstFrontTemplate();
 	if (options.show_templates && engineMayRasterize())
 	{
-		// Choose the first front template such that no unwanted rasterization
-		// is triggered when drawing the front templates to the device (later).
-		while (first_front_template > map.getFirstFrontTemplate()
-		       && !hasAlpha(map.getTemplate(first_front_template-1)))
+		// When we don't use a buffer for the map, i.e. when we draw in vector mode,
+		// we may need to put non-opaque foreground templates to the background
+		// in order to avoid rasterization 
+		if (!use_buffer_for_map)
 		{
-			--first_front_template;
+			first_front_template = map.getNumTemplates();
+			while (first_front_template > map.getFirstFrontTemplate()
+			       && !hasAlpha(map.getTemplate(first_front_template-1)))
+			{
+				--first_front_template;
+			}
 		}
 		
 		for (int i = 0; i < first_front_template && !use_page_buffer; ++i)
