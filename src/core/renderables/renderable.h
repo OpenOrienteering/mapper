@@ -90,7 +90,7 @@ public:
 	QRectF  bounding_box; ///< The bounding box of the area to be drawn.
 	                      ///  Given in map coordinates.
 	
-	qreal   scaling;      ///< The scaling.
+	qreal   scaling;      ///< The scaling expressed as pixels per mm.
 	                      ///  Used to calculate the final object sizes when
                           ///  ForceMinSize is set.
     
