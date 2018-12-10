@@ -202,6 +202,20 @@ public:
 	static qreal minSize();
 	
 	/**
+	 * Returns a representative pen width which shall be set on BrushOnly
+	 * rendererables in order to support for level-of-detail filtering.
+	 * 
+	 * This function is primarily meant to limit the drawing of pattern fills
+	 * which can generate a large number of tiny renderables. In class
+	 * SharedRenderables, renderables are grouped by configuration. So this
+	 * functions needs to return a low number of different values. For extents
+	 * exceeding a certain circumfence, this functions returns zero. This
+	 * special value signals that these renderables shall always be drawn (cf.
+	 * the special meaning of zero for pens, i.e. cosmetic lines).
+	 */
+	static qreal proxyPenWidth(const QRectF& extent);
+	
+	/**
 	 * Activates the configuration on the given painter.
 	 * 
 	 * If this method returns false, the corresponding renderables shall not be drawn.

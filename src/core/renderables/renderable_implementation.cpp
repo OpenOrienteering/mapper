@@ -55,7 +55,6 @@
 #endif
 
 // IWYU pragma: no_forward_declare QFontMetricsF
-// IWYU pragma: no_forward_declare QRectF
 
 
 namespace {
@@ -88,30 +87,6 @@ inline void fixPenForPdf(QPen& pen, const QPainter& painter)
 }
 
 
-/**
- * Returns a representative pen width which can be used for level-of-detail
- * filtering on brush rendererables.
- * 
- * This function is primarily meant to limit the drawing of pattern fills.
- * In class SharedRenderables, renderables are grouped by configuration.
- * So this functions needs to return a low number of different values.
- * 
- * For extents exceeding a circumfence of 8 mm, this functions returns zero
- * (equivalent to a cosmetic pen), signaling that these objects shall always
- * be drawn.
- */
-qreal proxyPenWidth(const QRectF& extent)
-{
-	auto const double_size = extent.width() + extent.height();
-	if (double_size < 0.5)
-		return 0.25;
-	else if (double_size < 4)
-		return 2;
-	else 
-		return 0;
-}
-
-
 }  // namespace
 
 
@@ -131,7 +106,7 @@ DotRenderable::DotRenderable(const PointSymbol* symbol, MapCoordF coord)
 
 PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	return { color_priority, PainterConfig::BrushOnly, proxyPenWidth(extent), clip_path };
+	return { color_priority, PainterConfig::BrushOnly, PainterConfig::proxyPenWidth(extent), clip_path };
 }
 
 void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
@@ -678,7 +653,7 @@ void AreaRenderable::addSubpath(const VirtualPath& virtual_path)
 
 PainterConfig AreaRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	return { color_priority, PainterConfig::BrushOnly, proxyPenWidth(extent), clip_path };
+	return { color_priority, PainterConfig::BrushOnly, PainterConfig::proxyPenWidth(extent), clip_path };
 }
 
 void AreaRenderable::render(QPainter &painter, const RenderConfig &/*config*/) const
@@ -764,7 +739,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 
 PainterConfig TextRenderable::getPainterConfig(const QPainterPath* clip_path) const
 {
-	return { color_priority, PainterConfig::BrushOnly, proxyPenWidth(extent), clip_path };
+	return { color_priority, PainterConfig::BrushOnly, PainterConfig::proxyPenWidth(extent), clip_path };
 }
 
 void TextRenderable::render(QPainter &painter, const RenderConfig &config) const

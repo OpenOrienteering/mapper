@@ -44,6 +44,9 @@
 #include "core/symbols/symbol.h"
 #include "util/util.h"
 
+// IWYU pragma: no_forward_declare QRectF
+
+
 #if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)
 static_assert(false, "This file needs to be modified for correct printing on Android");
 #endif
@@ -689,6 +692,18 @@ namespace {
 qreal PainterConfig::minSize()
 {
 	return min_renderable_size;
+}
+
+// static
+qreal PainterConfig::proxyPenWidth(const QRectF& extent)
+{
+	auto const double_size = extent.width() + extent.height();
+	if (double_size < 0.5)
+		return 0.25;
+	else if (double_size < 4)
+		return 2;
+	else
+		return 0;
 }
 
 bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const
