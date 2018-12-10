@@ -728,12 +728,21 @@ qreal PainterConfig::minSize()
 // static
 qreal PainterConfig::proxyPenWidth(const QRectF& extent)
 {
-	auto const double_size = extent.width() + extent.height();
-	if (double_size < 0.5)
+	// The amount of color contributed to a pixel depends on the *area* covered
+	// by the output, so we must analyze the product of width and height.
+	// However, the returned ("proxy") value isn't exactly the square root but
+	// just a representative value which is balanced with the level of detail
+	// filtering on strokes having a real pen width.
+	auto const area_size = extent.width() * extent.height();
+	if (area_size <= 0.0625)
+		return 0.125;
+	else if (area_size <= 0.25)
 		return 0.25;
-	else if (double_size < 4)
-		return 2;
-	else
+	else if (area_size <= 1)
+		return 0.5;
+	else if (area_size <= 4)
+		return 1;
+	else 
 		return 0;
 }
 
