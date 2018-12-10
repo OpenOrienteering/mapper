@@ -51,6 +51,10 @@
 static_assert(false, "This file needs to be modified for correct printing on Android");
 #endif
 
+#ifndef DEBUG_RENDERING
+//#define DEBUG_RENDERING
+#endif
+
 
 namespace OpenOrienteering {
 
@@ -268,6 +272,12 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
+#ifdef DEBUG_RENDERING
+	auto filtered_by_config = 0;
+	auto filtered_by_renderable = 0;
+	auto rendered = 0;
+#endif
+	
 #ifdef Q_OS_ANDROID
 	const qreal min_dimension = 1.0/config.scaling;
 #endif
@@ -314,20 +324,35 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 				}
 				QColor color = *map_color;
 				if (state.color_priority >= 0 && map_color->getOpacity() < 1)
+				{
 					color.setAlphaF(map_color->getOpacity());
+				}
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
-				    continue;
+				{	
+#ifdef DEBUG_RENDERING
+					filtered_by_config += renderables.second.size();
+#endif
+					continue;
+				}
 				
 				for (const auto renderable : renderables.second)
 				{
 #ifdef Q_OS_ANDROID
 					const QRectF& extent = renderable->getExtent();
 					if (extent.width() < min_dimension && extent.height() < min_dimension)
+					{
+#ifdef DEBUG_RENDERING
+						++filtered_by_renderable;
+#endif
 						continue;
+					}
 #endif
 					if (renderable->intersects(config.bounding_box))
 					{
 						renderable->render(*painter, config);
+#ifdef DEBUG_RENDERING
+						++rendered;
+#endif
 					}
 				}
 				
@@ -338,6 +363,12 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	} // each map color
 	
 	painter->restore();
+	
+#ifdef DEBUG_RENDERING
+	qDebug("Rendered: %d, dropped: %d (by config/by renderable: %d/%d)",
+	       rendered, filtered_by_config + filtered_by_renderable,
+	       filtered_by_config, filtered_by_renderable);
+#endif
 }
 
 void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderConfig& config) const
