@@ -188,6 +188,20 @@ public:
 	const QPainterPath* clip_path;  ///< A clip_path which may be shared by several Renderables
 	
 	/**
+	 * Returns the minimum renderable size in pixels that should be drawn.
+	 * 
+	 * When renderables are significantly smaller than a single pixel, the
+	 * indidual renderable doesn't contribute a lot to the output, but still
+	 * consumes time and resources for drawing. The value of minSize() is used
+	 * by acticate() to decide when to return false, i.e. prevending a whole
+	 * set of similar renderables to be drawn.
+	 * 
+	 * This only takes effect when Option::Screen is set and
+	 * Option::ForceMinSize is not set.
+	 */
+	static qreal minSize();
+	
+	/**
 	 * Activates the configuration on the given painter.
 	 * 
 	 * If this method returns false, the corresponding renderables shall not be drawn.

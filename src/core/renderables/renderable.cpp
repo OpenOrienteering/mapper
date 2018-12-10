@@ -28,12 +28,15 @@
 #include <QBrush>
 #include <QColor>
 #include <QImage>
+#include <QObject>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPen>
 #include <QRgb>
 #include <QTransform>
+#include <QVariant>
 
+#include "settings.h"
 #include "core/image_transparency_fixup.h"
 #include "core/map_color.h"
 #include "core/map.h"
@@ -82,6 +85,25 @@ namespace OpenOrienteering {
 	
 #endif
 
+
+namespace {
+
+/**
+ * The minimum pen width or extent size of renderables to be drawn.
+ */
+static qreal min_renderable_size = 0;
+
+
+/**
+ * Apply the global settings to the local state.
+ */
+void applySettings()
+{
+	min_renderable_size = Settings::getInstance().getSetting(Settings::MapDisplay_MinRenderableSizePx).toReal();
+}
+
+
+}  // namespace
 
 
 // ### Renderable ###
@@ -232,7 +254,11 @@ void MapRenderables::ObjectDeleter::operator()(Object* object) const
 MapRenderables::MapRenderables(Map* map)
  : map(map)
 {
-	; // nothing
+	static auto const settings_connected = []() {
+		applySettings();
+		QObject::connect(&Settings::getInstance(), &Settings::settingsChanged, &applySettings);
+		return true;
+	}();
 }
 
 void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
@@ -659,6 +685,12 @@ namespace {
 	}
 }
 
+// static
+qreal PainterConfig::minSize()
+{
+	return min_renderable_size;
+}
+
 bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const
 {
 	if (current_clip != clip_path)
@@ -717,7 +749,7 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 		if (pen_width > 0)
 		{
 			auto const width_px = pen_width * config.scaling;
-			if (config.testFlag(RenderConfig::Screen) && width_px < 0.125)
+			if (config.testFlag(RenderConfig::Screen) && width_px < minSize())
 				return false;
 			if (config.testFlag(RenderConfig::ForceMinSize) && width_px < 1)
 				actual_pen_width = 0.0; // Forces cosmetic pen
@@ -730,7 +762,7 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 		if (pen_width > 0)
 		{
 			auto const width_px = pen_width * config.scaling;
-			if (config.testFlag(RenderConfig::Screen) && width_px < 0.25)
+			if (config.testFlag(RenderConfig::Screen) && width_px < minSize())
 				return false;
 		}
 		painter->setPen(QPen(Qt::NoPen));

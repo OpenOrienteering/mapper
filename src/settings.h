@@ -45,6 +45,7 @@ public:
 	{
 		MapDisplay_Antialiasing = 0,
 		MapDisplay_TextAntialiasing,
+		MapDisplay_MinRenderableSizePx,
 		MapEditor_ClickToleranceMM,
 		MapEditor_SnapDistanceMM,
 		MapEditor_FixedAngleStepping,

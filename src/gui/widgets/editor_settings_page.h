@@ -28,6 +28,7 @@
 
 class QCheckBox;
 class QComboBox;
+class QSlider;
 class QSpinBox;
 class QWidget;
 
@@ -55,6 +56,7 @@ private:
 	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
+	QSlider* detail_slider;
 	QSpinBox* tolerance;
 	QSpinBox* snap_distance;
 	QSpinBox* fixed_angle_stepping;
