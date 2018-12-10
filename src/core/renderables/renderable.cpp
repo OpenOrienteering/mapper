@@ -48,10 +48,6 @@
 // IWYU pragma: no_forward_declare QRectF
 
 
-#if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)
-static_assert(false, "This file needs to be modified for correct printing on Android");
-#endif
-
 #ifndef DEBUG_RENDERING
 //#define DEBUG_RENDERING
 #endif
@@ -276,12 +272,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 #ifdef DEBUG_RENDERING
 	auto filtered_by_object = 0;
 	auto filtered_by_config = 0;
-	auto filtered_by_renderable = 0;
 	auto rendered = 0;
-#endif
-	
-#ifdef Q_OS_ANDROID
-	const qreal min_dimension = 1.0/config.scaling;
 #endif
 	
 	auto const tiny_length = qMin(1.0, 4 * min_renderable_size) / config.scaling;
@@ -358,16 +349,6 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 				
 				for (const auto renderable : renderables.second)
 				{
-#ifdef Q_OS_ANDROID
-					const QRectF& extent = renderable->getExtent();
-					if (extent.width() < min_dimension && extent.height() < min_dimension)
-					{
-#ifdef DEBUG_RENDERING
-						++filtered_by_renderable;
-#endif
-						continue;
-					}
-#endif
 					if (renderable->intersects(config.bounding_box))
 					{
 						renderable->render(*painter, config);
@@ -386,9 +367,9 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	painter->restore();
 	
 #ifdef DEBUG_RENDERING
-	qDebug("Rendered: %d, dropped: %d (by object/by config/by renderable: %d/%d/%d)",
-	       rendered, filtered_by_object + filtered_by_config + filtered_by_renderable,
-	       filtered_by_object, filtered_by_config, filtered_by_renderable);
+	qDebug("Rendered: %d, dropped: %d (by object/by config: %d/%d)",
+	       rendered, filtered_by_object + filtered_by_config,
+	       filtered_by_object, filtered_by_config);
 #endif
 }
 
