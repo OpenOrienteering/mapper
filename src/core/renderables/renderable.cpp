@@ -22,6 +22,7 @@
 
 #include <algorithm>
 #include <iterator>
+#include <numeric>  // IWYU pragma: keep
 #include <utility>
 
 #include <Qt>
@@ -273,6 +274,7 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	// TODO: improve performance by using some spatial acceleration structure?
 	
 #ifdef DEBUG_RENDERING
+	auto filtered_by_object = 0;
 	auto filtered_by_config = 0;
 	auto filtered_by_renderable = 0;
 	auto rendered = 0;
@@ -281,6 +283,11 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 #ifdef Q_OS_ANDROID
 	const qreal min_dimension = 1.0/config.scaling;
 #endif
+	
+	auto const tiny_length = qMin(1.0, 4 * min_renderable_size) / config.scaling;
+	auto const is_tiny = [tiny_length](const QRectF& extent) {
+		return extent.width() < tiny_length && extent.height() < tiny_length;
+	};
 	
 	QPainterPath initial_clip = painter->clipPath();
 	const QPainterPath* current_clip = nullptr;
@@ -309,8 +316,22 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object.first->getExtent().intersects(config.bounding_box))
+			auto const & extent = object.first->getExtent();
+			if (config.testFlag(RenderConfig::Screen) && is_tiny(extent))
+			{
+#ifdef DEBUG_RENDERING
+				const auto & renderables = *object.second;
+				filtered_by_object +=
+				        std::accumulate(renderables.begin(), renderables.end(), 0,
+				                        [](int a, auto c) { return a + c.second.size(); });
+#endif
 				continue;
+			}
+			
+			if (!extent.intersects(config.bounding_box))
+			{
+				continue;
+			}
 			
 			for (const auto& renderables : *object.second)
 			{
@@ -365,9 +386,9 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	painter->restore();
 	
 #ifdef DEBUG_RENDERING
-	qDebug("Rendered: %d, dropped: %d (by config/by renderable: %d/%d)",
-	       rendered, filtered_by_config + filtered_by_renderable,
-	       filtered_by_config, filtered_by_renderable);
+	qDebug("Rendered: %d, dropped: %d (by object/by config/by renderable: %d/%d/%d)",
+	       rendered, filtered_by_object + filtered_by_config + filtered_by_renderable,
+	       filtered_by_object, filtered_by_config, filtered_by_renderable);
 #endif
 }
 
