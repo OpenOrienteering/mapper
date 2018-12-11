@@ -471,6 +471,17 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 
 void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& config, const MapColor* separation, bool use_color) const
 {
+#ifdef DEBUG_RENDERING
+	auto filtered_by_object = 0;
+	auto filtered_by_config = 0;
+	auto rendered = 0;
+#endif
+	
+	auto const tiny_length = qMin(1.0, 4 * min_renderable_size) / config.scaling;
+	auto const is_tiny = [tiny_length](const QRectF& extent) {
+		return extent.width() < tiny_length && extent.height() < tiny_length;
+	};
+	
 	painter->save();
 	
 	const QPainterPath initial_clip(painter->clipPath());
@@ -589,8 +600,22 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object.first->getExtent().intersects(config.bounding_box))
+			auto const & extent = object.first->getExtent();
+			if (config.testFlag(RenderConfig::Screen) && is_tiny(extent))
+			{
+#ifdef DEBUG_RENDERING
+				const auto & renderables = *object.second;
+				filtered_by_object +=
+				        std::accumulate(renderables.begin(), renderables.end(), 0,
+				                        [](int a, auto c) { return a + c.second.size(); });
+#endif
 				continue;
+			}
+			
+			if (!extent.intersects(config.bounding_box))
+			{
+				continue;
+			}
 			
 			// For each pair of common rendering attributes and collection of renderables...
 			for (const auto& renderables : *object.second)
@@ -617,7 +642,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				}
 				
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
+				{	
+#ifdef DEBUG_RENDERING
+					filtered_by_config += renderables.second.size();
+#endif
 					continue;
+				}
 				
 				// For each renderable that uses the current painter configuration...
 				// Render the renderable
@@ -627,6 +657,9 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 					{
 						renderable->render(*painter, config);
 						drawing_started |= drawing;
+#ifdef DEBUG_RENDERING
+						++rendered;
+#endif
 					}
 				}
 				
@@ -637,6 +670,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 	} // each map color
 	
 	painter->restore();
+	
+#ifdef DEBUG_RENDERING
+	qDebug("Rendered %s: %d, dropped: %d (by object/by config: %d/%d)",
+	       qPrintable(separation->getSpotColorName()),
+	       rendered, filtered_by_object + filtered_by_config,
+	       filtered_by_object, filtered_by_config);
+#endif
 }
 
 void MapRenderables::insertRenderablesOfObject(const Object* object)
