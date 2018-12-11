@@ -832,7 +832,8 @@ void PrintWidget::setPrintArea(const QRectF& area)
 			{
 				// No longer single page.
 				block << policy_combo;
-				policy_combo->setCurrentIndex(policy_combo->findData(CustomArea));
+				policy = CustomArea;
+				policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				center_check->setChecked(false);
 				setOverlapEditEnabled(true);
 			}
