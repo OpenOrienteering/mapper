@@ -790,34 +790,6 @@ qreal PainterConfig::proxyPenWidth(const QRectF& extent)
 
 bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const
 {
-	if (current_clip != clip_path)
-	{
-		if (initial_clip.isEmpty())
-		{
-			if (clip_path)
-				painter->setClipPath(*clip_path, Qt::ReplaceClip);
-			else
-				painter->setClipPath(initial_clip, Qt::NoClip);
-		}
-		else if (clip_path)
-		{
-			/* This used to be a workaround for a Qt::IntersectClip problem
-			 * with Windows and Mac printers (cf. [tickets:#196]), and 
-			 * with Linux PDF export (cf. [tickets:#225]).
-			 * But it seems to be faster in general.
-			 */
-			QPainterPath merged = initial_clip.intersected(*clip_path);
-			if (merged.isEmpty())
-				return false; // outside of initial clip
-			painter->setClipPath(merged, Qt::ReplaceClip);
-		}
-		else
-		{
-			painter->setClipPath(initial_clip, Qt::ReplaceClip);
-		}
-		current_clip = clip_path;
-	}
-	
 	qreal actual_pen_width = pen_width;
 	
 	if (color_priority < 0 && color_priority != MapColor::Registration)
@@ -871,6 +843,34 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 	}
 	
 	painter->setOpacity(config.opacity);
+	
+	if (current_clip != clip_path)
+	{
+		if (initial_clip.isEmpty())
+		{
+			if (clip_path)
+				painter->setClipPath(*clip_path, Qt::ReplaceClip);
+			else
+				painter->setClipPath(initial_clip, Qt::NoClip);
+		}
+		else if (clip_path)
+		{
+			/* This used to be a workaround for a Qt::IntersectClip problem
+			 * with Windows and Mac printers (cf. [tickets:#196]), and 
+			 * with Linux PDF export (cf. [tickets:#225]).
+			 * But it seems to be faster in general.
+			 */
+			QPainterPath merged = initial_clip.intersected(*clip_path);
+			if (merged.isEmpty())
+				return false; // outside of initial clip
+			painter->setClipPath(merged, Qt::ReplaceClip);
+		}
+		else
+		{
+			painter->setClipPath(initial_clip, Qt::ReplaceClip);
+		}
+		current_clip = clip_path;
+	}
 	
 	return true;
 }
