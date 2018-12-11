@@ -832,7 +832,11 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 			painter->setRenderHint(QPainter::Antialiasing, true);
 		}
 		
-		actual_pen_width /= config.scaling;
+		if (mode == PainterConfig::PenOnly)
+		{
+			// Pen width came in pixel, not mm
+			actual_pen_width /= config.scaling;
+		}
 	}
 	else if (config.testFlag(RenderConfig::DisableAntialiasing))
 	{
