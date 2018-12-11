@@ -61,12 +61,12 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">OpenOrienteering Arancione</translation>
+            <translation>OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished">Nero 25% (Grigio)</translation>
+            <translation>Nero 25% (Grigio)</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
@@ -86,12 +86,12 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Bianco opaco sopra il verde</translation>
-        </message>
+            <translation>Bianco opaco sopra il Verde</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Verde opaco 20%</translation>
+            <translation>Verde opaco 20%</translation>
         </message>
         <message>
             <source>Opaque Green 50%</source>
@@ -106,7 +106,7 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Verde opaco</translation>
+            <translation>Verde opaco</translation>
         </message>
         <message>
             <source>Green 50%</source>
@@ -156,8 +156,8 @@
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished">Trattino di pendenza per curve di livello</translation>
-        </message>
+            <translation>Trattino di pendenza, curva di livello</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
@@ -166,18 +166,18 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Curva di livello maestra</translation>
+            <translation>Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ogni quinta curva di livello deve essere disegnata con una linea più spessa. Questo è un aiuto per una veloce valutazione della differenza di quota e della forma generale del terreno. Una curva maestra può essere rappresentata come una curva di livello ordinaria in aree con molti dettagli. Per piccole collinette e depressione non vengono di solito usate le curve maestre.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Quota della curva di livello</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
