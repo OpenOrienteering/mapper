@@ -1085,7 +1085,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (szétszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
         </message>
         <message>
             <source>Rough open land</source>

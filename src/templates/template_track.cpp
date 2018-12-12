@@ -402,6 +402,13 @@ int TemplateTrack::getTemplateBoundingBoxPixelBorder()
 	return 10e8;
 }
 
+
+bool TemplateTrack::hasAlpha() const
+{
+	return false;
+}
+
+
 Template* TemplateTrack::duplicateImpl() const
 {
 	TemplateTrack* copy = new TemplateTrack(template_path, map);

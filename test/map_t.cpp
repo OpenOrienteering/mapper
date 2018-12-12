@@ -31,6 +31,7 @@
 #include "core/map_color.h"
 #include "core/map_printer.h" // IWYU pragma: keep
 #include "core/map_view.h"
+#include "core/objects/object.h"
 #include "core/objects/symbol_rule_set.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -216,6 +217,77 @@ void MapTest::importTest()
 	auto symbol_map = map.importMap(imported_map, Map::CompleteImport, nullptr, -1, false);
 	QCOMPARE(map.getNumObjects(), original_size + imported_map.getNumObjects());
 	QCOMPARE(symbol_map.size(), imported_map.getNumSymbols());
+}
+
+
+
+void MapTest::hasAlpha()
+{
+	Map map;
+	MapView view{ &map };
+	QVERIFY(map.loadFrom(examples_dir.absoluteFilePath(QStringLiteral("complete map.omap")), &view));
+	QVERIFY(!map.hasAlpha());
+	
+	QVERIFY(map.getNumParts() > 0);
+	QVERIFY(map.getPart(0)->getNumObjects() > 0);
+	
+	auto* symbol = [&map]() -> Symbol* {
+	               auto* symbol = map.getPart(0)->getObject(0)->getSymbol();
+	               return symbol ? map.getSymbol(map.findSymbolIndex(symbol)) : nullptr;
+	}();
+	QVERIFY(symbol);
+	
+	auto* color = [&map, symbol]() -> MapColor* {
+	              auto* color = symbol->guessDominantColor();
+	              return color ? map.getMapColor(map.findColorIndex(color)) : nullptr;
+	}();
+	QVERIFY(color);
+	
+	color->setOpacity(0.5);
+	QVERIFY(map.hasAlpha());
+	
+	color->setOpacity(0);
+	QVERIFY(!map.hasAlpha());
+	
+	color->setOpacity(0.5);
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		if (map.getSymbol(i)->containsColor(color))
+			map.getSymbol(i)->setHidden(true);
+	}
+	QVERIFY(!map.hasAlpha());
+	
+	view.setAllTemplatesHidden(false);
+	view.setGridVisible(false);
+	QVERIFY(!view.hasAlpha());
+	
+	view.setMapVisibility({1, true});
+	QVERIFY(!view.hasAlpha());
+	
+	view.setMapVisibility({1, false});
+	QVERIFY(!view.hasAlpha());
+	
+	view.setMapVisibility({0.5, false});
+	QVERIFY(!view.hasAlpha());
+	
+	view.setMapVisibility({0.5, true});
+	QVERIFY(view.hasAlpha());
+	
+	view.setAllTemplatesHidden(true);
+	QVERIFY(!view.hasAlpha());
+	
+	view.setGridVisible(true);
+	MapGrid grid;
+	
+	grid.setColor(qRgb(0, 0, 0));
+	map.setGrid(grid);
+	QVERIFY(!grid.hasAlpha());
+	QVERIFY(!view.hasAlpha());
+	
+	grid.setColor(qRgba(0, 0, 0, 128));
+	map.setGrid(grid);
+	QVERIFY(grid.hasAlpha());
+	QVERIFY(view.hasAlpha());
 }
 
 

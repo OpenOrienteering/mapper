@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -51,6 +51,7 @@ namespace OpenOrienteering {
 
 class Map;
 class MapView;
+class Template;
 
 
 /** The MapPrinterPageFormat is a complete description of page properties. */
@@ -267,6 +268,38 @@ public:
 	/** Returns a list of vertical page positions on the map. */
 	const std::vector< qreal >& verticalPagePositions() const;
 	
+	
+	/**
+	 * Returns true when the Qt print engine may rasterize non-opaque data.
+	 * 
+	 * Drawing non-opaque data might cause rasterization with some Qt print
+	 * engines. This function is used to detect configurations where such
+	 * rasterization may happen. The result can be comined with tests for the
+	 * data actually having alpha.
+	 */
+	bool engineMayRasterize() const;
+	
+	/**
+	 * Returns true when the Qt print engine will have to rasterize the map.
+	 * 
+	 * Drawing a map with non-opaque colors will cause rasterization with some
+	 * Qt print engines. This functions signals when this rasterization must
+	 * take place (i.e. even when we try to avoid rasterization for templates
+	 * and grid).
+	 */
+	bool engineWillRasterize() const;
+	
+	/**
+	 * Returns true when the template will be printed non-opaquely.
+	 * 
+	 * Drawing non-opaque templates might cause rasterization with some Qt
+	 * print engines. This function is used to detect this case. It considers
+	 * the template's state and hasAlpha() property as well the view's
+	 * visibility configuration for the given template.
+	 */
+	bool hasAlpha(const Template* temp) const;
+	
+	
 	/** Creates a printer configured according to the current settings. */
 	std::unique_ptr<QPrinter> makePrinter() const;
 	
@@ -292,10 +325,10 @@ public:
 	 *  Otherwise, drawPage() may allocate a buffer with this map printer's
 	 *  resolution and size. Parameter units_per_inch has no influence on this
 	 *  buffer but refers to the logical coordinates of device_painter. */
-	void drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer = nullptr) const;
+	void drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer = nullptr) const;
 	
 	/** Draws the separations as distinct pages to the printer. */
-	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const;
+	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;
 	
 	/** Returns the current configuration. */
 	const MapPrinterConfig& config() const;

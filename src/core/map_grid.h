@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2015, 2017, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,6 +40,9 @@ class MapCoordF;
  * 
  * Each map has an instance of this class which can be retrieved with map->getGrid().
  * The grid's visibility is defined per MapView.
+ * 
+ * Grid lines are thin. They are either drawn using a cosmetic pen (usually on
+ * screen) or with 0.1 mm (usually on paper).
  */
 class MapGrid
 {
@@ -84,10 +87,11 @@ public:
 	 * @param bounding_box Bounding box of the area to draw the grid for, in
 	 *     map coordinates.
 	 * @param map Map to draw the grid for.
-	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
-	 *                  otherwise uses a 0.1 mm wide pen.
+	 * @param scale_adjustment If zero, uses a cosmetic pen (one pixel wide),
+	 *        otherwise this is the divisor used to create a 0.1 mm wide pen.
 	 */
-	void draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool on_screen) const;
+	void draw(QPainter* painter, const QRectF& bounding_box, Map* map, qreal scale_adjustment = 0) const;
+	void draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool) const = delete;
 	
 	/**
 	 * Calculates the "final" parameters with the following properties:
@@ -109,6 +113,11 @@ public:
 	inline void setSnappingEnabled(bool enable) {snapping_enabled = enable;}
 	inline QRgb getColor() const {return color;}
 	inline void setColor(QRgb color) {this->color = color;}
+	
+	/**
+	 * Returns true if the grid is not opaque.
+	 */
+	bool hasAlpha() const;
 	
 	inline DisplayMode getDisplayMode() const {return display;}
 	inline void setDisplayMode(DisplayMode mode) {display = mode;}

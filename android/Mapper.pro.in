@@ -41,6 +41,11 @@ CONFIG(debug, release|debug) {
 }
 
 
+versionAtLeast(QT_VERSION, 5.12) {
+  system(sed -i -e $$shell_quote(s/minSdkVersion=\"[0-9]*\"/minSdkVersion=\"16\"/) "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
+}
+
+
 # Additional configuration from packaging/custom_install.cmake
 include(mapper_libs.pri)
 

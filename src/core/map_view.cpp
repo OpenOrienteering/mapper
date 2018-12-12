@@ -63,6 +63,16 @@ namespace literal
 
 namespace OpenOrienteering {
 
+// ### TemplateVisibility ###
+
+bool TemplateVisibility::hasAlpha() const
+{
+	return visible && opacity > 0 && opacity < 1;
+}
+
+
+// ### MapView ###
+
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
@@ -463,6 +473,28 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 		overprinting_simulation_enabled = enabled;
 		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
 	}
+}
+
+
+
+bool MapView::hasAlpha() const
+{
+	auto map_visibility = effectiveMapVisibility();
+	if (map_visibility.hasAlpha() || map->hasAlpha())
+		return true;
+	
+	if (grid_visible && map->getGrid().hasAlpha())
+		return true;
+		
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		auto temp = map->getTemplate(i);
+		auto visibility = getTemplateVisibility(temp);
+		if (visibility.hasAlpha() || temp->hasAlpha())
+			return true;
+	}
+	
+	return false;
 }
 
 
