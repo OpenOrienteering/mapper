@@ -178,6 +178,13 @@ Template* TemplateMap::duplicateImpl() const
 	return copy;
 }
 
+
+bool TemplateMap::hasAlpha() const
+{
+	return template_map && template_map->hasAlpha();
+}
+
+
 const Map* TemplateMap::templateMap() const
 {
 	return template_map.get();

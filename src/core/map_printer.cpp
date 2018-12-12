@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2016  Kai Pastor
+ *    Copyright 2012-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -60,8 +60,12 @@
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
 
-namespace literal
-{
+namespace OpenOrienteering {
+
+namespace {
+
+namespace literal {
+
 	static const QLatin1String scale("scale");
 	static const QLatin1String resolution("resolution");
 	static const QLatin1String templates_visible("templates_visible");
@@ -86,11 +90,12 @@ namespace literal
 	static const QLatin1String print_area("print_area");
 	static const QLatin1String center_area("center_area");
 	static const QLatin1String single_page("single_page");
-}
+	
+}  // namespace literal
 
 
+}  // namespace
 
-namespace OpenOrienteering {
 
 // #### MapPrinterPageFormat ###
 
@@ -733,6 +738,77 @@ bool MapPrinter::isOutputEmpty() const
 	);
 }
 
+
+bool MapPrinter::engineMayRasterize() const
+{
+#ifdef Q_OS_WIN
+	/*
+	 * For Windows, non-opaque drawing to QWin32PrintEngine will trigger internal
+	 * rasterization in Qt (implemented in QAlphaPaintEngine), in order to do care
+	 * for the printing system's incapability to handle alpha. However, this is not
+	 * desired in our map printing where raster output is an explicit option.
+	 * 
+	 * QAlphaPaintEngines rasterizes
+	 * - with the device's logical resolution but at least 300 dpi,
+	 *   cf. QAlphaPaintEnginePrivate::drawAlphaImage(const QRectF &rect)
+	 * - in tiles of 2048x2048 pixels,
+	 *   cf. QAlphaPaintEnginePrivate::drawAlphaImage(const QRectF &rect)
+	 * - when the painter is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 * - when the pen is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 * - when the brush is not opaque,
+	 *   cf. QAlphaPaintEngine::updateState(const QPaintEngineState &state)
+	 */
+	return !rasterModeSelected()
+	       && target != pdfTarget()
+	       && target != imageTarget();
+#else
+	/*
+	 * For macOS (Cocoa), QMacPrintEngine does not rasterize.
+	 * 
+	 * For Linux (CUPS), QCupsPrintEngine is based on QPdfEngine
+	 * (via QPdfPrintEngine) which does not rasterize. (However, the print
+	 * queue may rasterize, even when *spooling* to a PDF file. The vector
+	 * output is preserved when redirecting the output to a file in
+	 * Print... > Preview... > Print > Output file [...].)
+	 */
+	return false;
+#endif
+}
+
+bool MapPrinter::engineWillRasterize() const
+{
+#ifdef Q_OS_WIN
+	if (!engineMayRasterize())
+		return false;
+	
+	if (!view)
+		return map.hasAlpha();
+	
+	const auto visibility = view->effectiveMapVisibility();
+	return visibility.hasAlpha()
+	       || (visibility.visible && map.hasAlpha());
+#else
+	Q_ASSERT(!engineMayRasterize());
+	return false;
+#endif
+}
+
+bool MapPrinter::hasAlpha(const Template* temp) const
+{
+	if (temp->getTemplateState() != Template::Loaded)
+		return false;
+	
+	if (!view)
+		return temp->hasAlpha();
+	
+	const auto visibility = view->getTemplateVisibility(temp);
+	return visibility.hasAlpha()
+	       || (visibility.visible && temp->hasAlpha());
+}
+
+
 void MapPrinter::updatePageBreaks()
 {
 	Q_ASSERT(print_area.left() <= print_area.right());
@@ -816,48 +892,44 @@ void MapPrinter::takePrinterSettings(const QPrinter* printer)
 	}
 }
 
-// local
-void drawBuffer(QPainter* device_painter, const QImage* page_buffer, qreal pixel2units)
-{
-	Q_ASSERT(page_buffer);
-	
-	device_painter->save();
-	device_painter->scale(pixel2units, pixel2units);
-	device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-	device_painter->drawImage(0, 0, *page_buffer);
-	device_painter->restore();
-}
 
-void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const QRectF& page_extent, bool white_background, QImage* page_buffer) const
+void MapPrinter::drawPage(QPainter* device_painter, const QRectF& page_extent, QImage* page_buffer) const
 {
-	device_painter->save();
-	
-	device_painter->setRenderHint(QPainter::Antialiasing);
-	device_painter->setRenderHint(QPainter::SmoothPixmapTransform);
-	
-	QPainter* painter = device_painter;
-	
 	// Logical units per mm
-	qreal units_per_mm = units_per_inch / 25.4;
-	// Image pixels per mm
-	qreal pixel_per_mm = options.resolution / 25.4;
-	// Scaling from pixels to logical units
-	qreal pixel2units = units_per_inch / options.resolution;
-	// The current painter's resolution
-	qreal scale = units_per_mm;
+	const qreal units_per_mm = options.resolution / 25.4;
+	
+	const auto saved_hints  = device_painter->renderHints();
+	const auto render_hints = saved_hints
+	                          | QPainter::Antialiasing
+	                          | QPainter::SmoothPixmapTransform;
+	
+	// Determine transformation and clipping for page extent and region
+	const auto page_extent_transform = [this, units_per_mm, page_extent]() {
+		// Translate for top left page margin 
+		auto transform = QTransform::fromScale(units_per_mm, units_per_mm);
+		transform.translate(page_format.page_rect.left(), page_format.page_rect.top());
+		// Convert native map scale to print scale
+		transform.scale(scale_adjustment, scale_adjustment);
+		// Translate and clip for margins and print area
+		transform.translate(-page_extent.left(), -page_extent.top());
+		return transform;
+	}();
+	
+	const auto page_region_used = page_extent.intersected(print_area);
+	
 	
 	/*
 	 * Analyse need for page buffer
 	 * 
-	 * Painting raster images with opacity is not supported on print devices.
-	 * This can only be solved by merging the images before sending them to
+	 * Painting with opacity is not supported on some print devices.
+	 * This can only be solved by merging raster images before sending them to
 	 * the printer. For the map itself, this may result in loss of sharpness
 	 * and increase in data volume.
 	 * 
-	 * In vector mode, a page buffer (raster image) is used to collect background
-	 * templates and raster foreground templates. After this buffer is sent to
-	 * to the printer, map, grid, and
-	 * non-raster foreground templates are drawn on top of it.
+	 * In vector mode, a page buffer (raster image) is used to collect
+	 * background templates and even lower foreground templates until only
+	 * opaque templates are left in the foreground. Map, grid, and the remaining
+	 * foreground templates are drawn on top of it.
 	 * 
 	 * In raster mode, all map features are drawn to in regular order to
 	 * temporary images first.
@@ -865,45 +937,41 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 	 * When the target is an image, use the temporary image to enforce the given
 	 * resolution.
 	 */
-	bool use_buffer_for_map = (options.mode == MapPrinterOptions::Raster || target == imageTarget());
-	bool use_buffer_for_background = use_buffer_for_map && options.show_templates;
-	bool use_buffer_for_foreground = use_buffer_for_map && options.show_templates;
-	if (view && options.show_templates)
+	const bool use_buffer_for_map = rasterModeSelected() || target == imageTarget() || engineWillRasterize();
+	bool use_page_buffer = use_buffer_for_map;
+	
+	auto first_front_template = map.getFirstFrontTemplate();
+	if (options.show_templates && engineMayRasterize())
 	{
-		if (!use_buffer_for_background)
+		// When we don't use a buffer for the map, i.e. when we draw in vector mode,
+		// we may need to put non-opaque foreground templates to the background
+		// in order to avoid rasterization 
+		if (!use_buffer_for_map)
 		{
-			for (int i = 0; i < map.getFirstFrontTemplate() && !use_buffer_for_background; ++i)
+			first_front_template = map.getNumTemplates();
+			while (first_front_template > map.getFirstFrontTemplate()
+			       && !hasAlpha(map.getTemplate(first_front_template-1)))
 			{
-				if (map.getTemplate(i)->isRasterGraphics())
-				{
-					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_background = visibility.visible && visibility.opacity < 1.0f;
-				}
+				--first_front_template;
 			}
 		}
-		if (!use_buffer_for_foreground)
+		
+		for (int i = 0; i < first_front_template && !use_page_buffer; ++i)
 		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates() && !use_buffer_for_foreground; ++i)
-			{
-				if (map.getTemplate(i)->isRasterGraphics())
-				{
-					auto visibility = view->getTemplateVisibility(map.getTemplate(i));
-					use_buffer_for_foreground = visibility.visible && visibility.opacity < 1.0f;
-				}
-			}
+			use_page_buffer = hasAlpha(map.getTemplate(i));
 		}
 	}
 	
-	// Prepare buffer if required
-	bool use_page_buffer = use_buffer_for_map ||
-	                       use_buffer_for_background ||
-	                       use_buffer_for_foreground;
-	QImage scoped_buffer;
+	/*
+	 * Use a local "page painter", redirected to a local buffer if needed.
+	 */
+	auto* page_painter = device_painter;
+	QImage local_page_buffer;
+	QPainter local_page_painter;
 	if (use_page_buffer && !page_buffer)
 	{
-		scale = pixel_per_mm;
-		int w = qCeil(page_format.paper_dimensions.width() * scale);
-		int h = qCeil(page_format.paper_dimensions.height() * scale);
+		int w = qCeil(page_format.paper_dimensions.width() * units_per_mm);
+		int h = qCeil(page_format.paper_dimensions.height() * units_per_mm);
 #if defined (Q_OS_MACOS)
 		if (device_painter->device()->physicalDpiX() == 0)
 		{
@@ -912,113 +980,86 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 			// the corresponding QPaintEngine must handle the resolution mapping"
 			// which doesn't seem to happen here.
 			qreal corr = device_painter->device()->logicalDpiX() / 72.0;
-			w = qCeil(page_format.paper_dimensions.width() * scale * corr);
-			h = qCeil(page_format.paper_dimensions.height() * scale * corr);
+			w = qCeil(page_format.paper_dimensions.width() * units_per_mm * corr);
+			h = qCeil(page_format.paper_dimensions.height() * units_per_mm * corr);
 		}
 #endif
 		
-		scoped_buffer = QImage(w, h, QImage::Format_RGB32);
-		if (scoped_buffer.isNull())
+		local_page_buffer = QImage(w, h, QImage::Format_RGB32);
+		if (local_page_buffer.isNull())
 		{
 			// Allocation failed
-			device_painter->restore();
 			device_painter->end(); // Signal error
 			return;
 		}
+		local_page_buffer.fill(QColor(Qt::white));
+		local_page_painter.begin(&local_page_buffer);
 		
-		page_buffer = &scoped_buffer;
-		painter = new QPainter(page_buffer);
-		painter->setRenderHints(device_painter->renderHints());
+		page_buffer = &local_page_buffer;
+		page_painter = &local_page_painter;
 	}
-	
-	/*
-	 * Prepare the common background
-	 */
-	if (use_page_buffer)
-	{
-		page_buffer->fill(QColor(Qt::white));
-	}
-	else if (white_background)
-	{
-		painter->fillRect(QRect(0, 0, painter->device()->width(), painter->device()->height()), Qt::white);
-	}
-	
-	/*
-	 * One-time setup of transformation and clipping
-	 */
-	// Translate for top left page margin 
-	painter->scale(scale, scale);
-	painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
-	
-	// Convert native map scale to print scale
-	if (scale_adjustment != 1.0)
-	{
-		scale *= scale_adjustment;
-		painter->scale(scale_adjustment, scale_adjustment);
-	}
-	
-	// Translate and clip for margins and print area
-	painter->translate(-page_extent.left(), -page_extent.top());
-	
-	QTransform transform = painter->transform();
-	
-	QRectF page_region_used(page_extent.intersected(print_area));
-	painter->setClipRect(page_region_used, Qt::ReplaceClip);
 	
 	/*
 	 * Draw templates in the background
 	 */
 	if (options.show_templates)
 	{
-		map.drawTemplates(painter, page_region_used, 0, map.getFirstFrontTemplate() - 1, view, false);
-		if (vectorModeSelected() && use_buffer_for_foreground)
-		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
-			{
-				if (map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(painter, page_region_used, i, i, view, false);
-			}
-		}
+		// This is the first output, so it can be drawn directly to page_painter.
+		page_painter->save();
+		
+		page_painter->setRenderHints(render_hints);
+		page_painter->setTransform(page_extent_transform, /*combine*/ true);
+		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
+		map.drawTemplates(page_painter, page_region_used, 0, first_front_template - 1, view, false);
+		
+		page_painter->restore();
 	}
 	
-	if (use_buffer_for_background && !use_buffer_for_map)
+	if (local_page_painter.isActive() && !use_buffer_for_map)
 	{
 		// Flush the buffer, reset painter
-		delete painter;
-		drawBuffer(device_painter, page_buffer, pixel2units);
+		local_page_painter.end();
 		
-		painter = device_painter;
-		painter->setTransform(transform);
-		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter->drawImage(0, 0, local_page_buffer);
+		
+		page_painter = device_painter;
 	}
+	
+	QImage local_buffer;
 	
 	/*
 	 * Draw the map
 	 */
 	if (!view || view->effectiveMapVisibility().visible)
 	{
-		QImage map_buffer;
-		QPainter* map_painter = painter;
+		QPainter* map_painter = page_painter;
+		
+		QPainter map_buffer_painter;
 		if (use_buffer_for_map)
 		{
 			// Draw map into a temporary buffer first which is printed with the map's opacity later.
 			// This prevents artifacts with overlapping objects.
-			if (painter == device_painter)
+			local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
+			if (local_buffer.isNull())
 			{
-				map_buffer = *page_buffer; // Use existing buffer
+				// Allocation failed
+				device_painter->end(); // Signal error
+				return;
 			}
-			else
-			{
-				map_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
-			}
-			map_buffer.fill(QColor(Qt::transparent));
-			
-			map_painter = new QPainter(&map_buffer);
-			map_painter->setRenderHints(painter->renderHints());
-			map_painter->setTransform(painter->transform());
+			local_buffer.fill(QColor(Qt::transparent));
+			map_buffer_painter.begin(&local_buffer);
+			map_painter = &map_buffer_painter;
 		}
 		
-		RenderConfig config = { map, page_region_used, scale, RenderConfig::NoOptions, 1.0 };
+		page_painter->save();  // Modified via map_painter, or when drawing the map_buffer
+		
+		map_painter->setRenderHints(render_hints);
+		map_painter->setTransform(page_extent_transform, /*combine*/ true);
+		map_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
+		RenderConfig config = { map, page_region_used, units_per_mm * scale_adjustment, RenderConfig::NoOptions, 1.0 };
 		
 		if (rasterModeSelected() && options.simulate_overprinting)
 		{
@@ -1026,76 +1067,123 @@ void MapPrinter::drawPage(QPainter* device_painter, float units_per_inch, const 
 		}
 		else
 		{
-			if (vectorModeSelected() && view)
+			if (view && !map_buffer_painter.isActive())
 				config.opacity = view->effectiveMapVisibility().opacity;
 		
 			map.draw(map_painter, config);
 		}
 			
-		if (map_painter != painter)
+		if (map_buffer_painter.isActive())
 		{
 			// Flush the buffer
-			delete map_painter;
-			map_painter = nullptr;
+			map_buffer_painter.end();
 			
-			// Print buffer with map opacity
-			painter->save();
-			painter->resetTransform();
+			// Draw buffer with map opacity
 			if (view)
-				painter->setOpacity(view->effectiveMapVisibility().opacity);
-			painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
-			painter->drawImage(0, 0, map_buffer);
-			painter->restore();
+				page_painter->setOpacity(view->effectiveMapVisibility().opacity);
+			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			page_painter->drawImage(0, 0, local_buffer);
 		}
+		
+		page_painter->restore();
 	}
 	
 	/*
 	 * Draw the grid
 	 */
 	if (options.show_grid)
-		map.drawGrid(painter, print_area, false); // Maybe replace by page_region_used?
+	{
+		page_painter->save();
+		
+		page_painter->setRenderHints(render_hints);
+		page_painter->setTransform(page_extent_transform, /*combine*/ true);
+		page_painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
+		const auto& map_grid = map.getGrid();
+		if (map_grid.hasAlpha() && !use_buffer_for_map && engineMayRasterize())
+		{
+			const auto rgba = map_grid.getColor();
+			const auto alpha = qAlpha(rgba);
+			const auto opaque = [alpha](auto component) {
+				return 255 - alpha * (255 - component) / 255;
+			};
+			auto grid_copy = map_grid;
+			grid_copy.setColor(qRgb(opaque(qRed(rgba)), opaque(qGreen(rgba)), opaque(qBlue(rgba))));
+			grid_copy.draw(page_painter, print_area, &map, scale_adjustment); // Maybe replace by page_region_used?
+		}
+		else
+		{
+			map_grid.draw(page_painter, print_area, &map, scale_adjustment); // Maybe replace by page_region_used?
+		}
+		
+		page_painter->restore();
+	}
 	
 	/*
 	 * Draw the foreground templates
 	 */
 	if (options.show_templates)
 	{
-		if (vectorModeSelected() && use_buffer_for_foreground)
+		QPainter* painter = page_painter;
+		
+		QPainter local_buffer_painter;
+		if (!vectorModeSelected() && use_buffer_for_map)
 		{
-			for (int i = map.getFirstFrontTemplate(); i < map.getNumTemplates(); ++i)
+			if (local_buffer.isNull())
 			{
-				if (!map.getTemplate(i)->isRasterGraphics())
-					map.drawTemplates(painter, page_region_used, i, i, view, false);
+				local_buffer = QImage(page_buffer->size(), QImage::Format_ARGB32_Premultiplied);
 			}
+			if (local_buffer.isNull())
+			{
+				// Allocation failed
+				device_painter->end(); // Signal error
+				return;
+			}
+			local_buffer.fill(QColor(Qt::transparent));
+			local_buffer_painter.begin(&local_buffer);
+			painter = &local_buffer_painter;
 		}
-		else
+		
+		page_painter->save();  // Modified via painter, or when drawing the local_buffer
+		
+		painter->setRenderHints(render_hints);
+		painter->setTransform(page_extent_transform, /*combine*/ true);
+		painter->setClipRect(page_region_used, Qt::ReplaceClip);
+		
+		map.drawTemplates(painter, page_region_used, first_front_template, map.getNumTemplates() - 1, view, false);
+		
+		if (local_buffer_painter.isActive())
 		{
-			if (use_buffer_for_foreground && !use_buffer_for_map)
-			{
-				page_buffer->fill(QColor(Qt::transparent));
-				painter = new QPainter(page_buffer);
-				painter->setRenderHints(device_painter->renderHints());
-				painter->setTransform(transform);
-				painter->setClipRect(page_region_used, Qt::ReplaceClip);
-			}
-			map.drawTemplates(painter, page_region_used, map.getFirstFrontTemplate(), map.getNumTemplates() - 1, view, false);
+			// Flush the buffer
+			local_buffer_painter.end();
+			
+			// Draw buffer with map opacity
+			page_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+			page_painter->drawImage(0, 0, local_buffer);
 		}
+		
+		page_painter->restore();
 	}
-
+	
+	// Release the second buffer's memory first: The following drawImage()
+	// needs memory to allocate a large QPixmap with QWin32PrintEngine.
+	local_buffer = {};
+	
 	/*
 	 * Cleanup: If a temporary buffer has been used, paint it on the device painter
 	 */
-	if (painter != device_painter)
+	if (local_page_painter.isActive())
 	{
-		delete painter;
-		painter = nullptr;
-		device_painter->resetTransform();
-		drawBuffer(device_painter, page_buffer, pixel2units);
+		local_page_painter.end();
+		
+		device_painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
+		device_painter->drawImage(0, 0, local_page_buffer);
 	}
-	device_painter->restore();
+	
+	device_painter->setRenderHints(saved_hints);
 }
 
-void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, float dpi, const QRectF& page_extent) const
+void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const
 {
 	Q_ASSERT(printer->colorMode() == QPrinter::GrayScale);
 	
@@ -1104,7 +1192,7 @@ void MapPrinter::drawSeparationPages(QPrinter* printer, QPainter* device_painter
 	device_painter->setRenderHint(QPainter::Antialiasing);
 	
 	// Translate for top left page margin 
-	qreal scale = dpi / 25.4; // Dots per mm
+	qreal scale = options.resolution / 25.4; // Dots per mm
 	device_painter->scale(scale, scale);
 	device_painter->translate(page_format.page_rect.left(), page_format.page_rect.top());
 	
@@ -1149,8 +1237,6 @@ bool MapPrinter::printMap(QPrinter* printer)
 	QSizeF extent_size = page_format.page_rect.size() / scale_adjustment;
 	QPainter painter(printer);
 	
-	auto resolution = float(options.resolution);
-	
 #if defined(Q_OS_WIN)
 	// Workaround for Wine
 	if (printer->resolution() == 0)
@@ -1158,42 +1244,14 @@ bool MapPrinter::printMap(QPrinter* printer)
 		return false;
 	}
 	
-	/* Non-opaque drawing of vector data to the raw printer will trigger
-	 * internal rasterization in Qt.
-	 */
-	auto engine_will_rasterize = [](const Map& map, const MapView* view, const MapPrinterOptions& options)->bool {
-		if (!view)
-			return false;
-		
-		if (options.mode != MapPrinterOptions::Raster)
-		{
-			auto visibility = view->effectiveMapVisibility();
-			if (visibility.visible && visibility.opacity < 1.0)
-				return true;
-		}
-			
-		for (int i = 0; i < map.getNumTemplates(); ++i)
-		{
-			auto temp = map.getTemplate(i);
-			if (temp->isRasterGraphics())
-				continue;
-			auto visibility = view->getTemplateVisibility(temp);
-			if (visibility.visible && visibility.opacity < 1.0)
-				return true;
-		}
-		
-		return false;
-	};
-
-	if (printer->paintEngine()->type() == QPaintEngine::Windows
-	    && !engine_will_rasterize(map, view, options) )
+	if (printer->paintEngine()->type() == QPaintEngine::Windows)
 	{
 		/* QWin32PrintEngine will (have to) do rounding when passing coordinates
 		 * to GDI, using the device's reported logical resolution.
 		 * We establish an MM_ISOTROPIC transformation from a higher resolution
 		 * to avoid the loss of precision due to this rounding.
-		 * However, output of rasterization produced by Qt fails when the
-		 * MM_ISOTROPIC transformation is active.
+		 * This transformation must only be used when we reliably avoid to
+		 * trigger rasterization in Qt (cf. engineMayRasterize etc.)
 		 */
 		
 		QWin32PrintEngine* engine = static_cast<QWin32PrintEngine*>(printer->printEngine());
@@ -1222,15 +1280,16 @@ bool MapPrinter::printMap(QPrinter* printer)
 			SetWindowExtEx(dc, hires_width, hires_height, nullptr);
 			SetViewportExtEx(dc, phys_width, phys_height, nullptr);
 			SetViewportOrgEx(dc, -phys_off_x, -phys_off_y, nullptr);
-			resolution *= ((double)hires_width / phys_width);
+			const auto hires_scale = static_cast<qreal>(hires_width) / phys_width;
+			painter.scale(hires_scale, hires_scale);
 		}
 	}
 	else if (printer->paintEngine()->type() == QPaintEngine::Picture)
 	{
 		// Preview: work around for offset, maybe related to QTBUG-5363
 		painter.translate(
-		    -page_format.page_rect.left()*resolution / 25.4,
-		    -page_format.page_rect.top()*resolution / 25.4   );
+		    -page_format.page_rect.left() * options.resolution / 25.4,
+		    -page_format.page_rect.top() * options.resolution / 25.4   );
 	}
 #endif
 	
@@ -1276,11 +1335,11 @@ bool MapPrinter::printMap(QPrinter* printer)
 			QRectF page_extent = QRectF(QPointF(hpos, vpos), extent_size);
 			if (separationsModeSelected())
 			{
-				drawSeparationPages(printer, &painter, resolution, page_extent);
+				drawSeparationPages(printer, &painter, page_extent);
 			}
 			else
 			{
-				drawPage(&painter, resolution, page_extent, false);
+				drawPage(&painter, page_extent);
 			}
 			
 			need_new_page = true;

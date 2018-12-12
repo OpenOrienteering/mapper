@@ -75,6 +75,7 @@ public:
     QRectF calculateTemplateBoundingBox() const override;
     int getTemplateBoundingBoxPixelBorder() override;
 	
+	bool hasAlpha() const override;
 	
 	/// Draws all tracks.
 	void drawTracks(QPainter* painter, bool on_screen) const;

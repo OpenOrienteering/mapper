@@ -288,10 +288,8 @@ public:
 	 * 
 	 * @param painter The QPainter used for drawing.
 	 * @param bounding_box Bounding box of area to draw, given in map coordinates.
-	 * @param on_screen If true, uses a cosmetic pen (one pixel wide),
-	 *                  otherwise uses a 0.1 mm wide pen.
 	 */
-	void drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen);
+	void drawGrid(QPainter* painter, const QRectF& bounding_box);
 	
 	/**
 	 * Draws the templates with indices first_template until last_template which
@@ -502,6 +500,11 @@ public:
 	
 	/** Returns true if the map contains spot colors. */
 	bool hasSpotColors() const;
+	
+	/**
+	 * Returns true if any visible object uses a non-opaque color.
+	 */
+	bool hasAlpha() const;
 	
 	
 	// Symbols
