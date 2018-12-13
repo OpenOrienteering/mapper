@@ -62,7 +62,9 @@
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
 #include "gui/util_gui.h"
+#ifdef QT_PRINTSUPPORT_LIB
 #include "printsupport/advanced_pdf_printer.h"
+#endif
 #include "templates/world_file.h"
 #include "util/transformation.h"
 #include "util/util.h"
@@ -291,6 +293,7 @@ void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, dou
 	
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
 	painter->setOpacity(opacity);
+#ifdef QT_PRINTSUPPORT_LIB
 	// QTBUG-70752: QPdfEngine fails to properly apply constant opacity on
 	// images. This can be worked around by setting a real brush.
 	// Fixed in Qt 5.12.0.
@@ -305,6 +308,7 @@ void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, dou
 		if (opacity < 1)
 			painter->setBrush(Qt::white);
 	}
+#endif
 	painter->drawImage(QPointF(-image.width() * 0.5, -image.height() * 0.5), image);
 	painter->setRenderHint(QPainter::SmoothPixmapTransform, false);
 }
