@@ -22,18 +22,22 @@
 
 #include <algorithm>
 #include <iterator>
+#include <numeric>  // IWYU pragma: keep
 #include <utility>
 
 #include <Qt>
 #include <QBrush>
 #include <QColor>
 #include <QImage>
+#include <QObject>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPen>
 #include <QRgb>
 #include <QTransform>
+#include <QVariant>
 
+#include "settings.h"
 #include "core/image_transparency_fixup.h"
 #include "core/map_color.h"
 #include "core/map.h"
@@ -41,8 +45,11 @@
 #include "core/symbols/symbol.h"
 #include "util/util.h"
 
-#if defined(Q_OS_ANDROID) && defined(QT_PRINTSUPPORT_LIB)
-static_assert(false, "This file needs to be modified for correct printing on Android");
+// IWYU pragma: no_forward_declare QRectF
+
+
+#ifndef DEBUG_RENDERING
+//#define DEBUG_RENDERING
 #endif
 
 
@@ -82,6 +89,25 @@ namespace OpenOrienteering {
 	
 #endif
 
+
+namespace {
+
+/**
+ * The minimum pen width or extent size of renderables to be drawn.
+ */
+static qreal min_renderable_size = 0;
+
+
+/**
+ * Apply the global settings to the local state.
+ */
+void applySettings()
+{
+	min_renderable_size = Settings::getInstance().getSetting(Settings::MapDisplay_MinRenderableSizePx).toReal();
+}
+
+
+}  // namespace
 
 
 // ### Renderable ###
@@ -232,16 +258,27 @@ void MapRenderables::ObjectDeleter::operator()(Object* object) const
 MapRenderables::MapRenderables(Map* map)
  : map(map)
 {
-	; // nothing
+	static auto const settings_connected = []() {
+		applySettings();
+		QObject::connect(&Settings::getInstance(), &Settings::settingsChanged, &applySettings);
+		return true;
+	}();
 }
 
 void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 {
 	// TODO: improve performance by using some spatial acceleration structure?
 	
-#ifdef Q_OS_ANDROID
-	const qreal min_dimension = 1.0/config.scaling;
+#ifdef DEBUG_RENDERING
+	auto filtered_by_object = 0;
+	auto filtered_by_config = 0;
+	auto rendered = 0;
 #endif
+	
+	auto const tiny_length = qMin(1.0, 4 * min_renderable_size) / config.scaling;
+	auto const is_tiny = [tiny_length](const QRectF& extent) {
+		return extent.width() < tiny_length && extent.height() < tiny_length;
+	};
 	
 	QPainterPath initial_clip = painter->clipPath();
 	const QPainterPath* current_clip = nullptr;
@@ -270,8 +307,22 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object.first->getExtent().intersects(config.bounding_box))
+			auto const & extent = object.first->getExtent();
+			if (config.testFlag(RenderConfig::Screen) && is_tiny(extent))
+			{
+#ifdef DEBUG_RENDERING
+				const auto & renderables = *object.second;
+				filtered_by_object +=
+				        std::accumulate(renderables.begin(), renderables.end(), 0,
+				                        [](int a, auto c) { return a + c.second.size(); });
+#endif
 				continue;
+			}
+			
+			if (!extent.intersects(config.bounding_box))
+			{
+				continue;
+			}
 			
 			for (const auto& renderables : *object.second)
 			{
@@ -285,20 +336,25 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 				}
 				QColor color = *map_color;
 				if (state.color_priority >= 0 && map_color->getOpacity() < 1)
+				{
 					color.setAlphaF(map_color->getOpacity());
+				}
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
-				    continue;
+				{	
+#ifdef DEBUG_RENDERING
+					filtered_by_config += renderables.second.size();
+#endif
+					continue;
+				}
 				
 				for (const auto renderable : renderables.second)
 				{
-#ifdef Q_OS_ANDROID
-					const QRectF& extent = renderable->getExtent();
-					if (extent.width() < min_dimension && extent.height() < min_dimension)
-						continue;
-#endif
 					if (renderable->intersects(config.bounding_box))
 					{
 						renderable->render(*painter, config);
+#ifdef DEBUG_RENDERING
+						++rendered;
+#endif
 					}
 				}
 				
@@ -309,6 +365,12 @@ void MapRenderables::draw(QPainter *painter, const RenderConfig &config) const
 	} // each map color
 	
 	painter->restore();
+	
+#ifdef DEBUG_RENDERING
+	qDebug("Rendered: %d, dropped: %d (by object/by config: %d/%d)",
+	       rendered, filtered_by_object + filtered_by_config,
+	       filtered_by_object, filtered_by_config);
+#endif
 }
 
 void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderConfig& config) const
@@ -409,6 +471,17 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 
 void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& config, const MapColor* separation, bool use_color) const
 {
+#ifdef DEBUG_RENDERING
+	auto filtered_by_object = 0;
+	auto filtered_by_config = 0;
+	auto rendered = 0;
+#endif
+	
+	auto const tiny_length = qMin(1.0, 4 * min_renderable_size) / config.scaling;
+	auto const is_tiny = [tiny_length](const QRectF& extent) {
+		return extent.width() < tiny_length && extent.height() < tiny_length;
+	};
+	
 	painter->save();
 	
 	const QPainterPath initial_clip(painter->clipPath());
@@ -527,8 +600,22 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 			if (symbol->isHidden())
 				continue;
 			
-			if (!object.first->getExtent().intersects(config.bounding_box))
+			auto const & extent = object.first->getExtent();
+			if (config.testFlag(RenderConfig::Screen) && is_tiny(extent))
+			{
+#ifdef DEBUG_RENDERING
+				const auto & renderables = *object.second;
+				filtered_by_object +=
+				        std::accumulate(renderables.begin(), renderables.end(), 0,
+				                        [](int a, auto c) { return a + c.second.size(); });
+#endif
 				continue;
+			}
+			
+			if (!extent.intersects(config.bounding_box))
+			{
+				continue;
+			}
 			
 			// For each pair of common rendering attributes and collection of renderables...
 			for (const auto& renderables : *object.second)
@@ -555,7 +642,12 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 				}
 				
 				if (!state.activate(painter, current_clip, config, color, initial_clip))
+				{	
+#ifdef DEBUG_RENDERING
+					filtered_by_config += renderables.second.size();
+#endif
 					continue;
+				}
 				
 				// For each renderable that uses the current painter configuration...
 				// Render the renderable
@@ -565,6 +657,9 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 					{
 						renderable->render(*painter, config);
 						drawing_started |= drawing;
+#ifdef DEBUG_RENDERING
+						++rendered;
+#endif
 					}
 				}
 				
@@ -575,6 +670,13 @@ void MapRenderables::drawColorSeparation(QPainter* painter, const RenderConfig& 
 	} // each map color
 	
 	painter->restore();
+	
+#ifdef DEBUG_RENDERING
+	qDebug("Rendered %s: %d, dropped: %d (by object/by config: %d/%d)",
+	       qPrintable(separation->getSpotColorName()),
+	       rendered, filtered_by_object + filtered_by_config,
+	       filtered_by_object, filtered_by_config);
+#endif
 }
 
 void MapRenderables::insertRenderablesOfObject(const Object* object)
@@ -659,8 +761,89 @@ namespace {
 	}
 }
 
+// static
+qreal PainterConfig::minSize()
+{
+	return min_renderable_size;
+}
+
+// static
+qreal PainterConfig::proxyPenWidth(const QRectF& extent)
+{
+	// The amount of color contributed to a pixel depends on the *area* covered
+	// by the output, so we must analyze the product of width and height.
+	// However, the returned ("proxy") value isn't exactly the square root but
+	// just a representative value which is balanced with the level of detail
+	// filtering on strokes having a real pen width.
+	auto const area_size = extent.width() * extent.height();
+	if (area_size <= 0.0625)
+		return 0.125;
+	else if (area_size <= 0.25)
+		return 0.25;
+	else if (area_size <= 1)
+		return 0.5;
+	else if (area_size <= 4)
+		return 1;
+	else 
+		return 0;
+}
+
 bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_clip, const RenderConfig& config, const QColor& color, const QPainterPath& initial_clip) const
 {
+	qreal actual_pen_width = pen_width;
+	
+	if (color_priority < 0 && color_priority != MapColor::Registration)
+	{
+		if (color_priority == MapColor::Reserved)
+			return false;
+		
+		if (!config.testFlag(RenderConfig::DisableAntialiasing))
+		{
+			// this is not undone here anywhere as it should apply to 
+			// all special symbols and these are always painted last
+			painter->setRenderHint(QPainter::Antialiasing, true);
+		}
+		
+		if (mode == PainterConfig::PenOnly)
+		{
+			// Pen width came in pixel, not mm
+			actual_pen_width /= config.scaling;
+		}
+	}
+	else if (config.testFlag(RenderConfig::DisableAntialiasing))
+	{
+		painter->setRenderHint(QPainter::Antialiasing, false);
+		painter->setRenderHint(QPainter::TextAntialiasing, false);
+	}
+	
+	QBrush brush(config.testFlag(RenderConfig::Highlighted) ? highlightedColor(color) : color);
+	if (mode == PainterConfig::PenOnly)
+	{
+		if (pen_width > 0)
+		{
+			auto const width_px = pen_width * config.scaling;
+			if (config.testFlag(RenderConfig::Screen) && width_px < minSize())
+				return false;
+			if (config.testFlag(RenderConfig::ForceMinSize) && width_px < 1)
+				actual_pen_width = 0.0; // Forces cosmetic pen
+		}
+		painter->setPen(QPen(brush, actual_pen_width));
+		painter->setBrush(QBrush(Qt::NoBrush));
+	}
+	else if (mode == PainterConfig::BrushOnly)
+	{
+		if (pen_width > 0)
+		{
+			auto const width_px = pen_width * config.scaling;
+			if (config.testFlag(RenderConfig::Screen) && width_px < minSize())
+				return false;
+		}
+		painter->setPen(QPen(Qt::NoPen));
+		painter->setBrush(brush);
+	}
+	
+	painter->setOpacity(config.opacity);
+	
 	if (current_clip != clip_path)
 	{
 		if (initial_clip.isEmpty())
@@ -688,56 +871,6 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 		}
 		current_clip = clip_path;
 	}
-	
-	qreal actual_pen_width = pen_width;
-	
-	if (color_priority < 0 && color_priority != MapColor::Registration)
-	{
-		if (color_priority == MapColor::Reserved)
-			return false;
-		
-		if (!config.testFlag(RenderConfig::DisableAntialiasing))
-		{
-			// this is not undone here anywhere as it should apply to 
-			// all special symbols and these are always painted last
-			painter->setRenderHint(QPainter::Antialiasing, true);
-		}
-		
-		actual_pen_width /= config.scaling;
-	}
-	else if (config.testFlag(RenderConfig::DisableAntialiasing))
-	{
-		painter->setRenderHint(QPainter::Antialiasing, false);
-		painter->setRenderHint(QPainter::TextAntialiasing, false);
-	}
-	
-	QBrush brush(config.testFlag(RenderConfig::Highlighted) ? highlightedColor(color) : color);
-	if (mode == PainterConfig::PenOnly)
-	{
-		if (pen_width > 0)
-		{
-			auto const width_px = pen_width * config.scaling;
-			if (config.testFlag(RenderConfig::Screen) && width_px < 0.125)
-				return false;
-			if (config.testFlag(RenderConfig::ForceMinSize) && width_px < 1)
-				actual_pen_width = 0.0; // Forces cosmetic pen
-		}
-		painter->setPen(QPen(brush, actual_pen_width));
-		painter->setBrush(QBrush(Qt::NoBrush));
-	}
-	else if (mode == PainterConfig::BrushOnly)
-	{
-		if (pen_width > 0)
-		{
-			auto const width_px = pen_width * config.scaling;
-			if (config.testFlag(RenderConfig::Screen) && width_px < 0.25)
-				return false;
-		}
-		painter->setPen(QPen(Qt::NoPen));
-		painter->setBrush(brush);
-	}
-	
-	painter->setOpacity(config.opacity);
 	
 	return true;
 }

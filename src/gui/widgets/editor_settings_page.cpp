@@ -20,11 +20,16 @@
 
 #include "editor_settings_page.h"
 
+#include <type_traits>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
 #include <QLabel>
+#include <QSlider>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QVariant>
@@ -36,6 +41,44 @@
 
 
 namespace OpenOrienteering {
+
+namespace LevelOfDetail {
+
+namespace {
+
+/// Minimum pixel sizes, ordered from minimum to maximum level of detail.
+static const qreal minimum_sizes[5] = { 0.5, 0.25, 0.125, 0.0625, 0 };
+
+}  // namespace
+
+/// Returns the maximum level of detail integer.
+/// (The minimum is zero.)
+int maxLevel()
+{
+	return int(std::extent<decltype(minimum_sizes)>::value) - 1;
+}
+
+/// Converts a minimum pixel size to a level of detail integer.
+int fromPixelSize(qreal min_size_px)
+{
+	int i = 0;
+	for (; i < maxLevel(); ++i)
+	{
+		if (min_size_px >= minimum_sizes[i])
+			return i;
+	}
+	return i;
+}
+
+/// Converts a level of detail integer to a minimum pixel size;
+qreal toPixelSize(int level_of_detail)
+{
+	return minimum_sizes[level_of_detail];
+}
+
+}  // namespace LevelOfDetail
+
+
 
 EditorSettingsPage::EditorSettingsPage(QWidget* parent)
  : SettingsPage(parent)
@@ -52,6 +95,12 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	text_antialiasing = new QCheckBox(tr("High quality text display in map (antialiasing), slow"), this);
 	text_antialiasing->setToolTip(tr("Antialiasing makes the map look much better, but also slows down the map display"));
 	layout->addRow(text_antialiasing);
+	
+	detail_slider = new QSlider(Qt::Horizontal);
+	detail_slider->setRange(0, LevelOfDetail::maxLevel());
+	detail_slider->setTickInterval(1);
+	detail_slider->setTickPosition(QSlider::TicksAbove);
+	layout->addRow(tr("Level of detail"), detail_slider);
 	
 	tolerance = Util::SpinBox::create(0, 50, tr("mm", "millimeters"));
 	layout->addRow(tr("Click tolerance:"), tolerance);
@@ -120,6 +169,7 @@ void EditorSettingsPage::apply()
 	setSetting(Settings::SymbolWidget_IconSizeMM, icon_size->value());
 	setSetting(Settings::MapDisplay_Antialiasing, antialiasing->isChecked());
 	setSetting(Settings::MapDisplay_TextAntialiasing, text_antialiasing->isChecked());
+	setSetting(Settings::MapDisplay_MinRenderableSizePx, LevelOfDetail::toPixelSize(detail_slider->value()));
 	setSetting(Settings::MapEditor_ClickToleranceMM, tolerance->value());
 	setSetting(Settings::MapEditor_SnapDistanceMM, snap_distance->value());
 	setSetting(Settings::MapEditor_FixedAngleStepping, fixed_angle_stepping->value());
@@ -144,6 +194,7 @@ void EditorSettingsPage::updateWidgets()
 	antialiasing->setChecked(getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setEnabled(antialiasing->isChecked());
 	text_antialiasing->setChecked(getSetting(Settings::MapDisplay_TextAntialiasing).toBool());
+	detail_slider->setValue(LevelOfDetail::fromPixelSize(getSetting(Settings::MapDisplay_MinRenderableSizePx).toReal()));
 	tolerance->setValue(getSetting(Settings::MapEditor_ClickToleranceMM).toInt());
 	snap_distance->setValue(getSetting(Settings::MapEditor_SnapDistanceMM).toInt());
 	fixed_angle_stepping->setValue(getSetting(Settings::MapEditor_FixedAngleStepping).toInt());

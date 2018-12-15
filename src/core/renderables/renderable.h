@@ -188,6 +188,34 @@ public:
 	const QPainterPath* clip_path;  ///< A clip_path which may be shared by several Renderables
 	
 	/**
+	 * Returns the minimum renderable size in pixels that should be drawn.
+	 * 
+	 * When renderables are significantly smaller than a single pixel, the
+	 * indidual renderable doesn't contribute a lot to the output, but still
+	 * consumes time and resources for drawing. The value of minSize() is used
+	 * by acticate() to decide when to return false, i.e. prevending a whole
+	 * set of similar renderables to be drawn.
+	 * 
+	 * This only takes effect when Option::Screen is set and
+	 * Option::ForceMinSize is not set.
+	 */
+	static qreal minSize();
+	
+	/**
+	 * Returns a representative pen width which shall be set on BrushOnly
+	 * rendererables in order to support for level-of-detail filtering.
+	 * 
+	 * This function is primarily meant to limit the drawing of pattern fills
+	 * which can generate a large number of tiny renderables. In class
+	 * SharedRenderables, renderables are grouped by configuration. So this
+	 * functions needs to return a low number of different values. For extents
+	 * exceeding a certain circumfence, this functions returns zero. This
+	 * special value signals that these renderables shall always be drawn (cf.
+	 * the special meaning of zero for pens, i.e. cosmetic lines).
+	 */
+	static qreal proxyPenWidth(const QRectF& extent);
+	
+	/**
 	 * Activates the configuration on the given painter.
 	 * 
 	 * If this method returns false, the corresponding renderables shall not be drawn.

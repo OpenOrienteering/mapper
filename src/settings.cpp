@@ -111,6 +111,8 @@ Settings::Settings()
 		ppi = QApplication::primaryScreen()->logicalDotsPerInch();
 	
 	registerSetting(MapDisplay_TextAntialiasing, "MapDisplay/text_antialiasing", false);
+	registerSetting(MapDisplay_MinRenderableSizePx, "MapDisplay/min_renderable_size_px", 0.125);
+	
 	registerSetting(MapEditor_ClickToleranceMM, "MapEditor/click_tolerance_mm", map_editor_click_tolerance_default);
 	registerSetting(MapEditor_SnapDistanceMM, "MapEditor/snap_distance_mm", map_editor_snap_distance_default);
 	registerSetting(MapEditor_FixedAngleStepping, "MapEditor/fixed_angle_stepping", 15);
