@@ -285,6 +285,86 @@ namespace {
 		return srs_wkt;
 	}
 	
+	class AverageLatLon
+	{
+	private:
+		double x = 0;
+		double y = 0;
+		unsigned num_coords = 0u;
+		
+		void handleGeometry(OGRGeometryH geometry)
+		{
+			auto const geometry_type = wkbFlatten(OGR_G_GetGeometryType(geometry));
+			switch (geometry_type)
+			{
+			case OGRwkbGeometryType::wkbPoint:
+			case OGRwkbGeometryType::wkbLineString:
+				for (auto num_points = OGR_G_GetPointCount(geometry), i = 0; i < num_points; ++i)
+				{
+					x += OGR_G_GetX(geometry, i);
+					y += OGR_G_GetY(geometry, i);
+					++num_coords;
+				}
+				break;
+				
+			case OGRwkbGeometryType::wkbPolygon:
+			case OGRwkbGeometryType::wkbMultiPoint:
+			case OGRwkbGeometryType::wkbMultiLineString:
+			case OGRwkbGeometryType::wkbMultiPolygon:
+			case OGRwkbGeometryType::wkbGeometryCollection:
+				for (auto num_geometries = OGR_G_GetGeometryCount(geometry), i = 0; i < num_geometries; ++i)
+				{
+					handleGeometry(OGR_G_GetGeometryRef(geometry, i));
+				}
+				break;
+				
+			default:
+				;  // unsupported type, will be reported in importGeometry
+			}
+		}
+		
+	public:
+		AverageLatLon(OGRDataSourceH data_source)
+		{
+			auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+			OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+			
+			auto num_layers = OGR_DS_GetLayerCount(data_source);
+			for (int i = 0; i < num_layers; ++i)
+			{
+				if (auto layer = OGR_DS_GetLayer(data_source, i))
+				{
+					auto spatial_reference = OGR_L_GetSpatialRef(layer);
+					if (!spatial_reference)
+						continue;
+					
+					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
+					if (!transformation)
+						continue;
+					
+					OGR_L_ResetReading(layer);
+					while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
+					{
+						auto geometry = OGR_F_GetGeometryRef(feature.get());
+						if (!geometry || OGR_G_IsEmpty(geometry))
+							continue;
+						
+						auto error = OGR_G_Transform(geometry, transformation.get());
+						if (error)
+							continue;
+						
+						handleGeometry(geometry);
+					}
+				}
+			}
+		}
+		
+		operator LatLon() const
+		{
+			return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+		}
+		
+	};
 }  // namespace
 
 
@@ -1368,47 +1448,7 @@ LatLon OgrFileImport::calcAverageLatLon(QFile& file)
 // static
 LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 {
-	auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
-	OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
-	
-	auto num_coords = 0u;
-	double x = 0, y = 0;
-	auto num_layers = OGR_DS_GetLayerCount(data_source);
-	for (int i = 0; i < num_layers; ++i)
-	{
-		if (auto layer = OGR_DS_GetLayer(data_source, i))
-		{
-			auto spatial_reference = OGR_L_GetSpatialRef(layer);
-			if (!spatial_reference)
-				continue;
-			
-			auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
-			if (!transformation)
-				continue;
-			
-			OGR_L_ResetReading(layer);
-			while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
-			{
-				auto geometry = OGR_F_GetGeometryRef(feature.get());
-				if (!geometry || OGR_G_IsEmpty(geometry))
-					continue;
-				
-				auto error = OGR_G_Transform(geometry, transformation.get());
-				if (error)
-					continue;
-				
-				auto num_points = OGR_G_GetPointCount(geometry);
-				for (int i = 0; i < num_points; ++i)
-				{
-					x += OGR_G_GetX(geometry, i);
-					y += OGR_G_GetY(geometry, i);
-					++num_coords;
-				}
-			}
-		}
-	}
-	
-	return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+	return AverageLatLon(data_source);
 }
 
 
