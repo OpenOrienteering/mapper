@@ -291,19 +291,7 @@ bool DrawPathTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	}
 	else
 	{
-		bool drag_distance_reached = (event->pos() - click_pos).manhattanLength() >= startDragDistance();
-		if (dragging && !drag_distance_reached)
-		{
-			if (create_spline_corner)
-			{
-				create_spline_corner = false;
-			}
-			else if (path_has_preview_point)
-			{
-				undoLastPoint();
-			}
-		}
-		else if (drag_distance_reached)
+		if ((event->pos() - click_pos).manhattanLength() >= startDragDistance())
 		{
 			// Giving a direction by dragging
 			dragging = true;
