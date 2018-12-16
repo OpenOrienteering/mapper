@@ -615,7 +615,10 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
             <translation type="unfinished">Olyan szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205). 
-Annak érdekében, hogy megkülönböztethető legyen a szomszédos (30 méternél közelebbi) sziklák (204), amelyek jelentős méretkülönbséggel bírnak, a szimbólum (0,5 mm) a 204 szimbólum nagyításaként használható egyes sziklák esetében.Annak érdekében, hogy a szomszédos (30 méternél közelebbi) nagyméretű sziklák (205) között megkülönböztethető legyen, jelentős méretkülönbséggel rendelkező 205 szimbólumot (0,5 mm) használhatunk a 205  kicsinyítését szimbólumú sziklát.</translation>
+
+Annak érdekében, hogy megkülönböztethető legyenek a szomszédos (30 méternél közelebbi) sziklák (204), amelyek jelentős méretkülönbséggel bírnak, a szimbólum (0,5 mm) a 204 szimbólum nagyításaként használható egyes sziklák esetében. 
+
+Annak érdekében, hogy a szomszédos (30 méternél közelebbi) nagyméretű sziklák (205) között megkülönböztethető legyen, jelentős méretkülönbséggel rendelkező 205 szimbólumot (0,5 mm) használhatunk a 205  kicsinyítését szimbólumú sziklát.</translation>
     </message>
         <message>
             <source>Large boulder</source>
@@ -767,8 +770,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation type="unfinished">Nyílt homokos talaj</translation>
-        </message>
+            <translation>Homokos talaj</translation>
+    </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
@@ -1743,8 +1746,8 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
-            <translation type="unfinished">Romos kőfal</translation>
-        </message>
+            <translation>Romos fal</translation>
+    </message>
         <message>
             <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
             <comment>Description of symbol 514</comment>
@@ -4182,7 +4185,10 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
 
 The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
             <comment>Description of symbol 101</comment>
-            <translation type="unfinished">Azonos tengerszint feletti magasságú pontokat összeköt õ vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) 2 vagy 2,5 méter.</translation>
+            <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) 2 vagy 2,5 méter.
+A kontúrvonal kép háromdimenziós hatásának hangsúlyozása érdekében a kontúrvonalakat folyamatos vonalként kell ábrázolni az összes szimbólumon, az épületen (526.1) és a lombkorona (526.2) is. Ha azonban a következő szimbólumokat érintik: kis földfal (108.1), kis kúp (112), kis hosszúkás domb (113), kis mélyedés (115), gödör vagy lyuk (116 ), a kiemelkedő szárazföldi alakzat (118), a betonozott terület (529.1) lépcsője vagy pereme.
+
+A szomszédos tulajdonságok közötti viszonylagos magasságkülönbséget a térképen a lehető legpontosabban kell megjeleníteni. Az abszolút magasság pontossága kevésbé fontos. A kontúr magasságának módosítása megengedett, ha ez javíthatja a funkció ábrázolását. Ez az eltérés nem haladhatja meg az alapszintköz 25% -át, és a szomszédos jellemzőket figyelembe kell venni. A legkisebb ív egy kontúrban 0,4 mm-re van a vonalak középpontjától a középpontig.</translation>
     </message>
         <message>
             <source>Index contour</source>
