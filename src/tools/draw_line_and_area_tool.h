@@ -63,6 +63,7 @@ public:
 	~DrawLineAndAreaTool() override;
 	
 	void leaveEvent(QEvent* event) override;
+	void finishEditing() override;
 	
 signals:
 	void dirtyRectChanged(const QRectF& rect);
