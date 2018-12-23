@@ -29,7 +29,7 @@ endif()
 
 # Project declaration
 
-project(Mapper VERSION 0.8.3 LANGUAGES CXX C)
+project(Mapper VERSION 0.8.4 LANGUAGES CXX C)
 
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")

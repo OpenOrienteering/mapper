@@ -516,6 +516,15 @@ public:
 	inline bool isAdjustmentDirty() const {return adjustment_dirty;}
 	void setAdjustmentDirty(bool value);
 	
+	
+	/**
+	 * Returns true if the template has elements which are not opaque.
+	 * 
+	 * The default implementation returns true when the template is loaded.
+	 */
+	virtual bool hasAlpha() const;
+	
+	
 	// Static
 	/**
 	 * Returns the filename extensions supported by known subclasses.

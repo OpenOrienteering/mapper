@@ -285,6 +285,86 @@ namespace {
 		return srs_wkt;
 	}
 	
+	class AverageLatLon
+	{
+	private:
+		double x = 0;
+		double y = 0;
+		unsigned num_coords = 0u;
+		
+		void handleGeometry(OGRGeometryH geometry)
+		{
+			auto const geometry_type = wkbFlatten(OGR_G_GetGeometryType(geometry));
+			switch (geometry_type)
+			{
+			case OGRwkbGeometryType::wkbPoint:
+			case OGRwkbGeometryType::wkbLineString:
+				for (auto num_points = OGR_G_GetPointCount(geometry), i = 0; i < num_points; ++i)
+				{
+					x += OGR_G_GetX(geometry, i);
+					y += OGR_G_GetY(geometry, i);
+					++num_coords;
+				}
+				break;
+				
+			case OGRwkbGeometryType::wkbPolygon:
+			case OGRwkbGeometryType::wkbMultiPoint:
+			case OGRwkbGeometryType::wkbMultiLineString:
+			case OGRwkbGeometryType::wkbMultiPolygon:
+			case OGRwkbGeometryType::wkbGeometryCollection:
+				for (auto num_geometries = OGR_G_GetGeometryCount(geometry), i = 0; i < num_geometries; ++i)
+				{
+					handleGeometry(OGR_G_GetGeometryRef(geometry, i));
+				}
+				break;
+				
+			default:
+				;  // unsupported type, will be reported in importGeometry
+			}
+		}
+		
+	public:
+		AverageLatLon(OGRDataSourceH data_source)
+		{
+			auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+			OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+			
+			auto num_layers = OGR_DS_GetLayerCount(data_source);
+			for (int i = 0; i < num_layers; ++i)
+			{
+				if (auto layer = OGR_DS_GetLayer(data_source, i))
+				{
+					auto spatial_reference = OGR_L_GetSpatialRef(layer);
+					if (!spatial_reference)
+						continue;
+					
+					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
+					if (!transformation)
+						continue;
+					
+					OGR_L_ResetReading(layer);
+					while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
+					{
+						auto geometry = OGR_F_GetGeometryRef(feature.get());
+						if (!geometry || OGR_G_IsEmpty(geometry))
+							continue;
+						
+						auto error = OGR_G_Transform(geometry, transformation.get());
+						if (error)
+							continue;
+						
+						handleGeometry(geometry);
+					}
+				}
+			}
+		}
+		
+		operator LatLon() const
+		{
+			return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+		}
+		
+	};
 }  // namespace
 
 
@@ -323,16 +403,20 @@ OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitTyp
 	setOption(QLatin1String{ "Separate layers" }, QVariant{ false });
 	
 	// OGR feature style defaults
-	default_pen_color = new MapColor(tr("Purple"), 0); 
+	default_pen_color = new MapColor(QLatin1String{"Purple"}, 0); 
 	default_pen_color->setSpotColorName(QLatin1String{"PURPLE"});
-	default_pen_color->setCmyk({0.2f, 1.0, 0.0, 0.0});
+	default_pen_color->setCmyk({0.35f, 0.85f, 0.0, 0.0});
 	default_pen_color->setRgbFromCmyk();
 	map->addColor(default_pen_color, 0);
 	
-	auto default_brush_color = new MapColor(default_pen_color->getName() + QLatin1String(" 50%"), 0);
-	default_brush_color->setSpotColorComposition({ {default_pen_color, 0.5f} });
+	// 50% opacity of 80% Purple should result in app. 40% Purple (on white) in
+	// normal view and in an opaque Purple slightly lighter than lines and
+	// points in overprinting simulation mode.
+	auto default_brush_color = new MapColor(default_pen_color->getName() + QLatin1String(" 40%"), 0);
+	default_brush_color->setSpotColorComposition({ {default_pen_color, 0.8f} });
 	default_brush_color->setCmykFromSpotColors();
 	default_brush_color->setRgbFromSpotColors();
+	default_brush_color->setOpacity(0.5f);
 	map->addColor(default_brush_color, 1);
 	
 	default_point_symbol = new PointSymbol();
@@ -1364,47 +1448,7 @@ LatLon OgrFileImport::calcAverageLatLon(QFile& file)
 // static
 LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 {
-	auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
-	OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
-	
-	auto num_coords = 0u;
-	double x = 0, y = 0;
-	auto num_layers = OGR_DS_GetLayerCount(data_source);
-	for (int i = 0; i < num_layers; ++i)
-	{
-		if (auto layer = OGR_DS_GetLayer(data_source, i))
-		{
-			auto spatial_reference = OGR_L_GetSpatialRef(layer);
-			if (!spatial_reference)
-				continue;
-			
-			auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
-			if (!transformation)
-				continue;
-			
-			OGR_L_ResetReading(layer);
-			while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
-			{
-				auto geometry = OGR_F_GetGeometryRef(feature.get());
-				if (!geometry || OGR_G_IsEmpty(geometry))
-					continue;
-				
-				auto error = OGR_G_Transform(geometry, transformation.get());
-				if (error)
-					continue;
-				
-				auto num_points = OGR_G_GetPointCount(geometry);
-				for (int i = 0; i < num_points; ++i)
-				{
-					x += OGR_G_GetX(geometry, i);
-					y += OGR_G_GetY(geometry, i);
-					++num_coords;
-				}
-			}
-		}
-	}
-	
-	return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+	return AverageLatLon(data_source);
 }
 
 

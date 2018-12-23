@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,6 +31,7 @@
 #include <QAbstractButton> // IWYU pragma: keep
 #include <QButtonGroup>
 #include <QCheckBox>
+#include <QColor>
 #include <QComboBox>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -413,11 +414,15 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				
 			case EXPORT_PDF_TASK:
 				map_printer->setTarget(MapPrinter::pdfTarget());
+				if (active)
+					setOptions(map_printer->getOptions());
 				emit taskChanged(tr("PDF export"));
 				break;
 				
 			case EXPORT_IMAGE_TASK:
 				map_printer->setTarget(MapPrinter::imageTarget());
+				if (active)
+					setOptions(map_printer->getOptions());
 				policy = SinglePage;
 				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
 				{
@@ -832,7 +837,8 @@ void PrintWidget::setPrintArea(const QRectF& area)
 			{
 				// No longer single page.
 				block << policy_combo;
-				policy_combo->setCurrentIndex(policy_combo->findData(CustomArea));
+				policy = CustomArea;
+				policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				center_check->setChecked(false);
 				setOverlapEditEnabled(true);
 			}
@@ -951,6 +957,15 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	auto scale = int(options.scale);
 	different_scale_edit->setValue(scale);
 	differentScaleEdited(scale);
+	
+	if (options.mode != MapPrinterOptions::Raster
+	    && map_printer->engineWillRasterize())
+	{
+		QMessageBox::warning(this, tr("Error"),
+		                     tr("The map contains transparent elements"
+		                        " which require the raster mode."));
+		map_printer->setMode(MapPrinterOptions::Raster);
+	}
 }
 
 void PrintWidget::onVisibilityChanged()
@@ -1080,7 +1095,7 @@ void PrintWidget::showTemplatesClicked(bool checked)
 
 void PrintWidget::checkTemplateConfiguration()
 {
-	bool visibility = vector_mode_button->isChecked() && show_templates_check->isChecked();
+	bool visibility = map_printer->engineMayRasterize() && show_templates_check->isChecked();
 	templates_warning_icon->setVisible(visibility);
 	templates_warning_text->setVisible(visibility);
 }
@@ -1195,6 +1210,8 @@ void PrintWidget::exportToImage()
 	image.setDotsPerMeterX(dots_per_meter);
 	image.setDotsPerMeterY(dots_per_meter);
 	
+	image.fill(QColor(Qt::white));
+	
 #if 0  // Pointless unless drawPage drives the event loop and sends progress
 	PrintProgressDialog progress(map_printer, main_window);
 	progress.setWindowTitle(tr("Export map ..."));
@@ -1202,7 +1219,7 @@ void PrintWidget::exportToImage()
 	
 	// Export the map
 	QPainter p(&image);
-	map_printer->drawPage(&p, map_printer->getOptions().resolution, map_printer->getPrintArea(), true, &image);
+	map_printer->drawPage(&p, map_printer->getPrintArea(), &image);
 	p.end();
 	if (!image.save(path))
 	{

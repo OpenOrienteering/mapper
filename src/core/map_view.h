@@ -57,6 +57,9 @@ public:
 	
 	/** Visibility flag */
 	bool visible;
+	
+	/** Returns true when the template is visible but not opaque. */
+	bool hasAlpha() const;
 };
 
 bool operator==(TemplateVisibility lhs, TemplateVisibility rhs);
@@ -321,6 +324,12 @@ public:
 	
 	/** Enables or disables overprinting simulation. */
 	void setOverprintingSimulationEnabled(bool enabled);
+	
+	
+	/**
+	 * Returns true if any of the visible elements is not opaque.
+	 */
+	bool hasAlpha() const;
 	
 	
 	/** Temporarily blocks automatic template loading on visibility changes. */

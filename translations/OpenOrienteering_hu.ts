@@ -4862,7 +4862,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Képtelenség helyes pozícióba menteni az elveszett &quot;%1&quot; hátteret</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1891"/>
@@ -5982,7 +5982,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>Kép mentése sikertelen. Létezik az útvonal? Elegendő a jogosultsága?</translation>
+        <translation>A kép mentése sikertelen. Nem létezik az útvonal vagy nincs elegendő jogosultsága.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>

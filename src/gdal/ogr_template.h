@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -86,7 +86,11 @@ protected:
 protected slots:
 	void reload();
 	
+	void applySettings();
+	
 protected:
+	void updateView(Map& template_map);
+	
 	void mapProjectionChanged();
 	
 	void mapTransformationChanged();

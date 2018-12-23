@@ -1313,7 +1313,7 @@ void MapWidget::updateMapCache(bool use_background)
 		map->draw(&painter, config);
 	
 	if (view->isGridVisible())
-		map->drawGrid(&painter, map_view_rect, true);
+		map->drawGrid(&painter, map_view_rect);
 	
 	// Finish drawing
 	painter.end();

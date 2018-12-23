@@ -25,6 +25,7 @@
 
 #include <QtGlobal>
 #include <QByteArray>
+#include <QPaintEngine>
 #include <QPainter>
 #include <QRectF>
 #include <QStringList>
@@ -36,6 +37,7 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/renderables/renderable.h"
+#include "gui/util_gui.h"
 #include "util/transformation.h"
 #include "util/util.h"
 
@@ -139,9 +141,22 @@ void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, doubl
 	}
 	
 	RenderConfig::Options options;
+	auto scaling = scale;
 	if (on_screen)
+	{
 		options |= RenderConfig::Screen;
-	RenderConfig config = { *(template_map.get()), transformed_clip_rect, scale, options, qreal(opacity) };
+		/// \todo Get the actual screen's resolution.
+		scaling = Util::mmToPixelPhysical(scale);
+	}
+	else
+	{
+		auto dpi = painter->device()->physicalDpiX();
+		if (!dpi)
+			dpi = painter->device()->logicalDpiX();
+		if (dpi > 0)
+			scaling *= dpi / 25.4;
+	}
+	RenderConfig config = { *template_map, transformed_clip_rect, scaling, options, qreal(opacity) };
 	// TODO: introduce template-specific options, adjustable by the user, to allow changing some of these parameters
 	template_map->draw(painter, config);
 }
@@ -162,6 +177,13 @@ Template* TemplateMap::duplicateImpl() const
 		copy->loadTemplateFileImpl(false);
 	return copy;
 }
+
+
+bool TemplateMap::hasAlpha() const
+{
+	return template_map && template_map->hasAlpha();
+}
+
 
 const Map* TemplateMap::templateMap() const
 {

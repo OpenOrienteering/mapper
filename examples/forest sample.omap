@@ -743,7 +743,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </templates>
 <view>
 <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
-<map_view zoom="2" rotation="0" position_x="94442" position_y="62930" overprinting_simulation_enabled="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+<map_view zoom="2" position_x="94442" position_y="62930" overprinting_simulation_enabled="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
 </view>
 <print scale="10000" resolution="600" simulate_overprinting="true" mode="raster"><page_format paper_size="Custom" orientation="portrait" h_overlap="5.00" v_overlap="5.00"><dimensions width="110.000" height="110.000"/><page_rect left="0.000" top="0.000" width="110.000" height="110.000"/></page_format><print_area left="59.639" top="18.763" width="74.685" height="65.687" center_area="true"/></print>
 </barrier>

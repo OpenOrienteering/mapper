@@ -661,6 +661,8 @@ private:
 	QAction* geographic_coordinates_act;
 	QAction* geographic_coordinates_dms_act;
 	
+	QMenu* toolbars_menu = nullptr;
+	
 	QAction* scale_all_symbols_act;
 	QAction* georeferencing_act;
 	QAction* scale_map_act;

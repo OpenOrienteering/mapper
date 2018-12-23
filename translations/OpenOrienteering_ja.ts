@@ -30,7 +30,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>このプログラムは有用であることを願って頒布されますが、全くの無保証です。商業可能性の保証や特定目的への適合性は、言外に示されたものも 含め、全く存在しません。&lt;a %1&gt;詳細は&lt;/a&gt;GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3 をご覧くださ い。</translation>
+        <translation>このプログラムは有用であることを願って頒布されますが、全くの無保証です。商業可能性の保証や特定目的への適合性は、言外に示されたものも含め、全く存在しません。&lt;a %1&gt;詳細&lt;/a&gt;は GNU 一般公衆利用許諾書 (GPL)、バージョン&amp;nbsp;3 をご覧くださ い。</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="186"/>
@@ -210,12 +210,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation>境界のクリップ要素。</translation>
+        <translation>要素を境界で切り抜きます。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>中心が境界の内部にある場合は、要素を描画します。</translation>
+        <translation>中心が境界の内部にある場合に、要素を描画します。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
@@ -440,7 +440,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="331"/>
         <source>- unnamed -</source>
-        <translation>- 無名 -</translation>
+        <translation>- 名称未設定 -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="600"/>
@@ -915,12 +915,12 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="129"/>
         <source>Distribute points evenly along path</source>
-        <translation>コースに沿って均等にポイントを配布する</translation>
+        <translation>パスに沿って均等にポイントを配布する</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="135"/>
         <source>Number of points per path:</source>
-        <translation>コースあたりのポイント数:</translation>
+        <translation>パスあたりのポイント数:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="137"/>
@@ -978,7 +978,7 @@
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="311"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation>%1 を保持して中心から描画を開始します。</translation>
+        <translation>%1 を押したままにすると、中心から描画を開始します。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="315"/>
@@ -996,7 +996,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: コースを描画します。 </translation>
+        <translation>&lt;b&gt;ドラッグ&lt;/b&gt;: パスを描画します。 </translation>
     </message>
 </context>
 <context>
@@ -1120,7 +1120,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1222"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: コースを終了。 &lt;b&gt;%1&lt;/b&gt;: コースを閉じる。 </translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 直線を描く。 &lt;b&gt;ドラッグ&lt;/b&gt;: 曲線を描く。 &lt;b&gt;右クリック/ダブルクリック&lt;/b&gt;: パスを終了。 &lt;b&gt;%1&lt;/b&gt;: パスを閉じる。 </translation>
     </message>
 </context>
 <context>
@@ -1374,12 +1374,12 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="757"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; コース上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; パス上: ダッシュポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: 通常の点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="760"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; コース上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
+        <translation>&lt;b&gt;%1+クリック&lt;/b&gt; ポイント上: 削除; パス上: ポイントを追加; &lt;b&gt;%2&lt;/b&gt;と: ダッシュ点を追加。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
@@ -1617,7 +1617,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="242"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;クリック&lt;/b&gt;: アクティブな記号でエリアを塗りつぶします。塗りつぶすエリアは、線またはエリアで閉じられている必要があります、他の記号は考慮しません。 </translation>
+        <translation>&lt;b&gt;クリック&lt;/b&gt;: 選択中の記号でエリアを塗りつぶします。塗りつぶすエリアは、線またはエリアで閉じている必要があります、他の記号は考慮しません。 </translation>
     </message>
 </context>
 <context>
@@ -2619,12 +2619,12 @@
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="408"/>
         <source>Error while reading map part count.</source>
-        <translation>地図の要素数を読み取り中にエラー。</translation>
+        <translation>地図パート数を読み取り中にエラー。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="419"/>
         <source>Error while loading map part %2.</source>
-        <translation>地図の要素 %2 を読み込み中にエラー。</translation>
+        <translation>地図パート %2 を読み込み中にエラー。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="120"/>
@@ -3370,7 +3370,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map.cpp" line="504"/>
         <source>default part</source>
-        <translation>デフォルトの要素</translation>
+        <translation>デフォルトの地図パート</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="36"/>
@@ -3699,7 +3699,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="920"/>
         <source>Fill bounded areas</source>
-        <translation>閉じたエリアの塗りつぶし</translation>
+        <translation>閉領域の塗りつぶし</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="921"/>
@@ -3734,7 +3734,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="926"/>
         <source>Connect paths</source>
-        <translation>コースを接続</translation>
+        <translation>パスを接続</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="928"/>
@@ -3772,7 +3772,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="949"/>
         <source>Simplify path</source>
-        <translation>コースを単純化</translation>
+        <translation>パスを単純化</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="950"/>
@@ -3787,7 +3787,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Distribute points along path</source>
-        <translation>コースに沿ってポイントを配布する</translation>
+        <translation>パスに沿ってポイントを配布する</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="960"/>
@@ -3822,7 +3822,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Create temporary path at GPS position</source>
-        <translation>GPS の位置で一時的なコースを作成</translation>
+        <translation>GPS の位置で一時的なパスを作成</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="976"/>
@@ -3843,24 +3843,24 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3587"/>
         <source>Add new part...</source>
-        <translation>新しい要素を追加...</translation>
+        <translation>新しい地図パートを追加...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3647"/>
         <source>Rename current part...</source>
-        <translation>現在の要素の名前を変更...</translation>
+        <translation>現在の地図パートの名前を変更...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3608"/>
         <source>Remove current part</source>
-        <translation>現在の要素を削除</translation>
+        <translation>現在の地図パートを削除</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="985"/>
         <source>Merge all parts</source>
-        <translation>すべての要素をマージ</translation>
+        <translation>すべての地図パートをマージ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="987"/>
@@ -4257,7 +4257,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2381"/>
         <source>Select at least two area or path objects activate this tool.</source>
-        <translation>少なくとも 2 つのエリアまたはコース オブジェクトを選択して、このツールを有効にします。</translation>
+        <translation>少なくとも 2 つのエリアまたはパスオブジェクトを選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2383"/>
@@ -4307,7 +4307,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3527"/>
         <source>Merge this part with</source>
-        <translation>この要素をマージ</translation>
+        <translation>この地図パートをマージ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3534"/>
@@ -4318,28 +4318,28 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3588"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3648"/>
         <source>Enter the name of the map part:</source>
-        <translation>地図の要素の名前を入力:</translation>
+        <translation>地図パートの名前を入力:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3664"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>地図の要素 &apos;%1&apos; に切り替えました。</translation>
+        <translation>地図パート &apos;%1&apos; に切り替えました。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3686"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3718"/>
         <source>Merge map parts</source>
-        <translation>地図の要素をマージ</translation>
+        <translation>地図パートをマージ</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3687"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>すべてのオブジェクトを地図の要素 &quot;%1&quot; から &quot;%2&quot; に移動して、&quot;%1&quot; を削除しますか?</translation>
+        <translation>すべてのオブジェクトを地図パート &quot;%1&quot; から &quot;%2&quot; に移動して、&quot;%1&quot; を削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3719"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>すべてのオブジェクトを地図の要素 &quot;%1&quot; に移動して、他の地図の要素をすべて削除しますか?</translation>
+        <translation>すべてのオブジェクトを地図パート &quot;%1&quot; に移動して、他の地図パートをすべて削除しますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3894"/>
@@ -4546,7 +4546,7 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1335"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3520"/>
         <source>Map parts</source>
-        <translation>地図の要素</translation>
+        <translation>地図パート</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1288"/>
@@ -4633,18 +4633,18 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>直線のpathをスムーズなベジエ曲線に変えます。</translation>
+        <translation>直線のパスをスムーズなベジエ曲線に変えます。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2364"/>
         <source>Select a path object to activate this tool.</source>
-        <translation>このツールを有効にするには、コースオブジェクトを選択してください。</translation>
+        <translation>このツールを有効にするには、パスオブジェクトを選択してください。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2364"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
-        <translation>コースオブジェクト内のポイントを(コースの形が変わらない範囲で)減らします。</translation>
+        <translation>パスオブジェクト内のポイントを(パスの形が変わらない範囲で)減らします。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
@@ -4655,7 +4655,7 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation>切り抜きの形状として閉じられたコース オブジェクトを選択して、このツールを有効にします。</translation>
+        <translation>切り抜きの形状として閉じられたパスオブジェクトを選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
@@ -4679,12 +4679,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
         <source>Places evenly spaced point objects along an existing path object</source>
-        <translation>既存のコースオブジェクトに沿って、均等に間隔をあけてポイントオブジェクトを配置</translation>
+        <translation>既存のパスオブジェクトに沿って、均等に間隔をあけてポイントオブジェクトを配置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
-        <translation>少なくとも 1 つのコース オブジェクトと単一のポイント記号を選択して、このツールを有効にします。</translation>
+        <translation>少なくとも 1 つのパスオブジェクトと単一のポイント記号を選択して、このツールを有効にします。</translation>
     </message>
     <message>
         <source>%1 object(s) duplicated</source>
@@ -4727,7 +4727,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3609"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>地図の要素「%1」と、そのすべてのオブジェクトを削除しますか?</translation>
+        <translation>地図パート「%1」と、そのすべてのオブジェクトを削除しますか?</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template</source>
@@ -5106,7 +5106,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="75"/>
         <source>The selected object is not a path.</source>
-        <translation>選択中のオブジェクトがコースではありません。</translation>
+        <translation>選択中のオブジェクトがパスではありません。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="99"/>
@@ -5463,7 +5463,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1008"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>テキスト記号をインポートしません。コースを把握できませんでした (npts=%1): %2</translation>
+        <translation>テキスト記号をインポートしません。パスを把握できませんでした (npts=%1): %2</translation>
     </message>
     <message>
         <source>Unable to import template: %1</source>
@@ -5698,7 +5698,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1665"/>
         <source>Not importing text symbol, couldn&apos;t figure out path&apos; (npts=%1): %2</source>
-        <translation>テキスト記号をインポートしません。コースを把握できませんでした (npts=%1): %2</translation>
+        <translation>テキスト記号をインポートしません。パスを把握できませんでした (npts=%1): %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1965"/>
@@ -6468,7 +6468,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>画像の保存に失敗しました。コースは存在しますか?　十分な権利はもっていますか?</translation>
+        <translation>画像の保存に失敗しました。ファイルパスは存在しますか?　十分な権利はもっていますか?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
@@ -7495,7 +7495,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="495"/>
         <source>- unnamed -</source>
-        <translation>- 無名 -</translation>
+        <translation>- 名称未設定 -</translation>
     </message>
     <message>
         <source>Symbol settings - Please enter a symbol name!</source>
@@ -8315,7 +8315,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_track.cpp" line="450"/>
         <source>The path is empty, there is nothing to import!</source>
-        <translation>コースが空です、インポートするものが何もありません!</translation>
+        <translation>パスが空です、インポートするものが何もありません!</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="464"/>
@@ -8753,7 +8753,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="209"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>Mapper の古いバージョンでは、複数の地図の要素はサポートしていません。互換モードで地図を保存するには、最初にすべての地図の要素をマージする必要があります。</translation>
+        <translation>Mapper の古いバージョンでは、複数の地図パートはサポートしていません。互換モードで地図を保存するには、最初にすべての地図パートをマージする必要があります。</translation>
     </message>
 </context>
 <context>

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -48,6 +48,8 @@ public:
 	const QString gdal_dxf_key{ QStringLiteral("dxf") };
 	const QString gdal_gpx_key{ QStringLiteral("gpx") };
 	const QString gdal_osm_key{ QStringLiteral("osm") };
+	const QString gdal_hatch_key{ QStringLiteral("area_hatching") };
+	const QString gdal_baseline_key{ QStringLiteral("baseline_view") };
 	
 	GdalManagerPrivate()
 	: dirty{ true }
@@ -63,6 +65,22 @@ public:
 		if (dirty)
 			update();
 	}
+	
+	
+	QVariant settingsValue(const QString& key, const QVariant& default_value) const
+	{
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		return settings.value(key, default_value);
+	}
+
+	void setSettingsValue(const QString& key, const QVariant& value)
+	{
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		settings.setValue(key, value);
+	}
+	
 	
 	void setFormatEnabled(GdalManager::FileFormat format, bool enabled)
 	{
@@ -81,15 +99,14 @@ public:
 			key = gdal_osm_key;
 			break;
 		}
-		QSettings settings;
-		settings.beginGroup(gdal_manager_group);
-		settings.setValue(key, QVariant{ enabled });
+		setSettingsValue(key, enabled);
 		dirty = true;
 	}
 	
 	bool isFormatEnabled(FileFormat format) const
 	{
 		QString key;
+		bool default_value = true;
 		switch (format)
 		{
 		case GdalManager::DXF:
@@ -98,15 +115,14 @@ public:
 			
 		case GdalManager::GPX:
 			key = gdal_gpx_key;
+			default_value = false;
 			break;
 			
 		case GdalManager::OSM:
 			key = gdal_osm_key;
 			break;
 		}
-		QSettings settings;
-		settings.beginGroup(gdal_manager_group);
-		return !settings.contains(key) || settings.value(key).toBool();
+		return settingsValue(key, default_value).toBool();
 	}
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
@@ -187,11 +203,11 @@ private:
 				auto extension = extensions.mid(start, pos - start);
 				if (extension.isEmpty())
 					continue;
-				if (extension == "dxf" && !settings.value(gdal_dxf_key).toBool())
+				if (extension == "dxf" && !settings.value(gdal_dxf_key, true).toBool())
 					continue;
-				if (extension == "gpx" && !settings.value(gdal_gpx_key).toBool())
+				if (extension == "gpx" && !settings.value(gdal_gpx_key, false).toBool())
 					continue;
-				if (extension == "osm" && !settings.value(gdal_osm_key).toBool())
+				if (extension == "osm" && !settings.value(gdal_osm_key, true).toBool())
 					continue;
 				enabled_vector_extensions.emplace_back(extension);
 			}
@@ -209,11 +225,11 @@ private:
 		enabled_vector_extensions = default_extensions;
 		
 		settings.beginGroup(gdal_manager_group);
-		if (settings.value(gdal_dxf_key).toBool())
+		if (settings.value(gdal_dxf_key, true).toBool())
 			enabled_vector_extensions.push_back("dxf");
-		if (settings.value(gdal_gpx_key).toBool())
+		if (settings.value(gdal_gpx_key, false).toBool())
 			enabled_vector_extensions.push_back("gpx");
-		if (settings.value(gdal_osm_key).toBool())
+		if (settings.value(gdal_osm_key, true).toBool())
 			enabled_vector_extensions.push_back("osm");
 		settings.endGroup();
 #endif
@@ -311,6 +327,28 @@ void GdalManager::configure()
 {
 	p->configure();
 }
+
+
+bool GdalManager::isAreaHatchingEnabled() const
+{
+	return p->settingsValue(p->gdal_hatch_key, false).toBool();
+}
+
+void GdalManager::setAreaHatchingEnabled(bool enabled)
+{
+	p->setSettingsValue(p->gdal_hatch_key, enabled);
+}
+
+bool GdalManager::isBaselineViewEnabled() const
+{
+	return p->settingsValue(p->gdal_baseline_key, false).toBool();
+}
+
+void GdalManager::setBaselineViewEnabled(bool enabled)
+{
+	p->setSettingsValue(p->gdal_baseline_key, enabled);
+}
+
 
 void GdalManager::setFormatEnabled(GdalManager::FileFormat format, bool enabled)
 {

@@ -2722,7 +2722,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="809"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
-        <translation>看来这 %1 坠毁最后一次打开此文件时间: &lt; br /&gt; &lt;tt&gt;%2&lt;/tt&gt; &lt; br /&gt; &lt; br /&gt; 真的重新尝试打开它吗？</translation>
+        <translation>看来这 %1 坠毁最后一次打开此文件时间: &lt;br /&gt; &lt;tt&gt;%2&lt;/tt&gt; &lt;br /&gt; &lt;br /&gt; 真的重新尝试打开它吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="1000"/>

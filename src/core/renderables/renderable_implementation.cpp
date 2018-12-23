@@ -110,7 +110,7 @@ PainterConfig DotRenderable::getPainterConfig(const QPainterPath* clip_path) con
 void DotRenderable::render(QPainter &painter, const RenderConfig &config) const
 {
 	if (config.options.testFlag(RenderConfig::ForceMinSize) && extent.width() * config.scaling < 1.5)
-		painter.drawEllipse(extent.center(), 0.5 / config.scaling, 0.5 * config.scaling);
+		painter.drawEllipse(extent.center(), 0.5 / config.scaling, 0.5 / config.scaling);
 	else
 		painter.drawEllipse(extent);
 }

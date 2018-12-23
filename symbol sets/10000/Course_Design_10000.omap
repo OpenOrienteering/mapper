@@ -486,7 +486,7 @@ The orientation of the symbol indicates the direction in which the corner points
 </templates>
 <view>
 <grid color="#c0c0c0" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="3" v_spacing="3" h_offset="0" v_offset="0" snapping_enabled="true"/>
-<map_view zoom="1" rotation="0" position_x="0" position_y="0" grid="true"><map opacity="1" visible="true"/><templates count="1"><ref template="0" visible="true" opacity="1"/></templates></map_view>
+<map_view zoom="1" position_x="0" position_y="0" grid="true"><map opacity="1" visible="true"/><templates count="1"><ref template="0" visible="true" opacity="1"/></templates></map_view>
 </view>
 <print scale="10000" resolution="600" templates_visible="true" mode="vector"><page_format paper_size="A4" orientation="portrait" h_overlap="5.00" v_overlap="5.00"><dimensions width="210.000" height="297.000"/><page_rect left="5.000" top="5.000" width="200.000" height="287.000"/></page_format><print_area left="5.000" top="5.000" width="200.000" height="287.000" center_area="true" single_page="true"/></print>
 </barrier>

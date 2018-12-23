@@ -40,6 +40,7 @@
 #include <QLatin1String>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPaintEngine>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
@@ -70,6 +71,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/text_browser_dialog.h"
 #include "templates/template.h"
+#include "undo/map_part_undo.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
@@ -970,6 +972,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 			// Import parts like this:
 			//  - if the other map has only one part, import it into the current part
 			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
+			auto* undo_step = new CombinedUndoStep(this);
 			for (const auto* part_to_import : imported_map.parts)
 			{
 				MapPart* dest_part = nullptr;
@@ -992,6 +995,7 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 						// Import as new part
 						dest_part = new MapPart(part_to_import->getName(), this);
 						addPart(dest_part, 0);
+						undo_step->push(new MapPartUndoStep(this, MapPartUndoStep::RemoveMapPart, 0));
 					}
 				}
 				
@@ -1000,12 +1004,16 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 				current_part_index = std::size_t(findPartIndex(dest_part));
 				
 				bool select_and_center_objects = dest_part == temp_current_part;
-				dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects);
-				if (select_and_center_objects)
-					ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				if (auto import_undo = dest_part->importPart(part_to_import, symbol_map, transform, select_and_center_objects))
+				{
+					undo_step->push(import_undo.release());
+					if (select_and_center_objects)
+						ensureVisibilityOfSelectedObjects(Map::FullVisibility);
+				}
 				
 				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
+			push(undo_step);
 		}
 	}
 	
@@ -1083,9 +1091,9 @@ void Map::drawColorSeparation(QPainter* painter, const RenderConfig& config, con
 	renderables->drawColorSeparation(painter, config, spot_color, use_color);
 }
 
-void Map::drawGrid(QPainter* painter, const QRectF& bounding_box, bool on_screen)
+void Map::drawGrid(QPainter* painter, const QRectF& bounding_box)
 {
-	grid.draw(painter, bounding_box, this, on_screen);
+	grid.draw(painter, bounding_box, this);
 }
 
 void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first_template, int last_template, const MapView* view, bool on_screen) const
@@ -1093,20 +1101,22 @@ void Map::drawTemplates(QPainter* painter, const QRectF& bounding_box, int first
 	for (int i = first_template; i <= last_template; ++i)
 	{
 		const Template* temp = getTemplate(i);
-		bool visible  = temp->getTemplateState() == Template::Loaded;
+		if (temp->getTemplateState() != Template::Loaded)
+			continue;
+		
 		double scale  = std::max(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-		float opacity = 1.0f;
+		auto visibility = TemplateVisibility{ 1, true };
 		if (view)
 		{
-			auto visibility = view->getTemplateVisibility(temp);
-			visible &= visibility.visible;
-			opacity  = visibility.opacity;
-			scale   *= view->getZoom();
+			visibility = view->getTemplateVisibility(temp);
+			visibility.visible &= visibility.opacity > 0;
+			scale *= view->getZoom();
 		}
-		if (visible)
+		if (visibility.visible)
 		{
+			Q_ASSERT(visibility.opacity == 1 || painter->paintEngine()->hasFeature(QPaintEngine::ConstantOpacity));
 			painter->save();
-			temp->drawTemplate(painter, bounding_box, scale, on_screen, opacity);
+			temp->drawTemplate(painter, bounding_box, scale, on_screen, visibility.opacity);
 			painter->restore();
 		}
 	}
@@ -1644,6 +1654,19 @@ bool Map::hasSpotColors() const
 			return true;
 	}
 	return false;
+}
+
+bool Map::hasAlpha() const
+{
+	return std::any_of(begin(color_set->colors), end(color_set->colors), [this](const MapColor* color) {
+		const auto opacity = color->getOpacity();
+		return opacity > 0 && opacity < 1
+		       && std::any_of(begin(symbols), end(symbols), [this, color](const Symbol* symbol) {
+			return !symbol->isHidden()
+			       && symbol->containsColor(color)
+			       && this->existsObjectWithSymbol(symbol);
+		});
+	});
 }
 
 

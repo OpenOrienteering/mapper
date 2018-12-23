@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -130,7 +130,7 @@ const MapGrid& MapGrid::load(QXmlStreamReader& xml)
 	return *this;
 }
 
-void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool on_screen) const
+void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, qreal scale_adjustment) const
 {
 	double final_horz_spacing, final_vert_spacing;
 	double final_horz_offset, final_vert_offset;
@@ -138,7 +138,7 @@ void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
 	QPen pen(color);
-	if (on_screen)
+	if (qIsNull(scale_adjustment))
 	{
 		// zero-width cosmetic pen (effectively one pixel)
 		pen.setWidth(0);
@@ -147,7 +147,7 @@ void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, bool
 	else
 	{
 		// 0.1 mm wide non-cosmetic pen
-		pen.setWidthF(0.1f);
+		pen.setWidthF(qreal(0.1) / scale_adjustment);
 	}
 	painter->setPen(pen);
 	painter->setBrush(Qt::NoBrush);
@@ -201,6 +201,14 @@ MapCoordF MapGrid::getClosestPointOnGrid(MapCoordF position, Map* map) const
 	position.rotate(final_rotation - M_PI / 2);
 	return MapCoordF(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset,
 					 qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset).rotated(-1 * (final_rotation - M_PI / 2));
+}
+
+
+bool MapGrid::hasAlpha() const
+{
+	return [](auto alpha) {
+		return alpha > 0 && alpha < 255;
+	}(qAlpha(color));
 }
 
 

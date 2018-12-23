@@ -64,6 +64,16 @@ namespace literal
 
 namespace OpenOrienteering {
 
+// ### TemplateVisibility ###
+
+bool TemplateVisibility::hasAlpha() const
+{
+	return visible && opacity > 0 && opacity < 1;
+}
+
+
+// ### MapView ###
+
 const double MapView::zoom_in_limit = 512;
 const double MapView::zoom_out_limit = 1 / 16.0;
 
@@ -101,8 +111,9 @@ void MapView::load(QIODevice* file, int version)
 {
 	qint64 center_x, center_y;
 	int unused;
+	double unused_double;
 	file->read((char*)&zoom, sizeof(double));
-	file->read((char*)&rotation, sizeof(double));
+	file->read((char*)&unused_double /*rotation*/, sizeof(double));
 	file->read((char*)&center_x, sizeof(qint64));
 	file->read((char*)&center_y, sizeof(qint64));
 	file->read((char*)&unused /*view_x*/, sizeof(int));
@@ -154,9 +165,9 @@ void MapView::load(QIODevice* file, int version)
 
 void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
+	// We do not save transient attributes such as rotation (for compass) or pan offset.
 	XmlElementWriter mapview_element(xml, element_name);
 	mapview_element.writeAttribute(literal::zoom, zoom);
-	mapview_element.writeAttribute(literal::rotation, rotation);
 	mapview_element.writeAttribute(literal::position_x, center_pos.nativeX());
 	mapview_element.writeAttribute(literal::position_y, center_pos.nativeY());
 	mapview_element.writeAttribute(literal::grid, grid_visible);
@@ -187,11 +198,11 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 
 void MapView::load(QXmlStreamReader& xml)
 {
+	// We do not load transient attributes such as rotation (for compass) or pan offset.
 	XmlElementReader mapview_element(xml);
 	zoom = qMin(mapview_element.attribute<double>(literal::zoom), zoom_in_limit);
 	if (zoom < zoom_out_limit)
 		zoom = 1.0;
-	rotation = mapview_element.attribute<double>(literal::rotation);
 	
 	auto center_x = mapview_element.attribute<qint64>(literal::position_x);
 	auto center_y = mapview_element.attribute<qint64>(literal::position_y);
@@ -533,6 +544,28 @@ void MapView::setOverprintingSimulationEnabled(bool enabled)
 		overprinting_simulation_enabled = enabled;
 		emit visibilityChanged(VisibilityFeature::OverprintingEnabled, enabled);
 	}
+}
+
+
+
+bool MapView::hasAlpha() const
+{
+	auto map_visibility = effectiveMapVisibility();
+	if (map_visibility.hasAlpha() || map->hasAlpha())
+		return true;
+	
+	if (grid_visible && map->getGrid().hasAlpha())
+		return true;
+		
+	for (int i = 0; i < map->getNumTemplates(); ++i)
+	{
+		auto temp = map->getTemplate(i);
+		auto visibility = getTemplateVisibility(temp);
+		if (visibility.hasAlpha() || temp->hasAlpha())
+			return true;
+	}
+	
+	return false;
 }
 
 
