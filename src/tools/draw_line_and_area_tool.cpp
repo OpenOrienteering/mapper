@@ -81,6 +81,12 @@ void DrawLineAndAreaTool::leaveEvent(QEvent* event)
 		map()->clearDrawingBoundingBox();
 }
 
+void DrawLineAndAreaTool::finishEditing()
+{
+	finishDrawing();
+	MapEditorTool::finishEditing();
+}
+
 void DrawLineAndAreaTool::setDrawingSymbol(const Symbol* symbol)
 {
 	// Avoid using deleted symbol

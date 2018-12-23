@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -67,6 +67,14 @@ const QCursor& CutHoleTool::getCursor() const
 	return cursor;
 }
 
+void CutHoleTool::finishEditing()
+{
+	Q_ASSERT(editingInProgress());
+	if (path_tool)
+		path_tool->finishEditing();
+	MapEditorTool::finishEditing();
+}
+
 CutHoleTool::~CutHoleTool()
 {
 	delete path_tool;
@@ -103,6 +111,8 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord
 	
 	path_tool->init();
 	path_tool->mousePressEvent(event, map_coord, widget);
+	Q_ASSERT(path_tool->editingInProgress());
+	setEditingInProgress(true);
 	
 	return true;
 }
@@ -195,6 +205,7 @@ void CutHoleTool::pathAborted()
 {
 	path_tool->deleteLater();
 	path_tool = nullptr;
+	setEditingInProgress(false);
 	updateDirtyRect();
 	updateStatusText();
 }
