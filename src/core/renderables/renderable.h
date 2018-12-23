@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -414,7 +414,7 @@ bool operator==(const PainterConfig& lhs, const PainterConfig& rhs)
 {
 	return (lhs.color_priority == rhs.color_priority) &&
 	       (lhs.mode == rhs.mode) &&
-	       (lhs.pen_width == rhs.pen_width) &&
+	       (lhs.pen_width == rhs.pen_width || lhs.mode == PainterConfig::BrushOnly) &&
 	       (lhs.clip_path != rhs.clip_path);
 }
 
