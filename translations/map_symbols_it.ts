@@ -61,12 +61,12 @@
         <message>
             <source>OpenOrienteering Orange</source>
             <comment>Color 11</comment>
-            <translation type="unfinished">OpenOrienteering Arancione</translation>
+            <translation>OpenOrienteering Arancione</translation>
         </message>
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation type="unfinished">Nero 25% (Grigio)</translation>
+            <translation>Nero 25% (Grigio)</translation>
         </message>
         <message>
             <source>Green 50%, Yellow</source>
@@ -86,12 +86,12 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation type="unfinished">Bianco opaco sopra il verde</translation>
-        </message>
+            <translation>Bianco opaco sopra il Verde</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
-            <translation type="unfinished">Verde opaco 20%</translation>
+            <translation>Verde opaco 20%</translation>
         </message>
         <message>
             <source>Opaque Green 50%</source>
@@ -106,7 +106,7 @@
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
-            <translation type="unfinished">Verde opaco</translation>
+            <translation>Verde opaco</translation>
         </message>
         <message>
             <source>Green 50%</source>
@@ -156,8 +156,8 @@
         <message>
             <source>Slope line, contour</source>
             <comment>Name of symbol 101.1</comment>
-            <translation type="unfinished">Trattino di pendenza per curve di livello</translation>
-        </message>
+            <translation>Trattino di pendenza, curva di livello</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 101.1</comment>
@@ -166,28 +166,28 @@
         <message>
             <source>Index contour</source>
             <comment>Name of symbol 102</comment>
-            <translation type="unfinished">Curva di livello maestra</translation>
+            <translation>Curva di livello maestra</translation>
         </message>
         <message>
             <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
             <comment>Description of symbol 102</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ogni quinta curva di livello deve essere disegnata con una linea più spessa. Questo è un aiuto per una veloce valutazione della differenza di quota e della forma generale del terreno. Una curva maestra può essere rappresentata come una curva di livello ordinaria in aree con molti dettagli. Per piccole collinette e depressione non vengono di solito usate le curve maestre.</translation>
+    </message>
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Quota della curva di livello</translation>
+    </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 102.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La quota delle curve di livello può essere inclusa per mettere in evidenza grandi differenze di quota. Vengono inserite sulla curva di livello in modo da non coprire altri dettagli. Il numero deve essere orientato in modo che la parte alta della scritta sia rivolto verso la salita.</translation>
+    </message>
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Curva di livello</translation>
+    </message>
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
@@ -196,8 +196,8 @@
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Trattino di pendenza, curva di livello</translation>
+    </message>
         <message>
             <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
             <comment>Description of symbol 103.1</comment>
@@ -206,144 +206,146 @@
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Scarpata</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una scarpata è un netto cambiamento di quota nel terreno che si distingue chiaramente dal resto del terreno, es. Cave di ghiaia o sabbia, terrapieni e tagli stradali o di ferrovie. Altezza minima: 1 m. Una scarpata può rallentare la corsa. I trattini rappresentano la reale estensione della scarpata. Per scarpate lunghe si possono usare trattini più corti ai termini. Se due scarpate sono vicine si possono non mettere i trattini. Scarpate non attraversabili dovrebbero essere disegnate usando il simbolo 201 (Roccia non attraversabile).</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Scarpata, lunghezza minima</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una scarpata è un netto cambiamento di quota nel terreno che si distingue chiaramente dal resto del terreno, es. Cave di ghiaia o sabbia, terrapieni e tagli stradali o di ferrovie. Altezza minima: 1 m. Una scarpata può rallentare la corsa. I trattini rappresentano la reale estensione della scarpata. Per scarpate lunghe si possono usare trattini più corti ai termini. Se due scarpate sono vicine si possono non mettere i trattini. Scarpate non attraversabili dovrebbero essere disegnate usando il simbolo 201 (Roccia non attraversabile).</translation>
+    </message>
         <message>
             <source>Earth bank, top line</source>
             <comment>Name of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Scarpata, linea principale</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una scarpata è un netto cambiamento di quota nel terreno che si distingue chiaramente dal resto del terreno, es. Cave di ghiaia o sabbia, terrapieni e tagli stradali o di ferrovie. Altezza minima: 1 m. Una scarpata può rallentare la corsa. I trattini rappresentano la reale estensione della scarpata. Per scarpate lunghe si possono usare trattini più corti ai termini. Se due scarpate sono vicine si possono non mettere i trattini. Scarpate non attraversabili dovrebbero essere disegnate usando il simbolo 201 (Roccia non attraversabile).</translation>
+    </message>
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 104.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Scarpata, trattino di pendenza</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 104.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Usa questo simbolo per disegnare la reale estensione della scarpata.</translation>
+    </message>
         <message>
             <source>Earth bank, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Scarpata, lunghezza minima (da ISOM2000)</translation>
+    </message>
         <message>
             <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
             <comment>Description of symbol 104.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una scarpata è un netto cambiamento di quota nel terreno che si distingue chiaramente dal resto del terreno, es. Cave di ghiaia o sabbia, terrapieni e tagli stradali o di ferrovie. Altezza minima: 1 m. Una scarpata può rallentare la corsa. I trattini rappresentano la reale estensione della scarpata. Per scarpate lunghe si possono usare trattini più corti ai termini. Se due scarpate sono vicine si possono non mettere i trattini. Scarpate non attraversabili dovrebbero essere disegnate usando il simbolo 201 (Roccia non attraversabile).</translation>
+    </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro di terra</translation>
+    </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Muro di terra. L&apos;altezza minima è 1 m.</translation>
+    </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Piccolo muro di terra</translation>
+    </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 106</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
+    </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fossa</translation>
+    </message>
         <message>
             <source>An erosion gully which is too small to be shown using symbol 104 (earth bank) is shown by a single line. Minimum depth: 1 m.
 Contour lines shall not be broken around this symbol.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una fossa che è troppo piccola per essere disegnata con il simbolo 104 (scarpata) è segnata con una linea singola. Profondità minima 1 m.</translation>
+    </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fossa piccola</translation>
+    </message>
         <message>
             <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una piccola fossa, canaletta o trincea. Profondità minima: 0.5 m.</translation>
+    </message>
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cucuzzolo</translation>
+    </message>
         <message>
             <source>An obvious mound or knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 109</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una piccola collina o cucuzzolo che non può essere disegnata in scala con una curva di livello. Altezza minima: 1 m.
+Il simbolo non dovrebbe toccare o sovrapporsi alle curve di livello.</translation>
+    </message>
         <message>
             <source>Small elongated knoll</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Cucuzzolo allungato</translation>
+    </message>
         <message>
             <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
             <comment>Description of symbol 110</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un evidente cucuzzolo che non può essere disegnato in scala con una curva di livello. Altezza minima: 1 m.
+Il simbolo non dovrebbe toccare o sovrapporsi alle curve di livello.</translation>
+    </message>
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 111</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Piccola depressione</translation>
+    </message>
         <message>
             <source>A small depression or hollow without steep sides that is too small to be shown by contours. Minimum depth: 1 m. Minimum width: 2 m.
 Small depressions with steep sides are represented with symbol 112 (pit). The symbol may not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 111</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una piccola depressione o conca senza pareti ripide che è troppo piccola per essere disegnata con le curve di livello. Profondità minima: 1 m.</translation>
+    </message>
         <message>
             <source>Pit</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca</translation>
+    </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Buche con evidenti pareti libere che non possono essere disegnate in scala con il simbolo 104 (scarpata). Profondità minima: 1 m. Larghezza minima:1 m. Una buca più larga di 5 m x 5 m dovrebbe essere esagerata e disegnata con il simbolo 104 (scarpata). Buche senza pareti ripide sono disegnate con il simbolo 111 (piccola depressione). Il simbolo è orientato a nord.</translation>
+    </message>
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sconnesso</translation>
+    </message>
         <message>
             <source>An area of pits and/or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
 This is an area symbol.
@@ -351,23 +353,27 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona di buche e cucuzzoli che è troppo intricata per essere disegnata nel dettaglio, o altri tipi di terreno sconnesso che è evidente ma non ha molto impatto sulla velocità di corsa.
+Questo è un simbolo d&apos;area.
+Il numero minimo di puntini è tre (corrisponde a 10 m x 10 m).
+Le curve di livello non devono essere tagliate nelle aree di terreno sconnesso.
+Densità: da 3 a 5 punti / mm2 (9-16%).</translation>
+    </message>
         <message>
             <source>Broken ground, individual dot</source>
             <comment>Name of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sconnesso, punto singolo</translation>
+    </message>
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 113.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona di buche e cucuzzoli che è troppo intrigata per essere disegnata nel dettaglio. La densità dei punti posizionati in maniera random può variare in base al terreno.</translation>
+    </message>
         <message>
             <source>Very broken ground</source>
             <comment>Name of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno molto sconnesso</translation>
+    </message>
         <message>
             <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
 This is an area symbol.
@@ -375,119 +381,139 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una zona di buche e cucuzzoli che è troppo intricata per essere disegnata nel dettaglio, o altri tipi di terreno sconnesso che è facilmente distinguibile e influenza la velocità di corsa.
+Questo è un simbolo d&apos;area.
+Il numero minimo di puntini è tre (corrisponde a 7 m x 7 m).
+Le curve di livello non devono essere tagliate nelle aree di terreno sconnesso.
+Densità: da 8 a 10 punti / mm2 (25-32%).</translation>
+    </message>
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oggetto particolare di terra</translation>
+    </message>
         <message>
             <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
             <comment>Description of symbol 115</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>L&apos;oggetto deve essere molto distinguibile dalla zona circostante. L&apos;oggetto è posto al centro del simbolo, che è orientato a nord. Il simbolo non deve toccare o sovrapporsi ad altri simboli marroni.</translation>
+    </message>
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. Ends of the top line may be rounded or square. Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia o scarpata che è così alta e ripida che è impossibile o pericoloso attraversarla.
+Per pareti verticali si possono omettere i trattini se lo spazio è poco. I vertici della linea principale possono essere arrotondati o squadrati. Si possono usare dei trattini più corti vicino agli estremi.
+Lo spazio fra due rocce non attraversabili o altri oggetti non attraversabili deve superare i 0.3 mm sulla mappa.
+Quando una roccia non attraversabile finisce direttamente in acqua, rendendo impossibile passare sotto la roccia al bordo dell&apos;acqua, la linea di riva non viene messa o i trattini devono chiaramente entrare nel lago. Una roccia non attraversabile dovrebbe interagire con le curve di livello.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile, dimensione minima</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia o scarpata che è così alta e ripida che è impossibile o pericoloso attraversarla.
+ I vertici della linea principale possono essere arrotondati o squadrati.
+Lo spazio fra due rocce non attraversabili o altri oggetti non attraversabili deve superare i 0.3 mm sulla mappa.
+Quando una roccia non attraversabile finisce direttamente in acqua, rendendo impossibile passare sotto la roccia al bordo dell&apos;acqua, la linea di riva non viene messa o i trattini devono chiaramente entrare nel lago. Una roccia non attraversabile dovrebbe interagire con le curve di livello.</translation>
+    </message>
         <message>
             <source>Impassable cliff, plan shape representation</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile, disegno in pianta</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For plan shape representation, the minimum width is 0.35 mm.&lt;/b&gt; Shorter tags may be used at the ends.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia o scarpata che è così alta e ripida che è impossibile o pericoloso attraversarla.
+Per pareti verticali si possono omettere i trattini se lo spazio è poco. &lt;b&gt;Per il disegno in pianta la larghezza minima è 0.35 mm.&lt;/b&gt; Si possono usare dei trattini più corti vicino agli estremi.
+Lo spazio fra due rocce non attraversabili o altri oggetti non attraversabili deve superare i 0.3 mm sulla mappa.
+Quando una roccia non attraversabile finisce direttamente in acqua, rendendo impossibile passare sotto la roccia al bordo dell&apos;acqua, la linea di riva non viene messa o i trattini devono chiaramente entrare nel lago. Una roccia non attraversabile dovrebbe interagire con le curve di livello.</translation>
+    </message>
         <message>
             <source>Impassable cliff, top line</source>
             <comment>Name of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile, linea principale</translation>
+    </message>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
+    </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile, trattino</translation>
+    </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.4</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Usa questo simbolo per mostrare la reale estensione della roccia.</translation>
+    </message>
         <message>
             <source>Impassable cliff, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia non attraversabile, dimensione minima (da ISOM2000)</translation>
+    </message>
         <message>
             <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
 Ends of the top line may be rounded or square.
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
             <comment>Description of symbol 201.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia o scarpata che è così alta e ripida che è impossibile o pericoloso attraversarla.
+I vertici della linea principale possono essere arrotondati o squadrati.
+Lo spazio fra due rocce non attraversabili o altri oggetti non attraversabili deve superare i 0.3 mm sulla mappa.
+Quando una roccia non attraversabile finisce direttamente in acqua, rendendo impossibile passare sotto la roccia al bordo dell&apos;acqua, la linea di riva non viene messa o i trattini devono chiaramente entrare nel lago. Una roccia non attraversabile dovrebbe interagire con le curve di livello.</translation>
+    </message>
         <message>
             <source>Cliff</source>
             <comment>Name of symbol 202</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia</translation>
+    </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia verticale attraversabile la cui direzione di pendenza è intuibile dal contesto di curve di livello. Altezza minima: 1 m.
+I vertici della linea possono essere arrotondati o squadrati. Lo spazio fra due rocce deve essere almeno di 0,2 mm. Una roccia dovrebbe interagire con le curve di livello.
+Attraversare una roccia normalmente rallenta la corsa.</translation>
+    </message>
         <message>
             <source>Cliff, minimum size</source>
             <comment>Name of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia, dimensione minima</translation>
+    </message>
         <message>
             <source>A passable, vertical cliff or quarry where the direction of fall of the cliff is apparent from the contours. Minimum height: 1 m.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia verticale attraversabile la cui direzione di pendenza è intuibile dal contesto di curve di livello. Altezza minima: 1 m.
+I vertici della linea possono essere arrotondati o squadrati. Lo spazio fra due rocce deve essere almeno di 0,2 mm. Una roccia dovrebbe interagire con le curve di livello.
+Attraversare una roccia normalmente rallenta la corsa.</translation>
+    </message>
         <message>
             <source>Cliff, with tags</source>
             <comment>Name of symbol 202.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia, con trattini</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
@@ -499,81 +525,94 @@ Crossing a cliff will normally slow progress.</source>
         <message>
             <source>Cliff, with tags, minimum size</source>
             <comment>Name of symbol 202.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia, con trattini, dimensione minima</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia attraversabile. Altezza minima: 1 m.
+I trattini indicano la direzione della discesa perché la direzione della pendenza non è scontata dal contesto di curve di livello, oppure per migliorarne la leggibilità. Per rocce non verticali, i trattini dovrebbero essere disegnati per mostrare la reale estensione orizzontale della roccia.
+I vertici della linea possono essere arrotondati o squadrati. Lo spazio fra due rocce deve essere almeno di 0,2 mm. Una roccia dovrebbe interagire con le curve di livello.
+Attraversare una roccia normalmente rallenta la corsa.</translation>
+    </message>
         <message>
             <source>Cliff, with tags, minimum size (from ISOM2000)</source>
             <comment>Name of symbol 202.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia, con trattini, dimensione minima (da ISOM2000)</translation>
+    </message>
         <message>
             <source>A passable cliff or quarry. Minimum height: 1 m.
 Short tags indicate in the direction of the downslope because the direction of fall of the cliff is not apparent from the contours, or to improve legibility. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una roccia attraversabile. Altezza minima: 1 m.
+I trattini indicano la direzione della discesa perché la direzione della pendenza non è scontata dal contesto di curve di livello, oppure per migliorarne la leggibilità. Per rocce non verticali, i trattini dovrebbero essere disegnati per mostrare la reale estensione orizzontale della roccia.
+I vertici della linea possono essere arrotondati o squadrati. Lo spazio fra due rocce deve essere almeno di 0,2 mm. Una roccia dovrebbe interagire con le curve di livello.
+Attraversare una roccia normalmente rallenta la corsa.</translation>
+    </message>
         <message>
             <source>Rocky pit or cave (without distinct entrance)</source>
             <comment>Name of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca di roccia o grotta (senza un ingresso chiaro)</translation>
+    </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buche di roccia, grotte o ingressi di miniere che possono rappresentare un pericolo per il corridore. Profondità minima: 1 m.
+Il luogo è al centro di gravità del simbolo.
+Buche di roccia più larghe di 5 m di diametro devono essere esagerate e disegnate con il simbolo di roccia (201,202).</translation>
+    </message>
         <message>
             <source>Rocky pit or cave with distinct entrance</source>
             <comment>Name of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca di roccia o grotta con un entrata evidente</translation>
+    </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca di roccia, roccia o miniera con un ingresso ben evidente che può essere un pericolo per il corridore. Profondità minima: 1 m.
+L&apos;oggetto è posto nel centro di gravità del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
+Buche di roccia con più di 5 m di diametro dovrebbero essere esagerate e disegnate usando il simbolo di roccia (201, 202).</translation>
+    </message>
         <message>
             <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
             <comment>Name of symbol 203.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca di roccia o grotta con ingresso evidente (from ISOM2000)</translation>
+    </message>
         <message>
             <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.9</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca di roccia, roccia o miniera con un ingresso ben evidente che può essere un pericolo per il corridore. Profondità minima: 1 m.
+L&apos;oggetto è posto nel centro di gravità del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
+Buche di roccia con più di 5 m di diametro dovrebbero essere esagerate e disegnate usando il simbolo di roccia (201, 202).</translation>
+    </message>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 204</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sasso</translation>
+    </message>
         <message>
             <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol 207 (boulder cluster) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 204</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un sasso evidente (dovrebbe essere più alto di 1 m), che è immediatamente identificabile sul terreno. Gruppi di sassi sono disegnati usando il simbolo 207 (gruppo di sassi) o con il simbolo di pietraia (208, 209).
+Per essere in grado di mostrare la differenza fra sassi vicini (più vicini di 30 m) i sassi con un differenza di dimensione significativa, si può ingrandire il simbolo a 0.5 mm per qualche sasso.</translation>
+    </message>
         <message>
             <source>Boulder or large boulder, different size</source>
             <comment>Name of symbol 204.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sasso o grande sasso, dimensione diversa</translation>
+    </message>
         <message>
             <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
 
@@ -581,67 +620,75 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un sasso che è più grande di quelli vicini (204), o un grande sasso che è più piccolo di quelli vicini (205).
+
+Per poter essere in grado di distinguere dei sassi (204) vicini (più vicini di 30 m) con un&apos;evidente differenza di dimensione, si può usare questo simbolo (0,5 mm) come un ingrandimento del simbolo 204 per alcuni sassi.
+
+Per poter essere in grado di distinguere dei grandi sassi (204) vicini (più vicini di 30 m) con un&apos;evidente differenza di dimensione, si può usare questo simbolo (0,5 mm) come una riduzione del simbolo 204 per alcuni sassi.</translation>
+    </message>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sasso grande</translation>
+    </message>
         <message>
             <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high. To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.</source>
             <comment>Description of symbol 205</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un sasso evidente e particolarmente grande. Un sasso grande dovrebbe essere più alto di 2 m. Per essere in grado di mostrare la differenza fra dei sassi grandi vicini (più vicini di 30 m) con una significativa differenza di dimensione, si può ridurre la dimensione del simbolo a 0.5 mm per alcuni dei sassi.</translation>
+    </message>
         <message>
             <source>Gigantic boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sasso enorme</translation>
+    </message>
         <message>
             <source>A rock pillar or gigantic boulder that is so high and steep that it is impossible topass/climb.
 The gap between gigantic boulders or between gigantic boulders and other impassable feature symbols must exceed 0.3 mm on the map.</source>
             <comment>Description of symbol 206</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un pilastro di roccia o sasso enorme che è così alto e ripido che è impossibile attraversare.
+Lo spazio fra due sassi enormi o un altro oggetto non attraversabile deve essere di almeno 0,3 mm sulla carta.</translation>
+    </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gruppo di sassi</translation>
+    </message>
         <message>
             <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 metre. A boulder cluster must be easily identifiable as a group of boulders.
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un gruppo di sassi così raggruppati da non poter essere mappati individualmente. I sassi nel gruppo devono essere più alti di un metro. Un gruppo di sassi deve essere facilmente identificabile come un gruppo di sassi.
+Per permettere di mostrare  una evidente differenza di dimensione fra gruppi di sassi vicini (non più di 30 m), si può ingrandire questo simbolo del 20% (lunghezza lato 0.96 mm) per qualche gruppo di sassi.</translation>
+    </message>
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Gruppo di sassi, grande</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Per permettere di mostrare un evidente differenza di dimensione fra gruppi di sassi vicini (non più di 30 m), si può ingrandire questo simbolo del 20% (lunghezza lato 0.96 mm) per qualche gruppo di sassi.</translation>
+    </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pietraia</translation>
+    </message>
         <message>
             <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area che è ricoperta da così tanti blocchi di pietra che non possono essere disegnati singolarmente, è disegnata con triangoli pieni orientati e posizionati in maniera casuale. Una pietraia non rallenta la corsa generalmente. Se la corsa è rallentata nella pietraia si dovrebbe usare il simbolo 209 (pietraia fitta) oppure si dovrebbe combinare il simbolo con quello di terreno sassoso.
+Si dovrebbe usare un minimo di due triangoli. Un triangolo può essere usato se usato combinato con altri simboli di roccia (ad esempio se direttamente sotto un simbolo di roccia (201, 201), adiacente ai simboli di sasso (204-206) o combinato con i simboli di terreno sassoso (210-212)).
+Per essere in grado di mostrare evidenti differenze di altezza all&apos;interno di una pietraia, si possono ingrandire alcuni triangoli del 120%.</translation>
+    </message>
         <message>
             <source>Boulder field, single triangle</source>
             <comment>Name of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pietraia, singolo triangolo</translation>
+    </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
@@ -650,18 +697,18 @@ To be able to show obvious height differences within a boulder field, it is perm
         <message>
             <source>Boulder field, single triangle, enlarged</source>
             <comment>Name of symbol 208.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pietraia, triangolo singolo, ingrandito</translation>
+    </message>
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Per permettere di mostrare la differenza in una pietraia con una evidente differenza nella dimensione dei sassi si possono ingrandire i triangolo del 20%.</translation>
+    </message>
         <message>
             <source>Dense boulder field</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Pietraia fitta</translation>
+    </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
 Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
@@ -671,8 +718,8 @@ Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height diffe
         <message>
             <source>Stony ground, slow running</source>
             <comment>Name of symbol 210</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sassoso, corsa lenta</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
@@ -684,8 +731,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Stony ground, individual dot</source>
             <comment>Name of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sassoso, punto singolo</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
@@ -697,8 +744,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Stony ground, walk</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sassoso, cammina</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
@@ -710,8 +757,8 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Stony ground, fight</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno sassoso, combatti</translation>
+    </message>
         <message>
             <source>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
 The dots should be randomly distributed but not interfere with the representation of important terrain features and objects.
@@ -723,30 +770,32 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno aperto sabbioso</translation>
+    </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
             <comment>Description of symbol 213</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area di sabbia soffice dove la corsa è ridotta a meno del 80% della velocità normale.</translation>
+    </message>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Roccia affiorante</translation>
+    </message>
         <message>
             <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).</source>
             <comment>Description of symbol 214</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area di roccia senza terra o vegetazione dovrebbe essere disegnata come roccia affiorante.
+Un&apos;area coperta con erba, muschio o vegetazione bassa non deve essere disegnata usando il simbolo di roccia affiorante.
+Un&apos;area di roccia affiorante che rallenta la corsa dovrebbe essere segnata usando il simbolo di terreno sassoso (210-212).</translation>
+    </message>
         <message>
             <source>Trench</source>
             <comment>Name of symbol 215</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Trincea</translation>
+    </message>
         <message>
             <source>Rocky or artificial trench. Minimum depth should be 1 m.
 Minimum length: 2 mm (footprint 30 m).
@@ -754,8 +803,12 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Trincea rocciosa o artificiale. Profondità minima deve essere 1 m.
+Lunghezza minima: 2 mm (30 m nella realtà).
+Trincee più corte possono essere esagerate fino alla dimensione grafica minima.
+Trincee non attraversabili dovrebbero essere segnate usando il simbolo 201 (roccia non attraversabile).
+Trincee collassate o facilmente attraversabili dovrebbero essere disegnate come fosse.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water, with bank line</source>
             <comment>Name of symbol 301</comment>
