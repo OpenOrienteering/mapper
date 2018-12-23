@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -714,14 +714,12 @@ bool PainterConfig::activate(QPainter* painter, const QPainterPath*& current_cli
 	QBrush brush(config.testFlag(RenderConfig::Highlighted) ? highlightedColor(color) : color);
 	if (mode == PainterConfig::PenOnly)
 	{
-		if (pen_width > 0)
-		{
-			auto const width_px = pen_width * config.scaling;
-			if (config.testFlag(RenderConfig::Screen) && width_px < 0.125)
-				return false;
-			if (config.testFlag(RenderConfig::ForceMinSize) && width_px < 1)
-				actual_pen_width = 0.0; // Forces cosmetic pen
-		}
+#ifdef Q_OS_ANDROID
+		if (pen_width * config.scaling < 0.1)
+			return false;
+#endif
+		if (config.testFlag(RenderConfig::ForceMinSize) && pen_width * config.scaling <= 1.0)
+			actual_pen_width = 0.0; // Forces cosmetic pen
 		painter->setPen(QPen(brush, actual_pen_width));
 		painter->setBrush(QBrush(Qt::NoBrush));
 	}
