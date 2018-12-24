@@ -191,8 +191,8 @@
         <message>
             <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
             <comment>Description of symbol 103</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Le curve ausiliarie vengono usate dove è necessario dare più informazioni sulla forma del terreno. Le curve ausiliarie vengono aggiunte solo dove la rappresentazione sarebbe incompleta senza il loro utilizzo. Non devono essere usate come curve intermedie. Deve essere usata una sola curva ausiliaria fra due curve di livello. E&apos; molto importante che le curve ausiliarie si integrino in modo logico all&apos;interno delle curve di livello, l&apos;inizio e la fine dovrebbero quindi essere parallele alle curve di livello vicine. L&apos;interruzione nel tratteggio deve essere messo in delle parti ragionevolmente dritte della curva ausiliaria. Le curve ausiliarie possono essere usate per distinguere dei cucuzzoli e delle depressioni classiche da altre più evidenti.</translation>
+    </message>
         <message>
             <source>Slope line, formline</source>
             <comment>Name of symbol 103.1</comment>
@@ -339,7 +339,7 @@ Small depressions with steep sides are represented with symbol 112 (pit). The sy
             <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol 104 (earth bank). Minimum depth: 1 m. Minimum width: 1 m. A pit larger than 5 m x 5 m should normally be exaggerated and drawn using symbol 104 (earth bank). Pits without steep sides are represented with symbol 111 (small depression). The symbol may not touch or overlap other brown symbols. Location is the centre of
 gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 112</comment>
-            <translation type="unfinished">Buche con evidenti pareti libere che non possono essere disegnate in scala con il simbolo 104 (scarpata). Profondità minima: 1 m. Larghezza minima:1 m. Una buca più larga di 5 m x 5 m dovrebbe essere esagerata e disegnata con il simbolo 104 (scarpata). Buche senza pareti ripide sono disegnate con il simbolo 111 (piccola depressione). Il simbolo è orientato a nord.</translation>
+            <translation>Buche con evidenti bordi ripidi che non possono essere disegnate in scala con il simbolo 104 (scarpata). Profondità minima: 1 m. Larghezza minima:1 m. Una buca più larga di 5 m x 5 m dovrebbe essere esagerata e disegnata con il simbolo 104 (scarpata). Buche senza pareti ripide sono disegnate con il simbolo 111 (piccola depressione). Il simbolo è orientato a nord.</translation>
     </message>
         <message>
             <source>Broken ground</source>
@@ -1198,100 +1198,106 @@ Areas of good visibility that are very difficult to run or impassable are repres
         <message>
             <source>Vegetation, fight</source>
             <comment>Name of symbol 410</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, combatti</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.
 For fairness reasons, areas that are really difficult to get through (10% and slower) shall be represented using symbol 411 (vegetation, impassable).</source>
             <comment>Description of symbol 410</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un area di vegetazione fitta (alberi o sottobosco) che è attraversabile a malapena. Corsa ridotta al 0-20% della velocità normale.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosco percorribile in una direzione, 3</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se un zona di bosco offre una buona percorribilità in una sola direzione, delle linee bianche sullo sfondo verde mostrano la direzione in cui la corsa è migliore.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3, 20%</source>
             <comment>Name of symbol 410.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosco percorribile in una direzione, 3, 20%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se un zona di bosco offre una buona percorribilità in una sola direzione, delle linee verde chiaro mostrano la direzione in cui la corsa è migliore.</translation>
+    </message>
         <message>
             <source>Forest runnable in one direction, 3, 50%</source>
             <comment>Name of symbol 410.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosco percorribile in una direzione, 3, 50%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 410.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Se un zona di bosco offre una buona percorribilità in una sola direzione, delle linee verde chiaro mostrano la direzione in cui la corsa è migliore.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, non attraversabile</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una area di vegetazione fitta (alberi o sottobosco) che è effettivamente inattraversabile. Utilizzabile principalmente per zone piccole e strette.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable</source>
             <comment>Name of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, inattraversabile</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area di vegetazione fitta (alberi o sottobosco) che è inattraversabile. Utile soprattutto per zone piccole e strette.</translation>
+    </message>
         <message>
             <source>Vegetation, impassable, minimum width</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, non attraversabile, spessore minimo</translation>
+    </message>
         <message>
             <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area di vegetazione fitta (alberi o sottobosco) che non è attraversabile.
+Spessore minimo: 0.35 mm</translation>
+    </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campi coltivati</translation>
+    </message>
         <message>
             <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol 709 (out of bounds area) to show cultivated land that shall not be entered.</source>
             <comment>Description of symbol 412</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Campi coltivati, usati normalmente per crescere raccolti. La velocità di corsa può variare a seconda del tipo di pianta e periodo dell&apos;anno. Per la silvicultura si può usare il simbolo 405 (bosco) o 402 (semiaperto grezzo) al posto del giallo.
+Visto che la velocità di corsa è variabile, queste zone dovrebbero essere evitate nella preparazione dei percorsi.
+Il simbolo combinato con il simbolo 709 (zona vietata) mostra che il campo coltivato non deve essere percorso.</translation>
+    </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Frutteto</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</source>
             <comment>Description of symbol 413</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terra con piantati alberi o cespugli, normalmente in modo regolare.
+I puntini possono essere orientati per mostrare la direzione delle piante.
+Può essere combinato sia con il simbolo 401 (terreno aperto) o 403 (aperto grezzo).
+Può essere combinato con il simbolo 407 (vegetazione, corsa lenta, buona visibilità) o 409 (vegetazione, cammina, buona visibilità) per mostrare una velocità di corsa ridotta.</translation>
+    </message>
         <message>
             <source>Orchard, rough open</source>
             <comment>Name of symbol 413.1</comment>
@@ -11881,8 +11887,8 @@ The orientation of the symbol indicates the direction in which the corner points
         <message>
             <source>Length of special route</source>
             <comment>Name of symbol 13.0</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation type="unfinished">Lunghezza del percorso speciale</translation>
+    </message>
         <message>
             <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
             <comment>Description of symbol 13.0</comment>
