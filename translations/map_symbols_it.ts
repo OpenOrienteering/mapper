@@ -355,7 +355,7 @@ Density: 3 to 5 dots / mm² (9-16%).</source>
             <comment>Description of symbol 113</comment>
             <translation>Una zona di buche e cucuzzoli che è troppo intricata per essere disegnata nel dettaglio, o altri tipi di terreno sconnesso che è evidente ma non ha molto impatto sulla velocità di corsa.
 Questo è un simbolo d&apos;area.
-Il numero minimo di puntini è tre (corrisponde a 10 m x 10 m).
+Il numero minimo di puntini è tre (ingombro 10 m x 10 m).
 Le curve di livello non devono essere tagliate nelle aree di terreno sconnesso.
 Densità: da 3 a 5 punti / mm2 (9-16%).</translation>
     </message>
@@ -383,7 +383,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
             <comment>Description of symbol 114</comment>
             <translation>Una zona di buche e cucuzzoli che è troppo intricata per essere disegnata nel dettaglio, o altri tipi di terreno sconnesso che è facilmente distinguibile e influenza la velocità di corsa.
 Questo è un simbolo d&apos;area.
-Il numero minimo di puntini è tre (corrisponde a 7 m x 7 m).
+Il numero minimo di puntini è tre (ingombro 7 m x 7 m).
 Le curve di livello non devono essere tagliate nelle aree di terreno sconnesso.
 Densità: da 8 a 10 punti / mm2 (25-32%).</translation>
     </message>
@@ -804,7 +804,7 @@ Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
             <comment>Description of symbol 215</comment>
             <translation>Trincea rocciosa o artificiale. Profondità minima deve essere 1 m.
-Lunghezza minima: 2 mm (30 m nella realtà).
+Lunghezza minima: 2 mm (ingombro 30 m).
 Trincee più corte possono essere esagerate fino alla dimensione grafica minima.
 Trincee non attraversabili dovrebbero essere segnate usando il simbolo 201 (roccia non attraversabile).
 Trincee collassate o facilmente attraversabili dovrebbero essere disegnate come fosse.</translation>
@@ -1301,92 +1301,101 @@ Può essere combinato con il simbolo 407 (vegetazione, corsa lenta, buona visibi
         <message>
             <source>Orchard, rough open</source>
             <comment>Name of symbol 413.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Frutteto, aperto grezzo</translation>
+    </message>
         <message>
             <source>Land planted with trees or bushes, normally in a regular pattern.
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</source>
             <comment>Description of symbol 413.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terra con piantati alberi o cespugli, normalmente in modo regolare.
+I puntini possono essere orientati per mostrare la direzione delle piante.
+Può essere combinato sia con il simbolo 401 (terreno aperto) o 403 (aperto grezzo).
+Può essere combinato con il simbolo 407 (vegetazione, corsa lenta, buona visibilità) o 409 (vegetazione, cammina, buona visibilità) per mostrare una velocità di corsa ridotta.</translation>
+    </message>
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vigneto</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un vigneto o terra coltivata in maniera simile con una fitto filare di piante, permette nella direzione del filare una velocità di corsa normale. Le linee devono essere orientate per mostrare la direzione dei filari. Deve essere combinato sia con il simbolo 401 (terreno aperto) o con il simbolo 403 (aperto grezzo).</translation>
+    </message>
         <message>
             <source>Vineyard, rough open</source>
             <comment>Name of symbol 414.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vigneto, aperto grezzo</translation>
+    </message>
         <message>
             <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
             <comment>Description of symbol 414.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un vigneto o terra coltivata in maniera simile con una fitto filare di piante, permette nella direzione del filare una velocità di corsa normale. Le linee devono essere orientate per mostrare la direzione dei filari. Deve essere combinato sia con il simbolo 401 (terreno aperto) o con il simbolo 403 (aperto grezzo).</translation>
+    </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Limite di coltivazione netto</translation>
+    </message>
         <message>
             <source>A boundary of symbol 412 (cultivated land) or a boundary between areas of cultivated land when not shown with other symbols (fence, wall, path, etc.).</source>
             <comment>Description of symbol 415</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Il limite del simbolo 412 (campo coltivato) o il limite fra aree coltivate quando non è mostrato con altri simboli (recinto, muro, sentiero, ecc.).</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Limite netto di vegetazione</translation>
+    </message>
         <message>
             <source>A distinct forest edge or vegetation boundary within the forest.
 Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map.
 Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</source>
             <comment>Description of symbol 416</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un limite netto di bosco o limite netti all&apos;interno del bosco.
+Bordi di bosco molto netti e limiti di vegetazione possono essere rappresentati usando il simbolo di limite di coltivazione. Solo uno dei simboli di limite di vegetazione può essere usato in una mappa (linea di puntini neri o linea tratteggiata verde.
+Lunghezza minima, puntini neri: 5 pallini (2.5 mm - ingombro 37 m).</translation>
+    </message>
         <message>
             <source>Distinct vegetation boundary, green dashed line</source>
             <comment>Name of symbol 416.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Limite netto di vegetazione, linea verde tratteggiata</translation>
+    </message>
         <message>
             <source>For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
 A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbols 410 (vegetation, fight) and 411 (vegetation, impassable). An alternative for these situations is to use symbol 415 (distinct cultivation boundary).
 Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).</source>
             <comment>Description of symbol 416.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Per aree con molte rocce, si raccomanda l&apos;utilizzo della linea verde tratteggiata per i limiti di vegetazione.
+Uno svantaggio della linea verde è che non può essere usata per mostrare un limite netto di vegetazione fra il simbolo 410 (vegetazione, combatti) e 411 (vegetazione, non attraversabile). Un alternativa per queste situazioni è usare il simbolo 415 (limite netto di coltivazione).
+Lunghezza minima, linea tratteggiata: 4 trattini (1.8 mm - ingombro 27 m).</translation>
+    </message>
         <message>
             <source>Prominent large tree</source>
             <comment>Name of symbol 417</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Albero isolato</translation>
+    </message>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 417</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ingombro: 13.5 m x 13.5 m.</translation>
+    </message>
         <message>
             <source>Prominent bush or tree</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Albero o cespuglio isolato</translation>
+    </message>
         <message>
             <source>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
 
 Footprint: 7.5 m x 7.5 m.</source>
             <comment>Description of symbol 418</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Usare con parsimonia, può essere facilmente confuso con il simbolo 109 (cucuzzolo) dai daltonici.
+
+Ingombro: 7.5 m x 7.5 m.</translation>
+    </message>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 419</comment>
@@ -1395,8 +1404,8 @@ Footprint: 7.5 m x 7.5 m.</source>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 419</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Ingombro: 13.5 m x 13.5 m.</translation>
+    </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 501</comment>
