@@ -1297,12 +1297,12 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>L&apos;antialiasing rende l&apos;aspetto della mappa molto migliore, ma rallenta la visualizzazione della stessa da parte del programma</translation>
+        <translation>L&apos;antialiasing rende l&apos;aspetto della mappa molto migliore, ma ne rallenta la visualizzazione</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="52"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>Rappresentazione del testo nella mappa ad alta qualità (antialiasing), lento</translation>
+        <translation>Rappresentazione del testo in mappa ad alta qualità (antialiasing), lento</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
@@ -1321,12 +1321,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>Snap distance (%1):</source>
-        <translation>Distanza di aggancio magnetico (%1):</translation>
+        <translation>Distanza del segui (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>Modalità di avanzamento ad angoli fissi (%1):</translation>
+        <translation>Gradini di avanzamento ad angoli fissi (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
@@ -1342,7 +1342,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>Quando si seleziona un oggetto, automaticamente si selsziona anche il suo simbolo</translation>
+        <translation>Quando si seleziona un oggetto, automaticamente si seleziona anche il suo simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1357,7 +1357,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="74"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>Template: mantiene le impostazioni dei template chiuso</translation>
+        <translation>Template: mantieni le impostazioni dei template chiusi</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="79"/>
@@ -1374,19 +1374,19 @@
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
         <source>Reset outer curve handles</source>
-        <translation>Reimposta (reset) le maniglie esterne della curva</translation>
+        <translation>Reimposta le maniglie esterne della curva</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="90"/>
         <source>Keep outer curve handles</source>
-        <translation>Mantiene  le maniglie esterne della curva</translation>
+        <translation>Conserva le maniglie esterne della curva</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="91"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>Azione legata alla cancellazione di un punto sulla curva con %1:</translation>
+        <translation>Azione legata alla cancellazione di un nodo sulla curva con %1:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="94"/>
@@ -1396,12 +1396,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="97"/>
         <source>Radius of helper cross:</source>
-        <translation>Raggio della croce di aiuto (visualizzazione):</translation>
+        <translation>Raggio della croce guida :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="99"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation>Anteprima della larghezza delle linee con la crocetta di aiuto</translation>
+        <translation>Anteprima della larghezza delle linee con la crocetta guida</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="115"/>
@@ -1414,7 +1414,7 @@
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1563"/>
         <source>Could not create new file: %1</source>
-        <translation>Impossibile creare il nuovo file: %1</translation>
+        <translation>Impossibile creare nuovo file: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_format.cpp" line="84"/>
@@ -1432,7 +1432,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="157"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation>L&apos;area della mappa è grande. L&apos;uso dello strumento riempimento può essere lento. Vuoi usalro ugualmente?</translation>
+        <translation>L&apos;area della mappa è grande. L&apos;uso dello strumento riempimento può essere molto lento. Vuoi usarlo lo stesso?</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="142"/>
@@ -1459,7 +1459,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="242"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Riempie l&apos;area con il simbolo attivo. L&apos;area da riempire deve essere limitata da linee o aree, altri simboli non sono considerati. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Riempie l&apos;area con il simbolo selezionato. L&apos;area da riempire deve essere limitata da linee o aree, altri simboli non sono considerati. </translation>
     </message>
 </context>
 <context>
@@ -1528,7 +1528,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="80"/>
         <source>Appearance</source>
-        <translation>Apparenza</translation>
+        <translation>Aspetto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="85"/>
@@ -1538,12 +1538,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="102"/>
         <source>Screen</source>
-        <translation>Screen (Schermi)</translation>
+        <translation>Schermo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="107"/>
         <source>Pixels per inch:</source>
-        <translation>Pixels (punti) per pollice:</translation>
+        <translation>Pixels per pollice:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="117"/>
@@ -1558,7 +1558,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="128"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>Mantiene la comapatibilità con Mapper %1</translation>
+        <translation>Mantieni compatibilità con Mapper %1</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
@@ -1620,7 +1620,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="216"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>Il programma deve essere chiuso e riaperto affincé il cambio di linguaggio abbia effetto!</translation>
+        <translation>Il programma deve essere riavviato affinché il cambio di linguaggio abbia effetto!</translation>
     </message>
     <message>
         <source>Use translation file...</source>
@@ -1650,7 +1650,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="395"/>
         <source>Primary screen resolution in pixels:</source>
-        <translation>Risoluzione dello schermo primario in pixel (punti):</translation>
+        <translation>Risoluzione dello schermo primario in pixel:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="399"/>
@@ -1735,7 +1735,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="258"/>
         <source>Map scale specification invalid or missing.</source>
-        <translation>Specifica della scala della mappa mancante o invalida.</translation>
+        <translation>Specifiche sulla scala della mappa mancante o invalida.</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="264"/>
@@ -1755,7 +1755,7 @@
     </message>
     <message>
         <source>Scale only</source>
-        <translation type="vanished">Scala soltanto</translation>
+        <translation>Scala da sola</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="553"/>
@@ -1772,7 +1772,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="113"/>
         <source>Map Georeferencing</source>
-        <translation>Georefernziazione mappa</translation>
+        <translation>Georeferenziazione mappa</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="190"/>
@@ -1844,7 +1844,7 @@
     </message>
     <message>
         <source>- from Proj.4 specification -</source>
-        <translation type="vanished">- dalla specifica di Proj 4 -</translation>
+        <translation>- dalla specifica di Proj.4 -</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="120"/>
@@ -1853,7 +1853,7 @@
     </message>
     <message>
         <source>CRS specification:</source>
-        <translation type="vanished">Specificazione CRS:</translation>
+        <translation>Specifica CRS:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
@@ -1863,7 +1863,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>&amp;Pick on map</source>
-        <translation>&amp;Preleva sulla mappa</translation>
+        <translation>&amp;Prendi nella mappa</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="135"/>
@@ -1928,7 +1928,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="207"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="93"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation>Sistema di riferimento delle &amp;coordinate:</translation>
+        <translation>&amp;Sistema di riferimento delle coordinate:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="214"/>
@@ -1963,7 +1963,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="464"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>La declinazione è cambiata. Vuoi anche ruotare il contenuto della mappa in corrispondenza del nuovo valore?</translation>
+        <translation>La declinazione è cambiata. Vuoi anche ruotare il contenuto della mappa in corrispondenza con il nuovo valore?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -1977,17 +1977,17 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="521"/>
         <source>Loading...</source>
-        <translation>Caricamneto...</translation>
+        <translation>Caricamento...</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="528"/>
         <source>locked</source>
-        <translation>Bloccato</translation>
+        <translation>bloccato</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="668"/>
         <source>Could not parse data.</source>
-        <translation>Impossibile intepretare i dati.</translation>
+        <translation>Impossibile interpretare i dati.</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="693"/>
@@ -2171,7 +2171,7 @@
     <message>
         <location filename="../src/core/objects/object.cpp" line="483"/>
         <source>Point object with undefined or wrong symbol at %1:%2.</source>
-        <translation>Oggetto di tipo punto con simbolo non definito o errato a %1:%2.</translation>
+        <translation>Oggetto puntiforme con simbolo non definito o errato a %1:%2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/native_file_format.cpp" line="95"/>
@@ -2216,7 +2216,7 @@
         <location filename="../src/fileformats/xml_file_format.cpp" line="1001"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="1021"/>
         <source>Error while loading the undo/redo steps at %1:%2: %3</source>
-        <translation>Errore durante il caricamento dell&apos;operazione in cronologia in %1:%2: %3</translation>
+        <translation>Errore durante il caricamento della cronologia delle operazioni in %1:%2: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="47"/>
