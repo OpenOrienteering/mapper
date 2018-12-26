@@ -1050,7 +1050,7 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished">&lt;b&gt;Click&lt;/b&gt;: Termina le impostazioni dell&apos;oggetto. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Termina le impostazioni dell&apos;oggetto. </translation>
     </message>
 </context>
 <context>
@@ -1684,7 +1684,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="66"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>Gauss-Krueger, datum: Potsdam</translation>
+        <translation>Gauss-Krueger, riferimento: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
@@ -2612,7 +2612,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="286"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>Ridimensiona il simbolo di tratteggio presso gli angoli</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="531"/>
@@ -3663,7 +3663,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="833"/>
         <source>K</source>
-        <translation type="unfinished">K</translation>
+        <translation>K</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="834"/>
@@ -5262,7 +5262,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="392"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Non posso impostare &quot;%1&quot; SRS con GDAL: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="326"/>
@@ -6486,7 +6486,7 @@ Vuoi salvare i tuoi cambiamenti?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="288"/>
         <source>&apos;%1&apos; is stored in a regular location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; e&apos; salvato in locazione regolare.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="291"/>
