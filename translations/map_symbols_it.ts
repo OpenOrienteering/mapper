@@ -565,7 +565,7 @@ Location is the centre of gravity of the symbol.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.1</comment>
             <translation>Buche di roccia, grotte o ingressi di miniere che possono rappresentare un pericolo per il corridore. Profondità minima: 1 m.
-Il luogo è al centro di gravità del simbolo.
+La posizione è nel baricentro simbolo.
 Buche di roccia più larghe di 5 m di diametro devono essere esagerate e disegnate con il simbolo di roccia (201,202).</translation>
     </message>
         <message>
@@ -579,7 +579,7 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.2</comment>
             <translation>Buca di roccia, roccia o miniera con un ingresso ben evidente che può essere un pericolo per il corridore. Profondità minima: 1 m.
-L&apos;oggetto è posto nel centro di gravità del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
+La posizione è nel baricentro del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
 Buche di roccia con più di 5 m di diametro dovrebbero essere esagerate e disegnate usando il simbolo di roccia (201, 202).</translation>
     </message>
         <message>
@@ -593,7 +593,7 @@ Location is the centre of gravity of the symbol, and the symbol should point int
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
             <comment>Description of symbol 203.9</comment>
             <translation>Buca di roccia, roccia o miniera con un ingresso ben evidente che può essere un pericolo per il corridore. Profondità minima: 1 m.
-L&apos;oggetto è posto nel centro di gravità del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
+L&apos;oggetto è posto nel baricentro del simbolo, il simbolo deve puntare verso l&apos;ingresso della grotta.
 Buche di roccia con più di 5 m di diametro dovrebbero essere esagerate e disegnate usando il simbolo di roccia (201, 202).</translation>
     </message>
         <message>
@@ -692,8 +692,8 @@ Per essere in grado di mostrare evidenti differenze di altezza all&apos;interno 
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area che è coperta da così tanti massi da non poter essere disegnato individualmente è disegnata con dei triangoli orientati casualmente con un rapporto dei lati 8:6:5. Devono essere usati un minimo di due triangoli. La percorribilità è indicata dalla densità dei triangoli. Per permettere di mostrare la differenza fra pietraie con una differenza nella dimensione dei massi significativa si possono ingrandire i triangoli del 20%.</translation>
+    </message>
         <message>
             <source>Boulder field, single triangle, enlarged</source>
             <comment>Name of symbol 208.2</comment>
@@ -713,8 +713,8 @@ Per essere in grado di mostrare evidenti differenze di altezza all&apos;interno 
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
 Density: 2–3 symbols / mm² (31%-47%). To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
             <comment>Description of symbol 209</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area che è coperta da così tanti massi da non poter essere disegnati individualmente e che influiscono sulla velocità di corsa, è disegnata con dei triangoli orientati casualmente. Devono essere usati un minimo di due triangoli. Density: 2-3 simboli / mm2 (31%-47%). Per permettere di mostrare un evidente differenza all&apos;interno di una pietraia, si possono allargare alcuni triangoli del 120%.</translation>
+    </message>
         <message>
             <source>Stony ground, slow running</source>
             <comment>Name of symbol 210</comment>
@@ -726,8 +726,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno roccioso o pietroso che riduce la velocità di corsa al 60-80%.
+I puntini dovrebbero essere distribuiti casualmente ma non interferire con la rappresentazione di importanti caratteristiche del terreno e oggetti.
+Il numero minimo di puntini è tre (ingombro 10 m x 10 m).
+Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i puntini non devono essere disposti in modo da creare una linea.</translation>
+    </message>
         <message>
             <source>Stony ground, individual dot</source>
             <comment>Name of symbol 210.1</comment>
@@ -739,8 +742,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 210.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno roccioso o pietroso che riduce la velocità di corsa al 60-80%.
+I puntini dovrebbero essere distribuiti casualmente ma non interferire con la rappresentazione di importanti caratteristiche del terreno e oggetti.
+Il numero minimo di puntini è tre (ingombro 10 m x 10 m).
+Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i puntini non devono essere disposti in modo da creare una linea.</translation>
+    </message>
         <message>
             <source>Stony ground, walk</source>
             <comment>Name of symbol 211</comment>
@@ -752,8 +758,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 8 m x 8 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 211</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno roccioso o pietroso che riduce di molto la velocità di corsa (circa al 20-60%).
+I puntini dovrebbero essere distribuiti casualmente ma non interferire con la rappresentazione di importanti caratteristiche del terreno e oggetti.
+Il numero minimo di puntini è tre (ingombro 8 m x 8 m).
+Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i puntini non devono essere disposti in modo da creare una linea.</translation>
+    </message>
         <message>
             <source>Stony ground, fight</source>
             <comment>Name of symbol 212</comment>
@@ -765,8 +774,11 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 7 m x 7 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
             <comment>Description of symbol 212</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno roccioso o pietroso che è difficilmente attraversabile (meno del 20% della velocità di corsa).
+I puntini dovrebbero essere distribuiti casualmente ma non interferire con la rappresentazione di importanti caratteristiche del terreno e oggetti.
+Il numero minimo di puntini è tre (ingombro 7 m x 7 m).
+Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i puntini non devono essere disposti in modo da creare una linea.</translation>
+    </message>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 213</comment>
@@ -812,83 +824,83 @@ Trincee collassate o facilmente attraversabili dovrebbero essere disegnate come 
         <message>
             <source>Uncrossable body of water, with bank line</source>
             <comment>Name of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua non attraversabile, con linea di riva</translation>
+    </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La linea di riva enfatizza che l&apos;elemento non è attraversabile. Specchi d&apos;acqua molto grandi possono essere disegnati con il colore al 70%. Piccoli specchi d&apos;acqua o che si stringono in alcuni parti devono essere sempre mostrati con colore pieno.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water</source>
             <comment>Name of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua non attraversabile</translation>
+    </message>
         <message>
             <source>The black bank line emphasises that the feature is uncrossable. Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La linea di riva enfatizza che l&apos;elemento non è attraversabile. Specchi d&apos;acqua molto grandi possono essere disegnati con il colore al 70%. Piccoli specchi d&apos;acqua o che si stringono in alcuni parti devono essere sempre mostrati con colore pieno.</translation>
+    </message>
         <message>
             <source>Uncrossable body of water, bank line</source>
             <comment>Name of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua non attraversabile, linea di riva</translation>
+    </message>
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una linea di riva nera indica che l&apos;elemento non può essere attraversato.</translation>
+    </message>
         <message>
             <source>Shallow body of water, with outline</source>
             <comment>Name of symbol 302</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua poco profondo, con bordo</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Uno specchio d&apos;acqua poco profondo o stagionale può essere disegnato usando un bordo tratteggiato. Piccoli specchi d&apos;acqua poco profondi possono essere disegnato con 100% blu (senza bordo).</translation>
+    </message>
         <message>
             <source>Shallow body of water</source>
             <comment>Name of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua poco profondo</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).</source>
             <comment>Description of symbol 302.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Uno specchio d&apos;acqua poco profondo o stagionale può essere disegnato usando un bordo tratteggiato. Piccoli specchi d&apos;acqua poco profondi possono essere disegnato con 100% blu (senza bordo).</translation>
+    </message>
         <message>
             <source>Shallow body of water, solid outline</source>
             <comment>Name of symbol 302.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua poco profondo, bordo pieno</translation>
+    </message>
         <message>
             <source>Use this symbol to represent regular outline for shallow body of water.</source>
             <comment>Description of symbol 302.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Usa questo simbolo per disegnare un bordo normale per uno specchio d&apos;acqua poco profondo.</translation>
+    </message>
         <message>
             <source>Shallow body of water, dashed outline</source>
             <comment>Name of symbol 302.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Specchio d&apos;acqua poco profondo, bordo tratteggiato</translation>
+    </message>
         <message>
             <source>A shallow seasonal or periodic body of water may be represented using a dashed 0.10 outline.</source>
             <comment>Description of symbol 302.3</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Uno specchio d&apos;acqua poco profondo o stagionale può essere disegnato usando un contorno tratteggiato da 0.10 .</translation>
+    </message>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Buca d&apos;acqua</translation>
+    </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.</source>
             <comment>Description of symbol 303</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una buca riempita d&apos;acqua o uno specchio d&apos;acqua troppo piccolo per essere disegnato in scala. La posizione è il baricentro del simbolo, e il simbolo è orientato a nord.</translation>
+    </message>
         <message>
             <source>Crossable watercourse</source>
             <comment>Name of symbol 304</comment>
@@ -976,119 +988,129 @@ The symbol is orientated to north.</source>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Striscia di palude</translation>
+    </message>
         <message>
             <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.</source>
             <comment>Description of symbol 309</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una palude troppo stretta (meno di 5 metri di larghezza) per essere disegnata con il simbolo di palude.</translation>
+    </message>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Palude indistinta</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una palude indistinta, stagionale o un&apos;area con un passaggio graduale fra palude e terreno asciutto, in ogni caso attraversabile. Il limite è generalmente poco evidente e la vegetazione simile a quella nei dintorni.
+Il simbolo deve essere combinato con altri simboli per dare informazioni sulla percorribilità e il tipo di vegetazione.</translation>
+    </message>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Palude indistinta, dimensione minima</translation>
+    </message>
         <message>
             <source>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
 The symbol shall be combined with other symbols to show runnability and openness.
 The symbol is orientated to north.</source>
             <comment>Description of symbol 310.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una palude indistinta, stagionale o un&apos;area con un passaggio graduale fra palude e terreno asciutto, in ogni caso attraversabile. Il limite è generalmente poco evidente e la vegetazione simile a quella nei dintorni.
+Il simbolo deve essere combinato con altri simboli per dare informazioni sulla percorribilità e il tipo di vegetazione.
+Il simbolo è orientato a nord.</translation>
+    </message>
         <message>
             <source>Well, fountain or water tank</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Fontana, pozzo o cisterna</translation>
+    </message>
         <message>
             <source>A prominent well, fountain, water tank or captive spring.</source>
             <comment>Description of symbol 311</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un evidente pozzo, fontana, cisterna o sorgente invasata.</translation>
+    </message>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 312</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sorgente</translation>
+    </message>
         <message>
             <source>A source of water.
 Location is the centre of gravity of the symbol, and the symbol is orientated to open downstream.</source>
             <comment>Description of symbol 312</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Una fonte d&apos;acqua.
+La posizione è nel baricentro del simbolo, e il simbolo è orientato con l&apos;apertura verso valle.</translation>
+    </message>
         <message>
             <source>Prominent water feature</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oggetto particolare d&apos;acqua</translation>
+    </message>
         <message>
             <source>Prominent water feature
 The symbol is orientated to north.</source>
             <comment>Description of symbol 313</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oggetto particolare d&apos;acqua
+Il simbolo è orientato a nord.</translation>
+    </message>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno aperto</translation>
+    </message>
         <message>
             <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</source>
             <comment>Description of symbol 401</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno aperto con un suolo (erba, muschio o simili) che permette una corsa più veloce di quella tipica del bosco. Se le aree gialle diventano dominanti si può usare una gradazione di giallo al 75%.
+Non si può combinare con altri simboli di area con eccezione del simbolo 113 (terreno sconnesso), simbolo 208 (pietraia) e simboli di palude (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno semiaperto</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un area con alberi e cespugli sparsi in un terreno aperto viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Alberi singoli particolarmente evidenti possono essere aggiunti usando il simbolo 417 (Albero isolato). Se le aree colorate di giallo diventano dominanti può essere usata una sfumatura del giallo al 75%.
+Non si può combinare con altri simboli di area con eccezione del simbolo 113 (terreno sconnesso), simbolo 208 (pietraia) e simboli di palude (308, 310).</translation>
+    </message>
         <message>
             <source>Open land with scattered bushes</source>
             <comment>Name of symbol 402.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno semiaperto cespuglioso</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
             <comment>Description of symbol 402.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un area con alberi e cespugli sparsi in un terreno aperto viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Alberi singoli particolarmente evidenti possono essere aggiunti usando il simbolo 417 (Albero isolato). Se le aree colorate di giallo diventano dominanti può essere usata una sfumatura del giallo al 75%.
+Non si può combinare con altri simboli di area con eccezione del simbolo 113 (terreno sconnesso), simbolo 208 (pietraia) e simboli di palude (308, 310).</translation>
+    </message>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno aperto grezzo</translation>
+    </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be left out, exaggerated or shown using symbol 401 (open land).</source>
             <comment>Description of symbol 403</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sterpaglie, area con alberi caduti, area con alberi appena piantati (più bassi di 1 m) o un altro terreno con una sterpaglie o erba alta che permette una velocità di corsa simile a quella tipica del bosco.
+Può essere combinata con il simbolo 407 (sottobosco) o 409 (sottobosco fitto) per mostrare una velocità di corsa rallentata.
+Area minima: 1 mm x 1 mm (ingombro 15 m x 15 m). Aree più piccole non devono essere disegnate, oppure esagerate e disegnate usando il simbolo 401 (terreno aperto).</translation>
+    </message>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Terreno semiaperto grezzo</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
@@ -1097,13 +1119,16 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. 
+I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Solo la variante con i pallini bianchi può essere combinata con il simbolo 407 (sottobosco) o 409 (sottobosco fitto) per mostrare un rallentamento nella corsa.
+Il simbolo è orientato a nord.
+Larghezza minima: 1.5 mm (ingombro 22.5 m). Area minima: 2.5 mm x 2.5 mm. Aree più piccole non devono essere disegnate oppure esagerate o deve essere usato il simbolo 403 (aperto grezzo).</translation>
+    </message>
         <message>
             <source>Rough open land with scattered bushes</source>
             <comment>Name of symbol 404.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Semiaperto grezzo cespuglioso</translation>
+    </message>
         <message>
             <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
 The dots may be white (scattered trees) or green (scattered bushes/thickets). Only the white dot variant can be combined with symbol 407 (vegetation, slow
@@ -1112,58 +1137,61 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</source>
             <comment>Description of symbol 404.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. 
+I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Solo la variante con i pallini bianchi può essere combinata con il simbolo 407 (sottobosco) o 409 (sottobosco fitto) per mostrare un rallentamento nella corsa.
+Il simbolo è orientato a nord.
+Larghezza minima: 1.5 mm (ingombro 22.5 m). Area minima: 2.5 mm x 2.5 mm. Aree più piccole non devono essere disegnate oppure esagerate o deve essere usato il simbolo 403 (aperto grezzo).</translation>
+    </message>
         <message>
             <source>Forest</source>
             <comment>Name of symbol 405</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Bosco</translation>
+    </message>
         <message>
             <source>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.</source>
             <comment>Description of symbol 405</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Il tipico bosco facilmente percorribile per quel tipo di terreno. Se nel bosco non ci sono aree facilmente percorribili allora non deve esserci per forza bianco sulla mappa.</translation>
+    </message>
         <message>
             <source>Vegetation, slow running</source>
             <comment>Name of symbol 406</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, corsa lenta</translation>
+    </message>
         <message>
             <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
             <comment>Description of symbol 406</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con vegetazione densa (visibilità bassa) che riduce la corsa al 60-80% della velocità normale.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 1</source>
             <comment>Name of symbol 406.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione percorribile in una direzione, 1</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 406.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
+    </message>
         <message>
             <source>Vegetation, slow running, good visibility</source>
             <comment>Name of symbol 407</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sottobosco</translation>
+    </message>
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con un sottobosco fitto ma mantenendo una buona visibilità (rovi, erica, cespugli bassi o rami tagliati) che riducono la velocità di corsa al 60-80% del normale. Non bisogna combinare questo simbolo con il simbolo 406 o 408.</translation>
+    </message>
         <message>
             <source>Vegetation, walk</source>
             <comment>Name of symbol 408</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione, cammina</translation>
+    </message>
         <message>
             <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
             <comment>Description of symbol 408</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con alberi fitti o boscaglia (bassa visibilità) che riduce la velocità di corsa al 20-60% del normale.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
