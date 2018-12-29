@@ -1195,34 +1195,34 @@ Larghezza minima: 1.5 mm (ingombro 22.5 m). Area minima: 2.5 mm x 2.5 mm. Aree p
         <message>
             <source>Vegetation runnable in one direction, 2</source>
             <comment>Name of symbol 408.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione percorribile in una direzione, 2</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Quando un&apos;area di bosco permette la corsa in una direzione ma non nelle altre, vengono lasciate delle strisce bianche sullo sfondo verde nella direzione percorribile.</translation>
+    </message>
         <message>
             <source>Vegetation runnable in one direction, 2, 20%</source>
             <comment>Name of symbol 408.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Vegetazione percorribile in una direzione, 2, 20%</translation>
+    </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, light green stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 408.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Quando un&apos;area di bosco permette la corsa in una direzione ma non nelle altre, vengono lasciate delle strisce bianche sullo sfondo verde nella direzione percorribile.</translation>
+    </message>
         <message>
             <source>Vegetation, walk, good visibility</source>
             <comment>Name of symbol 409</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Sottobosco fitto</translation>
+    </message>
         <message>
             <source>An area of good visibility that is difficult to run through due to for instance undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
 Areas of good visibility that are very difficult to run or impassable are represented using symbol 410 (vegetation, fight) or 411 (vegetation, impassable).</source>
             <comment>Description of symbol 409</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con una buona visibilità ma attraverso cui è difficile correre per colpa del sottobosco (rovi, erica, cespugli bassi o rami tagliati) che riduce la velocità di corsa al 20-60% del normale. Aree con buona visibilità ma molto difficili da attraversare sono disegnate con il simbolo 410 (vegetazione, combatti).</translation>
+    </message>
         <message>
             <source>Vegetation, fight</source>
             <comment>Name of symbol 410</comment>
