@@ -1427,8 +1427,8 @@ Ingombro: 7.5 m x 7.5 m.</translation>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 419</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Oggetto particolare vegetale</translation>
+    </message>
         <message>
             <source>Footprint: 13.5 m x 13.5 m.</source>
             <comment>Description of symbol 419</comment>
@@ -1437,38 +1437,38 @@ Ingombro: 7.5 m x 7.5 m.</translation>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 501</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Area pavimentata, con bordo</translation>
+    </message>
         <message>
             <source>An area with a firm level surface such as asphalt, hard gravel, tiles, concrete or the like. Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
             <comment>Description of symbol 501</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con una superficie compatta come l&apos;asfalto, ghiaia compatta, piastrelle, autobloccanti, sanpietrini, cemento o selciato di ogni tipo. Le aree pavimentate dovrebbero essere limitate o contornate da una linea nera sottile quando hanno un limite netto.</translation>
+    </message>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 501.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Area pavimentata</translation>
+    </message>
         <message>
             <source>An area with a firm level surface such as asphalt, hard gravel, tiles, concrete or the like.</source>
             <comment>Description of symbol 501.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Un&apos;area con una superficie compatta come l&apos;asfalto, ghiaia compatta, piastrelle, autobloccanti, sanpietrini, cemento o selciato di ogni tipo.</translation>
+    </message>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 501.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Area pavimentata, bordo</translation>
+    </message>
         <message>
             <source>Paved areas should be bordered (or framed) by a thin black line where they have a distinct boundary.</source>
             <comment>Description of symbol 501.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Le aree pavimentate dovrebbero essere bordate o divise da una linea nera sottile quando hanno un limite netto.</translation>
+    </message>
         <message>
             <source>Wide road, minimum width</source>
             <comment>Name of symbol 502</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Strada, dimensione minima</translation>
+    </message>
         <message>
             <source>The width should be drawn to scale, but not smaller than the minimum width (0.3 +
 2*0.14 mm – footprint 8.7 m)
@@ -1477,23 +1477,24 @@ symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) 
 feature is so close to the road edge that it cannot practically be shown as a separate
 symbol.</source>
             <comment>Description of symbol 502</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La larghezza deve essere disegnata in scala, ma non più stretta della dimensione minima (0.3 + 2*0.14 mm - ingombro 8.7 mm).
+Il bordo esterno può essere sostituito da altri simboli con linea nera, come il simbolo 516 (recinto), 518 (recinto non attraversabile), 513 (muretto) o 515 (muro non attraversabile) se l&apos;elemento è così vicino al bordo della strada da non essere possibile disegnarlo come un simbolo separato.</translation>
+    </message>
         <message>
             <source>Wide road, 0.5mm width</source>
             <comment>Name of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Strada, 0.5 mm larghezza</translation>
+    </message>
         <message>
             <source>Formerly &quot;502 Major road&quot;, provided for migration from ISOM 2000. Use of this symbol is discouraged for new maps.</source>
             <comment>Description of symbol 502.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>La vecchia &quot;502 Strada principale&quot;, simbolo creato per la conversione dalla ISOM 2000. L&apos;uso di questo simbolo è scoraggiato nelle nuove mappe.</translation>
+    </message>
         <message>
             <source>Road with two carriageways</source>
             <comment>Name of symbol 502.2</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>Strada con due carreggiate</translation>
+    </message>
         <message>
             <source>A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with other black line symbols, such as symbol 516 (fence), 518 (impassable fence), 513 (wall) or 515 (impassable wall) if the feature is so close to the road edge that it cannot practically be shown as a separate symbol.</source>
             <comment>Description of symbol 502.2</comment>
