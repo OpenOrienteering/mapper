@@ -3382,7 +3382,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="954"/>
         <source>Paint on template</source>
-        <translation>Disegna sul Template</translation>
+        <translation>Dipingi sul Template</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="551"/>
@@ -3392,7 +3392,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="551"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>La mappa è correntemente in modifica. Terminare la modifica prima di salvare.</translation>
+        <translation>La mappa è attualmente in modifica. Termina la modifica prima di salvare.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="556"/>
@@ -3429,12 +3429,12 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="895"/>
         <source>Replace symbol set...</source>
-        <translation>Rimpiazza l&apos;insieme dei simboli...</translation>
+        <translation>Rimpiazza la galleria di simboli...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="900"/>
         <source>Georeferencing...</source>
-        <translation>Georefernziazione...</translation>
+        <translation>Georeferenziazione...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="902"/>
@@ -3454,7 +3454,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"/>
         <source>Tag editor</source>
-        <translation>Editor di tag</translation>
+        <translation>Editor dei tag</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="911"/>
@@ -3484,12 +3484,12 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="929"/>
         <source>Cut free form hole</source>
-        <translation>Ritaglia liberando da un buco</translation>
+        <translation>Ritaglia un buco</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="930"/>
         <source>Cut round hole</source>
-        <translation>Ritaglia un buco tondo</translation>
+        <translation>Ritaglia un buco rotondo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="931"/>
@@ -3503,7 +3503,7 @@ Importare comunque i dati?</translation>
     </message>
     <message>
         <source>Scale object(s)</source>
-        <translation type="vanished">Scala oggetto(i)</translation>
+        <translation>Scala dimensioni oggetto</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="943"/>
@@ -3523,7 +3523,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="950"/>
         <source>Cutout</source>
-        <translation>Ritaglio (tieni interno)</translation>
+        <translation>Ritaglia (tieni interno)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="951"/>
@@ -3698,7 +3698,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="869"/>
         <source>Select nothing</source>
-        <translation>Seleziona nulla</translation>
+        <translation>Deseleziona</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="870"/>
@@ -3728,7 +3728,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="896"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation>Assegna i nuovi simboli con una tabella di riferimento</translation>
+        <translation>Assegna i nuovi simboli con una tabella di sostituzione</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
