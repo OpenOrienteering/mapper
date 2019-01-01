@@ -346,7 +346,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="163"/>
         <source>Custom process color:</source>
-        <translation>Colore di processo custom:</translation>
+        <translation>Colore di processo personalizzato:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="220"/>
         <source>Custom RGB color:</source>
-        <translation>Colore RGB custom:</translation>
+        <translation>Colore RGB personalizzato:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="226"/>
@@ -3114,7 +3114,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="885"/>
         <source>Set custom zoom factor...</source>
-        <translation>Imposta fattore di zoom a scelta...</translation>
+        <translation>Imposta fattore di zoom personalizzato...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="892"/>
@@ -3756,7 +3756,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1230"/>
         <source>Select template...</source>
-        <translation>Selziona template...</translation>
+        <translation>Seleziona template...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1236"/>
@@ -3771,17 +3771,17 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1288"/>
         <source>Select symbol</source>
-        <translation>Selezioneare un simbolo</translation>
+        <translation>Seleziona simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1328"/>
         <source>Hide top bar</source>
-        <translation>Nascondi la barra top</translation>
+        <translation>Nascondi la barra superiore</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1331"/>
         <source>Show top bar</source>
-        <translation>Mostra la barra top</translation>
+        <translation>Mostra la barra superiore</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
@@ -3812,12 +3812,12 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1610"/>
         <source>Print / Export is not available in this program version!</source>
-        <translation>Stampa / Esportazione non disponibili in questa versione di programma!</translation>
+        <translation>Stampa / Esportazione non disponibile in questa versione del programma!</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1630"/>
         <source>No undo steps available.</source>
-        <translation>Non ci sono operazioni da annullare.</translation>
+        <translation>Non ci sono indietro disponibili.</translation>
     </message>
     <message>
         <source>Cut %1 object(s)</source>
@@ -3846,7 +3846,7 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1804"/>
         <source>Set custom zoom factor</source>
-        <translation>Imposta un fattore di zoom custom</translation>
+        <translation>Imposta un fattore di zoom personalizzato</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1804"/>
@@ -3876,12 +3876,12 @@ Importare comunque i dati?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1941"/>
         <source>Scale all symbols</source>
-        <translation>Scala tutti i smboli</translation>
+        <translation>Scala tutti i simboli</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1941"/>
         <source>Scale to percentage:</source>
-        <translation>Scalatura a percentuale:</translation>
+        <translation>Scala in percentuale:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1965"/>
@@ -3914,9 +3914,9 @@ Importare comunque i dati?</translation>
 symbol
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation>No
-simbol
-selez</translation>
+        <translation>Scegli
+un 
+simbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2139"/>
@@ -3924,19 +3924,19 @@ selez</translation>
 symbols
 selected</source>
         <extracomment>Keep it short. Should not be much longer per line than the longest word in the original.</extracomment>
-        <translation>selez
-simbol
-multipli</translation>
+        <translation>Più di un
+simbolo
+selezion</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2235"/>
         <source>Place point objects on the map.</source>
-        <translation>Piazza oggetti di tipo punto sulla mappa.</translation>
+        <translation>Posiziona oggetti puntiformi sulla mappa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2235"/>
         <source>Select a point symbol to be able to use this tool.</source>
-        <translation>Per poter usare questo strumento selezionare un simbolo di tipo &quot;punto&quot;.</translation>
+        <translation>Seleziona un simbolo puntiforme per usare questo strumento.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2237"/>
@@ -3965,7 +3965,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2245"/>
         <source>Fill bounded areas.</source>
-        <translation>Riemie aree delimitate.</translation>
+        <translation>Riempi aree delimitate.</translation>
     </message>
     <message>
         <source>Deletes the selected object(s).</source>
@@ -3974,12 +3974,12 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2350"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation>Imposta la direzionedei motivi di riempimento o degli oggetti di tipo punto.</translation>
+        <translation>Imposta la direzione dei motivi di riempimento o degli oggetti puntiformi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2350"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation>Selezionare un oggetto di tipo area avente motivo ruotabile oppure un punto ruotabile per attivare questo strumento.</translation>
+        <translation>Seleziona un oggetto d&apos;area con motivo ruotabile oppure un punto ruotabile per attivare questo strumento.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2380"/>
@@ -4014,17 +4014,17 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>Fonde i buchi dell&apos;area assieme, oppure unisce i buchi con il contorno dell&apos;oggetto per tagliare questa parte.</translation>
+        <translation>Fonde insieme i buchi di un&apos;area, oppure fonde i buchi con il contorno dell&apos;oggetto tagliando la parte compresa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
         <source>Select one area object with holes to activate this tool.</source>
-        <translation>Selezionare un oggetto di area con buchi per attivare questo strumento.</translation>
+        <translation>Seleziona un oggetto d&apos;area con buchi per attivare questo strumento.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <source>Create a cutout of some objects or the whole map.</source>
-        <translation>Ricava un ritaglio foro da oggetti o dall&apos;intera mappa.</translation>
+        <translation>Ricava un ritaglio di alcuni oggetti o dell&apos;intera mappa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
@@ -4035,7 +4035,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2400"/>
         <source>Cut away some objects or everything in a limited area.</source>
-        <translation>Taglia via alcuni oggetti o tutto in una are alimitata.</translation>
+        <translation>Taglia via alcuni oggetti o tutto in una area delimitata.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2419"/>
@@ -4050,7 +4050,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3144"/>
         <source>Merging holes failed.</source>
-        <translation>Fusione dei fori fallita.</translation>
+        <translation>Fusione dei buchi fallita.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3412"/>
@@ -4070,7 +4070,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3534"/>
         <source>Move selected objects to</source>
-        <translation>Muove gli oggetti a</translation>
+        <translation>Muovi gli oggetti selezionati in</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3588"/>
@@ -4136,7 +4136,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="878"/>
         <source>Pan</source>
-        <translation>Sposta/inquadra</translation>
+        <translation>Spostati</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="890"/>
@@ -4166,12 +4166,12 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2247"/>
         <source>Write text on the map.</source>
-        <translation>Scrive testo sulla mappa.</translation>
+        <translation>Scrivi testo sulla mappa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2247"/>
         <source>Select a text symbol to be able to use this tool.</source>
-        <translation>Per usare questo strumento selezionare un simbolo di tipo testo.</translation>
+        <translation>Per usare questo strumento selezionare un simbolo di testo.</translation>
     </message>
     <message>
         <source>Duplicate the selected object(s).</source>
@@ -4199,7 +4199,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2356"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>Connette le estremità di due tracciati che sono vicine.</translation>
+        <translation>Connetti le estremità dei tracciati vicine fra loro.</translation>
     </message>
     <message>
         <source>Cut the selected object(s) into smaller parts.</source>
@@ -4208,7 +4208,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2360"/>
         <source>Select at least one line or area object to activate this tool.</source>
-        <translation>Per attivare questo strumento, selezionare almeno un oggetto di tipo area.</translation>
+        <translation>Per attivare questo strumento, selezionare almeno un oggetto d&apos;area.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2369"/>
@@ -4218,7 +4218,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2369"/>
         <source>Select a single area object to activate this tool.</source>
-        <translation>Per attivare questo strumento, selezionare un singolo oggetto di tipo area.</translation>
+        <translation>Per attivare questo strumento, selezionare un solo oggetto d&apos;area.</translation>
     </message>
     <message>
         <source>Rotate the selected object(s).</source>
@@ -4231,7 +4231,7 @@ multipli</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>Trasforma i trcciati composti da linee rette (spezzate) in percorsi arrotondati di tipo splines/bezier.</translation>
+        <translation>Trasforma i tracciati poligonali in percorsi arrotondati di bezier.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
@@ -4260,7 +4260,7 @@ multipli</translation>
     </message>
     <message>
         <source>%1 object(s) duplicated</source>
-        <translation type="vanished">%1 oggetto(i) duplicato(i)</translation>
+        <translation>%1 oggetto duplicato(i)</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2745"/>
@@ -4308,11 +4308,11 @@ multipli</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template</source>
-        <translation type="vanished">Disegna a mano libera su nu template</translation>
+        <translation>Disegna a mano libera su un template</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template. Create or load a template which can be drawn onto to activate this button</source>
-        <translation type="vanished">Disegna a mano libera su un template. Creare o caricare un tamplate su cui si possa disegnare per attivare questo pulsante</translation>
+        <translation>Disegna a mano libera su un template. Crea o carica un template su cui si possa disegnare per attivare questo pulsante</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3894"/>
@@ -4710,7 +4710,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
         <source>Note: Boundary length and area are correct only if there are no self-intersections and holes are used as such.</source>
-        <translation>Nota:La lunghezza del contorno e le arre sono corrette solo in assenza di auto intersezioni e i buchi sono usati come tali.</translation>
+        <translation>Nota: La lunghezza del contorno e le aree sono corrette solo in assenza di auto intersezioni e se i buchi sono usati come tali.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="150"/>
@@ -4738,7 +4738,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="70"/>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation>Scegli la scala e l&apos;insieme dei simboli per la nuova mappa.</translation>
+        <translation>Scegli la scala e la galleria di simboli per la nuova mappa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="77"/>
@@ -4748,12 +4748,12 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="82"/>
         <source>Symbol sets:</source>
-        <translation>Insieme simboli:</translation>
+        <translation>Galleria di simboli:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="87"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>Solo insiemi simboli corrispondenti alla scala selezionata</translation>
+        <translation>Mostra solo gallerie di simboli corrispondenti alla scala selezionata</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4767,18 +4767,18 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="171"/>
         <source>Empty symbol set</source>
-        <translation>Insieme simboli vuoto</translation>
+        <translation>Galleria di simboli vuota</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="209"/>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="264"/>
         <source>Load symbol set from a file...</source>
-        <translation>Carica l&apos;insieme dei simboli da un file...</translation>
+        <translation>Carica la galleria di simboli da un file...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="260"/>
         <source>All symbol set files</source>
-        <translation>Tutti i file di simboli</translation>
+        <translation>Tutti i file di galleria di simboli</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="262"/>
@@ -4801,12 +4801,12 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1608"/>
         <source>Registration black is exported as a regular color.</source>
-        <translation>Il nero &quot;registration&quot; è esportato come un colore regolare.</translation>
+        <translation>Il nero &quot;registration&quot; è esportato come un colore normale.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1716"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Impossibile esportare lo &quot;shift&quot; di un motivo per un oggetto di tipo area</translation>
+        <translation>Impossibile esportare lo &quot;shift&quot; di un motivo per un oggetto d&apos;area</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1851"/>
@@ -4832,7 +4832,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2207"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>Nel simbolo linea &quot;%1&quot;, impossibile rappresentare la cmbinazione di terminali e giunzioni.</translation>
+        <translation>Nel simbolo linea &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2231"/>
@@ -4857,12 +4857,12 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2404"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>Nel simbolo area &quot;%1&quot;, assumiamo un &quot;shifted rows&quot;come  montivo di tipo punto. Questo può essere sia corretto che non.</translation>
+        <translation>Nel simbolo area &quot;%1&quot;, assumiamo un &quot;shifted rows&quot;come motivo puntiforme. Questo può essere sia corretto che no.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2443"/>
         <source>In text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Nel simbolo testo %1: è impostata una spaziatura dei caratteri custom, questa implementazione non corrisponde ancora al comportamento di OCAD</translation>
+        <translation>Nel simbolo testo %1: è impostata una spaziatura dei caratteri personalizzata, questa implementazione non corrisponde ancora al comportamento di OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2450"/>
@@ -4913,7 +4913,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="215"/>
         <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>Il colore &quot;Calibrazione del nero&quot; è importato come colore speciale.</translation>
+        <translation>Il colore &quot;registration nero&quot; è importato come colore speciale.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="279"/>
@@ -4963,22 +4963,22 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="764"/>
         <source>During import of text symbol %1: ignoring custom weight (%2)</source>
-        <translation>Durante l&apos;importazione del simbolo testo %1: viene ignorato il peso custom (%2)</translation>
+        <translation>Durante l&apos;importazione del simbolo testo %1: viene ignorato il peso personalizzato (%2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="769"/>
         <source>During import of text symbol %1: custom character spacing is set, its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Durante l&apos;importazione del simbolo testo %1: risulta attivato la spaziatura caratteri custom, la sua implementazione non corrisponde ancora al comportamento di OCAD</translation>
+        <translation>Durante l&apos;importazione del simbolo testo %1: risulta attivata la spaziatura caratteri personalizzata, la sua implementazione non corrisponde ancora al comportamento di OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="774"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Durante l&apos;importazione del simbolo testo %1: viene ignorato la spaziatura custom delle parole (%2%)</translation>
+        <translation>Durante l&apos;importazione del simbolo testo %1: ignorata la spaziatura personalizzata delle parole (%2%)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="779"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Durante l&apos;importazione del simbolo testo %1: viene ignorato l&apos;indentazione custom (%2/%3)</translation>
+        <translation>Durante l&apos;importazione del simbolo testo %1: viene ignorato l&apos;indentazione personalizzata (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="800"/>
@@ -4993,7 +4993,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="961"/>
         <source>Unable to import rectangle object</source>
-        <translation>Impossibile importare l&apos;oggetto rettangolo</translation>
+        <translation>Impossibile importare l&apos;oggetto rettangolare</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1008"/>
@@ -5174,22 +5174,22 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1990"/>
         <source>Ignoring custom weight (%1).</source>
-        <translation>Pesatura custom ignorata (%1).</translation>
+        <translation>Pesatura personalizzata ignorata (%1).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2027"/>
         <source>Custom character spacing may be incorrect.</source>
-        <translation>La spaziatura custom dei caratteri potrebbe non essere corretta.</translation>
+        <translation>La spaziatura personalizzata dei caratteri potrebbe non essere corretta.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2032"/>
         <source>Ignoring custom word spacing (%1 %).</source>
-        <translation>La paziatura custom delle parole viene ignorata (%1 %).</translation>
+        <translation>La spaziatura personalizzata delle parole viene ignorata (%1 %).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2056"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>L&apos;indentazione custom viene ignorata (%1/%2).</translation>
+        <translation>L&apos;indentazione personalizzata viene ignorata (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2078"/>
@@ -5693,7 +5693,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
-        <translation>Area custom</translation>
+        <translation>Area personalizzata</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="190"/>
@@ -6292,7 +6292,7 @@ Vuoi salvare i tuoi cambiamenti?</translation>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="86"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Imposta la direzione dei motivi di riempimento o degli oggetti di tipo punto. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Imposta la direzione dei motivi di riempimento o degli oggetti puntiformi. </translation>
     </message>
 </context>
 <context>
@@ -7837,12 +7837,12 @@ La versione massima supportata è %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="214"/>
         <source>Custom tabulator positions</source>
-        <translation>Posizioni dei tabulatori custom</translation>
+        <translation>Posizioni dei tabulatori personalizzati</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="475"/>
         <source>Add custom tabulator</source>
-        <translation>Aggiungi tabulatore custom</translation>
+        <translation>Aggiungi tabulatore personalizzato</translation>
     </message>
 </context>
 <context>
