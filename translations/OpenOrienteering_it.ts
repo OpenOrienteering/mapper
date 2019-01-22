@@ -4080,7 +4080,7 @@ selezion</translation>
     </message>
     <message>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects? This cannot be undone.</source>
-        <translation>Vuoi rimuovere questa parte di mappa %1 con tutti i suoi oggetti?  Questa operazione non potrà essere annullata.</translation>
+        <translation>Vuoi rimuovere questa parte di mappa %1 con tutti i suoi oggetti? Questa operazione non potrà essere annullata.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3686"/>
@@ -4175,7 +4175,7 @@ selezion</translation>
     </message>
     <message>
         <source>Duplicate the selected object(s).</source>
-        <translation type="vanished">Duplica l&apos;oggetto selezionato(i).</translation>
+        <translation>Duplica l&apos;oggetto selezionato.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2339"/>
@@ -4246,7 +4246,7 @@ selezion</translation>
     </message>
     <message>
         <source>Switches the symbol of the selected object(s) to the selected symbol.</source>
-        <translation type="vanished">Commuta i simboli degli oggetti selezionati nel nuovo simbolo selezionato.</translation>
+        <translation>Cambia i simboli degli oggetti selezionati nel nuovo simbolo selezionato.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2414"/>
@@ -4269,7 +4269,7 @@ selezion</translation>
     </message>
     <message>
         <source>No objects were selected because there are no objects with the selected symbol(s).</source>
-        <translation type="vanished">Non è stato selezionato nessun oggetto perché non ce ne sono contenenti il simbolo selezionato.</translation>
+        <translation>Non è stato selezionato nessun oggetto perché non ce ne sono del simbolo selezionato.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3103"/>
@@ -4279,7 +4279,7 @@ selezion</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3117"/>
         <source>Unification failed.</source>
-        <translation>Unificazione fallita.</translation>
+        <translation>Unione fallita.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3123"/>
@@ -4595,7 +4595,7 @@ define the colors there.</source>
 
 Inizia definendo dei colori:
 Seleziona: Simboli -&gt; Finestra Colori
-per aprire la dialog dei colori
+per aprire la finestra dei colori
 e procedi alla definizione.</translation>
     </message>
     <message>
@@ -4631,7 +4631,7 @@ Templates .&gt; Apri Template...</translation>
         <source>Hint: Hold the middle mouse button to drag the map,
 zoom using the mouse wheel, if available.</source>
         <translation>Suggerimento: Tieni premuto il tasto centrale del mouse per trascinare la mappa,
-se disponibile si può zoomare con la rotella del mouse.</translation>
+zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     </message>
 </context>
 <context>
@@ -5004,12 +5004,12 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1200"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1307"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>Impossibile importare il template: sfondo &quot;%1&quot; non sembra che sia una immagine raster</translation>
+        <translation>Impossibile importare il template: sfondo &quot;%1&quot; non sembra essere una immagine raster</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1412"/>
         <source>Trying to import a text object with unknown coordinate format</source>
-        <translation>Tentativo di importazone di un oggetto testo avente formato delle coordinate sconosciuto</translation>
+        <translation>Tentativo di importazione di un oggetto testo avente formato delle coordinate sconosciuto</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1523"/>
@@ -5084,7 +5084,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="154"/>
         <source>In text symbol %1 &apos;%2&apos;: %3</source>
-        <translation>Nei simboli testol %1 &apos;%2&apos;: %3</translation>
+        <translation>Nei simboli testo %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="412"/>
@@ -5105,12 +5105,12 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="585"/>
         <source>Unsupported type &quot;%1&quot;.</source>
-        <translation>Tipo non supprtato &quot;%1&quot;.</translation>
+        <translation>Tipo non supportato &quot;%1&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="678"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Impossibile importare il template/sfondo: &quot;%1&quot; non è un tipo supportato.</translation>
+        <translation>Impossibile importare il template: &quot;%1&quot; non è un tipo supportato.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="926"/>
@@ -5148,7 +5148,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1217"/>
         <source>Skipped secondary point symbol.</source>
-        <translation>Simbolo punto secondario Saltato.</translation>
+        <translation>Simbolo punto secondario saltato.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1253"/>
@@ -5329,7 +5329,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="521"/>
         <source>Not enough coordinates.</source>
-        <translation>Non abbastanza coordinate.</translation>
+        <translation>Coordinate non sufficienti.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="564"/>
@@ -5349,7 +5349,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="460"/>
         <source>Select template to draw onto</source>
-        <translation>Selezionare il tempalte su cui disegnare</translation>
+        <translation>Selezionare il template su cui disegnare</translation>
     </message>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="487"/>
@@ -5385,7 +5385,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/tools/pan_tool.cpp" line="80"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muove la mappa. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muovi la mappa. </translation>
     </message>
 </context>
 <context>
@@ -5402,7 +5402,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="987"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Add a coordinate. &lt;b&gt;%1+Click&lt;/b&gt;: Change the selected coordinate. </source>
-        <translation>&lt;b&gt;Click&lt;/b&gt;: Aggiunge una coordinata. &lt;b&gt;%1+Click&lt;/b&gt;: Cambia la coordinata selezionata. </translation>
+        <translation>&lt;b&gt;Click&lt;/b&gt;: Aggiungi una coordinata. &lt;b&gt;%1+Click&lt;/b&gt;: Cambia la coordinata selezionata. </translation>
     </message>
 </context>
 <context>
@@ -5460,7 +5460,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="136"/>
         <source>Inner color:</source>
-        <translation>Colore dell&apos;interno:</translation>
+        <translation>Colore interno:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="139"/>
@@ -5485,7 +5485,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
         <source>Line cap:</source>
-        <translation>Cappello della linea:</translation>
+        <translation>Nodi della linea:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
@@ -5501,7 +5501,7 @@ se disponibile si può zoomare con la rotella del mouse.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="177"/>
         <source>square</source>
-        <translation>quadrato</translation>
+        <translation>squadrato</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
