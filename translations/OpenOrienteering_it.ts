@@ -5598,24 +5598,24 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="343"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muova l&apos;area di stampa. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muovi l&apos;area di stampa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="347"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muove la mappa. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muovi la mappa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="352"/>
         <location filename="../src/gui/print_tool.cpp" line="357"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s border. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muove il bordo dell&apos;area di stampa. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muovi il bordo dell&apos;area di stampa. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="362"/>
         <location filename="../src/gui/print_tool.cpp" line="367"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the print area&apos;s borders. </source>
-        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muove i bordi dell&apos;area di stampa. </translation>
+        <translation>&lt;b&gt;Trascina&lt;/b&gt;: Muovi i bordi dell&apos;area di stampa. </translation>
     </message>
 </context>
 <context>
@@ -5643,12 +5643,12 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
-        <translation>Ritratto (Portrite)</translation>
+        <translation>Verticale</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
-        <translation>Paesaggio (Landscape)</translation>
+        <translation>Orizzontale</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="154"/>
@@ -5673,7 +5673,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Width:</source>
-        <translation>LArghezza:</translation>
+        <translation>Larghezza:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="205"/>
@@ -5749,7 +5749,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
-        <translation>Simola la sovrastampa</translation>
+        <translation>Simula la sovrastampa</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="279"/>
@@ -5795,7 +5795,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="533"/>
         <source>Save to PDF</source>
-        <translation>Salva su PDF</translation>
+        <translation>Salva in PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="244"/>
