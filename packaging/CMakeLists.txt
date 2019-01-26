@@ -267,7 +267,7 @@ if(Mapper_PACKAGE_PROJ)
 	if(PROJ4_DIR AND NOT PROJ4_ROOT)
 		# Cf. find_package documentation
 		string(REGEX REPLACE "/CMake$|/cmake$" "" PROJ4_ROOT "${PROJ4_DIR}")            # U
-		string(REGEX REPLACE "/PROJ4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}")              # U, W
+		string(REGEX REPLACE "/PROJ4[^/]*$|/proj4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
 		string(REGEX REPLACE "/cmake$" "" PROJ4_ROOT "${PROJ4_ROOT}")                   # U
 		string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
 	elseif(NOT PROJ4_ROOT)
