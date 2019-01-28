@@ -2164,15 +2164,15 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			if (!object->coords[i].isHolePoint() && i < object->coords.size() - 1)
 				continue;
 			
-			if (object->coords[i].isPositionEqualTo(object->coords[start]))
+			auto coord = object->coords[start];
+			coord.setHolePoint(object->coords[i].isHolePoint());
+			coord.setClosePoint(true);
+			coord.setCurveStart(false);
+			if (object->coords[i].isPositionEqualTo(coord))
 			{
 				// This segment has the canonical closed form: The coordinates
 				// of the last point are identical to the first point.
-				MapCoord coord = object->coords[start];
-				coord.setCurveStart(false);
-				coord.setHolePoint(object->coords[i].isHolePoint());
-				coord.setClosePoint(true);
-				object->coords[i] = coord;
+				object->coords[i].setFlags(coord.flags());
 			}
 			else if (is_area)
 			{
@@ -2180,10 +2180,7 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 				// by inserting an extra end point.
 				using difference_type = decltype(object->coords)::difference_type;
 				auto const after_i = begin(object->coords) + static_cast<difference_type>(i + 1);
-				auto new_coord = object->coords.insert(after_i, object->coords[start]);
-				new_coord->setCurveStart(false);
-				new_coord->setHolePoint(object->coords[i].isHolePoint());
-				new_coord->setClosePoint(true);
+				object->coords.insert(after_i, coord);
 				object->coords[i].setHolePoint(false);
 				++i;
 			}
