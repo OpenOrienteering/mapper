@@ -834,12 +834,26 @@ void SymbolRenderWidget::deleteSymbols()
 	}
 	
 	// delete symbols in order
+	bool yes_to_all = false;
 	for (auto* symbol : saved_selection)
 	{
-		if (map->existsObjectWithSymbol(symbol))
+		if (!yes_to_all && map->existsObjectWithSymbol(symbol))
 		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(symbol->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
+			auto response = QMessageBox::warning(this, tr("Confirmation"),
+			                                     tr("The map contains objects with the symbol \"%1\"."
+			                                        " Deleting it will delete those objects and clear the undo history!"
+			                                        " Do you really want to do that?").arg(symbol->getName()),
+			                                     QMessageBox::Yes | QMessageBox::No | QMessageBox::YesToAll);
+			switch (response)
+			{
+			case QMessageBox::No:
 				continue;
+			case QMessageBox::YesToAll:
+				yes_to_all = true;
+				break;
+			default:
+				;
+			}
 		}
 		map->deleteSymbol(map->findSymbolIndex(symbol));
 	}
