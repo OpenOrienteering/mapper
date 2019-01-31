@@ -989,6 +989,12 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 {
 	Q_ASSERT(!isObjectSelected(object));
+
+	// we omit hidden and protected objects from any kind of selection
+	const auto* object_symbol = object->getSymbol();
+	if (object_symbol->isProtected() || object_symbol->isHidden())
+		return;
+
 	object_selection.insert(object);
 	addSelectionRenderables(object);
 	if (!first_selected_object)
