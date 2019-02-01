@@ -24,6 +24,8 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QCursor>
+#include <QInputDialog>
+#include <QKeyEvent>
 #include <QLocale>
 #include <QPainter>
 #include <QPixmap>
@@ -75,6 +77,7 @@ void ScaleTool::updateStatusText()
 
 void ScaleTool::clickRelease()
 {
+	prev_scaling_center = scaling_center;
 	scaling_center = cur_pos_map;
 	updateDirtyRect();
 	updateStatusText();
@@ -90,6 +93,18 @@ void ScaleTool::dragStart()
 }
 
 
+namespace {
+void doScaling(ScaleTool::ObjectsRange objects, double scaling_factor, const MapCoordF *group_center)
+{
+	for (auto object : objects)
+	{
+		const auto object_scaling_center = group_center ? *group_center : MapCoordF(object->getExtent().center());
+		object->scale(object_scaling_center, scaling_factor);
+	}
+}
+}  // anonymous namespace
+
+
 void ScaleTool::dragMove()
 {
 	resetEditedObjects();
@@ -100,8 +115,7 @@ void ScaleTool::dragMove()
 	
 	auto scaling_length = (cur_pos_map - scaling_center).length();
 	scaling_factor = qMax(minimum_length, scaling_length) / qMax(minimum_length, reference_length);
-	for (auto object : editedObjects())
-		object->scale(scaling_center, scaling_factor);
+	doScaling(editedObjects(), scaling_factor, group_scaling ? &scaling_center : nullptr);
 	
 	updatePreviewObjects();
 	updateStatusText();
@@ -115,18 +129,83 @@ void ScaleTool::dragFinish()
 }
 
 
+bool ScaleTool::keyPressEvent(QKeyEvent* event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Control:
+		group_scaling = false;
+		updateStatusText();
+		updateDirtyRect();
+		return false; // not consuming Ctrl
+	}
+
+	return false;
+}
+
+
+bool ScaleTool::keyReleaseEvent(QKeyEvent* event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_Control:
+		group_scaling = true;
+		updateStatusText();
+		updateDirtyRect();
+		return false; // not consuming Ctrl
+	}
+
+	return false;
+}
+
+bool ScaleTool::mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
+{
+	Q_UNUSED(event)
+	Q_UNUSED(map_coord)
+
+	// restore scaling center originally moved by the doubleclick's first click
+	scaling_center = prev_scaling_center;
+
+	bool ok;
+	auto scale_to_pct = QInputDialog::getDouble(widget, tr("Scale object(s)"),
+	                                        tr("Percent:"), 100, 0, 1e4, 1, &ok,
+	                                        Qt::WindowFlags(), 5);
+	if (ok)
+	{
+		startEditing(map()->selectedObjects());
+		doScaling(editedObjects(), scale_to_pct/100, group_scaling ? &scaling_center : nullptr);
+		finishEditing();
+	}
+
+	return true;
+}
+
 
 void ScaleTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
-	painter->setPen(Qt::white);
-	painter->setBrush(Qt::NoBrush);
-	
-	QPoint center = widget->mapToViewport(scaling_center).toPoint();
-	painter->drawEllipse(center, 3, 3);
-	painter->setPen(Qt::black);
-	painter->drawEllipse(center, 4, 4);
+	// /todo - this is the same circle as in rotate tool
+	// move the function to Util and use the shared code
+	auto draw_center_sign = [&](MapCoordF circle_center){
+		painter->setPen(Qt::white);
+		painter->setBrush(Qt::NoBrush);
+
+		QPoint center = widget->mapToViewport(circle_center).toPoint();
+		painter->drawEllipse(center, 3, 3);
+		painter->setPen(Qt::black);
+		painter->drawEllipse(center, 4, 4);
+	};
+
+	if (group_scaling)
+	{
+		draw_center_sign(scaling_center);
+	}
+	else
+	{
+		for (const auto object : map()->selectedObjects())
+			draw_center_sign(MapCoordF(object->getExtent().center()));
+	}
 }
 
 

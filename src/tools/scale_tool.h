@@ -57,14 +57,20 @@ protected:
 	void dragMove() override;
 	void dragFinish() override;
 	
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
+	bool mouseDoubleClickEvent(QMouseEvent *event, const MapCoordF &map_coord, MapWidget *widget) override;
+
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	int updateDirtyRectImpl(QRectF& rect) override;
 	void objectSelectionChangedImpl() override;
 	
 	MapCoordF scaling_center;
+	MapCoordF prev_scaling_center;
 	double reference_length = 0;
 	double scaling_factor   = 1;
+	bool group_scaling = true;
 };
 
 
