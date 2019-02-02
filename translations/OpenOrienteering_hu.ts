@@ -5982,7 +5982,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>A kép mentése sikertelen. Nem létezik az útvonal vagy nincs elegendő jogosultsága.</translation>
+        <translation>A kép mentése sikertelen. Létezik az útvonal? Van elegendő jogosultsága?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
