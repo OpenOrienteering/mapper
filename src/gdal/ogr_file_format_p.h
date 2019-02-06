@@ -277,12 +277,12 @@ protected:
 	MapCoord toMapCoord(double x, double y) const;
 	
 	/**
-	 * A MapCoordConstructor which interpretes the given coordinates in millimeters on paper.
+	 * A MapCoordConstructor which interprets the given coordinates in millimeters on paper.
 	 */
 	MapCoord fromDrawing(double x, double y) const;
 	
 	/**
-	 * A MapCoordConstructor which interpretes the given coordinates as projected.
+	 * A MapCoordConstructor which interprets the given coordinates as projected.
 	 */
 	MapCoord fromProjected(double x, double y) const;
 	

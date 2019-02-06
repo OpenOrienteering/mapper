@@ -209,7 +209,7 @@ public:
 	/**
 	 * Sets the georeferencing state.
 	 * 
-	 * This is only neccessary to decrease the state to Local, as otherwise it
+	 * This is only necessary to decrease the state to Local, as otherwise it
 	 * will be automatically changed when setting the respective values.
 	 */
 	void setState(State value);

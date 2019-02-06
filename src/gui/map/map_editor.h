@@ -271,7 +271,7 @@ public slots:
 	void redo();
 	/** Cuts the selected object(s). */
 	void cut();
-	/** Copies the selecte object(s). */
+	/** Copies the selected object(s). */
 	void copy();
 	/** Pastes the object(s) from the clipboard. */
 	void paste();

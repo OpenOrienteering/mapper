@@ -256,7 +256,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
-	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// This is in contradiction to the documentation for QKeyEvent::modifiers(),
 	// but the documented behaviour of (parent) QInputEvent::modifiers().
 	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
 	switch (event->key())
@@ -286,7 +286,7 @@ bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
-	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// This is in contradiction to the documentation for QKeyEvent::modifiers(),
 	// but the documented behaviour of (parent) QInputEvent::modifiers().
 	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
 	switch (event->key())

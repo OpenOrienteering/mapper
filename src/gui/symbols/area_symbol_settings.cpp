@@ -125,7 +125,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
 	
 	
-	/* From here, stacked widgets are used to unify the layout of pattern type dependant fields. */
+	/* From here, stacked widgets are used to unify the layout of pattern type dependent fields. */
 	auto single_line_headline = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_headline, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(single_line_headline);

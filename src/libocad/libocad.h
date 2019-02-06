@@ -651,7 +651,7 @@ const char *ocad_str2(char **buf, const str *ostr);
 
 /** Calculates the bounds of the given path and returns it in the provided rectangle. Returns
  *  FALSE and does not modify the rectangle if and only if npts is equal to zero. Otherwise,
- *  the rectangle is modifed and TRUE is returned.
+ *  the rectangle is modified and TRUE is returned.
  *
  *  The "prect" array must have at least four elements. The bounds are returned in the order
  *  { minX, minY, maxX, maxY }.
@@ -661,7 +661,7 @@ bool ocad_path_bounds(s32 *prect, u32 npts, const OCADPoint *pts);
 
 /** Calculates the bounds of the given path and returns it in the provided rectangle. Returns
  *  FALSE and does not modify the rectangle if and only if npts is equal to zero. Otherwise,
- *  the rectangle is modifed and TRUE is returned.
+ *  the rectangle is modified and TRUE is returned.
  */
 bool ocad_path_bounds_rect(OCADRect *prect, u32 npts, const OCADPoint *pts);
 

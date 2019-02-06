@@ -48,14 +48,14 @@ public:
 	/** Save to a file.
 	 *  @param path the path to save to
 	 *  @param format the file format
-	 *  @return true if saving was sucessful, false on errors
+	 *  @return true if saving was successful, false on errors
 	 */
 	virtual bool saveTo(const QString& path, const FileFormat& format);
 	
 	/** Export to a file, but don't change modified state
 	 *  with regard to the original file.
 	 *  @param path the path to export to
-	 *  @return true if saving was sucessful, false on errors
+	 *  @return true if saving was successful, false on errors
 	 */
 	bool exportTo(const QString& path);
 
@@ -63,7 +63,7 @@ public:
 	 *  with regard to the original file.
 	 *  @param path the path to export to
 	 *  @param format the file format
-	 *  @return true if saving was sucessful, false on errors
+	 *  @return true if saving was successful, false on errors
 	 */
 	virtual bool exportTo(const QString& path, const FileFormat& format);
 
@@ -71,7 +71,7 @@ public:
 	 *  @param path the path to load from
 	 *  @param dialog_parent Alternative parent widget for all dialogs.
 	 *      If nullptr, implementations should use MainWindowController::window.
-	 *  @return true if loading was sucessful, false on errors
+	 *  @return true if loading was successful, false on errors
 	 */
 	virtual bool loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent = nullptr);
 	

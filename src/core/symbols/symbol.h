@@ -520,7 +520,7 @@ public:
 		/**
 		 * Operator which compares two symbols by dominant colors.
 		 * 
-		 * \return True if s1's dominant color exists with lower prority then s2's dominant color.
+		 * \return True if s1's dominant color exists with lower priority then s2's dominant color.
 		 */
 		bool operator() (const Symbol* s1, const Symbol* s2) const;
 		

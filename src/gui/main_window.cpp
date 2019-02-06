@@ -295,7 +295,7 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 									return keyword.compare(text, Qt::CaseInsensitive) == 0;
 						}))
 					{
-						// Such warnings may indiciate missing setting of QAction::NoRole
+						// Such warnings may indicate missing setting of QAction::NoRole
 						// on a (new) item, or incomplete translations for Mapper or Qt.
 						qDebug("Unexpected TextHeuristicRole for \"%s > %s\"",
 						       qUtf8Printable(menubar_action->text()),

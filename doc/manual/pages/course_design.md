@@ -8,7 +8,7 @@ keywords: Courses, Symbol sets
 
 OpenOrienteering Mapper doesn't have a sophisticated course planning feature.
 The Course Design symbol set provides basic support for designing maps with
-courses and control desriptions. It contains the overprinting symbols from the
+courses and control descriptions. It contains the overprinting symbols from the
 ISOM 2000 and the control descriptions from IOF's "International Specification
 for Control Descriptions - 2004". See the [IOF Homepage] for details.
 
@@ -50,7 +50,7 @@ the nearest 0.1 km. The height climb is given in metres rounded to the nearest
 
 The heading is followed by lines describing the start location, the individual
 controls, and special routes. The description of start and individual controls
-uses eight colums which are refered to as A...H.
+uses eight columns which are referred to as A...H.
 
 | Column | Description |
 | ------ | ----------- |

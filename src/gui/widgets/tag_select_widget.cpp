@@ -251,7 +251,7 @@ void TagSelectWidget::moveRow(bool up)
 	if (row == -1)
 		row = max_row - 1;
 
-	// Cant move first row up or last row down
+	// Can't move first row up or last row down
 	if ((up && row < 1) || (!up && row == max_row - 1))
 		return;
 

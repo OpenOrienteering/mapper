@@ -247,7 +247,7 @@ public:
 	/** Returns the view rotation (in radians). */
 	double getRotation() const;
 	
-	/** Sets the view roation (in radians). */
+	/** Sets the view rotation (in radians). */
 	void setRotation(double value);
 	
 	
@@ -334,7 +334,7 @@ signals:
 	/**
 	 * Indicates a change of the viewed area of the map.
 	 * 
-	 * @param change The aspects that have chaneged.
+	 * @param change The aspects that have changed.
 	 */
 	void viewChanged(ChangeFlags change);
 	

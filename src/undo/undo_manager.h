@@ -242,7 +242,7 @@ protected:
 	 * method does not remove elements from undo_steps.
 	 * Instead, it replaces steps which are no longer reachable via valid steps,
 	 * or which exceed the max_undo_steps limit, with invalid NoOpUndoStep objects,
-	 * thus releasing the memory which was orginally occupied by now obsolete
+	 * thus releasing the memory which was originally occupied by now obsolete
 	 * undo steps.
 	 */
 	void validateUndoSteps();
@@ -252,7 +252,7 @@ protected:
 	 * 
 	 * This method removes elements from undo_steps which are no longer reachable
 	 * via valid steps, or which exceed the max_undo_steps limit, with invalid
-	 * NoOpUndoStep objects, thus releasing the memory which was orginally
+	 * NoOpUndoStep objects, thus releasing the memory which was originally
 	 * occupied by now obsolete undo steps.
 	 */
 	void validateRedoSteps();

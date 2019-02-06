@@ -46,7 +46,7 @@ namespace FileDialog {
 	 * 
 	 * Adds upper case version of the extension when needed.
 	 * Sets QFileDialog::HideNameFilterDetails when the length of any particular
-	 * filter exceeds a certain treshold.
+	 * filter exceeds a certain threshold.
 	 */
 	void adjustParameters(QString& filter, QFileDialog::Options& options);
 	

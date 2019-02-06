@@ -390,7 +390,7 @@ public:
 	 * std::invalid_argument if the (beginning of) text does not
 	 * contain valid data.
 	 *
-	 * This constructor will initialize the boundsOffset() if neccessary.
+	 * This constructor will initialize the boundsOffset() if necessary.
 	 * Otherwise it will apply the BoundsOffset() and throw a std::range_error
 	 * if the adjusted coordinates are out of bounds for qint32.
 	 */
@@ -402,7 +402,7 @@ public:
 	
 	/** Loads the MapCoord in xml format from the stream.
 	 *
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
@@ -410,7 +410,7 @@ public:
 	
 	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
 	 * 
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
@@ -420,7 +420,7 @@ public:
 	
 	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
 	 * 
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
@@ -544,7 +544,7 @@ public:
 	 * Changes the length of the vector.
 	 * 
 	 * The MapCoordF is interpreted as a vector and adjusted to a vector of the
-	 * same direction but having the given lenght.
+	 * same direction but having the given length.
 	 * It does nothing if the vector is very close to (0, 0).
 	 */
 	void setLength(qreal new_length);

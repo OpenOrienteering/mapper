@@ -148,7 +148,7 @@ public:
 	explicit TextObject(const Symbol* symbol = nullptr);
 	
 protected:
-	/** Constructs a TextObject, initalized from the given prototype. */
+	/** Constructs a TextObject, initialized from the given prototype. */
 	explicit TextObject(const TextObject& proto);
 	
 public:
@@ -189,8 +189,8 @@ public:
 	
 	
 	/** Set position and size. 
-	 *  The midpoint is set to (mid_x, mid_y), the size is specifed by the parameters
-	 *  width and heigt.
+	 *  The midpoint is set to (mid_x, mid_y), the size is specified by the parameters
+	 *  width and height.
 	 */
 	void setBox(qint32 mid_x, qint32 mid_y, qreal width, qreal height);
 	

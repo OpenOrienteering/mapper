@@ -112,7 +112,7 @@ protected:
 	/**
 	 * Replaces the given object in the map with the replacement objects.
 	 * 
-	 * Creates the neccessary undo steps. If replacement is empty, the object is
+	 * Creates the necessary undo steps. If replacement is empty, the object is
 	 * deleted without replacement.
 	 * 
 	 * @todo Consider moving this to a more general class (Map, MapPart).

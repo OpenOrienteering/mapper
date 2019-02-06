@@ -85,7 +85,7 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 	});
 	QVERIFY(found == end(entries));
 	entries.push_back({context, source, comment, {} });
-	// n occurences of ';' means n+1 translations, plus translation template -> n+2
+	// n occurrences of ';' means n+1 translations, plus translation template -> n+2
 	entries.back().translations.reserve(std::size_t(map_symbol_translations.count(';')) + 2);
 }
 

@@ -73,7 +73,7 @@ public:
 	length_type clen;
 	
 	
-	/** Default contructor. */
+	/** Default constructor. */
 	constexpr PathCoord() noexcept;
 	
 	/** Copy constructor. */

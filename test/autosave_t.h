@@ -81,7 +81,7 @@ private slots:
 	/** @brief Check the AutosaveTestDocument implementation of autosave(). */
 	void autosaveTestDocumentTest();
 	
-	/** @brief Tests successfull autosaving. */
+	/** @brief Tests successful autosaving. */
 	void successTest();
 	
 	/** @brief Tests temporary failing autosaving. */

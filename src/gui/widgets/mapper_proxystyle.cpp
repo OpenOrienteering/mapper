@@ -53,7 +53,7 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 	switch (element)
 	{
 	case PE_IndicatorButtonDropDown:
-		overridden_element = PE_PanelButtonTool; // Enforce same appearence. Workaround QWindowsStyle quirk.
+		overridden_element = PE_PanelButtonTool; // Enforce same appearance. Workaround QWindowsStyle quirk.
 		// fall through
 	case PE_PanelButtonCommand:
 	case PE_PanelButtonBevel:

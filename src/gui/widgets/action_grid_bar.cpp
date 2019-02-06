@@ -247,7 +247,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		item.button->updateGeometry();
 	}
 	
-	// Set row/col strech. The first and last row/col acts as margin in case
+	// Set row/col stretch. The first and last row/col acts as margin in case
 	// the available area is not a multiple of the button size.
 	if (direction == Horizontal)
 	{

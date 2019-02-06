@@ -120,7 +120,7 @@ QSize TextBrowserDialog::sizeHint() const
 
 void TextBrowserDialog::sourceChanged(const QUrl&)
 {
-	; // Nothing, to be overriden in subclasses
+	; // Nothing, to be overridden in subclasses
 }
 
 void TextBrowserDialog::updateWindowTitle()

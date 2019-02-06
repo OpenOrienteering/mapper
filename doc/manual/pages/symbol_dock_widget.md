@@ -42,7 +42,7 @@ To show the symbol menu, right click the symbol pane:
 
  - The actions in the first section enable to create new symbols or edit the selected symbol.
  - The actions in the second section enable to copy/paste symbols.
- - In the third section, in additon to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions [switch symbol](toolbars.md#switch_symbol) and [fill / create border](toolbars.md#fill_create_border).
+ - In the third section, in addition to the possibility to select all symbols with the selected object, there are shortcuts to the two drawing functions [switch symbol](toolbars.md#switch_symbol) and [fill / create border](toolbars.md#fill_create_border).
  - The fourth section enables to hide all objects with a given symbol, for example to remove all paths from a map, and to protect all objects with a given symbol from editing. This is useful to make large area symbols static while editing other objects on top of them.
  - The last section offers actions for symbol selection and sorting.
 

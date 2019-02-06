@@ -25,7 +25,7 @@ This toggle switches the display of the [color window](color_dock_widget.md) on 
 #### Symbol set ID...
 
 Opens a dialog for changing the map's symbol set ID.
-The symbol set ID controls suggested symbol replacements during import and during explict map symbol set replacment.
+The symbol set ID controls suggested symbol replacements during import and during explicit map symbol set replacment.
 
 
 #### Scale all symbols...

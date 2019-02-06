@@ -2365,7 +2365,7 @@ bool OcdFileImport::importImplementation()
 		throw FileFormatException(tr("Invalid data."));
 	
 	auto header = reinterpret_cast<const Ocd::FileHeaderGeneric*>(buffer.constData());
-	if (header->vendor_mark != 0x0cad) // This also tests correct endianess...
+	if (header->vendor_mark != 0x0cad) // This also tests correct endianness...
 		throw FileFormatException(tr("Invalid data."));
 	
 	ocd_version = header->version;

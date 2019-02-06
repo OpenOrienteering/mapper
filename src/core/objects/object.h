@@ -210,7 +210,7 @@ public:
 	 * Checks if the given coord, with the given tolerance, is on this object.
 	 * 
 	 * With extended_selection, the coord is on point objects always
-	 * if it is whithin their extent, otherwise it has to be close to
+	 * if it is within their extent, otherwise it has to be close to
 	 * their midpoint. Returns a Symbol::Type which specifies on which
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
@@ -470,11 +470,11 @@ public:
 	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 protected:
-	/** Constructs a PathObject, initalized from the given prototype. */
+	/** Constructs a PathObject, initialized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
 public:
-	/** Constructs a PathObject, initalized from the given part of another object. */
+	/** Constructs a PathObject, initialized from the given part of another object. */
 	explicit PathObject(const PathPart& proto_part);
 	
 	/**
@@ -493,7 +493,7 @@ public:
 	bool validate() const override;
 	
 	
-	/** Checks the path for valid flags, and makes corrections as neccessary. */
+	/** Checks the path for valid flags, and makes corrections as necessary. */
 	void normalize();
 	
 	
@@ -668,7 +668,7 @@ public:
 	) const;
 	
 	/**
-	 * Calculates the closest control point coordinate to the given coordiante,
+	 * Calculates the closest control point coordinate to the given coordinate,
 	 * returns the squared distance of these points and the index of the control point.
 	 * 
 	 * \todo Convert out_distance_sq to double (so avoiding conversions).
@@ -971,7 +971,7 @@ public:
 	explicit PointObject(const Symbol* symbol = nullptr);
 	
 protected:
-	/** Constructs a PointObject, initalized from the given prototype. */
+	/** Constructs a PointObject, initialized from the given prototype. */
 	explicit PointObject(const PointObject& proto);
 	
 public:
@@ -984,7 +984,7 @@ public:
 	
 	PointObject& operator=(const PointObject& other) = delete;
 	
-	/** Replaces the content of this object by that of anothe. */
+	/** Replaces the content of this object by that of another. */
 	void copyFrom(const Object& other) override;
 	
 	

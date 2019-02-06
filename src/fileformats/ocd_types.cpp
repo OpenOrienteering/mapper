@@ -270,7 +270,7 @@ namespace Ocd
 			auto code = find_code(new_buffer);
 			if (Q_UNLIKELY(code >= 0x200))
 			{
-				// Code word length exeeds 9 bits.
+				// Code word length exceeds 9 bits.
 				throw std::length_error("Excess data during icon compression");
 			}
 			else if (code >= 0)

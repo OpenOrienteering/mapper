@@ -520,7 +520,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	
 	path->closeAllParts();
 	
-	// Obsolete: The resultung path is as simple as the bounding objects,
+	// Obsolete: The resulting path is as simple as the bounding objects,
 	// so better avoid the loss in precision from PathObject::simplify.
 	//   const auto simplify_epsilon = 1e-2;
 	//   path->simplify(nullptr, simplify_epsilon);

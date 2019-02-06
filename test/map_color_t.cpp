@@ -212,7 +212,7 @@ void MapColorTest::spotColorTest()
 {
 	QScopedPointer<MapColor> duplicate;
 	
-	// Initalizing a spot color.
+	// Initializing a spot color.
 	MapColor spot_cyan(QString::fromLatin1("Cyan"), 0);
 	spot_cyan.setSpotColorName(QString::fromLatin1("CYAN"));
 	QCOMPARE(spot_cyan.getSpotColorMethod(), MapColor::SpotColor);

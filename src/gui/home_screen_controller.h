@@ -62,7 +62,7 @@ public slots:
 	/** Sets whether to open the most recently used file on startup. */
 	void setOpenMRUFile(bool state);
 	
-	/** Sets the visiblity of the tip-of-the-day to state. */
+	/** Sets the visibility of the tip-of-the-day to state. */
 	void setTipsVisible(bool state);
 	
 	/** Moves to the tip following the current tip-of-the-day. */

@@ -40,7 +40,7 @@
 #include "core/symbols/symbol.h"
 
 
-// ### Local utilites ###
+// ### Local utilities ###
 
 namespace {
 

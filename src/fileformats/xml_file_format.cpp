@@ -260,7 +260,7 @@ bool XMLFileExporter::exportImplementation()
 		if (XMLFileFormat::active_version >= 6)
 		{
 			// Prevent Mapper versions < 0.6.0 from crashing
-			// when compatibilty mode is NOT activated
+			// when compatibility mode is NOT activated
 			// Incompatible feature: dense coordinates
 			barrier = new XmlElementWriter(xml, literal::barrier);
 			barrier->writeAttribute(literal::version, 6);
@@ -283,7 +283,7 @@ bool XMLFileExporter::exportImplementation()
 		{
 			{
 				// Prevent Mapper versions < 0.6.0 from crashing
-				// when compatibilty mode IS activated
+				// when compatibility mode IS activated
 				// Incompatible feature: new undo step types
 				XmlElementWriter barrier(xml, literal::barrier);
 				barrier.writeAttribute(literal::version, 6);

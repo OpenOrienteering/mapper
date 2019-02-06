@@ -56,7 +56,7 @@ class SymbolToolTip;
  * 
  * SymbolRenderWidget lets the user select symbols and perform actions on them.
  * It is a plain widget which does not implement scrolling but takes as much
- * height as neccessary for given width and number of symbols. Scrolling is
+ * height as necessary for given width and number of symbols. Scrolling is
  * realized by SymbolWidget.
  */
 class SymbolRenderWidget : public QWidget
@@ -311,7 +311,7 @@ protected:
 	 * An active tool could catch the selectedSymbolsChanged() signal and
 	 * finish its editing for that reason. It would than insert a new object to
 	 * the map and so trigger another change of selection. Emitting
-	 * selectedSymbolsChanged() via this method supresses behavior by setting
+	 * selectedSymbolsChanged() via this method suppresses behavior by setting
 	 * the selection_locked flag before emitting the actual signal and resetting
 	 * the flag on return.
 	 */
