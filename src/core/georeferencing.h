@@ -501,6 +501,8 @@ public:
 	 * The new value is calculated from the grivation and the convergence.
 	 * For a local georeferencing, the convergence is zero, and declination
 	 * is set to the same value as grivation.
+	 * Also useful when grivation is locked, and a change in convergence
+	 * necessitates an update to the declination.
 	 */
 	void initDeclination();
 	
