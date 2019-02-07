@@ -1,4 +1,6 @@
 # OpenOrienteering Mapper
+[![Packaging status](https://repology.org/badge/tiny-repos/openorienteering-mapper.svg)](https://repology.org/metapackage/openorienteering-mapper/versions)
+[![Translation status](https://hosted.weblate.org/widgets/openorienteering/-/svg-badge.svg)](https://hosted.weblate.org/engage/openorienteering/?utm_source=widget)
 
 ![Mapper Screenshot](https://www.openorienteering.org/mapper-manual/pages/images/main_window.png)
 
