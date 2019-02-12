@@ -52,46 +52,6 @@ extern "C" void registerProjFileHelper();
 #endif
 
 
-/**
- * When x varies according to longitude lam, and y varies according to
- * latitude phi, ProjectionDerivatives represents the derivatives of
- * those functions.
- */
-struct ProjectionDerivatives {
-   double dx_dlam;
-   double dy_dphi;
-};
-
-/**
- * An Ellipsoid is the ideal mathematical surface which a projection
- * transforms to a flat surface. A latitude and longitude coordinate pair
- * indicates a position on the Ellipsoid in Cartesian 3-dimensional
- * space.
- * 
- * This class provides some geometric analysis.
- * Units for the axes are meters.
- */
-class Ellipsoid
-{
-	double semimajor;
-	double semiminor;
-	double eccentricity;
-
-public:
-	Ellipsoid(double semimajor, double semiminor, double eccentricity);
-	Ellipsoid(const Ellipsoid&);
-	static Ellipsoid fromEccentricity(double semimajor, double eccentricity);
-	static Ellipsoid fromFlattening(double semimajor, double flattening);
-
-	/**
-     * The ellipsoid is projected to a tangent plane at the latitude
-     * phi, with an x axis along a parallel and a y axis along a meridian.
-     * Latitude is geodetic (the usual) and in radians (unusual).
-     * Returns the derivatives associated with that projection.
-	 */
-	ProjectionDerivatives derivativesAtPhi(double phi) const;
-};
-
 
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
@@ -140,11 +100,6 @@ public:
 	 * A shared PROJ.4 specification of a WGS84 geographic CRS.
 	 */
 	static const QString geographic_crs_spec;
-	
-	/**
-	 * A shared WGS84 reference ellipsoid.
-	 */
-	static const Ellipsoid shared_geographic_ellipsoid;
 	
 	
 	/**
@@ -425,13 +380,12 @@ public:
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
-
 	
 	/**
-	 * Calculates the convergence at the reference point.
+	 * Calculates the meridian convergence at the reference point.
 	 * 
 	 * The meridian convergence is the angle between grid north and true north.
-     * In case of deformation, the convergence varies with direction; this is an average.
+	 * In case of deformation, convergence varies with direction; this is an average.
 	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
 	 */
@@ -624,7 +578,6 @@ private:
 	LatLon geographic_ref_point;
 	
 	projPJ geographic_crs;
-	Ellipsoid geographic_ellipsoid;
 	
 };
 

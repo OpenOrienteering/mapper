@@ -146,49 +146,9 @@ namespace
 
 
 
-//### Ellipsoid ###
-
-Ellipsoid::Ellipsoid(double semimajor, double semiminor, double eccentricity)
-    : semimajor(semimajor)
-    , semiminor(semiminor)
-    , eccentricity(eccentricity)
-{
-}
-Ellipsoid::Ellipsoid(const Ellipsoid &that)
-    : semimajor(that.semimajor)
-    , semiminor(that.semiminor)
-    , eccentricity(that.eccentricity)
-{
-}
-Ellipsoid Ellipsoid::fromEccentricity(double semimajor, double eccentricity)
-{
-	const double factor = (1 - eccentricity)*(1 + eccentricity);
-	const double semiminor = factor < 0 ? 0.0 : std::sqrt(factor)*semimajor;
-	return Ellipsoid(semimajor, semiminor, eccentricity);
-}
-Ellipsoid Ellipsoid::fromFlattening(double semimajor, double flattening)
-{
-	const double ecc_squared = (2-flattening)*flattening;
-	const double eccentricity = ecc_squared < 0 ? 0.0 : std::sqrt(ecc_squared);
-	return fromEccentricity(semimajor, eccentricity);
-}
-ProjectionDerivatives Ellipsoid::derivativesAtPhi(double phi) const
-{
-	const double minor_major_tan = (semiminor/semimajor)*std::tan(phi);
-	const double radical = 1+(minor_major_tan*minor_major_tan);
-	const double radical_root = std::sqrt(radical);
-	const double dx_dlam = semimajor/radical_root;
-	const double cos = std::cos(phi);
-	const double dy_dphi = semiminor*semiminor/(semimajor*cos*cos*cos*radical*radical_root);
-	return ProjectionDerivatives {dx_dlam, dy_dphi};
-}
-
-
-
 //### Georeferencing ###
 
 const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
-const Ellipsoid Georeferencing::shared_geographic_ellipsoid = Ellipsoid::fromFlattening(6378137.0, 1.0/298.257223563);
 
 Georeferencing::Georeferencing()
 : state(Local),
@@ -199,8 +159,7 @@ Georeferencing::Georeferencing()
   grivation(0.0),
   grivation_error(0.0),
   map_ref_point(0, 0),
-  projected_ref_point(0, 0),
-  geographic_ellipsoid(shared_geographic_ellipsoid)
+  projected_ref_point(0, 0)
 {
 	static ProjSetup run_once;
 	
@@ -226,8 +185,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
-  geographic_ref_point(other.geographic_ref_point),
-  geographic_ellipsoid(other.geographic_ellipsoid)
+  geographic_ref_point(other.geographic_ref_point)
 {
 	updateTransformation();
 	
@@ -626,22 +584,34 @@ QTransform Georeferencing::getGridCompensation() const
 	if (state != Normal || !isValid())
 		return QTransform();
 
-    // Use ellipsoid to determine 4 points near reference point.
-	if (fabs(geographic_ref_point.latitude()) > 89.0)
-	{
-		// Using longitude and geographic orientation in the vicinity of the pole creates problems.
-		return QTransform();
-	}
-
-	const double lam = geographic_ref_point.longitude() * DEG_TO_RAD;
-	const double phi = geographic_ref_point.latitude() * DEG_TO_RAD;
 	const double delta = 1000.0; // meters
-	const ProjectionDerivatives d = geographic_ellipsoid.derivativesAtPhi(phi);
-	// Add to lam and phi so as to use 1 km baselines west-east and south-north.
-	const LatLon east_point = LatLon::fromRadiant(phi, lam + (delta/2/d.dx_dlam));
-	const LatLon north_point = LatLon::fromRadiant(phi + (delta/2/d.dy_dphi), lam);
-	const LatLon west_point = LatLon::fromRadiant(phi, lam - (delta/2/d.dx_dlam));
-	const LatLon south_point = LatLon::fromRadiant(phi - (delta/2/d.dy_dphi), lam);
+
+	QString local_crs_spec = QString::fromLatin1("+proj=sterea +lat_0=%1 +lon_0=%2 +ellps=WGS84 +units=m")
+	        .arg(geographic_ref_point.latitude(), 0, 'f')
+	        .arg(geographic_ref_point.longitude(), 0, 'f');
+	projPJ local_crs = pj_init_plus_no_defs(local_crs_spec);
+	if (!local_crs)
+		return QTransform();
+
+	// Determine 1 km baselines west-east and south-north on the ellipsoid.
+	double easting = delta/2, northing = 0;
+	int east_ret = pj_transform(local_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+	const LatLon east_point = LatLon::fromRadiant(northing, easting);
+
+	easting = 0, northing = delta/2;
+	int north_ret = pj_transform(local_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+	const LatLon north_point = LatLon::fromRadiant(northing, easting);
+
+	easting = -delta/2, northing = 0;
+	int west_ret = pj_transform(local_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+	const LatLon west_point = LatLon::fromRadiant(northing, easting);
+
+	easting = 0, northing = -delta/2;
+	int south_ret = pj_transform(local_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
+	const LatLon south_point = LatLon::fromRadiant(northing, easting);
+
+	if (!(east_ret == 0 && north_ret == 0 && west_ret == 0 && south_ret == 0))
+		return QTransform();
 
 	// Get projected coordinates on same meridian and on same parallel around reference point.
 	bool ok_east = 0;
@@ -664,7 +634,7 @@ QTransform Georeferencing::getGridCompensation() const
 	const double d_northing_dx = (projected_east.y() - projected_west.y()) / delta;
 	const double d_easting_dx = (projected_east.x() - projected_west.x()) / delta;
 
-	// A transform with a tiny determinant is nonsense for a map, and
+	// A transform with a tiny (or negative) determinant is nonsense for a map, and
 	// would cause blow-ups.
 	const double determinant = d_easting_dx*d_northing_dy - d_northing_dx*d_easting_dy;
 	if (determinant < 0.00000000001)
