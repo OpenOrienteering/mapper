@@ -235,21 +235,25 @@ public:
 	 * Returns the grid scale factor.
 	 * 
 	 * The grid scale factor is the ratio between a length in the grid and the
-	 * length on the earth model. It is applied as a factor to ground distances
-	 * to get grid plane distances.
+	 * length on the earth model in meters. It is applied as a factor to
+	 * ellipsoid distances to get grid plane distances.
 	 * 
-	 * Mapper doesn't explicitly deal with any other factors (elevation factor,
-	 * unit of measurement). Technically, this property can be used as a
-	 * combined factor.
+	 * Mapper doesn't explicitly deal with any other factors (elevation factor)
+	 * Technically, this property can be used as a combined factor.
 	 */
 	double getGridScaleFactor() const;
 	
 	/**
-	 * Sets the grid scale factor.
+	 * Sets the supplemental scale factor.
 	 * 
-	 * \see getGridScaleFactor()
+	 * The supplemental scale factor is the ratio between ellipsoid distances
+	 * length on the ground. It is applied as a factor to ground distances
+	 * to get ellipsoid distances.
+	 * 
+	 * Mapper doesn't explicitly deal with any other factors than grid scale.
+	 * This property can be used as elevation factor.
 	 */
-	void setGridScaleFactor(double value);
+	void setSupplementalScaleFactor(double value);
 	
 	
 	/**
@@ -556,7 +560,9 @@ private:
 	State state;
 	
 	unsigned int scale_denominator;
+	double combined_scale_factor;
 	double grid_scale_factor;
+	double supplemental_scale_factor;
 	QTransform grid_compensation;
 	double declination;
 	double grivation;

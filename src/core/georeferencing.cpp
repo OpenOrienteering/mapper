@@ -55,6 +55,7 @@ namespace literal
 	
 	static const QLatin1String scale("scale");
 	static const QLatin1String grid_scale_factor{"grid_scale_factor"};
+	static const QLatin1String supplemental_scale_factor{"supplemental_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
 	
@@ -153,7 +154,9 @@ const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=lat
 Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator{1000},
+  combined_scale_factor{0.0},
   grid_scale_factor{1.0},
+  supplemental_scale_factor{1.0},
   grid_compensation(),
   declination(0.0),
   grivation(0.0),
@@ -175,7 +178,9 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 : QObject(),
   state(other.state),
   scale_denominator(other.scale_denominator),
+  combined_scale_factor{other.combined_scale_factor},
   grid_scale_factor{other.grid_scale_factor},
+  supplemental_scale_factor{other.supplemental_scale_factor},
   grid_compensation(other.grid_compensation),
   declination(other.declination),
   grivation(other.grivation),
@@ -209,7 +214,9 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
+	combined_scale_factor    = other.combined_scale_factor;
 	grid_scale_factor        = other.grid_scale_factor;
+	subpplemental_scale_factor = other.supplemental_scale_factor;
 	grid_compensation        = other.grid_compensation;
 	declination              = other.declination;
 	grivation                = other.grivation;
@@ -260,11 +267,22 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
 	
+	if (georef_element.hasAttribute(literal::supplemental_scale_factor))
+	{
+		combined_scale_factor = 0.0;
+		supplemental_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::supplemental_scale_factor));
+		if (supplemental_scale_factor <= 0.0)
+			throw FileFormatException(tr("Invalid supplemental scale factor: %1").arg(QString::number(supplemental_scale_factor)));
+	}
+	else
+		combined_scale_factor = 1.0;
 	if (georef_element.hasAttribute(literal::grid_scale_factor))
 	{
-		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
-		if (grid_scale_factor <= 0.0)
-			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(grid_scale_factor)));
+		if (georef_element.hasAttribute(literal::supplemental_scale_factor))
+			throw FileFormatException(tr("Combined and supplemental scale factors must not both be specified at the same time."));
+		combined_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
+		if (combined_scale_factor <= 0.0)
+			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(combined_scale_factor)));
 	}
 	
 	state = Local;
@@ -381,8 +399,17 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
-	if (grid_scale_factor != 1.0)
-		georef_element.writeAttribute(literal::grid_scale_factor, grid_scale_factor, scaleFactorPrecision());
+	if (combined_scale_factor != 0.0)
+	{
+		if (combined_scale_factor != 1.0)
+			georef_element.writeAttribute(literal::grid_scale_factor, combined_scale_factor, scaleFactorPrecision());
+	}
+	else
+	{
+		// Invariably write the supplemental scale factor, indicating use of
+		// automatically calculated grid scale factor.
+		georef_element.writeAttribute(literal::supplemental_scale_factor, supplemental_scale_factor, scaleFactorPrecision());
+	}
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
@@ -474,12 +501,12 @@ void Georeferencing::setScaleDenominator(int value)
 	}
 }
 
-void Georeferencing::setGridScaleFactor(double value)
+void Georeferencing::setSupplementalScaleFactor(double value)
 {
 	Q_ASSERT(value > 0);
-	if (grid_scale_factor != value)
+	if (supplemental_scale_factor != value)
 	{
-		grid_scale_factor = value;
+		supplemental_scale_factor = value;
 		updateTransformation();
 	}
 }
@@ -505,7 +532,9 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 	bool declination_change = declination != this->declination;
 	bool grivation_change = grivation != this->grivation;
 	bool compensation_change = grid_compensation != this->grid_compensation;
-	double grid_scale_factor = scaleFactorOfCompensation(grid_compensation);
+	double grid_scale_factor = combined_scale_factor == 0.0
+		? scaleFactorOfCompensation(grid_compensation)
+		: combined_scale_factor;
 	bool scale_factor_change = grid_scale_factor != this->grid_scale_factor;
 	if (declination_change || grivation_change || compensation_change || scale_factor_change)
 	{
@@ -704,6 +733,22 @@ void Georeferencing::updateTransformation()
 	transform.translate(projected_ref_point.x(), projected_ref_point.y());
 	transform *= grid_compensation;  // includes convergence and grid scale factor
 
+	// Undo convergence compensation prior to applying grivation.
+	transform.rotate(-convergenceOfCompensation(grid_compensation));
+	transform.rotate(-grivation);
+
+	// Normally we use the supplemental scale factor with the compensation matrix.
+	// Otherwise the combined scale factor is used instead of any isotropic or
+	// anisotropic scaling in the compensation matrix.
+
+	QTransform projected_translation(1, 0, 0, 1, projected_ref_point.x(), projected_ref_point.y());
+	if (combined_scale_factor == 0)
+		QTransform transform = grid_compensation * projected_translation;  // includes convergence and grid scale factor
+	else
+		QTransform transform = rotate(convergenceOfCompensation(grid_compensation)) * translate(combined_scale_factor) * projected_translation;  // includes convergence and grid scale factor
+    !! Ensure the above translation is in the correct sense, and get the syntax right.
+    !! and is there any way to not have to do and undo the convergence rotation?
+    !! perhaps by simplifying the determination of what's an old way map vs. a new way map.
 	// Undo convergence compensation prior to applying grivation.
 	transform.rotate(-convergenceOfCompensation(grid_compensation));
 	transform.rotate(-grivation);
