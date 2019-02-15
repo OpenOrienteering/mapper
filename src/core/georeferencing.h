@@ -531,7 +531,7 @@ public:
 	 * reference point. In case of change, declination/grivation,
 	 * scale factors, and transformation matrix are also updated.
 	 */
-	void updateGridCompensation();
+	void updateGridCompensation(bool update_declination_grivation = true);
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected

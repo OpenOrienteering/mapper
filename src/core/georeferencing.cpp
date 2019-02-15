@@ -543,9 +543,9 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 	}
 }
 
-void Georeferencing::updateGridCompensation()
+void Georeferencing::updateGridCompensation(bool update_declination_grivation)
 {
-    QTransform grid_compensation = getGridCompensation();
+	QTransform grid_compensation = getGridCompensation();
 	bool grid_compensation_change = grid_compensation != this->grid_compensation;
 	if (grid_compensation_change)
 	{
@@ -556,20 +556,23 @@ void Georeferencing::updateGridCompensation()
 		this->grid_compensation = grid_compensation;
 		
 		bool declination_change = false;
-		if (combined_scale_factor == 0.0)
+		if (update_declination_grivation)
 		{
-			double grivation = declination - convergenceOfCompensation(grid_compensation);
-			if (grivation != this->grivation)
+			if (combined_scale_factor == 0.0)
 			{
-				this->grivation = grivation;
-				this->grivation_error = 0.0;
+				double grivation = declination - convergenceOfCompensation(grid_compensation);
+				if (grivation != this->grivation)
+				{
+					this->grivation = grivation;
+					this->grivation_error = 0.0;
+				}
 			}
-		}
-		else
-		{
-			double declination = roundDeclination(grivation + convergenceOfCompensation(grid_compensation));
-			declination_change = declination != this->declination;
-			this->declination = declination;
+			else
+			{
+				double declination = roundDeclination(grivation + convergenceOfCompensation(grid_compensation));
+				declination_change = declination != this->declination;
+				this->declination = declination;
+			}
 		}
 		
 		updateTransformation();
@@ -608,7 +611,7 @@ void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
-				grid_compensation = getGridCompensation();
+				updateGridCompensation(false);
 				if (update_grivation)
 					updateGrivation();
 				emit projectionChanged();
@@ -737,7 +740,7 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
-			grid_compensation = getGridCompensation();
+			updateGridCompensation(false);
 			if (update_grivation)
 				updateGrivation();
 			updateTransformation();
