@@ -318,7 +318,7 @@ UndoStep* DeleteObjectsUndoStep::undo()
 	for (int i = 0; i < size; ++i)
 	{
 		undo_step->addObject(modified_objects[i], part->getObject(modified_objects[i]));
-		part->deleteObject(modified_objects[i], true);
+		part->releaseObject(modified_objects[i]);
 	}
 	
 	return undo_step;
@@ -390,7 +390,7 @@ void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
 			map->removeObjectFromSelection(objects[i], false);
 			object_deselected = true;
 		}
-		part->deleteObject(objects[i], true);
+		part->releaseObject(objects[i]);
 		map->setObjectsDirty();
 	}
 	if (object_deselected && emit_selection_changed)
@@ -467,7 +467,7 @@ UndoStep* SwitchPartUndoStep::undo()
 			auto object = target->getObject(i);
 			if (map->getCurrentPart() == target && map->isObjectSelected(object))
 				map->removeObjectFromSelection(object, false);
-			target->deleteObject(i, true);
+			target->releaseObject(i);
 			source->addObject(object);
 		});
 	}
@@ -480,7 +480,7 @@ UndoStep* SwitchPartUndoStep::undo()
 			auto object = source->getObject(i);
 			if (map->getCurrentPart() == source && map->isObjectSelected(object))
 				map->removeObjectFromSelection(object, false);
-			source->deleteObject(i, true);
+			source->releaseObject(i);
 			target->addObject(object, j);
 		});
 	}

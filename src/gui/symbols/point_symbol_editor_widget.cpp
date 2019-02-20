@@ -306,7 +306,7 @@ PointSymbolEditorWidget::~PointSymbolEditorWidget()
 	if (isVisible())
 		setEditorActive(false);
 	if (permanent_preview)
-		map->deleteObject(midpoint_object, false);
+		map->deleteObject(midpoint_object);
 }
 
 void PointSymbolEditorWidget::setEditorActive(bool active)
@@ -331,7 +331,7 @@ void PointSymbolEditorWidget::setEditorActive(bool active)
 		controller->setEditorActivity(nullptr);
 		if (!permanent_preview && midpoint_object)
 		{
-			map->deleteObject(midpoint_object, false);
+			map->deleteObject(midpoint_object);
 			midpoint_object = nullptr;
 		}
 	}

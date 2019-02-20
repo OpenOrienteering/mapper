@@ -827,12 +827,10 @@ public:
 	
 	/**
 	 * Deletes the given object from the map.
-	 * remove_only will remove the object from the map, but not call "delete object";
-	 * be sure to call removeObjectFromSelection() if necessary.
 	 * 
-	 * TODO: make a separate method "removeObject()", remove_only is misleading!
+	 * Be sure to call removeObjectFromSelection() if necessary.
 	 */
-	void deleteObject(Object* object, bool remove_only);
+	void deleteObject(Object* object);
 
 	/**
 	 * Relinquish object ownership.

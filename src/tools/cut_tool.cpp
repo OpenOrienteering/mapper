@@ -736,7 +736,7 @@ void CutTool::replaceObject(Object* object, const std::vector<PathObject*>& repl
 	auto add_step = new AddObjectsUndoStep(map);
 	add_step->addObject(map_part->findObjectIndex(object), object);
 	map->removeObjectFromSelection(object, false);
-	map->deleteObject(object, true);
+	map->releaseObject(object);
 	
 	auto delete_step = new DeleteObjectsUndoStep(map);
 	for (auto new_object : replacement)
