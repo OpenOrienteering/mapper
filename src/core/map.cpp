@@ -2087,15 +2087,24 @@ int Map::addObject(Object* object, int part_index)
 
 void Map::deleteObject(Object* object, bool remove_only)
 {
+	auto object_ptr = releaseObject(object);
+	if (!remove_only)
+	{
+		delete object_ptr;
+	}
+}
+
+Object* Map::releaseObject(Object* object)
+{
 	for (MapPart* part : parts)
 	{
-		if (part->deleteObject(object, remove_only))
-			return;
+		if (auto object_found = part->releaseObject(object))
+			return object_found;
 	}
 	
-	qCritical().nospace() << this << "::deleteObject(" << object << "," << remove_only << "): Object not found. This is a bug.";
-	if (!remove_only)
-		delete object;
+	qCritical().nospace() << this << "::deleteObject(" << object << "): Object not found. This is a bug.";
+
+	return nullptr;
 }
 
 void Map::setObjectsDirty()
