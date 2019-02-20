@@ -833,6 +833,14 @@ public:
 	 * TODO: make a separate method "removeObject()", remove_only is misleading!
 	 */
 	void deleteObject(Object* object, bool remove_only);
+
+	/**
+	 * Relinquish object ownership.
+	 *
+	 * Searches map parts and returns pointer if the object was found.
+	 * Otherwise nullptr is returned.
+	 */
+	Object* releaseObject(Object* object);
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
