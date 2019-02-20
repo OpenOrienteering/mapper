@@ -1600,6 +1600,11 @@ void Map::setSymbol(Symbol* symbol, int pos)
 
 void Map::deleteSymbol(int pos)
 {
+	delete releaseSymbol(pos);
+}
+
+Symbol* Map::releaseSymbol(int pos)
+{
 	if (deleteAllObjectsWithSymbol(symbols[pos]))
 		undo_manager->clear();
 	
@@ -1613,9 +1618,7 @@ void Map::deleteSymbol(int pos)
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	
-	// Delete the symbol
-	Symbol* temp = symbols[pos];
-	delete symbols[pos];
+	auto symbol_ptr = symbols[pos];
 	symbols.erase(symbols.begin() + pos);
 	
 	if (symbols.empty())
@@ -1624,8 +1627,9 @@ void Map::deleteSymbol(int pos)
 		updateAllMapWidgets();
 	}
 	
-	emit symbolDeleted(pos, temp);
+	emit symbolDeleted(pos, symbol_ptr);
 	setSymbolsDirty();
+	return symbol_ptr;
 }
 
 int Map::findSymbolIndex(const Symbol* symbol) const
