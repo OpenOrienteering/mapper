@@ -1,0 +1,131 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+trigger:
+- master
+
+jobs:
+- job: Superbuild
+
+  strategy:
+    matrix:
+      macOS:
+        imageName: 'macos-10.13'
+        cmakeArgs: >
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+        targetSuffix:
+      Linux-x64:
+        imageName: 'ubuntu-16.04'
+        cmakeArgs: >
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+        targetSuffix:
+      MinGW-x64:
+        imageName: 'ubuntu-16.04'
+        cmakeArgs: >
+          -DENABLE_x86_64-w64-mingw32=1
+          -Dx86_64-w64-mingw32_INSTALL_DIR=
+          -Dx86_64-w64-mingw32_INSTALL_PREFIX=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
+          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
+          -Dmingw-w64_FIX_HEADERS=1
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/share/gdal
+        targetSuffix: '-x86_64-w64-mingw32'
+
+  pool:
+    vmImage: $(imageName)
+
+  steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      pipelineId: $(openorienteering.superbuild.pipelineId)
+      artifactName: 'superbuild-$(imageName)$(targetSuffix)'
+      targetPath: $(Build.SourcesDirectory)/build/default/install
+
+  - bash: find $(Build.SourcesDirectory)/build/default/install
+    displayName: 'List prebuilt superbuild artifacts'
+
+  - bash: |
+      set -x
+      set -e
+      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+      case "$(imageName)$(targetSuffix)" in
+        ubuntu-*-x86_64-w64-mingw32)
+          sudo apt-get update
+          sudo apt-get install doxygen graphviz g++-mingw-w64-x86-64
+          chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
+          ;;
+        ubuntu-*)
+          sudo apt-get update
+          sudo apt-get install doxygen graphviz
+          ;;
+        macos-*)
+          sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
+          xcode-select --print-path
+          ;;
+      esac
+    displayName: 'Prepare build tools'
+
+  - bash: |
+      set -x
+      set -e
+      git init superbuild
+      cd superbuild
+      git remote add origin https://github.com/openorienteering/superbuild.git
+      git fetch origin master
+      git checkout origin/master
+      test -f ci/num_jobs.cmake && cp ci/num_jobs.cmake .
+      cp $(Build.SourcesDirectory)/ci/openorienteering-mapper-ci.cmake .
+    displayName: 'Create superbuild source dir'
+
+  - task: CMake@1
+    inputs:
+      workingDirectory: 'build'
+      cmakeArgs: >
+        $(Build.SourcesDirectory)/superbuild
+        -DCMAKE_BUILD_TYPE=Release
+        -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
+        "-DMapper_CI_SOURCE_DIR=$(Build.SourcesDirectory)"
+        "-DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranch) $(Build.SourceVersion)"
+        "-DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)"
+        "-DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)"
+        "-DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)"
+        $(cmakeArgs)
+    displayName: 'Configure'
+
+  - bash: |
+      set -x
+      set -e
+      cd $(Build.SourcesDirectory)/build
+      make `cat num_jobs || true` openorienteering-mapper-ci$(targetSuffix)
+    env:
+      CTEST_OUTPUT_ON_FAILURE: 1
+      DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
+      LD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
+      VERBOSE: 1
+    displayName: 'Build'
+
