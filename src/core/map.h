@@ -534,6 +534,10 @@ public:
 	 * Emits symbolDeleted().
 	 */
 	void deleteSymbol(int pos);
+
+	/** Remove symbol from internal structures
+	 */
+	Symbol* releaseSymbol(int pos);
 	
 	/**
 	 * Loops over all symbols, looking for the given symbol pointer.
