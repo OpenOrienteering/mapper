@@ -887,7 +887,7 @@ std::size_t Map::deleteIrregularObjects()
 	{
 		for (auto part : parts)
 		{
-			if (part->deleteObject(object, false))
+			if (part->deleteObject(object))
 			{
 				++result;
 				goto next_object;
@@ -940,7 +940,7 @@ void Map::deleteSelectedObjects()
 			if (index >= 0)
 			{
 				undo_step->addObject(index, *obj);
-				part->deleteObject(index, true);
+				part->releaseObject(index);
 			}
 			else
 			{
@@ -1964,7 +1964,7 @@ void Map::removePart(std::size_t index)
 	
 	// FIXME: This loop should move to MapPart.
 	while(part->getNumObjects())
-		part->deleteObject(0, false);
+		part->deleteObject(0);
 	
 	parts.erase(parts.begin() + index);
 	if (current_part_index >= index)
@@ -2026,7 +2026,7 @@ int Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::v
 		if (current_part_index == source && isObjectSelected(object))
 			removeObjectFromSelection(object, false);
 		
-		source_part->deleteObject(object, true);
+		source_part->releaseObject(object);
 		target_part->addObject(object);
 	}
 	
@@ -2050,7 +2050,7 @@ int Map::mergeParts(std::size_t source, std::size_t destination)
 	for (auto i = source_part->getNumObjects(); i > 0 ; --i)
 	{
 		Object* object = source_part->getObject(0);
-		source_part->deleteObject(0, true);
+		source_part->releaseObject(0);
 		
 		int index = target_part->getNumObjects();
 		target_part->addObject(object, index);
@@ -2085,13 +2085,9 @@ int Map::addObject(Object* object, int part_index)
 	return object_index;
 }
 
-void Map::deleteObject(Object* object, bool remove_only)
+void Map::deleteObject(Object* object)
 {
-	auto object_ptr = releaseObject(object);
-	if (!remove_only)
-	{
-		delete object_ptr;
-	}
+	delete releaseObject(object);
 }
 
 Object* Map::releaseObject(Object* object)

@@ -144,7 +144,7 @@ public:
 	 * Adds the object as new object at the end.
 	 */
 	void addObject(Object* object);
-	
+
 	/**
 	 * Adds the object as new object at the given index.
 	 */
@@ -152,22 +152,15 @@ public:
 	
 	/**
 	 * Deleted the object from the given index.
-	 * 
-	 * If remove_only is set, does not call "delete object".
-	 * 
-	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
-	void deleteObject(int pos, bool remove_only);
+	void deleteObject(int pos);
 	
 	/**
 	 * Deleted the object from the given index.
 	 * 
-	 * If remove_only is set, does not call "delete object".
 	 * Returns if the object was found in this part.
-	 * 
-	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
-	bool deleteObject(Object* object, bool remove_only);
+	bool deleteObject(Object* object);
 	
 	/**
 	  * Relinquish object ownership.

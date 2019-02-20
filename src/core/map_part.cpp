@@ -164,18 +164,15 @@ void MapPart::addObject(Object* object, int pos)
 		map->updateAllMapWidgets();
 }
 
-void MapPart::deleteObject(int pos, bool remove_only)
+void MapPart::deleteObject(int pos)
 {
-	auto object_ptr = releaseObject(pos);
-	if (!remove_only)
-		delete object_ptr;
+	delete releaseObject(pos);
 }
 
-bool MapPart::deleteObject(Object* object, bool remove_only)
+bool MapPart::deleteObject(Object* object)
 {
 	auto object_ptr = releaseObject(object);
-	if (!remove_only && object_ptr)
-		delete object_ptr;
+	delete object_ptr;
 
 	return object_ptr;
 }
