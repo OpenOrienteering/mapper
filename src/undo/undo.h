@@ -67,6 +67,7 @@ public:
 		MapPartUndoStepType        =   8,
 		SwitchPartUndoStepTypeV0   =   9,
 		SwitchPartUndoStepType     =  10,
+		SymbolUndoStepType         =  11,
 		InvalidUndoStepType        = 999
 	};
 	

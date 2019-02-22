@@ -151,8 +151,7 @@ ObjectCreatingUndoStep::ObjectCreatingUndoStep(Type type, Map* map)
 : ObjectModifyingUndoStep(type, map)
 , valid(true)
 {
-	connect(map, &Map::symbolChanged, this, &ObjectCreatingUndoStep::symbolChanged);
-	connect(map, &Map::symbolDeleted, this, &ObjectCreatingUndoStep::symbolDeleted);
+	// nothing
 }
 
 ObjectCreatingUndoStep::~ObjectCreatingUndoStep()
@@ -224,31 +223,6 @@ void ObjectCreatingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& s
 	}
 	else
 		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
-}
-
-void ObjectCreatingUndoStep::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (objects[i]->getSymbol() == old_symbol)
-			objects[i]->setSymbol(new_symbol, true);
-	}
-}
-
-void ObjectCreatingUndoStep::symbolDeleted(int pos,  const Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (objects[i]->getSymbol() == old_symbol)
-		{
-			valid = false;
-			return;
-		}
-	}
 }
 
 
@@ -522,8 +496,7 @@ SwitchSymbolUndoStep::SwitchSymbolUndoStep(Map* map)
 : ObjectModifyingUndoStep(SwitchSymbolUndoStepType, map)
 , valid(true)
 {
-	connect(map, &Map::symbolChanged, this, &SwitchSymbolUndoStep::symbolChanged);
-	connect(map, &Map::symbolDeleted, this, &SwitchSymbolUndoStep::symbolDeleted);
+	// nothing
 }
 
 SwitchSymbolUndoStep::~SwitchSymbolUndoStep()
@@ -601,31 +574,6 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 	else
 		ObjectModifyingUndoStep::loadImpl(xml, symbol_dict);
 }
-
-void SwitchSymbolUndoStep::symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	int size = (int)target_symbols.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (target_symbols[i] == old_symbol)
-			target_symbols[i] = new_symbol;
-	}
-}
-void SwitchSymbolUndoStep::symbolDeleted(int pos, const Symbol* old_symbol)
-{
-	Q_UNUSED(pos);
-	int size = (int)target_symbols.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (target_symbols[i] == old_symbol)
-		{
-			valid = false;
-			return;
-		}
-	}
-}
-
 
 
 // ### SwitchDashesUndoStep ###
