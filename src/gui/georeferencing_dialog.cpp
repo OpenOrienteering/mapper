@@ -456,27 +456,33 @@ void GeoreferencingDialog::reset()
 
 void GeoreferencingDialog::accept()
 {
-	float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
-	if ( !grivation_locked &&
-	     declination_change_degrees != 0 &&
-	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
+	if (grivation_locked)
 	{
-		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-		if (result == QMessageBox::Cancel)
+		georef->updateGrivation();
+	}
+	else
+	{
+		float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
+		if ( declination_change_degrees != 0 &&
+		     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 		{
-			return;
-		}
-		else if (result == QMessageBox::Yes)
-		{
-			RotateMapDialog dialog(this, map);
-			dialog.setWindowModality(Qt::WindowModal);
-			dialog.setRotationDegrees(declination_change_degrees);
-			dialog.setRotateAroundGeorefRefPoint();
-			dialog.setAdjustDeclination(false);
-			dialog.showAdjustDeclination(false);
-			int result = dialog.exec();
-			if (result == QDialog::Rejected)
+			int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+			if (result == QMessageBox::Cancel)
+			{
 				return;
+			}
+			else if (result == QMessageBox::Yes)
+			{
+				RotateMapDialog dialog(this, map);
+				dialog.setWindowModality(Qt::WindowModal);
+				dialog.setRotationDegrees(declination_change_degrees);
+				dialog.setRotateAroundGeorefRefPoint();
+				dialog.setAdjustDeclination(false);
+				dialog.showAdjustDeclination(false);
+				int result = dialog.exec();
+				if (result == QDialog::Rejected)
+					return;
+			}
 		}
 	}
 	
@@ -613,6 +619,7 @@ void GeoreferencingDialog::keepCoordsChanged()
 		grivation_locked = false;
 		original_declination = georef->getDeclination();
 		updateGrivation();
+		georef->updateGrivation();
 	}
 	reset_button->setEnabled(true);
 }
