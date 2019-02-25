@@ -125,7 +125,13 @@ GeoreferencingDialog::GeoreferencingDialog(
 	/*: The grid scale factor is the ratio between a length in the grid plane
 	    and the corresponding length on the curved earth model. It is applied
 	    as a factor to ground distances to get grid plane distances. */
-	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
+	grid_scale_factor_label = new QLabel(tr("Grid scale factor:"));
+	grid_scale_factor_field = new QLabel();
+	/*: The combined scale factor includes additional scaling as needed. */
+	combined_scale_factor_label = new QLabel(tr("Combined scale factor:"));
+	combined_scale_factor_field = new QLabel();
+	/*: The supplemental scale factor is combined with the grid scale factor. */
+	auto supplemental_scale_factor_label = new QLabel(tr("Supplemental scale factor:"));
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	
 	auto reference_point_label = Util::Headline::create(tr("Reference point"));
@@ -207,7 +213,9 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_selector);
 	crs_selector->setDialogLayout(edit_layout);
 	edit_layout->addRow(status_label, status_field);
-	edit_layout->addRow(scale_factor_label, scale_factor_edit);
+	edit_layout->addRow(grid_scale_factor_label, grid_scale_factor_field);
+	edit_layout->addRow(combined_scale_factor_label, combined_scale_factor_field);
+	edit_layout->addRow(supplemental_scale_factor_label, scale_factor_edit);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -310,7 +318,16 @@ void GeoreferencingDialog::transformationChanged()
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
 	
-	scale_factor_edit->setValue(georef->getGridScaleFactor());
+	double combined_scale_factor = georef->getCombinedScaleFactor();
+	grid_scale_factor_label->setVisible(combined_scale_factor == 0);
+	grid_scale_factor_field->setVisible(combined_scale_factor == 0);
+	grid_scale_factor_field->setText(QLocale().toString(georef->getGridScaleFactor(),
+														'f', Georeferencing::scaleFactorPrecision()));
+	combined_scale_factor_label->setVisible(combined_scale_factor != 0);
+	combined_scale_factor_field->setVisible(combined_scale_factor != 0);
+	combined_scale_factor_field->setText(QLocale().toString(combined_scale_factor,
+															'f', Georeferencing::scaleFactorPrecision()));
+	scale_factor_edit->setValue(georef->getSupplementalScaleFactor());
 	
 	updateGrivation();
 }
@@ -566,7 +583,7 @@ void GeoreferencingDialog::crsEdited()
 void GeoreferencingDialog::scaleFactorEdited()
 {
 	const QSignalBlocker block{scale_factor_edit};
-	georef->setGridScaleFactor(scale_factor_edit->value());
+	georef->setSupplementalScaleFactor(scale_factor_edit->value());
 	reset_button->setEnabled(true);
 }
 

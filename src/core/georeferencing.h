@@ -119,18 +119,17 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of declination/grivation.
+	 * @brief Returns the precision of declination/grivation/convergence.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
 	 * 
-	 * Values set as declination will be rounded to this precisison,
-	 * and grivation is rounded if grivation_directs_transforms.
+	 * All values set as declination or grivation will be rounded to this precisison.
 	 */
 	static constexpr unsigned int declinationPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of declination/grivation.
+	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
 	 * 
 	 * @see declinationPrecision();
 	 */
@@ -232,26 +231,40 @@ public:
 	
 	
 	/**
+	 * Returns the combined scale factor.
+	 * 
+	 * The combined scale factor is applied as a factor to
+	 * ground distances to get grid plane distances.
+	 */
+	double getCombinedScaleFactor() const;
+	
+	/**
 	 * Returns the grid scale factor.
 	 * 
 	 * The grid scale factor is the ratio between a length in the grid and the
 	 * length on the earth model in meters. It is applied as a factor to
 	 * ellipsoid distances to get grid plane distances.
 	 * 
-	 * Mapper doesn't explicitly deal with any other factors (elevation factor)
-	 * Technically, this property can be used as a combined factor.
+	 * Mapper doesn't explicitly deal with any other factors (elevation factor).
 	 */
 	double getGridScaleFactor() const;
 	
 	/**
-	 * Sets the supplemental scale factor.
+	 * Returns the supplemental scale factor.
 	 * 
 	 * The supplemental scale factor is the ratio between ellipsoid distances
-	 * length on the ground. It is applied as a factor to ground distances
+	 * and the length on the ground. It is applied as a factor to ground distances
 	 * to get ellipsoid distances.
 	 * 
 	 * Mapper doesn't explicitly deal with any other factors than grid scale.
 	 * This property can be used as elevation factor.
+	 */
+	double getSupplementalScaleFactor() const;
+	
+	/**
+	 * Sets the supplemental scale factor.
+	 * 
+	 * \see getSupplementalScaleFactor()
 	 */
 	void setSupplementalScaleFactor(double value);
 	
@@ -386,9 +399,9 @@ public:
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
 	/**
-	 * Calculates the meridian convergence at the reference point.
+	 * Calculates the convergence at the reference point.
 	 * 
-	 * The meridian convergence is the angle between grid north and true north.
+	 * The convergence is the angle between grid north and true north.
 	 * In case of deformation, convergence varies with direction; this is an average.
 	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
@@ -487,8 +500,9 @@ public:
 	
 	/**
 	 * Updates the transformation parameters between map coordinates and 
-	 * projected coordinates from the current projected reference point 
-	 * coordinates, the grivation and the scale.
+	 * projected coordinates. This depends on the map and projected
+	 * reference point coordinates, the declination/grivation, the scale,
+	 * the scale factors, and the grid compensation.
 	 */
 	void updateTransformation();
 	
@@ -507,10 +521,17 @@ public:
 	 * The new value is calculated from the grivation and the convergence.
 	 * For a local georeferencing, the convergence is zero, and declination
 	 * is set to the same value as grivation.
-	 * Also useful when grivation is locked, and a change in convergence
-	 * necessitates an update to the declination.
 	 */
 	void initDeclination();
+
+	/**
+	 * Updates the grid compensation matrix. 
+	 * 
+	 * The new value is calculated from the CRS and the geographical
+	 * reference point. In case of change, declination/grivation,
+	 * scale factors, and transformation matrix are also updated.
+	 */
+	void updateGridCompensation();
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected
@@ -555,7 +576,7 @@ private:
 	QTransform getGridCompensation() const;
 	static double convergenceOfCompensation(const QTransform &grid_compensation);
 	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
-	void setDeclinationAndGrivation(double declination, double grivation, const QTransform &grid_compensation);
+	void setDeclinationAndGrivation(double declination, double grivation);
 	
 	State state;
 	
@@ -650,9 +671,21 @@ unsigned int Georeferencing::getScaleDenominator() const
 }
 
 inline
+double Georeferencing::getCombinedScaleFactor() const
+{
+	return combined_scale_factor;
+}
+
+inline
 double Georeferencing::getGridScaleFactor() const
 {
 	return grid_scale_factor;
+}
+
+inline
+double Georeferencing::getSupplementalScaleFactor() const
+{
+	return supplemental_scale_factor;
 }
 
 inline

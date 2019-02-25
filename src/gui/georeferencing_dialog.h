@@ -250,6 +250,10 @@ private:
 	CRSSelector* crs_selector;
 	QLabel* status_label;
 	QLabel* status_field;
+	QLabel* grid_scale_factor_label;
+	QLabel* grid_scale_factor_field;
+	QLabel* combined_scale_factor_label;
+	QLabel* combined_scale_factor_field;
 	QDoubleSpinBox* scale_factor_edit;
 	
 	QDoubleSpinBox* map_x_edit;
