@@ -146,19 +146,61 @@ namespace
 
 
 
+//### Ellipsoid ###
+
+Ellipsoid::Ellipsoid(double semimajor, double semiminor, double eccentricity)
+    : semimajor(semimajor)
+    , semiminor(semiminor)
+    , eccentricity(eccentricity)
+{
+}
+Ellipsoid::Ellipsoid(const Ellipsoid &that)
+    : semimajor(that.semimajor)
+    , semiminor(that.semiminor)
+    , eccentricity(that.eccentricity)
+{
+}
+Ellipsoid Ellipsoid::fromEccentricity(double semimajor, double eccentricity)
+{
+	const double factor = (1 - eccentricity)*(1 + eccentricity);
+	const double semiminor = factor < 0 ? 0.0 : std::sqrt(factor)*semimajor;
+	return Ellipsoid(semimajor, semiminor, eccentricity);
+}
+Ellipsoid Ellipsoid::fromFlattening(double semimajor, double flattening)
+{
+	const double ecc_squared = (2-flattening)*flattening;
+	const double eccentricity = ecc_squared < 0 ? 0.0 : std::sqrt(ecc_squared);
+	return fromEccentricity(semimajor, eccentricity);
+}
+ProjectionDerivatives Ellipsoid::derivativesAtPhi(double phi) const
+{
+	const double minor_major_tan = (semiminor/semimajor)*std::tan(phi);
+	const double radical = 1+(minor_major_tan*minor_major_tan);
+	const double radical_root = std::sqrt(radical);
+	const double dx_dlam = semimajor/radical_root;
+	const double cos = std::cos(phi);
+	const double dy_dphi = semiminor*semiminor/(semimajor*cos*cos*cos*radical*radical_root);
+	return ProjectionDerivatives {dx_dlam, dy_dphi};
+}
+
+
+
 //### Georeferencing ###
 
 const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
+const Ellipsoid Georeferencing::shared_geographic_ellipsoid = Ellipsoid::fromFlattening(6378137.0, 1.0/298.257223563);
 
 Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator{1000},
   grid_scale_factor{1.0},
+  grid_compensation(),
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),
   map_ref_point(0, 0),
-  projected_ref_point(0, 0)
+  projected_ref_point(0, 0),
+  geographic_ellipsoid(shared_geographic_ellipsoid)
 {
 	static ProjSetup run_once;
 	
@@ -175,6 +217,7 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   state(other.state),
   scale_denominator(other.scale_denominator),
   grid_scale_factor{other.grid_scale_factor},
+  grid_compensation(other.grid_compensation),
   declination(other.declination),
   grivation(other.grivation),
   grivation_error(other.grivation_error),
@@ -183,7 +226,8 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
-  geographic_ref_point(other.geographic_ref_point)
+  geographic_ref_point(other.geographic_ref_point),
+  geographic_ellipsoid(other.geographic_ellipsoid)
 {
 	updateTransformation();
 	
@@ -208,6 +252,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
 	grid_scale_factor        = other.grid_scale_factor;
+	grid_compensation        = other.grid_compensation;
 	declination              = other.declination;
 	grivation                = other.grivation;
 	grivation_error          = other.grivation_error;
@@ -484,25 +529,33 @@ void Georeferencing::setGridScaleFactor(double value)
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
-	double grivation = declination - getConvergence();
-	setDeclinationAndGrivation(declination, grivation);
+	QTransform grid_compensation = getGridCompensation();
+	double grivation = declination - convergenceOfCompensation(grid_compensation);
+	setDeclinationAndGrivation(declination, grivation, grid_compensation);
 }
 
 void Georeferencing::setGrivation(double value)
 {
 	double grivation = roundDeclination(value);
-	double declination = grivation + getConvergence();
-	setDeclinationAndGrivation(declination, grivation);
+	QTransform grid_compensation = getGridCompensation();
+	double declination = grivation + convergenceOfCompensation(grid_compensation);
+	setDeclinationAndGrivation(declination, grivation, grid_compensation);
 }
 
-void Georeferencing::setDeclinationAndGrivation(double declination, double grivation)
+void Georeferencing::setDeclinationAndGrivation(double declination, double grivation, const QTransform &grid_compensation)
 {
 	bool declination_change = declination != this->declination;
-	if (declination_change || grivation != this->grivation)
+	bool grivation_change = grivation != this->grivation;
+	bool compensation_change = grid_compensation != this->grid_compensation;
+	double grid_scale_factor = scaleFactorOfCompensation(grid_compensation);
+	bool scale_factor_change = grid_scale_factor != this->grid_scale_factor;
+	if (declination_change || grivation_change || compensation_change || scale_factor_change)
 	{
 		this->declination = declination;
 		this->grivation   = grivation;
 		this->grivation_error = 0.0;
+		this->grid_scale_factor = grid_scale_factor;
+		this->grid_compensation = grid_compensation;
 		updateTransformation();
 		
 		if (declination_change)
@@ -568,23 +621,79 @@ QString Georeferencing::getProjectedCoordinatesName() const
 	return name;
 }
 
-double Georeferencing::getConvergence() const
+QTransform Georeferencing::getGridCompensation() const
 {
 	if (state != Normal || !isValid())
-		return 0.0;
-	
-	// Second point on the same meridian
-	const double delta_phi = 360.0 / 40000.0;  // roughly 1 km
-	double other_latitude = geographic_ref_point.latitude();
-	other_latitude +=  (other_latitude < 0.0) ? delta_phi : -delta_phi;
-	const double same_longitude = geographic_ref_point.longitude();
-	QPointF projected_other = toProjectedCoords(LatLon(other_latitude, same_longitude));
-	
-	double denominator = projected_other.y() - projected_ref_point.y();
-	if (fabs(denominator) < 0.00000000001)
-		return 0.0;
-	
-	return roundDeclination(RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator));
+		return QTransform();
+
+    // Use ellipsoid to determine 4 points near reference point.
+	if (fabs(geographic_ref_point.latitude()) > 89.0)
+	{
+		// Using longitude and geographic orientation in the vicinity of the pole creates problems.
+		return QTransform();
+	}
+
+	const double lam = geographic_ref_point.longitude() * DEG_TO_RAD;
+	const double phi = geographic_ref_point.latitude() * DEG_TO_RAD;
+	const double delta = 1000.0; // meters
+	const ProjectionDerivatives d = geographic_ellipsoid.derivativesAtPhi(phi);
+	// Add to lam and phi so as to use 1 km baselines west-east and south-north.
+	const LatLon east_point = LatLon::fromRadiant(phi, lam + (delta/2/d.dx_dlam));
+	const LatLon north_point = LatLon::fromRadiant(phi + (delta/2/d.dy_dphi), lam);
+	const LatLon west_point = LatLon::fromRadiant(phi, lam - (delta/2/d.dx_dlam));
+	const LatLon south_point = LatLon::fromRadiant(phi - (delta/2/d.dy_dphi), lam);
+
+	// Get projected coordinates on same meridian and on same parallel around reference point.
+	bool ok_east = 0;
+	QPointF projected_east  = toProjectedCoords(east_point,  &ok_east);
+	bool ok_north = 0;
+	QPointF projected_north = toProjectedCoords(north_point, &ok_north);
+	bool ok_west = 0;
+	QPointF projected_west  = toProjectedCoords(west_point,  &ok_west);
+	bool ok_south = 0;
+	QPointF projected_south = toProjectedCoords(south_point, &ok_south);
+    if (!(ok_east && ok_north && ok_west && ok_south))
+	{
+		return QTransform();
+	}
+
+	// Points on the same meridian
+	const double d_northing_dy = (projected_north.y() - projected_south.y()) / delta;
+	const double d_easting_dy = (projected_north.x() - projected_south.x()) / delta;
+	// Points on the same parallel
+	const double d_northing_dx = (projected_east.y() - projected_west.y()) / delta;
+	const double d_easting_dx = (projected_east.x() - projected_west.x()) / delta;
+
+	// A transform with a tiny determinant is nonsense for a map, and
+	// would cause blow-ups.
+	const double determinant = d_easting_dx*d_northing_dy - d_northing_dx*d_easting_dy;
+	if (determinant < 0.00000000001)
+	{
+		return QTransform();
+	}
+
+    // Transform from model coordinates to grid coordinates.
+	return QTransform(d_easting_dx, d_northing_dx, d_easting_dy, d_northing_dy, 0.0, 0.0);
+}
+
+double Georeferencing::convergenceOfCompensation(const QTransform &grid_compensation)
+{
+	// This is the angle between true azimuth and grid azimuth.
+    // In case of deformation, the convergence varies with direction and this is an average.
+	return roundDeclination(RAD_TO_DEG * atan2(grid_compensation.m12()-grid_compensation.m21(),
+							                   grid_compensation.m11()+grid_compensation.m22()));
+}
+
+double Georeferencing::scaleFactorOfCompensation(const QTransform &grid_compensation)
+{
+	// This is the scale factor from true distance to grid distance.
+    // In case of deformation, the scale factor varies with direction and this is an average.
+	return roundScaleFactor(sqrt(grid_compensation.determinant()));
+}
+
+double Georeferencing::getConvergence() const
+{
+	return convergenceOfCompensation(getGridCompensation());
 }
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation)
@@ -617,11 +726,19 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 
 void Georeferencing::updateTransformation()
 {
+    // If grivation directs, we use grivation with exact convergence
+    // and the compensation matrix.
+	// Otherwise we use declination with the compensation matrix.
+
 	QTransform transform;
 	transform.translate(projected_ref_point.x(), projected_ref_point.y());
+	transform *= grid_compensation;  // includes convergence and grid scale factor
+
+	// Undo convergence compensation prior to applying grivation.
+	transform.rotate(-convergenceOfCompensation(grid_compensation));
 	transform.rotate(-grivation);
-	
-	double scale = grid_scale_factor * scale_denominator / 1000.0; // to meters
+
+	double scale = scale_denominator / 1000.0; // to meters
 	transform.scale(scale, -scale);
 	transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	

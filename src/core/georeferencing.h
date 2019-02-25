@@ -52,6 +52,46 @@ extern "C" void registerProjFileHelper();
 #endif
 
 
+/**
+ * When x varies according to longitude lam, and y varies according to
+ * latitude phi, ProjectionDerivatives represents the derivatives of
+ * those functions.
+ */
+struct ProjectionDerivatives {
+   double dx_dlam;
+   double dy_dphi;
+};
+
+/**
+ * An Ellipsoid is the ideal mathematical surface which a projection
+ * transforms to a flat surface. A latitude and longitude coordinate pair
+ * indicates a position on the Ellipsoid in Cartesian 3-dimensional
+ * space.
+ * 
+ * This class provides some geometric analysis.
+ * Units for the axes are meters.
+ */
+class Ellipsoid
+{
+	double semimajor;
+	double semiminor;
+	double eccentricity;
+
+public:
+	Ellipsoid(double semimajor, double semiminor, double eccentricity);
+	Ellipsoid(const Ellipsoid&);
+	static Ellipsoid fromEccentricity(double semimajor, double eccentricity);
+	static Ellipsoid fromFlattening(double semimajor, double flattening);
+
+	/**
+     * The ellipsoid is projected to a tangent plane at the latitude
+     * phi, with an x axis along a parallel and a y axis along a meridian.
+     * Latitude is geodetic (the usual) and in radians (unusual).
+     * Returns the derivatives associated with that projection.
+	 */
+	ProjectionDerivatives derivativesAtPhi(double phi) const;
+};
+
 
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
@@ -101,6 +141,11 @@ public:
 	 */
 	static const QString geographic_crs_spec;
 	
+	/**
+	 * A shared WGS84 reference ellipsoid.
+	 */
+	static const Ellipsoid shared_geographic_ellipsoid;
+	
 	
 	/**
 	 * @brief Returns the precision of the grid scale factor.
@@ -119,17 +164,18 @@ public:
 	
 	
 	/**
-	 * @brief Returns the precision of declination/grivation/convergence.
+	 * @brief Returns the precision of declination/grivation.
 	 * 
 	 * The precision is given in number of decimal places,
 	 * i.e. digits after the decimal point.
 	 * 
-	 * All values set as declination or grivation will be rounded to this precisison.
+	 * Values set as declination will be rounded to this precisison,
+	 * and grivation is rounded if grivation_directs_transforms.
 	 */
 	static constexpr unsigned int declinationPrecision();
 	
 	/**
-	 * @brief Rounds according to the defined precision of declination/grivation/convergence.
+	 * @brief Rounds according to the defined precision of declination/grivation.
 	 * 
 	 * @see declinationPrecision();
 	 */
@@ -379,11 +425,13 @@ public:
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
+
 	
 	/**
-	 * Calculates the meridian convergence at the reference point.
+	 * Calculates the convergence at the reference point.
 	 * 
 	 * The meridian convergence is the angle between grid north and true north.
+     * In case of deformation, the convergence varies with direction; this is an average.
 	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
 	 */
@@ -546,12 +594,16 @@ signals:
 	
 	
 private:
-	void setDeclinationAndGrivation(double declination, double grivation);
+	QTransform getGridCompensation() const;
+	static double convergenceOfCompensation(const QTransform &grid_compensation);
+	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
+	void setDeclinationAndGrivation(double declination, double grivation, const QTransform &grid_compensation);
 	
 	State state;
 	
 	unsigned int scale_denominator;
 	double grid_scale_factor;
+	QTransform grid_compensation;
 	double declination;
 	double grivation;
 	double grivation_error;
@@ -572,6 +624,7 @@ private:
 	LatLon geographic_ref_point;
 	
 	projPJ geographic_crs;
+	Ellipsoid geographic_ellipsoid;
 	
 };
 

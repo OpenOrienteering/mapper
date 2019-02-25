@@ -85,11 +85,23 @@ void GeoreferencingTest::testGridScaleFactor()
 	
 	// Use UTM as a convenient approximation for the ground,
 	// having a scale factor close to 1.0.
-	auto point_a_utm = utm_georef.toProjectedCoords(LatLon{50.0, 8.0});
+	// Choose a point 180km from the 9 deg central meridian, where the
+	// UTM scale factor is 1.00000.
+	auto geographic_ref_point = LatLon{50.0, 6.489264};
+	auto point_a_utm = utm_georef.toProjectedCoords(geographic_ref_point);
 	auto point_b_utm = point_a_utm - QPointF{ 1000.0, 0.0 };
+	auto point_c_utm = point_a_utm - QPointF{ 0.0, 1000.0 };
+	utm_georef.setProjectedRefPoint(point_a_utm);
+	auto equal_utm_scale_factor = (qAbs(1.00000 - utm_georef.getGridScaleFactor()) < 0.00001);
+	if (!equal_utm_scale_factor)
+	{
+		// Fail with clear output
+		QCOMPARE(utm_georef.getGridScaleFactor(), 1.0);
+	}
 	
-	auto point_a_mercator = mercator_georef.toProjectedCoords(LatLon{50.0, 8.0});
+	auto point_a_mercator = mercator_georef.toProjectedCoords(geographic_ref_point);
 	auto point_b_mercator = mercator_georef.toProjectedCoords(utm_georef.toGeographicCoords(point_b_utm));
+	auto point_c_mercator = mercator_georef.toProjectedCoords(utm_georef.toGeographicCoords(point_c_utm));
 	
 	// Standard Mercator scale factor is as simple as:
 	//
@@ -101,13 +113,12 @@ void GeoreferencingTest::testGridScaleFactor()
 	auto phi = Georeferencing::degToRad(50.0); // Latitude as used for UTM above
 	auto scale_factor = pow(1.0 - e * e * sin(phi) * sin(phi), 0.5) / cos(phi);
 	QVERIFY(scale_factor != 1.0);
-	mercator_georef.setGridScaleFactor(scale_factor);
-	QCOMPARE(mercator_georef.getGridScaleFactor(), scale_factor);
+	mercator_georef.setProjectedRefPoint(point_a_mercator);
 	
 	// With the scale factor applied, we should get the same ground distance.
 	auto ground_distance_utm  = QLineF(point_a_utm, point_b_utm).length();
 	auto ground_distance_mercator  = QLineF(point_a_mercator, point_b_mercator).length();
-	auto equal_ground_distance = (qAbs(ground_distance_mercator / scale_factor - ground_distance_utm) < 1.0); // meter
+	auto equal_ground_distance = (qAbs(ground_distance_mercator / scale_factor - ground_distance_utm) < 0.01); // 0.01 meter
 	if (!equal_ground_distance)
 	{
 		// Fail with clear output
@@ -115,13 +126,22 @@ void GeoreferencingTest::testGridScaleFactor()
 	}
 	
 	// With the scale factor applied, we should get the same paper distance.
-	auto map_distance_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_b_utm)).length();
-	auto map_distance_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_b_mercator)).length();
-	equal_ground_distance = (qAbs(map_distance_mercator - map_distance_utm) < 1000.0); // millimeters, scale is 1:1
+	auto map_distance_ew_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_b_utm)).length();
+	auto map_distance_ew_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_b_mercator)).length();
+	equal_ground_distance = (qAbs(map_distance_ew_mercator - map_distance_ew_utm) < 10.0); // millimeters, scale is 1:1
 	if (!equal_ground_distance)
 	{
 		// Fail with clear output
-		QCOMPARE(map_distance_mercator, map_distance_utm);
+		QCOMPARE(map_distance_ew_mercator, map_distance_ew_utm);
+	}
+	// Also test north/south scale factor.
+	auto map_distance_ns_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_c_utm)).length();
+	auto map_distance_ns_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_c_mercator)).length();
+	equal_ground_distance = (qAbs(map_distance_ns_mercator - map_distance_ns_utm) < 10.0); // millimeters, scale is 1:1
+	if (!equal_ground_distance)
+	{
+		// Fail with clear output
+		QCOMPARE(map_distance_ns_mercator, map_distance_ns_utm);
 	}
 }
 
