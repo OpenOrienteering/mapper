@@ -85,7 +85,12 @@ private:
  * Conversions between map coordinates and "projected coordinates" (flat metric
  * coordinates in a projected coordinate reference system) are made as affine 
  * transformation based on the map scale (principal scale), grid scale factor,
- * the grivation and a defined reference point.
+ * the fully precise convergence, the declination, and a defined reference
+ * point. Grivation is relegated to a minor role.
+ *
+ * A variation of the conversion approach is used for backwards compatibility.
+ * In this case the affine transformation is based on the map scale,
+ * grid scale factor, the grivation and the reference point.
  * 
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification
@@ -256,13 +261,8 @@ public:
 	/**
 	 * Returns the grid scale factor.
 	 * 
-	 * The grid scale factor is the ratio between a length in the grid and the
-	 * length on the earth model. It is applied as a factor to ground distances
-	 * to get grid plane distances.
-	 * 
-	 * Mapper doesn't explicitly deal with any other factors (elevation factor,
-	 * unit of measurement). Technically, this property can be used as a
-	 * combined factor.
+	 * The grid scale factor is applied as a factor to
+	 * ground distances in meters, to get grid plane distances.
 	 */
 	double getGridScaleFactor() const;
 	
@@ -272,6 +272,36 @@ public:
 	 * \see getGridScaleFactor()
 	 */
 	void setGridScaleFactor(double value);
+	
+	
+	/**
+	 * Updates the grid scale factor. 
+	 * 
+	 * The new value is calculated fresh from the grid compensation,
+	 * overriding the present grid_scale_factor value.
+	 */
+	void updateGridScaleFactor();
+	
+	/**
+	 * Sets use of grid compensation matrix in map-to-projected transformations.
+	 *
+	 * The grid compensation matrix provides for automatically-generated
+	 * grid scale factor, anisotropic scaling in the map-to-projected and
+	 * map-from-projected transforms (enabling the map to be
+	 * georeferenced using projections like web mercator and plate carree).
+	 * Set to 'false' provides accurate backwards compatibility for older maps.
+	 */
+	void useGridCompensation(bool use_grid_compensation);
+	
+	/**
+	 * Returns whether use of the grid compensation matrix is enabled.
+	 */
+	bool usingGridCompensation() const;
+	
+	/**
+	 * Returns the grid compensation matrix.
+	 */
+	QTransform getGridCompensation() const;
 	
 	
 	/**
@@ -355,7 +385,8 @@ public:
 	 * Defines the projected coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the geographic coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and if
+	 * using grid compensation, the grid scale factor.
 	 */
 	void setProjectedRefPoint(const QPointF& point, bool update_grivation = true);
 	
@@ -404,9 +435,10 @@ public:
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
 	/**
-	 * Calculates the meridian convergence at the reference point.
+	 * Calculates the convergence at the reference point.
 	 * 
-	 * The meridian convergence is the angle between grid north and true north.
+	 * The convergence is the angle between grid north and true north.
+	 * In case of deformation, convergence varies with direction; this is an average.
 	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
 	 */
@@ -422,7 +454,8 @@ public:
 	 * Defines the geographic coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the projected coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and if
+	 * using grid compensation, the grid scale factor.
 	 */
 	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true);
 	
@@ -504,8 +537,9 @@ public:
 	
 	/**
 	 * Updates the transformation parameters between map coordinates and 
-	 * projected coordinates from the current projected reference point 
-	 * coordinates, the grivation and the scale.
+	 * projected coordinates. This depends on the map and projected
+	 * reference point coordinates, the declination/grivation, the scale,
+	 * the grid scale factor, and the grid compensation.
 	 */
 	void updateTransformation();
 	
@@ -526,6 +560,14 @@ public:
 	 * is set to the same value as grivation.
 	 */
 	void initDeclination();
+
+	/**
+	 * Updates the grid compensation matrix. 
+	 * 
+	 * The new value is calculated from the CRS and the geographical reference
+	 * point. In case of change, transformation matrix is also updated.
+	 */
+	void updateGridCompensation();
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected
@@ -565,14 +607,30 @@ signals:
 	 */
 	void declinationChanged();
 	
+	/**
+	 * Indicates a change of the "grid scale factor", as presented in
+	 * the georeferencing dialog.
+	 * 
+	 * The "grid scale factor" has no direct influence on projection or transformation.
+	 * That's why there is an independent signal.
+	 */
+	void gridScaleFactorChanged();
+	
 	
 private:
+	static double convergenceOfCompensation(const QTransform &grid_compensation);
+	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
 	void setDeclinationAndGrivation(double declination, double grivation);
 	
 	State state;
 	
 	unsigned int scale_denominator;
 	double grid_scale_factor;
+
+	// use_grid_compensation indicates to use the calculated grid_compensation
+	// (may be anisotropic) rather than simply the grid_scale_factor.
+	bool use_grid_compensation;
+	QTransform grid_compensation;
 	double declination;
 	double grivation;
 	double grivation_error;
@@ -661,6 +719,12 @@ inline
 double Georeferencing::getGridScaleFactor() const
 {
 	return grid_scale_factor;
+}
+
+inline
+bool Georeferencing::usingGridCompensation() const
+{
+	return use_grid_compensation;
 }
 
 inline
