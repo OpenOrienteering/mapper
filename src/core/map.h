@@ -1143,28 +1143,19 @@ public:
 	unsigned int getScaleDenominator() const;
 	
 	/**
-	 * Changes the map's scale.
+	 * Changes the map's scale, and/or scales all the map's objects.
 	 * 
 	 * @param new_scale_denominator The new scale denominator.
+	 * @param supplemental_scale_factor_change Ratio of new to existing supplemental scale factor.
 	 * @param scaling_center The coordinate to use as scaling center.
 	 * @param scale_symbols Whether to scale the map symbols.
 	 * @param scale_objects Whether to scale the map object coordinates.
 	 * @param scale_georeferencing Whether to adjust the map's georeferencing reference point.
 	 * @param scale_templates Whether to scale non-georeferenced templates.
 	 */
-	void changeScale(unsigned int new_scale_denominator,
+	void changeScale(unsigned int new_scale_denominator, double supplemental_scale_factor_change,
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
-	
-	/**
-	 * Scales all the map's objects.
-	 * 
-	 * @param scale_factor expansion ratio for sizes on the map (factor<1 shrinks sizes)
-	 * @param scaling_center The coordinate to use as scaling center.
-	 * @param scale_georeferencing Whether to adjust the map's georeferencing reference point.
-	 * @param scale_templates Whether to scale non-georeferenced templates.
-	 */
-	void scaleMap(double scale_factor, const MapCoord& scaling_center, bool scale_georeferencing, bool scale_templates);
 
 
 	/**

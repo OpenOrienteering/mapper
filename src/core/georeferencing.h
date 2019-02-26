@@ -272,6 +272,20 @@ public:
 	 * \see getSupplementalScaleFactor()
 	 */
 	void setSupplementalScaleFactor(double value);
+
+	/**
+	 * Enable anisotropic scaling.
+     *
+     * Support for anisotropic scaling in the map-to-projected and
+	 * map-from-projected transforms enables the map to be
+	 * georeferenced using projections like web mercator and plate carree.
+	 */
+	void enableAnisotropicScaling();
+
+	/**
+	 * Returns whether anisotropic scaling is enabled.
+	 */
+	bool isAnisotropicScalingEnabled() const;
 	
 	
 	/**
@@ -535,8 +549,12 @@ public:
 	 * The new value is calculated from the CRS and the geographical
 	 * reference point. In case of change, declination/grivation,
 	 * scale factors, and transformation matrix are also updated.
+	 * 
+	 * @param update_supplemental_scale_factor  based on combined scale factor
+	 * @param update_declination_grivation      depending on grivation_relegated
 	 */
-	void updateGridCompensation(bool update_declination_grivation = true);
+	void updateGridCompensation(bool update_supplemental_scale_factor,
+								bool update_declination_grivation = true);
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected
@@ -576,6 +594,14 @@ signals:
 	 */
 	void declinationChanged();
 	
+	/**
+	 * Indicates a change of the supplemental scale factor.
+	 * 
+	 * The supplemental scale factor has no direct influence on projection or transformation.
+	 * That's why there is an independent signal.
+	 */
+	void supplementalScaleFactorChanged();
+	
 	
 private:
 	QTransform getGridCompensation() const;
@@ -586,9 +612,13 @@ private:
 	State state;
 	
 	unsigned int scale_denominator;
+
+	// use_grid_compensation indicates to use the grid_compensation
+	// (may be anisotropic) rather than the grid_scale_factor.
 	double combined_scale_factor;
 	double grid_scale_factor;
 	double supplemental_scale_factor;
+	bool use_grid_compensation;
 	QTransform grid_compensation;
 	double declination;
 	double grivation;
@@ -691,6 +721,12 @@ inline
 double Georeferencing::getSupplementalScaleFactor() const
 {
 	return supplemental_scale_factor;
+}
+
+inline
+bool Georeferencing::isAnisotropicScalingEnabled() const
+{
+	return use_grid_compensation;
 }
 
 inline

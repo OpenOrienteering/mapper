@@ -52,6 +52,7 @@ private slots:
 	
 private:
 	QLineEdit* scale_edit;
+	QDoubleSpinBox* scale_factor_edit;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;

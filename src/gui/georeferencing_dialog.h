@@ -126,6 +126,11 @@ public:
 	void declinationChanged();
 	
 	/**
+	  * Updates the supplemental scale factor widget from the georeferencing.
+	  */
+	void supplementalScaleFactorChanged();
+	
+	/**
 	 * Triggers an online request for the magnetic declination.
 	 * 
 	 * @param no_confirm If true, the user will not be asked for confirmation.
@@ -243,9 +248,7 @@ private:
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
-	bool grivation_locked;
-	bool combined_scale_factor_locked;
-	double original_declination;
+	bool locked_to_grid;
 	
 	/* GUI elements */
 	CRSSelector* crs_selector;
