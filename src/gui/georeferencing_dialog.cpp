@@ -504,7 +504,7 @@ void GeoreferencingDialog::accept()
 	// It's OK to also allow for anisotropic scaling.
 	if ( !map_locked_to_grid &&
 		 (declination_change_degrees != 0 || supplemental_scale_factor_change != 1.0) )
-	{		
+	{
 		georef->enableAnisotropicScaling();
 	}
 
