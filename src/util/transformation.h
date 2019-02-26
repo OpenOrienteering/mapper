@@ -73,7 +73,7 @@ public:
 	
 	bool estimateSimilarityTransformation(not_null<QTransform*> out);
 	
-	/** Estimates an affine transformation without shearing. */
+	/** Estimates an affine transformation. */
 	bool estimateNonIsometricSimilarityTransform(not_null<QTransform*> out);
 };
 
