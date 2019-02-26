@@ -546,15 +546,10 @@ public:
 	/**
 	 * Updates the grid compensation matrix. 
 	 * 
-	 * The new value is calculated from the CRS and the geographical
-	 * reference point. In case of change, declination/grivation,
-	 * scale factors, and transformation matrix are also updated.
-	 * 
-	 * @param update_supplemental_scale_factor  based on combined scale factor
-	 * @param update_declination_grivation      depending on grivation_relegated
+	 * The new value is calculated from the CRS and the geographical reference
+	 * point. In case of change, transformation matrix is also updated.
 	 */
-	void updateGridCompensation(bool update_supplemental_scale_factor,
-								bool update_declination_grivation = true);
+	void updateGridCompensation();
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected
@@ -616,7 +611,6 @@ private:
 	// use_grid_compensation indicates to use the grid_compensation
 	// (may be anisotropic) rather than the grid_scale_factor.
 	double combined_scale_factor;
-	double grid_scale_factor;
 	double supplemental_scale_factor;
 	bool use_grid_compensation;
 	QTransform grid_compensation;
@@ -714,7 +708,7 @@ double Georeferencing::getCombinedScaleFactor() const
 inline
 double Georeferencing::getGridScaleFactor() const
 {
-	return grid_scale_factor;
+	return scaleFactorOfCompensation(grid_compensation);
 }
 
 inline
