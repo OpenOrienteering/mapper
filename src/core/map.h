@@ -1156,8 +1156,8 @@ public:
 	void changeScale(unsigned int new_scale_denominator, double supplemental_scale_factor_change,
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
-
-
+	
+	
 	/**
 	 * Rotate the map around a point.
 	 * 
@@ -1499,8 +1499,6 @@ private:
 	);
 	
 	
-	void scaleFlexibly(double scale_factor, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
-
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
 	void removeSelectionRenderables(const Object* object);

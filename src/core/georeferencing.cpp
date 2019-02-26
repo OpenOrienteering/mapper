@@ -585,7 +585,7 @@ void Georeferencing::updateGridCompensation(bool update_supplemental_scale_facto
 		bool declination_change = false;
 		if (update_declination_grivation)
 		{
-			if (combined_scale_factor == 0.0)
+			if (use_grid_compensation)
 			{
 				double grivation = declination - convergenceOfCompensation(grid_compensation);
 				if (grivation != this->grivation)
