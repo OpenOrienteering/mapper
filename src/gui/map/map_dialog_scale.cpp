@@ -44,9 +44,12 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
 	
+	QBoxLayout* scale_box = new QBoxLayout(QBoxLayout::LeftToRight);
+	scale_box->addWidget(new QLabel(tr("1 :")), 0);
 	scale_edit = new QLineEdit(QString::number(map->getScaleDenominator()));
 	scale_edit->setValidator(new QIntValidator(1, 9999999, scale_edit));
-	layout->addRow(tr("New scale:  1 :"), scale_edit);
+	scale_box->addWidget(scale_edit, 1);
+	layout->addRow(tr("New scale:"), scale_box);
 
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	scale_factor_edit->setValue(map->getGeoreferencing().getSupplementalScaleFactor());
