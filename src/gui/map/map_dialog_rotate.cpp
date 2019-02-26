@@ -53,6 +53,10 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	rotation_edit->setWrapping(true);
 	layout->addRow(tr("Angle (counter-clockwise):"), rotation_edit);
 	
+	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
+	declination_edit->setWrapping(true);
+	layout->addRow(tr("Declination:"), declination_edit);
+	
 	layout->addRow(new QLabel(tr("Rotate around:")));
 	
 	center_origin_radio = new QRadioButton(tr("Map coordinate system origin", "Rotation center point"));
@@ -117,7 +121,13 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	connect(center_other_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
 	connect(button_box, &QDialogButtonBox::accepted, this, &RotateMapDialog::okClicked);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+	connect(adjust_declination_check, &QAbstractButton::clicked, this, &RotateMapDialog::declinationCheckToggled);
+
+	connect(rotation_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &RotateMapDialog::rotationEdited);
+	connect(declination_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &RotateMapDialog::declinationEdited);
+
 	
+	rotationEdited();
 	updateWidgets();
 }
 
@@ -163,6 +173,36 @@ void RotateMapDialog::okClicked()
 	
 	map->rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
+}
+
+void RotateMapDialog::declinationCheckToggled(bool checked)
+{
+	const QSignalBlocker block(declination_edit);
+	if (checked)
+	{
+		declination_edit->setValue(Georeferencing::roundDeclination(map->getGeoreferencing().getDeclination()+rotation_edit->value()));
+		declination_edit->setEnabled(true);
+	}
+	else
+	{
+		declination_edit->setEnabled(false);
+		declination_edit->setValue(Georeferencing::roundDeclination(map->getGeoreferencing().getDeclination()));
+	}
+}
+
+void RotateMapDialog::rotationEdited()
+{
+	if (adjust_declination_check->isChecked())
+	{
+		const QSignalBlocker block(declination_edit);
+		declination_edit->setValue(Georeferencing::roundDeclination(map->getGeoreferencing().getDeclination() + rotation_edit->value()));
+	}
+}
+
+void RotateMapDialog::declinationEdited()
+{
+	const QSignalBlocker block(rotation_edit);
+	rotation_edit->setValue(Georeferencing::roundDeclination(declination_edit->value() - map->getGeoreferencing().getDeclination()));
 }
 
 

@@ -56,9 +56,13 @@ public:
 private slots:
 	void updateWidgets();
 	void okClicked();
+	void declinationCheckToggled(bool checked);
+	void rotationEdited();
+	void declinationEdited();
 	
 private:
 	QDoubleSpinBox* rotation_edit;
+	QDoubleSpinBox* declination_edit;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;
