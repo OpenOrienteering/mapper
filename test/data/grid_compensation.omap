@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<notes></notes>
+<georeferencing scale="4000" grid_scale_factor="1.002696"><projected_crs id="UTM"><spec language="PROJ.4">+proj=utm +datum=WGS84 +zone=32</spec><parameter>32 N</parameter><ref_point x="0.00049" y="0"/><grid_compensation m11="1.002696" m12="0" m21="0" m22="1.002696"/></projected_crs><geographic_crs id="Geographic coordinates"><spec language="PROJ.4">+proj=latlong +datum=WGS84</spec><ref_point_deg lat="0" lon="4.51125612"/></geographic_crs></georeferencing>
+<colors count="1">
+<color priority="0" name="Black" c="0" m="0" y="0" k="1" opacity="1"><spotcolors><namedcolor>BLACK</namedcolor></spotcolors><cmyk method="custom"/><rgb method="custom" r="0" g="0" b="0"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="1">
+<symbol type="1" id="0" code="535" name="High tower"><description>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</description><point_symbol inner_radius="600" inner_color="0" outer_width="0" outer_color="-1" elements="2"><element><symbol type="2" code=""><line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol><object type="1"><coords count="2">-1050 0;1050 0;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object></element><element><symbol type="2" code=""><line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol><object type="1"><coords count="2">0 -1050;0 1050;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object></element></point_symbol></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="1">
+<object type="0" symbol="0"><coords count="1">0 0;</coords></object>
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="2" position_x="0" position_y="0"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+<print scale="4000" resolution="600" mode="vector"><page_format paper_size="Custom" orientation="portrait" h_overlap="5" v_overlap="5"><dimensions width="110" height="110"/><page_rect left="0" top="0" width="110" height="110"/></page_format><print_area left="-55" top="-55" width="110" height="110" center_area="true" single_page="true"/></print>
+</barrier>
+<barrier version="6" required="0.6.0">
+<undo/>
+<redo/>
+</barrier>
+</map>
