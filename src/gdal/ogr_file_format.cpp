@@ -721,8 +721,12 @@ bool OgrFileImport::importImplementation()
 			auto offset_f  = MapCoordF { offset.x / 1000.0, offset.y / 1000.0 };
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
+			/// \todo Check how this can be solved with the map coords ref point,
+			///       in order to not interfer with grivation/grid compensation,
+			///       which is calculated using the geo coords.
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
 			georef.setProjectedRefPoint(new_projected, false);
+			
 			map->setGeoreferencing(georef);
 		}
 	}
@@ -838,6 +842,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		auto longitude = 0.001 * qRound(1000 * center.longitude());
 		auto ortho_georef = Georeferencing();
 		ortho_georef.setScaleDenominator(int(map->getScaleDenominator()));
+		ortho_georef.useGridCompensation(false);  // Local orthographic projection does not need this.
 		ortho_georef.setProjectedCRS(QString{},
 		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(latitude, 0, 'f')
@@ -852,6 +857,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 	{
 		auto georef = Georeferencing();
 		georef.setScaleDenominator(int(map->getScaleDenominator()));
+		georef.useGridCompensation(false);  // Local coordinate system does not need this.
 		georef.setDeclination(map->getGeoreferencing().getDeclination());
 		map->setGeoreferencing(georef);
 		return local_srs ? std::move(local_srs) : srsFromMap();

@@ -362,7 +362,7 @@ Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator{1000},
   grid_scale_factor{1.0},
-  use_grid_compensation(false),
+  use_grid_compensation(true),
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),

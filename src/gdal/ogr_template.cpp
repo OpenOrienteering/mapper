@@ -177,6 +177,7 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(cons
 	// Is the template's SRS orthographic, or can it be converted?
 	/// \todo Use the template's datum etc. instead of WGS84?
 	auto georef = std::make_unique<Georeferencing>();
+	georef->useGridCompensation(false);  // fixed local grid scale factor 1.0
 	georef->setScaleDenominator(int(map->getGeoreferencing().getScaleDenominator()));
 	georef->setProjectedCRS(QString{}, QStringLiteral("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +no_defs"));
 	if (OgrFileImport::checkGeoreferencing(path, *georef))
@@ -358,6 +359,7 @@ try
 				{
 					explicit_georef = std::make_unique<Georeferencing>();
 					explicit_georef->setScaleDenominator(int(map_georef.getScaleDenominator()));
+					explicit_georef->useGridCompensation(false);  // Legacy track compatibility
 					explicit_georef->setProjectedCRS(QString{}, projected_crs_spec);
 					explicit_georef->setProjectedRefPoint({}, false);
 				}

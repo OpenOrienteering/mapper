@@ -147,6 +147,7 @@ bool OCAD8FileImport::importImplementation()
 	// Scale and georeferencing parameters
 	Georeferencing georef;
 	georef.setScaleDenominator(file->setup->scale);
+	georef.useGridCompensation(false);  // legacy behaviour
 	georef.setProjectedRefPoint(QPointF(file->setup->offsetx, file->setup->offsety));
 	if (qAbs(file->setup->angle) >= 0.01) /* degrees */
 	{

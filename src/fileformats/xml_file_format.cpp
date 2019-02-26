@@ -591,6 +591,9 @@ bool XMLFileImporter::importImplementation()
 			// We need to adjust the georeferencing.
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
+			/// \todo Check how this can be solved with the map coords ref point,
+			///       in order to not interfer with grivation/grid compensation,
+			///       which is calculated using the geo coords.
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
 			georef.setProjectedRefPoint(new_projected, false);
 			map->setGeoreferencing(georef);

@@ -344,6 +344,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
+	georef.useGridCompensation(false);  // legacy behaviour
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
 	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
 	{
@@ -380,6 +381,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string)
 	// processed below.
 	auto add_warning = [this](const QString& w){ addWarning(w); };
 	Georeferencing georef;
+	georef.useGridCompensation(false);  // legacy behaviour
 	OcdGeorefFields fields;
 
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
