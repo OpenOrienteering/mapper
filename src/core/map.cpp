@@ -554,23 +554,43 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 	
 	double factor = getScaleDenominator() / (double)new_scale_denominator;
 	
+    scaleFlexibly(factor, scaling_center, scale_symbols, scale_objects, scale_georeferencing, scale_templates);
+
+	setScaleDenominator(new_scale_denominator);
+	setOtherDirty();
+	updateAllMapWidgets();
+}
+
+void Map::scaleMap(double scale_factor, const MapCoord& scaling_center, bool scale_georeferencing, bool scale_templates)
+{
+	if (scale_factor <= 0.0 || scale_factor == 1.0)
+		return;
+	
+	scaleFlexibly(scale_factor, scaling_center, false, true, scale_georeferencing, scale_templates);
+	
+	setOtherDirty();
+	updateAllMapWidgets();
+}
+
+void Map::scaleFlexibly(double scale_factor, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+{
 	if (scale_symbols)
-		scaleAllSymbols(factor);
+		scaleAllSymbols(scale_factor);
 	if (scale_objects)
 	{
 		undo_manager->clear();
-		scaleAllObjects(factor, scaling_center);
+		scaleAllObjects(scale_factor, scaling_center);
 		if (hasPrinterConfig())
 		{
 			auto print_area = printer_config->print_area;
 			auto center = QPointF(scaling_center);
-			print_area.setTopLeft(center + factor * (print_area.topLeft() - center));
-			print_area.setBottomRight(center + factor * (print_area.bottomRight() - center));
+			print_area.setTopLeft(center + scale_factor * (print_area.topLeft() - center));
+			print_area.setBottomRight(center + scale_factor * (print_area.bottomRight() - center));
 			printer_config->print_area = print_area;
 		}
 	}
 	if (scale_georeferencing)
-		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
+		georeferencing->setMapRefPoint(scaling_center + scale_factor * (georeferencing->getMapRefPoint() - scaling_center));
 	if (scale_templates)
 	{
 		for (int i = 0; i < getNumTemplates(); ++i)
@@ -579,7 +599,7 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 			if (temp->isTemplateGeoreferenced())
 				continue;
 			setTemplateAreaDirty(i);
-			temp->scale(factor, scaling_center);
+			temp->scale(scale_factor, scaling_center);
 			setTemplateAreaDirty(i);
 		}
 		for (int i = 0; i < getNumClosedTemplates(); ++i)
@@ -587,14 +607,10 @@ void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scalin
 			Template* temp = getClosedTemplate(i);
 			if (temp->isTemplateGeoreferenced())
 				continue;
-			temp->scale(factor, scaling_center);
+			temp->scale(scale_factor, scaling_center);
 		}
 	}
-	
-	setScaleDenominator(new_scale_denominator);
-	setOtherDirty();
-	updateAllMapWidgets();
-}
+}	
 
 void Map::rotateMap(double rotation, const MapCoord& center, bool adjust_georeferencing, bool adjust_declination, bool adjust_templates)
 {

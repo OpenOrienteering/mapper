@@ -105,6 +105,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
+ , combined_scale_factor_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
  , original_declination(0.0)
 {
 	if (!grivation_locked)
@@ -464,7 +465,7 @@ void GeoreferencingDialog::showHelp()
 
 void GeoreferencingDialog::reset()
 {
-	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
+	combined_scale_factor_locked = grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
 	if (!grivation_locked)
 		original_declination = initial_georef->getDeclination();
 	*georef.data() = *initial_georef;
@@ -494,6 +495,24 @@ void GeoreferencingDialog::accept()
 			int result = dialog.exec();
 			if (result == QDialog::Rejected)
 				return;
+		}
+	}
+	double supplemental_scale_factor_change = georef->getSupplementalScaleFactor() / initial_georef->getSupplementalScaleFactor();
+	if ( !combined_scale_factor_locked &&
+	     supplemental_scale_factor_change != 1.0 &&
+	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
+	{
+		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The supplemental scale factor has been changed. Do you want to scale the map content, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		if (result == QMessageBox::Cancel)
+		{
+			return;
+		}
+		else if (result == QMessageBox::Yes)
+		{
+			MapCoord center = georef->getMapRefPoint();
+			bool adjust_georeferencing_ref_point = true;
+			bool adjust_templates = true;
+			map->scaleMap(1.0/supplemental_scale_factor_change, center, adjust_georeferencing_ref_point, adjust_templates);
 		}
 	}
 	

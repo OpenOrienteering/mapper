@@ -244,6 +244,7 @@ private:
 	bool tool_active;
 	bool declination_query_in_progress;
 	bool grivation_locked;
+	bool combined_scale_factor_locked;
 	double original_declination;
 	
 	/* GUI elements */

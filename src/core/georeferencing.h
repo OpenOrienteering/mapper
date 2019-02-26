@@ -61,7 +61,12 @@ extern "C" void registerProjFileHelper();
  * Conversions between map coordinates and "projected coordinates" (flat metric
  * coordinates in a projected coordinate reference system) are made as affine 
  * transformation based on the map scale (principal scale), grid scale factor,
- * the grivation and a defined reference point.
+ * the fully precise convergence, the declination, and a defined reference
+ * point. Grivation is relegated to a minor role.
+ *
+ * A variation of the conversion approach is used for backwards compatibilty.
+ * In this case the affine transformation is based on the map scale,
+ * grid scale factor, the grivation and the reference point.
  * 
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification

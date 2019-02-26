@@ -129,7 +129,7 @@ bool PassPointList::estimateSimilarityTransformation(not_null<TemplateTransform*
 	}
 	else if (num_pass_points >= 2)
 	{
-		// Create linear equation system and solve using the pseuo inverse
+		// Create linear equation system and solve using the pseudo inverse
 		
 		// Derivation:
 		// (Attention: not by a mathematician. Please correct any errors.)
@@ -242,7 +242,7 @@ bool PassPointList::estimateSimilarityTransformation(not_null<QTransform*> out)
 	}
 	else if (num_pass_points >= 2)
 	{
-		// Create linear equation system and solve using the pseuo inverse
+		// Create linear equation system and solve using the pseudo inverse
 		
 		// Derivation:
 		// (Attention: not by a mathematician. Please correct any errors.)
@@ -334,7 +334,7 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*
 	auto num_pass_points = int(size());
 	Q_ASSERT(num_pass_points >= 3);
 	
-	// Create linear equation system and solve using the pseuo inverse
+	// Create linear equation system and solve using the pseudo inverse
 	
 	// Derivation: see comment in estimateSimilarityTransformation().
 	// Here, the resulting matrices look a bit different because the constraint

@@ -1156,7 +1156,17 @@ public:
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
 	
-	
+	/**
+	 * Scales all the map's objects.
+	 * 
+	 * @param scale_factor expansion ratio for sizes on the map (factor<1 shrinks sizes)
+	 * @param scaling_center The coordinate to use as scaling center.
+	 * @param scale_georeferencing Whether to adjust the map's georeferencing reference point.
+	 * @param scale_templates Whether to scale non-georeferenced templates.
+	 */
+	void scaleMap(double scale_factor, const MapCoord& scaling_center, bool scale_georeferencing, bool scale_templates);
+
+
 	/**
 	 * Rotate the map around a point.
 	 * 
@@ -1498,6 +1508,8 @@ private:
 	);
 	
 	
+	void scaleFlexibly(double scale_factor, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates);
+
 	void addSelectionRenderables(const Object* object);
 	void updateSelectionRenderables(const Object* object);
 	void removeSelectionRenderables(const Object* object);
