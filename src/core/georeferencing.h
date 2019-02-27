@@ -619,6 +619,15 @@ signals:
 	void declinationChanged();
 	
 	/**
+	 * Indicates a change of the "grid scale factor", as presented in
+	 * the georeferencing dialog.
+	 * 
+	 * The "grid scale factor" has no direct influence on projection or transformation.
+	 * That's why there is an independent signal.
+	 */
+	void gridScaleFactorChanged();
+	
+	/**
 	 * Indicates a change of the supplemental scale factor.
 	 * 
 	 * The supplemental scale factor has no direct influence on projection or transformation.

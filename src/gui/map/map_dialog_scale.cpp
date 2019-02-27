@@ -52,8 +52,16 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(tr("New scale:"), scale_box);
 
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
-	scale_factor_edit->setValue(map->getGeoreferencing().getSupplementalScaleFactor());
-	layout->addRow(tr("Supplemental scale factor:"), scale_factor_edit);
+	if (map->getGeoreferencing().usingGridCompensation())
+	{
+		scale_factor_edit->setValue(map->getGeoreferencing().getSupplementalScaleFactor());
+		layout->addRow(tr("Supplemental scale factor:"), scale_factor_edit);
+	}
+	else
+	{
+		scale_factor_edit->setValue(map->getGeoreferencing().getCombinedScaleFactor());
+		layout->addRow(tr("Grid scale factor:"), scale_factor_edit);
+	}
 	
 	layout->addRow(new QLabel(tr("Scaling center:")));
 	
@@ -146,9 +154,11 @@ void ScaleMapDialog::okClicked()
 	else if (center_other_radio->isChecked())
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 
-	double supplemental_scale_factor_change = scale_factor_edit->value() / map->getGeoreferencing().getSupplementalScaleFactor();
-
-	map->changeScale(scale, supplemental_scale_factor_change, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
+	double initial_scale_factor = map->getGeoreferencing().usingGridCompensation()
+		? map->getGeoreferencing().getSupplementalScaleFactor()
+		: map->getGeoreferencing().getCombinedScaleFactor();
+	double scale_factor_change = scale_factor_edit->value() / initial_scale_factor;
+	map->changeScale(scale, scale_factor_change, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
 

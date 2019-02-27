@@ -30,6 +30,7 @@
 #include "tools/tool.h"
 
 class QAction;
+class QCheckBox;
 class QCursor;
 class QDialogButtonBox;
 class QDoubleSpinBox;
@@ -126,6 +127,11 @@ public:
 	void declinationChanged();
 	
 	/**
+	  * Updates the grid scale factor widget from the georeferencing.
+	  */
+	void gridScaleFactorChanged();
+	
+	/**
 	  * Updates the supplemental scale factor widget from the georeferencing.
 	  */
 	void supplementalScaleFactorChanged();
@@ -194,9 +200,20 @@ protected:
 	void crsEdited();
 	
 	/**
-	 * Notifies the dialog of a change in the grid scale factor.
+	 * Notifies the dialog of a change in the "grid scale factor".
 	 */
-	void scaleFactorEdited();
+	void gridScaleFactorEdited();
+	
+	/**
+	 * Notifies the dialog of a change in the automatic grid scale
+	 * factor checkbox.
+	 */
+	void autoGridScaleCheckToggled(bool checked);
+	
+	/**
+	 * Notifies the dialog of a change in the supplemental scale factor.
+	 */
+	void supplementalScaleFactorEdited();
 	
 	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
@@ -256,10 +273,10 @@ private:
 	QLabel* status_label;
 	QLabel* status_field;
 	QLabel* grid_scale_factor_label;
-	QLabel* grid_scale_factor_field;
-	QLabel* combined_scale_factor_label;
-	QLabel* combined_scale_factor_field;
-	QDoubleSpinBox* scale_factor_edit;
+	QDoubleSpinBox* grid_scale_factor_edit;
+	QCheckBox* auto_grid_scale_factor_check;
+	QLabel* supplemental_scale_factor_label;
+	QDoubleSpinBox* supplemental_scale_factor_edit;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;

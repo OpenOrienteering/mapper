@@ -25,6 +25,7 @@
 
 #include <Qt>
 #include <QtGlobal>
+#include <QCheckBox>
 #include <QCursor>
 #include <QDate>
 #include <QDebug>
@@ -123,13 +124,14 @@ GeoreferencingDialog::GeoreferencingDialog(
 	    and the corresponding length on the curved earth model. It is applied
 	    as a factor to ground distances to get grid plane distances. */
 	grid_scale_factor_label = new QLabel(tr("Grid scale factor:"));
-	grid_scale_factor_field = new QLabel();
-	/*: The combined scale factor includes additional scaling as needed. */
-	combined_scale_factor_label = new QLabel(tr("Combined scale factor:"));
-	combined_scale_factor_field = new QLabel();
-	/*: The supplemental scale factor is combined with the grid scale factor. */
-	auto supplemental_scale_factor_label = new QLabel(tr("Supplemental scale factor:"));
-	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	grid_scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	auto_grid_scale_factor_check = new QCheckBox(tr("Automatic"));
+	if (georef->usingGridCompensation())
+		auto_grid_scale_factor_check->setChecked(true);
+
+	/*: The supplemental scale factor gets combined with the grid scale factor. */
+	supplemental_scale_factor_label = new QLabel(tr("Supplemental scale factor:"));
+	supplemental_scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	
 	auto reference_point_label = Util::Headline::create(tr("Reference point"));
 	
@@ -210,9 +212,19 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_selector);
 	crs_selector->setDialogLayout(edit_layout);
 	edit_layout->addRow(status_label, status_field);
-	edit_layout->addRow(grid_scale_factor_label, grid_scale_factor_field);
-	edit_layout->addRow(combined_scale_factor_label, combined_scale_factor_field);
-	edit_layout->addRow(supplemental_scale_factor_label, scale_factor_edit);
+
+	bool auto_grid_scale = georef->usingGridCompensation();
+	supplemental_scale_factor_edit->setVisible(auto_grid_scale);
+	supplemental_scale_factor_edit->setEnabled(auto_grid_scale);
+	grid_scale_factor_edit->setEnabled(!auto_grid_scale);
+	auto_grid_scale_factor_check->setChecked(auto_grid_scale);
+
+	QBoxLayout* grid_scale_factor_box = new QBoxLayout(QBoxLayout::LeftToRight);
+	grid_scale_factor_box->addWidget(grid_scale_factor_edit, 1);
+	grid_scale_factor_box->addWidget(auto_grid_scale_factor_check, 0);
+
+	edit_layout->addRow(grid_scale_factor_label, grid_scale_factor_box);
+	edit_layout->addRow(supplemental_scale_factor_label, supplemental_scale_factor_edit);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -240,7 +252,9 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
 	using TakingDoubleArgument = void (QDoubleSpinBox::*)(double);
-	connect(scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::scaleFactorEdited);
+	connect(grid_scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::gridScaleFactorEdited);
+	connect(auto_grid_scale_factor_check, &QAbstractButton::clicked, this, &GeoreferencingDialog::autoGridScaleCheckToggled);
+	connect(supplemental_scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::supplementalScaleFactorEdited);
 	
 	connect(map_x_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
 	connect(map_y_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
@@ -265,6 +279,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
 	connect(georef.data(), &Georeferencing::projectionChanged, this, &GeoreferencingDialog::projectionChanged);
 	connect(georef.data(), &Georeferencing::declinationChanged, this, &GeoreferencingDialog::declinationChanged);
+	connect(georef.data(), &Georeferencing::gridScaleFactorChanged, this, &GeoreferencingDialog::gridScaleFactorChanged);
 	connect(georef.data(), &Georeferencing::supplementalScaleFactorChanged, this, &GeoreferencingDialog::supplementalScaleFactorChanged);
 	
 	transformationChanged();
@@ -308,7 +323,7 @@ void GeoreferencingDialog::transformationChanged()
 	ScopedMultiSignalsBlocker block(
 	            map_x_edit, map_y_edit,
 	            easting_edit, northing_edit,
-	            scale_factor_edit
+	            grid_scale_factor_edit, supplemental_scale_factor_edit
 	);
 	
 	map_x_edit->setValue(georef->getMapRefPoint().x());
@@ -317,17 +332,13 @@ void GeoreferencingDialog::transformationChanged()
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
 	
-	double combined_scale_factor = georef->getCombinedScaleFactor();
+	grid_scale_factor_edit->setValue(georef->usingGridCompensation()
+									 ? georef->getGridScaleFactor()
+									 : georef->getCombinedScaleFactor());
 	bool grid_compensation_enabled = georef->usingGridCompensation();
-	grid_scale_factor_label->setVisible(grid_compensation_enabled);
-	grid_scale_factor_field->setVisible(grid_compensation_enabled);
-	grid_scale_factor_field->setText(QLocale().toString(georef->getGridScaleFactor(),
-														'f', Georeferencing::scaleFactorPrecision()));
-	combined_scale_factor_label->setVisible(!grid_compensation_enabled);
-	combined_scale_factor_field->setVisible(!grid_compensation_enabled);
-	combined_scale_factor_field->setText(QLocale().toString(combined_scale_factor,
-															'f', Georeferencing::scaleFactorPrecision()));
-	scale_factor_edit->setValue(georef->getSupplementalScaleFactor());
+	supplemental_scale_factor_label->setVisible(grid_compensation_enabled);
+	supplemental_scale_factor_edit->setVisible(grid_compensation_enabled);
+	supplemental_scale_factor_edit->setValue(georef->getSupplementalScaleFactor());
 	
 	updateGrivation();
 }
@@ -387,10 +398,20 @@ void GeoreferencingDialog::declinationChanged()
 }
 
 // slot
+void GeoreferencingDialog::gridScaleFactorChanged()
+{
+	const QSignalBlocker block1(grid_scale_factor_edit);
+	const QSignalBlocker block2(supplemental_scale_factor_edit);
+	grid_scale_factor_edit->setValue(georef->usingGridCompensation()
+									 ? georef->getGridScaleFactor()
+									 : georef->getCombinedScaleFactor());
+}
+
+// slot
 void GeoreferencingDialog::supplementalScaleFactorChanged()
 {
-	const QSignalBlocker block(scale_factor_edit);
-	scale_factor_edit->setValue(georef->getSupplementalScaleFactor());
+	const QSignalBlocker block(supplemental_scale_factor_edit);
+	supplemental_scale_factor_edit->setValue(georef->getSupplementalScaleFactor());
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -585,11 +606,38 @@ void GeoreferencingDialog::crsEdited()
 	reset_button->setEnabled(true);
 }
 
-void GeoreferencingDialog::scaleFactorEdited()
+void GeoreferencingDialog::gridScaleFactorEdited()
 {
-	const QSignalBlocker block{scale_factor_edit};
+	const QSignalBlocker block{grid_scale_factor_edit};
 	scale_factor_locked = false;
-	georef->setSupplementalScaleFactor(scale_factor_edit->value());
+	georef->setCombinedScaleFactor(grid_scale_factor_edit->value());
+	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
+{
+	georef->useGridCompensation(checked);
+	if (checked)
+	{
+		// compatibility mode becoming automatic grid scale factor mode
+		georef->setSupplementalScaleFactor(1.0);
+		grid_scale_factor_edit->setValue(georef->getGridScaleFactor());
+	}
+	else
+	{
+		// automatic grid scale factor mode becoming compatibility mode
+		grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor());
+	}
+	supplemental_scale_factor_edit->setVisible(checked);
+	supplemental_scale_factor_edit->setEnabled(checked);
+	grid_scale_factor_edit->setEnabled(!checked);
+}
+
+void GeoreferencingDialog::supplementalScaleFactorEdited()
+{
+	const QSignalBlocker block{supplemental_scale_factor_edit};
+	scale_factor_locked = false;
+	georef->setSupplementalScaleFactor(supplemental_scale_factor_edit->value());
 	reset_button->setEnabled(true);
 }
 
