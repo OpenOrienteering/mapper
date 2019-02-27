@@ -26,6 +26,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QAbstractButton>
+#include <QCheckBox>
 #include <QCursor>
 #include <QDate>
 #include <QDebug>
@@ -143,7 +144,10 @@ GeoreferencingDialog::GeoreferencingDialog(
 	    as a factor to ground distances to get grid plane distances. */
 	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
-	
+	auto_grid_scale_factor_check = new QCheckBox(tr("Automatic"));
+	if (georef->usingGridCompensation())
+		auto_grid_scale_factor_check->setChecked(true);
+
 	auto reference_point_label = Util::Headline::create(tr("Reference point"));
 	
 	ref_point_button = new QPushButton(tr("&Pick on map"));
@@ -224,7 +228,16 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_selector);
 	crs_selector->setDialogLayout(edit_layout);
 	edit_layout->addRow(status_label, status_field);
-	edit_layout->addRow(scale_factor_label, scale_factor_edit);
+	
+	bool auto_grid_scale = georef->usingGridCompensation();
+	scale_factor_edit->setEnabled(!auto_grid_scale);
+	auto_grid_scale_factor_check->setChecked(auto_grid_scale);
+	
+	auto* grid_scale_factor_box = new QHBoxLayout();
+	grid_scale_factor_box->addWidget(scale_factor_edit, 1);
+	grid_scale_factor_box->addWidget(auto_grid_scale_factor_check, 0);
+	
+	edit_layout->addRow(scale_factor_label, grid_scale_factor_box);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -252,6 +265,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
 	connect(scale_factor_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::scaleFactorEdited);
+	connect(auto_grid_scale_factor_check, &QAbstractButton::clicked, this, &GeoreferencingDialog::autoGridScaleCheckToggled);
 	
 	connect(map_x_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
 	connect(map_y_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
@@ -276,6 +290,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
 	connect(georef.data(), &Georeferencing::projectionChanged, this, &GeoreferencingDialog::projectionChanged);
 	connect(georef.data(), &Georeferencing::declinationChanged, this, &GeoreferencingDialog::declinationChanged);
+	connect(georef.data(), &Georeferencing::gridScaleFactorChanged, this, &GeoreferencingDialog::gridScaleFactorChanged);
 	
 	transformationChanged();
 	georefStateChanged();
@@ -383,6 +398,13 @@ void GeoreferencingDialog::declinationChanged()
 {
 	const QSignalBlocker block(declination_edit);
 	setValueIfChanged(declination_edit, georef->getDeclination());
+}
+
+// slot
+void GeoreferencingDialog::gridScaleFactorChanged()
+{
+	const QSignalBlocker block(scale_factor_edit);
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -585,6 +607,18 @@ void GeoreferencingDialog::scaleFactorEdited()
 	const QSignalBlocker block{scale_factor_edit};
 	georef->setGridScaleFactor(scale_factor_edit->value());
 	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
+{
+	georef->useGridCompensation(checked);
+	if (checked)
+	{
+		// compatibility mode becoming automatic grid scale factor mode
+		georef->updateGridScaleFactor();
+	}
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
+	scale_factor_edit->setEnabled(!checked);
 }
 
 void GeoreferencingDialog::selectMapRefPoint()
