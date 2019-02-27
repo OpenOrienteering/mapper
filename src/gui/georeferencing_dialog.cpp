@@ -318,13 +318,13 @@ void GeoreferencingDialog::transformationChanged()
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
 	
 	double combined_scale_factor = georef->getCombinedScaleFactor();
-	bool anisotropy_is_supported = georef->isAnisotropicScalingEnabled();
-	grid_scale_factor_label->setVisible(anisotropy_is_supported);
-	grid_scale_factor_field->setVisible(anisotropy_is_supported);
+	bool grid_compensation_enabled = georef->usingGridCompensation();
+	grid_scale_factor_label->setVisible(grid_compensation_enabled);
+	grid_scale_factor_field->setVisible(grid_compensation_enabled);
 	grid_scale_factor_field->setText(QLocale().toString(georef->getGridScaleFactor(),
 														'f', Georeferencing::scaleFactorPrecision()));
-	combined_scale_factor_label->setVisible(!anisotropy_is_supported);
-	combined_scale_factor_field->setVisible(!anisotropy_is_supported);
+	combined_scale_factor_label->setVisible(!grid_compensation_enabled);
+	combined_scale_factor_field->setVisible(!grid_compensation_enabled);
 	combined_scale_factor_field->setText(QLocale().toString(combined_scale_factor,
 															'f', Georeferencing::scaleFactorPrecision()));
 	scale_factor_edit->setValue(georef->getSupplementalScaleFactor());

@@ -569,11 +569,11 @@ void Georeferencing::updateSupplementalScaleFactor()
 	setCombinedScaleFactor(combined_scale_factor);
 }
 
-void Georeferencing::enableAnisotropicScaling()
+void Georeferencing::useGridCompensation(bool use_grid_compensation)
 {
-	if (!use_grid_compensation)
+	if (use_grid_compensation != this->use_grid_compensation)
 	{
-		use_grid_compensation = true;
+		this->use_grid_compensation = use_grid_compensation;
 		updateTransformation();
 	}
 }

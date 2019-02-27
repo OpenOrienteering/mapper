@@ -299,18 +299,20 @@ public:
 	void updateSupplementalScaleFactor();
 
 	/**
-	 * Enable anisotropic scaling.
-     *
-     * Support for anisotropic scaling in the map-to-projected and
-	 * map-from-projected transforms enables the map to be
-	 * georeferenced using projections like web mercator and plate carree.
+	 * Sets use of grid compensation matrix in map-to-projected transformations.
+	 *
+	 * The grid compensation matrix provides for automatically-generated
+	 * grid scale factor, anisotropic scaling in the map-to-projected and
+	 * map-from-projected transforms (enabling the map to be
+	 * georeferenced using projections like web mercator and plate carree).
+	 * Set to 'false' provides accurate backwards compatibility for older maps.
 	 */
-	void enableAnisotropicScaling();
+	void useGridCompensation(bool use_grid_compensation);
 
 	/**
-	 * Returns whether anisotropic scaling is enabled.
+	 * Returns whether use of the grid compensation matrix is enabled.
 	 */
-	bool isAnisotropicScalingEnabled() const;
+	bool usingGridCompensation() const;
 	
 	
 	/**
@@ -747,7 +749,7 @@ double Georeferencing::getSupplementalScaleFactor() const
 }
 
 inline
-bool Georeferencing::isAnisotropicScalingEnabled() const
+bool Georeferencing::usingGridCompensation() const
 {
 	return use_grid_compensation;
 }
