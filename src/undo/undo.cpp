@@ -27,6 +27,7 @@
 
 #include "object_undo.h"
 #include "map_part_undo.h"
+#include "symbol_undo.h"
 #include "util/xml_stream_util.h"
 
 
@@ -76,6 +77,9 @@ UndoStep* UndoStep::getUndoStepForType(Type type, Map* map)
 		
 	case MapPartUndoStepType:
 		return new MapPartUndoStep(map);
+		
+	case SymbolUndoStepType:
+		return new SymbolUndoStep(map);
 		
 	default:
 		qWarning("Undefined undo step type");

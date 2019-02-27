@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <functional>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -54,6 +55,7 @@ class QWidget;
 namespace OpenOrienteering {
 
 class CombinedSymbol;
+class CombinedUndoStep;
 class Georeferencing;
 class LineSymbol;
 class MapColor;
@@ -511,7 +513,7 @@ public:
 	 * Replaces the symbol at the given index with another symbol.
 	 * Emits symbolChanged() and possibly selectedObjectEdited().
 	 */
-	void setSymbol(Symbol* symbol, int pos);
+	std::unique_ptr<Symbol> setSymbol(Symbol* symbol, int pos);
 	
 	/**
 	 * Adds the given symbol at the specified index.
@@ -1489,6 +1491,9 @@ private:
 	 * 
 	 * If a filter is given, imports only the symbols for which filter[color_index] == true.
 	 * Imported symbols are placed at insert_pos (if positive), or after the existing symbols.
+	 *
+	 * @param undo_step Optional pointer to CombinedUndoStep where importSymbols() will store symbol removal operations.
+	 *
 	 * Returns a mapping from original symbols (in other) to imported symbols.
 	 */
 	QHash<const Symbol*, Symbol*> importSymbols(
@@ -1496,7 +1501,8 @@ private:
 	        const MapColorMap& color_map,
 	        int insert_pos = -1,
 	        bool merge_duplicates = true,
-	        const std::vector<bool>& filter = {}
+	        const std::vector<bool>& filter = {},
+	        CombinedUndoStep* undo_step = nullptr
 	);
 	
 	

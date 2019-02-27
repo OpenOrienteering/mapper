@@ -204,6 +204,7 @@ set(Mapper_Common_SRCS
   
   undo/map_part_undo.cpp
   undo/object_undo.cpp
+  undo/symbol_undo.cpp
   undo/undo.cpp
   undo/undo_manager.cpp
   

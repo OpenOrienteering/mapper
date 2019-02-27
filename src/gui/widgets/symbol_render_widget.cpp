@@ -37,6 +37,7 @@
 #include "settings.h"
 #include "core/map.h"
 #include "core/objects/object.h"
+#include "core/objects/object_operations.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
@@ -46,6 +47,9 @@
 #include "core/symbols/text_symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/symbol_tooltip.h"
+#include "undo/object_undo.h"
+#include "undo/symbol_undo.h"
+#include "undo/undo.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/overriding_shortcut.h"
 
@@ -799,7 +803,10 @@ void SymbolRenderWidget::editSymbol()
 	dialog.setWindowModality(Qt::WindowModal);
 	if (dialog.exec() == QDialog::Accepted)
 	{
-		map->setSymbol(dialog.getNewSymbol().release(), current_symbol_index);
+		auto old_symbol_ptr = map->setSymbol(dialog.getNewSymbol().release(), current_symbol_index);
+		map->push(new SymbolUndoStep(map, SymbolUndoStep::ChangeSymbol,
+		                             map->getSymbol(current_symbol_index),
+		                             old_symbol_ptr.release()));
 	}
 }
 
@@ -839,7 +846,7 @@ void SymbolRenderWidget::deleteSymbols()
 			                  this,
 			                  tr("Confirmation"),
 			                  tr("The map contains objects with the symbol \"%1\". "
-			                     "Deleting it will delete those objects and clear the undo history! "
+			                     "Deleting it will delete those objects! "
 			                     "Do you really want to do that?")
 			                  .arg(symbol->getName()),
 			                  QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No | QMessageBox::Cancel);
@@ -862,8 +869,29 @@ void SymbolRenderWidget::deleteSymbols()
 	}
 	
 	// Delete collected symbols
+	Q_ASSERT(saved_selection.size());
+	auto undo_step = new CombinedUndoStep(map);
 	for (auto* symbol : saved_selection)
-		map->deleteSymbol(map->findSymbolIndex(symbol));
+	{
+		const auto symbol_pos = map->findSymbolIndex(symbol);
+		auto undo_objects_step = new AddObjectsUndoStep(map);
+		auto move_object_to_undo = [this, undo_objects_step](Object* object_ptr,
+		                           MapPart* part, int object_index) {
+			Q_UNUSED(part); // FIXME - part information is lost
+			map->releaseObject(object_ptr);
+			if (map->isObjectSelected(object_ptr))
+			{
+				map->removeObjectFromSelection(object_ptr, false);
+			}
+			undo_objects_step->addObject(object_index, object_ptr);
+		};
+		map->applyOnMatchingObjects(move_object_to_undo, ObjectOp::HasSymbol{symbol});
+		undo_step->push(undo_objects_step);
+		
+		undo_step->push(new SymbolUndoStep(map, SymbolUndoStep::AddSymbol, const_cast<Symbol*>(symbol), symbol_pos));
+		map->releaseSymbol(symbol_pos);
+	}		
+	map->push(undo_step);
 	
 	if (selected_symbols.empty() && map->getFirstSelectedObject())
 		selectSingleSymbol(map->getFirstSelectedObject()->getSymbol());
@@ -873,7 +901,9 @@ void SymbolRenderWidget::duplicateSymbol()
 {
 	Q_ASSERT(current_symbol_index >= 0);
 	
-	map->addSymbol(duplicate(*map->getSymbol(current_symbol_index)).release(), current_symbol_index + 1);
+	const auto symbol_ptr = duplicate(*map->getSymbol(current_symbol_index)).release();
+	map->addSymbol(symbol_ptr, current_symbol_index + 1);
+	map->push(new SymbolUndoStep(map, SymbolUndoStep::RemoveSymbol, symbol_ptr, current_symbol_index + 1));
 	selectSingleSymbol(current_symbol_index + 1);
 }
 
@@ -1137,7 +1167,9 @@ bool SymbolRenderWidget::newSymbol(Symbol* prototype)
 		return false;
 	
 	int pos = (current_symbol_index >= 0) ? current_symbol_index : map->getNumSymbols();
-	map->addSymbol(dialog.getNewSymbol().release(), pos);
+	const auto symbol_ptr = dialog.getNewSymbol().release();
+	map->addSymbol(symbol_ptr, pos);
+	map->push(new SymbolUndoStep(map, SymbolUndoStep::RemoveSymbol, symbol_ptr, pos));
 	// Ensure that a change in selection is detected
 	selectSingleSymbol(-1);
 	selectSingleSymbol(pos);

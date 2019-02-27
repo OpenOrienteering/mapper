@@ -214,17 +214,6 @@ public:
 	void getModifiedObjects(int, ObjectSet&) const override;
 	
 	
-public slots:
-	/**
-	 * Adapts the symbol pointers of objects referencing the changed symbol.
-	 */
-	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
-	
-	/**
-	 * Invalidates the undo step if a contained object references the deleted symbol.
-	 */
-	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
-	
 protected:
 	/**
 	 * @copybrief UndoStep::saveImpl()
@@ -369,11 +358,6 @@ public:
 	
 	UndoStep* undo() override;
 	
-	
-public slots:
-	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
-	
-	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;

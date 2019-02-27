@@ -62,6 +62,7 @@
 #include "templates/template.h"
 #include "undo/map_part_undo.h"
 #include "undo/object_undo.h"
+#include "undo/symbol_undo.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
@@ -708,10 +709,11 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 	QHash<const Symbol*, Symbol*> symbol_map;
 	if ((mode & 0x0f) != ColorImport)
 	{
+		auto* undo_step = new CombinedUndoStep(this);
 		if (imported_map.getNumSymbols() > 0)
 		{
 			// Import symbols
-			symbol_map = importSymbols(imported_map, color_map, symbol_insert_pos, merge_duplicate_symbols, symbol_filter);
+			symbol_map = importSymbols(imported_map, color_map, symbol_insert_pos, merge_duplicate_symbols, symbol_filter, undo_step);
 		}
 		
 		if ((mode & 0x0f) != SymbolImport
@@ -720,7 +722,6 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 			// Import parts like this:
 			//  - if the other map has only one part, import it into the current part
 			//  - else check if there is already a part with an equal name for every part to import and import into this part if found, else create a new part
-			auto* undo_step = new CombinedUndoStep(this);
 			for (const auto* part_to_import : imported_map.parts)
 			{
 				MapPart* dest_part = nullptr;
@@ -761,6 +762,10 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 				
 				current_part_index = std::size_t(findPartIndex(temp_current_part));
 			}
+		}
+
+		if (undo_step->getNumSubSteps())
+		{
 			push(undo_step);
 		}
 	}
@@ -1415,7 +1420,8 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
         const MapColorMap& color_map,
         int insert_pos,
         bool merge_duplicates,
-        const std::vector<bool>& filter )
+        const std::vector<bool>& filter,
+        CombinedUndoStep* undo_step)
 {
 	QHash<const Symbol*, Symbol*> out_pointermap;
 	
@@ -1454,6 +1460,10 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 	for (auto* symbol : created_symbols)
 	{
 		addSymbol(symbol, insert_pos);
+		if (undo_step)
+		{
+			undo_step->push(new SymbolUndoStep(this, SymbolUndoStep::RemoveSymbol, symbol, insert_pos));
+		}
 		++insert_pos;
 	}
 	
@@ -1567,7 +1577,7 @@ Symbol* Map::getSymbol(int i)
 	return const_cast<Symbol*>(static_cast<const Map*>(this)->getSymbol(i));
 }
 
-void Map::setSymbol(Symbol* symbol, int pos)
+std::unique_ptr<Symbol> Map::setSymbol(Symbol* symbol, int pos)
 {
 	Symbol* old_symbol = symbols[pos];
 	
@@ -1598,10 +1608,11 @@ void Map::setSymbol(Symbol* symbol, int pos)
 	symbols[pos] = symbol;
 	emit symbolChanged(pos, symbol, old_symbol);
 	setSymbolsDirty();
-	delete old_symbol;
 	
 	if (object_with_symbol_selected)
 		emit selectedObjectEdited();
+
+	return std::unique_ptr<Symbol>(old_symbol);
 }
 
 void Map::deleteSymbol(int pos)
@@ -1611,8 +1622,7 @@ void Map::deleteSymbol(int pos)
 
 Symbol* Map::releaseSymbol(int pos)
 {
-	if (deleteAllObjectsWithSymbol(symbols[pos]))
-		undo_manager->clear();
+	deleteAllObjectsWithSymbol(symbols[pos]);
 	
 	int size = (int)symbols.size();
 	for (int i = 0; i < size; ++i)
