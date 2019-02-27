@@ -129,7 +129,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
     //qDebug() << "map scale is" << file->setup->scale;
 
 	// Scale and georeferencing parameters
-	Georeferencing georef;
+	Georeferencing georef(false);
 	georef.setScaleDenominator(file->setup->scale);
 	georef.setProjectedRefPoint(QPointF(file->setup->offsetx, file->setup->offsety));
 	if (qAbs(file->setup->angle) >= 0.01) /* degrees */

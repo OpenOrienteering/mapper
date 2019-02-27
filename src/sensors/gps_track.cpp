@@ -85,6 +85,7 @@ Track::Track(const Georeferencing& map_georef) : track_crs(nullptr), map_georef(
 }
 
 Track::Track(const Track& other)
+	: map_georef(other.map_georef)
 {
 	waypoints = other.waypoints;
 	waypoint_names = other.waypoint_names;
@@ -96,8 +97,6 @@ Track::Track(const Track& other)
 	current_segment_finished = other.current_segment_finished;
 	
 	element_tags   = other.element_tags;
-	
-	map_georef = other.map_georef;
 	
 	if (other.track_crs)
 	{

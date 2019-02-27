@@ -248,7 +248,8 @@ private:
 	bool allow_no_georeferencing;
 	bool tool_active;
 	bool declination_query_in_progress;
-	bool map_locked_to_grid;
+	bool grivation_locked;
+	bool scale_factor_locked;
 	
 	/* GUI elements */
 	CRSSelector* crs_selector;

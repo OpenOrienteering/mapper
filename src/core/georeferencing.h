@@ -143,8 +143,10 @@ public:
 	
 	/** 
 	 * Constructs a scale-only georeferencing.
+	 *
+	 * @param use_grid_compensation  enable automatic scaling, etc.
 	 */
-	Georeferencing();
+	Georeferencing(bool use_grid_compensation = true);
 	
 	/** 
 	 * Constructs a georeferencing which is a copy of an existing georeferencing.
@@ -242,6 +244,13 @@ public:
 	 * ground distances to get grid plane distances.
 	 */
 	double getCombinedScaleFactor() const;
+
+	/**
+	 * Sets the combined scale factor.
+	 * 
+	 * \see getCombinedScaleFactor()
+	 */
+	void setCombinedScaleFactor(double value);
 	
 	/**
 	 * Returns the grid scale factor.
@@ -272,6 +281,22 @@ public:
 	 * \see getSupplementalScaleFactor()
 	 */
 	void setSupplementalScaleFactor(double value);
+	
+	/**
+	 * Updates the combined scale factor. 
+	 * 
+	 * The new value is calculated from the supplemental scale factor and
+	 * the grid scale factor as calculated from the grid compensation.
+	 */
+	void updateCombinedScaleFactor();
+	
+	/**
+	 * Updates the supplemental scale factor. 
+	 * 
+	 * The new value is calculated from the combined scale factor and
+	 * the grid scale factor as calculated from the grid compensation.
+	 */
+	void updateSupplementalScaleFactor();
 
 	/**
 	 * Enable anisotropic scaling.
@@ -369,9 +394,10 @@ public:
 	 * Defines the projected coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the geographic coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and if
+	 * using grid compensation, the combined scale factor.
 	 */
-	void setProjectedRefPoint(QPointF point, bool update_grivation = true);
+	void setProjectedRefPoint(QPointF point, bool update_grivation = true, bool update_scale_factor = true);
 	
 	
 	/**
@@ -437,9 +463,10 @@ public:
 	 * Defines the geographic coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the projected coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and if
+	 * using grid compensation, the combined scale factor.
 	 */
-	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true);
+	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true, bool update_scale_factor = true);
 	
 	
 	/** 
@@ -603,13 +630,15 @@ private:
 	static double convergenceOfCompensation(const QTransform &grid_compensation);
 	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
 	void setDeclinationAndGrivation(double declination, double grivation);
+	void setScaleFactors(double supplemental_scale_factor, double combined_scale_factor);
 	
 	State state;
 	
 	unsigned int scale_denominator;
 
-	// use_grid_compensation indicates to use the grid_compensation
-	// (may be anisotropic) rather than the grid_scale_factor.
+	// use_grid_compensation indicates to use the calculated grid_compensation
+	// (may be anisotropic) together with supplemental_scale_factor,
+	// rather than simply the combined_scale_factor.
 	double combined_scale_factor;
 	double supplemental_scale_factor;
 	bool use_grid_compensation;
@@ -708,7 +737,7 @@ double Georeferencing::getCombinedScaleFactor() const
 inline
 double Georeferencing::getGridScaleFactor() const
 {
-	return scaleFactorOfCompensation(grid_compensation);
+	return roundScaleFactor(scaleFactorOfCompensation(grid_compensation));
 }
 
 inline

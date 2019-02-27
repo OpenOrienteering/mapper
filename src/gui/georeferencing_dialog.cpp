@@ -104,7 +104,8 @@ GeoreferencingDialog::GeoreferencingDialog(
  , allow_no_georeferencing(allow_no_georeferencing)
  , tool_active(false)
  , declination_query_in_progress(false)
- , map_locked_to_grid(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
+ , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
+ , scale_factor_locked(grivation_locked)
 {
 	setWindowTitle(tr("Map Georeferencing"));
 	setWindowModality(Qt::WindowModal);
@@ -470,7 +471,8 @@ void GeoreferencingDialog::showHelp()
 
 void GeoreferencingDialog::reset()
 {
-	map_locked_to_grid = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
+	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
+	scale_factor_locked = grivation_locked;
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
@@ -478,7 +480,7 @@ void GeoreferencingDialog::reset()
 void GeoreferencingDialog::accept()
 {
 	float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
-	if ( !map_locked_to_grid &&
+	if ( !grivation_locked &&
 	     declination_change_degrees != 0 &&
 	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 	{
@@ -489,7 +491,7 @@ void GeoreferencingDialog::accept()
 		}
 	}
 	double supplemental_scale_factor_change = georef->getSupplementalScaleFactor() / initial_georef->getSupplementalScaleFactor();
-	if ( !map_locked_to_grid &&
+	if ( !scale_factor_locked &&
 	     supplemental_scale_factor_change != 1.0 &&
 	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 	{
@@ -498,14 +500,6 @@ void GeoreferencingDialog::accept()
 		{
 			return;
 		}
-	}
-	
-	// If we get here with a change, the user wants to alter georeferencing.
-	// It's OK to also allow for anisotropic scaling.
-	if ( !map_locked_to_grid &&
-		 (declination_change_degrees != 0 || supplemental_scale_factor_change != 1.0) )
-	{
-		georef->enableAnisotropicScaling();
 	}
 
 	map->setGeoreferencing(*georef);
@@ -552,7 +546,7 @@ void GeoreferencingDialog::updateDeclinationButton()
 void GeoreferencingDialog::updateGrivation()
 {
 	QString text = trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
-	if (map_locked_to_grid)
+	if (grivation_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	grivation_label->setText(text);
 }
@@ -580,9 +574,9 @@ void GeoreferencingDialog::crsEdited()
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters());
 		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		if (keep_geographic_radio->isChecked())
-			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !map_locked_to_grid);
+			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked, !scale_factor_locked);
 		else
-			georef_copy.setProjectedRefPoint(georef->getProjectedRefPoint(), !map_locked_to_grid);
+			georef_copy.setProjectedRefPoint(georef->getProjectedRefPoint(), !grivation_locked, !scale_factor_locked);
 		break;
 	}
 	
@@ -594,7 +588,7 @@ void GeoreferencingDialog::crsEdited()
 void GeoreferencingDialog::scaleFactorEdited()
 {
 	const QSignalBlocker block{scale_factor_edit};
-	map_locked_to_grid = false;
+	scale_factor_locked = false;
 	georef->setSupplementalScaleFactor(scale_factor_edit->value());
 	reset_button->setEnabled(true);
 }
@@ -620,7 +614,7 @@ void GeoreferencingDialog::eastingNorthingEdited()
 	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double easting   = easting_edit->value();
 	double northing  = northing_edit->value();
-	georef->setProjectedRefPoint(QPointF(easting, northing), !map_locked_to_grid);
+	georef->setProjectedRefPoint(QPointF(easting, northing), !grivation_locked, !scale_factor_locked);
 	keep_projected_radio->setChecked(true);
 	reset_button->setEnabled(true);
 }
@@ -630,26 +624,27 @@ void GeoreferencingDialog::latLonEdited()
 	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double latitude  = lat_edit->value();
 	double longitude = lon_edit->value();
-	georef->setGeographicRefPoint(LatLon(latitude, longitude), !map_locked_to_grid);
+	georef->setGeographicRefPoint(LatLon(latitude, longitude), !grivation_locked, !scale_factor_locked);
 	keep_geographic_radio->setChecked(true);
 	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::keepCoordsChanged()
 {
-	if (map_locked_to_grid && keep_geographic_radio->isChecked())
+	if (grivation_locked && keep_geographic_radio->isChecked())
 	{
-		map_locked_to_grid = false;
+		grivation_locked = false;
 		updateGrivation();
 	}
+	scale_factor_locked = false;
 	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::declinationEdited(double value)
 {
-	if (map_locked_to_grid)
+	if (grivation_locked)
 	{
-		map_locked_to_grid = false;
+		grivation_locked = false;
 		updateGrivation();
 	}
 	georef->setDeclination(value);

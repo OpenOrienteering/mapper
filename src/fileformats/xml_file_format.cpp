@@ -544,7 +544,7 @@ void XMLFileImporter::import(bool load_symbols_only)
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
-			georef.setProjectedRefPoint(new_projected, false);
+			georef.setProjectedRefPoint(new_projected, false, false);
 			map->setGeoreferencing(georef);
 		}
 	}

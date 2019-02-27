@@ -251,7 +251,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	const Ocd::FileHeaderV8* header = file.header();
 	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
 	
-	Georeferencing georef;
+	Georeferencing georef(false);
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
 	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
@@ -271,7 +271,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 {
 	const QChar* unicode = param_string.unicode();
 	
-	Georeferencing georef;
+	Georeferencing georef(false);
 	QString combined_grid_zone;
 	QPointF proj_ref_point;
 	bool x_ok = false, y_ok = false;
@@ -337,7 +337,7 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 	
 	if (x_ok && y_ok)
 	{
-		georef.setProjectedRefPoint(proj_ref_point, false);
+		georef.setProjectedRefPoint(proj_ref_point, false, false);
 	}
 	
 	map->setGeoreferencing(georef);

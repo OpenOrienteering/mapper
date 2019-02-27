@@ -149,7 +149,7 @@ void NativeFileImport::import(bool load_symbols_only)
 
     if (version <= 16)
 	{
-		Georeferencing georef;
+		Georeferencing georef(false);
 		stream->read((char*)&georef.scale_denominator, sizeof(int));
 		
 		if (version >= 15)
@@ -170,7 +170,7 @@ void NativeFileImport::import(bool load_symbols_only)
 	{
 		loadString(stream, map->map_notes);
 		
-		Georeferencing georef;
+		Georeferencing georef(false);
 		stream->read((char*)&georef.scale_denominator, sizeof(int));
 		double value;
 		if (version >= 18)
