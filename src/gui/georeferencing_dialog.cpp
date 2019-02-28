@@ -511,15 +511,23 @@ void GeoreferencingDialog::accept()
 			return;
 		}
 	}
-	double supplemental_scale_factor_change = georef->getSupplementalScaleFactor() / initial_georef->getSupplementalScaleFactor();
 	if ( !scale_factor_locked &&
-	     supplemental_scale_factor_change != 1.0 &&
 	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 	{
-		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The supplemental scale factor has been changed. To preserve georeferencing of the map content, use \"Change map scale\" instead. Do you want to alter the geographic scale and location of all map content?"), QMessageBox::Yes | QMessageBox::No);
-		if (result == QMessageBox::No)
+		QString scale_factor_name = initial_georef->usingGridCompensation()
+			? tr("supplemental scale factor")
+			: tr("grid scale factor");
+		double scale_factor_change = initial_georef->usingGridCompensation()
+			? georef->getSupplementalScaleFactor() / initial_georef->getSupplementalScaleFactor()
+			: georef->getCombinedScaleFactor() / initial_georef->getCombinedScaleFactor();
+		if ( georef->usingGridCompensation() != initial_georef->usingGridCompensation()
+			 || scale_factor_change != 1.0 )
 		{
-			return;
+			int result = QMessageBox::question(this, tr("Scale factor change"), tr("The %1 has been changed. To preserve georeferencing of the map content, use \"Change map scale\" instead. Do you want to alter the geographic scale and location of all map content?").arg(scale_factor_name), QMessageBox::Yes | QMessageBox::No);
+			if (result == QMessageBox::No)
+			{
+				return;
+			}
 		}
 	}
 
@@ -620,6 +628,7 @@ void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
 	if (checked)
 	{
 		// compatibility mode becoming automatic grid scale factor mode
+		scale_factor_locked = false;
 		georef->setSupplementalScaleFactor(1.0);
 		grid_scale_factor_edit->setValue(georef->getGridScaleFactor());
 	}
