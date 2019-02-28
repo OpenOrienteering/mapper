@@ -58,10 +58,11 @@ namespace literal
 	static const QLatin1String supplemental_scale_factor{"supplemental_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
-	static const QLatin1String compensation_11("compensation_11");
-	static const QLatin1String compensation_12("compensation_12");
-	static const QLatin1String compensation_21("compensation_21");
-	static const QLatin1String compensation_22("compensation_22");
+	static const QLatin1String grid_compensation("grid_compensation");
+	static const QLatin1String m11("m11");
+	static const QLatin1String m12("m12");
+	static const QLatin1String m21("m21");
+	static const QLatin1String m22("m22");
 	
 	static const QLatin1String ref_point("ref_point");
 	static const QLatin1String ref_point_deg("ref_point_deg");
@@ -273,8 +274,6 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
 	
-	combined_scale_factor = 1.0;
-	supplemental_scale_factor = 1.0;
 	if (georef_element.hasAttribute(literal::supplemental_scale_factor))
 	{
 		supplemental_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::supplemental_scale_factor));
@@ -287,31 +286,11 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 		if (combined_scale_factor <= 0.0)
 			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(combined_scale_factor)));
 	}
-	use_grid_compensation = false;
-	if (georef_element.hasAttribute(literal::compensation_11)
-	    || georef_element.hasAttribute(literal::compensation_22))
-	{
-		use_grid_compensation = true;
-		if (!georef_element.hasAttribute(literal::compensation_11))
-			throw FileFormatException(tr("Georeferencing grid compensation missing element 11."));
-		double compensation_11 = roundScaleFactor(georef_element.attribute<double>(literal::compensation_11));
-		double compensation_12 = 0.0;
-		if (georef_element.hasAttribute(literal::compensation_12))
-			compensation_12 = roundScaleFactor(georef_element.attribute<double>(literal::compensation_12));
-		double compensation_21 = 0.0;
-		if (georef_element.hasAttribute(literal::compensation_21))
-			compensation_21 = roundScaleFactor(georef_element.attribute<double>(literal::compensation_21));
-		if (!georef_element.hasAttribute(literal::compensation_22))
-			throw FileFormatException(tr("Georeferencing grid compensation missing element 22."));
-		double compensation_22 = roundScaleFactor(georef_element.attribute<double>(literal::compensation_22));
-		grid_compensation = QTransform(compensation_11, compensation_12, compensation_21, compensation_22, 0.0, 0.0);
-		if (grid_compensation.determinant() < 0.00000000001)
-			throw FileFormatException(tr("Georeferencing grid compensation invalid."));
-	}
-	
 	state = Local;
 	if (load_scale_only)
 	{
+		use_grid_compensation = true;
+		grid_compensation *= (combined_scale_factor/supplemental_scale_factor);
 		xml.skipCurrentElement();
 	}
 	else
@@ -395,6 +374,18 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 					}
 				}
 			}
+			else if (xml.name() == literal::grid_compensation)
+			{
+				use_grid_compensation = true;
+				XmlElementReader compensation_element(xml);
+				double m11 = roundScaleFactor(compensation_element.attribute<double>(literal::m11));
+				double m12 = roundScaleFactor(compensation_element.attribute<double>(literal::m12));
+				double m21 = roundScaleFactor(compensation_element.attribute<double>(literal::m21));
+				double m22 = roundScaleFactor(compensation_element.attribute<double>(literal::m22));
+				grid_compensation = QTransform(m11, m12, m21, m22, 0.0, 0.0);
+				if (grid_compensation.determinant() < 0.00000000001)
+					throw FileFormatException(tr("Georeferencing grid compensation invalid."));
+			}
 			else // unknown
 			{
 				; // nothing
@@ -435,12 +426,11 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		georef_element.writeAttribute(literal::grivation, grivation, declinationPrecision());
 	if (use_grid_compensation)
 	{
-		georef_element.writeAttribute(literal::compensation_11, grid_compensation.m11(), scaleFactorPrecision());
-		if (!qIsNull(grid_compensation.m12()))
-			georef_element.writeAttribute(literal::compensation_12, grid_compensation.m12(), scaleFactorPrecision());
-		if (!qIsNull(grid_compensation.m21()))
-			georef_element.writeAttribute(literal::compensation_21, grid_compensation.m21(), scaleFactorPrecision());
-		georef_element.writeAttribute(literal::compensation_22, grid_compensation.m22(), scaleFactorPrecision());
+		XmlElementWriter compensation_element(xml, literal::grid_compensation);
+		compensation_element.writeAttribute(literal::m11, grid_compensation.m11(), scaleFactorPrecision());
+		compensation_element.writeAttribute(literal::m12, grid_compensation.m12(), scaleFactorPrecision());
+		compensation_element.writeAttribute(literal::m21, grid_compensation.m21(), scaleFactorPrecision());
+		compensation_element.writeAttribute(literal::m22, grid_compensation.m22(), scaleFactorPrecision());
 	}
 		
 	if (!qIsNull(map_ref_point.lengthSquared()))
