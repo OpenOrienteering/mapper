@@ -121,6 +121,10 @@ namespace
 		const Georeferencing& b_geo = b.getGeoreferencing();
 		if (a_geo.isLocal() != b_geo.isLocal() ||
 			a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
+			a_geo.getCombinedScaleFactor() != b_geo.getCombinedScaleFactor() ||
+			a_geo.usingGridCompensation() != b_geo.usingGridCompensation() ||
+			(a_geo.usingGridCompensation() && (a_geo.getSupplementalScaleFactor() != b_geo.getSupplementalScaleFactor())) ||
+			(a_geo.usingGridCompensation() && (a_geo.getGridCompensation() != b_geo.getGridCompensation())) ||
 			a_geo.getDeclination() != b_geo.getDeclination() ||
 			a_geo.getGrivation() != b_geo.getGrivation() ||
 			a_geo.getMapRefPoint() != b_geo.getMapRefPoint() ||
@@ -321,6 +325,7 @@ namespace
 	  "data:issue-513-coords-outside-printable.xmap",
 	  "data:issue-513-coords-outside-printable.omap",
 	  "data:issue-513-coords-outside-qint32.omap",
+	  "data:grid_compensation.omap",
 	  "data:spotcolor_overprint.xmap",
 #ifndef NO_NATIVE_FILE_FORMAT
 	  "data:test_map.omap"

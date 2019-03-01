@@ -314,6 +314,10 @@ public:
 	 */
 	bool usingGridCompensation() const;
 	
+	/**
+	 * Returns the grid compensation matrix.
+	 */
+	QTransform getGridCompensation() const;
 	
 	/**
 	 * Returns the magnetic declination (in degrees).
@@ -637,7 +641,6 @@ signals:
 	
 	
 private:
-	QTransform getGridCompensation() const;
 	static double convergenceOfCompensation(const QTransform &grid_compensation);
 	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
 	void setDeclinationAndGrivation(double declination, double grivation);
