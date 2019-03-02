@@ -691,7 +691,6 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		                             .arg(longitude, 0, 'f') );
 		ortho_georef.setProjectedRefPoint({}, false, false);
 		ortho_georef.setDeclination(map->getGeoreferencing().getDeclination());
-		ortho_georef.setSupplementalScaleFactor(map->getGeoreferencing().getSupplementalScaleFactor());
 		map->setGeoreferencing(ortho_georef);
 		return srsFromMap();
 	}

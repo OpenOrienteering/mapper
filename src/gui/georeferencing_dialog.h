@@ -132,11 +132,6 @@ public:
 	void gridScaleFactorChanged();
 	
 	/**
-	  * Updates the supplemental scale factor widget from the georeferencing.
-	  */
-	void supplementalScaleFactorChanged();
-	
-	/**
 	 * Triggers an online request for the magnetic declination.
 	 * 
 	 * @param no_confirm If true, the user will not be asked for confirmation.
@@ -211,11 +206,6 @@ protected:
 	void autoGridScaleCheckToggled(bool checked);
 	
 	/**
-	 * Notifies the dialog of a change in the supplemental scale factor.
-	 */
-	void supplementalScaleFactorEdited();
-	
-	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
 	 * the reference point on the map.
 	 */
@@ -275,8 +265,6 @@ private:
 	QLabel* grid_scale_factor_label;
 	QDoubleSpinBox* grid_scale_factor_edit;
 	QCheckBox* auto_grid_scale_factor_check;
-	QLabel* supplemental_scale_factor_label;
-	QDoubleSpinBox* supplemental_scale_factor_edit;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;

@@ -547,13 +547,13 @@ unsigned int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(unsigned int new_scale_denominator, double supplemental_scale_factor_change, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, double scale_factor_change, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
-	if (new_scale_denominator == getScaleDenominator() && supplemental_scale_factor_change == 1.0)
+	if (new_scale_denominator == getScaleDenominator() && scale_factor_change == 1.0)
 		return;
 	
 	double denominator_factor = getScaleDenominator() / (double)new_scale_denominator;
-	double factor = denominator_factor / supplemental_scale_factor_change;
+	double factor = denominator_factor / scale_factor_change;
 	
 	if (scale_symbols)
 		scaleAllSymbols(denominator_factor);
@@ -572,7 +572,8 @@ void Map::changeScale(unsigned int new_scale_denominator, double supplemental_sc
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
-	georeferencing->setSupplementalScaleFactor(georeferencing->getSupplementalScaleFactor() * supplemental_scale_factor_change);
+	if (scale_factor_change != 1.0)
+		georeferencing->setCombinedScaleFactor(georeferencing->getCombinedScaleFactor() * scale_factor_change);
 	if (scale_templates)
 	{
 		for (int i = 0; i < getNumTemplates(); ++i)

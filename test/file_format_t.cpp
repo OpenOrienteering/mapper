@@ -123,7 +123,6 @@ namespace
 			a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
 			a_geo.getCombinedScaleFactor() != b_geo.getCombinedScaleFactor() ||
 			a_geo.usingGridCompensation() != b_geo.usingGridCompensation() ||
-			(a_geo.usingGridCompensation() && (a_geo.getSupplementalScaleFactor() != b_geo.getSupplementalScaleFactor())) ||
 			(a_geo.usingGridCompensation() && (a_geo.getGridCompensation() != b_geo.getGridCompensation())) ||
 			a_geo.getDeclination() != b_geo.getDeclination() ||
 			a_geo.getGrivation() != b_geo.getGrivation() ||

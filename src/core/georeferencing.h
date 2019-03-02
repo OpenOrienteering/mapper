@@ -264,39 +264,12 @@ public:
 	double getGridScaleFactor() const;
 	
 	/**
-	 * Returns the supplemental scale factor.
-	 * 
-	 * The supplemental scale factor is the ratio between ellipsoid distances
-	 * and the length on the ground. It is applied as a factor to ground distances
-	 * to get ellipsoid distances.
-	 * 
-	 * Mapper doesn't explicitly deal with any other factors than grid scale.
-	 * This property can be used as elevation factor.
-	 */
-	double getSupplementalScaleFactor() const;
-	
-	/**
-	 * Sets the supplemental scale factor.
-	 * 
-	 * \see getSupplementalScaleFactor()
-	 */
-	void setSupplementalScaleFactor(double value);
-	
-	/**
 	 * Updates the combined scale factor. 
 	 * 
-	 * The new value is calculated from the supplemental scale factor and
-	 * the grid scale factor as calculated from the grid compensation.
+	 * The new value is calculated from the grid scale factor
+	 * as calculated from the grid compensation.
 	 */
 	void updateCombinedScaleFactor();
-	
-	/**
-	 * Updates the supplemental scale factor. 
-	 * 
-	 * The new value is calculated from the combined scale factor and
-	 * the grid scale factor as calculated from the grid compensation.
-	 */
-	void updateSupplementalScaleFactor();
 
 	/**
 	 * Sets use of grid compensation matrix in map-to-projected transformations.
@@ -631,30 +604,19 @@ signals:
 	 */
 	void gridScaleFactorChanged();
 	
-	/**
-	 * Indicates a change of the supplemental scale factor.
-	 * 
-	 * The supplemental scale factor has no direct influence on projection or transformation.
-	 * That's why there is an independent signal.
-	 */
-	void supplementalScaleFactorChanged();
-	
 	
 private:
 	static double convergenceOfCompensation(const QTransform &grid_compensation);
 	static double scaleFactorOfCompensation(const QTransform &grid_compensation);
 	void setDeclinationAndGrivation(double declination, double grivation);
-	void setScaleFactors(double supplemental_scale_factor, double combined_scale_factor);
 	
 	State state;
 	
 	unsigned int scale_denominator;
 
 	// use_grid_compensation indicates to use the calculated grid_compensation
-	// (may be anisotropic) together with supplemental_scale_factor,
-	// rather than simply the combined_scale_factor.
+	// (may be anisotropic) rather than simply the combined_scale_factor.
 	double combined_scale_factor;
-	double supplemental_scale_factor;
 	bool use_grid_compensation;
 	QTransform grid_compensation;
 	double declination;
@@ -752,12 +714,6 @@ inline
 double Georeferencing::getGridScaleFactor() const
 {
 	return roundScaleFactor(scaleFactorOfCompensation(grid_compensation));
-}
-
-inline
-double Georeferencing::getSupplementalScaleFactor() const
-{
-	return supplemental_scale_factor;
 }
 
 inline

@@ -59,7 +59,6 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
 	connect(&georef, &Georeferencing::stateChanged, this, &TemplateTrack::updateGeoreferencing);
 	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
-	connect(&georef, &Georeferencing::supplementalScaleFactorChanged, this, &TemplateTrack::updateGeoreferencing);
 }
 
 TemplateTrack::~TemplateTrack()

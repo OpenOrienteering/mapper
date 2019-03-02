@@ -55,7 +55,6 @@ namespace literal
 	
 	static const QLatin1String scale("scale");
 	static const QLatin1String grid_scale_factor{"grid_scale_factor"};
-	static const QLatin1String supplemental_scale_factor{"supplemental_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
 	static const QLatin1String grid_compensation("grid_compensation");
@@ -160,7 +159,6 @@ Georeferencing::Georeferencing(bool use_grid_compensation)
 : state(Local),
   scale_denominator{1000},
   combined_scale_factor{1.0},
-  supplemental_scale_factor{1.0},
   use_grid_compensation(use_grid_compensation),
   grid_compensation(),
   declination(0.0),
@@ -184,7 +182,6 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   state(other.state),
   scale_denominator(other.scale_denominator),
   combined_scale_factor{other.combined_scale_factor},
-  supplemental_scale_factor{other.supplemental_scale_factor},
   use_grid_compensation(other.use_grid_compensation),
   grid_compensation(other.grid_compensation),
   declination(other.declination),
@@ -220,7 +217,6 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
 	combined_scale_factor    = other.combined_scale_factor;
-	supplemental_scale_factor = other.supplemental_scale_factor;
 	use_grid_compensation    = other.use_grid_compensation;
 	grid_compensation        = other.grid_compensation;
 	declination              = other.declination;
@@ -244,7 +240,6 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	emit transformationChanged();
 	emit declinationChanged();
 	emit gridScaleFactorChanged();
-	emit supplementalScaleFactorChanged();
 	emit projectionChanged();
 	
 	return *this;
@@ -274,12 +269,6 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	if (scale_denominator <= 0)
 		throw FileFormatException(tr("Map scale specification invalid or missing."));
 	
-	if (georef_element.hasAttribute(literal::supplemental_scale_factor))
-	{
-		supplemental_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::supplemental_scale_factor));
-		if (supplemental_scale_factor <= 0.0)
-			throw FileFormatException(tr("Invalid supplemental scale factor: %1").arg(QString::number(supplemental_scale_factor)));
-	}
 	if (georef_element.hasAttribute(literal::grid_scale_factor))
 	{
 		combined_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
@@ -290,7 +279,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	if (load_scale_only)
 	{
 		use_grid_compensation = true;
-		grid_compensation *= (combined_scale_factor/supplemental_scale_factor);
+		grid_compensation *= combined_scale_factor;
 		xml.skipCurrentElement();
 	}
 	else
@@ -397,7 +386,6 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	updateTransformation();
 	emit declinationChanged();
 	emit gridScaleFactorChanged();
-	emit supplementalScaleFactorChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
 		if (projected_crs)
@@ -418,8 +406,6 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 	georef_element.writeAttribute(literal::scale, scale_denominator);
 	if (combined_scale_factor != 1.0)
 		georef_element.writeAttribute(literal::grid_scale_factor, combined_scale_factor, scaleFactorPrecision());
-	if (use_grid_compensation && supplemental_scale_factor != 1.0)
-		georef_element.writeAttribute(literal::supplemental_scale_factor, supplemental_scale_factor, scaleFactorPrecision());
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
@@ -519,48 +505,24 @@ void Georeferencing::setScaleDenominator(int value)
 	}
 }
 
-void Georeferencing::setSupplementalScaleFactor(double value)
-{
-	Q_ASSERT(value > 0);
-	double supplemental_scale_factor = roundScaleFactor(value);
-	double combined_scale_factor = roundScaleFactor(scaleFactorOfCompensation(grid_compensation) * value);
-	setScaleFactors(supplemental_scale_factor, combined_scale_factor);
-}
-
 void Georeferencing::setCombinedScaleFactor(double value)
 {
 	Q_ASSERT(value > 0);
 	double combined_scale_factor = roundScaleFactor(value);
-	double supplemental_scale_factor = roundScaleFactor(value / scaleFactorOfCompensation(grid_compensation));
-	setScaleFactors(supplemental_scale_factor, combined_scale_factor);
-}
-
-void Georeferencing::setScaleFactors(double supplemental, double combined)
-{
-	bool supplemental_change = supplemental != supplemental_scale_factor;
-	bool combined_change = combined != combined_scale_factor;
-	if (supplemental_change || combined_change)
+	if (combined_scale_factor != this->combined_scale_factor)
 	{
-		supplemental_scale_factor = supplemental;
-		combined_scale_factor     = combined;
-		if ((use_grid_compensation && supplemental_change) || (!use_grid_compensation && combined_change))
+		this->combined_scale_factor = combined_scale_factor;
+		if (!use_grid_compensation)
+		{
 			updateTransformation();
-		
-		if (supplemental_change)
-			emit supplementalScaleFactorChanged();
-		if (!use_grid_compensation && combined_change)
 			emit gridScaleFactorChanged();
+		}
 	}
 }
 
 void Georeferencing::updateCombinedScaleFactor()
 {
-	setSupplementalScaleFactor(supplemental_scale_factor);
-}
-
-void Georeferencing::updateSupplementalScaleFactor()
-{
-	setCombinedScaleFactor(combined_scale_factor);
+	setCombinedScaleFactor(scaleFactorOfCompensation(grid_compensation));
 }
 
 void Georeferencing::useGridCompensation(bool use_grid_compensation)
@@ -571,8 +533,6 @@ void Georeferencing::useGridCompensation(bool use_grid_compensation)
 		if (use_grid_compensation)
 			updateGridCompensation();
 		updateTransformation();
-		if (supplemental_scale_factor != 1.0)
-			emit gridScaleFactorChanged();
 	}
 }
 
@@ -656,8 +616,6 @@ void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation, 
 				{
 					if (use_grid_compensation)
 						updateCombinedScaleFactor();
-					else
-						updateSupplementalScaleFactor();
 				}
 				emit projectionChanged();
 			}
@@ -802,8 +760,7 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 
 void Georeferencing::updateTransformation()
 {
-	// When using complete grid compensation, apply the declination
-	// and supplemental scale factor.
+	// When using complete grid compensation, apply the declination.
 	// Otherwise the combined scale factor and grivation are used,
 	// taking the place of any grid scale factor or convergence
 	// present in the compensation matrix.
@@ -814,7 +771,6 @@ void Georeferencing::updateTransformation()
 	if (use_grid_compensation)
 	{
 		transform = grid_compensation * projected_translation;  // includes convergence and grid scale factor
-		scale *= supplemental_scale_factor;
 		transform.rotate(-declination);
 	}
 	else
