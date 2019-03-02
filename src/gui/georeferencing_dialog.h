@@ -195,9 +195,9 @@ protected:
 	void crsEdited();
 	
 	/**
-	 * Notifies the dialog of a change in the "grid scale factor".
+	 * Notifies the dialog of a change in the grid scale factor.
 	 */
-	void gridScaleFactorEdited();
+	void scaleFactorEdited();
 	
 	/**
 	 * Notifies the dialog of a change in the automatic grid scale
@@ -261,8 +261,7 @@ private:
 	CRSSelector* crs_selector;
 	QLabel* status_label;
 	QLabel* status_field;
-	QLabel* grid_scale_factor_label;
-	QDoubleSpinBox* grid_scale_factor_edit;
+	QDoubleSpinBox* scale_factor_edit;
 	QCheckBox* auto_grid_scale_factor_check;
 	
 	QDoubleSpinBox* map_x_edit;

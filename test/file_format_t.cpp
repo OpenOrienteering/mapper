@@ -121,7 +121,7 @@ namespace
 		const Georeferencing& b_geo = b.getGeoreferencing();
 		if (a_geo.isLocal() != b_geo.isLocal() ||
 			a_geo.getScaleDenominator() != b_geo.getScaleDenominator() ||
-			a_geo.getCombinedScaleFactor() != b_geo.getCombinedScaleFactor() ||
+			a_geo.getGridScaleFactor() != b_geo.getGridScaleFactor() ||
 			a_geo.usingGridCompensation() != b_geo.usingGridCompensation() ||
 			(a_geo.usingGridCompensation() && (a_geo.getGridCompensation() != b_geo.getGridCompensation())) ||
 			a_geo.getDeclination() != b_geo.getDeclination() ||

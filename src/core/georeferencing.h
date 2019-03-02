@@ -238,38 +238,27 @@ public:
 	
 	
 	/**
-	 * Returns the combined scale factor.
-	 * 
-	 * The combined scale factor is applied as a factor to
-	 * ground distances to get grid plane distances.
-	 */
-	double getCombinedScaleFactor() const;
-
-	/**
-	 * Sets the combined scale factor.
-	 * 
-	 * \see getCombinedScaleFactor()
-	 */
-	void setCombinedScaleFactor(double value);
-	
-	/**
 	 * Returns the grid scale factor.
 	 * 
-	 * The grid scale factor is the ratio between a length in the grid and the
-	 * length on the earth model in meters. It is applied as a factor to
-	 * ellipsoid distances to get grid plane distances.
-	 * 
-	 * Mapper doesn't explicitly deal with any other factors (elevation factor).
+	 * The grid scale factor is applied as a factor to
+	 * ground distances in meters, to get grid plane distances.
 	 */
 	double getGridScaleFactor() const;
+
+	/**
+	 * Sets the grid scale factor.
+	 * 
+	 * \see getGridScaleFactor()
+	 */
+	void setGridScaleFactor(double value);
 	
 	/**
-	 * Updates the combined scale factor. 
+	 * Updates the grid scale factor. 
 	 * 
-	 * The new value is calculated from the grid scale factor
-	 * as calculated from the grid compensation.
+	 * The new value is calculated fresh from the grid compensation,
+	 * overriding the present grid_scale_factor value.
 	 */
-	void updateCombinedScaleFactor();
+	void updateGridScaleFactor();
 
 	/**
 	 * Sets use of grid compensation matrix in map-to-projected transformations.
@@ -374,7 +363,7 @@ public:
 	 * 
 	 * This may trigger changes of the geographic coordinates of the reference
 	 * point, the convergence, the grivation, the transformations, and if
-	 * using grid compensation, the combined scale factor.
+	 * using grid compensation, the grid scale factor.
 	 */
 	void setProjectedRefPoint(QPointF point, bool update_grivation = true, bool update_scale_factor = true);
 	
@@ -443,7 +432,7 @@ public:
 	 * 
 	 * This may trigger changes of the projected coordinates of the reference
 	 * point, the convergence, the grivation, the transformations, and if
-	 * using grid compensation, the combined scale factor.
+	 * using grid compensation, the grid scale factor.
 	 */
 	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true, bool update_scale_factor = true);
 	
@@ -527,7 +516,7 @@ public:
 	 * Updates the transformation parameters between map coordinates and 
 	 * projected coordinates. This depends on the map and projected
 	 * reference point coordinates, the declination/grivation, the scale,
-	 * the scale factors, and the grid compensation.
+	 * the grid scale factor, and the grid compensation.
 	 */
 	void updateTransformation();
 	
@@ -615,8 +604,8 @@ private:
 	unsigned int scale_denominator;
 
 	// use_grid_compensation indicates to use the calculated grid_compensation
-	// (may be anisotropic) rather than simply the combined_scale_factor.
-	double combined_scale_factor;
+	// (may be anisotropic) rather than simply the grid_scale_factor.
+	double grid_scale_factor;
 	bool use_grid_compensation;
 	QTransform grid_compensation;
 	double declination;
@@ -705,15 +694,9 @@ unsigned int Georeferencing::getScaleDenominator() const
 }
 
 inline
-double Georeferencing::getCombinedScaleFactor() const
-{
-	return combined_scale_factor;
-}
-
-inline
 double Georeferencing::getGridScaleFactor() const
 {
-	return roundScaleFactor(scaleFactorOfCompensation(grid_compensation));
+	return grid_scale_factor;
 }
 
 inline

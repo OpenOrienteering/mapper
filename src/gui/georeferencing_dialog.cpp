@@ -122,8 +122,8 @@ GeoreferencingDialog::GeoreferencingDialog(
 	/*: The grid scale factor is the ratio between a length in the grid plane
 	    and the corresponding length on the curved earth model. It is applied
 	    as a factor to ground distances to get grid plane distances. */
-	grid_scale_factor_label = new QLabel(tr("Grid scale factor:"));
-	grid_scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
+	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	auto_grid_scale_factor_check = new QCheckBox(tr("Automatic"));
 	if (georef->usingGridCompensation())
 		auto_grid_scale_factor_check->setChecked(true);
@@ -209,14 +209,14 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(status_label, status_field);
 
 	bool auto_grid_scale = georef->usingGridCompensation();
-	grid_scale_factor_edit->setEnabled(!auto_grid_scale);
+	scale_factor_edit->setEnabled(!auto_grid_scale);
 	auto_grid_scale_factor_check->setChecked(auto_grid_scale);
 
 	QBoxLayout* grid_scale_factor_box = new QBoxLayout(QBoxLayout::LeftToRight);
-	grid_scale_factor_box->addWidget(grid_scale_factor_edit, 1);
+	grid_scale_factor_box->addWidget(scale_factor_edit, 1);
 	grid_scale_factor_box->addWidget(auto_grid_scale_factor_check, 0);
 
-	edit_layout->addRow(grid_scale_factor_label, grid_scale_factor_box);
+	edit_layout->addRow(scale_factor_label, grid_scale_factor_box);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -244,7 +244,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
 	using TakingDoubleArgument = void (QDoubleSpinBox::*)(double);
-	connect(grid_scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::gridScaleFactorEdited);
+	connect(scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::scaleFactorEdited);
 	connect(auto_grid_scale_factor_check, &QAbstractButton::clicked, this, &GeoreferencingDialog::autoGridScaleCheckToggled);
 	
 	connect(map_x_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
@@ -312,7 +312,7 @@ void GeoreferencingDialog::transformationChanged()
 	ScopedMultiSignalsBlocker block(
 	            map_x_edit, map_y_edit,
 	            easting_edit, northing_edit,
-	            grid_scale_factor_edit
+	            scale_factor_edit
 	);
 	
 	map_x_edit->setValue(georef->getMapRefPoint().x());
@@ -321,7 +321,7 @@ void GeoreferencingDialog::transformationChanged()
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
 	
-	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor();
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
 	
 	updateGrivation();
 }
@@ -383,8 +383,8 @@ void GeoreferencingDialog::declinationChanged()
 // slot
 void GeoreferencingDialog::gridScaleFactorChanged()
 {
-	const QSignalBlocker block(grid_scale_factor_edit);
-	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor();
+	const QSignalBlocker block(scale_factor_edit);
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -579,10 +579,10 @@ void GeoreferencingDialog::crsEdited()
 	reset_button->setEnabled(true);
 }
 
-void GeoreferencingDialog::gridScaleFactorEdited()
+void GeoreferencingDialog::scaleFactorEdited()
 {
-	const QSignalBlocker block{grid_scale_factor_edit};
-	georef->setCombinedScaleFactor(grid_scale_factor_edit->value());
+	const QSignalBlocker block{scale_factor_edit};
+	georef->setGridScaleFactor(scale_factor_edit->value());
 	reset_button->setEnabled(true);
 }
 
@@ -592,10 +592,10 @@ void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
 	if (checked)
 	{
 		// compatibility mode becoming automatic grid scale factor mode
-		georef->updateCombinedScaleFactor();
+		georef->updateGridScaleFactor();
 	}
-	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor());
-	grid_scale_factor_edit->setEnabled(!checked);
+	scale_factor_edit->setValue(georef->getGridScaleFactor());
+	scale_factor_edit->setEnabled(!checked);
 }
 
 void GeoreferencingDialog::selectMapRefPoint()
