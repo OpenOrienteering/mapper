@@ -106,7 +106,6 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
- , scale_factor_locked(grivation_locked)
 {
 	setWindowTitle(tr("Map Georeferencing"));
 	setWindowModality(Qt::WindowModal);
@@ -322,10 +321,7 @@ void GeoreferencingDialog::transformationChanged()
 	easting_edit->setValue(georef->getProjectedRefPoint().x());
 	northing_edit->setValue(georef->getProjectedRefPoint().y());
 	
-	grid_scale_factor_edit->setValue(georef->usingGridCompensation()
-									 ? georef->getGridScaleFactor()
-									 : georef->getCombinedScaleFactor());
-	bool grid_compensation_enabled = georef->usingGridCompensation();
+	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor();
 	
 	updateGrivation();
 }
@@ -388,9 +384,7 @@ void GeoreferencingDialog::declinationChanged()
 void GeoreferencingDialog::gridScaleFactorChanged()
 {
 	const QSignalBlocker block(grid_scale_factor_edit);
-	grid_scale_factor_edit->setValue(georef->usingGridCompensation()
-									 ? georef->getGridScaleFactor()
-									 : georef->getCombinedScaleFactor());
+	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor();
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -472,7 +466,6 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
-	scale_factor_locked = grivation_locked;
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
@@ -484,29 +477,25 @@ void GeoreferencingDialog::accept()
 	     declination_change_degrees != 0 &&
 	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 	{
-		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. To preserve georeferencing of the map content, use \"Rotate map\" instead. Do you want to alter the geographic orientation and location of all map content?"), QMessageBox::Yes | QMessageBox::No);
-		if (result == QMessageBox::No)
+		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		if (result == QMessageBox::Cancel)
 		{
 			return;
 		}
-	}
-	if ( !scale_factor_locked &&
-	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
-	{
-		double scale_factor_change = initial_georef->usingGridCompensation()
-			? 1.0
-			: georef->getCombinedScaleFactor() / initial_georef->getCombinedScaleFactor();
-		if ( georef->usingGridCompensation() != initial_georef->usingGridCompensation()
-			 || scale_factor_change != 1.0 )
+		else if (result == QMessageBox::Yes)
 		{
-			int result = QMessageBox::question(this, tr("Scale factor change"), tr("The grid scale factor has been changed. To preserve georeferencing of the map content, use \"Change map scale\" instead. Do you want to alter the geographic scale and location of all map content?"), QMessageBox::Yes | QMessageBox::No);
-			if (result == QMessageBox::No)
-			{
+			RotateMapDialog dialog(this, map);
+			dialog.setWindowModality(Qt::WindowModal);
+			dialog.setRotationDegrees(declination_change_degrees);
+			dialog.setRotateAroundGeorefRefPoint();
+			dialog.setAdjustDeclination(false);
+			dialog.showAdjustDeclination(false);
+			int result = dialog.exec();
+			if (result == QDialog::Rejected)
 				return;
-			}
 		}
 	}
-
+	
 	map->setGeoreferencing(*georef);
 	QDialog::accept();
 }
@@ -593,7 +582,6 @@ void GeoreferencingDialog::crsEdited()
 void GeoreferencingDialog::gridScaleFactorEdited()
 {
 	const QSignalBlocker block{grid_scale_factor_edit};
-	scale_factor_locked = false;
 	georef->setCombinedScaleFactor(grid_scale_factor_edit->value());
 	reset_button->setEnabled(true);
 }
@@ -604,7 +592,6 @@ void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
 	if (checked)
 	{
 		// compatibility mode becoming automatic grid scale factor mode
-		scale_factor_locked = false;
 		georef->updateCombinedScaleFactor();
 	}
 	grid_scale_factor_edit->setValue(georef->getCombinedScaleFactor());
@@ -654,7 +641,6 @@ void GeoreferencingDialog::keepCoordsChanged()
 		grivation_locked = false;
 		updateGrivation();
 	}
-	scale_factor_locked = false;
 	reset_button->setEnabled(true);
 }
 

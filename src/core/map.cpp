@@ -547,16 +547,15 @@ unsigned int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(unsigned int new_scale_denominator, double scale_factor_change, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
-	if (new_scale_denominator == getScaleDenominator() && scale_factor_change == 1.0)
+	if (new_scale_denominator == getScaleDenominator())
 		return;
 	
-	double denominator_factor = getScaleDenominator() / (double)new_scale_denominator;
-	double factor = denominator_factor / scale_factor_change;
+	double factor = getScaleDenominator() / (double)new_scale_denominator;
 	
 	if (scale_symbols)
-		scaleAllSymbols(denominator_factor);
+		scaleAllSymbols(factor);
 	if (scale_objects)
 	{
 		undo_manager->clear();
@@ -572,8 +571,6 @@ void Map::changeScale(unsigned int new_scale_denominator, double scale_factor_ch
 	}
 	if (scale_georeferencing)
 		georeferencing->setMapRefPoint(scaling_center + factor * (georeferencing->getMapRefPoint() - scaling_center));
-	if (scale_factor_change != 1.0)
-		georeferencing->setCombinedScaleFactor(georeferencing->getCombinedScaleFactor() * scale_factor_change);
 	if (scale_templates)
 	{
 		for (int i = 0; i < getNumTemplates(); ++i)
@@ -867,7 +864,7 @@ void Map::importMap(
 			Map clone;
 			clone.setGeoreferencing(other->getGeoreferencing());
 			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
-			clone.changeScale(getScaleDenominator(), 1.0, MapCoord(0, 0), true, true, true, true);
+			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
 			QHash<const Symbol*, Symbol*> symbol_map; // clone symbol -> this map's symbol
 			importMap(&clone, mode, dialog_parent, nullptr, symbol_insert_pos, merge_duplicate_symbols, &symbol_map);
 			if (out_symbol_map) // original imported symbol -> clone symbol
