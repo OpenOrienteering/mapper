@@ -396,6 +396,10 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			state = Normal;
 			emit stateChanged();
 		}
+		if (!use_grid_compensation)
+		{
+			updateGridCompensation();
+		}
 	}
 	emit projectionChanged();
 }
