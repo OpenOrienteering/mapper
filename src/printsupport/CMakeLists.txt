@@ -58,7 +58,7 @@ target_include_directories(printsupport
 target_link_libraries(printsupport
   Qt5::PrintSupport
   Qt5::Gui
-  ${ZLIB_LIBRARY}
+  ZLIB::ZLIB
 )
 
 
