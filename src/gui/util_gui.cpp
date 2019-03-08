@@ -237,15 +237,19 @@ namespace Util {
 		void drawCenterMarker(QPainter* painter, const QPointF& center)
 		{
 			const auto saved_hints = painter->renderHints();
-			painter->setRenderHint(QPainter::Antialiasing, true);
+			painter->setRenderHint(QPainter::Antialiasing, Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool());
 			
-			painter->setPen(Qt::white);
+			const auto larger_radius = mmToPixelPhysical(1.1);
+			const auto smaller_radius = larger_radius*3/4;
+			
+			auto pen = QPen(Qt::white);
+			pen.setWidthF(larger_radius - smaller_radius);
+			painter->setPen(pen);
 			painter->setBrush(Qt::NoBrush);
-			
-			/// \todo Use dpi-scaled dimensions
-			painter->drawEllipse(center, 3, 3);
-			painter->setPen(Qt::black);
-			painter->drawEllipse(center, 4, 4);
+			painter->drawEllipse(center, smaller_radius, smaller_radius);
+			pen.setColor(Qt::black);
+			painter->setPen(pen);
+			painter->drawEllipse(center, larger_radius, larger_radius);
 			
 			painter->setRenderHints(saved_hints);
 		}
