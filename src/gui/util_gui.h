@@ -30,6 +30,8 @@ class QCheckBox;
 class QDoubleSpinBox;
 class QLabel;
 class QObject;
+class QPainter;
+class QPointF;
 class QSpacerItem;
 class QSpinBox;
 class QWidget;
@@ -203,6 +205,13 @@ namespace Util
 	
 	
 	
+	namespace Marker
+	{
+		/** Center marker sign for rotate and scale tools. */
+		void drawCenterMarker(QPainter* painter, const QPointF& center);
+	}  // namespace Marker
+
+
 	namespace Headline
 	{
 		/**

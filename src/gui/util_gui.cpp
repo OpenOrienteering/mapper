@@ -38,6 +38,8 @@
 #include <QLabel>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPen>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSpacerItem>
@@ -230,6 +232,27 @@ namespace Util {
 	
 	
 	
+	namespace Marker
+	{
+		void drawCenterMarker(QPainter* painter, const QPointF& center)
+		{
+			const auto saved_hints = painter->renderHints();
+			painter->setRenderHint(QPainter::Antialiasing, true);
+			
+			painter->setPen(Qt::white);
+			painter->setBrush(Qt::NoBrush);
+			
+			/// \todo Use dpi-scaled dimensions
+			painter->drawEllipse(center, 3, 3);
+			painter->setPen(Qt::black);
+			painter->drawEllipse(center, 4, 4);
+			
+			painter->setRenderHints(saved_hints);
+		}
+	}  // namespace Marker
+
+
+
 	QSpacerItem* SpacerItem::create(const QWidget* widget)
 	{
 		const int spacing = widget->style()->pixelMetric(QStyle::PM_LayoutTopMargin);

@@ -36,6 +36,7 @@
 #include "core/map.h"
 #include "core/map_view.h"
 #include "gui/map/map_widget.h"
+#include "gui/util_gui.h"
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
 #include "gui/util_gui.h"
@@ -170,26 +171,14 @@ void ScaleTool::drawImpl(QPainter* painter, MapWidget* widget)
 {
 	drawSelectionOrPreviewObjects(painter, widget);
 	
-	// /todo - this is the same circle as in rotate tool
-	// move the function to Util and use the shared code
-	auto draw_center_sign = [&](MapCoordF circle_center){
-		painter->setPen(Qt::white);
-		painter->setBrush(Qt::NoBrush);
-
-		QPoint center = widget->mapToViewport(circle_center).toPoint();
-		painter->drawEllipse(center, 3, 3);
-		painter->setPen(Qt::black);
-		painter->drawEllipse(center, 4, 4);
-	};
-
 	if (using_scaling_center)
 	{
-		draw_center_sign(scaling_center);
+		Util::Marker::drawCenterMarker(painter, widget->mapToViewport(scaling_center));
 	}
 	else
 	{
 		for (const auto* object : map()->selectedObjects())
-			draw_center_sign(MapCoordF(object->getExtent().center()));
+			Util::Marker::drawCenterMarker(painter, widget->mapToViewport(object->getExtent().center()));
 	}
 }
 
