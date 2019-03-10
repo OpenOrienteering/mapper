@@ -46,6 +46,7 @@ endif()
 # Create an androiddeployqt configuration file via qmake project.
 execute_process(
   COMMAND "$<TARGET_FILE:Qt5::qmake>"
+    $<$<NOT:$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>>:"CONFIG+=debug">
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
 )
