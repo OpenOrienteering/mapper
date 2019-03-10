@@ -421,7 +421,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="259"/>
         <source>Desktop</source>
-        <translation>Desktop</translation>
+        <translation>Schreibtisch</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="260"/>
@@ -7527,7 +7527,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="48"/>
         <source>Real</source>
-        <translation>Real</translation>
+        <translation>reell</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
