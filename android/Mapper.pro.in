@@ -46,10 +46,6 @@ versionAtLeast(QT_VERSION, 5.12) {
 }
 
 
-# Additional configuration from packaging/custom_install.cmake
-include(mapper_libs.pri)
-
-
 # For the generated .pro file to be used in Qt Creator,
 # we must install everything and replace the dummy libMapper.so.
 INSTALLS            += everything

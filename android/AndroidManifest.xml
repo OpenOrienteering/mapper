@@ -48,14 +48,9 @@
             <!-- Run with local libs -->
             <meta-data android:name="android.app.use_local_qt_libs" android:value="-- %%USE_LOCAL_QT_LIBS%% --"/>
             <meta-data android:name="android.app.libs_prefix" android:value="/data/local/tmp/qt/"/>
-            <!-- Automatic dependency detection is currently not used for Mapper. -->
-            <meta-data android:name="android.app.load_local_libs.AUTO" android:value="-- %%INSERT_LOCAL_LIBS%% --"/>
-            <meta-data android:name="android.app.load_local_jars.AUTO" android:value="-- %%INSERT_LOCAL_JARS%% --"/>
-            <meta-data android:name="android.app.static_init_classes.AUTO" android:value="-- %%INSERT_INIT_CLASSES%% --"/>
-            <!-- Reviewed result of automatic dependency detection. -->
-            <meta-data android:name="android.app.load_local_libs" android:value="plugins/platforms/android/libqtforandroid.so:plugins/sensors/libqtsensors_android.so:plugins/position/libqtposition_android.so"/>
-            <meta-data android:name="android.app.load_local_jars" android:value="jar/QtAndroid-bundled.jar:jar/QtAndroidAccessibility-bundled.jar:jar/QtSensors-bundled.jar:jar/QtPositioning-bundled.jar"/>
-            <meta-data android:name="android.app.static_init_classes" android:value="org.qtproject.qt5.android.sensors.QtSensors:org.qtproject.qt5.android.positioning.QtPositioning"/>
+            <meta-data android:name="android.app.load_local_libs" android:value="-- %%INSERT_LOCAL_LIBS%% --"/>
+            <meta-data android:name="android.app.load_local_jars" android:value="-- %%INSERT_LOCAL_JARS%% --"/>
+            <meta-data android:name="android.app.static_init_classes" android:value="-- %%INSERT_INIT_CLASSES%% --"/>
             <!-- Used to specify custom system library path to run with local system libs -->
             <!-- <meta-data android:name="android.app.system_libs_prefix" android:value="/system/lib/"/> -->
             <!--  Messages maps -->
