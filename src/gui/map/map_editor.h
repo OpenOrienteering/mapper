@@ -532,7 +532,7 @@ public slots:
 	);
 	
 	/** Imports a track file (GPX) into the map */
-	bool importGeoFile(const QString& filename);
+	bool importGpxFile(const QString& filename);
 	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename, bool show_errors);
 	/** Shows the import file selector and imports the selected file, if any. */

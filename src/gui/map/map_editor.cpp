@@ -4021,8 +4021,8 @@ void MapEditorController::importClicked()
 	}
 	else if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		// Fallback: Legacy geo file import
-		importGeoFile(filename);
+		// Fallback: Legacy GPX file import
+		importGpxFile(filename);
 		return; // Error reporting in Track::import()
 	}
 	else if (importMapFile(filename, false))
@@ -4043,7 +4043,7 @@ void MapEditorController::importClicked()
 	}
 }
 
-bool MapEditorController::importGeoFile(const QString& filename)
+bool MapEditorController::importGpxFile(const QString& filename)
 {
 	TemplateTrack temp(filename, map);
 	return !temp.configureAndLoad(window, main_view)
