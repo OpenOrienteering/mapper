@@ -28,7 +28,10 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 trigger:
-- master
+  branches:
+    exclude:
+    - manual
+    - images
 
 jobs:
 - job: Superbuild
