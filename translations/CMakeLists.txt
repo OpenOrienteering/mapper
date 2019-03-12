@@ -267,7 +267,7 @@ endmacro()
 
 
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT ANDROID)
 	set(update_source )
 	if(Mapper_DEVELOPMENT_BUILD)
 		# Only development builds are allowed to update the source directories.
