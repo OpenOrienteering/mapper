@@ -79,16 +79,17 @@ jobs:
       case "$(imageName)$(targetSuffix)" in
         ubuntu-*-x86_64-w64-mingw32)
           sudo apt-get update
-          sudo apt-get install doxygen graphviz g++-mingw-w64-x86-64
+          sudo apt-get install doxygen graphviz python-lxml g++-mingw-w64-x86-64
           chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
           ;;
         ubuntu-*)
           sudo apt-get update
-          sudo apt-get install doxygen graphviz
+          sudo apt-get install doxygen graphviz python-lxml
           ;;
         macos-*)
           sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
           xcode-select --print-path
+          pip install lxml
           ;;
       esac
     displayName: 'Prepare build tools'
@@ -122,9 +123,13 @@ jobs:
 
   - bash: |
       set -x
-      set -e
       cd $(Build.SourcesDirectory)/build
       make `cat num_jobs || true` openorienteering-mapper-ci$(targetSuffix)
+      #
+      if [ -d $(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci$(targetSuffix)/Testing ]; then
+        python $(Build.SourcesDirectory)/ci/ctest_to_junit.py default/openorienteering-mapper-ci$(targetSuffix)
+        echo "##vso[task.setVariable variable=TEST_RESULTS]true"
+      fi
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
       DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
@@ -132,3 +137,10 @@ jobs:
       VERBOSE: 1
     displayName: 'Build'
 
+  - task: PublishTestResults@2
+    displayName: 'Publish test results'
+    inputs:
+      testRunner: 'jUnit'
+      testResultsFiles: '*/jUnit.xml'
+      searchFolder: '$(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci$(targetSuffix)/Testing'
+    condition: eq(variables.TEST_RESULTS, 'true')

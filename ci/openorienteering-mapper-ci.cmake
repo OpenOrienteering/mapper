@@ -91,6 +91,8 @@ superbuild_package(
     INSTALL_COMMAND
       "${CMAKE_COMMAND}" --build . --target package/fast
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:
+    TEST_COMMAND
+      "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output
     TEST_BEFORE_INSTALL 1
   >
   ]]
