@@ -223,25 +223,26 @@ else()
 		
 		set(pre_lupdate )
 		set(post_lupdate
-		  COMMAND sed -i -e "/<context>/N\\;/<name>Q[A-Z]/,/<.context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+		  COMMAND sed -e "/<context>/N\\;/<name>Q[A-Z]/,/<.context>/d" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		)
 		if("${ts_filename}" STREQUAL "OpenOrienteering_hu")
 			# No plural support for Hungarian in Qt
 			# Save first numerusform in translatorcomment
 			list(APPEND pre_lupdate
-			  COMMAND sed -i -f "${save_first_numerusform}" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+			  COMMAND sed -f "${save_first_numerusform}" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 			)
 			# Restore first numerusform for translatorcomment
 			list(APPEND post_lupdate
-			  COMMAND sed -i -f "${restore_first_numerusform}" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+			  COMMAND sed -f "${restore_first_numerusform}" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 			)
 		endif()
 		
 		add_custom_target(Mapper_${ts_filename}_update
 		  ${pre_lupdate}
 		  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${lupdate_options} "@${listfile}" -ts "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
-		  COMMAND sed -i -e "/<context>/N;/<name>Q[A-Z]/,/<.context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+		  COMMAND sed -e "/<context>/N;/<name>Q[A-Z]/,/<.context>/d" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		  ${post_lupdate}
+		  COMMAND rm -f "${CMAKE_CURRENT_SOURCE_DIR}/${translation}--"
 		  VERBATIM
 		)
 		add_dependencies(Mapper_translations_update Mapper_${ts_filename}_update)

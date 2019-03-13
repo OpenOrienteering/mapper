@@ -36,13 +36,15 @@ CONFIG(debug, release|debug) {
   # or the developer may loose maps.
   system(cp -a "$$ANDROID_PACKAGE_SOURCE_DIR" "$$OUT_PWD/")
   ANDROID_PACKAGE_SOURCE_DIR = $$OUT_PWD/android
-  system(sed -i -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
-  system(sed -i -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> dev/) "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
+  system(sed -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
+  system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
+  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--")
 }
 
 
 versionAtLeast(QT_VERSION, 5.12) {
-  system(sed -i -e $$shell_quote(s/minSdkVersion=\"[0-9]*\"/minSdkVersion=\"16\"/) "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
+  system(sed -e $$shell_quote(s/minSdkVersion=\"[0-9]*\"/minSdkVersion=\"16\"/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
+  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--")
 }
 
 
