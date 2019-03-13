@@ -49,9 +49,7 @@ private:
 public:
 	enum FileFormat
 	{
-		DXF,
 		GPX,
-		OSM
 	};
 
 	enum ExportOption

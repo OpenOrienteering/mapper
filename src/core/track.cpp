@@ -24,16 +24,12 @@
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>  // IWYU pragma: keep
-#include <QHash>
-#include <QMessageBox>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 // IWYU pragma: no_include <qxmlstream.h>
 
 #include "core/georeferencing.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
-#include "templates/template_track.h"
-#include "util/dxfparser.h"
 
 
 namespace OpenOrienteering {
@@ -158,20 +154,9 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 		return false;
 	
 	clear();
-
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
 		if (!loadFromGPX(&file, project_points, dialog_parent))
-			return false;
-	}
-	else if (path.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive))
-	{
-		if (!loadFromDXF(&file, project_points, dialog_parent))
-			return false;
-	}
-	else if (path.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
-	{
-		if (!loadFromOSM(&file, project_points, dialog_parent))
 			return false;
 	}
 	else
@@ -180,6 +165,7 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 	file.close();
 	return true;
 }
+
 bool Track::saveTo(const QString& path) const
 {
 	QFile file(path);
@@ -411,213 +397,6 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 	{
 		segment_starts.pop_back();
 	}
-	
-	return true;
-}
-
-bool Track::loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent)
-{
-	DXFParser* parser = new DXFParser();
-	parser->setData(file);
-	QString result = parser->parse();
-	if (!result.isEmpty())
-	{
-		QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error reading"), OpenOrienteering::TemplateTrack::tr("There was an error reading the DXF file %1:\n\n%2").arg(file->fileName(), result));
-		delete parser;
-		return false;
-	}
-	QList<DXFPath> paths = parser->getData();
-	delete parser;
-	
-	// TODO: Re-implement the possibility to load degree values somewhere else.
-	//       It does not fit here as this method is called again every time a map
-	//       containing a track is re-loaded, and in this case the question should
-	//       not be asked again.
-	//int res = QMessageBox::question(dialog_parent, OpenOrienteering::TemplateTrack::tr("Question"), OpenOrienteering::TemplateTrack::tr("Are the coordinates in the DXF file in degrees?"), QMessageBox::Yes|QMessageBox::No);
-	for (auto&& path : paths)
-	{
-		if (path.type == POINT)
-		{
-			if(path.coords.size() < 1)
-				continue;
-			TrackPoint point = TrackPoint(LatLon(path.coords.at(0).y, path.coords.at(0).x));
-			if (project_points)
-				point.map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(point.gps_coord)); // TODO: check for errors
-			waypoints.push_back(point);
-			waypoint_names.push_back(path.layer);
-		}
-		if (path.type == LINE ||
-			path.type == SPLINE	)
-		{
-			if (path.coords.size() < 1)
-				continue;
-			segment_starts.push_back(segment_points.size());
-			segment_names.push_back(path.layer);
-			int i = 0;
-			for (auto&& coord : path.coords)
-			{
-				TrackPoint point = TrackPoint(LatLon(coord.y, coord.x), QDateTime());
-				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(point.gps_coord)); // TODO: check for errors
-				if (path.type == SPLINE &&
-					i % 3 == 0 &&
-					i < path.coords.size() - 3)
-					point.is_curve_start = true;
-					
-				segment_points.push_back(point);
-				++i;
-			}
-			if (path.closed && !segment_points.empty())
-			{
-				const TrackPoint& start = segment_points[segment_starts.back()];
-				if (start.gps_coord != segment_points.back().gps_coord)
-				{
-					segment_points.push_back(start);
-					segment_points.back().is_curve_start = false;
-				}
-			}
-		}
-	}
-	
-	return true;
-}
-
-bool Track::loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent)
-{
-	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
-	track_crs->setTransformationDirectly(QTransform());
-	
-	// Basic OSM file support
-	// Reference: https://wiki.openstreetmap.org/wiki/OSM_XML
-	const double min_supported_version = 0.5;
-	const double max_supported_version = 0.6;
-	QHash<QString, TrackPoint> nodes;
-	int node_problems = 0;
-	
-	QXmlStreamReader xml(file);
-	if (xml.readNextStartElement())
-	{
-		if (xml.name() != QLatin1String("osm"))
-		{
-			QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"), OpenOrienteering::TemplateTrack::tr("%1:\nNot an OSM file."));
-			return false;
-		}
-		else
-		{
-			QXmlStreamAttributes attributes(xml.attributes());
-			const double osm_version = attributes.value(QLatin1String("version")).toDouble();
-			if (osm_version < min_supported_version)
-			{
-				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
-				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe minimum supported version is %2.").arg(
-				                          attributes.value(QLatin1String("version")).toString(), QString::number(min_supported_version, 'g', 1)));
-				return false;
-			}
-			if (osm_version > max_supported_version)
-			{
-				QMessageBox::critical(dialog_parent, OpenOrienteering::TemplateTrack::tr("Error"),
-				                      OpenOrienteering::TemplateTrack::tr("The OSM file has version %1.\nThe maximum supported version is %2.").arg(
-				                          attributes.value(QLatin1String("version")).toString(), QString::number(max_supported_version, 'g', 1)));
-				return false;
-			}
-		}
-	}
-	
-	qint64 internal_node_id = 0;
-	while (xml.readNextStartElement())
-	{
-		const QStringRef name(xml.name());
-		QXmlStreamAttributes attributes(xml.attributes());
-		if (attributes.value(QLatin1String("visible")) == QLatin1String("false"))
-		{
-			xml.skipCurrentElement();
-			continue;
-		}
-		
-		QString id(attributes.value(QLatin1String("id")).toString());
-		if (id.isEmpty())
-		{
-			id = QLatin1Char('!') + QString::number(++internal_node_id);
-		}
-		
-		if (name == QLatin1String("node"))
-		{
-			bool ok = true;
-			double lat = 0.0, lon = 0.0;
-			if (ok) lat = attributes.value(QLatin1String("lat")).toDouble(&ok);
-			if (ok) lon = attributes.value(QLatin1String("lon")).toDouble(&ok);
-			if (!ok)
-			{
-				node_problems++;
-				xml.skipCurrentElement();
-				continue;
-			}
-			
-			TrackPoint point(LatLon(lat, lon));
-			if (project_points)
-			{
-				point.map_coord = map_georef.toMapCoordF(point.gps_coord); // TODO: check for errors
-			}
-			nodes.insert(id, point);
-			
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == QLatin1String("tag"))
-				{
-					const QString k(xml.attributes().value(QLatin1String("k")).toString());
-					const QString v(xml.attributes().value(QLatin1String("v")).toString());
-					element_tags[id][k] = v;
-					
-					if (k == QLatin1String("ele"))
-					{
-						bool ok;
-						double elevation = v.toDouble(&ok);
-						if (ok) nodes[id].elevation = elevation;
-					}
-					else if (k == QLatin1String("name"))
-					{
-						if (!v.isEmpty() && !nodes.contains(v)) 
-						{
-							waypoints.push_back(point);
-							waypoint_names.push_back(v);
-						}
-					}
-				}
-				xml.skipCurrentElement();
-			}
-		}
-		else if (name == QLatin1String("way"))
-		{
-			segment_starts.push_back(segment_points.size());
-			segment_names.push_back(id);
-			while (xml.readNextStartElement())
-			{
-				if (xml.name() == QLatin1String("nd"))
-				{
-					QString ref = xml.attributes().value(QLatin1String("ref")).toString();
-					if (ref.isEmpty() || !nodes.contains(ref))
-						node_problems++;
-					else
-						segment_points.push_back(nodes[ref]);
-				}
-				else if (xml.name() == QLatin1String("tag"))
-				{
-					const QString k(xml.attributes().value(QLatin1String("k")).toString());
-					const QString v(xml.attributes().value(QLatin1String("v")).toString());
-					element_tags[id][k] = v;
-				}
-				xml.skipCurrentElement();
-			}
-		}
-		else
-		{
-			xml.skipCurrentElement();
-		}
-	}
-	
-	if (node_problems > 0)
-		QMessageBox::warning(dialog_parent, OpenOrienteering::TemplateTrack::tr("Problems"), OpenOrienteering::TemplateTrack::tr("%1 nodes could not be processed correctly.").arg(node_problems));
 	
 	return true;
 }

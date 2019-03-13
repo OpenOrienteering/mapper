@@ -4001,10 +4001,10 @@ void MapEditorController::importClicked()
 	
 	QString filename = FileDialog::getOpenFileName(
 	                       window,
-	                       tr("Import %1, GPX, OSM or DXF file").arg(
+	                       tr("Import %1 or GPX file").arg(
 	                           map_names.join(QString::fromLatin1(", "))),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2 *.gpx *.osm *.dxf);;%3 (*.*)").arg(
+	                       QString::fromLatin1("%1 (%2 *.gpx);;%3 (*.*)").arg(
 	                           tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
 	if (filename.isEmpty() || filename.isNull())
 		return;
@@ -4019,12 +4019,10 @@ void MapEditorController::importClicked()
 		importMapFile(filename, true); // Error reporting in importMapFile()
 		return;
 	}
-	else if (filename.endsWith(QLatin1String(".dxf"), Qt::CaseInsensitive)
-	         || filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive)
-	         || filename.endsWith(QLatin1String(".osm"), Qt::CaseInsensitive))
+	else if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		// Fallback: Legacy geo file import
-		importGeoFile(filename);
+		// Fallback: Legacy GPX file import
+		importGpxFile(filename);
 		return; // Error reporting in Track::import()
 	}
 	else if (importMapFile(filename, false))
@@ -4045,7 +4043,7 @@ void MapEditorController::importClicked()
 	}
 }
 
-bool MapEditorController::importGeoFile(const QString& filename)
+bool MapEditorController::importGpxFile(const QString& filename)
 {
 	TemplateTrack temp(filename, map);
 	return !temp.configureAndLoad(window, main_view)

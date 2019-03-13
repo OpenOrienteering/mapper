@@ -145,8 +145,6 @@ public:
 	
 private:
 	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
-	bool loadFromDXF(QFile* file, bool project_points, QWidget* dialog_parent);
-	bool loadFromOSM(QFile* file, bool project_points, QWidget* dialog_parent);
 	
 	void projectPoints();
 	

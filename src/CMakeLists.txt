@@ -206,7 +206,6 @@ set(Mapper_Common_SRCS
   undo/undo.cpp
   undo/undo_manager.cpp
   
-  util/dxfparser.cpp
   util/encoding.cpp
   util/item_delegates.cpp
   util/matrix.cpp
