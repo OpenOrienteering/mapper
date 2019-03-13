@@ -24,8 +24,35 @@ execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Creating APK package")
 set(CPACK_GENERATOR "")
 
 set(destdir "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install")
+
+set(final_message )
 set(KEYSTORE_URL "@KEYSTORE_URL@")
 set(KEYSTORE_ALIAS "@KEYSTORE_ALIAS@")
+set(SIGN_APK "@SIGN_APK@")
+if(SIGN_APK AND "@CMAKE_HOST_UNIX@")
+	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
+	execute_process(COMMAND tty RESULT_VARIABLE result)
+	if(result)
+		# APK signing enabled at configuration time, but not possible at build time.
+		message(WARNING "Not running in a terminal, signing disabled.")
+		set(SIGN_APK 0)
+	endif()
+endif()
+if(SIGN_APK)
+	set(config "CONFIG+=release")
+	set(sign --sign "${KEYSTORE_URL}" "${KEYSTORE_ALIAS}")
+else()
+	set(config "CONFIG+=debug")
+	set(sign )
+$<@SIGN_APK@:
+	# APK signing enabled at configuration time, but disabled at build time.
+	set(final_message "The build created an unsigned APK. To sign the APK, run:
+  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore '${KEYSTORE_URL}' /path/to/install-release-unsigned.apk '${KEYSTORE_ALIAS}'
+  zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
+	)
+>
+endif()
+
 
 if(EXISTS "${destdir}")
 	FILE(REMOVE_RECURSE "${destdir}")
@@ -45,8 +72,7 @@ endif()
 
 # Create an androiddeployqt configuration file via qmake project.
 execute_process(
-  COMMAND "$<TARGET_FILE:Qt5::qmake>"
-    $<$<NOT:$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>>:"CONFIG+=debug">
+  COMMAND "$<TARGET_FILE:Qt5::qmake>" "${config}"
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
 )
@@ -60,27 +86,6 @@ file(INSTALL
   FILES "$<TARGET_FILE:Mapper>"
 )
 
-set(sign )
-set(result )
-set(final_message )
-$<$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
-if("@CMAKE_HOST_UNIX@")
-	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
-	execute_process(COMMAND tty	RESULT_VARIABLE result)
-	if(result)
-		message(SEND_ERROR "Not running in a terminal, signing disabled.")
-	else()
-		set(sign --sign "${KEYSTORE_URL}" "${KEYSTORE_ALIAS}")
-	endif()
-endif()
-if(NOT "@CMAKE_HOST_UNIX@" OR result)
-	set(final_message "The build created an unsigned APK. To sign the APK, run:
-  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore '${KEYSTORE_URL}' /path/to/install-release-unsigned.apk ${KEYSTORE_ALIAS}
-  zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
-	)
-endif()
->
-
 execute_process(
   COMMAND androiddeployqt
     --output "${destdir}"
@@ -89,9 +94,7 @@ execute_process(
     --verbose
 $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:
     --release
-  $<$<AND:$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
     ${sign}
-  >
 >
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
   RESULT_VARIABLE result
@@ -99,15 +102,15 @@ $<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:
 if(result)
 	message(FATAL_ERROR "Running androiddeployqt failed: ${result}")
 endif()
-$<$<AND:$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>,$<BOOL:${KEYSTORE_URL}>,$<BOOL:${KEYSTORE_ALIAS}>>:
-configure_file(
-  "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install/build/outputs/apk/install-release-signed.apk"
-  "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
-  COPYONLY
-)
->
+
+if(SIGN_APK)
+	configure_file(
+	  "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install/build/outputs/apk/install-release-signed.apk"
+	  "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
+	  COPYONLY
+	)
+endif()
 
 if(final_message)
 	message(STATUS "${final_message}")
 endif()
-
