@@ -52,8 +52,8 @@ jobs:
         imageName: 'ubuntu-16.04'
         cmakeArgs: >
           -DENABLE_x86_64-w64-mingw32=1
-          -Dx86_64-w64-mingw32_INSTALL_DIR=
-          -Dx86_64-w64-mingw32_INSTALL_PREFIX=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
+          -Dx86_64-w64-mingw32_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
+          -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
           -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
           -Dmingw-w64_FIX_HEADERS=1
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/share/gdal
@@ -93,6 +93,12 @@ jobs:
         ubuntu-*)
           sudo apt-get update
           sudo apt-get install doxygen graphviz python-lxml
+          ;;
+        macos-*-arm-linux-androideabi)
+          sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
+          xcode-select --print-path
+          pip install lxml
+          chmod +x $(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain/bin/*
           ;;
         macos-*)
           sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
@@ -134,10 +140,28 @@ jobs:
       cd $(Build.SourcesDirectory)/build
       make `cat num_jobs || true` openorienteering-mapper-ci$(targetSuffix)
       #
-      if [ -d $(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci$(targetSuffix)/Testing ]; then
-        python $(Build.SourcesDirectory)/ci/ctest_to_junit.py default/openorienteering-mapper-ci$(targetSuffix)
+      cd $(Build.SourcesDirectory)
+      if [ -d build/default/openorienteering-mapper-ci$(targetSuffix)/Testing ]; then
+        python ci/ctest_to_junit.py build/default/openorienteering-mapper-ci$(targetSuffix)
         echo "##vso[task.setVariable variable=TEST_RESULTS]true"
       fi
+      #
+      cd $(Build.SourcesDirectory)
+      mkdir output
+      case "$(imageName)$(targetSuffix)" in
+        ubuntu-*-x86_64-w64-mingw32)
+          cp build/x86_64-w64-mingw32/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.zip output/
+          ;;
+        ubuntu-*)
+          cp build/default/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.deb output/
+          ;;
+        macos-*-arm-linux-androideabi)
+          cp build/arm-linux-androideabi/openorienteering-mapper-ci/packaging/Mapper/install/build/outputs/apk/release/*.apk output/
+          ;;
+        macos-*)
+          cp build/default/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.dmg output/
+          ;;
+      esac
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
       DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
@@ -152,3 +176,15 @@ jobs:
       testResultsFiles: '*/jUnit.xml'
       searchFolder: '$(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci$(targetSuffix)/Testing'
     condition: eq(variables.TEST_RESULTS, 'true')
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'Mapper-$(imageName)'
+      targetPath: $(Build.SourcesDirectory)/output
+    condition: and(succeeded(), eq(variables.targetSuffix, ''))
+
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: 'Mapper$(targetSuffix)'
+      targetPath: $(Build.SourcesDirectory)/output
+    condition: and(succeeded(), ne(variables.targetSuffix, ''))
