@@ -56,7 +56,7 @@ jobs:
           -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
           -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
           -Dmingw-w64_FIX_HEADERS=1
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/share/gdal
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/usr/share/gdal
         targetSuffix: '-x86_64-w64-mingw32'
       Android-armv7:
         imageName: 'macos-10.13'
@@ -65,6 +65,7 @@ jobs:
           -Darm-linux-androideabi_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi
           -Darm-linux-androideabi_INSTALL_PREFIX=/usr
           -Darm-linux-androideabi_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/usr/share/gdal
         targetSuffix: '-arm-linux-androideabi'
 
   pool:
