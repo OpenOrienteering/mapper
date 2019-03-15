@@ -34,159 +34,57 @@ trigger:
     - images
 
 jobs:
-- job: Superbuild
+- job: macOS_Debug
+  pool:
+    vmImage: 'macos-10.13'
+  steps:
+    - template: build-steps.yml
+      parameters:
+        imageName: 'macos-10.13'
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Debug
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
 
-  strategy:
-    matrix:
-      macOS:
-        imageName: 'macos-10.13'
-        cmakeArgs: >
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
-        targetSuffix:
-      Linux-x64:
+- job: Linux_Release
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: build-steps.yml
+      parameters:
         imageName: 'ubuntu-16.04'
         cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
-        targetSuffix:
-      MinGW-x64:
-        imageName: 'ubuntu-16.04'
-        cmakeArgs: >
-          -DENABLE_x86_64-w64-mingw32=1
-          -Dx86_64-w64-mingw32_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
-          -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
-          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
-          -Dmingw-w64_FIX_HEADERS=1
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/usr/share/gdal
-        targetSuffix: '-x86_64-w64-mingw32'
-      Android-armv7:
+
+- job: Android_armv7_Release
+  pool:
+    vmImage: 'macos-10.13'
+  steps:
+    - template: build-steps.yml
+      parameters:
         imageName: 'macos-10.13'
+        targetSuffix: '-arm-linux-androideabi'
         cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Relase
           -DENABLE_arm-linux-androideabi=1
           -Darm-linux-androideabi_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi
           -Darm-linux-androideabi_INSTALL_PREFIX=/usr
           -Darm-linux-androideabi_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/usr/share/gdal
-        targetSuffix: '-arm-linux-androideabi'
 
+- job: MinGW_x64_Release
   pool:
-    vmImage: $(imageName)
-
+    vmImage: 'ubuntu-16.04'
   steps:
-  - task: DownloadPipelineArtifact@0
-    inputs:
-      pipelineId: $(openorienteering.superbuild.pipelineId)
-      artifactName: 'superbuild-$(imageName)$(targetSuffix)'
-      targetPath: $(Build.SourcesDirectory)/build/default/install
-
-  - bash: find $(Build.SourcesDirectory)/build/default/install
-    displayName: 'List prebuilt superbuild artifacts'
-
-  - bash: |
-      set -x
-      set -e
-      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
-      case "$(imageName)$(targetSuffix)" in
-        ubuntu-*-x86_64-w64-mingw32)
-          sudo apt-get update
-          sudo apt-get install doxygen graphviz python-lxml g++-mingw-w64-x86-64
-          chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
-          ;;
-        ubuntu-*)
-          sudo apt-get update
-          sudo apt-get install doxygen graphviz python-lxml
-          ;;
-        macos-*-arm-linux-androideabi)
-          sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
-          xcode-select --print-path
-          pip install lxml
-          chmod +x $(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain/bin/*
-          ;;
-        macos-*)
-          sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
-          xcode-select --print-path
-          pip install lxml
-          ;;
-      esac
-    displayName: 'Prepare build tools'
-
-  - bash: |
-      set -x
-      set -e
-      git init superbuild
-      cd superbuild
-      git remote add origin https://github.com/openorienteering/superbuild.git
-      git fetch origin master
-      git checkout origin/master
-      test -f ci/num_jobs.cmake && cp ci/num_jobs.cmake .
-      cp $(Build.SourcesDirectory)/ci/openorienteering-mapper-ci.cmake .
-    displayName: 'Create superbuild source dir'
-
-  - task: CMake@1
-    inputs:
-      workingDirectory: 'build'
-      cmakeArgs: >
-        $(Build.SourcesDirectory)/superbuild
-        -DCMAKE_BUILD_TYPE=Release
-        -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
-        "-DMapper_CI_SOURCE_DIR=$(Build.SourcesDirectory)"
-        "-DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranch) $(Build.SourceVersion)"
-        "-DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)"
-        "-DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)"
-        "-DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)"
-        $(cmakeArgs)
-    displayName: 'Configure'
-
-  - bash: |
-      set -x
-      cd $(Build.SourcesDirectory)/build
-      make `cat num_jobs || true` openorienteering-mapper-ci$(targetSuffix)
-      #
-      cd $(Build.SourcesDirectory)
-      MAPPER_DIR=`echo build/default$(targetSuffix)/openorienteering-mapper-ci | sed -e 's,default-,,'`
-      if [ -d "${MAPPER_DIR}/Testing" ]; then
-        python ci/ctest_to_junit.py "${MAPPER_DIR}"
-        echo "##vso[task.setVariable variable=TEST_RESULTS]true"
-      fi
-      #
-      cd $(Build.SourcesDirectory)
-      mkdir output
-      case "$(imageName)$(targetSuffix)" in
-        ubuntu-*-x86_64-w64-mingw32)
-          cp build/x86_64-w64-mingw32/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.zip output/
-          ;;
-        ubuntu-*)
-          cp build/default/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.deb output/
-          ;;
-        macos-*-arm-linux-androideabi)
-          cp build/arm-linux-androideabi/openorienteering-mapper-ci/packaging/Mapper/install/build/outputs/apk/release/*.apk output/
-          ;;
-        macos-*)
-          cp build/default/openorienteering-mapper-ci/OpenOrienteering-Mapper-*.dmg output/
-          ;;
-      esac
-    env:
-      CTEST_OUTPUT_ON_FAILURE: 1
-      DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
-      LD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
-      VERBOSE: 1
-    displayName: 'Build'
-
-  - task: PublishTestResults@2
-    displayName: 'Publish test results'
-    inputs:
-      testRunner: 'jUnit'
-      testResultsFiles: '*/jUnit.xml'
-      searchFolder: '$(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci$(targetSuffix)/Testing'
-    condition: eq(variables.TEST_RESULTS, 'true')
-
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'Mapper-$(imageName)'
-      targetPath: $(Build.SourcesDirectory)/output
-    condition: and(succeeded(), eq(variables.targetSuffix, ''))
-
-  - task: PublishPipelineArtifact@0
-    inputs:
-      artifactName: 'Mapper$(targetSuffix)'
-      targetPath: $(Build.SourcesDirectory)/output
-    condition: and(succeeded(), ne(variables.targetSuffix, ''))
+    - template: build-steps.yml
+      parameters:
+        imageName: 'ubuntu-16.04'
+        targetSuffix: '-x86_64-w64-mingw32'
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Relase
+          -DENABLE_x86_64-w64-mingw32=1
+          -Dx86_64-w64-mingw32_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
+          -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
+          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/usr/share/gdal
+          -Dmingw-w64_FIX_HEADERS=1
