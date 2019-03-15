@@ -142,8 +142,9 @@ jobs:
       make `cat num_jobs || true` openorienteering-mapper-ci$(targetSuffix)
       #
       cd $(Build.SourcesDirectory)
-      if [ -d build/default/openorienteering-mapper-ci$(targetSuffix)/Testing ]; then
-        python ci/ctest_to_junit.py build/default/openorienteering-mapper-ci$(targetSuffix)
+      MAPPER_DIR=`echo build/default$(targetSuffix)/openorienteering-mapper-ci | sed -e 's,default-,,'`
+      if [ -d "${MAPPER_DIR}/Testing" ]; then
+        python ci/ctest_to_junit.py "${MAPPER_DIR}"
         echo "##vso[task.setVariable variable=TEST_RESULTS]true"
       fi
       #
