@@ -29,6 +29,7 @@
 
 parameters:
   cmakeArgs: '-DCMAKE_BUILD_TYPE=Release'
+  extraTargets: ''
   imageName: ''
   targetSuffix: ''
 
@@ -98,7 +99,10 @@ steps:
     set -x
     #
     cd $(Build.SourcesDirectory)/build
-    make `cat num_jobs || true` openorienteering-mapper-ci${{ parameters.targetSuffix }}
+    make `cat num_jobs || true` \
+      toolchain-info${{ parameters.targetSuffix}} \
+      ${{ parameters.extraTargets }} \
+      openorienteering-mapper-ci${{ parameters.targetSuffix }}
     #
     cd $(Build.SourcesDirectory)
     TARGET=`echo default${{ parameters.targetSuffix }} | sed -e 's,^default-,,'`

@@ -71,6 +71,8 @@ jobs:
           -Darm-linux-androideabi_INSTALL_PREFIX=/usr
           -Darm-linux-androideabi_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/usr/share/gdal
+          -DANDROID_BUILD_LIBCXX=1
+        extraTargets: android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
 
 - job: MinGW_x64_Release
   pool:
