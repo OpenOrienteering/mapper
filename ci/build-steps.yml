@@ -29,9 +29,9 @@
 
 parameters:
   cmakeArgs: '-DCMAKE_BUILD_TYPE=Release'
-  extraTargets: ''
   imageName: ''
   targetSuffix: ''
+  toolchainTargets: 'default-toolchain'
 
 
 steps:
@@ -94,6 +94,14 @@ steps:
       "-DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)"
       ${{ parameters.cmakeArgs }}
   displayName: 'Configure'
+  
+- bash: |
+    set -x
+    #
+    cd $(Build.SourcesDirectory)/build
+    make `cat num_jobs || true` \
+      ${{ parameters.toolchainTargets }}
+  displayName: 'Build toolchain'
 
 - bash: |
     set -x
@@ -101,7 +109,6 @@ steps:
     cd $(Build.SourcesDirectory)/build
     make `cat num_jobs || true` \
       toolchain-info${{ parameters.targetSuffix}} \
-      ${{ parameters.extraTargets }} \
       openorienteering-mapper-ci${{ parameters.targetSuffix }}
     #
     cd $(Build.SourcesDirectory)
@@ -137,7 +144,7 @@ steps:
     DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
     LD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
     VERBOSE: 1
-  displayName: 'Build'
+  displayName: 'Build Mapper'
 
 - task: PublishTestResults@2
   displayName: 'Publish test results'

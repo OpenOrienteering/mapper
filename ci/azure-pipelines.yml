@@ -72,7 +72,9 @@ jobs:
           -Darm-linux-androideabi_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/usr/share/gdal
           -DANDROID_BUILD_LIBCXX=1
-        extraTargets: android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
+        toolchainTargets: >
+          arm-linux-androideabi-toolchain-$(openorienteering.superbuild.ndkVersion)
+          android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
 
 - job: MinGW_x64_Release
   pool:
@@ -90,3 +92,5 @@ jobs:
           -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/usr/share/gdal
           -Dmingw-w64_FIX_HEADERS=1
+        toolchainTargets: >
+          x86_64-w64-mingw32-toolchain-1
