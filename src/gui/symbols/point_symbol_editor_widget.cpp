@@ -72,7 +72,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 // IWYU pragma: no_forward_declare QBoxLayout
 // IWYU pragma: no_forward_declare QGridLayout

@@ -41,7 +41,7 @@
 #include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 
 

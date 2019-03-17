@@ -38,7 +38,7 @@
 #include "gdal/gdal_manager.h"
 #include "gdal/ogr_file_format.h"
 #include "gui/util_gui.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {

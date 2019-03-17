@@ -61,7 +61,7 @@
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 using namespace OpenOrienteering;

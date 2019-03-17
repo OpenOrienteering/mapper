@@ -62,7 +62,7 @@
 #include "gui/map/new_map_dialog.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {
