@@ -104,14 +104,14 @@ void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	XmlElementWriter element(xml, QLatin1String("affected_objects"));
 	element.writeAttribute(QLatin1String("part"), part_index);
-	int size = modified_objects.size();
+	auto size = modified_objects.size();
 	if (size > 8)
 		element.writeAttribute(QLatin1String("count"), size);
 	
-	for (int i = 0; i < size; ++i)
+	for (auto object_index : modified_objects)
 	{
 		XmlElementWriter ref(xml, QLatin1String("ref"));
-		ref.writeAttribute(QLatin1String("object"), modified_objects[i]);
+		ref.writeAttribute(QLatin1String("object"), object_index);
 	}
 }
 
@@ -121,9 +121,10 @@ void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& 
 	{
 		XmlElementReader element(xml);
 		part_index = element.attribute<int>(QLatin1String("part"));
-		int size = element.attribute<int>(QLatin1String("count"));
+		auto size = element.attribute<std::size_t>(QLatin1String("count"));
 		if (size)
 			modified_objects.reserve(size);
+		
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("ref"))
