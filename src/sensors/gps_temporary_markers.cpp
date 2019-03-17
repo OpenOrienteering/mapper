@@ -1,6 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,23 +21,31 @@
 
 #include "gps_temporary_markers.h"
 
-#include <QPainter>
+#include <memory>
 
+#include <QBrush>
+#include <QPainter>
+#include <QPen>
+#include <QRgb>
+#include <Qt>
+
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "gui/map/map_widget.h"
 #include "gps_display.h"
 #include "tools/tool.h"
 
+// IWYU pragma: no_forward_declare QPointF
+
 
 namespace OpenOrienteering {
 
-GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display): QObject()
+GPSTemporaryMarkers::GPSTemporaryMarkers(MapWidget* widget, GPSDisplay* gps_display, QObject* parent)
+: QObject(parent)
+, gps_display(gps_display)
+, widget(widget)
 {
-	this->widget = widget;
-	this->gps_display = gps_display;
-	recording_path = false;
-	
 	connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &GPSTemporaryMarkers::newGPSPosition);
-	
 	widget->setTemporaryMarkerDisplay(this);
 }
 
@@ -80,29 +88,29 @@ void GPSTemporaryMarkers::paint(QPainter* painter)
 {
 	painter->save();
 	widget->applyMapTransform(painter);
-	float scale_factor = 1.0f / widget->getMapView()->getZoom();
+	const auto scale_factor = 1 / widget->getMapView()->getZoom();
 	
 	// Draw paths
 	painter->setBrush(Qt::NoBrush);
 
-	painter->setPen(QPen(QBrush(qRgb(255, 255, 255)), scale_factor * 0.3f));
+	painter->setPen(QPen(QBrush(qRgb(255, 255, 255)), scale_factor * 0.3));
 	for (const auto& path : paths)
-		painter->drawPolyline(path.data(), path.size());
+		painter->drawPolyline(path.data(), int(path.size()));
 	
-	painter->setPen(QPen(QBrush(MapEditorTool::active_color), scale_factor * 0.2f));
+	painter->setPen(QPen(QBrush(MapEditorTool::active_color), scale_factor * 0.2));
 	for (const auto& path : paths)
-		painter->drawPolyline(path.data(), path.size());
+		painter->drawPolyline(path.data(), int(path.size()));
 	
 	// Draw points
 	painter->setPen(Qt::NoPen);
 	
 	painter->setBrush(QBrush(qRgb(255, 255, 255)));
-	float point_radius = scale_factor * 0.5f;
+	auto point_radius = scale_factor * 0.5;
 	for (const auto& point : points)
 		painter->drawEllipse(point, point_radius, point_radius);
 	
 	painter->setBrush(QBrush(MapEditorTool::inactive_color));
-	point_radius = scale_factor * 0.4f;
+	point_radius = scale_factor * 0.4;
 	for (const auto& point : points)
 		painter->drawEllipse(point, point_radius, point_radius);
 	
@@ -115,15 +123,14 @@ void GPSTemporaryMarkers::newGPSPosition(const MapCoordF& coord, float accuracy)
 
 	if (recording_path && ! paths.empty())
 	{
-		std::vector< QPointF >& path_coords = paths.back();
-		path_coords.push_back(coord);
+		paths.back().push_back(coord);
 		updateMapWidget();
 	}
 }
 
 void GPSTemporaryMarkers::updateMapWidget()
 {
-	// NOTE: could limit the updated area here
+	/// \todo Limit the updated area here
 	widget->update();
 }
 

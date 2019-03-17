@@ -24,15 +24,11 @@
 
 #include <QtGlobal>
 #include <QObject>
-#if defined(QT_POSITIONING_LIB)
-#  include <QGeoPositionInfo>  // IWYU pragma: keep
-#  include <QGeoPositionInfoSource>  // IWYU pragma: keep
-#else
-class QGeoPositionInfoSource;  // IWYU pragma: keep
-#endif
 
 #include "core/map_coord.h"
 
+class QGeoPositionInfo;
+class QGeoPositionInfoSource;
 class QPainter;
 class QTimerEvent;
 
@@ -90,7 +86,7 @@ public:
 	bool hasValidPosition() const { return has_valid_position; }
 	/// Returns the latest received GPS coord. Check hasValidPosition() beforehand!
 	const MapCoordF& getLatestGPSCoord() const { return latest_gps_coord; }
-	/// Returns the accuracy of the latest received GPS coord, or -1 if unknown. Check hasValidPosition() beforehand!
+	/// Returns the accuracy of the latest received GPS coord, or NaN if unknown. Check hasValidPosition() beforehand!
 	float getLatestGPSCoordAccuracy() const { return latest_gps_coord_accuracy; }
 	
 	/// Starts quick blinking for one or more seconds.
@@ -108,12 +104,12 @@ protected:
 	
 signals:
 	/// Is emitted whenever a new position update happens.
-	/// If the accuracy is unknown, -1 will be given.
+	/// If the accuracy is unknown, NaN will be given.
 	void mapPositionUpdated(const MapCoordF& coord, float accuracy);
 	
 	/// Like mapPositionUpdated(), but gives the values as
 	/// latitude / longitude in degrees and also gives altitude
-	/// (meters above sea level; -9999 is unknown)
+	/// (meters above sea level; NaN means unknown)
 	void latLonUpdated(double latitude, double longitude, double altitude, float accuracy);
 	
 	/// Is emitted when updates are interrupted after previously being active,
@@ -122,12 +118,9 @@ signals:
 	void positionUpdatesInterrupted();
 	
 private slots:
-#if defined(QT_POSITIONING_LIB)
     void positionUpdated(const QGeoPositionInfo& info);
-	void error(QGeoPositionInfoSource::Error positioningError);
+	void error();
 	void updateTimeout();
-#endif
-	void debugPositionUpdate();
 	
 private:
 	MapCoordF calcLatestGPSCoord(bool& ok);
@@ -166,9 +159,6 @@ private:
 	MapWidget* widget;
 	const Georeferencing& georeferencing;
 	QGeoPositionInfoSource* source = nullptr;
-#if defined(QT_POSITIONING_LIB)
-	QGeoPositionInfo latest_pos_info;
-#endif
 	MapCoordF latest_gps_coord;
 	float latest_gps_coord_accuracy = 0;
 	PulsatingOpacity pulsating_opacity;

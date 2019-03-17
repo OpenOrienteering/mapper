@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,18 +22,23 @@
 #ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
 #define OPENORIENTEERING_TEMPLATE_TRACK_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
 #include <QObject>
+#include <QPainterPath>
+#include <QPointF>
 #include <QRectF>
 #include <QString>
+#include <QVarLengthArray>
 
 #include "core/track.h"
 #include "templates/template.h"
 
 class QByteArray;
 class QPainter;
+// IWYU pragma: no_forward_declare QPointF
 class QRectF;
 class QWidget;
 class QXmlStreamReader;
@@ -48,10 +53,22 @@ class PathObject;
 class PointObject;
 
 
-/** A template consisting of a set of tracks (polylines) and waypoints */
+/**
+ * A template for displaying a GPX track.
+ * 
+ * A track is a set of track point segments and waypoints.
+ * 
+ * Normally, the geographic data from the track will be projected using the
+ * map's georeferencing (georeferenced mode). However, it is also possible to
+ * use a custom projection (non-georeferenced mode).
+ * 
+ * \see Track
+ */
 class TemplateTrack : public Template
 {
-Q_OBJECT
+	Q_OBJECT
+	Q_DISABLE_COPY(TemplateTrack)
+	
 public:
 	/**
 	 * Returns the filename extensions supported by this template class.
@@ -59,9 +76,10 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateTrack(const QString& path, Map* map);
-    ~TemplateTrack() override;
-	const char* getTemplateType() const override {return "TemplateTrack";}
-	bool isRasterGraphics() const override {return false;}
+	~TemplateTrack() override;
+	
+	const char* getTemplateType() const override;
+	bool isRasterGraphics() const override;
 	
 	bool saveTemplateFile() const override;
 	
@@ -69,18 +87,16 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
-	QRectF getTemplateExtent() const override;
-    QRectF calculateTemplateBoundingBox() const override;
-    int getTemplateBoundingBoxPixelBorder() override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	QRectF calculateTemplateBoundingBox() const override;
 	
 	bool hasAlpha() const override;
 	
 	/// Draws all tracks.
-	void drawTracks(QPainter* painter, bool on_screen) const;
+	void drawTracks(QPainter* painter, bool on_screen, qreal opacity) const;
 	
 	/// Draws all waypoints.
-	void drawWaypoints(QPainter* painter) const;
+	void drawWaypoints(QPainter* painter, qreal opacity) const;
 	
 	/// Import the track as map object(s), returns true if something has been imported.
 	/// TODO: should this be moved to the Track class?
@@ -94,18 +110,27 @@ public:
 	inline Track& getTrack() {return track;}
 	
 public slots:
+	void trackChanged(Track::TrackChange change, const TrackPoint& point);
+	
 	void updateGeoreferencing();
 	
 protected:
 	Template* duplicateImpl() const override;
 	
-    void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
-    bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
-	/// Projects the track in non-georeferenced mode
+	/// Calculates a simple projection for non-georeferenced track usage.
 	QString calculateLocalGeoreferencing() const;
 	
-	void applyProjectedCrsSpec();
+	/// Sets a custom projection, for non-georeferenced track usage.
+	void setCustomProjection(const QString& projected_crs_spec);
+	
+	/// Returns the georeferencing to be used for projecting the track data.
+	const Georeferencing& georeferencing() const;
+	
+	/// Updates the cached projected data from the geographic track data.
+	void projectTrack();
 	
 	PathObject* importPathStart();
 	void importPathEnd(PathObject* path);
@@ -113,13 +138,20 @@ protected:
 	
 	
 	Track track;
-	QString track_crs_spec;
-	QString projected_crs_spec;
-	friend class OgrTemplate; // for migration
-	std::unique_ptr<Georeferencing> preserved_georef;
+	std::unique_ptr<Georeferencing> projected_georef;
+	std::vector<QPointF> waypoints;
+	QVarLengthArray<QPainterPath, 4> track_segments;
 	
-private:
-	Q_DISABLE_COPY(TemplateTrack)
+	/// The height of waypoint labels.
+	mutable qreal line_height = 3;
+	/// A factor which is used to approximate the size of waypoint labels.
+	mutable qreal half_char_width = 2;
+	
+	friend class OgrTemplate;                          // for migration
+	
+	// The following attributes might be removed in the future.
+	std::unique_ptr<Georeferencing> preserved_georef;  // legacy
+	QString track_crs_spec;                            // legacy
 };
 
 

@@ -78,8 +78,11 @@ PATTERN=" \
   tag_select_widget.cpp \
   template_image.cpp \
   template_list_widget.cpp \
+  template_track.cpp \
   template_tool \
   text_brwoser_dialog \
+  track_t.cpp \
+  /track.cpp \
   undo_manager.cpp \
   /util.cpp \
   /util_gui.cpp \
@@ -88,6 +91,7 @@ PATTERN=" \
   xml_stream_util.cpp \
   \
   ocd \
+  sensors/ \
   src/tools/ \
   settings \
   \

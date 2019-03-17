@@ -22,160 +22,174 @@
 #ifndef OPENORIENTEERING_TRACK_H
 #define OPENORIENTEERING_TRACK_H
 
+#include <cmath>
 #include <vector>
 
+#include <QtGlobal>
 #include <QDateTime>
-#include <QHash>
+#include <QMetaType>
+#include <QObject>
 #include <QString>
+#include <QVarLengthArray>
 
-#include "core/georeferencing.h"
 #include "core/latlon.h"
-#include "core/map_coord.h"
 
-class QFile;
-class QWidget;
+class QIODevice;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
 
 /**
- * A point in a track or a waypoint, which stores position on ellipsoid and
- * map and more attributes (e.g. number of satellites)
+ * A geographic point with optional attributes such as time.
+ * 
+ * \see GPX `ptType`, https://www.topografix.com/GPX/1/1/#type_ptType
  */
 struct TrackPoint
 {
-	LatLon gps_coord;
-	MapCoordF map_coord;
-	bool is_curve_start;
+	LatLon latlon;
+	QDateTime datetime;             // QDateTime() if invalid
+	float elevation     = NAN;      // NaN if invalid
+	float hDOP          = NAN;      // NaN if invalid
+	QString name;
 	
-	QDateTime datetime;		// QDateTime() if invalid
-	float elevation;		// -9999 if invalid
-	int num_satellites;		// -1 if invalid
-	float hDOP;				// -1 if invalid
+	// Default special member functions are fine.
 	
-	TrackPoint(LatLon coord = LatLon(), const QDateTime& datetime = QDateTime(),
-			   float elevation = -9999, int num_satellites = -1, float hDOP = -1);
 	void save(QXmlStreamWriter* stream) const;
 };
 
-/**
- * Stores a set of tracks and / or waypoints, e.g. taken from a GPS device.
- * Can optionally store a track coordinate reference system in track_georef;
- * if no track CRS is given, assumes that coordinates are geographic WGS84 coordinates
+bool operator==(const TrackPoint& lhs, const TrackPoint& rhs);
+
+inline bool operator!=(const TrackPoint& lhs, const TrackPoint& rhs) { return !(lhs==rhs); }
+
+
+
+/** 
+ * A TrackSegment is a continuous span of track data.
+ * 
+ * \see https://www.topografix.com/GPX/1/1/#type_trksegType
  */
-class Track
+using TrackSegment = std::vector<TrackPoint>;
+
+
+
+/**
+ * Stores a set of track point and/or waypoints, e.g. taken from a GPS device.
+ * 
+ * This unit is model after the GPX standard.
+ * All coordinates are assumed to be geographic WGS84 coordinates.
+ * 
+ * For recording purposes, this class allows to append track segments, track
+ * points and waypoints to the existing data, and it sends signals for such
+ * changes.
+ */
+class Track : public QObject
 {
+	Q_OBJECT
+	Q_DISABLE_COPY(Track)
+	
 public:
+	///  Marks a particular change to the track data.
+	enum TrackChange
+	{
+		NewSegment,         ///< A new segment was started, and a trackpoint was added to it.
+		TrackPointAppended, ///< A track point was appended to the current segment.
+		WaypointAppended,   ///< A waypoint was appended to the track.
+	};
+	
+	
 	/// Constructs an empty track
-	Track();
-	Track(const Georeferencing& map_georef);
-	/// Duplicates a track
-	Track(const Track& other);
+	explicit Track(QObject* parent = nullptr);
 	
 	~Track();
 	
-	/// Deletes all data of the track, except the projection parameters
+	/// Returns true when the track contains no points.
+	bool empty() const;
+	
+	/// Deletes all data of the track
 	void clear();
 	
+	/// If the current segment is empty, squeezes the previous segment, but
+    /// moves its allocation to the current segment.
+   void squeeze();
+   
+	/// Replaces this track's data with the data from the another track.
+	void copyFrom(const Track& other);
+	
 	/// Attempts to load the track from the given file.
-	/// If you choose not to project_point, you have to call changeProjectionParams() afterwards.
-	bool loadFrom(const QString& path, bool project_points, QWidget* dialog_parent = nullptr);
+	bool loadFrom(const QString& path);
+	/// Attempts to load GPX data from the open device.
+	bool loadGpxFrom(QIODevice& device);
 	/// Attempts to save the track to the given file
 	bool saveTo(const QString& path) const;
+	/// Saves the track as GPX data to the open device.
+	bool saveGpxTo(QIODevice& device) const;
 	
 	// Modifiers
 	
-	/**
-	 * @brief Appends the point and updates the point's map coordinates.
-	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
-	 * according to the map's georeferencing.
-	 */
-	void appendTrackPoint(TrackPoint& point);
+	/// Appends a track point to the current segment.
+	void appendTrackPoint(const TrackPoint& point);
+	
+	/// Appends a track point for the current date and time to the current segment.
+	void appendCurrentTrackPoint(double latitude, double longitude, double altitude, float accuracy);
 	
 	/**
-	 * Marks the current track segment as finished, so the next added point
-	 * will define the start of a new track segment.
+	 * Ends the current track segment, so that a new segment will be started
+	 * when the next track point is added.
 	 */
 	void finishCurrentSegment();
 	
-	/**
-	 * @brief Appends the waypoint and updates the point's map coordinates.
-	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
-	 * according to the map's georeferencing.
-	 */
-	void appendWaypoint(TrackPoint& point, const QString& name);
+	/// Appends a waypoint.
+	void appendWaypoint(const TrackPoint& point);
 	
-	/** Updates the map positions of all points based on the new georeferencing. */
-	void changeMapGeoreferencing(const Georeferencing& new_georef);
-	
-	/// Sets the track coordinate reference system.
-	/// The Track object takes ownership of the Georeferencing object.
-	void setTrackCRS(Georeferencing* track_crs);
 	
 	// Getters
 	int getNumSegments() const;
 	int getSegmentPointCount(int segment_number) const;
 	const TrackPoint& getSegmentPoint(int segment_number, int point_number) const;
-	const QString& getSegmentName(int segment_number) const;
 	
 	int getNumWaypoints() const;
 	const TrackPoint& getWaypoint(int number) const;
-	const QString& getWaypointName(int number) const;
-	
-	bool hasTrackCRS() const {return track_crs;}
-	Georeferencing* getTrackCRS() const {return track_crs;}
 	
 	/// Averages all track coordinates
 	LatLon calcAveragePosition() const;
 	
-	/** A collection of key:value tags. Cf. Object::Tags. */
-	typedef QHash<QString, QString> Tags;
 	
-	/** A mapping of an element name to a tags collection. */
-	typedef QHash<QString, Tags> ElementTags;
+signals:
+	/**
+	 * Signals a change in the track data, as it occurs during recording.
+	 * 
+	 * These signals are emitted by appendTrackPoint() and appendWaypoint().
+	 * 
+	 * @param change         The type of change.
+	 * @param point_number   The index of the changed point.
+	 * @param segment_number The index of the segment of the changed track point.
+	 *                       Not used for Track::WaypointAppended.
+	 */
+	void trackChanged(TrackChange change, const TrackPoint& point);
 	
-	/** Returns the mapping of element names to tag collections. */
-	const ElementTags& tags() const;
-
-	/** Assigns a copy of another Track's data to this object. */
-	Track& operator=(const Track& rhs);
 	
 private:
-	bool loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent);
+	TrackSegment waypoints;
+	QVarLengthArray<TrackSegment> segments;
+	bool current_segment_finished = true;
 	
-	void projectPoints();
-	
-	
-	/** A mapping of element id to tags. */
-	ElementTags element_tags; 
-	
-	std::vector<TrackPoint> waypoints;
-	std::vector<QString> waypoint_names;
-	
-	std::vector<TrackPoint> segment_points;
-	// The indices of the first points of every track segment in this track
-	std::vector<int> segment_starts;
-	std::vector<QString> segment_names;
-	
-	bool current_segment_finished;
-	
-	Georeferencing* track_crs;
-	Georeferencing map_georef;
+	friend bool operator==(const Track& lhs, const Track& rhs);
 };
 
+/**
+ * Compares waypoints, segments, and track points for equality.
+ */
+bool operator==(const Track& lhs, const Track& rhs);
 
-// ### Track inline code ###
-
-inline
-const Track::ElementTags& Track::tags() const
-{
-	return element_tags;
-}
+inline bool operator!=(const Track& lhs, const Track& rhs) { return !(lhs==rhs); }
 
 
 }  // namespace OpenOrienteering
+
+
+Q_DECLARE_METATYPE(OpenOrienteering::TrackPoint);
+Q_DECLARE_METATYPE(OpenOrienteering::Track::TrackChange);
+
 
 #endif  // OPENORIENTEERING_TRACK_H
