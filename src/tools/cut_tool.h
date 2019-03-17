@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QRectF>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "core/path_coord.h"

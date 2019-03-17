@@ -28,7 +28,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QChar>
-#include <QCoreApplication>
 #include <QHash>
 #include <QLatin1Char>
 #include <QLatin1String>

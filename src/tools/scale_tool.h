@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_SCALE_TOOL_H
 
 #include <QObject>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/tool_base.h"

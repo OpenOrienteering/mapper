@@ -1008,7 +1008,9 @@
 # --- Manual additions ---
 
     # convenience
+    { symbol: [ "Q_DECLARE_FLAGS", "private", "<QFlags>", "public" ] },
     { include: [ "<QFlag>", "public", "<QFlags>", "public" ] },
+    { include: [ "<QNoDebug>", "public", "<QDebug>", "public" ] },
     { include: [ "<QStaticByteArrayData>", "public", "<QByteArray>", "public" ] },
     { include: [ "<QStaticStringData>", "public", "<QString>", "public" ] },
     { include: [ "<QVariantComparisonHelper>", "public", "<QVariant>", "public" ] },

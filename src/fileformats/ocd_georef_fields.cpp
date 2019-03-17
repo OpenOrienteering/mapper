@@ -27,7 +27,6 @@
 
 #include <QtGlobal>
 #include <QtNumeric>
-#include <QCoreApplication>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>

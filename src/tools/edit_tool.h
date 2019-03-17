@@ -31,6 +31,7 @@
 #include <QRectF>
 #include <QRgb>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"

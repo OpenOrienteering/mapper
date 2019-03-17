@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_TOOL_ROTATE_PATTERN_H
 
 #include <QObject>
+#include <QString>
 
 #include "tools/tool_base.h"
 

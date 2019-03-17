@@ -31,6 +31,7 @@
 #include <type_traits>
 #include <vector>
 
+#include <QtGlobal>
 #include <QtMath>
 #include <QChar>
 #include <QCoreApplication>
@@ -71,8 +72,8 @@
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
 #include "fileformats/ocd_types_v10.h"
-#include "fileformats/ocd_types_v11.h"
-#include "fileformats/ocd_types_v12.h"
+#include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
+#include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v2018.h"
 #include "templates/template.h"
 #include "templates/template_image.h"

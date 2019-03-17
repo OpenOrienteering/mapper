@@ -23,6 +23,7 @@
 
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
 class QAbstractButton;
 class QCloseEvent;

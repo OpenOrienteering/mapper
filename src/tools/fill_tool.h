@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QObject>
 // IWYU pragma: no_include <QRectF>
+#include <QString>
 #include <QTransform>
 
 #include "tool_base.h"

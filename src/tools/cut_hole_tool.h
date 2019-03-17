@@ -24,6 +24,7 @@
 
 #include <QObject>
 #include <QRectF>
+#include <QString>
 
 #include "tool.h"
 

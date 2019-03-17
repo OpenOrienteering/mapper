@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QString>
 
 #include "tools/tool_base.h"
 

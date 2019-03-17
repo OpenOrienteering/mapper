@@ -27,6 +27,7 @@
 #include <QtGlobal>
 #include <QAbstractButton>
 #include <QAbstractItemView>
+#include <QAbstractSlider>
 #include <QAction>
 #include <QBoxLayout>
 #include <QBrush>

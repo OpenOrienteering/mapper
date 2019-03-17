@@ -4,6 +4,7 @@
     # Mapper uses -DQT_USE_QSTRINGBUILDER 
     { include: [ "<QStringBuilder>", "public", "<QString>", "public" ] },
     
+    { symbol: [ "abs", "private", "<cmath>", "public" ] },
     { symbol: [ "M_PI", "private", "<QtMath>", "public" ] },
     
     { include: [ "\"util/qasconst.h\"", "private", "\"util/backports.h\"", "public" ] },

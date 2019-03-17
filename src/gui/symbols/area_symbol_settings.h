@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "core/symbols/area_symbol.h"
 #include "gui/symbols/symbol_properties_widget.h"

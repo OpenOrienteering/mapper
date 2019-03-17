@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_TOOL_PAN_H
 
 #include <QObject>
+#include <QString>
 
 #include "tools/tool_base.h"
 

@@ -40,7 +40,6 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 #include <QSpinBox>
-#include <QString>
 #include <QWidget>
 
 #include "core/symbols/combined_symbol.h"

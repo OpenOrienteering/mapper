@@ -24,6 +24,8 @@
 
 #include <QtGlobal>
 #include <QObject>
+#include <QString>
+
 #if defined(QT_POSITIONING_LIB)
 #  include <QGeoPositionInfo>  // IWYU pragma: keep
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep

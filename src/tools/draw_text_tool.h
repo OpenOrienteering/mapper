@@ -27,6 +27,7 @@
 #include <Qt>
 #include <QObject>
 #include <QVariant>
+#include <QString>
 
 #include "core/renderables/renderable.h"
 #include "tools/tool_base.h"

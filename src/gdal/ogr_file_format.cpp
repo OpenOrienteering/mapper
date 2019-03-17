@@ -40,7 +40,6 @@
 #include <QtMath>
 #include <QByteArray>
 #include <QColor>
-#include <QCoreApplication>
 #include <QFileInfo>
 #include <QFlags>
 #include <QHash>

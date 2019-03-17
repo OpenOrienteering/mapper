@@ -111,6 +111,8 @@ if echo "$@" | grep -q "${PATTERN}"; then
 			  -Xiwyu --mapping_file=${0%/*}/iwyu-mapper.imp \
 			  -Xiwyu --check_also=*_p.h \
 			  -Xiwyu --max_line_length=160 \
+			  "-DqPrintable(...)=(void(__VA_ARGS__), \"\")" \
+			  "-DqUtf8Printable(...)=(void(__VA_ARGS__), \"\")" \
 			  "$@" \
 			|| exit 1
 		fi

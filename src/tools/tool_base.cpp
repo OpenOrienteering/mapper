@@ -21,12 +21,16 @@
 
 #include "tool_base.h"
 
-#include <cstdlib>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <cstdlib>
+#endif
 #include <iterator>
 #include <type_traits>
 
 #include <QtGlobal>
-#include <QCoreApplication>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <QCoreApplication>
+#endif
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>

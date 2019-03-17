@@ -32,6 +32,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QPointF>
+#include <QString>
 
 #include <QPointer>
 

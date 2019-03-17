@@ -25,6 +25,7 @@
 
 #include <Qt>
 #include <QtGlobal>
+#include <QAbstractButton>
 #include <QCursor>
 #include <QDate>
 #include <QDebug>
@@ -47,7 +48,6 @@
 #include <QSignalBlocker>
 #include <QSize>
 #include <QSpacerItem>
-#include <QString>
 #include <QStringRef>
 #include <QTimer>
 #include <QUrl>

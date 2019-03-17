@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_POINT_SYMBOL_SETTINGS_H
 
 #include <QObject>
+#include <QString>
 
 #include "gui/symbols/symbol_properties_widget.h"
 

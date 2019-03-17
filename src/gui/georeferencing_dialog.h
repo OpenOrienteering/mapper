@@ -25,6 +25,7 @@
 #include <QDialog>
 #include <QObject>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"

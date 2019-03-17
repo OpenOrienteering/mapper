@@ -42,7 +42,6 @@
 #include <QSizePolicy>
 #include <QSpacerItem>
 #include <QStackedWidget>
-#include <QString>
 #include <QToolButton>
 #include <QVariant>
 #include <QVBoxLayout>

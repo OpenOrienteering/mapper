@@ -41,7 +41,9 @@
 #include <QPen>
 #include <QPoint>
 #include <QPointF>
-#include <QTime>
+#if MAPPER_DEVELOPMENT_BUILD
+#  include <QTime>
+#endif
 #include <QTimer>  // IWYU pragma: keep
 #include <QTimerEvent>
 

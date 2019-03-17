@@ -26,6 +26,7 @@
 
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
 class QDoubleSpinBox;
 class QCheckBox;

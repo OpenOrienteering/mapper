@@ -37,7 +37,6 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QEvent>
-#include <QFlags>
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QIcon>
