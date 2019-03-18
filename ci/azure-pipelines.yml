@@ -45,7 +45,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
 
-- job: Linux_Release
+- job: Linux_clazy_Release
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
@@ -55,6 +55,7 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+        mode: 'clazy'
 
 - job: Android_armv7_Release
   pool:

@@ -32,6 +32,7 @@ parameters:
   imageName: ''
   targetSuffix: ''
   toolchainTargets: 'default-toolchain'
+  mode: ''
 
 
 steps:
@@ -58,6 +59,15 @@ steps:
       ubuntu-*)
         sudo apt-get update
         sudo apt-get install doxygen graphviz python-lxml
+        case "${{ parameters.mode }}" in
+          clazy)
+            curl https://downloads.kdab.com/clazy/1.5/Clazy-x86_64-1.5.AppImage -o clazy
+            sha256sum clazy | grep e6ca38fb1e31ca5240489bfb653ec0ef8dbeb8ef5957d73400ea1e5c3d0303a6
+            sudo cp clazy /usr/local/bin/
+            sudo chmod +x /usr/local/bin/clazy
+            echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
+            ;;
+        esac
         ;;
       macos-*-arm-linux-androideabi)
         sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
@@ -144,6 +154,10 @@ steps:
     DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
     LD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
     VERBOSE: 1
+    ${{ if eq(parameters.mode, 'clazy') }}:
+      CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
+      CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
+      CLAZY_NO_WERROR: 1
   displayName: 'Build Mapper'
 
 - task: PublishTestResults@2
