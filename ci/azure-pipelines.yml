@@ -57,6 +57,19 @@ jobs:
           -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
         mode: 'clazy'
 
+- job: Linux_Coverage
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: build-steps.yml
+      parameters:
+        imageName: 'ubuntu-16.04'
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Debug
+          -DMapper_CI_ENABLE_COVERAGE=1
+          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+        mode: 'gcov'
+
 - job: Android_armv7_Release
   pool:
     vmImage: 'macos-10.13'

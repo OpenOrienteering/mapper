@@ -31,6 +31,7 @@ set(Mapper_CI_SOURCE_DIR "mapper" CACHE STRING "Mapper (CI): Path to Mapper sour
 set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display string")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
+option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
 option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" OFF)
 option(Mapper_CI_MANUAL_PDF "Mapper (git): Provide the manual as PDF file (needs pdflatex)" OFF)
 set(Mapper_CI_GDAL_DATA_DIR "NOTFOUND" CACHE STRING "Mapper (CI): GDAL data directory")
@@ -57,6 +58,7 @@ superbuild_package(
     Mapper_CI_SOURCE_DIR
     Mapper_CI_VERSION_DISPLAY
     Mapper_CI_LICENSING_PROVIDER
+    Mapper_CI_ENABLE_COVERAGE
     Mapper_CI_ENABLE_POSITIONING
     Mapper_CI_MANUAL_PDF
     Mapper_CI_GDAL_DATA_DIR
@@ -93,6 +95,10 @@ superbuild_package(
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:
     TEST_COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output
+    $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
+    COMMAND
+      "${CMAKE_CTEST_COMMAND}" -T Coverage
+    >
     TEST_BEFORE_INSTALL 1
   >
   ]]

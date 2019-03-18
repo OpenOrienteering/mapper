@@ -162,6 +162,8 @@ endif()
 
 # Build definitons
 
+include(CTest)
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 

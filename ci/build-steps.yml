@@ -67,6 +67,10 @@ steps:
             sudo chmod +x /usr/local/bin/clazy
             echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
             ;;
+          gcov)
+            sudo apt-get install g++ python-pip
+            sudo pip install gcovr
+            ;;
         esac
         ;;
       macos-*-arm-linux-androideabi)
@@ -158,6 +162,12 @@ steps:
       CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
       CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
       CLAZY_NO_WERROR: 1
+    ${{ if eq(parameters.mode, 'gcov') }}:
+      CC: gcc
+      CFLAGS: -fprofile-arcs -ftest-coverage
+      CXX: g++
+      CXXFLAGS: -fprofile-arcs -ftest-coverage
+      LDFLAGS: -fuse-ld=gold
   displayName: 'Build Mapper'
 
 - task: PublishTestResults@2
@@ -168,7 +178,34 @@ steps:
   condition: variables.TEST_RESULTS
   displayName: 'Publish test results'
 
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: '$(ARTIFACT_NAME)'
-    targetPath: $(Build.SourcesDirectory)/output
+- ${{ if eq(parameters.mode, 'gcov') }}:
+  - bash: |
+      set -x
+      #
+      cd $(Build.SourcesDirectory)
+      mkdir coverage
+      GCOVR_ARGS="\
+        --root=$(Build.SourcesDirectory) \
+        --filter=src/ \
+        --filter=test/ \
+        --object-directory=$(TEST_RESULTS)/CoverageInfo \
+        --use-gcov-files \
+        --keep \
+        --print-summary"
+      gcovr --xml --output $(Build.SourcesDirectory)/coverage/coverage.xml ${GCOVR_ARGS}
+      gcovr --html --html-details --output $(Build.SourcesDirectory)/coverage/index.html ${GCOVR_ARGS}
+    displayName: 'Process code coverage results'
+
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)/coverage/coverage.xml'
+      reportDirectory: '$(Build.SourcesDirectory)/coverage'
+    displayName: 'Publish code coverage results'
+
+- ${{ if ne(parameters.mode, 'gcov') }}:
+  - task: PublishPipelineArtifact@0
+    inputs:
+      artifactName: '$(ARTIFACT_NAME)'
+      targetPath: $(Build.SourcesDirectory)/output
+    condition: variables.ARTIFACT_NAME
