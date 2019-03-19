@@ -79,7 +79,7 @@ jobs:
         imageName: 'macos-10.13'
         targetSuffix: '-arm-linux-androideabi'
         cmakeArgs: >
-          -DCMAKE_BUILD_TYPE=Relase
+          -DCMAKE_BUILD_TYPE=Release
           -DENABLE_arm-linux-androideabi=1
           -Darm-linux-androideabi_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi
           -Darm-linux-androideabi_INSTALL_PREFIX=/usr
@@ -99,7 +99,7 @@ jobs:
         imageName: 'ubuntu-16.04'
         targetSuffix: '-x86_64-w64-mingw32'
         cmakeArgs: >
-          -DCMAKE_BUILD_TYPE=Relase
+          -DCMAKE_BUILD_TYPE=Release
           -DENABLE_x86_64-w64-mingw32=1
           -Dx86_64-w64-mingw32_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
           -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr

@@ -72,7 +72,6 @@ superbuild_package(
       "-DBUILD_SHARED_LIBS=0"
       "-DMapper_AUTORUN_SYSTEM_TESTS=0"
       "-DLICENSING_PROVIDER=${Mapper_CI_LICENSING_PROVIDER}"
-      "-DMapper_BUILD_PACKAGE=1"
       "-DMapper_VERSION_DISPLAY=${Mapper_CI_VERSION_DISPLAY}"
       "-DMapper_MANUAL_PDF=$<BOOL:@Mapper_CI_MANUAL_PDF@>"
       "-DGDAL_DATA_DIR=${Mapper_CI_GDAL_DATA_DIR}"
