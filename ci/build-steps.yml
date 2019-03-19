@@ -50,6 +50,8 @@ steps:
     set -x
     set -e
     chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+    sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
+      > filter-stderr.sed
     case "${{ parameters.imageName }}${{ parameters.targetSuffix }}" in
       ubuntu-*-x86_64-w64-mingw32)
         sudo apt-get update
@@ -123,7 +125,8 @@ steps:
     cd $(Build.SourcesDirectory)/build
     make `cat num_jobs || true` \
       toolchain-info${{ parameters.targetSuffix}} \
-      openorienteering-mapper-ci${{ parameters.targetSuffix }}
+      openorienteering-mapper-ci${{ parameters.targetSuffix }} \
+      2> >(sed -f $(Build.SourcesDirectory)/filter-stderr.sed)
     #
     cd $(Build.SourcesDirectory)
     TARGET=`echo default${{ parameters.targetSuffix }} | sed -e 's,^default-,,'`
