@@ -21,12 +21,16 @@
 
 #include "tool_base.h"
 
-#include <cstdlib>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <cstdlib>
+#endif
 #include <iterator>
 #include <type_traits>
 
 #include <QtGlobal>
-#include <QCoreApplication>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <QCoreApplication>
+#endif
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>
@@ -678,7 +682,7 @@ void MapEditorToolBase::generateNextSimulatedEvent()
 			QMouseEvent release(QEvent::MouseButtonRelease, next_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers);
 			qApp->sendEvent(mapWidget(), &release);
 		}
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		simulation_state = 0;
 	}

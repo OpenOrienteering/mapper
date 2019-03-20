@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QString>
 
 #include "tool_base.h"
 

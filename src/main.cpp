@@ -50,7 +50,7 @@
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
 

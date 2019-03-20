@@ -26,12 +26,10 @@
 #include <QAbstractButton>
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QFlags>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
 #include <QPushButton>
 #include <QStackedLayout>
-#include <QString>
 #include <QTextEdit>
 #include <QWidget>
 

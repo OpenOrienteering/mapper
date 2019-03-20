@@ -30,7 +30,6 @@
 #include <QtGlobal>
 #include <QBuffer>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QImageReader>
 #include <QImageWriter>
 #include <QLatin1Char>

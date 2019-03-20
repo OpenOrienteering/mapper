@@ -28,6 +28,7 @@
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QVariant>
+#include <QWidget>
 
 #include "settings.h"
 #include "gui/modifier_key.h"

@@ -28,10 +28,8 @@
 
 #include <Qt>
 #include <QtGlobal>
-#include <QFlags>
 #include <QLatin1String>
 #include <QMessageBox>
-#include <QString>
 #include <QStringRef>
 #include <QXmlStreamReader>
 

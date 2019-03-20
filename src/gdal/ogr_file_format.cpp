@@ -40,7 +40,6 @@
 #include <QtMath>
 #include <QByteArray>
 #include <QColor>
-#include <QCoreApplication>
 #include <QFileInfo>
 #include <QFlags>
 #include <QHash>
@@ -1133,7 +1132,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		
 	case Symbol::Combined:
 		/// \todo
-		//  fall through
+		Q_FALLTHROUGH();
 	case Symbol::Line:
 		symbol = line_symbols.value(style_string);
 		if (!symbol)
@@ -1753,12 +1752,12 @@ bool OgrFileExport::exportImplementation()
 				addLinesToLayer(layer, match_symbol);
 				break;
 			case Symbol::Combined:
-				if (!symbol->getContainedTypes() & Symbol::Area)
+				if (!(symbol->getContainedTypes() & Symbol::Area))
 				{
 					addLinesToLayer(layer, match_symbol);
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			case Symbol::Area:
 				addAreasToLayer(layer, match_symbol);
 				break;

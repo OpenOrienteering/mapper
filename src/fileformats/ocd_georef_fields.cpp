@@ -27,7 +27,6 @@
 
 #include <QtGlobal>
 #include <QtNumeric>
-#include <QCoreApplication>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
@@ -918,7 +917,7 @@ OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
 			{
 				param_string.remove(QLatin1String(" N"));
 			}
-			// fallthrough
+			Q_FALLTHROUGH();
 
 		default:
 			crs_param = param_string.toInt(&param_conversion_ok);

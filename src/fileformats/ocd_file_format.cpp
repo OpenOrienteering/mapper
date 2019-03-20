@@ -25,7 +25,6 @@
 #include <memory>
 
 #include <QtGlobal>
-#include <QCoreApplication>
 #include <QFlags>
 #include <QString>
 

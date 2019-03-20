@@ -29,7 +29,6 @@
 #include <QBuffer>
 #include <QByteArray>
 #include <QChar>
-#include <QCoreApplication>
 #include <QIODevice>
 #include <QScopedValueRollback>
 #include <QTextCodec>

@@ -4,7 +4,7 @@
     # Mapper uses -DQT_USE_QSTRINGBUILDER 
     { include: [ "<QStringBuilder>", "public", "<QString>", "public" ] },
     
-    { include: [ "<math.h>", "public", "<cmath>", "public" ] },
+    { symbol: [ "abs", "private", "<cmath>", "public" ] },
     { symbol: [ "M_PI", "private", "<QtMath>", "public" ] },
     
     { include: [ "\"util/qasconst.h\"", "private", "\"util/backports.h\"", "public" ] },
@@ -22,7 +22,14 @@
     # GDAL 2: gdal.h includes "cpl_minixml.h", "ogr_api.h"
     
     # ?
+    { include: [ "<bits/exception.h>", "private", "<exception>", "public" ] },
+    { include: [ "<bits/refwrap.h>", "private", "<functional>", "public" ] },
+    { include: [ "<bits/shared_ptr.h>", "private", "<memory>", "public" ] },
+    { include: [ "<bits/std_abs.h>", "private", "<cmath>", "public" ] },
+    { include: [ "<bits/std_function.h>", "private", "<functional>", "public" ] },
     { include: [ "<ext/alloc_traits.h>", "private", "<memory>", "public" ] },
+    { include: [ "<math.h>", "public", "<cmath>", "public" ] },
+    { include: [ "<stdlib.h>", "public", "<cstdlib>", "public" ] },
     
     # libstdc++ debugging headers, for use with -D_GLIBCXX_DEBUG
     { include: [ "<debug/map.h>", "private", "<map>", "public" ] },

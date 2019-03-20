@@ -27,6 +27,7 @@
 #include <QtGlobal>
 #include <QAbstractButton>
 #include <QAbstractItemView>
+#include <QAbstractSlider>
 #include <QAction>
 #include <QBoxLayout>
 #include <QBrush>
@@ -905,7 +906,8 @@ void TemplateListWidget::cellDoubleClicked(int row, int column)
 		if (! (row >= 0 && pos >= 0
 		       && map->getTemplate(pos)->getTemplateState() == Template::Invalid))
 			break;
-		// Invalid template: fall through
+		// Invalid template:
+		Q_FALLTHROUGH();
 	case 3:
 		if (!mobile_mode
 		    && row >= 0 && pos >= 0)
@@ -1147,7 +1149,7 @@ void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bo
 				updateRow(posFromRow(row));
 			break;
 		}
-		// fallthrough
+		Q_FALLTHROUGH();
 	case MapView::MultipleFeatures:
 		updateAll();
 		break;
@@ -1191,7 +1193,7 @@ void TemplateListWidget::addRowItems(int row)
 void TemplateListWidget::updateRow(int row)
 {
 	int pos = posFromRow(row);
-	int group = -1;
+	//int group = -1;
 	QString name;
 	QString path;
 	bool valid = true;
@@ -1208,7 +1210,7 @@ void TemplateListWidget::updateRow(int row)
 	if (pos >= 0)
 	{
 		auto temp = map->getTemplate(pos);
-		group = temp->getTemplateGroup();
+		//group = temp->getTemplateGroup();
 		name = temp->getTemplateFilename();
 		path = temp->getTemplatePath();
 		valid = temp->getTemplateState() != Template::Invalid;
@@ -1236,7 +1238,7 @@ void TemplateListWidget::updateRow(int row)
 	auto decoration     = QVariant{ };
 	auto checkable      = Qt::ItemIsUserCheckable;
 	auto editable       = Qt::NoItemFlags;
-	auto group_editable = Qt::NoItemFlags;
+	//auto group_editable = Qt::NoItemFlags;
 	
 	if (valid)
 	{
@@ -1250,7 +1252,7 @@ void TemplateListWidget::updateRow(int row)
 				editable = Qt::ItemIsEditable;
 				if (pos >= 0)
 				{
-					group_editable = Qt::ItemIsEditable;
+					//group_editable = Qt::ItemIsEditable;
 				}
 			}
 		}

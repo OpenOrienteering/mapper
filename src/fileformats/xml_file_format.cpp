@@ -29,7 +29,6 @@
 
 #include <QtGlobal>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QDir>
 #include <QExplicitlySharedDataPointer>
 #include <QFileInfo>

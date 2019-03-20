@@ -28,7 +28,9 @@
 #include <QByteArray>
 #include <QCheckBox>
 #include <QCoreApplication>
-#include <QDebug>
+#ifndef NDEBUG
+#  include <QDebug>
+#endif
 #include <QDir>
 #include <QDoubleSpinBox>
 #include <QFileInfo>

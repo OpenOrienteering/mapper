@@ -62,7 +62,7 @@
 #include "gui/map/new_map_dialog.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {
@@ -648,7 +648,7 @@ bool MainWindow::showSaveOnCloseDialog()
 		case QMessageBox::Save:
 			if (!save())
 				return false;
-			// fall through 
+			Q_FALLTHROUGH(); 
 			
 		 case QMessageBox::Yes:
 			setHasAutosaveConflict(false);
@@ -883,7 +883,7 @@ bool MainWindow::openPath(const QString& path, const FileFormat* format)
 #endif
 	}
 	
-	if (new_actual_path.isEmpty() || !new_controller->loadFrom(new_actual_path, *format, this))
+	if (new_actual_path.isEmpty() || !new_controller->loadFrom(new_actual_path, *new_actual_format, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);

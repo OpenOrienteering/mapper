@@ -31,7 +31,6 @@
 #include <QCursor>
 #include <QDir>
 #include <QFileInfo>
-#include <QFlags>
 #include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QIcon>

@@ -56,7 +56,7 @@
 #include "core/map_color.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/translation_util.h"
 

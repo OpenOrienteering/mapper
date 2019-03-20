@@ -43,7 +43,6 @@
 #  include <QByteArray>
 #  include <QLatin1Char>
 #  include <QMetaObject>
-#  include <QObject>
 #  include <QStringList>
 #endif
 

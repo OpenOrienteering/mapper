@@ -24,7 +24,7 @@
 
 #include <algorithm>
 #include <array>
-#include <cstdlib>
+#include <cmath>
 
 #include <Qt>
 #include <QtGlobal>

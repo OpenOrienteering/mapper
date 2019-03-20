@@ -28,6 +28,7 @@
 #include <QRectF>
 
 #include "core/map.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 
 

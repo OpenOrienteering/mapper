@@ -30,7 +30,6 @@
 #include <QByteArray>
 #include <QDebug>
 #include <QFileInfo>  // IWYU pragma: keep
-#include <QFlags>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QImageReader>

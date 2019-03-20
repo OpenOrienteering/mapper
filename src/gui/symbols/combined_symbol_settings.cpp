@@ -40,14 +40,13 @@
 #include <QPushButton>
 #include <QSignalBlocker>
 #include <QSpinBox>
-#include <QString>
 #include <QWidget>
 
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {

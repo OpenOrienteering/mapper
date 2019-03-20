@@ -1,0 +1,7 @@
+{
+	Checks: '*,-cert-err58-cpp,-fuchsia*,-google*,-hicpp*,-llvm*,-readability-braces-around-statements'
+	CheckOptions: [{
+		AllowIntegerConditions: 1,
+		AllowPointerConditions: 1
+	}]
+}

@@ -28,6 +28,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "core/symbols/symbol.h"
 

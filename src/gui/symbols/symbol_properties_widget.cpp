@@ -44,7 +44,7 @@
 #include "gui/symbols/icon_properties_widget.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "util/translation_util.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 // IWYU pragma: no_forward_declare QGridLayout
 // IWYU pragma: no_forward_declare QLabel

@@ -233,7 +233,7 @@ void TextObjectEditorHelper::commitStateChange()
 			break;
 		case UpdateInputProperties:
 			im_query = Qt::ImQueryInput;
-			// fall through
+			Q_FALLTHROUGH();
 		case UpdateAllProperties:
 #ifdef DEBUG_INPUT_METHOD_SUPPORT
 			qDebug("\n>>> inputMethod()->update(%d)", im_query);	

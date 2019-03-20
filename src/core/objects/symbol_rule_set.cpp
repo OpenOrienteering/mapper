@@ -283,7 +283,7 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 					second_field = query.tagOperands()->value;
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			case ObjectQuery::OperatorIsNot:
 			case ObjectQuery::OperatorContains:
 				if (query.tagOperands())

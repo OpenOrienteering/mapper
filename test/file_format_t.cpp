@@ -71,7 +71,7 @@
 #include "templates/template.h"
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 using namespace OpenOrienteering;
 
@@ -198,7 +198,7 @@ namespace
 		{
 			QCOMPARE(actual.getNumParts(), expected.getNumParts());
 		}
-		else for (auto p = 0u; p < actual.getNumParts(); ++p)
+		else for (auto p = 0u; p < static_cast<decltype(p)>(actual.getNumParts()); ++p)
 		{
 			const auto& actual_part = *actual.getPart(p);
 			const auto& expected_part = *expected.getPart(p);

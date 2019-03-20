@@ -41,7 +41,6 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSpacerItem>
-#include <QString>
 #include <QStyle>
 #include <QVariant>
 

@@ -36,7 +36,7 @@
 #include "core/symbols/combined_symbol.h"
 #include "core/symbols/symbol.h"
 #include "gui/util_gui.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 // allow explicit use of Symbol pointers in QVariant

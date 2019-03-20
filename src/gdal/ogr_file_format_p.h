@@ -30,6 +30,7 @@
 #include <QFlags>
 #include <QHash>
 #include <QString>
+#include <QtGlobal>
 
 // The GDAL/OGR C API is more stable than the C++ API.
 #include <gdal.h>

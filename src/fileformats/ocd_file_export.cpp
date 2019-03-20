@@ -34,7 +34,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QCoreApplication>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFontMetricsF>
@@ -77,8 +76,8 @@
 #include "fileformats/ocd_types.h"
 #include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
-#include "fileformats/ocd_types_v11.h"
-#include "fileformats/ocd_types_v12.h"
+#include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
+#include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "templates/template.h"
 #include "util/encoding.h"
 #include "util/util.h"
@@ -1294,7 +1293,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 						flags |= Ocd::SymbolRotatable;
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			default:
 				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area_symbol->getPlainTextName()));
 			}
