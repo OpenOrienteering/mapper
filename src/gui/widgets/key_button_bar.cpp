@@ -30,8 +30,8 @@
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QHideEvent>
-#include <QInputEvent>
 #include <QKeyEvent>
+#include <QMouseEvent>
 #include <QShowEvent>
 #include <QToolButton>
 
@@ -205,7 +205,7 @@ bool KeyButtonBar::eventFilter(QObject* /*watched*/, QEvent* event)
 	case QEvent::MouseButtonRelease:
 	case QEvent::MouseButtonDblClick:
 	// Probably add more input events later.
-		static_cast<QInputEvent*>(event)->setModifiers(Qt::KeyboardModifiers(active_modifiers));
+		static_cast<QMouseEvent*>(event)->setModifiers(Qt::KeyboardModifiers(active_modifiers));
 		break;
 		
 	default:
