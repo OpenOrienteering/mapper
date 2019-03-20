@@ -4059,7 +4059,7 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	if (!importer)
 	{
 		if (show_errors)
-			;  /// \todo error message
+		{}  /// \todo error message
 		return false;
 	}
 	

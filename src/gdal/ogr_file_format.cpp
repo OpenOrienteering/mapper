@@ -1752,7 +1752,7 @@ bool OgrFileExport::exportImplementation()
 				addLinesToLayer(layer, match_symbol);
 				break;
 			case Symbol::Combined:
-				if (!symbol->getContainedTypes() & Symbol::Area)
+				if (!(symbol->getContainedTypes() & Symbol::Area))
 				{
 					addLinesToLayer(layer, match_symbol);
 					break;
