@@ -100,7 +100,6 @@ if echo "$@" | grep -q "${PATTERN}"; then
 	*clang-tidy*)
 		if ${ENABLE_CLANG_TIDY}; then
 			"${PROGRAM}" \
-			  -checks=-*,modernize-*,cert-*,misc-*,readability-*,-cert-err58-cpp,-readability-implicit-bool-cast,-readability-braces-around-statements,-readability-else-after-return \
 			  "$@" \
 			|| exit 1
 		fi
