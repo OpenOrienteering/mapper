@@ -897,9 +897,6 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	
 	switch (options.mode)
 	{
-	default:
-		qWarning("Unhandled MapPrinterMode");
-		// fall through in release build
 	case MapPrinterOptions::Vector:
 		vector_mode_button->setChecked(true);
 		setEnabledAndChecked(show_templates_check, options.show_templates);
@@ -931,9 +928,6 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	
 	switch (options.color_mode)
 	{
-	default:
-		qWarning("Unhandled ColorMode");
-		// fall through in release build
 	case MapPrinterOptions::DefaultColorMode:
 		color_mode_combo->setCurrentIndex(0);
 		break;

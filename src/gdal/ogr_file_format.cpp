@@ -1132,7 +1132,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		
 	case Symbol::Combined:
 		/// \todo
-		//  fall through
+		Q_FALLTHROUGH();
 	case Symbol::Line:
 		symbol = line_symbols.value(style_string);
 		if (!symbol)
@@ -1757,7 +1757,7 @@ bool OgrFileExport::exportImplementation()
 					addLinesToLayer(layer, match_symbol);
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			case Symbol::Area:
 				addAreasToLayer(layer, match_symbol);
 				break;

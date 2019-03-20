@@ -1293,7 +1293,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 						flags |= Ocd::SymbolRotatable;
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			default:
 				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area_symbol->getPlainTextName()));
 			}

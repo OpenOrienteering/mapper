@@ -1257,7 +1257,7 @@ void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Oc
 		addSymbolWarning( symbol,
 		                  tr("Unsupported line style '%1'.").
 		                  arg(attributes.line_style) );
-		// fall through
+		Q_FALLTHROUGH();
 	case LineStyle::BevelJoin_FlatCap:
 		symbol->join_style = LineSymbol::BevelJoin;
 		symbol->cap_style = LineSymbol::FlatCap;
@@ -1817,7 +1817,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				{
 				default:
 					qDebug("Ocd::PointSymbolElementV8: Unknown flags value %d", element->flags);
-					// fall through
+					Q_FALLTHROUGH();
 				case Ocd::PointSymbolElementV8::NoFlags:
 					element_symbol->setCapStyle(LineSymbol::FlatCap);
 					element_symbol->setJoinStyle(LineSymbol::BevelJoin);
@@ -2190,10 +2190,10 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			{
 			default:
 				object->coords[i-2].setCurveStart(false);
-				// fall through
+				Q_FALLTHROUGH();
 			case 1:
 				object->coords[i-1].setCurveStart(false);
-				// fall through
+				Q_FALLTHROUGH();
 			case 0:
 				; // nothing
 			}
@@ -2275,7 +2275,7 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 	case Ocd::HAlignJustified:
 		/// \todo Implement justified alignment
 		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		text_halign_map[symbol] = TextObject::AlignHCenter;
 	}
@@ -2290,7 +2290,7 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 		break;
 	default:
 		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(attributes.alignment & Ocd::VAlignMask));
-		// fall through
+		Q_FALLTHROUGH();
 	case Ocd::VAlignBottom:
 		text_valign_map[symbol] = TextObject::AlignBaseline;
 	}
@@ -2350,7 +2350,7 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	case Ocd::FramingRectangle:
 	default:
 		addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(framing.mode));
-		// fall through
+		Q_FALLTHROUGH();
 	case Ocd::FramingNone:
 		symbol->framing = false;
 	}

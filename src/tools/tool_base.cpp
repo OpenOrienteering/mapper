@@ -682,7 +682,7 @@ void MapEditorToolBase::generateNextSimulatedEvent()
 			QMouseEvent release(QEvent::MouseButtonRelease, next_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers);
 			qApp->sendEvent(mapWidget(), &release);
 		}
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		simulation_state = 0;
 	}

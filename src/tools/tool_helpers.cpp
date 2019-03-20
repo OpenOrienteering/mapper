@@ -509,7 +509,7 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 		
 	case ObjectPaths:
 		handle_type = PointHandles::NormalHandle;
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		point_handles.draw(painter, widget->mapToViewport(snap_mark), handle_type, PointHandles::NormalHandleState);
 	}

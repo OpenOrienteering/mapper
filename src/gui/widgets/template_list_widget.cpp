@@ -906,7 +906,8 @@ void TemplateListWidget::cellDoubleClicked(int row, int column)
 		if (! (row >= 0 && pos >= 0
 		       && map->getTemplate(pos)->getTemplateState() == Template::Invalid))
 			break;
-		// Invalid template: fall through
+		// Invalid template:
+		Q_FALLTHROUGH();
 	case 3:
 		if (!mobile_mode
 		    && row >= 0 && pos >= 0)
@@ -1148,7 +1149,7 @@ void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bo
 				updateRow(posFromRow(row));
 			break;
 		}
-		// fallthrough
+		Q_FALLTHROUGH();
 	case MapView::MultipleFeatures:
 		updateAll();
 		break;

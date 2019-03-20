@@ -39,6 +39,10 @@ execute_process(
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
+if (${Qt5Core_VERSION} VERSION_LESS 5.8.0)
+	add_definitions("-DQ_FALLTHROUGH=(void)0")
+endif()
+
 set(Mapper_Common_SRCS
   global.cpp
   mapper_resource.cpp

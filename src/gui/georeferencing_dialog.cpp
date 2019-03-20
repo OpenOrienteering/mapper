@@ -286,7 +286,7 @@ void GeoreferencingDialog::georefStateChanged()
 		break;
 	default:
 		qDebug() << "Unhandled georeferencing state:" << georef->getState();
-		// fall through
+		Q_FALLTHROUGH();
 	case Georeferencing::Normal:
 		projectionChanged();
 		keep_geographic_radio->setEnabled(true);
@@ -541,7 +541,7 @@ void GeoreferencingDialog::crsEdited()
 	{
 	default:
 		qWarning("Unsupported CRS item id");
-		// fall through
+		Q_FALLTHROUGH();
 	case Georeferencing::Local:
 		// Local
 		georef_copy.setState(Georeferencing::Local);
@@ -750,7 +750,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& 
 	{
 	case Qt::LeftButton:
 		dialog->setMapRefPoint(MapCoord(map_coord));
-		// fall through
+		Q_FALLTHROUGH();
 	case Qt::RightButton:
 		QTimer::singleShot(0, dialog, SIGNAL(exec()));  // clazy:exclude=old-style-connect
 		handled = true;

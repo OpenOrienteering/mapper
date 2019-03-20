@@ -54,7 +54,7 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 	{
 	case PE_IndicatorButtonDropDown:
 		overridden_element = PE_PanelButtonTool; // Enforce same appearence. Workaround QWindowsStyle quirk.
-		// fall through
+		Q_FALLTHROUGH();
 	case PE_PanelButtonCommand:
 	case PE_PanelButtonBevel:
 	case PE_PanelButtonTool:

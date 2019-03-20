@@ -648,7 +648,7 @@ bool MainWindow::showSaveOnCloseDialog()
 		case QMessageBox::Save:
 			if (!save())
 				return false;
-			// fall through 
+			Q_FALLTHROUGH(); 
 			
 		 case QMessageBox::Yes:
 			setHasAutosaveConflict(false);

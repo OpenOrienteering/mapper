@@ -529,7 +529,7 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 		{
 		default:
 			qWarning("Undefined georeferencing state");
-			// fall through
+			Q_FALLTHROUGH();
 		case Local:
 			break;
 		case Normal:

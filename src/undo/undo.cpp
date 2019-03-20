@@ -79,7 +79,7 @@ UndoStep* UndoStep::getUndoStepForType(Type type, Map* map)
 		
 	default:
 		qWarning("Undefined undo step type");
-		// fall through
+		Q_FALLTHROUGH();
 	case SwitchPartUndoStepTypeV0:
 		return new NoOpUndoStep(map, false);
 	}
