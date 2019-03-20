@@ -1192,7 +1192,7 @@ void TemplateListWidget::addRowItems(int row)
 void TemplateListWidget::updateRow(int row)
 {
 	int pos = posFromRow(row);
-	int group = -1;
+	//int group = -1;
 	QString name;
 	QString path;
 	bool valid = true;
@@ -1209,7 +1209,7 @@ void TemplateListWidget::updateRow(int row)
 	if (pos >= 0)
 	{
 		auto temp = map->getTemplate(pos);
-		group = temp->getTemplateGroup();
+		//group = temp->getTemplateGroup();
 		name = temp->getTemplateFilename();
 		path = temp->getTemplatePath();
 		valid = temp->getTemplateState() != Template::Invalid;
@@ -1237,7 +1237,7 @@ void TemplateListWidget::updateRow(int row)
 	auto decoration     = QVariant{ };
 	auto checkable      = Qt::ItemIsUserCheckable;
 	auto editable       = Qt::NoItemFlags;
-	auto group_editable = Qt::NoItemFlags;
+	//auto group_editable = Qt::NoItemFlags;
 	
 	if (valid)
 	{
@@ -1251,7 +1251,7 @@ void TemplateListWidget::updateRow(int row)
 				editable = Qt::ItemIsEditable;
 				if (pos >= 0)
 				{
-					group_editable = Qt::ItemIsEditable;
+					//group_editable = Qt::ItemIsEditable;
 				}
 			}
 		}
