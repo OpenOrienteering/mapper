@@ -52,8 +52,10 @@ class TextObjectEditorHelper;
 
 /**
  * Tool to draw text objects.
+ * 
+ * This class is marked as final because its destructor calls virtual functions.
  */
-class DrawTextTool : public MapEditorToolBase
+class DrawTextTool final : public MapEditorToolBase
 {
 Q_OBJECT
 public:

@@ -40,8 +40,10 @@ class SettingsPage;
 
 /** 
  * A dialog for editing Mapper's settings.
+ * 
+ * This class is marked as final because its constructor calls virtual functions.
  */
-class SettingsDialog : public QDialog
+class SettingsDialog final : public QDialog
 {
 Q_OBJECT
 public:
