@@ -204,6 +204,10 @@ if(Mapper_USE_GDAL)
 	find_package(GDAL REQUIRED)
 endif()
 
+find_package(Qt5Core 5.3 REQUIRED)
+if (${Qt5Core_VERSION} VERSION_LESS 5.8.0)
+	add_definitions("-D'Q_FALLTHROUGH()=(void)0'")
+endif()
 
 include("TestBigEndian")
 test_big_endian(big_endian)

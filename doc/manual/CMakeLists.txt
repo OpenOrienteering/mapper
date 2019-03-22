@@ -136,7 +136,7 @@ if(Mapper_MANUAL_QTHELP)
 	# Qt Help generation
 	#
 	
-	find_package(Qt5Core 5.3 REQUIRED)
+	find_package(Qt5Core REQUIRED)
 	if (Qt5Core_VERSION VERSION_LESS 5.12)
 		set(qcollectiongenerator_name qcollectiongenerator)
 	else()
