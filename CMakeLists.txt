@@ -196,6 +196,7 @@ if(NOT TARGET PROJ4::proj)
 	set(PROJ4_FOUND false)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
+add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 
 if(Mapper_USE_GDAL)
 	find_package(GDAL REQUIRED)
