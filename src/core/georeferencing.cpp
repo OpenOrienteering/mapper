@@ -870,9 +870,6 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 }
 
 
-}  // namespace OpenOrienteering
-
-
 
 #if defined(Q_OS_ANDROID)
 
@@ -919,3 +916,6 @@ void copyProjAssets()
 }
 
 #endif  // defined(Q_OS_ANDROID)
+
+
+}  // namespace OpenOrienteering
