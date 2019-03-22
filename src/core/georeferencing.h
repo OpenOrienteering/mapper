@@ -37,7 +37,7 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QPointF
 
-typedef void* projPJ;
+typedef struct PJconsts PJ;
 
 namespace OpenOrienteering {
 
@@ -45,9 +45,9 @@ namespace OpenOrienteering {
 #if defined(Q_OS_ANDROID)
 
 /**
- * Registers a file finder function needed by Proj.4 on Android.
+ * Copies assets so that PROJ can find them on Android.
  */
-extern "C" void registerProjFileHelper();
+void copyProjAssets();
 
 #endif
 
@@ -66,7 +66,7 @@ extern "C" void registerProjFileHelper();
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification
  * of the coordinate reference system of the projected coordinates. The actual
- * geographic transformation is done by the PROJ.4 library for geographic 
+ * geographic transformation is done by the PROJ library for geographic 
  * projections. 
  *
  * If no (valid) specification is given, the projected coordinates are regarded
@@ -96,7 +96,7 @@ public:
 	
 	
 	/**
-	 * A shared PROJ.4 specification of a WGS84 geographic CRS.
+	 * A shared PROJ specification of a WGS84 geographic CRS.
 	 */
 	static const QString geographic_crs_spec;
 	
@@ -196,7 +196,7 @@ public:
 	/**
 	 * Returns true if the "projected CRS" is actually geographic.
 	 * 
-	 * \see pj_is_latlong(projPJ pj) in PROJ.4
+	 * \see proj_angular_output(PJ *, enum PJ_DIRECTION) in PROJ
 	 */
 	bool isGeographic() const;
 	
@@ -360,7 +360,7 @@ public:
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
 	 * projected coordinates
-	 * @return a PROJ.4 specification of the CRS
+	 * @return a PROJ specification of the CRS
 	 */
 	QString getProjectedCRSSpec() const { return projected_crs_spec; }
 	
@@ -373,7 +373,7 @@ public:
 	 * declination and grivation.
 	 * 
 	 * @param id  an identifier
-	 * @param spec the PROJ.4 specification of the CRS
+	 * @param spec the PROJ specification of the CRS
 	 * @param params parameter values (ignore for empty spec)
 	 * @return true if the specification is valid or empty, false otherwise
 	 */
@@ -564,11 +564,9 @@ private:
 	QString projected_crs_id;
 	QString projected_crs_spec;
 	std::vector< QString > projected_crs_parameters;
-	projPJ projected_crs;
+	PJ *projected_crs;
 	
 	LatLon geographic_ref_point;
-	
-	projPJ geographic_crs;
 	
 };
 
