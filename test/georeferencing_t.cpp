@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -218,6 +218,33 @@ void GeoreferencingTest::testProjection()
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
 	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error / cos(latitude)))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
+}
+
+
+
+namespace {
+	static bool finder_called;
+
+	const char* projFinderTestFakeCRS(const char* name)
+	{
+		finder_called = true;
+		[name]() {
+			QCOMPARE(name, "fake_crs");
+		}();
+		return nullptr;
+	}
+}
+
+void GeoreferencingTest::testPjSetFinder()
+{
+	finder_called = false;
+	
+	pj_set_finder(&projFinderTestFakeCRS);
+	QVERIFY(!finder_called);
+	
+	Georeferencing fake_georef;
+	fake_georef.setProjectedCRS(QStringLiteral("Fake CRS"), QString::fromLatin1("+init=fake_crs:123"));
+	QVERIFY(finder_called);
 }
 
 

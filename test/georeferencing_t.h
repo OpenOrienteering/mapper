@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -69,6 +69,14 @@ private slots:
 	void testProjection();
 	
 	void testProjection_data();
+	
+	/**
+	 * Tests whether the `pj_set_finder()` function is working.
+	 * The `pj_set_finder()` function is deprecated API in PROJ 6.0.0, but a 
+	 * substitute is not available. Mapper relies on this function to extract
+	 * data files on Android. This test covers this function in native builds.
+	 */
+	void testPjSetFinder();
 	
 private:
 	Georeferencing georef;
