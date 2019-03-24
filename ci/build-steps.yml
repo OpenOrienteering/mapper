@@ -133,10 +133,9 @@ steps:
     #
     cd $(Build.SourcesDirectory)
     TARGET=`echo default${{ parameters.targetSuffix }} | sed -e 's,^default-,,'`
-    MAPPER_DIR=build/${TARGET}/openorienteering-mapper-ci
-    if [ -f "${MAPPER_DIR}/Testing/TAG" ]; then
-      python ci/ctest_to_junit.py "${MAPPER_DIR}"
-      echo "##vso[task.setVariable variable=TEST_RESULTS]$(Build.SourcesDirectory)/${MAPPER_DIR}/Testing"
+    TEST_RESULTS=build/${TARGET}/openorienteering-mapper-ci/Testing
+    if [ -f "${TEST_RESULTS}/TAG" ]; then
+      echo "##vso[task.setVariable variable=TEST_RESULTS]$(Build.SourcesDirectory)/${TEST_RESULTS}"
     fi
     #
     cd $(Build.SourcesDirectory)
@@ -177,9 +176,10 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testRunner: 'jUnit'
-    testResultsFiles: '*/jUnit.xml'
+    testResultsFormat: 'cTest'
+    testResultsFiles: '*/Test.xml'
     searchFolder: '$(TEST_RESULTS)'
+    buildPlatform: ${{ parameters.imageName }}
   condition: variables.TEST_RESULTS
   displayName: 'Publish test results'
 
