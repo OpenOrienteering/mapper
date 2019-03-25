@@ -1769,7 +1769,7 @@ bool OgrFileExport::exportImplementation()
 	}
 	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
 	{
-		// Add points, lines, areas in this order for driver compatability (esp GPX)
+		// Add points, lines, areas in this order for driver compatibility (esp GPX)
 		for (auto symbol : symbols)
 		{
 			if (symbol->getType() == Symbol::Point)
@@ -1823,7 +1823,7 @@ bool OgrFileExport::exportImplementation()
 	}
 	else
 	{
-		// Add points, lines, areas in this order for driver compatability (esp GPX)
+		// Add points, lines, areas in this order for driver compatibility (esp GPX)
 		auto point_layer = createLayer(QString::fromLatin1("%1_points").arg(info.baseName()).toLatin1(), wkbPoint);
 		if (point_layer != nullptr)
 		{

@@ -45,7 +45,7 @@ namespace OpenOrienteering {
  * This is used to simulate keys in Mapper's mobile GUI where a physical
  * keyboard is not present.
  * 
- * For modifier keys, the GUI buttons indicate wether the keys are in pressed
+ * For modifier keys, the GUI buttons indicate whether the keys are in pressed
  * state or not. However, the labels are not expected to display the name of the
  * key but the associated tool behaviour. The tools need to make sure that the
  * actual behaviour is consistent with the indicated state.
@@ -74,7 +74,7 @@ public:
 	 * Adds a button for a combination of a regular key with a modifier key.
 	 * 
 	 * By default, the button is not checkable and sends a sequence of a press
-	 * event and a relase event for the given key_code. If a modifier_code
+	 * event and a release event for the given key_code. If a modifier_code
 	 * different from Qt::NoModifier is given, and this modifier key is not
 	 * already active, a press event for the corresponding modifier key code is
 	 * sent first, and a release event for the modifier key code is send after

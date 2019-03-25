@@ -795,7 +795,7 @@ void MapWidget::paintEvent(QPaintEvent* event)
 		return;
 	}
 	
-	// No colors, symbols, or objects? Provide a litte help message ...
+	// No colors, symbols, or objects? Provide a little help message ...
 	bool no_contents = view->getMap()->getNumObjects() == 0 && view->getMap()->getNumTemplates() == 0 && !view->isGridVisible();
 	
 	QTransform transform = painter.worldTransform();

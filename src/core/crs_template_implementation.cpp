@@ -155,7 +155,7 @@ QWidget* FullSpecParameter::createEditor(WidgetObserver& observer) const
 
 void FullSpecParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	// Don't accidently clear this field.
+	// Don't accidentally clear this field.
 	if (!value.isEmpty())
 		TextParameter::setValue(edit_widget, value);
 }
@@ -200,7 +200,7 @@ QString UTMZoneParameter::value(const QWidget* edit_widget) const
 
 void UTMZoneParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	// Don't accidently clear this field.
+	// Don't accidentally clear this field.
 	auto text_edit = qobject_cast<UTMZoneEdit*>(edit_widget);
 	if (text_edit && !value.isEmpty())
 		text_edit->setText(value);

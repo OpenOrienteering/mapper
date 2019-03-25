@@ -36,7 +36,7 @@ namespace OpenOrienteering {
 class MapColor;
 
 /**
- * The MapColorCmyk class provides a datatype for storing and transfering 
+ * The MapColorCmyk class provides a datatype for storing and transferring 
  * opaque CMYK colors. 
  * 
  * Components (c, m, y, k) are floats in the range [0.0; 1.0].
@@ -85,7 +85,7 @@ bool operator!=(const MapColorCmyk& lhs, const MapColorCmyk& rhs);
 
 
 /**
- * The MapColorRgb class provides a datatype for storing and transfering 
+ * The MapColorRgb class provides a datatype for storing and transferring 
  * opaque RGB colors. 
  * 
  * Components (r, g, b) are floats in the range [0.0; 1.0].

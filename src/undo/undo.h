@@ -71,7 +71,7 @@ public:
 	};
 	
 	/**
-	 * A set of integers refering to parts.
+	 * A set of integers referring to parts.
 	 */
 	typedef std::set<int> PartSet;
 	

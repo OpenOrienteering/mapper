@@ -37,7 +37,7 @@ namespace OpenOrienteering {
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
 {
-	// nothing esle
+	// nothing else
 }
 
 

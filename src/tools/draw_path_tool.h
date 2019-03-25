@@ -121,7 +121,7 @@ protected:
 	qreal calculateRotation(const QPoint& mouse_pos, const MapCoordF& mouse_pos_map) const;
 	/**
 	 * Activates or deactivates dash point drawing depending on if a line symbol
-	 * with dash symbols is selcted.
+	 * with dash symbols is selected.
 	 */
 	void updateDashPointDrawing();
 	void updateStatusText();

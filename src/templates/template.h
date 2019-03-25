@@ -59,7 +59,7 @@ class MapView;
  * 3. scale.
  * 
  * So this order is also chosen for the member variables, and
- * thus used in list initalization.
+ * thus used in list initialization.
  * 
  * \see Template::applyTemplateTransform()
  */
