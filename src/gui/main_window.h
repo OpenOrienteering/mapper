@@ -183,7 +183,7 @@ public:
 	/**
 	 * Blocks shortcuts.
 	 * 
-	 * During text input, it may be neccessary to disable shortcuts.
+	 * During text input, it may be necessary to disable shortcuts.
 	 * 
 	 * @param blocked true for blocking shortcuts, false for normal behaviour.
 	 */
@@ -304,7 +304,7 @@ public slots:
 	 * If saving is successful, the selected path will become
 	 * this window's current path.
 	 * 
-	 * @return true if saving was succesful, false otherwise
+	 * @return true if saving was successful, false otherwise
 	 */
 	bool showSaveAsDialog();
 	
@@ -315,7 +315,7 @@ public slots:
 	 * If loading is successful, the selected path will become
 	 * the [new] window's current path.
 	 * 
-	 * @return true if loading was succesful, false otherwise
+	 * @return true if loading was successful, false otherwise
 	 */
 	bool openPath(const QString &path);
 	
@@ -416,7 +416,7 @@ protected slots:
 	 * If the given path is the current actual_path, no change is made.
 	 * 
 	 * If the currently loaded file was modified, the user is asked whether he
-	 * really wants to switch to another file which means loosing the changes
+	 * really wants to switch to another file which means losing the changes
 	 * he had made.
 	 */
 	void switchActualPath(const QString &path);

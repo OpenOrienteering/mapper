@@ -25,7 +25,7 @@ execute_process(
 )
 
 if(TEST_RESULT EQUAL 0)
-	# Test succesful, update stamp file
+	# Test successful, update stamp file
 	execute_process(
 	  COMMAND ${CMAKE_COMMAND} -E touch @testname@-RUN.stamp 
 	  WORKING_DIRECTORY @CMAKE_CURRENT_BINARY_DIR@

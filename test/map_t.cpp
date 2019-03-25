@@ -69,7 +69,7 @@ void MapTest::iconTest()
 	// Newly constructed map
 	QVERIFY(!qIsNull(map.symbolIconZoom()));
 	
-	// Explict update on newly constructed map
+	// Explicit update on newly constructed map
 	map.updateSymbolIconZoom();
 	const auto default_zoom = map.symbolIconZoom();
 	QVERIFY(default_zoom > 0);

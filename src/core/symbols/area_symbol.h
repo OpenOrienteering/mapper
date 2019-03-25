@@ -181,7 +181,7 @@ public:
 		/**
 		 * Creates renderables for this pattern to fill the area surrounded by the outline.
 		 * @param outline A renderable giving the extent and outline.
-		 * @param delta_rotation Rotation offest which is added to the pattern angle.
+		 * @param delta_rotation Rotation offset which is added to the pattern angle.
 		 * @param pattern_origin Origin point for line / point placement.
 		 * @param output Created renderables will be inserted here.
 		 */

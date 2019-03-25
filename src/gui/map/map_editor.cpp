@@ -1315,7 +1315,7 @@ void MapEditorController::createMenuAndToolbars()
 	
 	// Advanced editing toolbar
 	toolbar_advanced_editing = window->addToolBar(tr("Advanced editing"));
-	toolbar_advanced_editing->setObjectName(QString::fromLatin1("Advanved editing toolbar"));
+	toolbar_advanced_editing->setObjectName(QString::fromLatin1("Advanced editing toolbar"));
 	toolbar_advanced_editing->addAction(cutout_physical_act);
 	toolbar_advanced_editing->addAction(cutaway_physical_act);
 	toolbar_advanced_editing->addAction(convert_to_curves_act);

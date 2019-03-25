@@ -366,7 +366,7 @@ namespace Ocd
  * fetched via the OcdFile<F>::operator[].
  * 
  * As with regular STL iterator, dereferencing and incrementing must only be
- * called when the iterator is dereferencable or incrementable state,
+ * called when the iterator is dereferenceable or incrementable state,
  * respectively.
  * 
  * @param V the index value type

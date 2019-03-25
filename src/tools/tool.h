@@ -192,7 +192,7 @@ public:
 	
 	
 	/**
-	 * @brief Returns the action which repesents this tool.
+	 * @brief Returns the action which represents this tool.
 	 */
 	QAction* toolAction() const { return tool_action; }
 	

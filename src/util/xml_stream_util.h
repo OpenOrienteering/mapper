@@ -61,7 +61,7 @@ void writeLineBreak(QXmlStreamWriter& xml);
  * was initialized.
  * 
  * In a single recovery attempt, the utility tries to handle all offending
- * characters from the element for wich the tool was constructed. For each
+ * characters from the element for which the tool was constructed. For each
  * offending character, the whole XML data is parsed again from the start.
  * That's why multiple corrections may take a long time to run.
  * 

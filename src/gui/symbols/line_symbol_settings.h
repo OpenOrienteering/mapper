@@ -90,7 +90,7 @@ protected:
 	void updateBorderContents(LineSymbolBorder& border, BorderWidgets& widgets);
 	
 	/** 
-	 * Ensures that a particular widget is visible in the scoll area. 
+	 * Ensures that a particular widget is visible in the scroll area. 
 	 */
 	void ensureWidgetVisible(QWidget* widget);
 	
@@ -133,7 +133,7 @@ protected slots:
 	void scaleDashSymbolClicked(bool checked);
 	
 private slots:
-	/** Ensure that a predetermined widget is visible in the scoll area.
+	/** Ensure that a predetermined widget is visible in the scroll area.
 	 *  The widget is set in advance by ensureWidgetVisible(QWidget* widget).
 	 */
 	void ensureWidgetVisible();

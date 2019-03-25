@@ -205,10 +205,10 @@ bool maybeMainLine(const LineSymbol* line)
 /**
  * Efficiently convert a single coordinate value to the OCD format.
  * 
- * This function handles two responsibilites at the same time,
+ * This function handles two responsibilities at the same time,
  * in a constexpr implementation:
  * 
- * - convert from 1/100 mm to 1/10 mm, rounding half up (for intervalls of equal size),
+ * - convert from 1/100 mm to 1/10 mm, rounding half up (for intervals of equal size),
  * - shift by 8 bits (which are reserved for flags in OCD format).
  *
  * Neither rounding (the result of an integer division) half up 
@@ -630,7 +630,7 @@ bool OcdFileExport::exportImplementation()
 		};
 	}
 	
-	// Check for a neccessary offset (and add related warnings early).
+	// Check for a necessary offset (and add related warnings early).
 	area_offset = calculateAreaOffset();
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	
@@ -1315,7 +1315,7 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
 				// NOTE: This is only a heuristic which works for the
 				// orienteering symbol sets, not a general conversion.
-				// (Conversion is not generally posssible.)
+				// (Conversion is not generally possible.)
 				// No further checks are done to find out if the conversion
 				// is applicable because with these checks. Already a tiny
 				// (not noticeable) error in the symbol definition would make

@@ -33,7 +33,7 @@ namespace OpenOrienteering {
  * 
  * AutosavePrivate implements most of Autosave's behaviour.
  * Autosave is meant to be used through inheritance.
- * Due to the implemenation of QObject and moc, only the first inherited class
+ * Due to the implementation of QObject and moc, only the first inherited class
  * may be derived from QObject. That is why Autosave itself is not derived from
  * QObject, but rather uses this helper class.
  */

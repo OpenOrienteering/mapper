@@ -245,7 +245,7 @@ private:
 	 * @param original      The original PathObject.
 	 * @param coord_index   The index of the segment start at the original.
 	 * @param polygon       The ClipperLib::Path polygon.
-	 * @param start_index   The start of the segement at the polygon.
+	 * @param start_index   The start of the segment at the polygon.
 	 * @param end_index     The end of the segment at the polygon.
 	 * @param out_coords_increasing If the segments match, will be set to
 	 *                      either true if a matching segment's point at coord_index corresponds to the point at start_index,

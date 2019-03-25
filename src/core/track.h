@@ -89,7 +89,7 @@ public:
 	/**
 	 * @brief Appends the point and updates the point's map coordinates.
 	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
+	 * The point's map coordinates are determined from its geographic coordinates
 	 * according to the map's georeferencing.
 	 */
 	void appendTrackPoint(TrackPoint& point);
@@ -103,7 +103,7 @@ public:
 	/**
 	 * @brief Appends the waypoint and updates the point's map coordinates.
 	 * 
-	 * The point's map coordinates are determined from its geographic coodinates
+	 * The point's map coordinates are determined from its geographic coordinates
 	 * according to the map's georeferencing.
 	 */
 	void appendWaypoint(TrackPoint& point, const QString& name);

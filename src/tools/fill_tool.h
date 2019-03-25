@@ -67,7 +67,7 @@ protected:
 	/**
 	 * Tries to apply the fill tool at the current click position,
 	 * rasterizing the given extent of the map.
-	 * Returns -1 for abort, 0 for unsuccesful, 1 for succesful.
+	 * Returns -1 for abort, 0 for unsuccessful, 1 for successful.
 	 */
 	int fill(const QRectF& extent);
 	

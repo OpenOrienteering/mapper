@@ -121,7 +121,7 @@ function(add_system_test testname)
 endfunction()
 
 
-# Include generated files (moc ouput, build configuration)
+# Include generated files (moc output, build configuration)
 include_directories("${PROJECT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")

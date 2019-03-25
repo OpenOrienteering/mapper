@@ -74,7 +74,7 @@ public slots:
 	/** Sets the text of the the tip-of-the-day. */
 	virtual void setTipOfTheDay(const QString& text) = 0;
 	
-	/** Sets the visiblity of the tip-of-the-day, and
+	/** Sets the visibility of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
 	virtual void setTipsVisible(bool state) = 0;
 	
@@ -122,7 +122,7 @@ public slots:
 	/** Sets the text of the the tip-of-the-day. */
 	void setTipOfTheDay(const QString& text) override;
 	
-	/** Sets the visiblity of the tip-of-the-day, and
+	/** Sets the visibility of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
 	void setTipsVisible(bool state) override;
 	
@@ -176,7 +176,7 @@ public slots:
 	/** Sets the text of the the tip-of-the-day. */
 	void setTipOfTheDay(const QString& text) override;
 	
-	/** Sets the visiblity of the tip-of-the-day, and
+	/** Sets the visibility of the tip-of-the-day, and
 	 *  sets the "checked" state of the control for displaying the tip. */
 	void setTipsVisible(bool state) override;
 	

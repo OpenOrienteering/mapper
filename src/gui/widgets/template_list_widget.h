@@ -46,7 +46,7 @@ class Template;
 
 /**
  * Widget showing the list of templates, including the map layer.
- * Allows to load templates, set their view properties and reoder them,
+ * Allows to load templates, set their view properties and reorder them,
  * and do various other actions like adjusting template positions.
  */
 class TemplateListWidget : public QWidget

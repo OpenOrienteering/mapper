@@ -170,7 +170,7 @@ public:
 	 * 
 	 * If the Map::GeorefImport mode flag is set, this overload will attempt to
 	 * calculate a transformation based on the maps' georeferencing.
-	 * All further processsing is delegated to the other overload.
+	 * All further processing is delegated to the other overload.
 	 * 
 	 */
 	QHash<const Symbol*, Symbol*> importMap(
@@ -275,7 +275,7 @@ public:
 	
 	/**
 	 * Draws the templates with indices first_template until last_template which
-	 * are visible in the given bouding box.
+	 * are visible in the given bounding box.
 	 * 
 	 * view determines template visibility and can be nullptr to show all templates.
 	 * The initial transform of the given QPainter must be the map-to-paintdevice transformation.
@@ -1247,7 +1247,7 @@ public:
 	void resetPrinterConfig();
 	
 	
-	/** Returns the default parameters for loading of image tempaltes. */
+	/** Returns the default parameters for loading of image templates. */
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
 		double& dpi, double& scale);
 	
@@ -1289,11 +1289,11 @@ public:
 	bool isOtherDirty() const;
 	
 	/**
-	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
+	 * Marks something unspecific in the map as "dirty", i.e. as having unsaved changes.
 	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
-	 * setObjectsDirty() if you know more specificly what has changed.
+	 * setObjectsDirty() if you know more specifically what has changed.
 	 */
 	void setOtherDirty();
 	

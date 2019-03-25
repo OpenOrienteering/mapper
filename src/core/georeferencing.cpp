@@ -661,7 +661,7 @@ QTransform Georeferencing::projectedToMap() const
 
 bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
-	// Default return value if no change is neccessary
+	// Default return value if no change is necessary
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
 	
 	for (const auto& substitution : spec_substitutions)

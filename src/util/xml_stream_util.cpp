@@ -124,7 +124,7 @@ bool XmlRecoveryHelper::operator() ()
 		}
 		
 		// Restore the XML stream state with the modified data.
-		// We must use a QIODevice again, for later recovery attemts.
+		// We must use a QIODevice again, for later recovery attempts.
 		auto buffer = new QBuffer(stream); // buffer will live as long as the original stream
 		buffer->setData(codec->fromUnicode(data));
 		buffer->open(QIODevice::ReadOnly);

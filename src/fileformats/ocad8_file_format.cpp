@@ -1581,7 +1581,7 @@ bool OCAD8FileExport::exportImplementation()
 	int err = ocad_file_new(&file);
 	if (err != 0) throw FileFormatException(tr("libocad returned %1").arg(err));
 	
-	// Check for a neccessary offset (and add related warnings early).
+	// Check for a necessary offset (and add related warnings early).
 	auto area_offset = calculateAreaOffset();
 	
 	// Fill header struct

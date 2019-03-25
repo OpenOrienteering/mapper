@@ -126,7 +126,7 @@ TestMapEditor::TestMapEditor(Map* map)
 
 TestMapEditor::~TestMapEditor()
 {
-	// The window may still be refered to by tools which are scheduled for
+	// The window may still be referred to by tools which are scheduled for
 	// deleteLater(), so we need to postpone the window deletion, too.
 	window->deleteLater();
 }
