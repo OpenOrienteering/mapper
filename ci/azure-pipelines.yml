@@ -34,6 +34,12 @@ trigger:
     - images
 
 jobs:
+- job: Codespell
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: codespell.yml
+
 - job: macOS_Debug
   pool:
     vmImage: 'macos-10.13'
