@@ -121,7 +121,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	updateWidgets();
 }
 
-void RotateMapDialog::setRotationDegrees(float rotation)
+void RotateMapDialog::setRotationDegrees(double rotation)
 {
 	rotation_edit->setValue(rotation);
 }

@@ -71,6 +71,7 @@
 #include "gui/map/map_editor.h"
 #include "gui/widgets/crs_selector.h"
 #include "gui/util_gui.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/scoped_signals_blocker.h"
 
 
@@ -105,11 +106,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
- , original_declination(0.0)
 {
-	if (!grivation_locked)
-		original_declination = initial_georef->getDeclination();
-	
 	setWindowTitle(tr("Map Georeferencing"));
 	setWindowModality(Qt::WindowModal);
 	
@@ -234,21 +231,20 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
-	using TakingDoubleArgument = void (QDoubleSpinBox::*)(double);
-	connect(scale_factor_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::scaleFactorEdited);
+	connect(scale_factor_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::scaleFactorEdited);
 	
-	connect(map_x_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
-	connect(map_y_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::mapRefChanged);
+	connect(map_x_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
+	connect(map_y_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
 	connect(ref_point_button, &QPushButton::clicked, this, &GeoreferencingDialog::selectMapRefPoint);
 	
-	connect(easting_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::eastingNorthingEdited);
-	connect(northing_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::eastingNorthingEdited);
+	connect(easting_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::eastingNorthingEdited);
+	connect(northing_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::eastingNorthingEdited);
 	
-	connect(lat_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::latLonEdited);
-	connect(lon_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::latLonEdited);
+	connect(lat_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::latLonEdited);
+	connect(lon_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::latLonEdited);
 	connect(keep_geographic_radio, &QRadioButton::toggled, this, &GeoreferencingDialog::keepCoordsChanged);
 	
-	connect(declination_edit, (TakingDoubleArgument)&QDoubleSpinBox::valueChanged, this, &GeoreferencingDialog::declinationEdited);
+	connect(declination_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::declinationEdited);
 	connect(declination_button, &QPushButton::clicked, this, &GeoreferencingDialog::requestDeclination);
 	
 	connect(buttons_box, &QDialogButtonBox::accepted, this, &GeoreferencingDialog::accept);
@@ -448,18 +444,19 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
-	if (!grivation_locked)
-		original_declination = initial_georef->getDeclination();
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
 
 void GeoreferencingDialog::accept()
 {
-	float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
-	if ( !grivation_locked &&
-	     declination_change_degrees != 0 &&
-	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
+	auto const declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
+	if (grivation_locked)
+	{
+		georef->updateGrivation();
+	}
+	else if (!qIsNull(declination_change_degrees)
+	         && (map->getNumObjects() > 0 || map->getNumTemplates() > 0))
 	{
 		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (result == QMessageBox::Cancel)
@@ -611,8 +608,8 @@ void GeoreferencingDialog::keepCoordsChanged()
 	if (grivation_locked && keep_geographic_radio->isChecked())
 	{
 		grivation_locked = false;
-		original_declination = georef->getDeclination();
 		updateGrivation();
+		georef->updateGrivation();
 	}
 	reset_button->setEnabled(true);
 }
@@ -622,7 +619,6 @@ void GeoreferencingDialog::declinationEdited(double value)
 	if (grivation_locked)
 	{
 		grivation_locked = false;
-		original_declination = georef->getDeclination();
 		updateGrivation();
 	}
 	georef->setDeclination(value);
