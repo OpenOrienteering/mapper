@@ -450,9 +450,9 @@ void GeoreferencingDialog::reset()
 
 void GeoreferencingDialog::accept()
 {
-	float declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
+	auto const declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
 	if ( !grivation_locked &&
-	     declination_change_degrees != 0 &&
+	     !qIsNull(declination_change_degrees) &&
 	     (map->getNumObjects() > 0 || map->getNumTemplates() > 0) )
 	{
 		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);

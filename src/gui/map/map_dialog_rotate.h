@@ -45,7 +45,7 @@ public:
 	RotateMapDialog(QWidget* parent, Map* map);
 	
 	/** Sets the rotation angle in degrees in the corresponding widget. */
-	void setRotationDegrees(float rotation);
+	void setRotationDegrees(double rotation);
 	/** Enables the setting to rotate around the georeferencing reference point. */
 	void setRotateAroundGeorefRefPoint();
 	/** Checks or unchecks the setting to adjust the georeferencing declination. */
