@@ -245,7 +245,6 @@ private:
 	bool tool_active;
 	bool declination_query_in_progress;
 	bool grivation_locked;
-	double original_declination;
 	
 	/* GUI elements */
 	CRSSelector* crs_selector;

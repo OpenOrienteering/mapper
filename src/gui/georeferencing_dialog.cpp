@@ -105,11 +105,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
- , original_declination(0.0)
 {
-	if (!grivation_locked)
-		original_declination = initial_georef->getDeclination();
-	
 	setWindowTitle(tr("Map Georeferencing"));
 	setWindowModality(Qt::WindowModal);
 	
@@ -448,8 +444,6 @@ void GeoreferencingDialog::showHelp()
 void GeoreferencingDialog::reset()
 {
 	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
-	if (!grivation_locked)
-		original_declination = initial_georef->getDeclination();
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
@@ -611,7 +605,6 @@ void GeoreferencingDialog::keepCoordsChanged()
 	if (grivation_locked && keep_geographic_radio->isChecked())
 	{
 		grivation_locked = false;
-		original_declination = georef->getDeclination();
 		updateGrivation();
 	}
 	reset_button->setEnabled(true);
@@ -622,7 +615,6 @@ void GeoreferencingDialog::declinationEdited(double value)
 	if (grivation_locked)
 	{
 		grivation_locked = false;
-		original_declination = georef->getDeclination();
 		updateGrivation();
 	}
 	georef->setDeclination(value);
