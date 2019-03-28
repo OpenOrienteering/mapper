@@ -306,7 +306,7 @@ try
 					// This is an extra expense (by loading the data twice), but
 					// only until the map (projected_crs_spec) is saved once.
 					TemplateTrack track{template_path, map};
-					if (track.track.loadFrom(template_path, false))
+					if (track.track.loadFrom(template_path))
 					{
 						projected_crs_spec = track.calculateLocalGeoreferencing();
 					}

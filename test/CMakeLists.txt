@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,9 +18,7 @@
 
 
 find_package(Qt5Network REQUIRED)
-find_package(Qt5Positioning)
 find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Sensors)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
@@ -173,6 +171,7 @@ add_system_test(symbol_set_t)
 add_system_test(symbol_t)
 add_system_test(template_t)
 add_system_test(tools_t)
+add_system_test(track_t)  # Could be unit test, but needs Georeferencing
 add_system_test(transform_t)
 add_system_test(undo_manager_t)
 

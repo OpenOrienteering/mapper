@@ -21,133 +21,115 @@
 
 #include "track.h"
 
+#include <algorithm>
+#include <iterator>
+#include <numeric>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtNumeric>
 #include <QApplication>
 #include <QFile>
 #include <QFileInfo>  // IWYU pragma: keep
+#include <QIODevice>
+#include <QLatin1String>
+#include <QSaveFile>
+#include <QStringRef>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 // IWYU pragma: no_include <qxmlstream.h>
 
-#include "core/georeferencing.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {
 
-// There is some (mis?)use of TrackPoint's gps_coord LatLon
-// as sort-of MapCoordF.
-// This function serves both for explicit conversion and highlighting.
-MapCoordF fakeMapCoordF(const LatLon &latlon)
-{
-	return MapCoordF(latlon.longitude(), latlon.latitude());
-}
+// ### TrackPoint ###
 
-TrackPoint::TrackPoint(LatLon coord, const QDateTime& datetime, float elevation, int num_satellites, float hDOP)
-{
-	gps_coord = coord;
-	is_curve_start = false;
-	this->datetime = datetime;
-	this->elevation = elevation;
-	this->num_satellites = num_satellites;
-	this->hDOP = hDOP;
-}
 void TrackPoint::save(QXmlStreamWriter* stream) const
 {
-	stream->writeAttribute(QStringLiteral("lat"), QString::number(gps_coord.latitude(), 'f', 12));
-	stream->writeAttribute(QStringLiteral("lon"), QString::number(gps_coord.longitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lat"), QString::number(latlon.latitude(), 'f', 12));
+	stream->writeAttribute(QStringLiteral("lon"), QString::number(latlon.longitude(), 'f', 12));
 	
 	if (datetime.isValid())
 		stream->writeTextElement(QStringLiteral("time"), datetime.toString(Qt::ISODate));
-	if (elevation > -9999)
-		stream->writeTextElement(QStringLiteral("ele"), QString::number(elevation, 'f', 3));
-	if (num_satellites >= 0)
-		stream->writeTextElement(QStringLiteral("sat"), QString::number(num_satellites));
-	if (hDOP >= 0)
-		stream->writeTextElement(QStringLiteral("hdop"), QString::number(hDOP, 'f', 3));
+	if (!qIsNaN(elevation))
+		stream->writeTextElement(QStringLiteral("ele"), QString::number(static_cast<qreal>(elevation), 'f', 3));
+	if (!qIsNaN(hDOP))
+		stream->writeTextElement(QStringLiteral("hdop"), QString::number(static_cast<qreal>(hDOP), 'f', 3));
+	if (!name.isEmpty())
+		stream->writeTextElement(QStringLiteral("name"), name);
+}
+
+bool operator==(const TrackPoint& lhs, const TrackPoint& rhs)
+{
+	auto fuzzyCompare =[](auto a, auto b) {
+		return (qIsNaN(a) && qIsNaN(b))
+		       || qFuzzyCompare(a, b);
+	};
+	return lhs.latlon == rhs.latlon
+	       && lhs.datetime == rhs.datetime
+	       && fuzzyCompare(lhs.elevation, rhs.elevation)
+	       && fuzzyCompare(lhs.hDOP, rhs.hDOP)
+	       && lhs.name == rhs.name;
 }
 
 
 
 // ### Track ###
 
-Track::Track() : track_crs(nullptr)
+Track::Track(QObject* parent)
+: QObject(parent)
 {
-	current_segment_finished = true;
+	// The registered meta types are used by async signal-slot connections.
+	static const auto track_change_id = qRegisterMetaType<TrackChange>("TrackChange");
+	static const auto track_point_id = qRegisterMetaType<TrackPoint>("TrackPoint");
+	Q_UNUSED(track_change_id);
+	Q_UNUSED(track_point_id);
 }
 
-Track::Track(const Georeferencing& map_georef) : track_crs(nullptr), map_georef(map_georef)
-{
-	current_segment_finished = true;
-}
+Track::~Track() = default;
 
-Track::Track(const Track& other)
+bool Track::empty() const
 {
-	waypoints = other.waypoints;
-	waypoint_names = other.waypoint_names;
-	
-	segment_points = other.segment_points;
-	segment_starts = other.segment_starts;
-	segment_names  = other.segment_names;
-	
-	current_segment_finished = other.current_segment_finished;
-	
-	element_tags   = other.element_tags;
-	
-	map_georef = other.map_georef;
-	
-	if (other.track_crs)
-	{
-		track_crs = new Georeferencing(*other.track_crs);
-	}
-}
-
-Track::~Track()
-{
-	delete track_crs;
-}
-
-Track& Track::operator=(const Track& rhs)
-{
-	if (this == &rhs)
-		return *this;
-	
-	clear();
-	
-	waypoints = rhs.waypoints;
-	waypoint_names = rhs.waypoint_names;
-	
-	segment_points = rhs.segment_points;
-	segment_starts = rhs.segment_starts;
-	segment_names  = rhs.segment_names;
-	
-	current_segment_finished = rhs.current_segment_finished;
-	
-	element_tags   = rhs.element_tags;
-	
-	map_georef = rhs.map_georef;
-	
-	if (rhs.track_crs)
-	{
-		track_crs = new Georeferencing(*rhs.track_crs);
-	}
-	
-	return *this;
+	return waypoints.empty() 
+	       && std::all_of(begin(segments), end(segments), [](const auto& s) { return s.empty(); });
 }
 
 void Track::clear()
 {
 	waypoints.clear();
-	waypoint_names.clear();
-	segment_points.clear();
-	segment_starts.clear();
-	segment_names.clear();
+	segments.clear();
+	segments.squeeze();  // QVarLengthArray: reset to local storage
 	current_segment_finished = true;
-	element_tags.clear();
-	delete track_crs;
-	track_crs = nullptr;
 }
 
-bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_parent)
+void Track::squeeze()
+{
+	if (segments.size() > 1)
+	{
+		auto current = segments.end() - 1;
+		if (current->empty())
+		{
+			auto previous = current - 1;
+			*current = *previous;
+			previous->swap(*current);
+			current->clear();
+		}
+	}
+}
+
+
+void Track::copyFrom(const Track& other)
+{
+	clear();
+	segments = other.segments;
+	waypoints = other.waypoints;
+	current_segment_finished = other.current_segment_finished;
+}
+
+bool Track::loadFrom(const QString& path)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -156,7 +138,7 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 	clear();
 	if (path.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 	{
-		if (!loadFromGPX(&file, project_points, dialog_parent))
+		if (!loadGpxFrom(file))
 			return false;
 	}
 	else
@@ -168,180 +150,160 @@ bool Track::loadFrom(const QString& path, bool project_points, QWidget* dialog_p
 
 bool Track::saveTo(const QString& path) const
 {
-	QFile file(path);
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-		return false;
+	QSaveFile file(path);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Text)
+	    && saveGpxTo(file)
+	    && file.commit())
+	{
+#ifdef Q_OS_ANDROID
+		// Make the MediaScanner aware of the *updated* file.
+		Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
+#endif
+		return true;  // NOLINT : redundant boolean literal in conditional return statement
+	}
 	
-	QXmlStreamWriter stream(&file);
+	return false;
+}
+
+
+bool Track::saveGpxTo(QIODevice& device) const
+{
+	static const auto newline = QString::fromLatin1("\n");
+	
+	QXmlStreamWriter stream(&device);
 	stream.writeStartDocument();
+	stream.writeCharacters(newline);
 	stream.writeStartElement(QString::fromLatin1("gpx"));
 	stream.writeAttribute(QString::fromLatin1("version"), QString::fromLatin1("1.1"));
 	stream.writeAttribute(QString::fromLatin1("creator"), qApp->applicationDisplayName());
 	
-	int size = getNumWaypoints();
-	for (int i = 0; i < size; ++i)
+	for (const auto& waypoint : waypoints)
 	{
+		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("wpt"));
-		const TrackPoint& point = getWaypoint(i);
-		point.save(&stream);
-		stream.writeTextElement(QStringLiteral("name"), waypoint_names[i]);
+		waypoint.save(&stream);
 		stream.writeEndElement();
 	}
 	
+	stream.writeCharacters(newline);
 	stream.writeStartElement(QStringLiteral("trk"));
-	for (int i = 0; i < getNumSegments(); ++i)
+	for (const auto& segment : segments)
 	{
+		stream.writeCharacters(newline);
 		stream.writeStartElement(QStringLiteral("trkseg"));
-		size = getSegmentPointCount(i);
-		for (int k = 0; k < size; ++k)
+		for (const auto& trackPoint : segment)
 		{
+			stream.writeCharacters(newline);
 			stream.writeStartElement(QStringLiteral("trkpt"));
-			const TrackPoint& point = getSegmentPoint(i, k);
-			point.save(&stream);
+			trackPoint.save(&stream);
 			stream.writeEndElement();
 		}
+		stream.writeCharacters(newline);
 		stream.writeEndElement();
 	}
+	stream.writeCharacters(newline);
 	stream.writeEndElement();
 	
+	stream.writeCharacters(newline);
 	stream.writeEndElement();
 	stream.writeEndDocument();
-	
-	file.close();
-#ifdef Q_OS_ANDROID
-	// Make the MediaScanner aware of the *updated* file.
-	Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
-#endif
-	return true;
+	return !stream.hasError();
 }
 
-void Track::appendTrackPoint(TrackPoint& point)
+void Track::appendTrackPoint(const TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
-	segment_points.push_back(point);
-	
-	if (current_segment_finished)
+	if (Q_UNLIKELY(current_segment_finished))
 	{
-		segment_starts.push_back(segment_points.size() - 1);
+		segments.push_back({});
+		squeeze();
 		current_segment_finished = false;
 	}
+	
+	Q_ASSERT(!segments.empty());
+	auto& segment = segments.back();
+	const auto change = segment.empty() ? NewSegment : TrackPointAppended;
+	segment.push_back(point);
+	emit trackChanged(change, point);
 }
+
+void Track::appendCurrentTrackPoint(double latitude, double longitude, double altitude, float accuracy)
+{
+	appendTrackPoint({ LatLon(latitude, longitude),
+	                   QDateTime::currentDateTimeUtc(),
+	                   static_cast<float>(altitude),
+	                   accuracy
+	});
+}
+
 void Track::finishCurrentSegment()
 {
 	current_segment_finished = true;
 }
 
-void Track::appendWaypoint(TrackPoint& point, const QString& name)
+void Track::appendWaypoint(const TrackPoint& point)
 {
-	point.map_coord = map_georef.toMapCoordF(point.gps_coord, nullptr); // TODO: check for errors
 	waypoints.push_back(point);
-	waypoint_names.push_back(name);
-}
-
-void Track::changeMapGeoreferencing(const Georeferencing& new_map_georef)
-{
-	map_georef = new_map_georef;
-	
-	projectPoints();
-}
-
-void Track::setTrackCRS(Georeferencing* track_crs)
-{
-	delete this->track_crs;
-	this->track_crs = track_crs;
-	
-	projectPoints();
+	emit trackChanged(WaypointAppended, point);
 }
 
 int Track::getNumSegments() const
 {
-	return (int)segment_starts.size();
+	return static_cast<int>(segments.size());
+}
+
+const TrackSegment& Track::getSegment(int segment_number) const
+{
+	return segments[segment_number];
 }
 
 int Track::getSegmentPointCount(int segment_number) const
 {
-	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
-	if (segment_number == (int)segment_starts.size() - 1)
-		return segment_points.size() - segment_starts[segment_number];
-	else
-		return segment_starts[segment_number + 1] - segment_starts[segment_number];
+	return static_cast<int>(segments[segment_number].size());
 }
 
 const TrackPoint& Track::getSegmentPoint(int segment_number, int point_number) const
 {
-	Q_ASSERT(segment_number >= 0 && segment_number < (int)segment_starts.size());
-	return segment_points[segment_starts[segment_number] + point_number];
+	return segments[segment_number][static_cast<TrackSegment::size_type>(point_number)];
 }
 
-const QString& Track::getSegmentName(int segment_number) const
+const TrackSegment&Track::getWaypoints() const
 {
-	// NOTE: Segment names not [yet] supported by most track importers.
-	if (segment_names.size() == 0)
-	{
-		static const QString empty_string;
-		return empty_string;
-	}
-	
-	return segment_names[segment_number];
+	return waypoints;
 }
 
 int Track::getNumWaypoints() const
 {
-	return waypoints.size();
+	return static_cast<int>(waypoints.size());
 }
 
 const TrackPoint& Track::getWaypoint(int number) const
 {
-	return waypoints[number];
-}
-
-const QString& Track::getWaypointName(int number) const
-{
-	return waypoint_names[number];
+	return waypoints[static_cast<TrackSegment::size_type>(number)];
 }
 
 LatLon Track::calcAveragePosition() const
 {
-	double avg_latitude = 0;
-	double avg_longitude = 0;
-	int num_samples = 0;
-	
-	int size = getNumWaypoints();
-	for (int i = 0; i < size; ++i)
+	auto num_samples = waypoints.size();
+	auto acc = std::accumulate(begin(waypoints), end(waypoints), LatLon{}, [](LatLon a, const TrackPoint& t) {
+		return LatLon{a.latitude() + t.latlon.latitude(), a.longitude() + t.latlon.longitude()};
+	});
+	for (const auto& segment : segments)
 	{
-		const TrackPoint& point = getWaypoint(i);
-		avg_latitude += point.gps_coord.latitude();
-		avg_longitude += point.gps_coord.longitude();
-		++num_samples;
+		num_samples += segment.size();
+		acc = std::accumulate(begin(segment), end(segment), acc, [](const LatLon& a, const TrackPoint& t) {
+			return LatLon{a.latitude() + t.latlon.latitude(), a.longitude() + t.latlon.longitude()};
+		});
 	}
-	for (int i = 0; i < getNumSegments(); ++i)
-	{
-		size = getSegmentPointCount(i);
-		for (int k = 0; k < size; ++k)
-		{
-			const TrackPoint& point = getSegmentPoint(i, k);
-			avg_latitude += point.gps_coord.latitude();
-			avg_longitude += point.gps_coord.longitude();
-			++num_samples;
-		}
-	}
+	if (num_samples == 0)
+		num_samples = 1;
 	
-	return LatLon((num_samples > 0) ? (avg_latitude / num_samples) : 0,
-				  (num_samples > 0) ? (avg_longitude / num_samples) : 0);
+	return { acc.latitude() / num_samples, acc.longitude() / num_samples };
 }
 
-bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent)
+bool Track::loadGpxFrom(QIODevice& device)
 {
-	Q_UNUSED(dialog_parent);
-	
-	track_crs = new Georeferencing();
-	track_crs->setProjectedCRS({}, Georeferencing::geographic_crs_spec);
-	track_crs->setTransformationDirectly(QTransform());
-	
 	TrackPoint point;
-	QString point_name;
-
-	QXmlStreamReader stream(file);
+	QXmlStreamReader stream(&device);
 	while (!stream.atEnd())
 	{
 		stream.readNext();
@@ -349,80 +311,53 @@ bool Track::loadFromGPX(QFile* file, bool project_points, QWidget* dialog_parent
 		{
 			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0
 			    || stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
-				|| stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
+			    || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
-				point = TrackPoint(LatLon(stream.attributes().value(QLatin1String("lat")).toDouble(),
-				                          stream.attributes().value(QLatin1String("lon")).toDouble()));
-				if (project_points)
-					point.map_coord = map_georef.toMapCoordF(point.gps_coord); // TODO: check for errors
-				point_name.clear();
+				point = TrackPoint{LatLon{stream.attributes().value(QLatin1String("lat")).toDouble(),
+				                          stream.attributes().value(QLatin1String("lon")).toDouble()}};
 			}
 			else if (stream.name().compare(QLatin1String("trkseg"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rte"), Qt::CaseInsensitive) == 0)
 			{
-				if (segment_starts.size() == 0 ||
-					segment_starts.back() < (int)segment_points.size())
-				{
-					segment_starts.push_back(segment_points.size());
-				}
+				segments.push_back({});
+				squeeze();
 			}
 			else if (stream.name().compare(QLatin1String("ele"), Qt::CaseInsensitive) == 0)
 				point.elevation = stream.readElementText().toFloat();
 			else if (stream.name().compare(QLatin1String("time"), Qt::CaseInsensitive) == 0)
 				point.datetime = QDateTime::fromString(stream.readElementText(), Qt::ISODate);
-			else if (stream.name().compare(QLatin1String("sat"), Qt::CaseInsensitive) == 0)
-				point.num_satellites = stream.readElementText().toInt();
 			else if (stream.name().compare(QLatin1String("hdop"), Qt::CaseInsensitive) == 0)
 				point.hDOP = stream.readElementText().toFloat();
 			else if (stream.name().compare(QLatin1String("name"), Qt::CaseInsensitive) == 0)
-				point_name = stream.readElementText();
+				point.name = stream.readElementText();
 		}
 		else if (stream.tokenType() == QXmlStreamReader::EndElement)
 		{
 			if (stream.name().compare(QLatin1String("wpt"), Qt::CaseInsensitive) == 0)
 			{
 				waypoints.push_back(point);
-				waypoint_names.push_back(point_name);
 			}
 			else if (stream.name().compare(QLatin1String("trkpt"), Qt::CaseInsensitive) == 0
 			         || stream.name().compare(QLatin1String("rtept"), Qt::CaseInsensitive) == 0)
 			{
-				segment_points.push_back(point);
+				/// \todo Don't load route points as track points.
+				if (Q_UNLIKELY(segments.empty()))
+					segments.push_back({});
+				segments.back().push_back(point);
 			}
 		}
 	}
 	
-	if (segment_starts.size() > 0 &&
-		segment_starts.back() == (int)segment_points.size())
-	{
-		segment_starts.pop_back();
-	}
+	current_segment_finished = true;
 	
-	return true;
+	return !stream.hasError();
 }
 
-void Track::projectPoints()
+
+bool operator==(const Track& lhs, const Track& rhs)
 {
-	if (track_crs->getProjectedCRSSpec() == Georeferencing::geographic_crs_spec)
-	{
-		int size = waypoints.size();
-		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(waypoints[i].gps_coord, nullptr); // FIXME: check for errors
-			
-		size = segment_points.size();
-		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(segment_points[i].gps_coord, nullptr); // FIXME: check for errors
-	}
-	else
-	{
-		int size = waypoints.size();
-		for (int i = 0; i < size; ++i)
-			waypoints[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(waypoints[i].gps_coord), nullptr); // FIXME: check for errors
-			
-		size = segment_points.size();
-		for (int i = 0; i < size; ++i)
-			segment_points[i].map_coord = map_georef.toMapCoordF(track_crs, fakeMapCoordF(segment_points[i].gps_coord), nullptr); // FIXME: check for errors
-	}
+	return lhs.waypoints == rhs.waypoints
+	       && lhs.segments == rhs.segments;
 }
 
 

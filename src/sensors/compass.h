@@ -21,6 +21,9 @@
 #ifndef OPENORIENTEERING_COMPASS_H
 #define OPENORIENTEERING_COMPASS_H
 
+#include <memory>
+
+#include <QtGlobal>
 #include <QObject>
 
 class QMetaMethod;
@@ -35,9 +38,12 @@ class Compass : public QObject
 {
 Q_OBJECT
 friend class CompassPrivate;
-public:
+
+private:
+	Compass();
 	~Compass() override;
-	
+
+public:
 	/** Singleton accessor method. Constructs the object on first use. */
 	static Compass& getInstance();
 	
@@ -49,9 +55,9 @@ public:
 	
 	/** Returns the most recent azimuth value
 	 *  (in degrees clockwise from north; updated approx. every 30 milliseconds). */
-	float getCurrentAzimuth();
+	qreal getCurrentAzimuth();
 	
-	/** Connects to the azimuthChanged(float azimuth_degrees) signal. This ensures to use a queued
+	/** Connects to the azimuthChanged(qreal azimuth_degrees) signal. This ensures to use a queued
 	 *  connection, which is important because the data provider runs on another
 	 *  thread. Updates are delivered approx. every 30 milliseconds. */
 	void connectToAzimuthChanges(const QObject* receiver, const char* slot);
@@ -62,7 +68,7 @@ public:
 signals:
 	/** Emitted regularly with the current azimuth value (in degrees).
 	 *  Preferably use connectToAzimuthChanges() to connect to this signal. */
-	void azimuthChanged(float azimuth);
+	void azimuthChanged(qreal azimuth);
 	
 protected:
 	void connectNotify(const QMetaMethod& signal) override;
@@ -70,12 +76,10 @@ protected:
 	void disconnectNotify(const QMetaMethod& signal) override;
 	
 private:
-	Compass();
+	void emitAzimuthChanged(qreal value);
 	
-	void emitAzimuthChanged(float value);
-	
-	int reference_counter;
-	CompassPrivate* p;
+	std::unique_ptr<CompassPrivate> p;
+	int reference_counter = 0;
 };
 
 

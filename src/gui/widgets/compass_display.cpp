@@ -41,7 +41,7 @@ CompassDisplay::~CompassDisplay()
 	// nothing, not inlined
 }
 
-void CompassDisplay::setAzimuth(float azimuth_deg)
+void CompassDisplay::setAzimuth(qreal azimuth_deg)
 {
 	constexpr int update_interval = 200;
 	QTime current_time = QTime::currentTime();

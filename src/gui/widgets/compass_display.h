@@ -61,7 +61,7 @@ public:
 	 * 
 	 * This does nothing unless at least 200 ms elapsed since the last change.
 	 */
-	void setAzimuth(float azimuth_deg);
+	void setAzimuth(qreal azimuth_deg);
 	
 	QSize sizeHint() const override;
 	
