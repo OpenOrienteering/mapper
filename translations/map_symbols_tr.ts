@@ -6,207 +6,207 @@
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Opaque White below Black</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah altında Mat Beyaz</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah %65</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah %20</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi %50</translation>
     </message>
     <message>
         <source>Black below light browns</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kahverengiler altında Siyah</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat mavi</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi %50</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah %25 (Gri)</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50, Sarı</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <source>Opaque Yellow</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Sarı</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerine Mat Beyaz</translation>
     </message>
     <message>
         <source>Opaque Green 20%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil %20</translation>
     </message>
     <message>
         <source>Opaque Green 50%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil %50</translation>
     </message>
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil, Siyah %50</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil</translation>
     </message>
     <message>
         <source>Green 50%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50</translation>
     </message>
     <message>
         <source>Green 20%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %20</translation>
     </message>
     <message>
         <source>Green below light greens</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık yeşiller altında Yeşil</translation>
     </message>
     <message>
         <source>Green 50% over Yellow</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı üzerinde Yeşil %50</translation>
     </message>
     <message>
         <source>White over Yellow</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Beyaz Sarı üzerinde</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı %50</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eş yükseklikteki noktaları birleştiren bir çizgi. Eşyükselti arasındaki standart düşey aralık 5 metredir. 2,5 metre eşyükselti aralığı düz arazilerde için kullanılabilir. Bir eşyükseltideki en küçük kıvrım merkezden çizgilerin ortasına 0,25 mm dir.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgisi, eşyükselti</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için Kontur hattının alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
     </message>
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Her beşinci kontur kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve yeryüzünün genel şeklinin  hızlı değerlendirmesine yardımcı olur. Bir indeks eşyükselti eğrisi çok detay içeren bir arazide normal bir eşyükselti çizgisi gibi temsil edilebilir. Küçük tepecikler ve çöküntüler normalde indeks eşyükselti kullanarak gösterilmez.</translation>
     </message>
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değeri</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgileri yerin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Biçim çizgileri sadece normal  eşyükselti ile temsilin eksik olacağı yerlerde eklenir. Ara eşyükseltiler gibi kullanılamaz. Tek bir biçim çizgisi komşu eşyükseltilerin arasında kullanılmalıdır. Biçim çizgilerinin eşyükselti sistemine mantıklı uyması çok önemlidir, bu yüzden biçim çizgisi başlangıç ve bitişi komşu eşyükseltilere paralel olmalıdır. Biçim çizgisinin kesikli çizgileri arasındaki boşluklar, form çizgisinin oldukça düz bölümlerine yerleştirilmelidir. Biçim çizgileri düz tepecikleri ve çöküntüleri daha belirgin olanlardan ayırmak için kullanılabilir.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgisi, biçim çizgisi</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eğim çizgileri eğim yönünü açıklığa kavuşturmak için eşyükselti çizgisinin alt tarafında çizilmiş olabilir. Kullanıldığında, girintilerin içinde yerleştirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
