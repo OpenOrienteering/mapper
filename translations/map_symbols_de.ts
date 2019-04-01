@@ -6636,7 +6636,9 @@ Kleine Wasserflächen werden vollfarbig dargestellt. Verwende das Symbol 302 (&q
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kleine Wasserflächen sollen vollfarbig dargestellt werden.
+
+Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 Lake&quot; in ISMTBOM.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -6676,7 +6678,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ein unpassierbarer oder für den Läufer gefährlicher Sumpf. Das Symbol hat eine blaue Umrisslinie.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -6756,22 +6758,22 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Forest: good visibility</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wald: gute Sicht</translation>
     </message>
     <message>
         <source>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Normal offener Wald für den jeweiligen Geländetyp. Weiß sollte nicht verwendet werden, wenn der Wald zu dicht ist, um ein Fahrrad zu schieben oder zu tragen.</translation>
     </message>
     <message>
         <source>Forest: reduced visibility</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wald: verminderte Sicht</translation>
     </message>
     <message>
         <source>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fläche mit dichtem Baumbestand (schlechte Sicht), deutliche Behinderung beim Schieben oder Tragen des Rads oder unpassierbar.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -6857,84 +6859,84 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Track: fast riding</source>
         <comment>Name of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Weg: sehr gut befahrbar</translation>
     </message>
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein Weg mit befestigter Oberfläche, mindestens 1,5 m breit. Forstweg oder gut instand gehaltener Weg ohne Hindernisse. Geschwindigkeit 75-100 %.</translation>
     </message>
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pfad: sehr gut befahrbar</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gut instand gehaltener Pfad, unter 1,5 m breit. Ebener Pfad ohne Auswaschungen oder Hindernisse. Geschwindigkeit 75-100 %.</translation>
     </message>
     <message>
         <source>Track: medium riding</source>
         <comment>Name of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Weg: gut befahrbar</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein mindestens 1,5 m breiter Weg mit Senkung der Geschwindigkeit und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
     </message>
     <message>
         <source>Path: medium riding</source>
         <comment>Name of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pfad: gut befahrbar</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein Pfad unter 1,5 m Breite mit Senkung der Geschwindkeit und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
     </message>
     <message>
         <source>Track: slow riding</source>
         <comment>Name of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Weg: langsam befahrbar</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein mindestens 1,5 m breiter Weg mit Hindernissen wie Steinen, Furchen, Gras, Sand oder Schlamm, die ein Ausweichen erfordern. Möglicherweise steinige Oberflächen. Das Treten ist schwieriger, die Fahrt verlangsamt. Erfahrene/fitte Fahrer kommen durch. Weniger erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit 25-50 %.</translation>
     </message>
     <message>
         <source>Path: slow riding</source>
         <comment>Name of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pfad: langsam befahrbar</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide, with sufficient obstacles to require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein Pfad unter 1,5 m Breite mit Hindernissen wie Steinen, Furchen, Gras, Sand oder Schlamm, die ein Ausweichen erfordern. Möglicherweise steinige Oberflächen. Das Treten ist schwieriger, die Fahrt verlangsamt. Erfahrene/fitte Fahrer kommen durch. Weniger erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit 25-50 %.</translation>
     </message>
     <message>
         <source>Track: difficult to ride</source>
         <comment>Name of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Weg: schwierig befahrbar</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
 erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
 required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein mindestens 1,5 m breiter Weg mit schwierigen Hindernissen wie Wurzeln, tiefer Sand oder Schlamm, Auswaschungen oder steinige Stufen. Sehr langsames Fahren oder Fahren unmöglich. Auch Erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit maximal 25 %.</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
         <comment>Name of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pfad: schwierig befahrbar</translation>
     </message>
     <message>
         <source>A path less than 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible riding. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein Pfad unter 1,5 m Breite mit schwierigen Hindernissen wie Wurzeln, tiefer Sand oder Schlamm, Auswaschungen oder steinige Stufen. Sehr langsames Fahren oder Fahren unmöglich. Auch Erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit maximal 25 %.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -6944,7 +6946,7 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Non-ridable narrow forest rides should be represented.</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nicht befahrbare schmale Schneisen sollen dargestellt werden.</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -7005,7 +7007,7 @@ required to dismount. Speed max 25 %.</source>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
 cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mit diesem Symbol Steinmauer sollen alle sichtbaren Mauern dargestellt werden. Wenn es verboten ist, die Mauer zu überqueren, ist Symbol 707 (uncrossable boundary) zu verwenden.</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -7025,7 +7027,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alle Stellen, an denen hohe Zäune oder Mauern durch- oder überquert werden können, müssen dargestellt werden. Das Symbol kann auch für ein Tor oder einen Übertritt über eine Steinmauer (521), einen Zaun (524) oder eine Pipeline (534) verwendet werden.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -7100,7 +7102,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eine unpassierbare Pipeline. Wenn eine unpassierbare Pipeline nicht passiert werden darf, ist sie mit dem Symbol 707 (uncrossable boundary) zu versehen.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -7160,7 +7162,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magnetische Nordlinien sind Linien, die nach magnetisch Nord zeigen. In den Maßstäben 1:5000, 1:7500 und 1:10000 soll der Abstand der Nordlinien auf der Karte 30 mm betragen; in dem Maßstäben 1:15000 und 1:20000 sollte der Abstand auf der Karte 20 mm betragen. Nordlinien können unterbrochen werden, wenn sie kleine Objekte wie z.B. Felsen, Klippen, Bachmündungen oder Pfadenden verdecken.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -7260,7 +7262,7 @@ of symbol 704 before or after a control, it represents an obligatory route for t
 competitors. The symbol can also be used in areas where off-track riding is forbidden
 to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eine markierte Strecke wird auf der Karte mit einer gestrichelten Linie dargestellt. Wird das Symbol vor oder nach einem Posten anstelle von Symbol  704 verwendet, so stellt es eine Pflichtstrecke für die Wettkämpfer dar. Das Symbol kann auch in Gebieten, wo das Verlassen der Wege verboten ist, verwendet werden, um zulässige Routen darzustellen, die im Gelände markiert sind.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -7300,12 +7302,12 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein verbotenes Gebiet ist mit vertikalen Linien dargestellt. Es kann eine Umrisslinie gezeichnet werden. Flächen, die für die Wettkämpfer gefährlich sein können, sind mit diesem Symbol zu kennzeichnen.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, bounding line</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Verbotenes Gebiet, Umrisslinie</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -7344,22 +7346,22 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
         <comment>Name of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gefährliches Objekt auf Wegen oder Pfaden, Stufen</translation>
     </message>
     <message>
         <source>These barriers must be highly visible on the map and should be overprinted in purple. The symbol should be used for all obstacles that are difficult to cross. For uncrossable barrier, symbol 844 shall be used. This symbol can be used for stairs. There is no particular stair symbol.</source>
         <comment>Description of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Diese Hindernisse müssen auf der Karte sehr gut sichtbar sein und sollten daher in Magenta überdruckt werden. Das Symbol sollte für alle Hindernisse verwendet werden, die schwierig zu überwinden sind. Es kann auch für Treppen verwendet werden. Es gibt kein gesondertes Symbol für Treppen. Für unüberwindbare Hindernisse ist das Symbol 844 zu verwenden.</translation>
     </message>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unüberwindliches Hindernis / Überqueren verboten</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dieses Symbol kann für alle Stellen verwendet werden, die nicht passiert werden dürfen oder können, z.B. unüberwindliche Hindernisse; Zäune oder Mauern, die nicht überstiegen werden dürfen oder können; Wege oder Pfade, die nicht benutzt werden dürfen (für längere Abschnitte ist Symbol 711 zu benutzen). An Stellen, an denen sich zwei Wege oder Pfade fast treffen, die Situation auf der Karte aber nicht deutlich ist, kann dieses Symbol benutzt werden, um anzuzeigen, dass ein Übergang verboten ist.</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -8481,7 +8483,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Uncrossable waterbody (forbidden to cross)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unpassierbares Gewässer (verboten)</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or is otherwise dangerous to cross, the colour of the area shall be blue 100 %. That means also that the area is forbidden to cross.</source>
@@ -8514,7 +8516,10 @@ The bank line of the crossable waterbody is not presented in ski orienteering ma
 
 The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank lines of the ISOM 301 Lake symbol and of the 301.2 ISSkiOM Uncrossable Waterbody symbol.</source>
         <comment>Description of symbol 301.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wenn ein Gewässer gefahrlos überquert werden kann, ist als Farbe blau 50% zu wählen, um das Lesen der Wegsymbole zu erleichtern.
+Die Uferlinie eines passierbaren Gewässers wird auf einer Ski-OL-Karte nicht dargestellt.
+
+Die ISSkiOM-Symbolnummer  ist 301.1. Der Mapper benutzt diese Nummer schon für die Uferlinie des ISOM-Symbols 301 (See) und des ISSkiOM-Symbols 301.2 (Unpassierbares Gewässer).</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -8539,14 +8544,16 @@ The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank
     <message>
         <source>Marsh (in ski orienteering map)</source>
         <comment>Name of symbol 310.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sumpf (auf Ski-OL-Karte)</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge. Symbol 403 Rough open land shall be used with the symbol, if there are no trees or bushes.
 
 The ISSkiOM symbol number is 310.1. Mapper uses this number already for the minimum-sized 310 Marsh symbol in the ISOM symbol set.</source>
         <comment>Description of symbol 310.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ein passierbarer Sumpf, gewöhnlich mit deutlichem Rand. Wenn keine Bäume und Büsche stehen, ist das Symbol in Verbindung mit Symbol 403 (Raues offenes Land) zu verwenden.
+
+Die ISSkiOM-Symbolnummer ist 310.1. Der Mapper benutzt diese Nummer schon für das ISOM-Symbol 310 (Sumpf) in Mindestgröße.</translation>
     </message>
     <message>
         <source>Open land</source>
