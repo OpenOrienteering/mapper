@@ -841,8 +841,12 @@ void SymbolRenderWidget::deleteSymbols()
 		map->deleteSymbol(map->findSymbolIndex(symbol));
 	}
 	
-	if (selected_symbols.empty() && map->getFirstSelectedObject())
-		selectSingleSymbol(map->getFirstSelectedObject()->getSymbol());
+	if (selected_symbols.empty()) {
+		if (map->getFirstSelectedObject())
+			selectSingleSymbol(map->getFirstSelectedObject()->getSymbol());
+		else
+			selectSingleSymbol(-1);
+	}
 }
 
 void SymbolRenderWidget::duplicateSymbol()
