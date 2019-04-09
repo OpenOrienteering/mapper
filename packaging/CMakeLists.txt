@@ -387,7 +387,7 @@ if(Mapper_PACKAGE_ASSISTANT)
 	deploy_qt_translations(assistant qt_help)
 endif(Mapper_PACKAGE_ASSISTANT)
 
-if(CMAKE_CROSSCOMPILING AND MINGW)
+if(MINGW)
 	set(_env_lang $ENV{LC_ALL})
 	set(ENV{LC_ALL} C)
 	execute_process(
