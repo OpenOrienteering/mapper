@@ -1,0 +1,126 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+parameters:
+  cmakeArgs: 
+  makeArgs:
+  mingw: 'mingw64'
+  licensingProvider: 'OFF'
+
+
+steps:
+- task: DownloadPipelineArtifact@0
+  inputs:
+    pipelineId: $(msys2.pipelineId)
+    artifactName: 'msys2-${{ parameters.mingw }}'
+  displayName: 'Download MSYS2 artifact'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: msys2.tgz
+    destinationFolder: C:\
+    cleanDestinationFolder: false
+  displayName: 'Extract MSYS2 artifact'
+
+- script: |
+    echo on
+    set PATH=C:\msys2\${{ parameters.mingw }}\bin;%WINDIR%\system32;%WINDIR%;%WINDIR%\system32\wbem
+    
+    @REM Keep this warning out of CI stderr
+    C:\msys2\usr\bin\sed -i -e "/licensing_warning/s,WARNING,STATUS," doc\licensing\CMakeLists.txt
+    
+    mkdir build
+    cd build
+    cmake ^
+      $(Build.SourcesDirectory) ^
+      -Wno-dev ^
+      "-DMapper_VERSION_DISPLAY=$(Build.SourceBranch) $(Build.SourceVersion)" ^
+      "-DMapper_BUILD_CLIPPER=1" ^
+      "-DLICENSING_PROVIDER=${{ parameters.licensingProvider }}" ^
+      "-DPROJ4_ROOT=C:/msys2/${{ parameters.mingw }}" ^
+      "-DGDAL_DATA_DIR=C:/msys2/${{ parameters.mingw }}/share/gdal" ^
+      "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Positioning:BOOL=TRUE" ^
+      "-Dgp_grep_cmd=C:\msys2\usr\bin\grep" ^
+      ${{ parameters.cmakeArgs }}
+    if errorlevel 1 exit /b 1
+    
+    cmake --build . --target all -- ${{ parameters.makeArgs }} 2>error.log
+    if errorlevel 1 (
+      type error.log 1>&2
+      exit /b 1
+    ) else (
+      type error.log
+    )
+    
+    set PROJ_LIB=C:\msys2\${{ parameters.mingw }}\share\proj
+    set TEST_RESULTS=$(Build.SourcesDirectory)\build\Testing
+    ctest -T Test --no-compress-output --output-on-failure
+    if errorlevel 1 echo. > FAILED
+    if exist "%TEST_RESULTS%\TAG" (
+      echo ##vso[task.setVariable variable=TEST_RESULTS]%TEST_RESULTS%
+    )
+    if exist FAILED exit /b 1
+  displayName: 'Build Mapper'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'cTest'
+    testResultsFiles: '*\Test.xml'
+    searchFolder: '$(TEST_RESULTS)'
+    buildPlatform: Windows-${{ parameters.mingw }}
+  condition: variables.TEST_RESULTS
+  displayName: 'Publish test results'
+
+- script: |
+    echo on
+    set PATH=C:\msys2\${{ parameters.mingw }}\bin;%WINDIR%\system32;%WINDIR%;%WINDIR%\system32\wbem
+    
+    cd build
+    cmake --build . --target package -- ${{ parameters.makeArgs }} 2>error.log
+    if errorlevel 1 (
+      type error.log 1>&2
+      exit /b 1
+    ) else (
+      type error.log
+    )
+    
+    mkdir $(Build.SourcesDirectory)\output
+    cd $(Build.SourcesDirectory)\output
+    copy /B $(Build.SourcesDirectory)\build\OpenOrienteering-Mapper-*.zip
+    if not errorlevel 1 (
+      echo ##vso[task.setVariable variable=ARTIFACT_NAME]Mapper-${{ parameters.mingw }}
+    )
+  displayName: 'Build Mapper package'
+
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: '$(ARTIFACT_NAME)'
+    targetPath: $(Build.SourcesDirectory)/output
+  condition: variables.ARTIFACT_NAME
+
