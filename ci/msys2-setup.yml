@@ -43,9 +43,25 @@ jobs:
     vmImage: 'windows-2019'
 
   steps:
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      pipelineId: $(msys2.reuseBuildId)
+      artifactName: 'msys2-$(mingw)'
+    displayName: 'Download MSYS2 artifact'
+    condition: ne('', variables['msys2.reuseBuildId'])
+
+  - task: ExtractFiles@1
+    inputs:
+      archiveFilePatterns: msys2.tgz
+      destinationFolder: C:\
+      cleanDestinationFolder: false
+    displayName: 'Extract MSYS2 artifact'
+    condition: ne('', variables['msys2.reuseBuildId'])
+
   - script: |
       choco install msys2 --params="/InstallDir:C:\msys2 /NoUpdate /NoPath"
     displayName: 'Install MSYS2'
+    condition: eq('', variables['msys2.reuseBuildId'])
 
   - script: |
       set PATH=C:\msys2\usr\bin;%WINDIR%\system32;%WINDIR%;%WINDIR%\system32\wbem
@@ -86,17 +102,15 @@ jobs:
     displayName: 'Install MSYS2 MinGW packages for OpenOrienteering Mapper'
 
   - bash: |
+      set -e
+      cd /c/msys2/$(mingw)/share/proj
       curl -L -o proj-datumgrid.tar.gz \
         https://github.com/OSGeo/proj-datumgrid/releases/download/1.8/proj-datumgrid-1.8.tar.gz
+      tar xvzf proj-datumgrid.tar.gz --overwrite
+      rm proj-datumgrid.tar.gz
     workingDirectory: $(Build.SourcesDirectory)
-    displayName: 'Download proj-datumgrid'
-
-  - task: ExtractFiles@1
-    inputs:
-      archiveFilePatterns: proj-datumgrid.tar.gz
-      destinationFolder: C:\msys2\$(mingw)\share\proj
-      cleanDestinationFolder: false
-    displayName: 'Extract proj-datumgrid'
+    displayName: 'Download and install proj-datumgrid'
+    condition: eq('', variables['msys2.reuseBuildId'])
 
   - script: |
       set PATH=C:\msys2\usr\bin;%WINDIR%\system32;%WINDIR%;%WINDIR%\system32\wbem
