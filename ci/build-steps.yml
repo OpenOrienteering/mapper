@@ -43,51 +43,50 @@ steps:
     targetPath: $(Build.SourcesDirectory)/build/default/install
   displayName: 'Download superbuild artifacts'
 
-- bash: find $(Build.SourcesDirectory)/build/default/install
-  displayName: 'List superbuild artifacts'
+- ${{ if startsWith(parameters.imageName, 'ubuntu') }}:
+  - bash: |
+      set -x
+      set -e
+      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+      sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
+        > filter-stderr.sed
+      sudo apt-get update
+      sudo apt-get install doxygen graphviz python-lxml
+      case "${{ parameters.mode }}${{ parameters.targetSuffix }}" in
+        *-x86_64-w64-mingw32)
+          sudo apt-get install g++-mingw-w64-x86-64
+          chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
+          ;;
+        clazy*)
+          curl https://downloads.kdab.com/clazy/1.5/Clazy-x86_64-1.5.AppImage -o clazy
+          sha256sum clazy | grep e6ca38fb1e31ca5240489bfb653ec0ef8dbeb8ef5957d73400ea1e5c3d0303a6
+          sudo cp clazy /usr/local/bin/
+          sudo chmod +x /usr/local/bin/clazy
+          echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
+          ;;
+        gcov*)
+          sudo apt-get install g++ libgcc-5-dev python-pip
+          sudo pip install gcovr
+          sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
+          ;;
+      esac
+    displayName: 'Prepare build tools'
 
-- bash: |
-    set -x
-    set -e
-    chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
-    sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
-      > filter-stderr.sed
-    case "${{ parameters.imageName }}${{ parameters.targetSuffix }}" in
-      ubuntu-*-x86_64-w64-mingw32)
-        sudo apt-get update
-        sudo apt-get install doxygen graphviz python-lxml g++-mingw-w64-x86-64
-        chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
-        ;;
-      ubuntu-*)
-        sudo apt-get update
-        sudo apt-get install doxygen graphviz python-lxml
-        case "${{ parameters.mode }}" in
-          clazy)
-            curl https://downloads.kdab.com/clazy/1.5/Clazy-x86_64-1.5.AppImage -o clazy
-            sha256sum clazy | grep e6ca38fb1e31ca5240489bfb653ec0ef8dbeb8ef5957d73400ea1e5c3d0303a6
-            sudo cp clazy /usr/local/bin/
-            sudo chmod +x /usr/local/bin/clazy
-            echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
-            ;;
-          gcov)
-            sudo apt-get install g++ python-pip
-            sudo pip install gcovr
-            ;;
-        esac
-        ;;
-      macos-*-arm-linux-androideabi)
-        sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
-        xcode-select --print-path
-        pip install lxml
-        chmod +x $(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain/bin/*
-        ;;
-      macos-*)
-        sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
-        xcode-select --print-path
-        pip install lxml
-        ;;
-    esac
-  displayName: 'Prepare build tools'
+- ${{ if startsWith(parameters.imageName, 'macos') }}:
+  - bash: |
+      set -x
+      set -e
+      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+      sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
+        > filter-stderr.sed
+      sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
+      pip install lxml
+      case "${{ parameters.mode }}${{ parameters.targetSuffix }}" in
+        *-arm-linux-androideabi)
+          chmod +x $(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain/bin/*
+          ;;
+      esac
+    displayName: 'Prepare build tools'
 
 - bash: |
     set -x
