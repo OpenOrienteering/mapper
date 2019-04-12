@@ -67,6 +67,7 @@ steps:
         gcov*)
           sudo apt-get install g++ libgcc-5-dev python-pip
           sudo pip install gcovr
+          sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
           ;;
       esac
     displayName: 'Prepare build tools'
