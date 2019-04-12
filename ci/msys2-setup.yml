@@ -112,6 +112,15 @@ jobs:
     displayName: 'Download and install proj-datumgrid'
     condition: eq('', variables['msys2.reuseBuildId'])
 
+  - bash: |
+      set -e
+      curl -L -o libgeotiff.pkg.tar.xz \
+        http://repo.msys2.org/mingw/$(arch)/mingw-w64-$(arch)-libgeotiff-1.4.3-2-any.pkg.tar.xz
+      tar xvJf libgeotiff.pkg.tar.xz $(mingw)/bin/libgeotiff-2.dll
+      mv $(mingw)/bin/libgeotiff-2.dll /c/msys2/$(mingw)/bin
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: 'Add libgeotiff-2.dll required by gdal'
+
   - script: |
       set PATH=C:\msys2\usr\bin;%WINDIR%\system32;%WINDIR%;%WINDIR%\system32\wbem
       echo ON
