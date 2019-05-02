@@ -58,9 +58,12 @@ steps:
           chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
           ;;
         clazy*)
-          curl https://downloads.kdab.com/clazy/1.5/Clazy-x86_64-1.5.AppImage -o clazy
-          sha256sum clazy | grep e6ca38fb1e31ca5240489bfb653ec0ef8dbeb8ef5957d73400ea1e5c3d0303a6
-          sudo cp clazy /usr/local/bin/
+          CLAZY_VERSION=1.5
+          CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
+          curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
+          curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
+          grep --no-filename $(sha1sum ${CLAZY_IMAGE}) sums.txt
+          sudo cp ${CLAZY_IMAGE} /usr/local/bin/clazy
           sudo chmod +x /usr/local/bin/clazy
           echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
           ;;
