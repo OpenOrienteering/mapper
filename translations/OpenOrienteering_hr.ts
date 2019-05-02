@@ -6,12 +6,12 @@
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijentacijska karta</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>Softver za crtanje orijentacijskih karata</translation>
     </message>
 </context>
 <context>
@@ -20,44 +20,44 @@
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="172"/>
         <source>About %1</source>
-        <translation type="unfinished"></translation>
+        <translation>O %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="186"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;a %1&gt;Sve o licencama, obavijestima o autorskim pravima, uvjetima i odricanju od odgovornosti.&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="188"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation type="unfinished"></translation>
+        <translation>Programeri OpenOrienteeringa abecednim redoslijedom:</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="189"/>
         <source>(project initiator)</source>
-        <translation type="unfinished"></translation>
+        <translation>(inicijator projekta)</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="14"/>
         <location filename="../src/gui/about_dialog.cpp" line="174"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Slobodni softver za crtanje orijentacijskih karata</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="176"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovaj program je slobodni softver: možete ga redistribuirati i/ili mijenjati pod uvjetima &lt;a %1&gt;GNU Opće javne licence(GPL), verzija &amp;nbsp;3&lt;/a&gt;, koju je objavila zaklada Free Software Foundation.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="181"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovaj program se distribuira u nadi da će biti koristan, ali BEZ IKAKVOG JAMSTVA; čak i bez podrazumijevanog jamstva TRGOVINSKE PRIKLADNOSTI ili ODGOVARANJA ODREĐENOJ SVRSI. Za  &lt;a %1&gt;detalje&lt;/a&gt; pročitajte GNU Opću javnu licencu (GPL),  verzija&amp;nbsp;3.</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
         <source>For contributions, thanks to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Na doprinosima možete zahvaliti:</translation>
     </message>
 </context>
 <context>
@@ -65,12 +65,12 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Open most recently used file</source>
-        <translation type="unfinished"></translation>
+        <translation>Otvorite nedavno korištenu datoteku</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="122"/>
         <source>Show tip of the day</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaži savjet dana</translation>
     </message>
 </context>
 <context>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="52"/>
         <source>Show remaining items</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži preostale stavke</translation>
     </message>
 </context>
 <context>
@@ -86,27 +86,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
         <source>mm²</source>
-        <translation type="unfinished"></translation>
+        <translation>mm²</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="88"/>
         <source>Minimum size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Najmanja veličina:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="95"/>
         <source>Fills</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispune</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"/>
         <source>Line fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispuna linijama</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="109"/>
         <source>Pattern fill</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispuna uzorkom</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="147"/>
@@ -115,137 +115,137 @@
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="184"/>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="189"/>
         <source>mm</source>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="162"/>
         <source>Single line</source>
-        <translation type="unfinished"></translation>
+        <translation>Pojedinačna linija</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="176"/>
         <source>Parallel lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralelne linije</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="178"/>
         <source>Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Razmak linija:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="181"/>
         <source>Single row</source>
-        <translation type="unfinished"></translation>
+        <translation>Jedan redak</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="183"/>
         <source>Pattern interval:</source>
-        <translation type="unfinished"></translation>
+        <translation>Interval uzorka:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="188"/>
         <source>Pattern offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomak uzorka:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="193"/>
         <source>Row offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomak retka:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="195"/>
         <source>Parallel rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralelni redci</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="197"/>
         <source>Row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Razmak između redaka:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="203"/>
         <source>Fill rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakretanje ispune</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="205"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kut:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
         <source>adjustable per object</source>
-        <translation type="unfinished"></translation>
+        <translation>podesivo po objektu</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>Crtanje elemenata na granici</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Presijeci elemente na granici.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nacrtaj elemente ako im je središte unutar granice.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nacrtaj elemente ako im bilo koja točka unutar granice.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nacrtaj elemente ako su im sve točke unutar granice.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke površine</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="341"/>
         <source>Pattern fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispuna uzorkom %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="350"/>
         <source>Line fill %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispuna linijama %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="369"/>
         <source>No fill selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Nije odabrana ispuna</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="85"/>
         <source>Area color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boja površine:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="174"/>
         <source>Line offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomak linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="169"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boja linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="164"/>
         <source>Line width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Debljina linije:</translation>
     </message>
 </context>
 <context>
@@ -253,35 +253,37 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="46"/>
         <source>Autosaved file</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatski spremljena datoteka</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n bajt</numerusform>
+            <numerusform>%n bajta</numerusform>
+            <numerusform>%n bajtova</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteku je spremio korisnik</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"/>
         <source>File recovery</source>
-        <translation type="unfinished"></translation>
+        <translation>Oporavak datoteke</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka% 1 nije pravilno zatvorena. Trenutno postoje dvije verzije:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
         <source>Save the active file to remove the conflicting version.</source>
-        <translation type="unfinished"></translation>
+        <translation>Spremite aktivnu datoteku da biste uklonili sukobljenu verziju.</translation>
     </message>
 </context>
 <context>
@@ -289,27 +291,27 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="86"/>
         <source>Edit map color</source>
-        <translation type="unfinished"></translation>
+        <translation>Uredi boje na karti</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Uredi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Ispis spot boja</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
         <source>Defines a spot color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Definira spot boju:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation type="unfinished"></translation>
+        <translation>Mješavina spot boja (sita i podlaganje boja):</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="130"/>
@@ -319,113 +321,113 @@
         <location filename="../src/gui/color_dialog.cpp" line="183"/>
         <location filename="../src/gui/color_dialog.cpp" line="417"/>
         <source>%</source>
-        <translation type="unfinished"></translation>
+        <translation>%</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="135"/>
         <source>Knockout: erases lower colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbijanje podloge: briše niže boje</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="153"/>
         <location filename="../src/gui/color_dialog.cpp" line="210"/>
         <source>Calculate from spot colors</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj iz spot boja</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="158"/>
         <source>Calculate from RGB color</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj iz RGB boja</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="163"/>
         <source>Custom process color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prilagođena procesna boja:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="169"/>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cijan</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="174"/>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="179"/>
         <source>Yellow</source>
-        <translation type="unfinished"></translation>
+        <translation>Žuta</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="184"/>
         <source>Black</source>
-        <translation type="unfinished"></translation>
+        <translation>Crna</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="205"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="215"/>
         <source>Calculate from CMYK color</source>
-        <translation type="unfinished"></translation>
+        <translation>Izračunaj iz CMYK boja</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="220"/>
         <source>Custom RGB color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prilagođena RGB boja:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="226"/>
         <source>Red</source>
-        <translation type="unfinished"></translation>
+        <translation>Crvena</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="231"/>
         <source>Green</source>
-        <translation type="unfinished"></translation>
+        <translation>Zelena</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="236"/>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Plava</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="241"/>
         <source>#RRGGBB</source>
-        <translation type="unfinished"></translation>
+        <translation>#RRGGBB</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="259"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stolni ispis</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="260"/>
         <source>Professional printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Profesionalni ispis</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="279"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="331"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- neimenovana -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="600"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Upozorenje</translation>
     </message>
 </context>
 <context>
@@ -433,7 +435,7 @@
     <message>
         <location filename="../src/gui/widgets/color_dropdown.cpp" line="42"/>
         <source>- none -</source>
-        <translation type="unfinished"></translation>
+        <translation>- nijedna -</translation>
     </message>
 </context>
 <context>
@@ -441,100 +443,100 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ime</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirnost</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>Spot color</source>
-        <translation type="unfinished"></translation>
+        <translation>Spot boja</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>CMYK</source>
-        <translation type="unfinished"></translation>
+        <translation>CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>RGB</source>
-        <translation type="unfinished"></translation>
+        <translation>RGB</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>K.o.</source>
-        <translation type="unfinished"></translation>
+        <translation>I.p.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="89"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="94"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="97"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>Izbriši</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="90"/>
         <source>Duplicate</source>
-        <translation type="unfinished"></translation>
+        <translation>Dupliciraj</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="103"/>
         <source>Move Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomakni gore</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="105"/>
         <source>Move Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomakni dolje</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="116"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Pomoć</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="137"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvaput kliknite vrijednost boje za otvaranje dijaloga.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrda</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation type="unfinished"></translation>
+        <translation>Karta sadrži simbole u ovoj boji. Brisanjem će ukloniti boju tih objekata! Želite li to stvarno učiniti?</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (duplikat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="251"/>
         <source> (Duplicate)</source>
-        <translation type="unfinished"></translation>
+        <translation> (Duplikat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="409"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="458"/>
         <source>Double click to define the color</source>
-        <translation type="unfinished"></translation>
+        <translation>Dvaput kliknite za definiranje boje</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="417"/>
         <source>Click to select the name and click again to edit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknite za odabir imena i ponovo kliknite za uređivanje.</translation>
     </message>
 </context>
 <context>
@@ -542,42 +544,42 @@
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="88"/>
         <source>&amp;Number of parts:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Broj djelova:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private line symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Privatni linijski simbol -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="97"/>
         <source>- Private area symbol -</source>
-        <translation type="unfinished"></translation>
+        <translation>- Privatni simbol površine -</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="100"/>
         <source>Edit private symbol...</source>
-        <translation type="unfinished"></translation>
+        <translation>Uredi privatni simbol...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="114"/>
         <source>Combination settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke kombinacije</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Change from public to private symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Promjena iz javnog u privatni simbol</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uzeti stari simbol kao predložak za privatni simbol?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="93"/>
         <source>Symbol %1:</source>
-        <translation type="unfinished"></translation>
+        <translation>Simbol %1:</translation>
     </message>
 </context>
 <context>
@@ -585,150 +587,150 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Configure grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Podesite mrežu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži mrežu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>Snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj s mrežom</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
         <source>Choose...</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi...</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>All lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Sve linije</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
         <source>Horizontal lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodoravne linije</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Vertical lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Okomite crte</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="128"/>
         <source>Alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnanje</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj s magnetskim sjeverom</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj sa sjeverom mreže</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj s pravim sjeverom</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodatno zakretanje (suprotno od kazaljke na satu):</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="83"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
         <source>Positioning</source>
-        <translation type="unfinished"></translation>
+        <translation>Namještanje</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>metara na terenu</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation type="unfinished"></translation>
+        <translation>milimetara na karti</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
         <source>Horizontal spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodoravni razmak:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="93"/>
         <source>Vertical spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Okomiti razmak:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="97"/>
         <source>Horizontal offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vodoravni pomak:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="99"/>
         <source>Vertical offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Okomiti pomak:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jedinica:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Boja linije:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Display:</source>
-        <translation type="unfinished"></translation>
+        <translation>Prikaži:</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="171"/>
         <source>Choose grid line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Odaberi boju linija mreže</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation type="unfinished"></translation>
+        <translation>m</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>mm</source>
         <comment>millimeters</comment>
-        <translation type="unfinished"></translation>
+        <translation>mm</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="261"/>
         <source>Origin at: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ishodište na: %1</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>ishodištu koordinata na papiru</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
         <source>projected coordinates origin</source>
-        <translation type="unfinished"></translation>
+        <translation>ishodištu projiciranih koordinata</translation>
     </message>
 </context>
 <context>
@@ -736,7 +738,7 @@
     <message>
         <location filename="../src/tools/cut_hole_tool.cpp" line="249"/>
         <source>&lt;b&gt;Click or drag&lt;/b&gt;: Start drawing the hole. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt; Kliknite ili povucite &lt;/b&gt;: Počnite crtati rupu. </translation>
     </message>
 </context>
 <context>
@@ -747,32 +749,32 @@
         <location filename="../src/tools/cut_tool.cpp" line="422"/>
         <location filename="../src/tools/cut_tool.cpp" line="428"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Greška</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="416"/>
         <source>The split line must end on the area boundary!</source>
-        <translation type="unfinished"></translation>
+        <translation>Rascjepna linija mora završiti na granici područja!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="422"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation type="unfinished"></translation>
+        <translation>Početak i kraj rascjepne linije su na različitim djelovima objekta!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="428"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation type="unfinished"></translation>
+        <translation>Početak i kraj rascjepne linije su na istom mjestu!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikni&lt;/b&gt; na liniju: Podijeli je na dvije. &lt;b&gt;Povuci&lt;/b&gt; duž linije: Ukloni dio linije. &lt;b&gt;Klikni ili povuci&lt;/b&gt; na granicu površine: Započni rascjepnu liniju. </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="368"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation type="unfinished"></translation>
+        <translation>Razdvajanje rupa u objektima površine još nije podržano!</translation>
     </message>
 </context>
 <context>
@@ -780,18 +782,18 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="148"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Obreži cijelu kartu. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
         <location filename="../src/tools/cutout_tool.cpp" line="153"/>
         <source>&lt;b&gt;%1+Click or drag&lt;/b&gt;: Select the objects to be clipped. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+klik ili povlačenje&lt;/b&gt;: Odaberite objekte koje ćete obrezati. </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Obrežite odabrane objekte. </translation>
     </message>
 </context>
 <context>
@@ -799,12 +801,12 @@
     <message>
         <location filename="../src/util/dxfparser.cpp" line="38"/>
         <source>Could not open the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne mogu otvoriti datoteku.</translation>
     </message>
     <message>
         <location filename="../src/util/dxfparser.cpp" line="54"/>
         <source>The file is not an DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Datoteka nije u DXF formatu.</translation>
     </message>
 </context>
 <context>
@@ -812,18 +814,18 @@
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="109"/>
         <source>Letter:</source>
-        <translation type="unfinished"></translation>
+        <translation>Slovo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="111"/>
         <source>A</source>
         <extracomment>&quot;A&quot; is the default letter which is used for determining letter height.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="117"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Visina:</translation>
     </message>
 </context>
 <context>
@@ -831,38 +833,38 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="129"/>
         <source>Distribute points evenly along path</source>
-        <translation type="unfinished"></translation>
+        <translation>Ravnomjerno rasporedi točke duž staze</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="135"/>
         <source>Number of points per path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Broj točaka po stazi:</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="137"/>
         <source>Also place objects at line end points</source>
-        <translation type="unfinished"></translation>
+        <translation>Također stavi objekte na krajnje točke staze</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="143"/>
         <source>Rotation settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Postavke zakretanja</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="146"/>
         <source>Align points with direction of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj točke sa smjerom linije</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="150"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="152"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodatni kut zakretanja (suprotno od kazaljke na satu):</translation>
     </message>
 </context>
 <context>
@@ -871,32 +873,32 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="69"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Od središta</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="308"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a circle or ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Započni krug ili elipsu. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="309"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Povuci&lt;/b&gt;: Nacrtaj krug. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="311"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation type="unfinished"></translation>
+        <translation>Držite %1 da počnete crtati od središta.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="315"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish the circle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Dovršite krug. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw an ellipse. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Povucite&lt;/b&gt;: Nacrtajte elipsu. </translation>
     </message>
 </context>
 <context>
@@ -904,7 +906,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Povucite&lt;/b&gt;: Nacrtajte stazu. </translation>
     </message>
 </context>
 <context>
@@ -913,43 +915,43 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1172"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="725"/>
         <source>&lt;b&gt;Dash points on.&lt;/b&gt; </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Crtice na točkama su uključene.&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1180"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap or append to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: Poravnajte ili dodajte na postojeće objekte. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1188"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="731"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Pick direction from existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: Odaberite smjer s postojećeg objekta. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1189"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1216"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Azimut i dužina segmenta. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1205"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="736"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="760"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+klik&lt;/b&gt;: Poravnajte s postojećim objektima. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1215"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="750"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fiksni kutovi. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1225"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="766"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Undo last point. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Poništi posljednju točku. </translation>
     </message>
 </context>
 <context>
@@ -957,66 +959,66 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="102"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dovrši</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="103"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Zatvori</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="105"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kut</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crtica</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="112"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Poništi</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="113"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1167"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Dužina:&lt;/b&gt; %1 m </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1195"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Start a straight line. &lt;b&gt;Drag&lt;/b&gt;: Start a curve. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikni&lt;/b&gt;: Započni ravnu liniju. &lt;b&gt;Povuci&lt;/b&gt;: Započni krivulju. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1206"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+Povuci&lt;/b&gt;: Slijedi postojeće objekte. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1222"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Draw a straight line. &lt;b&gt;Drag&lt;/b&gt;: Draw a curve. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the path. &lt;b&gt;%1&lt;/b&gt;: Close the path. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikni&lt;/b&gt;: Nacrtaj ravnu liniju. &lt;b&gt;Povuci&lt;/b&gt;: Nacrtaj krivulju. &lt;b&gt;Desni ili dvostruki klik&lt;/b&gt;: Dovrši stazu. &lt;b&gt;%1&lt;/b&gt;: Zatvori stazu. </translation>
     </message>
 </context>
 <context>
@@ -1024,12 +1026,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotakni kartu za dovršenje usrednjavanja</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Dovrši postavljanje objekta. </translation>
     </message>
 </context>
 <context>
@@ -1038,46 +1040,46 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="83"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="84"/>
         <source>Angle</source>
         <comment>Using constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kut</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="85"/>
         <source>Reset</source>
         <comment>Reset rotation</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Izvorno</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="334"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="346"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Kut:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="335"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fiksni kutovi. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Stvori točkasti objekt.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Povuci&lt;/b&gt;: Stvorite objekt i postavite njegovu orijentaciju.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Poništi zakretanje.</translation>
     </message>
 </context>
 <context>
@@ -1085,50 +1087,50 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="90"/>
         <source>Finish</source>
-        <translation type="unfinished"></translation>
+        <translation>Završi</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="91"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="92"/>
         <source>Line snap</source>
         <comment>Snap to previous lines</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj na liniju</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="93"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crtica</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="96"/>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Vrati</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="97"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Prekini</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="741"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klikni ili povuci&lt;/b&gt;: Započni crtanje pravokutnika. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="754"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Poravnaj s prethodnim linijama. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="765"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Postavite kutnu točku. &lt;b&gt;Desni ili dvostruki klik&lt;/b&gt;: Dovršite pravokutnik. </translation>
     </message>
 </context>
 <context>
@@ -1137,22 +1139,22 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Dovrši uređivanje. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Prekini uređivanje. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Stvori tekstualni objekt s jednim sidrom. &lt;b&gt;Povuci&lt;/b&gt;: Stvorite okvir s tekstom. </translation>
     </message>
 </context>
 <context>
@@ -1161,23 +1163,23 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="405"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="406"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pretvori krivulju</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="518"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Slobodno kretanje. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="534"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1+klik&lt;/b&gt; na odijeljak: Prebacivanje između ravne i zakrivljene. </translation>
     </message>
 </context>
 <context>
@@ -1186,24 +1188,24 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Poravnaj</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="537"/>
         <source>Point / Angle</source>
         <comment>Modify points or use constrained angles</comment>
-        <translation type="unfinished"></translation>
+        <translation>Točka / Kut</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="538"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Uključite crtice</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="717"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Dovršite uređivanje. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="736"/>
@@ -1238,14 +1240,14 @@
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="729"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fiksni kutovi. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
         <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="520"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Poravnaj s postojećim objektima. </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="746"/>
@@ -1257,7 +1259,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="749"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="529"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Izbriši odabrane objekte. </translation>
     </message>
 </context>
 <context>
@@ -1265,13 +1267,13 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>High quality map display (antialiasing)</source>
-        <translation type="unfinished"></translation>
+        <translation>Visoka kvaliteta prikaza karte (antialiasing)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation type="unfinished"></translation>
+        <translation>Antialiasing čini izgled karte mnogo boljim, ali i usporava prikaz karte</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="52"/>
