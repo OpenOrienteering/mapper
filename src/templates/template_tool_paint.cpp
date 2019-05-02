@@ -140,7 +140,7 @@ int PaintOnTemplateTool::erase_width = 4;
 
 
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action)
-: MapEditorTool(editor, Other, tool_action)
+: MapEditorTool(editor, Scribble, tool_action)
 {
 	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
 }

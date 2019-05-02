@@ -2270,7 +2270,7 @@ void MapEditorController::selectedSymbolsChanged()
 		if (symbol && !symbol->isHidden() && !symbol->isProtected() && current_tool)
 		{
 			// Auto-switch to a draw tool when selecting a symbol under certain conditions
-			if (current_tool->toolType() == MapEditorTool::Pan
+			if (current_tool->toolType() == MapEditorTool::Pan || current_tool->toolType() == MapEditorTool::Scribble
 			    || ((current_tool->toolType() == MapEditorTool::EditLine || current_tool->toolType() == MapEditorTool::EditPoint) && map->getNumSelectedObjects() == 0))
 			{
 				current_tool->switchToDefaultDrawTool(active_symbol);

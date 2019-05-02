@@ -89,6 +89,7 @@ public:
 		DrawText      = 7,
 		DrawFreehand  = 8,
 		Pan           = 9,
+		Scribble      = 10,
 		Other         = 0
 	};
 	
