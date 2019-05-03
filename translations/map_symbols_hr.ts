@@ -6,152 +6,152 @@
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Purpurna</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crna</translation>
     </message>
     <message>
         <source>Opaque White below Black</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna bijela ispod crne</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crna 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crna 20%</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Smeđa 50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crna ispod svjetlo smeđih</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirne plava</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Plava</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Plava 50%</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Smeđa</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering narančasta</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Crna 25% (siva)</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena 50%, žuta</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena</translation>
     </message>
     <message>
         <source>Opaque Yellow</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna žuta</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna bijela preko zelene</translation>
     </message>
     <message>
         <source>Opaque Green 20%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna zelena 20%</translation>
     </message>
     <message>
         <source>Opaque Green 50%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna zelena 50%</translation>
     </message>
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena, crna 50%</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neprozirna zelena</translation>
     </message>
     <message>
         <source>Green 50%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena 50%</translation>
     </message>
     <message>
         <source>Green 20%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena 20%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena ispod svijetlo zelenih</translation>
     </message>
     <message>
         <source>Green 50% over Yellow</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelena 50% preko žute</translation>
     </message>
     <message>
         <source>White over Yellow</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bijele preko žute</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žuta</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žuta 50%</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Slojnica</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linija koja povezuje točke jednake visine. Uopičajeni vertikalni razmak među slojnicama je 5 metara. Razmak od 2,5 metara može se koristiti za ravne terene. Najmanji zavoj na slojnici je 0,25 mm od centra do sredine linije.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
