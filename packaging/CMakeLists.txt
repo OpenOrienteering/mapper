@@ -240,7 +240,6 @@ elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Kai Pastor <dg0yt@darc.de>")
 	set(CPACK_DEBIAN_SECTION            "graphics")
 	set(CPACK_DEBIAN_PACKAGE_HOMEPAGE   "https://www.openorienteering.org/apps/mapper/")
-	set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS  "ON")
 	
 endif()
 
