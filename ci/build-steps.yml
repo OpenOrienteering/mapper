@@ -40,14 +40,14 @@ steps:
   inputs:
     pipelineId: $(openorienteering.superbuild.pipelineId)
     artifactName: 'superbuild-${{ parameters.imageName }}${{ parameters.targetSuffix }}'
-    targetPath: $(Build.SourcesDirectory)/build/default/install
+    targetPath: $(SUPERBUILD_INSTALL_DIR)
   displayName: 'Download superbuild artifacts'
 
 - ${{ if startsWith(parameters.imageName, 'ubuntu') }}:
   - bash: |
       set -x
       set -e
-      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+      chmod +x $(SUPERBUILD_INSTALL_DIR)/bin/*
       sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
         > filter-stderr.sed
       sudo apt-get update
@@ -55,7 +55,7 @@ steps:
       case "${{ parameters.mode }}${{ parameters.targetSuffix }}" in
         *-x86_64-w64-mingw32)
           sudo apt-get install g++-mingw-w64-x86-64
-          chmod +x $(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain/bin/*
+          chmod +x $(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/toolchain/bin/*
           ;;
         clazy*)
           CLAZY_VERSION=1.5
@@ -79,14 +79,14 @@ steps:
   - bash: |
       set -x
       set -e
-      chmod +x $(Build.SourcesDirectory)/build/default/install/bin/*
+      chmod +x $(SUPERBUILD_INSTALL_DIR)/bin/*
       sed -e 's,@SOURCE_DIR@,$(Build.SourcesDirectory),' ci/filter-stderr.sed.in \
         > filter-stderr.sed
       sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
       pip install lxml
       case "${{ parameters.mode }}${{ parameters.targetSuffix }}" in
         *-arm-linux-androideabi)
-          chmod +x $(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain/bin/*
+          chmod +x $(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/toolchain/bin/*
           ;;
       esac
     displayName: 'Prepare build tools'
@@ -105,6 +105,9 @@ steps:
     cmakeArgs: >
       $(Build.SourcesDirectory)/superbuild
       "-DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE"
+      -Ddefault_INSTALL_DIR=
+      -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)
+      -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/toolchain
       "-DMapper_CI_SOURCE_DIR=$(Build.SourcesDirectory)"
       "-DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranch) $(Build.SourceVersion)"
       "-DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)"
@@ -162,8 +165,6 @@ steps:
     esac
   env:
     CTEST_OUTPUT_ON_FAILURE: 1
-    DYLD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
-    LD_LIBRARY_PATH: $(Build.SourcesDirectory)/build/default/install/lib
     ${{ if eq(parameters.mode, 'clazy') }}:
       CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
       CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
