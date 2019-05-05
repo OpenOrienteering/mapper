@@ -28,6 +28,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 parameters:
+  buildCommand: make -j3
   cmakeArgs: '-DCMAKE_BUILD_TYPE=Release'
   imageName: ''
   targetSuffix: ''
@@ -95,7 +96,6 @@ steps:
     set -x
     set -e
     git clone --branch master --depth 1 https://github.com/openorienteering/superbuild.git
-    test -f superbuild/ci/num_jobs.cmake && cp superbuild/ci/num_jobs.cmake superbuild/
     cp $(Build.SourcesDirectory)/ci/openorienteering-mapper-ci.cmake superbuild/
   displayName: 'Checkout superbuild source'
 
@@ -120,7 +120,7 @@ steps:
     set -x
     #
     cd $(Build.SourcesDirectory)/build
-    make `cat num_jobs || true` \
+    ${{ parameters.buildCommand }} \
       ${{ parameters.toolchainTargets }}
   displayName: 'Build toolchain'
 
@@ -128,11 +128,11 @@ steps:
     set -x
     #
     cd $(Build.SourcesDirectory)/build
-    make `cat num_jobs || true` \
+    ${{ parameters.buildCommand }} \
       toolchain-info${{ parameters.targetSuffix}} \
       2> >(sed -f $(Build.SourcesDirectory)/filter-stderr.sed) \
       || exit 1
-    make `cat num_jobs || true` \
+    ${{ parameters.buildCommand }} \
       openorienteering-mapper-ci${{ parameters.targetSuffix }} \
       2> >(sed -f $(Build.SourcesDirectory)/filter-stderr.sed)
     #

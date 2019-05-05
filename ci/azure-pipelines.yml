@@ -46,6 +46,7 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
+        buildCommand: make -j5
 
 - job: Linux_clazy_Release
   variables:
@@ -94,6 +95,7 @@ jobs:
           -Darm-linux-androideabi_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/toolchain
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/usr/share/gdal
           -DANDROID_BUILD_LIBCXX=1
+        buildCommand: make -j5
         toolchainTargets: >
           arm-linux-androideabi-toolchain-$(openorienteering.superbuild.ndkVersion)
           android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
