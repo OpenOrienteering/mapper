@@ -35,6 +35,8 @@ jobs:
     - template: codespell.yml
 
 - job: macOS_Debug
+  variables:
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
   pool:
     vmImage: 'macos-10.13'
   steps:
@@ -43,9 +45,12 @@ jobs:
         imageName: 'macos-10.13'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Debug
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
+        buildCommand: make -j5
 
 - job: Linux_clazy_Release
+  variables:
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
@@ -54,10 +59,12 @@ jobs:
         imageName: 'ubuntu-16.04'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
         mode: 'clazy'
 
 - job: Linux_Coverage
+  variables:
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
@@ -67,10 +74,12 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/share/gdal
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
         mode: 'gcov'
 
 - job: Android_armv7_Release
+  variables:
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
   pool:
     vmImage: 'macos-10.13'
   steps:
@@ -81,16 +90,19 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
           -DENABLE_arm-linux-androideabi=1
-          -Darm-linux-androideabi_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi
+          -Darm-linux-androideabi_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi
           -Darm-linux-androideabi_INSTALL_PREFIX=/usr
-          -Darm-linux-androideabi_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/toolchain
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/arm-linux-androideabi/usr/share/gdal
+          -Darm-linux-androideabi_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/usr/share/gdal
           -DANDROID_BUILD_LIBCXX=1
+        buildCommand: make -j5
         toolchainTargets: >
           arm-linux-androideabi-toolchain-$(openorienteering.superbuild.ndkVersion)
           android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
 
 - job: MinGW_x64_Release
+  variables:
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
@@ -101,10 +113,10 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
           -DENABLE_x86_64-w64-mingw32=1
-          -Dx86_64-w64-mingw32_INSTALL_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32
+          -Dx86_64-w64-mingw32_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32
           -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
-          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/toolchain
-          -DMapper_CI_GDAL_DATA_DIR=$(Build.SourcesDirectory)/build/default/install/x86_64-w64-mingw32/usr/share/gdal
+          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/usr/share/gdal
           -Dmingw-w64_FIX_HEADERS=1
         toolchainTargets: >
           x86_64-w64-mingw32-toolchain-1
