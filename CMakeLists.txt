@@ -265,6 +265,22 @@ endif()
 add_subdirectory("doc/api")
 add_subdirectory("packaging/src")
 
+# Auxiliary targets
+
+set(ci
+  ci/azure-pipelines.yml
+  ci/build-steps.yml
+  ci/codespell.yml
+  ci/filter-stderr.sed.in
+  ci/msys2-build.yml
+  ci/msys2-setup.yml
+  ci/openorienteering-mapper-ci.cmake
+)
+
+add_custom_target(CI SOURCES ${ci})
+
+# Configuration report
+
 feature_summary(WHAT ALL)
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" type)
