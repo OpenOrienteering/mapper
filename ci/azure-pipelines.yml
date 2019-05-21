@@ -116,6 +116,7 @@ jobs:
           -Dx86_64-w64-mingw32_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32
           -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
           -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/toolchain
+          -DMapper_CI_LICENSING_PROVIDER=OFF
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/usr/share/gdal
           -Dmingw-w64_FIX_HEADERS=1
         toolchainTargets: >
