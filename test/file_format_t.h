@@ -22,6 +22,7 @@
 #define OPENORIENTEERING_FILE_FORMAT_T_H
 
 #include <QObject>
+#include <QString>
 
 
 /**
@@ -60,11 +61,6 @@ private slots:
 	 */
 	void issue_513_high_coordinates();
 	void issue_513_high_coordinates_data();
-	
-	/**
-	 * Tests basic properties of OCD V8 icon compression.
-	 */
-	void compressedOcdIconTest();
 	
 	/**
 	 * Tests that maps contain the same information before and after saving
