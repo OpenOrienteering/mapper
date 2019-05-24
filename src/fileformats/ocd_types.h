@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015-2018 Kai Pastor
+ *    Copyright 2013, 2015-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,7 +22,6 @@
 
 #include <algorithm>
 #include <cstddef>
-#include <cstring>
 #include <iterator>
 #include <type_traits>
 
@@ -78,9 +77,11 @@ namespace Ocd
 	};
 	
 	/** 
-	 * A string of max. N characters with a pascal-style binary representation:
-	 * the first byte indicates the length,
+	 * A string of max. N characters with a pascal-style binary representation.
+	 * 
+	 * The first byte indicates the length,
 	 * the following N bytes contain the actual character data.
+	 * Unused bytes are filled with zero.
 	 */
 	template< unsigned char N >
 	struct PascalString
@@ -88,18 +89,23 @@ namespace Ocd
 		unsigned char length;
 		char data[N];
 
-		PascalString& operator=(const QByteArray& value)
+		PascalString& operator=(const QByteArray& value) noexcept
 		{
-			length = std::min(N, decltype(length)(value.length()));
-			memcpy(data, value, length);
+			// For defined behaviour for longer inputs, do std::min on the
+			// wider type, then cast the result to the more narrow type.
+			length = static_cast<unsigned char>(std::min(static_cast<int>(N), value.length()));
+			auto const tail = std::copy(value.data(), value.data()+length, data);
+			std::fill(tail, std::end(data), 0);
 			return *this;
 		}
 	};
 	
 	/** 
-	 * A UTF-8-encoded string of max. N characters with a pascal-style binary representation:
-	 * the first byte indicates the length,
+	 * A UTF-8-encoded string of max. N characters with a pascal-style binary representation.
+	 * 
+	 * The first byte indicates the length,
 	 * the following N bytes contain the actual character data.
+	 * Unused bytes are filled with zero.
 	 */
 	template< unsigned char N >
 	struct Utf8PascalString
@@ -109,14 +115,22 @@ namespace Ocd
 		
 		Utf8PascalString& operator=(const QString& value)
 		{
-			qstrncpy(data, value.toUtf8(), N);
-			length = qstrnlen(data, N);
+			// For defined behaviour for longer inputs, do std::min on the
+			// wider type, then cast the result to the more narrow type.
+			length = static_cast<unsigned char>(std::min(static_cast<int>(N), value.length()));
+			auto const utf8 = value.toUtf8();
+			auto const tail = std::copy(utf8.data(), utf8.data()+length, data);
+			std::fill(tail, std::end(data), 0);
 			return *this;
 		}
 	};
 	
 	/** 
 	 * A UTF-16LE-encoded string of max. N characters, zero-terminated.
+	 * 
+	 * This string actually holds max. N-1 16-bit code units, as the last one
+	 * is reserved for the terminating zero.
+	 * Unused elements are filled with zero.
 	 */
 	template< std::size_t N >
 	struct Utf16PascalString
@@ -125,7 +139,10 @@ namespace Ocd
 		
 		Utf16PascalString& operator=(const QString& value)
 		{
-			memcpy(reinterpret_cast<void*>(data), reinterpret_cast<const void*>(value.utf16()), std::max(std::size_t(value.length())+1, 2*N));
+			auto const length = std::min(N-1, static_cast<std::size_t>(value.length()));
+			auto* const utf16 = value.unicode();
+			auto const tail = std::copy(utf16, utf16+length, data);
+			std::fill(tail, std::end(data), 0);
 			return *this;
 		}
 	};
