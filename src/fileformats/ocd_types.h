@@ -20,7 +20,6 @@
 #ifndef OPENORIENTEERING_OCD_TYPES_H
 #define OPENORIENTEERING_OCD_TYPES_H
 
-#include <algorithm>
 #include <cstddef>
 #include <iterator>
 #include <type_traits>
@@ -76,6 +75,16 @@ namespace Ocd
 		// nothing
 	};
 	
+	/**
+	 * Private OCD string implementation details.
+	 */
+	namespace string
+	{
+		unsigned char assign(const QByteArray& value, unsigned char max_length, char* first, char* last) noexcept;
+		unsigned char assignUtf8(const QString& value, unsigned char max_length, char* first, char* last);
+		std::size_t assignUtf16(const QString& value, std::size_t max_length, QChar* first, QChar* last);
+	}
+	
 	/** 
 	 * A string of max. N characters with a pascal-style binary representation.
 	 * 
@@ -91,11 +100,7 @@ namespace Ocd
 
 		PascalString& operator=(const QByteArray& value) noexcept
 		{
-			// For defined behaviour for longer inputs, do std::min on the
-			// wider type, then cast the result to the more narrow type.
-			length = static_cast<unsigned char>(std::min(static_cast<int>(N), value.length()));
-			auto const tail = std::copy(value.data(), value.data()+length, data);
-			std::fill(tail, std::end(data), 0);
+			length = Ocd::string::assign(value, N, std::begin(data), std::end(data));
 			return *this;
 		}
 	};
@@ -115,12 +120,7 @@ namespace Ocd
 		
 		Utf8PascalString& operator=(const QString& value)
 		{
-			// For defined behaviour for longer inputs, do std::min on the
-			// wider type, then cast the result to the more narrow type.
-			length = static_cast<unsigned char>(std::min(static_cast<int>(N), value.length()));
-			auto const utf8 = value.toUtf8();
-			auto const tail = std::copy(utf8.data(), utf8.data()+length, data);
-			std::fill(tail, std::end(data), 0);
+			length = Ocd::string::assignUtf8(value, N, std::begin(data), std::end(data));
 			return *this;
 		}
 	};
@@ -139,10 +139,7 @@ namespace Ocd
 		
 		Utf16PascalString& operator=(const QString& value)
 		{
-			auto const length = std::min(N-1, static_cast<std::size_t>(value.length()));
-			auto* const utf16 = value.unicode();
-			auto const tail = std::copy(utf16, utf16+length, data);
-			std::fill(tail, std::end(data), 0);
+			Ocd::string::assignUtf16(value, N-1, std::begin(data), std::end(data));
 			return *this;
 		}
 	};

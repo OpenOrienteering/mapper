@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016-2018 Kai Pastor
+ *    Copyright 2013, 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -17,12 +17,13 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "ocd_types.h"
+
+#include <algorithm>
 #include <cstring>
 #include <limits>
 #include <stdexcept>
 #include <vector>
-
-#include "ocd_types.h"
 
 #include "ocd_types_v8.h"
 #include "ocd_types_v9.h"
@@ -56,6 +57,42 @@ namespace Ocd
 	Q_STATIC_ASSERT(std::extent<decltype(IconV8::bits)>::value == IconV8::length());
 	
 	Q_STATIC_ASSERT(std::extent<decltype(IconV9::bits)>::value == IconV9::length());
+	
+	
+	namespace string
+	{
+		
+		unsigned char assign(const QByteArray& value, unsigned char max_length, char* first, char* last) noexcept
+		{
+			// For defined behaviour for longer inputs, do std::min on the
+			// wider type, then cast the result to the more narrow type.
+			auto const length = static_cast<unsigned char>(std::min(static_cast<int>(max_length), value.length()));
+			auto const tail = std::copy(value.data(), value.data()+length, first);
+			std::fill(tail, last, 0);
+			return length;
+		}
+		
+		unsigned char assignUtf8(const QString& value, unsigned char max_length, char* first, char* last)
+		{
+			// For defined behaviour for longer inputs, do std::min on the
+			// wider type, then cast the result to the more narrow type.
+			auto const utf8 = value.toUtf8();
+			auto const length = static_cast<unsigned char>(std::min(static_cast<int>(max_length), utf8.length()));
+			auto const tail = std::copy(utf8.data(), utf8.data()+length, first);
+			std::fill(tail, last, 0);
+			return length;
+		}
+		
+		std::size_t assignUtf16(const QString& value, std::size_t max_length, QChar* first, QChar* last)
+		{
+			auto const utf16 = value.unicode();
+			auto const length = std::min(max_length, static_cast<std::size_t>(value.length()));
+			auto const tail = std::copy(utf16, utf16+length, first);
+			std::fill(tail, last, 0);
+			return length;
+		}
+		
+	}
 	
 	
 	// uncompressed IconV8: Compare 11 bytes of each scanline, 12th byte unused.
