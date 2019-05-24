@@ -77,8 +77,31 @@ namespace Ocd
 			// For defined behaviour for longer inputs, do std::min on the
 			// wider type, then cast the result to the more narrow type.
 			auto const utf8 = value.toUtf8();
-			auto const length = static_cast<unsigned char>(std::min(static_cast<int>(max_length), utf8.length()));
-			auto const tail = std::copy(utf8.data(), utf8.data()+length, first);
+			auto length = static_cast<unsigned char>(std::min(static_cast<int>(max_length), utf8.length()));
+			auto tail = std::copy(utf8.data(), utf8.data()+length, first);
+			if (tail == first+max_length && (*(tail-1) & 0x80))
+			{
+				// string ends with multi-byte character which may be incomplete
+				auto safe_tail = tail;
+				if ((*(--safe_tail) & 0xc0) == 0xc0)
+				{
+					// string ends with first byte of multi-byte character
+					tail = safe_tail;
+					length -= 1;
+				}
+				else if ((*(--safe_tail) & 0xe0) == 0xe0)
+				{
+					// string ends with first two bytes of three- or four-byte character
+					tail = safe_tail;
+					length -= 2;
+				}
+				else if ((*(--safe_tail) & 0xf0) == 0xf0)
+				{
+					// string ends with first three bytes of four-byte character
+					tail = safe_tail;
+					length -= 3;
+				}
+			}
 			std::fill(tail, last, 0);
 			return length;
 		}
@@ -86,8 +109,13 @@ namespace Ocd
 		std::size_t assignUtf16(const QString& value, std::size_t max_length, QChar* first, QChar* last)
 		{
 			auto const utf16 = value.unicode();
-			auto const length = std::min(max_length, static_cast<std::size_t>(value.length()));
-			auto const tail = std::copy(utf16, utf16+length, first);
+			auto length = std::min(max_length, static_cast<std::size_t>(value.length()));
+			auto tail = std::copy(utf16, utf16+length, first);
+			if (tail == first+max_length && (tail-1)->isHighSurrogate())
+			{
+				// string ends with incomplete surrogate pair
+				--tail;
+			}
 			std::fill(tail, last, 0);
 			return length;
 		}

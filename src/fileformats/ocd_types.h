@@ -115,6 +115,9 @@ namespace Ocd
 	template< unsigned char N >
 	struct Utf8PascalString
 	{
+		// The handling of trailing multi-byte characters assumes a minimal length.
+		Q_STATIC_ASSERT(N >= 3);
+		
 		unsigned char length;
 		char data[N];
 		
@@ -135,6 +138,9 @@ namespace Ocd
 	template< std::size_t N >
 	struct Utf16PascalString
 	{
+		// The handling of trailing surrogate pairs assumes a minimal length.
+		Q_STATIC_ASSERT(N >= 2);
+		
 		QChar data[N];
 		
 		Utf16PascalString& operator=(const QString& value)

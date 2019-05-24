@@ -161,6 +161,21 @@ private slots:
 		QTest::newRow("1234")      << QByteArray("1234")      << QByteArray("1234");
 		QTest::newRow("123456789") << QByteArray("123456789") << QByteArray("1234");
 		QTest::newRow("257x A")    << QByteArray(257, 'A')    << QByteArray(4, 'A');
+		
+		// trailing two-byte character
+		QTest::newRow("123Cent")   << QByteArray("123¢")      << QByteArray("123");
+		QTest::newRow("12Cent")    << QByteArray("12¢")       << QByteArray("12¢");
+		
+		// trailing three-byte character
+		QTest::newRow("123Euro")   << QByteArray("123€")      << QByteArray("123");
+		QTest::newRow("12Euro")    << QByteArray("12€")       << QByteArray("12");
+		QTest::newRow("1Euro")     << QByteArray("1€")        << QByteArray("1€");
+		
+		// trailing four-byte character
+		QTest::newRow("123Hwair")  << QByteArray("123𐍈")      << QByteArray("123");
+		QTest::newRow("12Hwair")   << QByteArray("12𐍈")       << QByteArray("12");
+		QTest::newRow("1Hwair")    << QByteArray("1𐍈")        << QByteArray("1");
+		QTest::newRow("Hwair")     << QByteArray("𐍈")         << QByteArray("𐍈");
 	}
 	
 	/**
@@ -200,6 +215,10 @@ private slots:
 		QTest::newRow("123")       << QString::fromUtf8("123")       << QString::fromUtf8("123");
 		QTest::newRow("1234")      << QString::fromUtf8("1234")      << QString::fromUtf8("123");
 		QTest::newRow("123456789") << QString::fromUtf8("123456789") << QString::fromUtf8("123");
+		
+		// trailing surrogate pair
+		QTest::newRow("12Yee")     << QString::fromUtf8("12𐐷")       << QString::fromUtf8("12");
+		QTest::newRow("1Yee")      << QString::fromUtf8("1𐐷")        << QString::fromUtf8("1𐐷");
 	}
 	
 	/**
