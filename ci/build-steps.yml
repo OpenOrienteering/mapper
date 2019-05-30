@@ -108,7 +108,8 @@ steps:
       -Ddefault_INSTALL_DIR=
       -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)
       -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/toolchain
-      "-DMapper_CI_SOURCE_DIR=$(Build.SourcesDirectory)"
+      "-DMapper_CI_GIT_REPOSITORY=$(Build.SourcesDirectory)"
+      "-DMapper_CI_GIT_TAG=$(Build.SourceVersion)"
       "-DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranch) $(Build.SourceVersion)"
       "-DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)"
       "-DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)"
@@ -192,8 +193,10 @@ steps:
       #
       cd $(Build.SourcesDirectory)
       mkdir coverage
+      # Run gcovr from source dir, cf. https://github.com/gcovr/gcovr/issues/64
+      cd build/source/openorienteering-mapper-ci
       GCOVR_ARGS="\
-        --root=$(Build.SourcesDirectory) \
+        --root=$(Build.SourcesDirectory)/build/source/openorienteering-mapper-ci \
         --filter=src/ \
         --filter=test/ \
         --object-directory=$(TEST_RESULTS)/CoverageInfo \

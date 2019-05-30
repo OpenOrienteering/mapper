@@ -27,7 +27,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set(Mapper_CI_SOURCE_DIR "mapper" CACHE STRING "Mapper (CI): Path to Mapper source tree")
+set(Mapper_CI_GIT_REPOSITORY "mapper" CACHE STRING "Mapper (CI): Repository reference")
+set(Mapper_CI_GIT_TAG  "master" CACHE STRING "Mapper (CI): Tag or commit to checkout")
 set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display string")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
@@ -54,8 +55,11 @@ superbuild_package(
     host:doxygen
     host:qttools-${Mapper_CI_QT_VERSION}
 
+  SOURCE
+    GIT_REPOSITORY ${Mapper_CI_GIT_REPOSITORY}
+    GIT_TAG        ${Mapper_CI_GIT_TAG}
+
   USING
-    Mapper_CI_SOURCE_DIR
     Mapper_CI_VERSION_DISPLAY
     Mapper_CI_LICENSING_PROVIDER
     Mapper_CI_ENABLE_COVERAGE
@@ -64,8 +68,7 @@ superbuild_package(
     Mapper_CI_GDAL_DATA_DIR
 
   BUILD [[
-    CONFIGURE_COMMAND
-      "${CMAKE_COMMAND}" "${Mapper_CI_SOURCE_DIR}"
+    CMAKE_ARGS
       "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
       "-UCMAKE_STAGING_PREFIX"
       "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
