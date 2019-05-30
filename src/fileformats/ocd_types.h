@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2015-2018 Kai Pastor
+ *    Copyright 2013, 2015-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,9 +20,7 @@
 #ifndef OPENORIENTEERING_OCD_TYPES_H
 #define OPENORIENTEERING_OCD_TYPES_H
 
-#include <algorithm>
 #include <cstddef>
-#include <cstring>
 #include <iterator>
 #include <type_traits>
 
@@ -77,10 +75,22 @@ namespace Ocd
 		// nothing
 	};
 	
+	/**
+	 * Private OCD string implementation details.
+	 */
+	namespace string
+	{
+		unsigned char assign(const QByteArray& value, unsigned char max_length, char* first, char* last) noexcept;
+		unsigned char assignUtf8(const QString& value, unsigned char max_length, char* first, char* last);
+		std::size_t assignUtf16(const QString& value, std::size_t max_length, QChar* first, QChar* last);
+	}
+	
 	/** 
-	 * A string of max. N characters with a pascal-style binary representation:
-	 * the first byte indicates the length,
+	 * A string of max. N characters with a pascal-style binary representation.
+	 * 
+	 * The first byte indicates the length,
 	 * the following N bytes contain the actual character data.
+	 * Unused bytes are filled with zero.
 	 */
 	template< unsigned char N >
 	struct PascalString
@@ -88,44 +98,54 @@ namespace Ocd
 		unsigned char length;
 		char data[N];
 
-		PascalString& operator=(const QByteArray& value)
+		PascalString& operator=(const QByteArray& value) noexcept
 		{
-			length = std::min(N, decltype(length)(value.length()));
-			memcpy(data, value, length);
+			length = Ocd::string::assign(value, N, std::begin(data), std::end(data));
 			return *this;
 		}
 	};
 	
 	/** 
-	 * A UTF-8-encoded string of max. N characters with a pascal-style binary representation:
-	 * the first byte indicates the length,
+	 * A UTF-8-encoded string of max. N characters with a pascal-style binary representation.
+	 * 
+	 * The first byte indicates the length,
 	 * the following N bytes contain the actual character data.
+	 * Unused bytes are filled with zero.
 	 */
 	template< unsigned char N >
 	struct Utf8PascalString
 	{
+		// The handling of trailing multi-byte characters assumes a minimal length.
+		Q_STATIC_ASSERT(N >= 3);
+		
 		unsigned char length;
 		char data[N];
 		
 		Utf8PascalString& operator=(const QString& value)
 		{
-			qstrncpy(data, value.toUtf8(), N);
-			length = qstrnlen(data, N);
+			length = Ocd::string::assignUtf8(value, N, std::begin(data), std::end(data));
 			return *this;
 		}
 	};
 	
 	/** 
 	 * A UTF-16LE-encoded string of max. N characters, zero-terminated.
+	 * 
+	 * This string actually holds max. N-1 16-bit code units, as the last one
+	 * is reserved for the terminating zero.
+	 * Unused elements are filled with zero.
 	 */
 	template< std::size_t N >
 	struct Utf16PascalString
 	{
+		// The handling of trailing surrogate pairs assumes a minimal length.
+		Q_STATIC_ASSERT(N >= 2);
+		
 		QChar data[N];
 		
 		Utf16PascalString& operator=(const QString& value)
 		{
-			memcpy(reinterpret_cast<void*>(data), reinterpret_cast<const void*>(value.utf16()), std::max(std::size_t(value.length())+1, 2*N));
+			Ocd::string::assignUtf16(value, N-1, std::begin(data), std::end(data));
 			return *this;
 		}
 	};

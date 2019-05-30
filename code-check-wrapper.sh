@@ -65,6 +65,7 @@ PATTERN=" \
   object_mover.cpp \
   object_query.cpp \
   ocd_file_format.cpp \
+  ocd_t.cpp \
   ogr_file_format.cpp \
   ogr_template.cpp \
   overriding_shortcut.cpp \

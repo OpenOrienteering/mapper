@@ -155,6 +155,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 )
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
+add_unit_test(ocd_t ../src/fileformats/ocd_types)
 add_unit_test(qpainter_t)
 add_unit_test(util_t ../src/util/util
 	../src/settings
