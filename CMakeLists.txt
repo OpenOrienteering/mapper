@@ -269,11 +269,17 @@ add_subdirectory("packaging/src")
 
 set(ci
   ci/azure-pipelines.yml
-  ci/build-steps.yml
+  ci/build.yml
   ci/codespell.yml
   ci/filter-stderr.sed.in
   ci/msys2-build.yml
   ci/msys2-setup.yml
+  ci/publish.yml
+  ci/publish-coverage.yml
+  ci/setup-common.yml
+  ci/setup-macos.yml
+  ci/setup-ubuntu.yml
+  ci/shell.sh
   ci/openorienteering-mapper-ci.cmake
 )
 
