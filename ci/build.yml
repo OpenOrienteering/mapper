@@ -47,7 +47,7 @@ steps:
     workingDirectory: 'build'
     cmakeArgs: >
       $(CMAKE_WRAPPING)
-      $(Build.SourcesDirectory)/superbuild
+      $(SOURCE_DIR)/superbuild
       -DCMAKE_BUILD_TYPE=Release
       -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
       -DMapper_CI_GIT_REPOSITORY=$(Build.SourcesDirectory)
@@ -110,7 +110,8 @@ steps:
     testResultsFormat: cTest
     testResultsFiles: '*/Test.xml'
     searchFolder: $(TEST_RESULTS)
-    buildPlatform: $(IMAGE_NAME)
+    buildPlatform: $(IMAGE_NAME)$(OUTPUT_SUFFIX)
+    testRunTitle: '$(Agent.JobName)'
   condition: variables.TEST_RESULTS
   displayName: 'Publish test results'
 

@@ -155,29 +155,48 @@ jobs:
 
 - job: Windows_mingw32_Release
   displayName: Windows x32 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw32
+    OUTPUT_SUFFIX: '-$(MINGW)'
   pool:
-    vmImage: 'windows-2019'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: msys2-build.yml
+    - template: setup-msys2.yml
+    - template: build.yml
       parameters:
-        imageName: 'windows-2019'
-        mingw: 'mingw32'
         cmakeArgs: >
-          -G "MinGW Makefiles"
+          -G "MSYS Makefiles"
           -DCMAKE_BUILD_TYPE=Release
-        makeArgs: -j 3
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
 
 
-- job: Windows_mingw64_RelWithDebInfo
-  displayName: Windows x64 (RelWithDebInfo, MinGW)
+- job: Windows_mingw64_Release
+  displayName: Windows x64 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw64
+    OUTPUT_SUFFIX: '-$(MINGW)'
   pool:
-    vmImage: 'windows-2019'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: msys2-build.yml
+    - template: setup-msys2.yml
+    - template: build.yml
       parameters:
-        imageName: 'windows-2019'
-        mingw: 'mingw64'
         cmakeArgs: >
-          -G "Ninja"
-          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -G "MSYS Makefiles"
+          -DCMAKE_BUILD_TYPE=Release
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
 

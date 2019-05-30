@@ -30,7 +30,7 @@
 steps:
 - task: PublishPipelineArtifact@0
   inputs:
-    artifactName: 'Mapper-$(IMAGE_NAME)$(TARGET_SUFFIX)'
+    artifactName: 'Mapper-$(IMAGE_NAME)$(OUTPUT_SUFFIX)'
     targetPath: $(Build.SourcesDirectory)/output
   displayName: 'Publish binary artifacts'
 
