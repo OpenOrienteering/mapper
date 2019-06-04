@@ -93,7 +93,7 @@ superbuild_package(
       "-DCMAKE_PROGRAM_PATH=@HOST_DIR@/bin"
     >
     INSTALL_COMMAND
-      "${CMAKE_COMMAND}" --build . --target package/fast
+      "${CMAKE_COMMAND}" --build . --target package$<IF:$<STREQUAL:@CMAKE_GENERATOR@,Ninja>,,/fast>
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:
     TEST_COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output

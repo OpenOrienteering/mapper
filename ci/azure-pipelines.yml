@@ -35,8 +35,8 @@ jobs:
     - template: codespell.yml
 
 
-- job: macOS_Debug
-  displayName: macOS (Debug)
+- job: macOS
+  displayName: macOS (Release)
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -47,13 +47,13 @@ jobs:
     - template: build.yml
       parameters:
         cmakeArgs: >
-          -DCMAKE_BUILD_TYPE=Debug
+          -DCMAKE_BUILD_TYPE=Release
         buildArgs: -j5
     - template: publish.yml
 
 
-- job: Linux_clazy_Release
-  displayName: Linux (Release, clazy)
+- job: Linux_clazy
+  displayName: Linux (RelWithDebInfo, clazy)
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
@@ -68,7 +68,7 @@ jobs:
     - template: build.yml
       parameters:
         cmakeArgs: >
-          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - template: publish.yml
 
 
@@ -89,12 +89,14 @@ jobs:
     - template: build.yml
       parameters:
         cmakeArgs: >
+          -G Ninja
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
+        buildArgs:
     - template: publish-coverage.yml
 
 
-- job: Android_armv7_Release
+- job: Android_armv7
   displayName: Android arm-v7 (Release)
   variables:
     IMAGE_NAME: 'macos-10.13'
@@ -125,8 +127,8 @@ jobs:
     - template: publish.yml
 
 
-- job: MinGW_x64_Release
-  displayName: Windows x64 (Release, cross on Linux)
+- job: MinGW_x64_Linux
+  displayName: Windows x64 (Release, MinGW on Linux)
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
