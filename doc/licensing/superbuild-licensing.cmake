@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -58,19 +58,26 @@ if(NOT APPLE)
 	  libsqlite
 	)
 endif()
-if(NOT ANDROID AND NOT APPLE)
+if(WIN32)
 	list(APPEND third_party_components
 	  zlib
 	)
 endif()
-if(MINGW OR CMAKE_ANDROID_STL_TYPE MATCHES "gnustl")
+if(CMAKE_ANDROID_STL_TYPE MATCHES "gnustl")
 	list(APPEND third_party_components
 	  gnustl
 	)
-endif()
-if(ANDROID_STL MATCHES "c\\+\\+")
+elseif(CMAKE_ANDROID_STL_TYPE MATCHES "c\\+\\+")
 	list(APPEND third_party_components
 	  libc++
+	)
+endif()
+if(MINGW)
+	list(APPEND third_party_components
+	  gcc-libs
+	  libiconv
+	  mingw-w64
+	  winpthreads
 	)
 endif()
 
@@ -87,7 +94,7 @@ list(APPEND common_license_names
 )
 
 
-# Map component names to package names
+# Map component names to source package names
 set(package_names
   libcurl:curl
   libexpat:expat

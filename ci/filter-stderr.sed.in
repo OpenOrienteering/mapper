@@ -1,5 +1,5 @@
 # Cf. https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md
-/^\/.*[Ww]arning:/ {
+/^\/.*openorienteering.*[Ww]arning:/ {
   s,^@SOURCE_DIR@/,,
   s,^,##vso[task.LogIssue type=warning;],
   s,^\([^;]*\);\]\([^:]*\):\([0-9]*\):\([0-9]*\): *[Ww]arning: *,\1;sourcepath=\2;linenumber=\3;columnnumber=\4;],

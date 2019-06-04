@@ -34,115 +34,171 @@ jobs:
   steps:
     - template: codespell.yml
 
-- job: macOS_Debug
+
+- job: macOS
+  displayName: macOS (Release)
   variables:
+    IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
   pool:
-    vmImage: 'macos-10.13'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: build-steps.yml
+    - template: setup-macos.yml
+    - template: build.yml
       parameters:
-        imageName: 'macos-10.13'
-        cmakeArgs: >
-          -DCMAKE_BUILD_TYPE=Debug
-          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
-        buildCommand: make -j5
-
-- job: Linux_clazy_Release
-  variables:
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: build-steps.yml
-      parameters:
-        imageName: 'ubuntu-16.04'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
-        mode: 'clazy'
+        buildArgs: -j5
+    - template: publish.yml
+
+
+- job: Linux_clazy
+  displayName: Linux (RelWithDebInfo, clazy)
+  variables:
+    IMAGE_NAME: 'ubuntu-16.04'
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    CLAZY_VERSION: 1.5
+    CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
+    CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
+    CLAZY_NO_WERROR: 1
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-ubuntu.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - template: publish.yml
+
 
 - job: Linux_Coverage
+  displayName: Linux (Debug, coverage)
   variables:
+    IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    CC: gcc
+    CFLAGS: -fprofile-arcs -ftest-coverage
+    CXX: g++
+    CXXFLAGS: -fprofile-arcs -ftest-coverage
+    LDFLAGS: -fuse-ld=gold
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: build-steps.yml
+    - template: setup-ubuntu.yml
+    - template: build.yml
       parameters:
-        imageName: 'ubuntu-16.04'
         cmakeArgs: >
+          -G Ninja
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
-          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
-        mode: 'gcov'
+        buildArgs:
+    - template: publish-coverage.yml
 
-- job: Android_armv7_Release
+
+- job: Android_armv7
+  displayName: Android arm-v7 (Release)
   variables:
+    IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: arm-linux-androideabi
+    TARGET_SUFFIX: -$(TARGET)
   pool:
-    vmImage: 'macos-10.13'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: build-steps.yml
+    - template: setup-macos.yml
+    - template: build.yml
       parameters:
-        imageName: 'macos-10.13'
         targetSuffix: '-arm-linux-androideabi'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          -DENABLE_arm-linux-androideabi=1
-          -Darm-linux-androideabi_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi
-          -Darm-linux-androideabi_INSTALL_PREFIX=/usr
-          -Darm-linux-androideabi_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/toolchain
-          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/arm-linux-androideabi/usr/share/gdal
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_BUILD_LIBCXX=1
-        buildCommand: make -j5
-        toolchainTargets: >
-          arm-linux-androideabi-toolchain-$(openorienteering.superbuild.ndkVersion)
-          android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
+        outputFilter: packaging/Mapper/install/build/outputs/apk/*/*.apk
+    - template: publish.yml
 
-- job: MinGW_x64_Release
+
+- job: MinGW_x64_Linux
+  displayName: Windows x64 (Release, MinGW on Linux)
   variables:
+    IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    TARGET: x86_64-w64-mingw32
+    TARGET_SUFFIX: -$(TARGET)
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: build-steps.yml
+    - template: setup-ubuntu.yml
+    - template: build.yml
       parameters:
-        imageName: 'ubuntu-16.04'
-        targetSuffix: '-x86_64-w64-mingw32'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          -DENABLE_x86_64-w64-mingw32=1
-          -Dx86_64-w64-mingw32_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32
-          -Dx86_64-w64-mingw32_INSTALL_PREFIX=/usr
-          -Dx86_64-w64-mingw32_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/toolchain
-          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/x86_64-w64-mingw32/usr/share/gdal
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_LICENSING_PROVIDER=OFF
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -Dmingw-w64_FIX_HEADERS=1
-        toolchainTargets: >
-          x86_64-w64-mingw32-toolchain-1
+        toolchainTargets:
+          - $(TARGET)-toolchain-1
+          - toolchain-info-$(TARGET)
+    - template: publish.yml
+
 
 - job: Windows_mingw32_Release
+  displayName: Windows x32 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw32
+    OUTPUT_SUFFIX: '-$(MINGW)'
   pool:
-    vmImage: 'windows-2019'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: msys2-build.yml
+    - template: setup-msys2.yml
+    - template: build.yml
       parameters:
-        imageName: 'windows-2019'
-        mingw: 'mingw32'
         cmakeArgs: >
-          -G "MinGW Makefiles"
+          -G "MSYS Makefiles"
           -DCMAKE_BUILD_TYPE=Release
-        makeArgs: -j 3
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
 
-- job: Windows_mingw64_RelWithDebInfo
+
+- job: Windows_mingw64_Release
+  displayName: Windows x64 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw64
+    OUTPUT_SUFFIX: '-$(MINGW)'
   pool:
-    vmImage: 'windows-2019'
+    vmImage: '$(IMAGE_NAME)'
   steps:
-    - template: msys2-build.yml
+    - template: setup-msys2.yml
+    - template: build.yml
       parameters:
-        imageName: 'windows-2019'
-        mingw: 'mingw64'
         cmakeArgs: >
-          -G "Ninja"
-          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+          -G "MSYS Makefiles"
+          -DCMAKE_BUILD_TYPE=Release
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
 

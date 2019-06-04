@@ -1,5 +1,5 @@
 #
-#    Copyright 2014-2017 Kai Pastor
+#    Copyright 2014-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -53,8 +53,20 @@ set(LICENSING_PROVIDER "${default_provider}" CACHE STRING
 )
 
 
-# Software and data used directly by Mapper
+# Software and data used by Mapper, as given by configuration
+set(LICENSING_ATTRIBUTION "" CACHE STRING
+  "Third-party components for which attribution must be deployed"
+)
+
+# A way to remove attributions which is required by default.
+set(LICENSING_NO_ATTRIBUTION "" CACHE STRING
+  "Third-party components for which attribution shall not be deployed"
+)
+
+
+# Software and data used directly by Mapper, or set by configuration
 set(third_party_components
+  ${LICENSING_ATTRIBUTION}
   libpolyclipping
   proj
   qtbase
@@ -171,6 +183,9 @@ foreach(entry ${package_names})
 endforeach()
 
 list(SORT third_party_components)
+if(LICENSING_NO_ATTRIBUTION)
+	list(REMOVE_ITEM third_party_components ${LICENSING_NO_ATTRIBUTION})
+endif()
 list(REMOVE_DUPLICATES third_party_components)
 foreach(basename ${third_party_components})
 	if(LICENSING_PROVIDER AND NOT DEFINED explicit_copyright_${basename})

@@ -1,0 +1,117 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+parameters:
+  cmakeArgs: '-DCMAKE_BUILD_TYPE=Release'
+  buildArgs: -j3
+  toolchainTargets: []
+  outputFilter: OpenOrienteering-Mapper-*.*
+
+
+steps:
+- bash: |
+    set -x
+    set -e
+    git clone --branch master --depth 1 https://github.com/openorienteering/superbuild.git
+    cp ci/openorienteering-mapper-ci.cmake superbuild/
+  displayName: 'Checkout superbuild source'
+
+- task: CMake@1
+  inputs:
+    workingDirectory: 'build'
+    cmakeArgs: >
+      $(CMAKE_WRAPPING)
+      $(SOURCE_DIR)/superbuild
+      -DCMAKE_BUILD_TYPE=Release
+      -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
+      -DMapper_CI_GIT_REPOSITORY=$(Build.SourcesDirectory)
+      -DMapper_CI_GIT_TAG=$(Build.SourceVersion)
+      -DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranchName)-$(Build.BuildNumber)
+      -DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)
+      -DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)
+      -DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)
+      -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
+      -Ddefault_INSTALL_DIR=
+      -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)
+      -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/toolchain
+      ${{ parameters.cmakeArgs }}
+  displayName: 'Configure'
+  
+- task: CMake@1
+  inputs:
+    workingDirectory: 'build'
+    cmakeArgs: >
+      $(CMAKE_WRAPPING)
+      --build .
+      --target toolchain-info
+      -- ${{ parameters.buildArgs }}
+  displayName: 'Build toolchain-info'
+
+- ${{ each toolchainTarget in parameters.toolchainTargets }}:
+  - task: CMake@1
+    inputs:
+      workingDirectory: 'build'
+      cmakeArgs: >
+        $(CMAKE_WRAPPING)
+        --build .
+        --target ${{ toolchainTarget }}
+        -- ${{ parameters.buildArgs }}
+    displayName: 'Build ${{ toolchainTarget }}'
+
+- task: CMake@1
+  inputs:
+    workingDirectory: 'build'
+    cmakeArgs: >
+      $(CMAKE_WRAPPING)
+      --build .
+      --target openorienteering-mapper-ci$(TARGET_SUFFIX)
+      -- ${{ parameters.buildArgs }}
+  displayName: 'Build openorienteering-mapper-ci'
+
+- bash: |
+    set -x
+    #
+    mkdir output
+    cp build/${TARGET:-default}/openorienteering-mapper-ci/${{ parameters.outputFilter }} output/
+    #
+    if [ ! -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
+      echo "##vso[task.setVariable variable=TEST_RESULTS]"
+    fi
+  displayName: 'Process output and test results'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: cTest
+    testResultsFiles: '*/Test.xml'
+    searchFolder: $(TEST_RESULTS)
+    buildPlatform: $(IMAGE_NAME)$(OUTPUT_SUFFIX)
+    testRunTitle: '$(Agent.JobName)'
+  condition: variables.TEST_RESULTS
+  displayName: 'Publish test results'
+
