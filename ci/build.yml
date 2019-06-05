@@ -50,7 +50,7 @@ steps:
       $(SOURCE_DIR)/superbuild
       -DCMAKE_BUILD_TYPE=Release
       -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
-      -DMapper_CI_GIT_REPOSITORY=$(Build.SourcesDirectory)
+      -DMapper_CI_GIT_REPOSITORY=$(SOURCE_DIR)
       -DMapper_CI_GIT_TAG=$(Build.SourceVersion)
       -DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranchName)-$(Build.BuildNumber)
       -DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)
