@@ -106,13 +106,14 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 else()
 	set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
 endif()
+string(REGEX REPLACE "[\\/:*?| ]" "_" mapper_version_filesystem "${Mapper_VERSION_DISPLAY}")
 set(CPACK_PACKAGE_FILE_NAME 
-    "OpenOrienteering-Mapper-${Mapper_VERSION}-${_system_name}")
+    "OpenOrienteering-Mapper-${mapper_version_filesystem}-${_system_name}")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
 set(CPACK_STRIP_FILES "TRUE")
 
 set(CPACK_SOURCE_PACKAGE_FILE_NAME
-    "openorienteering-mapper_${Mapper_VERSION}-src")
+    "openorienteering-mapper_${mapper_version_filesystem}-src")
 set(CPACK_SOURCE_IGNORE_FILES 
   "${PROJECT_BINARY_DIR}"
   "/[.]git/"
@@ -124,12 +125,13 @@ set(CPACK_SOURCE_IGNORE_FILES
 
 set(MAPPER_MACOS_SUBDIR "")
 
+set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
+
 if(WIN32)
 	# Packaging as ZIP archive
 	set(CPACK_GENERATOR_DEFAULT "ZIP")
 	#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${mapper_version_filesystem}")
 	
 	find_program(MAKENSIS_EXECUTABLE "makensis")
 	if(MAKENSIS_EXECUTABLE)
@@ -137,7 +139,7 @@ if(WIN32)
 		# The title displayed at the top of the installer
 		set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
 		# The display name string that appears in the Windows Add/Remove Program control panel
-		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
+		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
 		# NSIS start menu links will point to executables in this directory
 		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 		# A path to the executable that contains the uninstaller icon.
@@ -160,13 +162,12 @@ if(WIN32)
 elseif(APPLE)
 	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${Mapper_VERSION}")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 	set_target_properties(Mapper PROPERTIES
 	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
 	  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
-	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for OS X"
+	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for macOS"
 	  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
 	  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 	  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
