@@ -6,12 +6,12 @@
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Opaque White below Black</source>
@@ -21,17 +21,17 @@
     <message>
         <source>Black 65%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Svart 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Svart 20%</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun  50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -46,77 +46,77 @@
     <message>
         <source>Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 50%</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-oransje</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 25% (grå)</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%, gul</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn</translation>
     </message>
     <message>
         <source>Opaque Yellow</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig gul</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig hvit over grønn</translation>
     </message>
     <message>
         <source>Opaque Green 20%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn 20%</translation>
     </message>
     <message>
         <source>Opaque Green 50%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn 50%</translation>
     </message>
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn, svart 50%</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn</translation>
     </message>
     <message>
         <source>Green 50%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%</translation>
     </message>
     <message>
         <source>Green 20%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 20%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -131,17 +131,17 @@
     <message>
         <source>White over Yellow</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvitt over gult</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 50%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -216,12 +216,12 @@
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jordskrent, minimal størrelse</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordskrent er en krapp forhøyning i bakkenivå som tydelig kan spilles fra dens omgivelser, f.eks. grus eller sandtak, vei eller jernbanegjennomskjæringer eller diker. Minimumshøyde: 1 m. En jordskrent kan forstyrre løpetakt. Etiketten representerer hele lengden av jordskrenten. For lange jordskrenter tillates det å bruke etiketter kortere enn minimumslengden på endene. Hvis to jordskrenter er tett sammen, kan etikettene utelates. Jordskrenter som det ikke går an å forsere, skal representeres ved symbol 201 (uforserbar skrent).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -391,7 +391,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uforserbar skrent</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -1311,7 +1311,7 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
     <message>
         <source>Prominent large tree</source>
         <comment>Name of symbol 417</comment>
-        <translation type="unfinished"></translation>
+        <translation>Markant stort tre</translation>
     </message>
     <message>
         <source>Footprint: 13.5 m x 13.5 m.</source>
@@ -1321,7 +1321,7 @@ Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).
     <message>
         <source>Prominent bush or tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Markant buske eller tre</translation>
     </message>
     <message>
         <source>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
@@ -1760,7 +1760,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
     <message>
         <source>Large building</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stor bygning</translation>
     </message>
     <message>
         <source>Buildings larger than 75 m x 75 m may be represented with a dark grey infill in urban areas.</source>
@@ -1770,7 +1770,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
     <message>
         <source>Large building outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Omriss av stor bygning</translation>
     </message>
     <message>
         <source>A black line surrounds the symbol 521.1.1.</source>
@@ -1810,53 +1810,54 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 523</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>A ruined building. The ground plan of a ruin is shown to scale, down to the minimum size.</source>
         <comment>Description of symbol 523</comment>
-        <translation type="unfinished"></translation>
+        <translation>En bygningsruin. Grunnplanet vises i den skalaen det er, ned til minimal størrelse.</translation>
     </message>
     <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 523.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin, minimal størrelse</translation>
     </message>
     <message>
         <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
         <comment>Description of symbol 523.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruiner som er så små at de ikke kan tegnes i den skalaen de er i kan representeres av én ubrutt linje.</translation>
     </message>
     <message>
         <source>High tower</source>
         <comment>Name of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høyt tårn</translation>
     </message>
     <message>
         <source>A high tower or large pylon. If it is in a forest, it must be visible above the level of the surrounding forest.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Et høyt tårn eller støttetårn. Hvis det er i en skog, må de være synlig fra omkransende skog.</translation>
     </message>
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lite tårn</translation>
     </message>
     <message>
         <source>An obvious small tower, platform or seat.</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Et åpenbart lite tårn, plattform eller base.</translation>
     </message>
     <message>
         <source>Cairn</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varde</translation>
     </message>
     <message>
         <source>A prominent cairn, memorial stone, boundary stone or trigonometric point.
 Minimum height: 0.5 m.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>En markant varde, minnestein, grensestein eller trigonometrisk punkt.
+Minimumshøyde: 0,5 m.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -1912,7 +1913,7 @@ Location is at the centre of gravity of the symbol.</source>
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
@@ -1932,7 +1933,7 @@ Location is at the centre of gravity of the symbol.</source>
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
@@ -1942,7 +1943,7 @@ Location is at the centre of gravity of the symbol.</source>
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster, blåe</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map. North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
@@ -1952,7 +1953,7 @@ Location is at the centre of gravity of the symbol.</source>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsmerke</translation>
     </message>
     <message>
         <source>At least three registration marks should be placed within the frame of a map in a non-symmetrical position. These can be used for course overprinting when overprinting on already printed maps. In addition, it allows a check of colour registration when printing colours separately.</source>
@@ -1982,7 +1983,7 @@ Location is at the centre of gravity of the symbol.</source>
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
@@ -2033,7 +2034,7 @@ Sections of the circle should be omitted to leave important detail showing.</sou
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The end of the course.</source>
@@ -2162,12 +2163,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logo</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logoen</translation>
     </message>
 </context>
 <context>
@@ -2175,17 +2176,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -2195,67 +2196,67 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Blue</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig blå</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 50%</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-oransje</translation>
     </message>
     <message>
         <source>Black 30%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%, gul</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønt på hvitt på grønt</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig hvitt over grønt</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønt</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -2265,22 +2266,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 50%</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit på gul 70%</translation>
     </message>
     <message>
         <source>Yellow 70%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 70%</translation>
     </message>
     <message>
         <source>Contour</source>
