@@ -81,26 +81,15 @@ QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 
 namespace Util {
 	
+#if 0
 	// Implementation moved to settings.cpp
 	qreal mmToPixelPhysical(qreal millimeters);
-	
-	// Implementation moved to settings.cpp
 	qreal pixelToMMPhysical(qreal pixels);
-
-	
-	// Implementation moved to settings.cpp
 	qreal mmToPixelLogical(qreal millimeters);
-	
-	// Implementation moved to settings.cpp
 	qreal pixelToMMLogical(qreal pixels);
-	
-	
-	// Implementation moved to settings.cpp
 	bool isAntialiasingRequired(qreal ppi);
-	
-	// Implementation moved to settings.cpp
 	bool isAntialiasingRequired();
-	
+#endif
 	
 	
 	void showHelp(QWidget* dialog_parent, const char* filename_latin1, const char* anchor_latin1)

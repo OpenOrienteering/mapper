@@ -57,8 +57,5 @@ steps:
         chmod +x $(SUPERBUILD_INSTALL_DIR)/${TARGET}/toolchain/bin/*
       fi
     fi
-    
-    sed -e "s,@SOURCE_DIR@,${PWD}," ci/filter-stderr.sed.in \
-      > filter-stderr.sed
   displayName: 'Prepare common build tools'
 

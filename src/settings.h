@@ -107,11 +107,7 @@ public:
 	/// Returns the default value for the setting
 	inline QVariant getDefaultValue(SettingsEnum setting) const { return setting_defaults[setting]; }
 	
-	static Settings& getInstance()
-	{
-		static Settings instance;
-		return instance;
-	}
+	static Settings& getInstance();
 	
 	// Methods related to specific settings
 	

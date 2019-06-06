@@ -271,7 +271,7 @@ set(ci
   ci/azure-pipelines.yml
   ci/build.yml
   ci/codespell.yml
-  ci/filter-stderr.sed.in
+  ci/filter-stderr.sed
   ci/publish.yml
   ci/publish-coverage.yml
   ci/setup-common.yml

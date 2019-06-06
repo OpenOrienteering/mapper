@@ -4,5 +4,14 @@ if [ -n "${MINGW}" ] ; then
   unset CC
   unset PKG_CONFIG_PATH
 fi
-set -x
-"$@" 3>&1 1>&2 2>&3 | sed -f "${SOURCE_DIR}/filter-stderr.sed" 3>&1 1>&2 2>&3
+
+unset UNBUFFER
+if [ -f /usr/bin/stdbuf ] ; then
+  UNBUFFER="/usr/bin/stdbuf -oL"
+elif [ -f /usr/bin/unbuffer ] ; then
+  UNBUFFER="/usr/bin/unbuffer"
+fi
+
+set -o pipefail
+
+${UNBUFFER} "$@" 2>&1 | ${UNBUFFER} sed -f "${SOURCE_DIR}/ci/filter-stderr.sed"
