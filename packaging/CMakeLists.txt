@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -344,7 +344,9 @@ if(Mapper_PACKAGE_QT)
 			# unless plugin class name ends in Plugin
 			file(GLOB pluginTargets "${Qt5Positioning_DIR}/Qt5Positioning_*.cmake")
 			foreach(file ${pluginTargets})
-				if(NOT file MATCHES "Plugin.cmake")
+				string(REGEX REPLACE "^.*/Qt5Positioning_([^/]*)\\.cmake" "Qt5::\\1" lib "${file}")
+				if(NOT file MATCHES "Plugin.cmake"
+				   AND NOT "${Qt5Positioning_PLUGINS}" MATCHES "${lib}")
 					include(${file})
 				endif()
 			endforeach()
