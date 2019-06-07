@@ -40,6 +40,8 @@
 #include <QLabel>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPen>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSpacerItem>
@@ -221,6 +223,31 @@ namespace Util {
 	
 	
 	
+	namespace Marker
+	{
+		void drawCenterMarker(QPainter* painter, const QPointF& center)
+		{
+			const auto saved_hints = painter->renderHints();
+			painter->setRenderHint(QPainter::Antialiasing, Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool());
+			
+			const auto larger_radius = mmToPixelPhysical(1.1);
+			const auto smaller_radius = larger_radius*3/4;
+			
+			auto pen = QPen(Qt::white);
+			pen.setWidthF(larger_radius - smaller_radius);
+			painter->setPen(pen);
+			painter->setBrush(Qt::NoBrush);
+			painter->drawEllipse(center, smaller_radius, smaller_radius);
+			pen.setColor(Qt::black);
+			painter->setPen(pen);
+			painter->drawEllipse(center, larger_radius, larger_radius);
+			
+			painter->setRenderHints(saved_hints);
+		}
+	}  // namespace Marker
+
+
+
 	QSpacerItem* SpacerItem::create(const QWidget* widget)
 	{
 		const int spacing = widget->style()->pixelMetric(QStyle::PM_LayoutTopMargin);

@@ -58,6 +58,9 @@ protected:
 	void dragMove() override;
 	void dragFinish() override;
 	
+	bool keyPressEvent(QKeyEvent* event) override;
+	bool keyReleaseEvent(QKeyEvent* event) override;
+
 	void drawImpl(QPainter* painter, MapWidget* widget) override;
 	
 	int updateDirtyRectImpl(QRectF& rect) override;
@@ -66,6 +69,7 @@ protected:
 	MapCoordF scaling_center;
 	double reference_length = 0;
 	double scaling_factor   = 1;
+	bool using_scaling_center = true;
 };
 
 

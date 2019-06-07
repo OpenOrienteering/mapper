@@ -41,6 +41,7 @@
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
 #include "gui/map/map_widget.h"
+#include "gui/util_gui.h"
 #include "tools/tool.h"
 #include "tools/tool_helpers.h"
 #include "util/util.h"
@@ -160,18 +161,7 @@ void RotateTool::drawImpl(QPainter* painter, MapWidget* widget)
 	map()->drawSelection(painter, true, widget);
 	painter->restore();
 	
-	const auto saved_hints = painter->renderHints();
-	painter->setRenderHint(QPainter::Antialiasing, true);
-	
-	painter->setPen(Qt::white);
-	painter->setBrush(Qt::NoBrush);
-	
-	/// \todo Use dpi-scaled dimensions
-	painter->drawEllipse(center, 3, 3);
-	painter->setPen(Qt::black);
-	painter->drawEllipse(center, 4, 4);
-	
-	painter->setRenderHints(saved_hints);
+	Util::Marker::drawCenterMarker(painter, center);
 }
 
 
