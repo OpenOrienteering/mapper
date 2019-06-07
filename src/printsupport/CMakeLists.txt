@@ -51,7 +51,9 @@ target_compile_definitions(printsupport PRIVATE
   QT_USE_QSTRINGBUILDER
 )
 target_include_directories(printsupport
-  BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
+  SYSTEM
+  BEFORE
+  PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
   INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
@@ -75,5 +77,5 @@ foreach(module Core Gui PrintSupport)
 			endif()
 		endforeach()
 	endif()
-	target_include_directories(printsupport PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+	target_include_directories(printsupport SYSTEM PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()

@@ -47,7 +47,8 @@ target_compile_definitions(mapper-gdal PRIVATE
 
 target_compile_definitions(mapper-gdal INTERFACE MAPPER_USE_GDAL)
 
-target_include_directories(mapper-gdal PRIVATE "${GDAL_INCLUDE_DIR}" "${PROJECT_SOURCE_DIR}/src")
+target_include_directories(mapper-gdal SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
+target_include_directories(mapper-gdal PRIVATE "${PROJECT_SOURCE_DIR}/src")
 
 target_link_libraries(mapper-gdal "${GDAL_LIBRARY}" Qt5::Core Qt5::Gui Qt5::Widgets)
 
