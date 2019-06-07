@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,10 +72,18 @@ AutosaveTest::AutosaveTest(QObject* parent)
 : QObject(parent)
 , autosave_interval(0.02) // 0.02 min = 1.2 s
 {
+	// The default settings format for Windows (registry) needs an organization.
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
 	// Set distinct application name in order to use distinct settings.
 	// Autosave objects must not be constructed before this!
 	QCoreApplication::setApplicationName(QString::fromLatin1("Tests"));
+}
+
+void AutosaveTest::initTestCase()
+{
 	Settings::getInstance().setSetting(Settings::General_AutosaveInterval, autosave_interval);
+	QCOMPARE(QSettings().status(), QSettings::NoError);
+	QCOMPARE(Settings::getInstance().getSetting(Settings::General_AutosaveInterval).toDouble(), autosave_interval);
 }
 
 void AutosaveTest::autosaveTestDocumentTest()

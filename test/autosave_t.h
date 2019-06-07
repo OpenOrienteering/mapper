@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014, 2017 Kai Pastor
+ *    Copyright 2014, 2017, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -78,6 +78,8 @@ public:
 	explicit AutosaveTest(QObject* parent = nullptr);
 	
 private slots:
+	void initTestCase();
+	
 	/** @brief Check the AutosaveTestDocument implementation of autosave(). */
 	void autosaveTestDocumentTest();
 	
