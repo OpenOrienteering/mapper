@@ -58,6 +58,8 @@ superbuild_package(
   SOURCE
     GIT_REPOSITORY ${Mapper_CI_GIT_REPOSITORY}
     GIT_TAG        ${Mapper_CI_GIT_TAG}
+    PATCH_COMMAND
+      sed -i -e [[ s/autosave_t MANUAL/autosave_t/ ]] test/CMakeLists.txt
 
   USING
     Mapper_CI_VERSION_DISPLAY
