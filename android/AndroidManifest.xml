@@ -88,15 +88,16 @@
         </activity>
     </application>
 
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="19"/>
+    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28"/>
     <supports-screens android:largeScreens="true" android:normalScreens="true" android:anyDensity="true" android:smallScreens="true"/>
 
     <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
          Remove the comment if you do not require these default permissions. -->
     <!-- Not used for Mapper: %%INSERT_PERMISSIONS -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/><!-- PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.INTERNET"/><!-- PROTECTION_NORMAL -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
 
     <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
          Remove the comment if you do not require these default features. -->
