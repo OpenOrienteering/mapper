@@ -112,6 +112,10 @@ int main(int argc, char** argv)
 	QApplication qapp(argc, argv);
 #endif
 	
+#ifdef Q_OS_ANDROID
+	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "1");
+#endif
+	
 	// Load resources
 	Q_INIT_RESOURCE(resources);
 	

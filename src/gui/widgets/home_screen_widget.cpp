@@ -35,6 +35,7 @@
 #include <QVBoxLayout>
 
 #include "settings.h"
+#include "core/app_permissions.h"
 #include "core/storage_location.h" // IWYU pragma: keep
 #include "fileformats/file_format_registry.h"
 #include "gui/home_screen_controller.h"
@@ -475,6 +476,23 @@ QListWidget* HomeScreenWidgetMobile::makeFileListWidget()
 void HomeScreenWidgetMobile::updateFileListWidget()
 {
 	file_list_widget->clear();
+	
+	auto storage_access = AppPermissions::checkPermission(AppPermissions::StorageAccess);
+	if (storage_access != AppPermissions::Granted)
+	{
+		AppPermissions::requestPermission(AppPermissions::StorageAccess, this, &HomeScreenWidgetMobile::updateFileListWidget);
+		
+		// List examples
+		constexpr auto filters = QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot;
+		constexpr auto flags = QDir::DirsLast | QDir::Name | QDir::IgnoreCase | QDir::LocaleAware;
+		auto const info_list = QDir(QLatin1String("data:/examples")).entryInfoList(filters, flags);
+		for (const auto& file_info : info_list)
+		{
+			addItemToFileList(file_info);
+		}
+		return;
+	}
+	
 	if (history.empty())
 	{
 		// First screen.

@@ -44,6 +44,7 @@ set(Mapper_Common_SRCS
   mapper_resource.cpp
   settings.cpp
   
+  core/app_permissions.cpp
   core/autosave.cpp
   core/crs_template.cpp
   core/crs_template_implementation.cpp
