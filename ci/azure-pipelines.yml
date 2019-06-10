@@ -124,7 +124,6 @@ jobs:
           - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
           - toolchain-info-$(TARGET)
           - android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
-        outputFilter: packaging/Mapper/install/build/outputs/apk/*/*.apk
     - template: publish.yml
 
 
