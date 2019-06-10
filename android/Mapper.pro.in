@@ -37,7 +37,8 @@ CONFIG(debug, release|debug) {
   system(cp -a "$$ANDROID_PACKAGE_SOURCE_DIR" "$$OUT_PWD/")
   ANDROID_PACKAGE_SOURCE_DIR = $$OUT_PWD/android
   system(sed -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
-  system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
+  system(sed -e $$shell_quote(/<manifest/ s/@Mapper_VERSION@/@Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
+  system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> @Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
   system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--")
 }
 
