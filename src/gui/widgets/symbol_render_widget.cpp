@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -825,24 +825,45 @@ void SymbolRenderWidget::scaleSymbol()
 
 void SymbolRenderWidget::deleteSymbols()
 {
-	// save selected symbols
+	// Collect selected symbols
 	std::vector<const Symbol*> saved_selection;
 	saved_selection.reserve(selected_symbols.size());
+	
+	bool need_confirmation = true;
 	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.push_back(map->getSymbol(symbol_index));
+		auto* symbol = map->getSymbol(symbol_index);
+		if (need_confirmation && map->existsObjectWithSymbol(symbol))
+		{
+			auto answer = QMessageBox::warning(
+			                  this,
+			                  tr("Confirmation"),
+			                  tr("The map contains objects with the symbol \"%1\". "
+			                     "Deleting it will delete those objects and clear the undo history! "
+			                     "Do you really want to do that?")
+			                  .arg(symbol->getName()),
+			                  QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No | QMessageBox::Cancel);
+			switch (answer)
+			{
+			case QMessageBox::Cancel:
+				return;
+			case QMessageBox::YesToAll:
+				need_confirmation = false;
+				break;
+			case QMessageBox::Yes:
+				break;
+			case QMessageBox::No:
+				continue;
+			default:
+				Q_UNREACHABLE();
+			}
+		}
+		saved_selection.push_back(symbol);
 	}
 	
-	// delete symbols in order
+	// Delete collected symbols
 	for (auto* symbol : saved_selection)
-	{
-		if (map->existsObjectWithSymbol(symbol))
-		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(symbol->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-				continue;
-		}
 		map->deleteSymbol(map->findSymbolIndex(symbol));
-	}
 	
 	if (selected_symbols.empty() && map->getFirstSelectedObject())
 		selectSingleSymbol(map->getFirstSelectedObject()->getSymbol());
