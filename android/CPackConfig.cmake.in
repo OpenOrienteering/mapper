@@ -26,8 +26,16 @@ set(CPACK_GENERATOR "")
 set(destdir "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install")
 
 set(final_message )
-set(KEYSTORE_URL "@KEYSTORE_URL@")
-set(KEYSTORE_ALIAS "@KEYSTORE_ALIAS@")
+
+set(apk "${destdir}/build/outputs/apk/")
+if(@RELEASE_APK@)
+	set(config "CONFIG+=release")
+	set(apk "${apk}/release/install-release" )
+else()
+	set(config "CONFIG+=debug")
+	set(apk "${apk}/debug/install-debug" )
+endif()
+
 set(SIGN_APK "@SIGN_APK@")
 if(SIGN_APK AND "@CMAKE_HOST_UNIX@")
 	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
@@ -38,19 +46,20 @@ if(SIGN_APK AND "@CMAKE_HOST_UNIX@")
 		set(SIGN_APK 0)
 	endif()
 endif()
+
 if(SIGN_APK)
-	set(config "CONFIG+=release")
-	set(sign --sign "${KEYSTORE_URL}" "${KEYSTORE_ALIAS}")
+	set(sign --sign "@KEYSTORE_URL@" "@KEYSTORE_ALIAS@")
+	set(apk "${apk}-signed.apk" )
 else()
-	set(config "CONFIG+=debug")
 	set(sign )
-$<@SIGN_APK@:
-	# APK signing enabled at configuration time, but disabled at build time.
+	if(@RELEASE_APK@)
+		set(apk "${apk}-unsigned.apk")
+	else()
+		set(apk "${apk}.apk")
+	endif()
 	set(final_message "The build created an unsigned APK. To sign the APK, run:
-  jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore '${KEYSTORE_URL}' /path/to/install-release-unsigned.apk '${KEYSTORE_ALIAS}'
-  zipalign 4 /path/to/install-release-unsigned.apk outfile.apk"
+  apksigner sign --ks <keystore> --ks-key-alias <alias> ${apk}"
 	)
->
 endif()
 
 
@@ -92,8 +101,10 @@ execute_process(
     --deployment "bundled"
     --gradle
     --verbose
-$<$<OR:$<CONFIG:Release>,$<CONFIG:MinSizeRel>>:
+$<@RELEASE_APK@:
     --release
+>
+$<@SIGN_APK@:
     ${sign}
 >
   WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
@@ -103,13 +114,7 @@ if(result)
 	message(FATAL_ERROR "Running androiddeployqt failed: ${result}")
 endif()
 
-if(SIGN_APK)
-	configure_file(
-	  "@CMAKE_CURRENT_BINARY_DIR@/Mapper/install/build/outputs/apk/install-release-signed.apk"
-	  "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
-	  COPYONLY
-	)
-endif()
+configure_file("${apk}" "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk" COPYONLY)
 
 if(final_message)
 	message(STATUS "${final_message}")
