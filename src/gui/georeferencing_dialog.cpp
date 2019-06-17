@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -76,6 +76,17 @@
 
 
 namespace OpenOrienteering {
+	
+namespace  {
+
+void setValueIfChanged(QDoubleSpinBox* field, qreal value) {
+	if (!qFuzzyCompare(field->value(), value))
+		field->setValue(value);
+};
+
+}  // namespace
+
+
 
 // ### GeoreferencingDialog ###
 
@@ -300,13 +311,13 @@ void GeoreferencingDialog::transformationChanged()
 	            scale_factor_edit
 	);
 	
-	map_x_edit->setValue(georef->getMapRefPoint().x());
-	map_y_edit->setValue(-1 * georef->getMapRefPoint().y());
+	setValueIfChanged(map_x_edit, georef->getMapRefPoint().x());
+	setValueIfChanged(map_y_edit, -georef->getMapRefPoint().y());
 	
-	easting_edit->setValue(georef->getProjectedRefPoint().x());
-	northing_edit->setValue(georef->getProjectedRefPoint().y());
+	setValueIfChanged(easting_edit, georef->getProjectedRefPoint().x());
+	setValueIfChanged(northing_edit, georef->getProjectedRefPoint().y());
 	
-	scale_factor_edit->setValue(georef->getGridScaleFactor());
+	setValueIfChanged(scale_factor_edit, georef->getGridScaleFactor());
 	
 	updateGrivation();
 }
@@ -338,8 +349,8 @@ void GeoreferencingDialog::projectionChanged()
 	LatLon latlon = georef->getGeographicRefPoint();
 	double latitude  = latlon.latitude();
 	double longitude = latlon.longitude();
-	lat_edit->setValue(latitude);
-	lon_edit->setValue(longitude);
+	setValueIfChanged(lat_edit, latitude);
+	setValueIfChanged(lon_edit, longitude);
 	QString osm_link =
 	  QString::fromLatin1("http://www.openstreetmap.org/?lat=%1&lon=%2&zoom=18&layers=M").
 	  arg(latitude).arg(longitude);
@@ -362,7 +373,7 @@ void GeoreferencingDialog::projectionChanged()
 void GeoreferencingDialog::declinationChanged()
 {
 	const QSignalBlocker block(declination_edit);
-	declination_edit->setValue(georef->getDeclination());
+	setValueIfChanged(declination_edit, georef->getDeclination());
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -656,7 +667,7 @@ void GeoreferencingDialog::declinationReplyFinished(QNetworkReply* reply)
 								double declination = text.toDouble(&ok);
 								if (ok)
 								{
-									declination_edit->setValue(Georeferencing::roundDeclination(declination));
+									setValueIfChanged(declination_edit, Georeferencing::roundDeclination(declination));
 									return;
 								}
 								else 
