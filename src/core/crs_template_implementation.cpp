@@ -128,7 +128,7 @@ QString TextParameter::value(const QWidget* edit_widget) const
 void TextParameter::setValue(QWidget* edit_widget, const QString& value)
 {
 	auto* field = qobject_cast<Editor*>(edit_widget);
-	if (field)
+	if (field && field->text() != value)
 		field->setText(value);
 }
 
@@ -198,7 +198,7 @@ void UTMZoneParameter::setValue(QWidget* edit_widget, const QString& value)
 {
 	// Don't accidentally clear this field.
 	auto* text_edit = qobject_cast<UTMZoneEdit*>(edit_widget);
-	if (text_edit && !value.isEmpty())
+	if (text_edit && !value.isEmpty() && text_edit->text() != value)
 		text_edit->setText(value);
 }
 
@@ -274,8 +274,10 @@ QString IntRangeParameter::value(const QWidget* edit_widget) const
 
 void IntRangeParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	if (auto* spin_box = qobject_cast<QSpinBox*>(edit_widget))
-		spin_box->setValue(value.toInt());
+	auto* spin_box = qobject_cast<QSpinBox*>(edit_widget);
+	auto int_value = value.toInt();
+	if (bool(spin_box) && spin_box->value() != int_value)
+		spin_box->setValue(int_value);
 }
 
 
