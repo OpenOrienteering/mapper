@@ -178,7 +178,7 @@ UTMZoneParameter::~UTMZoneParameter()
 QWidget* UTMZoneParameter::createEditor(WidgetObserver& observer) const
 {
 	auto widget = new UTMZoneEdit(observer, nullptr);
-	QObject::connect(widget, &UTMZoneEdit::textEdited, [&observer](){ observer.crsParameterEdited(); });
+	QObject::connect(widget, &UTMZoneEdit::textChanged, [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
 

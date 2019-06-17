@@ -48,6 +48,7 @@ ENABLE_IWYU=true
 PATTERN=" \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  crs_param_widgets.cpp \
   duplicate_equals_t.cpp \
   file_dialog.cpp \
   /file_format.cpp \
