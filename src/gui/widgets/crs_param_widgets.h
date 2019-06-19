@@ -1,5 +1,5 @@
 /*
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015, 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #ifndef OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 #define OPENORIENTEERING_CRS_PARAM_WIDGETS_H
 
+#include <QtGlobal>
 #include <QObject>
 #include <QString>
 #include <QWidget>
@@ -35,6 +36,7 @@ class CRSParameterWidgetObserver;
 class UTMZoneEdit : public QWidget
 {
 	Q_OBJECT
+	Q_DISABLE_COPY(UTMZoneEdit)
 public:
 	UTMZoneEdit(CRSParameterWidgetObserver& observer, QWidget* parent = nullptr);
 	~UTMZoneEdit() override;
@@ -44,7 +46,7 @@ public:
 	bool calculateValue();
 	
 signals:
-	void textEdited(const QString& text); // TODO: rename to textChanged, see QLineEdit
+	void textChanged(const QString& text);
 	
 private:
 	CRSParameterWidgetObserver& observer;

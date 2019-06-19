@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +38,7 @@
 #include "core/latlon.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_param_widgets.h"
+#include "util/backports.h"  // IWYU pragma: keep (QOverload)
 
 
 namespace OpenOrienteering {
@@ -110,7 +111,7 @@ TextParameter::TextParameter(const QString& id, const QString& name)
 
 QWidget* TextParameter::createEditor(WidgetObserver& observer) const
 {
-	auto widget = new Editor();
+	auto* widget = new Editor();
 	QObject::connect(widget, &TextParameter::Editor::textChanged, [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
@@ -126,8 +127,8 @@ QString TextParameter::value(const QWidget* edit_widget) const
 
 void TextParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	auto field = qobject_cast<Editor*>(edit_widget);
-	if (field)
+	auto* field = qobject_cast<Editor*>(edit_widget);
+	if (field && field->text() != value)
 		field->setText(value);
 }
 
@@ -143,7 +144,7 @@ FullSpecParameter::FullSpecParameter(const QString& id, const QString& name)
 
 QWidget* FullSpecParameter::createEditor(WidgetObserver& observer) const
 {
-	auto widget = qobject_cast<TextParameter::Editor*>(TextParameter::createEditor(observer));
+	auto* widget = qobject_cast<TextParameter::Editor*>(TextParameter::createEditor(observer));
 	Q_ASSERT(widget);
 	if (widget)
 	{
@@ -170,15 +171,10 @@ UTMZoneParameter::UTMZoneParameter(const QString& id, const QString& name)
 	// nothing
 }
 
-UTMZoneParameter::~UTMZoneParameter()
-{
-	// nothing
-}
-
 QWidget* UTMZoneParameter::createEditor(WidgetObserver& observer) const
 {
-	auto widget = new UTMZoneEdit(observer, nullptr);
-	QObject::connect(widget, &UTMZoneEdit::textEdited, [&observer](){ observer.crsParameterEdited(); });
+	auto* widget = new UTMZoneEdit(observer, nullptr);
+	QObject::connect(widget, &UTMZoneEdit::textChanged, [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
 
@@ -193,7 +189,7 @@ std::vector<QString> UTMZoneParameter::specValues(const QString& edit_value) con
 QString UTMZoneParameter::value(const QWidget* edit_widget) const
 {
 	QString value;
-	if (auto text_edit = qobject_cast<const UTMZoneEdit*>(edit_widget))
+	if (auto* text_edit = qobject_cast<const UTMZoneEdit*>(edit_widget))
 		value = text_edit->text();
 	return value;
 }
@@ -201,12 +197,12 @@ QString UTMZoneParameter::value(const QWidget* edit_widget) const
 void UTMZoneParameter::setValue(QWidget* edit_widget, const QString& value)
 {
 	// Don't accidentally clear this field.
-	auto text_edit = qobject_cast<UTMZoneEdit*>(edit_widget);
-	if (text_edit && !value.isEmpty())
+	auto* text_edit = qobject_cast<UTMZoneEdit*>(edit_widget);
+	if (text_edit && !value.isEmpty() && text_edit->text() != value)
 		text_edit->setText(value);
 }
 
-QVariant UTMZoneParameter::calculateUTMZone(const LatLon lat_lon)
+QVariant UTMZoneParameter::calculateUTMZone(const LatLon& lat_lon)
 {
 	QVariant ret;
 	
@@ -248,16 +244,10 @@ IntRangeParameter::IntRangeParameter(const QString& id, const QString& name, int
 	// nothing
 }
 
-IntRangeParameter::~IntRangeParameter()
-{
-	// nothing
-}
-
 QWidget* IntRangeParameter::createEditor(WidgetObserver& observer) const
 {
-	using TakingIntArgument = void (QSpinBox::*)(int);
-	auto widget = Util::SpinBox::create(min_value, max_value);
-	QObject::connect(widget, (TakingIntArgument) &QSpinBox::valueChanged, [&observer](){ observer.crsParameterEdited(); });
+	auto* widget = Util::SpinBox::create(min_value, max_value);
+	QObject::connect(widget, QOverload<int>::of(&QSpinBox::valueChanged), [&observer](){ observer.crsParameterEdited(); });
 	return widget;
 }
 
@@ -277,15 +267,17 @@ std::vector<QString> IntRangeParameter::specValues(const QString& edit_value) co
 QString IntRangeParameter::value(const QWidget* edit_widget) const
 {
 	QString value;
-	if (auto spin_box = qobject_cast<const QSpinBox*>(edit_widget))
+	if (auto* spin_box = qobject_cast<const QSpinBox*>(edit_widget))
 		value = spin_box->cleanText();
 	return value;
 }
 
 void IntRangeParameter::setValue(QWidget* edit_widget, const QString& value)
 {
-	if (auto spin_box = qobject_cast<QSpinBox*>(edit_widget))
-		spin_box->setValue(value.toInt());
+	auto* spin_box = qobject_cast<QSpinBox*>(edit_widget);
+	auto int_value = value.toInt();
+	if (bool(spin_box) && spin_box->value() != int_value)
+		spin_box->setValue(int_value);
 }
 
 

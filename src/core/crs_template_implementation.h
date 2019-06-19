@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014, 2015, 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -89,7 +89,6 @@ class UTMZoneParameter : public CRSTemplateParameter
 {
 public:
 	UTMZoneParameter(const QString& id, const QString& name);
-	~UTMZoneParameter() override;
 	QWidget* createEditor(WidgetObserver& observer) const override;
 	std::vector<QString> specValues(const QString& edit_value) const override;
 	QString value(const QWidget* edit_widget) const override;
@@ -100,7 +99,7 @@ public:
 	 * 
 	 * Returns a null value on error.
 	 */
-	static QVariant calculateUTMZone(const LatLon lat_lon);
+	static QVariant calculateUTMZone(const LatLon& lat_lon);
 };
 
 
@@ -115,7 +114,6 @@ public:
 	
 	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value);
 	IntRangeParameter(const QString& id, const QString& name, int min_value, int max_value, OutputList&& outputs);
-	~IntRangeParameter() override;
 	QWidget* createEditor(WidgetObserver& observer) const override;
 	std::vector<QString> specValues(const QString& edit_value) const override;
 	QString value(const QWidget* edit_widget) const override;
