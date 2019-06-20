@@ -165,6 +165,9 @@ namespace Util
 		/** The number of decimals. */
 		constexpr static int decimals() noexcept { return 2; }
 		
+		/** If true, spin box fields are meant to wrap at boundaries. */
+		constexpr static bool wrapping() noexcept { return false; }
+		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		static QString unit();
 	};
@@ -198,6 +201,9 @@ namespace Util
 		
 		/** The number of decimals. */
 		constexpr static int decimals() noexcept { return 2; }
+		
+		/** If true, spin box fields are meant to wrap at boundaries. */
+		constexpr static bool wrapping() noexcept { return false; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		static QString unit();
@@ -233,6 +239,9 @@ namespace Util
 		
 		/** The number of decimals. */
 		constexpr static int decimals() noexcept { return 2; }
+		
+		/** If true, spin box fields are meant to wrap at boundaries. */
+		constexpr static bool wrapping() noexcept { return true; }
 		
 		/** The unit of measurement, translated in context UnitOfMeasurement. */
 		static QString unit();
@@ -289,7 +298,8 @@ namespace Util
 		 * QSpinBox in a single call:
 		 * the lower and upper bound of the valid range,
 		 * the unit of measurement (optional),
-		 * the step width of the spinbox buttons (optional).
+		 * the step width of the spinbox buttons (optional),
+		 * the wrapping property of the spinbox (optional).
 		 */
 		QSpinBox* create(int min, int max, const QString &unit = {}, int step = 0);
 		
@@ -302,7 +312,8 @@ namespace Util
 		 * the lower and upper bound of the valid range,
 		 * the unit of measurement (optional),
 		 * the step width of the spinbox buttons (optional; dependent on
-		 * the number of decimals if not specified).
+		 * the number of decimals if not specified),
+		 * the wrapping property of the spinbox (optional).
 		 */
 		QDoubleSpinBox* create(int decimals, double min, double max, const QString &unit = {}, double step = 0.0);
 		
@@ -317,7 +328,10 @@ namespace Util
 		QDoubleSpinBox* create()
 		{
 			typedef InputProperties<T> P;
-			return create(P::decimals(), P::min(), P::max(), P::unit(), P::step());
+			auto* spinbox = create(P::decimals(), P::min(), P::max(), P::unit(), P::step());
+			if (P::wrapping())
+				spinbox->setWrapping(true);
+			return spinbox;
 		}
 		
 		/**
@@ -338,7 +352,10 @@ namespace Util
 		QDoubleSpinBox* create(const QString& unit)
 		{
 			typedef InputProperties<T> P;
-			return create(P::decimals(), P::min(), P::max(), unit, P::step());
+			auto* spinbox = create(P::decimals(), P::min(), P::max(), unit, P::step());
+			if (P::wrapping())
+				spinbox->setWrapping(true);
+			return spinbox;
 		}
 	}
 	
