@@ -54,23 +54,28 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	layout->addRow(new QLabel(tr("Scaling center:")));
 	
-	center_origin_radio = new QRadioButton(tr("Map coordinate system origin", "Scaling center point"));
+	//: Scaling center point
+	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
 	center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point", "Scaling center point"));
+	//: Scaling center point
+	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
 	if (!map->getGeoreferencing().isValid())
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
-	center_other_radio = new QRadioButton(tr("Other point,", "Scaling center point"));
+	//: Scaling center point
+	center_other_radio = new QRadioButton(tr("Other point,"));
 	layout->addRow(center_other_radio);
 	
+	//: x coordinate
 	other_x_edit = Util::SpinBox::create<MapCoordF>();
-	layout->addRow(tr("X:", "x coordinate"), other_x_edit);
+	layout->addRow(tr("X:"), other_x_edit);
 	
+	//: y coordinate
 	other_y_edit = Util::SpinBox::create<MapCoordF>();
-	layout->addRow(tr("Y:", "y coordinate"), other_y_edit);
+	layout->addRow(tr("Y:"), other_y_edit);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
