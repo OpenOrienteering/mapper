@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013, 2015, 2017 Kai Pastor
+ *    Copyright 2012, 2013, 2015, 2017, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -192,6 +192,41 @@ namespace Util
 		
 		/** The maximum input value. */
 		constexpr static double max() noexcept { return +99999999.99; }
+		
+		/** The spinbox step width. */
+		constexpr static double step() noexcept { return 1.0; }
+		
+		/** The number of decimals. */
+		constexpr static int decimals() noexcept { return 2; }
+		
+		/** The unit of measurement, translated in context UnitOfMeasurement. */
+		static QString unit();
+	};
+	
+	
+	
+	/** Identifies the type double representing a rotation angle in degrees */
+	struct RotationalDegrees
+	{
+		// intentionally left empty
+	};
+	
+	
+	/**
+	 * Provides information about the type double representing a rotation angle
+	 * for the purpose of customizing input widgets.
+	 */
+	template< >
+	struct InputProperties< RotationalDegrees >
+	{
+		/** The underlying fundamental type. */
+		typedef double basetype;
+		
+		/** The minimum input value. */
+		static constexpr double min() noexcept { return -180.0; }
+		
+		/** The maximum input value. */
+		constexpr static double max() noexcept { return +180.0; }
 		
 		/** The spinbox step width. */
 		constexpr static double step() noexcept { return 1.0; }

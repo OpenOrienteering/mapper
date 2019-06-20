@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,6 +42,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QPen>
+#include <QPointF>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSpacerItem>
@@ -207,6 +208,11 @@ namespace Util {
 	QString InputProperties<RealMeters>::unit()
 	{
 		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "m", "meters");
+	}
+	
+	QString InputProperties<RotationalDegrees>::unit()
+	{
+		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "\u00b0", "degrees");
 	}
 	
 	
