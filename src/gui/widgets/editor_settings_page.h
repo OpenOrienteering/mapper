@@ -27,6 +27,7 @@
 #include "settings_page.h"
 
 class QCheckBox;
+class QDoubleSpinBox;
 class QComboBox;
 class QSpinBox;
 class QWidget;
@@ -57,7 +58,7 @@ private:
 	QCheckBox* text_antialiasing;
 	QSpinBox* tolerance;
 	QSpinBox* snap_distance;
-	QSpinBox* fixed_angle_stepping;
+	QDoubleSpinBox* fixed_angle_stepping;
 	QCheckBox* select_symbol_of_objects;
 	QCheckBox* zoom_out_away_from_cursor;
 	QCheckBox* draw_last_point_on_right_click;

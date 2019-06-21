@@ -79,8 +79,8 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool g
 	true_north_radio = new QRadioButton(tr("Align with true north"));
 	
 	auto rotate_label = new QLabel(tr("Additional rotation (counter-clockwise):"));
-	additional_rotation_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -360, +360, trUtf8("°"));
-	additional_rotation_edit->setWrapping(true);
+	additional_rotation_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	additional_rotation_edit->setRange(-360, +360);
 	
 	
 	unit_combo = new QComboBox();

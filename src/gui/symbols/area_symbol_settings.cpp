@@ -201,8 +201,9 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	fill_pattern_layout->addRow(Util::Headline::create(tr("Fill rotation")));
 	
-	pattern_angle_edit = Util::SpinBox::create(1, 0.0, 360.0, trUtf8("°"));
-	pattern_angle_edit->setWrapping(true);
+	pattern_angle_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	pattern_angle_edit->setDecimals(1);
+	pattern_angle_edit->setRange(0, 360);
 	fill_pattern_layout->addRow(tr("Angle:"), pattern_angle_edit);
 	
 	pattern_rotatable_check = new QCheckBox(tr("adjustable per object"));
