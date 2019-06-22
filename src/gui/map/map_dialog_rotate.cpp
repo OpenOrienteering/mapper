@@ -55,25 +55,28 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	
 	layout->addRow(new QLabel(tr("Rotate around:")));
 	
-	center_origin_radio = new QRadioButton(tr("Map coordinate system origin", "Rotation center point"));
+	//: Rotation center point
+	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
 	center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point", "Rotation center point"));
+	//: Rotation center point
+	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
 	if (!map->getGeoreferencing().isValid())
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
-	center_other_radio = new QRadioButton(tr("Other point,", "Rotation center point"));
-	other_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	other_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	auto other_center_layout = new QHBoxLayout();
-	other_center_layout->addWidget(center_other_radio);
-	other_center_layout->addWidget(new QLabel(tr("X:", "x coordinate")), 0);
-	other_center_layout->addWidget(other_x_edit, 1);
-	other_center_layout->addWidget(new QLabel(tr("Y:", "y coordinate")), 0);
-	other_center_layout->addWidget(other_y_edit, 1);
-	layout->addRow(other_center_layout);
+	//: Rotation center point
+	center_other_radio = new QRadioButton(tr("Other point,"));
+	layout->addRow(center_other_radio);
+	
+	//: x coordinate
+	other_x_edit = Util::SpinBox::create<MapCoordF>();
+	layout->addRow(tr("X:"), other_x_edit);
+	
+	//: y coordinate
+	other_y_edit = Util::SpinBox::create<MapCoordF>();
+	layout->addRow(tr("Y:"), other_y_edit);
 	
 	
 	layout->addItem(Util::SpacerItem::create(this));
@@ -106,11 +109,15 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	layout->addRow(adjust_templates_check);
 	
 	
-	layout->addItem(Util::SpacerItem::create(this));
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
-	layout->addRow(button_box);
 	
-	setLayout(layout);
+	auto* box_layout = new QVBoxLayout();
+	box_layout->addLayout(layout);
+	box_layout->addItem(Util::SpacerItem::create(this));
+	box_layout->addStretch();
+	box_layout->addWidget(button_box);
+	
+	setLayout(box_layout);
 	
 	connect(center_origin_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
 	connect(center_georef_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);

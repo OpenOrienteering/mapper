@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,8 +26,9 @@
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QLabel>
-#include <QLineEdit>
 #include <QRadioButton>
+#include <QSpinBox>
+#include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -44,31 +46,36 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
 	
-	scale_edit = new QLineEdit(QString::number(map->getScaleDenominator()));
-	scale_edit->setValidator(new QIntValidator(1, 9999999, scale_edit));
-	layout->addRow(tr("New scale:  1 :"), scale_edit);
+	scale_edit = Util::SpinBox::create(1, 9999999, {}, 500);
+	scale_edit->setPrefix(QStringLiteral("1 : "));
+	scale_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
+	scale_edit->setValue(static_cast<int>(map->getScaleDenominator()));
+	layout->addRow(tr("New scale:"), scale_edit);
 	
 	layout->addRow(new QLabel(tr("Scaling center:")));
 	
-	center_origin_radio = new QRadioButton(tr("Map coordinate system origin", "Scaling center point"));
+	//: Scaling center point
+	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
 	center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
-	center_georef_radio = new QRadioButton(tr("Georeferencing reference point", "Scaling center point"));
+	//: Scaling center point
+	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
 	if (!map->getGeoreferencing().isValid())
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
-	center_other_radio = new QRadioButton(tr("Other point,", "Scaling center point"));
-	other_x_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	other_y_edit = Util::SpinBox::create<MapCoordF>(tr("mm"));
-	QHBoxLayout* other_center_layout = new QHBoxLayout();
-	other_center_layout->addWidget(center_other_radio);
-	other_center_layout->addWidget(new QLabel(tr("X:", "x coordinate")), 0);
-	other_center_layout->addWidget(other_x_edit, 1);
-	other_center_layout->addWidget(new QLabel(tr("Y:", "y coordinate")), 0);
-	other_center_layout->addWidget(other_y_edit, 1);
-	layout->addRow(other_center_layout);
+	//: Scaling center point
+	center_other_radio = new QRadioButton(tr("Other point,"));
+	layout->addRow(center_other_radio);
+	
+	//: x coordinate
+	other_x_edit = Util::SpinBox::create<MapCoordF>();
+	layout->addRow(tr("X:"), other_x_edit);
+	
+	//: y coordinate
+	other_y_edit = Util::SpinBox::create<MapCoordF>();
+	layout->addRow(tr("Y:"), other_y_edit);
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
@@ -107,12 +114,16 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	layout->addRow(adjust_templates_check);
 	
 	
-	layout->addItem(Util::SpacerItem::create(this));
 	QDialogButtonBox* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, Qt::Horizontal);
 	ok_button = button_box->button(QDialogButtonBox::Ok);
-	layout->addRow(button_box);
 	
-	setLayout(layout);
+	auto* box_layout = new QVBoxLayout();
+	box_layout->addLayout(layout);
+	box_layout->addItem(Util::SpacerItem::create(this));
+	box_layout->addStretch();
+	box_layout->addWidget(button_box);
+	
+	setLayout(box_layout);
 	
 	connect(center_origin_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
 	connect(center_georef_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
@@ -132,7 +143,7 @@ void ScaleMapDialog::updateWidgets()
 
 void ScaleMapDialog::okClicked()
 {
-	int scale = scale_edit->text().toInt();
+	auto scale = static_cast<unsigned int>(scale_edit->value());
 	MapCoord center = MapCoord(0, 0);
 	if (center_georef_radio->isChecked())
 		center = map->getGeoreferencing().getMapRefPoint();
