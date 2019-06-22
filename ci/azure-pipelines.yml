@@ -48,6 +48,9 @@ jobs:
       parameters:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
+          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          -DCMAKE_FIND_FRAMEWORK=LAST
+          -DCMAKE_FIND_APPBUNDLE=LAST
         buildArgs: -j5
     - template: publish.yml
 
