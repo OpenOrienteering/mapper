@@ -82,7 +82,7 @@ namespace  {
 void setValueIfChanged(QDoubleSpinBox* field, qreal value) {
 	if (!qFuzzyCompare(field->value(), value))
 		field->setValue(value);
-};
+}
 
 }  // namespace
 
