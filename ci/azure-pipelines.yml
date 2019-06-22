@@ -112,7 +112,6 @@ jobs:
     - template: setup-macos.yml
     - template: build.yml
       parameters:
-        targetSuffix: '-arm-linux-androideabi'
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
           -DENABLE_$(TARGET)=1
@@ -128,6 +127,99 @@ jobs:
           - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
           - toolchain-info-$(TARGET)
           - android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_arm64
+  displayName: Android arm64 (Release)
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: aarch64-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-arm64-v8a-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_x86
+  displayName: Android x86 (Release)
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: i686-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-x86-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_x86_64
+  displayName: Android x86_64 (Release)
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: x86_64-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-x86_64-$(openorienteering.superbuild.ndkVersion)
     - template: publish.yml
 
 
