@@ -84,6 +84,8 @@ PATTERN=" \
   template_list_widget.cpp \
   template_tool \
   text_brwoser_dialog \
+  track_t.cpp \
+  /track.cpp \
   undo_manager.cpp \
   /util.cpp \
   /util_gui.cpp \

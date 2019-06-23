@@ -174,6 +174,7 @@ add_system_test(symbol_set_t)
 add_system_test(symbol_t)
 add_system_test(template_t)
 add_system_test(tools_t)
+add_system_test(track_t)  # Could be unit test, but needs Georeferencing
 add_system_test(transform_t)
 add_system_test(undo_manager_t)
 
