@@ -156,7 +156,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
 	is_georeferenced = true;
 	
