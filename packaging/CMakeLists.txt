@@ -342,12 +342,13 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
+	  styles/qmacstyle
 	)
 	if(ANDROID)
 		set(MAPPER_QT_PLUGINS ) # Ignore for now, handled by androiddeployqt
 	endif()
 	set(QT_PLUGIN_TARGETS )
-	foreach(module Gui Positioning PrintSupport Sensors Sql)
+	foreach(module Gui Positioning PrintSupport Sensors Sql Widgets)
 		find_package(Qt5${module} QUIET)
 		if(module STREQUAL "Positioning" AND Qt5Positioning_DIR)
 			# Workaround for QTBUG-58812 CMake: Plugin config not loaded
