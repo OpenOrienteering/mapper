@@ -23,17 +23,16 @@
 #include <QtTest>
 #include <QCoreApplication>
 #include <QString>
-#include <QThread>
 
 #include "settings.h"
 
 
 namespace {
 
-/// Converts from autosave interval unit (minutes) to QThread::msleep unit (milliseconds)
-unsigned long msecs(double minutes)
+/// Converts from autosave interval unit (minutes) to QTest::qWait unit (milliseconds)
+int msecs(double minutes)
 {
-	return static_cast<unsigned long>(minutes * 60000);
+	return qRound(minutes * 60000);
 }
 
 }  // namespace
@@ -119,21 +118,19 @@ void AutosaveTest::successTest()
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.8 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger within 2 seconds after timeout
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.2 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
 	
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.8 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger once again within 2 seconds
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.2 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 2, 2000);
 }
 
@@ -145,30 +142,35 @@ void AutosaveTest::temporaryFailureTest()
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.8 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger within 2 seconds after timeout
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.2 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
 	
 	// Verify that Autosave does not trigger once more too early
-	QThread::msleep(4000);
-	QCoreApplication::processEvents();
+	QTest::qWait(4000);
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger once more quickly
-	QThread::msleep(1000);
+	QTest::qWait(1000);
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 2, 2000);
 	
+	// NOTE: The following check used to fail frequently on macOS with our
+	//       standard timing of 0.8 * autosave_interval. Given our extremely
+	//       short autosave_interval in this test, this is probably a timer
+	//       precision issue, not a bug in the Autosave unit.
+	//       The less strict timing of 0.7 * autosave_interval seems to reduce
+	//       the rate of failing runs to an acceptable level. The extra time
+	//       is moved to the subsequent step of waiting.
+	
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.7 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 2);
 	
 	// Verify that Autosave does trigger again once before too late
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.3 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 3, 2000);
 }
 
@@ -180,21 +182,19 @@ void AutosaveTest::permanentFailureTest()
 	doc.setAutosaveNeeded(true);
 	
 	// Verify that Autosave does not trigger too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.8 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 0);
 	
 	// Verify that Autosave does trigger exactly once before too late
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.2 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
 
 	// Verify that Autosave does not trigger again too early
-	QThread::msleep(msecs(0.8 * autosave_interval));
-	QCoreApplication::processEvents();
+	QTest::qWait(msecs(0.8 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 1);
 	
 	// Verify that Autosave does trigger again once before too late
-	QThread::msleep(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.2 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 2, 2000);
 }
 
@@ -207,14 +207,12 @@ void AutosaveTest::autosaveStopTest()
 		doc.setAutosaveNeeded(true);
 		
 		// Sleep some time
-		QThread::msleep(msecs(0.3 * autosave_interval));
-		QCoreApplication::processEvents();
+		QTest::qWait(msecs(0.3 * autosave_interval));
 		QCOMPARE(doc.autosaveCount(), 0);
 		
 		// Verify that Autosave does not trigger after setAutosaveNeeded(false)
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(msecs(autosave_interval) + 2000);
-		QCoreApplication::processEvents();
+		QTest::qWait(msecs(autosave_interval) + 2000);
 		QCOMPARE(doc.autosaveCount(), 0);
 	}
 	
@@ -223,12 +221,11 @@ void AutosaveTest::autosaveStopTest()
 		
 		// Test stopping autosave in temporary failure mode
 		doc.setAutosaveNeeded(true);
-		QThread::msleep(msecs(autosave_interval));
+		QTest::qWait(msecs(autosave_interval));
 		QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
 
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(msecs(autosave_interval) + 7000);
-		QCoreApplication::processEvents();
+		QTest::qWait(msecs(autosave_interval) + 7000);
 		QCOMPARE(doc.autosaveCount(), 1);
 	}
 	
@@ -237,12 +234,11 @@ void AutosaveTest::autosaveStopTest()
 		
 		// Test stopping autosave in permament failure mode
 		doc.setAutosaveNeeded(true);
-		QThread::msleep(msecs(autosave_interval));
+		QTest::qWait(msecs(autosave_interval));
 		QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 1, 2000);
 
 		doc.setAutosaveNeeded(false);
-		QThread::msleep(msecs(autosave_interval) + 2000);
-		QCoreApplication::processEvents();
+		QTest::qWait(msecs(autosave_interval) + 2000);
 		QCOMPARE(doc.autosaveCount(), 1);
 	}
 }
