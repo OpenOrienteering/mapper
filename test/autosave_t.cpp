@@ -157,12 +157,20 @@ void AutosaveTest::temporaryFailureTest()
 	QTest::qWait(1000);
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 2, 2000);
 	
+	// NOTE: The following check used to fail frequently on macOS with our
+	//       standard timing of 0.8 * autosave_interval. Given our extremely
+	//       short autosave_interval in this test, this is probably a timer
+	//       precision issue, not a bug in the Autosave unit.
+	//       The less strict timing of 0.7 * autosave_interval seems to reduce
+	//       the rate of failing runs to an acceptable level. The extra time
+	//       is moved to the subsequent step of waiting.
+	
 	// Verify that Autosave does not trigger again too early
-	QTest::qWait(msecs(0.8 * autosave_interval));
+	QTest::qWait(msecs(0.7 * autosave_interval));
 	QCOMPARE(doc.autosaveCount(), 2);
 	
 	// Verify that Autosave does trigger again once before too late
-	QTest::qWait(msecs(0.2 * autosave_interval));
+	QTest::qWait(msecs(0.3 * autosave_interval));
 	QTRY_COMPARE_WITH_TIMEOUT((doc.autosaveCount()), 3, 2000);
 }
 
