@@ -28,9 +28,6 @@
 #include <QByteArray>
 #include <QCheckBox>
 #include <QCoreApplication>
-#ifndef NDEBUG
-#  include <QDebug>
-#endif
 #include <QDir>
 #include <QDoubleSpinBox>
 #include <QFileInfo>
@@ -265,15 +262,28 @@ namespace Util {
 	{
 		
 #ifndef NDEBUG
+		namespace {
+		
 		/**
-		 * Returns the maximum number of digits in a spinbox which is regarded
-		 * as normal. Exceedings this number in Util::SpinBox::create() will
-		 * print a runtime warning in development builds.
+		 * Counts the number of digits for the given number and locale.
+		 */
+		template <class T>
+		int countDigits(T value, const QLocale& locale)
+		{
+			return locale.toString(value).remove(locale.groupSeparator()).length();
+		}
+		
+		/**
+		 * Returns the maximum number of spinbox digits which is regarded as
+		 * acceptable. Exceeding this number in Util::SpinBox::create() will
+		 * print a warning at runtime.
 		 */
 		constexpr int max_digits()
 		{
 			return 13;
 		}
+		
+		}  // namespace
 #endif
 		
 		QSpinBox* create(int min, int max, const QString &unit, int step)
@@ -288,14 +298,14 @@ namespace Util {
 			if (step > 0)
 				box->setSingleStep(step);
 #ifndef NDEBUG
-			if (box->locale().toString(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min);
-			if (box->locale().toString(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max);
+			if (countDigits(min, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of min=%s",
+				         QByteArray::number(min).constData());
+			if (countDigits(max, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of max=%s",
+				         QByteArray::number(max).constData());
 #endif
 			return box;
 		}
@@ -322,14 +332,14 @@ namespace Util {
 				}
 			}
 	#ifndef NDEBUG
-			if (box->textFromValue(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min, 'f', decimals);
-			if (box->textFromValue(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max, 'f', decimals);
+			if (countDigits(min, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of min=%s",
+				         QByteArray::number(min, 'f', decimals).constData());
+			if (countDigits(max, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of max=%s",
+				         QByteArray::number(max, 'f', decimals).constData());
 	#endif
 			return box;
 		}
