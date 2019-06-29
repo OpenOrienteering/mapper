@@ -47,6 +47,8 @@ private slots:
 	 */
 	void testGridScaleFactor();
 	
+	void testGridScaleFactor_data();
+	
 	/**
 	 * Tests whether Georeferencing supports particular projected CRS.
 	 */

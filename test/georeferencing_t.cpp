@@ -28,6 +28,7 @@
 #include <QPoint>
 #include <QPointF>
 
+#include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj.h>
 #endif
@@ -65,7 +66,44 @@ namespace
 	{
 		return d + m/60.0 + s/3600.0;
 	}
-}
+	
+	
+	/**
+	 * Returns the geodetic distance between the given geographic coordinates.
+	 * 
+	 * This function uses the WGS84 ellipsoid.
+	 */
+	double geodeticDistance(const LatLon& first, const LatLon& second)
+	{
+		auto distance = 0.0;
+		auto g = geod_geodesic{};
+		geod_init(&g, 6378137, 1/298.257223563);  // WGS84 ellipsoid
+		geod_inverse(&g, first.latitude(), first.longitude(), second.latitude(), second.longitude(),
+		             &distance, nullptr, nullptr);
+		return distance;
+	}
+	
+	/**
+	 * Returns the nominal east-west scale factor for "Web Mercator".
+	 */
+	double epsg3857ScaleX(double latitude)
+	{
+		constexpr auto e = 0.081819191; // WGS84 eccentricity
+		auto phi = qDegreesToRadians(latitude);
+		return pow(1.0 - e * e * sin(phi) * sin(phi), 0.5) / cos(phi);
+	}
+	
+	/**
+	 * Returns the nominal north-south scale factor for "Web Mercator".
+	 */
+	double epsg3857ScaleY(double latitude)
+	{
+		constexpr auto e = 0.081819191; // WGS84 eccentricity
+		auto phi = qDegreesToRadians(latitude);
+		return pow(1.0 - e * e * sin(phi) * sin(phi), 1.5) / (1.0 - e * e) / cos(phi);
+	}
+	
+}  // namespace
 
 
 void GeoreferencingTest::initTestCase()
@@ -90,55 +128,78 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 	QCOMPARE(new_georef.getProjectedRefPoint(), QPointF(0.0, 0.0));
 }
 
+void GeoreferencingTest::testGridScaleFactor_data()
+{
+	QTest::addColumn<QString>("spec");
+	QTest::addColumn<double>("lat");
+	QTest::addColumn<double>("lon");
+	QTest::addColumn<double>("scale_x");
+	QTest::addColumn<double>("scale_y");
+	
+	QTest::newRow("UTM 32 central meridian")    << utm32_spec     << 50.0 << 9.0  << 0.9996 << 0.9996;
+	QTest::newRow("UTM 32 180 km west of c.m.") << utm32_spec     << 50.0 << 6.48 << 1.0    << 1.0;
+	QTest::newRow("EPSG 3857")                  << epsg3857_spec  << 50.0 << 6.48 << epsg3857ScaleX(50.0) << epsg3857ScaleY(50.0);
+}
+
 void GeoreferencingTest::testGridScaleFactor()
 {
-	Georeferencing utm_georef;
-	utm_georef.setProjectedCRS(QStringLiteral("UTM"), utm32_spec);
-	QVERIFY(utm_georef.isValid());
+	QFETCH(QString, spec);
+	QFETCH(double, lat);
+	QFETCH(double, lon);
+	QFETCH(double, scale_x);
+	QFETCH(double, scale_y);
 	
-	Georeferencing mercator_georef;
-	mercator_georef.setProjectedCRS(QStringLiteral("EPSG:3857"), epsg3857_spec);
-	QVERIFY(mercator_georef.isValid());
+	Georeferencing georef;
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), spec);
+	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	
-	// Use UTM as a convenient approximation for the ground,
-	// having a scale factor close to 1.0.
-	auto point_a_utm = utm_georef.toProjectedCoords(LatLon{50.0, 8.0});
-	auto point_b_utm = point_a_utm - QPointF{ 1000.0, 0.0 };
+	auto const latlon = LatLon{lat, lon};
+	georef.setGeographicRefPoint(latlon);
+	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	
-	auto point_a_mercator = mercator_georef.toProjectedCoords(LatLon{50.0, 8.0});
-	auto point_b_mercator = mercator_georef.toProjectedCoords(utm_georef.toGeographicCoords(point_b_utm));
-	
-	// Standard Mercator scale factor is as simple as:
-	//
-	//   scale_factor = 1.0 / cos(degToRad(50.0));
-	//
-	// EPSG:3857 aka Web Mercator scale factor is more complicated, and
-	// different E/W vs. N/S. For our test, we need the east/west scale factor:
-	auto e = 0.081819191; // WGS84 eccentricity
-	auto phi = qDegreesToRadians(50.0); // Latitude as used for UTM above
-	auto scale_factor = std::pow(1.0 - e * e * std::sin(phi) * std::sin(phi), 0.5) / std::cos(phi);
-	QVERIFY(scale_factor != 1.0);
-	mercator_georef.setGridScaleFactor(scale_factor);
-	QCOMPARE(mercator_georef.getGridScaleFactor(), scale_factor);
-	
-	// With the scale factor applied, we should get the same ground distance.
-	auto ground_distance_utm  = QLineF(point_a_utm, point_b_utm).length();
-	auto ground_distance_mercator  = QLineF(point_a_mercator, point_b_mercator).length();
-	auto equal_ground_distance = (std::fabs(ground_distance_mercator / scale_factor - ground_distance_utm) < 1.0); // meter
-	if (!equal_ground_distance)
+	// Verify scale_x
+	auto const east = georef.getProjectedRefPoint() + QPointF{500.0, 0.0};
+	auto const west = georef.getProjectedRefPoint() - QPointF{500.0, 0.0};
+	auto const grid_distance_x = QLineF{east, west}.length();
+	auto const geod_distance_x = geodeticDistance(georef.toGeographicCoords(west), georef.toGeographicCoords(east));
+	if (std::fabs(grid_distance_x - geod_distance_x * scale_x) >= 0.001)
 	{
-		// Fail with clear output
-		QCOMPARE(ground_distance_mercator / scale_factor, ground_distance_utm);
+		QVERIFY(geod_distance_x > 0.0);
+		QCOMPARE(grid_distance_x / geod_distance_x, scale_x);
 	}
 	
-	// With the scale factor applied, we should get the same paper distance.
-	auto map_distance_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_b_utm)).length();
-	auto map_distance_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_b_mercator)).length();
-	equal_ground_distance = (std::fabs(map_distance_mercator - map_distance_utm) < 1000.0); // millimeters, scale is 1:1
-	if (!equal_ground_distance)
+	// Verify scale_y
+	auto const north = georef.getProjectedRefPoint() - QPointF{0.0, 500.0};
+	auto const south = georef.getProjectedRefPoint() + QPointF{0.0, 500.0};
+	auto const grid_distance_y = QLineF{north, south}.length();
+	auto const geod_distance_y = geodeticDistance(georef.toGeographicCoords(north), georef.toGeographicCoords(south));
+	if (std::fabs(grid_distance_y - geod_distance_y * scale_y) >= 0.001)
 	{
-		// Fail with clear output
-		QCOMPARE(map_distance_mercator, map_distance_utm);
+		QVERIFY(geod_distance_y > 0.0);
+		QCOMPARE(grid_distance_y / geod_distance_y, scale_y);
+	}
+	
+	// Apply the average scale factor to the georeferencing, and
+	// compare geodetic distance against ground distance, based on length in map.
+	auto const sw = georef.getProjectedRefPoint() - QPointF{100.0, 100.0};
+	auto const ne = georef.getProjectedRefPoint() + QPointF{100.0, 100.0};
+	auto const geod_distance = geodeticDistance(georef.toGeographicCoords(sw), georef.toGeographicCoords(ne));
+	
+	georef.setGridScaleFactor((scale_x + scale_y) / 2);
+	auto map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	auto ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
+	}
+	
+	// And again, with significant declination
+	georef.setDeclination(20.0);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
 	}
 }
 
