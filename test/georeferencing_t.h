@@ -23,11 +23,6 @@
 #include <QObject>
 #include <QString>
 
-#include "core/georeferencing.h"
-#include "core/latlon.h"
-
-using namespace OpenOrienteering;
-
 
 /**
  * @test Tests the Georeferencing class.
@@ -82,8 +77,6 @@ private slots:
 	void testProjContextSetFileFinder();
 #endif
 	
-private:
-	Georeferencing georef;
 };
 
 #endif
