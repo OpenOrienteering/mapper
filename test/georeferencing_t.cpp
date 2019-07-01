@@ -27,6 +27,7 @@
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
+#include <QTransform>
 
 #include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
@@ -133,12 +134,13 @@ void GeoreferencingTest::testGridScaleFactor_data()
 	QTest::addColumn<QString>("spec");
 	QTest::addColumn<double>("lat");
 	QTest::addColumn<double>("lon");
-	QTest::addColumn<double>("scale_x");
-	QTest::addColumn<double>("scale_y");
+	QTest::addColumn<double>("scale_x");  // app. east-west grid scale factor
+	QTest::addColumn<double>("scale_y");  // app. north-south grid scale factor
 	
 	QTest::newRow("UTM 32 central meridian")    << utm32_spec     << 50.0 << 9.0  << 0.9996 << 0.9996;
 	QTest::newRow("UTM 32 180 km west of c.m.") << utm32_spec     << 50.0 << 6.48 << 1.0    << 1.0;
 	QTest::newRow("EPSG 3857")                  << epsg3857_spec  << 50.0 << 6.48 << epsg3857ScaleX(50.0) << epsg3857ScaleY(50.0);
+	QTest::newRow("Winkel III") << QStringLiteral("+proj=wintri +ellps=WGS84 +lat_1=50.46 +units=m +no_defs") << 36.164085 << -82.095455 << 0.910817 << 1.03145;
 }
 
 void GeoreferencingTest::testGridScaleFactor()
@@ -157,26 +159,15 @@ void GeoreferencingTest::testGridScaleFactor()
 	georef.setGeographicRefPoint(latlon);
 	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	
-	// Verify scale_x
-	auto const east = georef.getProjectedRefPoint() + QPointF{500.0, 0.0};
-	auto const west = georef.getProjectedRefPoint() - QPointF{500.0, 0.0};
-	auto const grid_distance_x = QLineF{east, west}.length();
-	auto const geod_distance_x = geodeticDistance(georef.toGeographicCoords(west), georef.toGeographicCoords(east));
-	if (std::fabs(grid_distance_x - geod_distance_x * scale_x) >= 0.001)
+	// Verify calculated grid compensation
+	auto const compensation = georef.getGridCompensation();
+	if (std::fabs(compensation.m11() - scale_x) >= 0.001)
 	{
-		QVERIFY(geod_distance_x > 0.0);
-		QCOMPARE(grid_distance_x / geod_distance_x, scale_x);
+		QCOMPARE(compensation.m11(), scale_x);
 	}
-	
-	// Verify scale_y
-	auto const north = georef.getProjectedRefPoint() - QPointF{0.0, 500.0};
-	auto const south = georef.getProjectedRefPoint() + QPointF{0.0, 500.0};
-	auto const grid_distance_y = QLineF{north, south}.length();
-	auto const geod_distance_y = geodeticDistance(georef.toGeographicCoords(north), georef.toGeographicCoords(south));
-	if (std::fabs(grid_distance_y - geod_distance_y * scale_y) >= 0.001)
+	if (std::fabs(compensation.m22() - scale_y) >= 0.001)
 	{
-		QVERIFY(geod_distance_y > 0.0);
-		QCOMPARE(grid_distance_y / geod_distance_y, scale_y);
+		QCOMPARE(compensation.m22(), scale_y);
 	}
 	
 	// Apply the average scale factor to the georeferencing, and
@@ -190,11 +181,23 @@ void GeoreferencingTest::testGridScaleFactor()
 	auto ground_distance = map_distance * georef.getScaleDenominator() / 1000;
 	if (std::fabs(geod_distance - ground_distance) >= 0.001)
 	{
+		QEXPECT_FAIL("Winkel III", "Winkel III needs grid compensation", Continue);
 		QCOMPARE(geod_distance, ground_distance);
 	}
 	
 	// And again, with significant declination
 	georef.setDeclination(20.0);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QEXPECT_FAIL("Winkel III", "Winkel III needs grid compensation", Continue);
+		QCOMPARE(geod_distance, ground_distance);
+	}
+	
+	// Finally, apply the full grid compensation to the georeferencing, and
+	// compare geodetic distance against ground distance, based on length in map.
+	georef.useGridCompensation(true);
 	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
 	if (std::fabs(geod_distance - ground_distance) >= 0.001)
