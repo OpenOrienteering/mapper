@@ -264,14 +264,15 @@
             <translation>Muro di terra. L&apos;altezza minima è 1 m.</translation>
     </message>
         <message>
-            <source>Small earth wall</source>
+            <source>Ruined earth wall</source>
             <comment>Name of symbol 106</comment>
-            <translation>Piccolo muro di terra</translation>
+            <translation type="unfinished">Piccolo muro di terra</translation>
     </message>
         <message>
-            <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+            <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
+Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
             <comment>Description of symbol 106</comment>
-            <translation>Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
+            <translation type="unfinished">Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
     </message>
         <message>
             <source>Erosion gully</source>
@@ -520,7 +521,10 @@ Short tags indicate in the direction of the downslope because the direction of f
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
             <comment>Description of symbol 202.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una roccia attraversabile. Altezza minima: 1 m.
+I trattini indicano la direzione della discesa perché la direzione della pendenza non è scontata dal contesto di curve di livello, oppure per migliorarne la leggibilità. Per rocce non verticali, i trattini dovrebbero essere disegnati per mostrare la reale estensione orizzontale della roccia.
+I vertici della linea possono essere arrotondati o squadrati. Lo spazio fra due rocce deve essere almeno di 0,2 mm. Una roccia dovrebbe interagire con le curve di livello.
+Attraversare una roccia normalmente rallenta la corsa.</translation>
         </message>
         <message>
             <source>Cliff, with tags, minimum size</source>
@@ -780,9 +784,9 @@ Il numero minimo di puntini è tre (ingombro 7 m x 7 m).
 Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i puntini non devono essere disposti in modo da creare una linea.</translation>
     </message>
         <message>
-            <source>Open sandy ground</source>
+            <source>Sandy ground</source>
             <comment>Name of symbol 213</comment>
-            <translation>Terreno aperto sabbioso</translation>
+            <translation type="unfinished">Terreno aperto sabbioso</translation>
     </message>
         <message>
             <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -907,7 +911,8 @@ Trincee collassate o facilmente attraversabili dovrebbero essere disegnate come 
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+            <source>Should be at least 2 m wide.
+Minimum length (isolated): footprint 15 m.</source>
             <comment>Description of symbol 304</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1621,7 +1626,7 @@ If it is forbidden to run along the railway, it shall be combined with the overp
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Power line</source>
+            <source>Power line, cableway or skilift</source>
             <comment>Name of symbol 510</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -1708,7 +1713,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Ruined stone wall</source>
+            <source>Ruined wall</source>
             <comment>Name of symbol 514</comment>
             <translation type="unfinished"></translation>
         </message>
@@ -2400,7 +2405,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -2420,17 +2425,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quota della curva di livello</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>La quota delle curve di livello può essere inclusa per mettere in evidenza grandi differenze di quota. Vengono inserite sulla curva di livello in modo da non coprire altri dettagli. Il numero deve essere orientato in modo che la parte alta della scritta sia rivolto verso la salita.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -2440,7 +2445,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, lunghezza minima</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -2470,37 +2475,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, trattino di pendenza</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per disegnare la reale estensione della scarpata.</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra. L&apos;altezza minima è 1 m.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccolo muro di terra</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -2510,7 +2515,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa piccola</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -2520,7 +2525,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cucuzzolo</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -2540,7 +2545,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccola depressione</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -2550,7 +2555,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -2565,7 +2570,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una zona di buche e cucuzzoli che è troppo intrigata per essere disegnata nel dettaglio. La densità dei punti posizionati in maniera random può variare in base al terreno.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
@@ -2590,7 +2595,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -2600,7 +2605,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, dimensione minima</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -2615,17 +2620,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, trattino</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per mostrare la reale estensione della roccia.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -2720,7 +2725,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -2740,7 +2745,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso grande</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -2750,12 +2755,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pietraia</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area che è coperta da così tanti massi da non poter essere disegnato individualmente è disegnata con dei triangoli orientati casualmente con un rapporto dei lati 8:6:5. Devono essere usati un minimo di due triangoli. La percorribilità è indicata dalla densità dei triangoli. Per permettere di mostrare la differenza fra pietraie con una differenza nella dimensione dei massi significativa si possono ingrandire i triangoli del 20%.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -2765,12 +2770,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per permettere di mostrare la differenza in una pietraia con una evidente differenza nella dimensione dei sassi si possono ingrandire i triangolo del 20%.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -2780,7 +2785,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi, grande</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -2810,7 +2815,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto sabbioso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
@@ -2820,7 +2825,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia affiorante</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -2845,7 +2850,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una linea di riva nera indica che l&apos;elemento non può essere attraversato.</translation>
         </message>
         <message>
             <source>Lake, with bank line</source>
@@ -2865,7 +2870,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca d&apos;acqua</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -2905,7 +2910,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Striscia di palude</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -2955,7 +2960,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -2965,7 +2970,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta, dimensione minima</translation>
         </message>
         <message>
             <source>Well</source>
@@ -2980,7 +2985,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sorgente</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
@@ -3000,7 +3005,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -3010,7 +3015,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -3020,7 +3025,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto grezzo</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
@@ -3030,7 +3035,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto grezzo</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
@@ -3065,7 +3070,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area con un sottobosco fitto ma mantenendo una buona visibilità (rovi, erica, cespugli bassi o rami tagliati) che riducono la velocità di corsa al 60-80% del normale. Non bisogna combinare questo simbolo con il simbolo 406 o 408.</translation>
         </message>
         <message>
             <source>Forest: difficult to run</source>
@@ -3115,7 +3120,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
@@ -3125,22 +3130,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Bosco percorribile in una direzione, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frutteto</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
@@ -3151,7 +3156,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vigneto</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -3161,7 +3166,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite di coltivazione netto</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
@@ -3171,7 +3176,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Campi coltivati</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
@@ -3181,7 +3186,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite netto di vegetazione</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
@@ -3527,7 +3532,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata</translation>
         </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
@@ -3537,12 +3542,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, bordo</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, con bordo</translation>
         </message>
         <message>
             <source>Ruin</source>
@@ -4118,7 +4123,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -4138,17 +4143,17 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quota della curva di livello</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>La quota delle curve di livello può essere inclusa per mettere in evidenza grandi differenze di quota. Vengono inserite sulla curva di livello in modo da non coprire altri dettagli. Il numero deve essere orientato in modo che la parte alta della scritta sia rivolto verso la salita.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -4168,17 +4173,17 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, trattino di pendenza</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per disegnare la reale estensione della scarpata.</translation>
         </message>
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccolo muro di terra</translation>
         </message>
         <message>
             <source>A small distinct earth wall, usually man made. The minimum height is 0.5 m. Larger earth walls should be represented with the symbols contour (101), form line (103) or earth bank (106).</source>
@@ -4198,7 +4203,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa piccola</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth is 0.5 m.</source>
@@ -4208,7 +4213,7 @@ The relative height difference between neighbouring features must be represented
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cucuzzolo</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (101), index contour (102) or form line (103). The height of the knoll should be a minimum of 1 m from the surrounding ground.</source>
@@ -4230,7 +4235,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccola depressione</translation>
         </message>
         <message>
             <source>A small shallow natural depression or hollow which cannot be represented by the symbol contour (101) or form line (103) is represented by a semicircle. The minimum diameter should be 2 m. The minimum depth from the surrounding ground should be 1 m. The symbol is orientated to north.</source>
@@ -4240,7 +4245,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca</translation>
         </message>
         <message>
             <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol earth bank (106). The minimum diameter shall be 2 m. The minimum depth from the surrounding ground shall be 1 m. The symbol is orientated to north.</source>
@@ -4260,7 +4265,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Broken ground</source>
             <comment>Name of symbol 117.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno sconnesso</translation>
         </message>
         <message>
             <source>An area of pits or knolls, which is too complex to be represented in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
@@ -4270,7 +4275,7 @@ The symbol may not be drawn in free form or such that two elongated knoll symbol
         <message>
             <source>Prominent landform feature</source>
             <comment>Name of symbol 118</comment>
-            <translation type="unfinished"></translation>
+            <translation>Oggetto particolare di terra</translation>
         </message>
         <message>
             <source>A small landform feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -4315,7 +4320,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, no tags, minimum size &lt;span style=&quot;color:magenta&quot;&gt;(forbidden to cross)&lt;/span&gt;</source>
@@ -4325,17 +4330,17 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, trattino</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per mostrare la reale estensione della roccia.</translation>
         </message>
         <message>
             <source>Gigantic boulder or rock pillar</source>
@@ -4432,7 +4437,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso</translation>
         </message>
         <message>
             <source>A small distinct boulder. The minimum height is 1 m. Every boulder marked on the map shall be immediately identifiable on the ground.</source>
@@ -4442,7 +4447,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso grande</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. Gigantic boulders shall be represented in plan shape with the symbol gigantic boulder or rock pillar (202).</source>
@@ -4452,7 +4457,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pietraia</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is represented with randomly orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles. A minimum of two triangles shall be used. The triangles can be enlarged by up to 20 %.</source>
@@ -4492,7 +4497,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto sabbioso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation which reduces runnability. Where an area of sandy ground is open and has good runnability, it is represented with symbol open land (401), open land with scattered trees (402) or paved area (529).</source>
@@ -4502,7 +4507,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia affiorante</translation>
         </message>
         <message>
             <source>An area of runnable rock without earth or vegetation. An area of rock covered with grass, moss or other low vegetation shall be represented according to its openness and runnability (401/402/403/404).</source>
@@ -4512,7 +4517,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca d&apos;acqua</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. The symbol is orientated to north.</source>
@@ -4634,7 +4639,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Striscia di palude</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol marsh (310).</source>
@@ -4694,7 +4699,7 @@ Minimum size: not less than 2 lines, 5 mm long.</source>
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.
@@ -4706,7 +4711,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta, dimensione minima</translation>
         </message>
         <message>
             <source>Small fountain or well</source>
@@ -4721,7 +4726,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sorgente</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. This symbol should generally not be used in urban areas. The symbol is orientated to open downstream.</source>
@@ -4731,7 +4736,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Prominent water feature</source>
             <comment>Name of symbol 314</comment>
-            <translation type="unfinished"></translation>
+            <translation>Oggetto particolare d&apos;acqua</translation>
         </message>
         <message>
             <source>A small water feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -4741,7 +4746,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto</translation>
         </message>
         <message>
             <source>An area of cultivated land, lawn, field, meadow, grassland, etc. without trees, offering very good runnability.</source>
@@ -4751,7 +4756,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto</translation>
         </message>
         <message>
             <source>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability. Areas smaller than 10 mm² at the maps scale are shown as open land (401). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</source>
@@ -4761,7 +4766,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto grezzo</translation>
         </message>
         <message>
             <source>An area of heath or moorland, a felled area, a newly planted area (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, i.e. heather or tall grass. This symbol may be combined with symbols undergrowth: slow running (407) and undergrowth: difficult to run (409) to show reduced runnability.</source>
@@ -4771,7 +4776,7 @@ Minimum size: 4 dashes.</source>
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto grezzo</translation>
         </message>
         <message>
             <source>An area of rough open land with scattered trees or bushes. Areas smaller than 16 mm² in the map scale are either mapped as rough open land (403) or forest: easy running (405). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</source>
@@ -4890,7 +4895,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frutteto</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to represent the direction of planting.</source>
@@ -4910,7 +4915,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite di coltivazione netto</translation>
         </message>
         <message>
             <source>The boundary of symbol cultivated land (seasonally out of bounds) (415) when not shown with other symbols (fence, wall, path, etc.) is represented with a black line. A permanent boundary between different types of cultivated land is also represented with this symbol.</source>
@@ -4930,7 +4935,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite netto di vegetazione</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and/or dot screen.</source>
@@ -4940,7 +4945,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Prominent large tree</source>
             <comment>Name of symbol 418</comment>
-            <translation type="unfinished"></translation>
+            <translation>Albero isolato</translation>
         </message>
         <message>
             <source>A prominent single tree.</source>
@@ -4960,7 +4965,7 @@ Minimum width: 0.25 mm.</source>
         <message>
             <source>Prominent vegetation feature</source>
             <comment>Name of symbol 420</comment>
-            <translation type="unfinished"></translation>
+            <translation>Oggetto particolare vegetale</translation>
         </message>
         <message>
             <source>A vegetation feature which is significant or prominent. The definition of the symbol shall always be given in the map legend. The symbol is orientated to north.</source>
@@ -6098,17 +6103,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quota della curva di livello</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>La quota delle curve di livello può essere inclusa per mettere in evidenza grandi differenze di quota. Vengono inserite sulla curva di livello in modo da non coprire altri dettagli. Il numero deve essere orientato in modo che la parte alta della scritta sia rivolto verso la salita.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6118,7 +6123,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, lunghezza minima</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6148,27 +6153,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, trattino di pendenza</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per disegnare la reale estensione della scarpata.</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra. L&apos;altezza minima è 1 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -6178,7 +6183,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6188,7 +6193,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, dimensione minima</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6203,17 +6208,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, trattino</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per mostrare la reale estensione della roccia.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -6228,7 +6233,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -6268,7 +6273,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto sabbioso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
@@ -6278,7 +6283,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia affiorante</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -6305,7 +6310,7 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una linea di riva nera indica che l&apos;elemento non può essere attraversato.</translation>
         </message>
         <message>
             <source>Lake, with bank line</source>
@@ -6402,7 +6407,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6412,7 +6417,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6422,7 +6427,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto grezzo</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
@@ -6432,7 +6437,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto grezzo</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
@@ -6462,7 +6467,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frutteto</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
@@ -6473,7 +6478,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vigneto</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -6741,7 +6746,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata</translation>
         </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
@@ -6751,12 +6756,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, bordo</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, con bordo</translation>
         </message>
         <message>
             <source>Firing range</source>
@@ -7070,7 +7075,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7080,17 +7085,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccolo muro di terra</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa piccola</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -7100,7 +7105,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cucuzzolo</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -7120,7 +7125,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccola depressione</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -7130,7 +7135,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -7145,7 +7150,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una zona di buche e cucuzzoli che è troppo intrigata per essere disegnata nel dettaglio. La densità dei punti posizionati in maniera random può variare in base al terreno.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
@@ -7250,7 +7255,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso grande</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -7260,12 +7265,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pietraia</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area che è coperta da così tanti massi da non poter essere disegnato individualmente è disegnata con dei triangoli orientati casualmente con un rapporto dei lati 8:6:5. Devono essere usati un minimo di due triangoli. La percorribilità è indicata dalla densità dei triangoli. Per permettere di mostrare la differenza fra pietraie con una differenza nella dimensione dei massi significativa si possono ingrandire i triangoli del 20%.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -7275,12 +7280,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per permettere di mostrare la differenza in una pietraia con una evidente differenza nella dimensione dei sassi si possono ingrandire i triangolo del 20%.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7290,7 +7295,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi, grande</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -7300,7 +7305,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca d&apos;acqua</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -7310,7 +7315,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Striscia di palude</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -7320,7 +7325,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -7330,7 +7335,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta, dimensione minima</translation>
         </message>
         <message>
             <source>Well</source>
@@ -7345,7 +7350,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sorgente</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
@@ -7360,7 +7365,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area con un sottobosco fitto ma mantenendo una buona visibilità (rovi, erica, cespugli bassi o rami tagliati) che riducono la velocità di corsa al 60-80% del normale. Non bisogna combinare questo simbolo con il simbolo 406 o 408.</translation>
         </message>
         <message>
             <source>Forest: difficult to run</source>
@@ -7410,7 +7415,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
@@ -7420,22 +7425,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Bosco percorribile in una direzione, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite di coltivazione netto</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
@@ -7445,7 +7450,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Campi coltivati</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
@@ -7455,7 +7460,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite netto di vegetazione</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
@@ -7884,7 +7889,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Form line</source>
             <comment>Name of symbol 103</comment>
-            <translation type="unfinished"></translation>
+            <translation>Curva di livello</translation>
         </message>
         <message>
             <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7904,17 +7909,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Contour value</source>
             <comment>Name of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quota della curva di livello</translation>
         </message>
         <message>
             <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
             <comment>Description of symbol 105</comment>
-            <translation type="unfinished"></translation>
+            <translation>La quota delle curve di livello può essere inclusa per mettere in evidenza grandi differenze di quota. Vengono inserite sulla curva di livello in modo da non coprire altri dettagli. Il numero deve essere orientato in modo che la parte alta della scritta sia rivolto verso la salita.</translation>
         </message>
         <message>
             <source>Earth bank</source>
             <comment>Name of symbol 106</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -7924,7 +7929,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Earth bank, minimum size</source>
             <comment>Name of symbol 106.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, lunghezza minima</translation>
         </message>
         <message>
             <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -7954,27 +7959,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Earth bank, tag line</source>
             <comment>Name of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Scarpata, trattino di pendenza</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of wide earth banks.</source>
             <comment>Description of symbol 106.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per disegnare la reale estensione della scarpata.</translation>
         </message>
         <message>
             <source>Earth wall</source>
             <comment>Name of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra</translation>
         </message>
         <message>
             <source>Distinct earth wall. Minimum height is 1 m.</source>
             <comment>Description of symbol 107</comment>
-            <translation type="unfinished"></translation>
+            <translation>Muro di terra. L&apos;altezza minima è 1 m.</translation>
         </message>
         <message>
             <source>Erosion gully</source>
             <comment>Name of symbol 109</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa</translation>
         </message>
         <message>
             <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
@@ -7984,7 +7989,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Impassable cliff</source>
             <comment>Name of symbol 201</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -7994,7 +7999,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Impassable cliff, minimum size</source>
             <comment>Name of symbol 201.0.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, dimensione minima</translation>
         </message>
         <message>
             <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8009,17 +8014,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
             <comment>Description of symbol 201.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per pareti di roccia verticali i trattini possono essere omessi se lo spazio è poco, es. paggi stretti fra le rocce (il passaggio deve essere disegnato con una larghezza di almeno 0.3 mm).</translation>
         </message>
         <message>
             <source>Impassable cliff, tag line</source>
             <comment>Name of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia non attraversabile, trattino</translation>
         </message>
         <message>
             <source>Use this symbol to display the full extent of a wide cliff.</source>
             <comment>Description of symbol 201.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Usa questo simbolo per mostrare la reale estensione della roccia.</translation>
         </message>
         <message>
             <source>Rock pillars/cliffs</source>
@@ -8094,7 +8099,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Boulder</source>
             <comment>Name of symbol 206</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso</translation>
         </message>
         <message>
             <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
@@ -8114,7 +8119,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Large boulder</source>
             <comment>Name of symbol 207</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sasso grande</translation>
         </message>
         <message>
             <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
@@ -8124,12 +8129,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Pietraia</translation>
         </message>
         <message>
             <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area che è coperta da così tanti massi da non poter essere disegnato individualmente è disegnata con dei triangoli orientati casualmente con un rapporto dei lati 8:6:5. Devono essere usati un minimo di due triangoli. La percorribilità è indicata dalla densità dei triangoli. Per permettere di mostrare la differenza fra pietraie con una differenza nella dimensione dei massi significativa si possono ingrandire i triangoli del 20%.</translation>
         </message>
         <message>
             <source>Boulder field, large</source>
@@ -8139,12 +8144,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
             <comment>Description of symbol 208.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Per permettere di mostrare la differenza in una pietraia con una evidente differenza nella dimensione dei sassi si possono ingrandire i triangolo del 20%.</translation>
         </message>
         <message>
             <source>Boulder cluster</source>
             <comment>Name of symbol 209</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi</translation>
         </message>
         <message>
             <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -8154,7 +8159,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>Boulder cluster, large</source>
             <comment>Name of symbol 209.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Gruppo di sassi, grande</translation>
         </message>
         <message>
             <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
@@ -8179,7 +8184,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <message>
             <source>A black bank line indicates that the feature cannot be crossed.</source>
             <comment>Description of symbol 301.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una linea di riva nera indica che l&apos;elemento non può essere attraversato.</translation>
         </message>
         <message>
             <source>Uncrossable waterbody (forbidden to cross), with bank line</source>
@@ -8234,7 +8239,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Open land</source>
             <comment>Name of symbol 401</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto</translation>
         </message>
         <message>
             <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -8244,7 +8249,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Open land with scattered trees</source>
             <comment>Name of symbol 402</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto</translation>
         </message>
         <message>
             <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -8254,7 +8259,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Rough open land</source>
             <comment>Name of symbol 403</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto grezzo</translation>
         </message>
         <message>
             <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
@@ -8264,7 +8269,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Rough open land with scattered trees</source>
             <comment>Name of symbol 404</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno semiaperto grezzo</translation>
         </message>
         <message>
             <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
@@ -8294,7 +8299,7 @@ The ISSkiOM symbol number is 310.1. Mapper uses this number already for the mini
         <message>
             <source>Orchard</source>
             <comment>Name of symbol 412</comment>
-            <translation type="unfinished"></translation>
+            <translation>Frutteto</translation>
         </message>
         <message>
             <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
@@ -8305,7 +8310,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Vineyard</source>
             <comment>Name of symbol 413</comment>
-            <translation type="unfinished"></translation>
+            <translation>Vigneto</translation>
         </message>
         <message>
             <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
@@ -8315,7 +8320,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct cultivation boundary</source>
             <comment>Name of symbol 414</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite di coltivazione netto</translation>
         </message>
         <message>
             <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
@@ -8325,7 +8330,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Distinct vegetation boundary</source>
             <comment>Name of symbol 416</comment>
-            <translation type="unfinished"></translation>
+            <translation>Limite netto di vegetazione</translation>
         </message>
         <message>
             <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
@@ -8550,7 +8555,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Paved area</source>
             <comment>Name of symbol 529</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata</translation>
         </message>
         <message>
             <source>An area of hard standing used for parking or other purposes.</source>
@@ -8560,12 +8565,12 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <message>
             <source>Paved area, bounding line</source>
             <comment>Name of symbol 529.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, bordo</translation>
         </message>
         <message>
             <source>Paved area, with bounding line</source>
             <comment>Name of symbol 529.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Area pavimentata, con bordo</translation>
         </message>
         <message>
             <source>Firing range</source>
@@ -9054,17 +9059,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small earth wall</source>
             <comment>Name of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccolo muro di terra</translation>
         </message>
         <message>
             <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
             <comment>Description of symbol 108</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
         </message>
         <message>
             <source>Small erosion gully</source>
             <comment>Name of symbol 110</comment>
-            <translation type="unfinished"></translation>
+            <translation>Fossa piccola</translation>
         </message>
         <message>
             <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -9074,7 +9079,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small knoll</source>
             <comment>Name of symbol 112</comment>
-            <translation type="unfinished"></translation>
+            <translation>Cucuzzolo</translation>
         </message>
         <message>
             <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
@@ -9094,7 +9099,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Small depression</source>
             <comment>Name of symbol 115</comment>
-            <translation type="unfinished"></translation>
+            <translation>Piccola depressione</translation>
         </message>
         <message>
             <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
@@ -9104,7 +9109,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Pit</source>
             <comment>Name of symbol 116</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca</translation>
         </message>
         <message>
             <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
@@ -9119,7 +9124,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
             <comment>Description of symbol 117.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Una zona di buche e cucuzzoli che è troppo intrigata per essere disegnata nel dettaglio. La densità dei punti posizionati in maniera random può variare in base al terreno.</translation>
         </message>
         <message>
             <source>Broken ground, big</source>
@@ -9184,7 +9189,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Open sandy ground</source>
             <comment>Name of symbol 211</comment>
-            <translation type="unfinished"></translation>
+            <translation>Terreno aperto sabbioso</translation>
         </message>
         <message>
             <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
@@ -9194,7 +9199,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Bare rock</source>
             <comment>Name of symbol 212</comment>
-            <translation type="unfinished"></translation>
+            <translation>Roccia affiorante</translation>
         </message>
         <message>
             <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
@@ -9214,7 +9219,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Waterhole</source>
             <comment>Name of symbol 303</comment>
-            <translation type="unfinished"></translation>
+            <translation>Buca d&apos;acqua</translation>
         </message>
         <message>
             <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -9244,7 +9249,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Narrow marsh</source>
             <comment>Name of symbol 308</comment>
-            <translation type="unfinished"></translation>
+            <translation>Striscia di palude</translation>
         </message>
         <message>
             <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
@@ -9294,7 +9299,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh</source>
             <comment>Name of symbol 311</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta</translation>
         </message>
         <message>
             <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
@@ -9304,7 +9309,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Indistinct marsh, minimum size</source>
             <comment>Name of symbol 311.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Palude indistinta, dimensione minima</translation>
         </message>
         <message>
             <source>Well</source>
@@ -9319,7 +9324,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>Spring</source>
             <comment>Name of symbol 313</comment>
-            <translation type="unfinished"></translation>
+            <translation>Sorgente</translation>
         </message>
         <message>
             <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
@@ -9344,7 +9349,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
             <comment>Description of symbol 407</comment>
-            <translation type="unfinished"></translation>
+            <translation>Un&apos;area con un sottobosco fitto ma mantenendo una buona visibilità (rovi, erica, cespugli bassi o rami tagliati) che riducono la velocità di corsa al 60-80% del normale. Non bisogna combinare questo simbolo con il simbolo 406 o 408.</translation>
         </message>
         <message>
             <source>Undergrowth: difficult to run</source>
@@ -9384,7 +9389,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.0</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 2</source>
@@ -9394,22 +9399,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.1</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Forest runnable in one direction, 3</source>
             <comment>Name of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Bosco percorribile in una direzione, 3</translation>
         </message>
         <message>
             <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
             <comment>Description of symbol 411.2</comment>
-            <translation type="unfinished"></translation>
+            <translation>Quando un&apos;area permette una buona percorribilità in una direzione ma non nelle altre, delle linee bianche sono disegnate sul verde nella direzione di percorribilità.</translation>
         </message>
         <message>
             <source>Cultivated land</source>
             <comment>Name of symbol 415</comment>
-            <translation type="unfinished"></translation>
+            <translation>Campi coltivati</translation>
         </message>
         <message>
             <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
