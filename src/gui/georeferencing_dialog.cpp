@@ -76,7 +76,10 @@
 
 
 namespace OpenOrienteering {
-	
+
+Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == Util::InputProperties<Util::RotationalDegrees>::decimals());
+
+
 namespace  {
 
 void setValueIfChanged(QDoubleSpinBox* field, qreal value) {
@@ -165,8 +168,9 @@ GeoreferencingDialog::GeoreferencingDialog(
 	projected_ref_layout->addSpacing(qMax(ref_point_button_width, geographic_datum_label_width));
 	
 	projected_ref_label = new QLabel();
-	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, trUtf8("°"));
-	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, trUtf8("°"));
+	lat_edit = Util::SpinBox::create(8, -90.0, +90.0, Util::InputProperties<Util::RotationalDegrees>::unit());
+	lon_edit = Util::SpinBox::create(8, -180.0, +180.0, Util::InputProperties<Util::RotationalDegrees>::unit());
+	lon_edit->setWrapping(true);
 	auto geographic_ref_layout = new QHBoxLayout();
 	geographic_ref_layout->addWidget(lat_edit, 1);
 	geographic_ref_layout->addWidget(new QLabel(tr("N", "north")), 0);
@@ -194,7 +198,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	auto map_north_label = Util::Headline::create(tr("Map north"));
 	
-	declination_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -180.0, +180.0, trUtf8("°"));
+	declination_edit = Util::SpinBox::create<Util::RotationalDegrees>();
 	declination_button = new QPushButton(tr("Lookup..."));
 	auto declination_layout = new QHBoxLayout();
 	declination_layout->addWidget(declination_edit, 1);

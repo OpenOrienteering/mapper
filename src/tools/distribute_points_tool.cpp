@@ -146,7 +146,9 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(
 	rotate_symbols_check->setChecked(settings.rotate_symbols);
 	layout->addRow(rotate_symbols_check);
 	
-	additional_rotation_edit = Util::SpinBox::create(1, 0, 360, trUtf8("°", "degrees"), 5);
+	additional_rotation_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	additional_rotation_edit->setDecimals(1);
+	additional_rotation_edit->setSingleStep(5.0);
 	additional_rotation_edit->setValue(qRadiansToDegrees(settings.additional_rotation));
 	layout->addRow(tr("Additional rotation angle (counter-clockwise):"), additional_rotation_edit);
 	

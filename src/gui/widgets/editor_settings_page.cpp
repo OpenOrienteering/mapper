@@ -23,6 +23,7 @@
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QSpacerItem>
@@ -60,7 +61,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	snap_distance = Util::SpinBox::create(0, 100, tr("mm", "millimeters"));
 	layout->addRow(tr("Snap distance (%1):").arg(ModifierKey::shift()), snap_distance);
 	
-	fixed_angle_stepping = Util::SpinBox::create(1, 180, trUtf8("°", "Degree sign for angles"));
+	fixed_angle_stepping = Util::SpinBox::create<Util::RotationalDegrees>();
+	fixed_angle_stepping->setDecimals(1);
+	fixed_angle_stepping->setRange(0.1, 180.0);
 	layout->addRow(tr("Stepping of fixed angle mode (%1):").arg(ModifierKey::control()), fixed_angle_stepping);
 
 	select_symbol_of_objects = new QCheckBox(tr("When selecting an object, automatically select its symbol, too"));

@@ -119,7 +119,9 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	++row;
 	prof_color_layout->addWidget(new QLabel(tr("Screen angle:")), row, col, 1, 1);
-	sc_angle_edit = Util::SpinBox::create(1, 0.0, 359.9, trUtf8("°"), 1.0);
+	sc_angle_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	sc_angle_edit->setDecimals(1);
+	sc_angle_edit->setRange(0, 359.9);
 	prof_color_layout->addWidget(sc_angle_edit, row, col+1, 1, 1);
 	
 	++row;
