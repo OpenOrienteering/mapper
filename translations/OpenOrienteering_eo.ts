@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne eblas skribi dosieron: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas malfermi dosieron
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Ne povas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 %2</translation>
@@ -35,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Nevalida dosiertipo.</translation>
+        <translation>Nevalida dosiertipo.</translation>
     </message>
 </context>
 <context>
@@ -43,7 +45,7 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Demando</translation>
+        <translation>Demando</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
@@ -58,7 +60,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">Versio %1 de OCD-dosieroj ne estas subtenata!</translation>
+        <translation>Versio %1 de OCD-dosieroj ne estas subtenata!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
@@ -90,7 +92,7 @@ Rescale the imported data?</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevalida spot-koloro.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
@@ -100,7 +102,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Ne eblas eksporti ŝablonon: dosiertipo &quot;%1&quot; ankoraŭ ne estas subtenata</translation>
+        <translation>Ne eblas eksporti ŝablonon: dosiertipo &quot;%1&quot; ankoraŭ ne estas subtenata</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
@@ -123,7 +125,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kodoprezento &apos;%1&apos; ne estas disponebla. Kontrolu la agordojn.</translation>
+        <translation>Kodoprezento &apos;%1&apos; ne estas disponebla. Kontrolu la agordojn.</translation>
     </message>
 </context>
 <context>
@@ -427,12 +429,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedifinite</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
@@ -442,7 +444,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="122"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="126"/>
@@ -677,7 +679,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
@@ -1541,7 +1543,7 @@ Rescale the imported data?</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Ne povas konservi dosieron
+        <translation>Ne povas konservi dosieron
 %1:
 %2</translation>
     </message>
@@ -1635,12 +1637,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Ŝablonoj</translation>
+        <translation>Ŝablonoj</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Haĉitaj areoj</translation>
+        <translation>Haĉitaj areoj</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
@@ -1650,7 +1652,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Agordaĵoj por eksporto</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
@@ -2227,7 +2229,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="513"/>
         <source>Help</source>
-        <translation type="unfinished">Helpo</translation>
+        <translation>Helpo</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="534"/>
@@ -2253,22 +2255,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Ĉiuj dosieroj (*.*)</translation>
+        <translation>Ĉiuj dosieroj (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Defaŭlta bildsimbolo</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2279,7 +2281,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Konservi…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
@@ -2294,22 +2296,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Larĝo:</translation>
+        <translation>Larĝo:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ŝargi…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Vakigi</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
@@ -2320,7 +2322,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Eraro</translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2339,7 +2341,7 @@ Rescale the imported data?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Ne povas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 %2</translation>
@@ -2482,7 +2484,9 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne povas malfermi dosieron
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -3018,7 +3022,7 @@ Do you want to save your changes?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Ne povas malfermi dosieron:
+        <translation>Ne povas malfermi dosieron:
 %1
 
 %2</translation>
@@ -3046,7 +3050,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="835"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Nevalida dosiertipo.</translation>
+        <translation>Nevalida dosiertipo.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
@@ -3164,14 +3168,14 @@ Premu Ne por elekti malsaman dosierformon.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="51"/>
         <location filename="../src/gui/main_window_controller.cpp" line="59"/>
         <source>Error</source>
-        <translation type="unfinished">Eraro</translation>
+        <translation>Eraro</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="52"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Ne povas eksporti la mapon kiel
+        <translation>Ne povas eksporti la mapon kiel
 &quot;%1&quot;
 ĉar la dosierformo estas nekonata.</translation>
     </message>
@@ -3180,7 +3184,7 @@ because the format is unknown.</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Ne povas eksporti la mapon kiel
+        <translation>Ne povas eksporti la mapon kiel
 &quot;%1&quot;
 ĉar konservado kiel %2 (.%3) estas nesubtenata.</translation>
     </message>
@@ -3815,7 +3819,7 @@ Import the data anyway?</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Ne povas eksporti la mapon kiel
+        <translation>Ne povas eksporti la mapon kiel
 &quot;%1&quot;
 ĉar konservado kiel %2 (.%3) estas nesubtenata.</translation>
     </message>
@@ -3824,7 +3828,7 @@ because saving as %2 (.%3) is not supported.</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Ne povas konservi dosieron
+        <translation>Ne povas konservi dosieron
 %1:
 %2</translation>
     </message>
@@ -3833,18 +3837,18 @@ because saving as %2 (.%3) is not supported.</source>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>Warning</source>
-        <translation type="unfinished">Averto</translation>
+        <translation>Averto</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="600"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Eksportado de la mapo kaŭzis avertojn.</translation>
+        <translation>Eksportado de la mapo kaŭzis avertojn.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Mapa importo generis avertojn.</translation>
+        <translation>Mapa importo generis avertojn.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="848"/>
@@ -4024,7 +4028,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1140"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilobretoj</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1236"/>
@@ -4082,12 +4086,12 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Nenio por importi.</translation>
+        <translation>Nenio por importi.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4139"/>
         <source>Question</source>
-        <translation type="unfinished">Demando</translation>
+        <translation>Demando</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
@@ -4481,7 +4485,7 @@ elektitaj</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1661"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporto</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2343"/>
@@ -4838,7 +4842,7 @@ elektitaj</translation>
         <location filename="../src/gui/color_dialog.cpp" line="557"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduko (%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="609"/>
@@ -6676,17 +6680,17 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="70"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Alia punkto,</translation>
+        <translation>Alia punkto,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="75"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="79"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="83"/>
@@ -6811,17 +6815,17 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Alia punkto,</translation>
+        <translation>Alia punkto,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7789,7 +7793,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="276"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Georeferencita</translation>
+        <translation>Georeferencita</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="436"/>
@@ -7815,17 +7819,17 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Ne povas ŝargi mapodosieron, ĉesigado.</translation>
+        <translation>Ne povas ŝargi mapodosieron, ĉesigado.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>Warning</source>
-        <translation type="unfinished">Averto</translation>
+        <translation>Averto</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Mapa importo generis avertojn.</translation>
+        <translation>Mapa importo generis avertojn.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
@@ -7864,7 +7868,7 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Ne povas ŝargi mapodosieron, ĉesigado.</translation>
+        <translation>Ne povas ŝargi mapodosieron, ĉesigado.</translation>
     </message>
 </context>
 <context>
