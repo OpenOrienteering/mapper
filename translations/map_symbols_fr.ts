@@ -66,13 +66,13 @@
         <message>
             <source>Black 25% (Grey)</source>
             <comment>Color 12</comment>
-            <translation>Noir 25% (Gris)</translation>
-        </message>
+            <translation>Noir 25% (gris)</translation>
+    </message>
         <message>
             <source>Green 50%, Yellow</source>
             <comment>Color 13</comment>
-            <translation>Vert 50%, Jaune</translation>
-        </message>
+            <translation>Vert 50%, jaune</translation>
+    </message>
         <message>
             <source>Green</source>
             <comment>Color 14</comment>
@@ -86,8 +86,8 @@
         <message>
             <source>Opaque White over Green</source>
             <comment>Color 16</comment>
-            <translation>Blanc opaque au dessus du vert</translation>
-        </message>
+            <translation>Blanc opaque sur vert</translation>
+    </message>
         <message>
             <source>Opaque Green 20%</source>
             <comment>Color 17</comment>
@@ -101,8 +101,8 @@
         <message>
             <source>Green, Black 50%</source>
             <comment>Color 19</comment>
-            <translation>Vert, Noir 50%</translation>
-        </message>
+            <translation>Vert, noir 50%</translation>
+    </message>
         <message>
             <source>Opaque Green</source>
             <comment>Color 20</comment>
@@ -126,13 +126,13 @@
         <message>
             <source>Green 50% over Yellow</source>
             <comment>Color 24</comment>
-            <translation>Vert 50% sur Jaune</translation>
-        </message>
+            <translation>Vert 50% sur jaune</translation>
+    </message>
         <message>
             <source>White over Yellow</source>
             <comment>Color 25</comment>
-            <translation>Blanc sur Jaune</translation>
-        </message>
+            <translation>Blanc sur jaune</translation>
+    </message>
         <message>
             <source>Yellow</source>
             <comment>Color 26</comment>
