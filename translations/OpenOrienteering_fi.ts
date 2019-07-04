@@ -438,7 +438,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjatiheys:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -453,7 +453,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasterikulma:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="122"/>
@@ -1703,7 +1703,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo taso jokaiselle symbolille</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2423,7 +2423,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esikatseluleveys:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
@@ -2560,7 +2560,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD-versio %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="200"/>
@@ -5917,7 +5917,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1738"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tason luominen epäonnistui: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1876"/>
@@ -6893,7 +6893,7 @@ Haluatko tallentaa muutokset?</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="587"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="594"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukkoa ei voi ladata, keskeytetään.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -7519,7 +7519,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä muokatut kuvakkeet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
