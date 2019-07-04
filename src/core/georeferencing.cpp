@@ -352,7 +352,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			}
 			else // unknown
 			{
-				; // nothing
+				xml.skipCurrentElement();
 			}
 		}
 	}
