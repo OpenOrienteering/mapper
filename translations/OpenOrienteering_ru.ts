@@ -427,7 +427,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Линиатура растра:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -442,7 +442,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол поворота растра:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="122"/>
@@ -1616,7 +1616,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1988"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>В объединённом символе %1: Неподдерживаемый подсимвол в индексе %2.</translation>
     </message>
 </context>
 <context>
@@ -4475,7 +4475,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4004"/>
         <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт %1 или GPX файла</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4042"/>
@@ -5306,7 +5306,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="231"/>
         <source>Color &quot;Registration black&quot; is imported as a special color.</source>
-        <translation>Цвет &quot;Registration black&quot; импортирован как специальный цвет.</translation>
+        <translation>Цвет &quot;Регистрационный чёрный&quot; импортирован как специальный цвет.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="295"/>
@@ -5485,7 +5485,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="879"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось преобразовать систему координат &apos;%1:%2&apos;.</translation>
     </message>
 </context>
 <context>
@@ -5623,7 +5623,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="522"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет &quot;%1&quot; импортирован как специальный цвет &quot;Регистрационный чёрный&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
@@ -5727,7 +5727,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>В текстовом символе %1: установлен пользовательский межсимвольный интервал, эта реализация еще не соответствует поведению OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
@@ -5765,12 +5765,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1876"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта не имеет геопривязки. Только локальная геопривязка.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1889"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось правильно экспортировать информацию о настройке системы координат. Только локальная геопривязка.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1899"/>
