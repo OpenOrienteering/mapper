@@ -16,7 +16,7 @@
 <context>
     <name>OpenOrienteering::Importer</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="105"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="187"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -27,7 +27,7 @@
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1644"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1736"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1697"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1788"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1737"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1828"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2535"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2631"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
@@ -63,7 +63,7 @@
 <context>
     <name>OpenOrienteering::OCAD8FileImport</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/ocad8_file_format.cpp" line="149"/>
+        <location filename="../src/fileformats/ocad8_file_format.cpp" line="165"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
             <numerusform>One color separation was skipped, reason: Import disabled.</numerusform>
@@ -74,11 +74,11 @@
 <context>
     <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="500"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="505"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="510"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="515"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="520"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="731"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="736"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="741"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="746"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="751"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
@@ -89,7 +89,7 @@
 <context>
     <name>OpenOrienteering::TagSelectWidget</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_find_feature.cpp" line="233"/>
+        <location filename="../src/gui/map/map_find_feature.cpp" line="231"/>
         <source>%n object(s) selected</source>
         <translation>
             <numerusform>One object selected</numerusform>
@@ -100,7 +100,7 @@
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="532"/>
+        <location filename="../src/templates/template_track.cpp" line="455"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>One path object could not be imported (reason: missing coordinates).</numerusform>
