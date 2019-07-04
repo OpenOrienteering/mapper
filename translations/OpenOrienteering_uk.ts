@@ -4069,7 +4069,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>Включити лінії складені з прямих відрізків всередині кривих Безьє.</translation>
+        <translation>Перетворити лінії складені з прямих відрізків на криві Безьє.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2362"/>

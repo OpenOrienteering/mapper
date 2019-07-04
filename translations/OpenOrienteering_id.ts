@@ -2152,7 +2152,7 @@
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="295"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>Data vektor geospasial</translation>
     </message>
 </context>
 <context>
@@ -2754,7 +2754,7 @@ Apakah Anda ingin skala simbol untuk skala dipilih?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="155"/>
         <source>You must close the current file before you can open another one.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anda harus menutup file saat ini sebelum membuka yang lain.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="789"/>
