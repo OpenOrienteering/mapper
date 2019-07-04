@@ -269,6 +269,44 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 	QVERIFY(file.exists());
 }
 
+void saveIfDifferent(QFile& file, QByteArray& new_data, const QByteArray& existing_data)
+{
+	auto find_eol = [](auto first, auto last) {
+		return std::find(first, last, '\n');
+	};
+	auto find_printing = [](auto first, auto last) {
+		return std::find_if(first, last, [](auto c) {
+			return c != ' ' && c != '\t' && c != '\n';
+		});
+	};
+	using std::begin; using std::end;
+	auto last1 = end(new_data);
+	auto first1 = find_printing(begin(new_data), last1);
+	auto last2 = end(existing_data);
+	auto first2 = find_printing(begin(existing_data), last2);
+	auto equal = true;
+	while (equal && first1 != last1)
+	{
+		auto eol1 = find_eol(first1, last1);
+		auto eol2 = find_eol(first2, last2);
+		equal = std::equal(first1, eol1, first2, eol2);
+		first1 = find_printing(eol1, last1);
+		first2 = find_printing(eol2, last2);
+	}
+	
+	if (!equal)
+	{
+		new_data.replace("'", "&apos;");
+		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
+		file.write(new_data);
+		QVERIFY(file.flush());
+		file.close();
+		QCOMPARE(file.error(), QFileDevice::NoError);
+	}
+}
+
+
+
 void SymbolSetTool::initTestCase()
 {
 	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
@@ -750,15 +788,10 @@ void SymbolSetTool::processSymbolSetTranslations()
 		new_data.replace(0, pos+1, lower_case_xml);
 	}
 	
-	if (new_data != existing_data)
-	{
-		new_data.replace("'", "&apos;");
-		QVERIFY(file.open(QIODevice::WriteOnly | QIODevice::Truncate));
-		file.write(new_data);
-		QVERIFY(file.flush());
-		file.close();
-		QCOMPARE(file.error(), QFileDevice::NoError);
-	}
+	// Weblate uses different formatting
+	new_data.replace("    <", "<");
+	
+	saveIfDifferent(file, new_data, existing_data);
 }
 
 
