@@ -421,7 +421,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="259"/>
         <source>Desktop</source>
-        <translation>Desktop</translation>
+        <translation>Schreibtisch</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="260"/>
@@ -5954,7 +5954,7 @@ rationen</translation>
         <location filename="../src/gui/print_widget.cpp" line="1209"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
-        <translation>Bild konnte nicht gespeichert werden. Pfad nicht vorhanden oder Berechtigungen unzureichend.</translation>
+        <translation>Bild konnte nicht gespeichert werden. Ist der Pfad vorhanden? Hast du genug Rechte?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1213"/>
@@ -7527,7 +7527,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="48"/>
         <source>Real</source>
-        <translation>Real</translation>
+        <translation>reell</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="49"/>
@@ -7829,7 +7829,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="149"/>
         <source>Kerning</source>
-        <translation>Kerning</translation>
+        <translation>Unterschneidung</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="156"/>

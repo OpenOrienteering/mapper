@@ -4425,7 +4425,7 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="517"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="325"/>
         <source>Map (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>地图（%1）</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="518"/>
@@ -6001,7 +6001,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">无法打开文件: %1 %2</translation>
+        <translation>无法打开文件：
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="346"/>
@@ -7725,7 +7728,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
         <source>%1°</source>
         <comment>degree</comment>
-        <translation type="unfinished">%1 x {1°?}</translation>
+        <translation>%1°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="623"/>

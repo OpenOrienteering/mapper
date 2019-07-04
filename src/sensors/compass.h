@@ -1,5 +1,6 @@
 /*
  *    Copyright 2014 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,6 +21,8 @@
 
 #ifndef OPENORIENTEERING_COMPASS_H
 #define OPENORIENTEERING_COMPASS_H
+
+#include <memory>
 
 #include <QObject>
 
@@ -70,12 +73,10 @@ protected:
 	void disconnectNotify(const QMetaMethod& signal) override;
 	
 private:
-	Compass();
-	
 	void emitAzimuthChanged(float value);
 	
-	int reference_counter;
-	CompassPrivate* p;
+	std::unique_ptr<CompassPrivate> p;
+	int reference_counter = 0;
 };
 
 

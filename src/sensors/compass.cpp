@@ -1,5 +1,6 @@
 /*
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -516,22 +517,8 @@ private:
 #endif
 
 
-Compass::Compass(): QObject()
-{
-	reference_counter = 0;
-#ifdef QT_SENSORS_LIB
-	p = new CompassPrivate(this);
-#else
-	p = nullptr;
-#endif
-}
-
-Compass::~Compass()
-{
-#ifdef QT_SENSORS_LIB
-	delete p;
-#endif
-}
+// Emit vtable once, in this translation unit
+Compass::~Compass() = default;
 
 Compass& Compass::getInstance()
 {
@@ -544,7 +531,10 @@ void Compass::startUsage()
 	++ reference_counter;
 #ifdef QT_SENSORS_LIB
 	if (reference_counter == 1)
+	{
+		p.reset(new CompassPrivate(this));
 		p->enable(true);
+	}
 #endif
 }
 
@@ -553,14 +543,17 @@ void Compass::stopUsage()
 	-- reference_counter;
 #ifdef QT_SENSORS_LIB
 	if (reference_counter == 0)
+	{
 		p->enable(false);
+		p.reset();
+	}
 #endif
 }
 
 float Compass::getCurrentAzimuth()
 {
 #ifdef QT_SENSORS_LIB
-	return p->getLatestAzimuth();
+	return p ? p->getLatestAzimuth() : 0.0f;
 #elif MAPPER_DEVELOPMENT_BUILD
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();
