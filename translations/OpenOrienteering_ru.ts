@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно записать файл: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно открыть файл
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Невозможно открыть файл:
+        <translation>Невозможно открыть файл:
 %1
 
 %2</translation>
@@ -35,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Некорректный тип файла.</translation>
+        <translation>Некорректный тип файла.</translation>
     </message>
 </context>
 <context>
@@ -43,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Вопрос</translation>
+        <translation>Вопрос</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Масштаб импортируемых данных 1:%1 отличается от масштаба карты 1:%2.
+        <translation>Масштаб импортируемых данных 1:%1 отличается от масштаба карты 1:%2.
 
 Отмасштабировать импортируемые данные?</translation>
     </message>
@@ -60,18 +62,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">OCD файлы версии %1 не поддерживаются!</translation>
+        <translation>OCD файлы версии %1 не поддерживаются!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Координаты поправлены так, чтобы вписываться в зону рисования OCAD 8 (-2 м … 2 м).</translation>
+        <translation>Координаты поправлены так, чтобы вписываться в зону рисования OCAD 8 (-2 м … 2 м).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Некоторые координаты выходят за границы зоны рисования OCAD 8. Они могут быть недоступны в OCAD.</translation>
+        <translation>Некоторые координаты выходят за границы зоны рисования OCAD 8. Они могут быть недоступны в OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -97,12 +99,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Невозможно сохранить корректное положение отсутствующей подложки: &quot;%1&quot;</translation>
+        <translation>Невозможно сохранить корректное положение отсутствующей подложки: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Невозможно экспортировать подложку: тип файла &quot;%1&quot; пока не поддерживается</translation>
+        <translation>Невозможно экспортировать подложку: тип файла &quot;%1&quot; пока не поддерживается</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
@@ -125,7 +127,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
+        <translation>Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
     </message>
 </context>
 <context>
@@ -445,7 +447,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="122"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="126"/>
@@ -1564,7 +1566,7 @@ Rescale the imported data?</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Невозможно сохранить файл
+        <translation>Невозможно сохранить файл
 %1:
 %2</translation>
     </message>
@@ -1658,17 +1660,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Подложки</translation>
+        <translation>Подложки</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Штриховать области</translation>
+        <translation>Штриховать области</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Показ базовых линий</translation>
+        <translation>Показ базовых линий</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
@@ -2254,7 +2256,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="513"/>
         <source>Help</source>
-        <translation type="unfinished">Справка</translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="534"/>
@@ -2280,12 +2282,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Все файлы (*.*)</translation>
+        <translation>Все файлы (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2306,7 +2308,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
@@ -2321,7 +2323,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
