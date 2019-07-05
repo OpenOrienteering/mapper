@@ -2760,12 +2760,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="168"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>Центр штрихов</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="169"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Центр штриховых групп</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
@@ -2810,12 +2810,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="671"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Избыточная длина в начале:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="672"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Избыточная длина в конце:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="676"/>
@@ -7997,7 +7997,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Геопривязка не может быть изменена.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1222"/>
@@ -8509,7 +8509,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
