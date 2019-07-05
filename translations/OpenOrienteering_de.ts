@@ -282,62 +282,61 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Drehung der Füllung</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="204"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="206"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
         <translation>Winkel:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="208"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
         <source>adjustable per object</source>
         <translation>objektweise einstellbar</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="228"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
         <translation>Zeichnen von Elementen  am Rand</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
         <translation>Elemente am Rand beschneiden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
         <translation>Elemente zeichnen wenn das Zentrum innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
         <translation>Elemente zeichnen wenn irgendein Punkt innerhalb der Begrenzung liegt.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
         <translation>Elemente zeichnen wenn alle Punkte innerhalb der Begrenzung liegen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="248"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
         <translation>Flächeneinstellungen</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="342"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
         <translation>Füllmuster %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="351"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
         <translation>Linienfüllung %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="370"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
         <source>No fill selected</source>
         <translation>Keine Füllung ausgewählt</translation>
     </message>
@@ -442,128 +441,127 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="122"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="126"/>
+        <location filename="../src/gui/color_dialog.cpp" line="128"/>
         <source>Mixture of spot colors (screens and overprint):</source>
         <translation>Mischung aus Schmuckfarben (Raster und Überdruck):</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="141"/>
-        <location filename="../src/gui/color_dialog.cpp" line="179"/>
-        <location filename="../src/gui/color_dialog.cpp" line="184"/>
-        <location filename="../src/gui/color_dialog.cpp" line="189"/>
-        <location filename="../src/gui/color_dialog.cpp" line="194"/>
-        <location filename="../src/gui/color_dialog.cpp" line="438"/>
+        <location filename="../src/gui/color_dialog.cpp" line="143"/>
+        <location filename="../src/gui/color_dialog.cpp" line="181"/>
+        <location filename="../src/gui/color_dialog.cpp" line="186"/>
+        <location filename="../src/gui/color_dialog.cpp" line="191"/>
+        <location filename="../src/gui/color_dialog.cpp" line="196"/>
+        <location filename="../src/gui/color_dialog.cpp" line="440"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="146"/>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
         <translation>Knockout: löscht darunterliegende Farben</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="159"/>
+        <location filename="../src/gui/color_dialog.cpp" line="161"/>
         <source>CMYK</source>
         <translation>CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="174"/>
+        <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
         <translation>Angepasste Prozessfarbe:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="180"/>
+        <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Cyan</source>
         <translation>Cyan</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="185"/>
+        <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Magenta</source>
         <translation>Magenta</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="190"/>
+        <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Yellow</source>
         <translation>Gelb</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="195"/>
+        <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>Black</source>
         <translation>Schwarz</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="216"/>
+        <location filename="../src/gui/color_dialog.cpp" line="218"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="290"/>
+        <location filename="../src/gui/color_dialog.cpp" line="292"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="344"/>
+        <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
         <translation>- unbenannt -</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="621"/>
+        <location filename="../src/gui/color_dialog.cpp" line="623"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="164"/>
-        <location filename="../src/gui/color_dialog.cpp" line="221"/>
+        <location filename="../src/gui/color_dialog.cpp" line="166"/>
+        <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Calculate from spot colors</source>
         <translation>Aus Schmuckfarben berechnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="169"/>
+        <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from RGB color</source>
         <translation>Aus RGB-Farbe berechnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="226"/>
+        <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Calculate from CMYK color</source>
         <translation>Aus CMYK-Farbe berechnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="231"/>
+        <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Custom RGB color:</source>
         <translation>Angepasste RGB-Farbe:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="237"/>
+        <location filename="../src/gui/color_dialog.cpp" line="239"/>
         <source>Red</source>
         <translation>Rot</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="242"/>
+        <location filename="../src/gui/color_dialog.cpp" line="244"/>
         <source>Green</source>
         <translation>Grün</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="247"/>
+        <location filename="../src/gui/color_dialog.cpp" line="249"/>
         <source>Blue</source>
         <translation>Blau</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="252"/>
+        <location filename="../src/gui/color_dialog.cpp" line="254"/>
         <source>#RRGGBB</source>
         <translation>#RRGGBB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="270"/>
+        <location filename="../src/gui/color_dialog.cpp" line="272"/>
         <source>Desktop</source>
         <translation>Schreibtisch</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="271"/>
+        <location filename="../src/gui/color_dialog.cpp" line="273"/>
         <source>Professional printing</source>
         <translation>Professioneller Druck</translation>
     </message>
@@ -799,9 +797,8 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Zusätzliche Drehung (gegen Uhrzeigersinn):</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="134"/>
@@ -1021,13 +1018,12 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation>Drehung der Punkte am Pfad ausrichten</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="149"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="151"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
         <translation>Zusätzliche Drehung (gegen Uhrzeigersinn):</translation>
     </message>
@@ -1434,122 +1430,121 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 <context>
     <name>OpenOrienteering::EditorSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>High quality map display (antialiasing)</source>
         <translation>Hohe Darstellungsqualität (Antialiasing)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="55"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
         <translation>Antialiasing verbessert die Kartendarstellung, verlangsamt aber den Bildaufbau</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>High quality text display in map (antialiasing), slow</source>
         <translation>Hohe Text-Darstellungsqualität (Antialiasing), langsam</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="58"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="59"/>
         <source>Click tolerance:</source>
         <translation>Klicktoleranz:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="46"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="97"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="47"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="58"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Snap distance (%1):</source>
         <translation>Einrastdistanz (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="64"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Stepping of fixed angle mode (%1):</source>
         <translation>Schrittweite bei eingeschränkten Winkeln (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="47"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Symbol icon size:</source>
         <translation>Symbolgröße:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="66"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
         <source>When selecting an object, automatically select its symbol, too</source>
         <translation>Automatisch das zugehörige Symbol auswählen, wenn ein Objekt ausgewählt wird</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
         <source>Zoom away from cursor when zooming out</source>
         <translation>Vom Mauszeiger aus herauszoomen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>Drawing tools: set last point on finishing with right click</source>
         <translation>Zeichentools: beim Abschließen mit Rechtsklick auch letzten Punkt setzen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Templates: keep settings of closed templates</source>
         <translation>Vorlagen: Einstellungen von geschlossenen Vorlagen speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="80"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
         <source>Edit tool:</source>
         <translation>Bearbeitungstool:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="86"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <source>Retain old shape</source>
         <translation>Alte Form beibehalten</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="90"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="93"/>
         <source>Reset outer curve handles</source>
         <translation>Äußere Kurven-Handles zurücksetzen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="91"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="88"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="94"/>
         <source>Keep outer curve handles</source>
         <translation>Äußere Kurven-Handles behalten</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="86"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <source>Action on deleting a curve point with %1:</source>
         <translation>Aktion beim Löschen eines Kurvenpunkts mit %1:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <source>Rectangle tool:</source>
         <translation>Rechteckstool:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Radius of helper cross:</source>
         <translation>Radius des Hilfskreuzes:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Preview the width of lines with helper cross</source>
         <translation>Breite von Linien mit dem Hilfskreuz darstellen</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="116"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="119"/>
         <source>Editor</source>
         <translation>Editor</translation>
     </message>
@@ -1955,72 +1950,72 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 <context>
     <name>OpenOrienteering::GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="121"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="124"/>
         <source>Map Georeferencing</source>
         <translation>Georeferenzierung</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="198"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="529"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="202"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="533"/>
         <source>Lookup...</source>
         <translation>Abrufen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="158"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="159"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="161"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
         <source>m</source>
         <translation>m</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="232"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="236"/>
         <source>Declination:</source>
         <translation>Deklination:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <source>Projected coordinates</source>
         <translation>Projizierte Koordinaten</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>Status:</source>
         <translation>Status:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="139"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translatorcomment>Maßstabsfaktor der Projektionsverzerrung</translatorcomment>
         <translation>Maßstabsfaktor:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="188"/>
         <source>Geographic coordinates</source>
         <translation>Geographische Koordinaten</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="179"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
         <source>Show reference point in:</source>
         <translation>Referenzpunkt anzeigen in:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="371"/>
         <source>valid</source>
         <translation>gültig</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="361"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="365"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="391"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="395"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="708"/>
         <source>Online declination lookup</source>
         <translation>Deklination online abrufen</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="125"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
         <source>Map coordinate reference system</source>
         <translation>Karten-Koordinatenbezugssystem</translation>
     </message>
@@ -2033,7 +2028,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="vanished">- aus Proj.4-Spezifikation -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
         <source>- local -</source>
         <translation>- lokal -</translation>
     </message>
@@ -2042,112 +2037,109 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="vanished">Koordinatenbezugssystem-Spezifikation:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="139"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
         <source>Reference point</source>
         <translation>Referenzpunkt</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="144"/>
         <source>&amp;Pick on map</source>
         <translation>Auf &amp;Karte auswählen</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
         <source>(Datum: WGS84)</source>
         <translation>(Datum: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="150"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="156"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="165"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="169"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="172"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="176"/>
         <source>N</source>
         <comment>north</comment>
         <translation>N</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="174"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="178"/>
         <source>E</source>
         <comment>east</comment>
         <translation>O</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="195"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
         <source>Map north</source>
         <translation>Kartennord</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="219"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="93"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Koordinatenbezugssystem:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="226"/>
         <source>Map coordinates:</source>
         <translation>Kartenkoordinaten:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="224"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Geographic coordinates:</source>
         <translation>Geographische Koordinaten:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="231"/>
         <source>On CRS changes, keep:</source>
         <translation>Bei Änderungen des&lt;br/&gt;Koordinatenbezugssystems, behalte bei:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="233"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="237"/>
         <source>Grivation:</source>
         <translation>Nadelabweichung:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="392"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="396"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Die magnetische Deklination des Referenzpunkts %1° %2° wird nun online von &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt; abgerufen. Wollen Sie fortfahren?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="476"/>
         <source>Declination change</source>
         <translation>Deklinationsänderung</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="476"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Die Deklination wurde geändert. Wollen Sie auch den Karteninhalt entsprechend drehen?</translation>
     </message>
@@ -2156,39 +2148,39 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="vanished">Projizierte Koordinaten:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="502"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="506"/>
         <source>Local coordinates:</source>
         <translation>Lokale Koordinaten:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="529"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="533"/>
         <source>Loading...</source>
         <translation>Lade...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="536"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="540"/>
         <source>locked</source>
         <translation>gesperrt</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="679"/>
         <source>Could not parse data.</source>
         <translation>Konnte Daten nicht auswerten.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="700"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
         <source>Declination value not found.</source>
         <translation>Deklinationswert nicht gefunden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="705"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="709"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Der Online-Abruf der Deklination ist fehlgeschlagen:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="534"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="538"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -2201,7 +2193,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="vanished">&lt;b&gt;Klick&lt;/b&gt;: Referenzpunkt setzen. Andere Maustaste zum Abbrechen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="733"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="737"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation>&lt;b&gt;Klick&lt;/b&gt;: Referenzpunkt setzen. &lt;b&gt;Rechtsklick&lt;/b&gt;: Abbrechen.</translation>
     </message>
@@ -4996,39 +4988,39 @@ gewählt</translation>
 <context>
     <name>OpenOrienteering::MapSymbolTranslation</name>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="286"/>
+        <location filename="../src/gui/color_dialog.cpp" line="288"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"/>
         <source>Text source:</source>
         <translation>Textquelle:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="538"/>
+        <location filename="../src/gui/color_dialog.cpp" line="540"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="321"/>
         <source>Map (%1)</source>
         <translation>Karte (%1)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="539"/>
-        <location filename="../src/gui/color_dialog.cpp" line="554"/>
+        <location filename="../src/gui/color_dialog.cpp" line="541"/>
+        <location filename="../src/gui/color_dialog.cpp" line="556"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="322"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="335"/>
         <source>undefined language</source>
         <translation>undefinierte Sprache</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="557"/>
+        <location filename="../src/gui/color_dialog.cpp" line="559"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>Translation (%1)</source>
         <translation>Übersetzung (%1)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="609"/>
+        <location filename="../src/gui/color_dialog.cpp" line="611"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="212"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
         <translation>Vor dem Bearbeiten wird der gespeicherte Text mit der aktuellen Übersetzung ersetzt. Möchten Sie fortfahren?</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="616"/>
+        <location filename="../src/gui/color_dialog.cpp" line="618"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="219"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
         <translation>Nach dem Verändern des gespeicherten Texts wird möglicherweise die Übersetzung nicht mehr gefunden. Möchten Sie fortfahren?</translation>
@@ -6862,14 +6854,13 @@ Sollen die Änderungen gesichert werden?</translation>
         <translation>Karte drehen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="54"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="53"/>
         <source>Angle (counter-clockwise):</source>
         <translation>Winkel (gegen Uhrzeigersinn):</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="52"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="50"/>
@@ -6877,7 +6868,7 @@ Sollen die Änderungen gesichert werden?</translation>
         <translation>Drehungsparameter</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="56"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="55"/>
         <source>Rotate around:</source>
         <translation>Drehen um:</translation>
     </message>
@@ -6911,50 +6902,50 @@ Sollen die Änderungen gesichert werden?</translation>
         <translation type="vanished">Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="59"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished">Ursprung des Karten-Koordinatensystems</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="64"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished">Referenzpunkt der Georeferenzierung</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="70"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished">Anderer Punkt,</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="75"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
         <translation type="unfinished">X:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="79"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
         <translation type="unfinished">Y:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="83"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
         <source>Options</source>
         <translation>Optionen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="85"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Referenzpunkt für Georeferenzierung anpassen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="92"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="91"/>
         <source>Adjust georeferencing declination</source>
         <translation>Deklination in Georeferenzierung anpassen</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="99"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="98"/>
         <source>Rotate non-georeferenced templates</source>
         <translation>Nicht-georeferenzierte Vorlagen drehen</translation>
     </message>
@@ -8646,16 +8637,22 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>OpenOrienteering::UnitOfMeasurement</name>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="204"/>
+        <location filename="../src/gui/util_gui.cpp" line="202"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="209"/>
+        <location filename="../src/gui/util_gui.cpp" line="207"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/util_gui.cpp" line="212"/>
+        <source>°</source>
+        <comment>degrees</comment>
+        <translation type="unfinished">°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
@@ -8673,29 +8670,29 @@ Die höchste unterstütze Version ist %2.</translation>
 <context>
     <name>OpenOrienteering::Util</name>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="130"/>
-        <location filename="../src/gui/util_gui.cpp" line="144"/>
-        <location filename="../src/gui/util_gui.cpp" line="178"/>
+        <location filename="../src/gui/util_gui.cpp" line="128"/>
+        <location filename="../src/gui/util_gui.cpp" line="142"/>
+        <location filename="../src/gui/util_gui.cpp" line="176"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="130"/>
+        <location filename="../src/gui/util_gui.cpp" line="128"/>
         <source>Failed to locate the help files.</source>
         <translation>Die Hilfedateien konnten nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="144"/>
+        <location filename="../src/gui/util_gui.cpp" line="142"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gefunden werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="179"/>
+        <location filename="../src/gui/util_gui.cpp" line="177"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Das Handbuchprogramm (&quot;Qt Assistant&quot;) konnte nicht gestartet werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="197"/>
+        <location filename="../src/gui/util_gui.cpp" line="195"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
         <translation>Mehr...</translation>

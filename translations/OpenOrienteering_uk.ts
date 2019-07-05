@@ -282,62 +282,57 @@ Rescale the imported data?</source>
         <translation>Обертання заповнення</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="204"/>
-        <source>°</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="206"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
         <translation>Кут:</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="208"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
         <source>adjustable per object</source>
         <translation>регулюється за об&apos;єктом</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="228"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
         <translation>Відображення елементів на межі</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="230"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
         <translation>Обрізати елементи на межі.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
         <translation>Відображати елементи якщо центр всередині межі.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
         <translation>Відображати елементи якщо будь-яка точка всередині межі.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
         <translation>Відображати елементи якщо всі точки всередині межі.</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="248"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
         <translation>Параметри площі</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="342"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
         <translation>Заповнення візерунком %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="351"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
         <translation>Заповнення лінією %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="370"/>
+        <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
         <source>No fill selected</source>
         <translation>Заповення не вибрано</translation>
     </message>
@@ -443,128 +438,127 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="122"/>
         <source>°</source>
-        <translation type="unfinished">°</translation>
+        <translation type="obsolete">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="126"/>
+        <location filename="../src/gui/color_dialog.cpp" line="128"/>
         <source>Mixture of spot colors (screens and overprint):</source>
         <translation>Суміш планшетних кольорів (екран і overprint):</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="141"/>
-        <location filename="../src/gui/color_dialog.cpp" line="179"/>
-        <location filename="../src/gui/color_dialog.cpp" line="184"/>
-        <location filename="../src/gui/color_dialog.cpp" line="189"/>
-        <location filename="../src/gui/color_dialog.cpp" line="194"/>
-        <location filename="../src/gui/color_dialog.cpp" line="438"/>
+        <location filename="../src/gui/color_dialog.cpp" line="143"/>
+        <location filename="../src/gui/color_dialog.cpp" line="181"/>
+        <location filename="../src/gui/color_dialog.cpp" line="186"/>
+        <location filename="../src/gui/color_dialog.cpp" line="191"/>
+        <location filename="../src/gui/color_dialog.cpp" line="196"/>
+        <location filename="../src/gui/color_dialog.cpp" line="440"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="146"/>
+        <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
         <translation>Витіснення: замальовувати нижні кольори</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="159"/>
+        <location filename="../src/gui/color_dialog.cpp" line="161"/>
         <source>CMYK</source>
         <translation>CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="164"/>
-        <location filename="../src/gui/color_dialog.cpp" line="221"/>
+        <location filename="../src/gui/color_dialog.cpp" line="166"/>
+        <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Calculate from spot colors</source>
         <translation>Розрахувати з планшетного кольору</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="169"/>
+        <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from RGB color</source>
         <translation>Розрахувати з кольору RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="174"/>
+        <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
         <translation>Набрати колір вручну:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="180"/>
+        <location filename="../src/gui/color_dialog.cpp" line="182"/>
         <source>Cyan</source>
         <translation>Блакитний</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="185"/>
+        <location filename="../src/gui/color_dialog.cpp" line="187"/>
         <source>Magenta</source>
         <translation>Пурпурний</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="190"/>
+        <location filename="../src/gui/color_dialog.cpp" line="192"/>
         <source>Yellow</source>
         <translation>Жовтий</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="195"/>
+        <location filename="../src/gui/color_dialog.cpp" line="197"/>
         <source>Black</source>
         <translation>Чорний</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="216"/>
+        <location filename="../src/gui/color_dialog.cpp" line="218"/>
         <source>RGB</source>
         <translation>RGB</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="226"/>
+        <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Calculate from CMYK color</source>
         <translation>Розрахувати з кольору CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="231"/>
+        <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Custom RGB color:</source>
         <translation>Набрати колір RGB вручну:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="237"/>
+        <location filename="../src/gui/color_dialog.cpp" line="239"/>
         <source>Red</source>
         <translation>Червоний</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="242"/>
+        <location filename="../src/gui/color_dialog.cpp" line="244"/>
         <source>Green</source>
         <translation>Зелений</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="247"/>
+        <location filename="../src/gui/color_dialog.cpp" line="249"/>
         <source>Blue</source>
         <translation>Синій</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="252"/>
+        <location filename="../src/gui/color_dialog.cpp" line="254"/>
         <source>#RRGGBB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="270"/>
+        <location filename="../src/gui/color_dialog.cpp" line="272"/>
         <source>Desktop</source>
         <translation>Домашній друк</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="271"/>
+        <location filename="../src/gui/color_dialog.cpp" line="273"/>
         <source>Professional printing</source>
         <translation>Професійний друк</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="290"/>
+        <location filename="../src/gui/color_dialog.cpp" line="292"/>
         <source>Name</source>
         <translation>Назва</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="344"/>
+        <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
         <translation>- без назви -</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="621"/>
+        <location filename="../src/gui/color_dialog.cpp" line="623"/>
         <source>Warning</source>
         <translation>Попередження</translation>
     </message>
@@ -797,9 +791,8 @@ Rescale the imported data?</source>
         <translation>Додаткове обертання (проти годинникової стрілки):</translation>
     </message>
     <message>
-        <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="134"/>
@@ -1018,13 +1011,7 @@ Rescale the imported data?</source>
         <translation>Вирівняти точки у напрямку лінії</translation>
     </message>
     <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="149"/>
-        <source>°</source>
-        <comment>degrees</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../src/tools/distribute_points_tool.cpp" line="151"/>
+        <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
         <translation>Додатковий кут повороту (проти годинникової стрілки):</translation>
     </message>
@@ -1427,122 +1414,121 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::EditorSettingsPage</name>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>High quality map display (antialiasing)</source>
         <translation>Висока якість відображення карти (згладжування)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="55"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
         <translation>Згладжування робить вигляд карти значно кращим, але уповільнює відображення</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="53"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>High quality text display in map (antialiasing), slow</source>
         <translation>Висока якість відображення тексту на карті (згладжування), повільно</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="58"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="59"/>
         <source>Click tolerance:</source>
         <translation>Допуск курсора:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="46"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="97"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="47"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="58"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="62"/>
         <source>Snap distance (%1):</source>
         <translation>Відстань для прив&apos;язки (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="64"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="67"/>
         <source>Stepping of fixed angle mode (%1):</source>
         <translation>Кроки у режимі фіксованих кутів (%1):</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="63"/>
         <source>°</source>
         <comment>Degree sign for angles</comment>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="47"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="48"/>
         <source>Symbol icon size:</source>
         <translation>Розмір іконок знаків:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="66"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
         <source>When selecting an object, automatically select its symbol, too</source>
         <translation>Якщо виділити об’єкт, автоматично виділяти і його знак</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
         <source>Zoom away from cursor when zooming out</source>
         <translation>Триматися поруч курсора під час віддалення</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="72"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>Drawing tools: set last point on finishing with right click</source>
         <translation>Інструменти креслення: Правий клік завершує лінію</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Templates: keep settings of closed templates</source>
         <translation>Підложки: запам&apos;ятовувати налаштування закритих підложок</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="80"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
         <source>Edit tool:</source>
         <translation>Інструменти редагування:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="83"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="86"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <source>Retain old shape</source>
         <translation>Зберегти стару форму</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="90"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="87"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="93"/>
         <source>Reset outer curve handles</source>
         <translation>Скинути налаштування напрямних у зовнішніх точках кривої</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="85"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="91"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="88"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="94"/>
         <source>Keep outer curve handles</source>
         <translation>Зберегти напрямні у зовнішніх точках кривої</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="86"/>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <source>Action on deleting a curve point with %1:</source>
         <translation>Дія при видаленні точки кривої з %1:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <source>Rectangle tool:</source>
         <translation>Інструмент Прямокутник:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Radius of helper cross:</source>
         <translation>Величина допоміжного хрестика:</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="103"/>
         <source>Preview the width of lines with helper cross</source>
         <translation>Попередній перегляд ширини лінії разом з допоміжним хрестиком</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="116"/>
+        <location filename="../src/gui/widgets/editor_settings_page.cpp" line="119"/>
         <source>Editor</source>
         <translation>Редактор</translation>
     </message>
@@ -1931,223 +1917,220 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::GeoreferencingDialog</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="198"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="529"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="202"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="533"/>
         <source>Lookup...</source>
         <translation>Розрахувати...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="158"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="159"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="161"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
         <source>m</source>
         <translation>м</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="232"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="236"/>
         <source>Declination:</source>
         <translation>Магнітне схилення:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="187"/>
         <source>Projected coordinates</source>
         <translation>Проекційні координати</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="219"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="93"/>
         <source>&amp;Coordinate reference system:</source>
         <translation>&amp;Базова система координат:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="130"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>Status:</source>
         <translation>Статус:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="184"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="188"/>
         <source>Geographic coordinates</source>
         <translation>Географічні координати</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="179"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="183"/>
         <source>Show reference point in:</source>
         <translation>Показати опорну точку в:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="367"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="371"/>
         <source>valid</source>
         <translation>дійсний</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="361"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="365"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
         <translation>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="391"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="395"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="708"/>
         <source>Online declination lookup</source>
         <translation>Пошук схилення онлайн</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="125"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
         <source>Map coordinate reference system</source>
         <translation>Базова система координат карти</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="121"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="124"/>
         <source>Map Georeferencing</source>
         <translation>Геоприв&apos;язка карти</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="128"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="131"/>
         <source>- local -</source>
         <translation>- локально -</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="139"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
         <translation>Коефіцієнт викривлення сітки:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="139"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="142"/>
         <source>Reference point</source>
         <translation>Опорна точка</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="141"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="144"/>
         <source>&amp;Pick on map</source>
         <translation>&amp;Указати на карті</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="143"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
         <source>(Datum: WGS84)</source>
         <translation>(Датум: WGS84)</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="146"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="150"/>
         <source>mm</source>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
         <source>X</source>
         <comment>x coordinate</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="156"/>
         <source>Y</source>
         <comment>y coordinate</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="162"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="165"/>
         <source>E</source>
         <comment>west / east</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="164"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <source>N</source>
         <comment>north / south</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="168"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="169"/>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="197"/>
         <source>°</source>
-        <translation>°</translation>
+        <translation type="vanished">°</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="172"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="176"/>
         <source>N</source>
         <comment>north</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="174"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="178"/>
         <source>E</source>
         <comment>east</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="195"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="199"/>
         <source>Map north</source>
         <translation>Північ карти</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="222"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="226"/>
         <source>Map coordinates:</source>
         <translation>Координати карти:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="224"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="228"/>
         <source>Geographic coordinates:</source>
         <translation>Географічні координати:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="231"/>
         <source>On CRS changes, keep:</source>
         <translation>При змінах в БСК, зберегти:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="233"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="237"/>
         <source>Grivation:</source>
         <translation>Квазісхилення:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="392"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="396"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
         <translation>Магнітне схилення для опорної точки %1° %2° буде взято з &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Хочете продовжити?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="476"/>
         <source>Declination change</source>
         <translation>Зміна магнітного схилення</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="472"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="476"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
         <translation>Величину магнітного схилення змінено. Повернути вміст карти відповідно?</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="502"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="506"/>
         <source>Local coordinates:</source>
         <translation>Локальні координати:</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="529"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="533"/>
         <source>Loading...</source>
         <translation>Завантаження...</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="536"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="540"/>
         <source>locked</source>
         <translation>замкнено</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="675"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="679"/>
         <source>Could not parse data.</source>
         <translation>Не вдається проаналізувати дані.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="700"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="704"/>
         <source>Declination value not found.</source>
         <translation>Значення схилення не знайдено.</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="705"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="709"/>
         <source>The online declination lookup failed:
 %1</source>
         <translation>Онлайн пошук схилення невдалий:
 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="534"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="538"/>
         <source>%1 °</source>
         <comment>degree value</comment>
         <translation>%1 °</translation>
@@ -2156,7 +2139,7 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::GeoreferencingTool</name>
     <message>
-        <location filename="../src/gui/georeferencing_dialog.cpp" line="733"/>
+        <location filename="../src/gui/georeferencing_dialog.cpp" line="737"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the reference point. &lt;b&gt;Right click&lt;/b&gt;: Cancel.</source>
         <translation>&lt;b&gt;Клік&lt;/b&gt;: Установити опорну точку. &lt;b&gt;Правий клік&lt;/b&gt;: Відміна.</translation>
     </message>
@@ -4900,39 +4883,39 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::MapSymbolTranslation</name>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="286"/>
+        <location filename="../src/gui/color_dialog.cpp" line="288"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"/>
         <source>Text source:</source>
         <translation>Джерело тексту:</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="538"/>
+        <location filename="../src/gui/color_dialog.cpp" line="540"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="321"/>
         <source>Map (%1)</source>
         <translation>Карта (%1)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="539"/>
-        <location filename="../src/gui/color_dialog.cpp" line="554"/>
+        <location filename="../src/gui/color_dialog.cpp" line="541"/>
+        <location filename="../src/gui/color_dialog.cpp" line="556"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="322"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="335"/>
         <source>undefined language</source>
         <translation>невизначена мова</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="557"/>
+        <location filename="../src/gui/color_dialog.cpp" line="559"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>Translation (%1)</source>
         <translation>Переклад (%1)</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="609"/>
+        <location filename="../src/gui/color_dialog.cpp" line="611"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="212"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
         <translation>Зверніть увагу, що збережений текст буде замінено на поточний переклад. Бажаєте продовжити?</translation>
     </message>
     <message>
-        <location filename="../src/gui/color_dialog.cpp" line="616"/>
+        <location filename="../src/gui/color_dialog.cpp" line="618"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="219"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
         <translation>Після редагування збереженого тексту, переклад більше не буде доступним. Бажаєте продовжити?</translation>
@@ -6740,14 +6723,9 @@ Do you want to save your changes?</source>
         <translation>Повернути карту</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="54"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="53"/>
         <source>Angle (counter-clockwise):</source>
         <translation>Кут (проти годинникової стрілки):</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="52"/>
-        <source>°</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="50"/>
@@ -6755,7 +6733,7 @@ Do you want to save your changes?</source>
         <translation>Параметри обертання</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="56"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="55"/>
         <source>Rotate around:</source>
         <translation>Обертати навколо:</translation>
     </message>
@@ -6779,50 +6757,50 @@ Do you want to save your changes?</source>
         <translation type="vanished">мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="59"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="64"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="70"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="75"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="79"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="83"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
         <source>Options</source>
         <translation>Опції</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="85"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
         <translation>Підігнати опорну точку геоприв&apos;язки</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="92"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="91"/>
         <source>Adjust georeferencing declination</source>
         <translation>Підігнати геоприв&apos;язане схилення</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="99"/>
+        <location filename="../src/gui/map/map_dialog_rotate.cpp" line="98"/>
         <source>Rotate non-georeferenced templates</source>
         <translation>Повернути негеоприв&apos;язані підложки</translation>
     </message>
@@ -8476,16 +8454,22 @@ The maximum supported version is %2.</source>
 <context>
     <name>OpenOrienteering::UnitOfMeasurement</name>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="204"/>
+        <location filename="../src/gui/util_gui.cpp" line="202"/>
         <source>mm</source>
         <comment>millimeters</comment>
         <translation>мм</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="209"/>
+        <location filename="../src/gui/util_gui.cpp" line="207"/>
         <source>m</source>
         <comment>meters</comment>
         <translation>м</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/util_gui.cpp" line="212"/>
+        <source>°</source>
+        <comment>degrees</comment>
+        <translation type="unfinished">°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
@@ -8503,29 +8487,29 @@ The maximum supported version is %2.</source>
 <context>
     <name>OpenOrienteering::Util</name>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="130"/>
-        <location filename="../src/gui/util_gui.cpp" line="144"/>
-        <location filename="../src/gui/util_gui.cpp" line="178"/>
+        <location filename="../src/gui/util_gui.cpp" line="128"/>
+        <location filename="../src/gui/util_gui.cpp" line="142"/>
+        <location filename="../src/gui/util_gui.cpp" line="176"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="130"/>
+        <location filename="../src/gui/util_gui.cpp" line="128"/>
         <source>Failed to locate the help files.</source>
         <translation>Не вдалося знайти файли довідки.</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="144"/>
+        <location filename="../src/gui/util_gui.cpp" line="142"/>
         <source>Failed to locate the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Не знайдено переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="179"/>
+        <location filename="../src/gui/util_gui.cpp" line="177"/>
         <source>Failed to launch the help browser (&quot;Qt Assistant&quot;).</source>
         <translation>Не вдалося запустити переглядач для довідки (&quot;Qt Assistant&quot;).</translation>
     </message>
     <message>
-        <location filename="../src/gui/util_gui.cpp" line="197"/>
+        <location filename="../src/gui/util_gui.cpp" line="195"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
         <translation>Більше...</translation>
