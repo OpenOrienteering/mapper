@@ -6636,7 +6636,7 @@ Kleine Wasserflächen werden vollfarbig dargestellt. Verwende das Symbol 302 (&q
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished">Kleine Wasserflächen sollen vollfarbig dargestellt werden.
+        <translation>Kleine Wasserflächen sollen voller Farbe dargestellt werden.
 
 Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 Lake&quot; in ISMTBOM.</translation>
     </message>
@@ -6758,22 +6758,22 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
     <message>
         <source>Forest: good visibility</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished">Wald: gute Sicht</translation>
+        <translation>Wald: gute Sicht</translation>
     </message>
     <message>
         <source>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished">Normal offener Wald für den jeweiligen Geländetyp. Weiß sollte nicht verwendet werden, wenn der Wald zu dicht ist, um ein Fahrrad zu schieben oder zu tragen.</translation>
+        <translation>Normaler offener Wald für den jeweiligen Geländetyp. Weiß sollte nicht verwendet werden, wenn der Wald zu dicht ist, um ein Fahrrad zu schieben oder zu tragen.</translation>
     </message>
     <message>
         <source>Forest: reduced visibility</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished">Wald: verminderte Sicht</translation>
+        <translation>Wald: verminderte Sicht</translation>
     </message>
     <message>
         <source>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished">Fläche mit dichtem Baumbestand (schlechte Sicht), deutliche Behinderung beim Schieben oder Tragen des Rads oder unpassierbar.</translation>
+        <translation>Fläche mit dichtem Baumbestand (schlechte Sicht), deutliche Behinderung beim Schieben oder Tragen des Rads oder unpassierbar.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -6859,47 +6859,47 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Track: fast riding</source>
         <comment>Name of symbol 831</comment>
-        <translation type="unfinished">Weg: sehr gut befahrbar</translation>
+        <translation>Weg: schnell befahrbar</translation>
     </message>
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 831</comment>
-        <translation type="unfinished">Ein Weg mit befestigter Oberfläche, mindestens 1,5 m breit. Forstweg oder gut instand gehaltener Weg ohne Hindernisse. Geschwindigkeit 75-100 %.</translation>
+        <translation>Ein Weg mit befestigter Oberfläche, mindestens 1,5 m breit. Forstweg oder gut instand gehaltener Weg ohne Hindernisse. Geschwindigkeit 75-100 %.</translation>
     </message>
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation type="unfinished">Pfad: sehr gut befahrbar</translation>
+        <translation>Pfad: schnell befahrbar</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 832</comment>
-        <translation type="unfinished">Gut instand gehaltener Pfad, unter 1,5 m breit. Ebener Pfad ohne Auswaschungen oder Hindernisse. Geschwindigkeit 75-100 %.</translation>
+        <translation>Gut instand gehaltener Pfad, weniger als 1,5 m breit. Ebener Pfad ohne Auswaschungen oder Hindernisse. Geschwindigkeit 75-100 %.</translation>
     </message>
     <message>
         <source>Track: medium riding</source>
         <comment>Name of symbol 833</comment>
-        <translation type="unfinished">Weg: gut befahrbar</translation>
+        <translation>Weg: gut befahrbar</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 833</comment>
-        <translation type="unfinished">Ein mindestens 1,5 m breiter Weg mit Senkung der Geschwindigkeit und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
+        <translation>Ein mindestens 1,5 m breiter Weg mit Geschwindigkeitsreduktion und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
     </message>
     <message>
         <source>Path: medium riding</source>
         <comment>Name of symbol 834</comment>
-        <translation type="unfinished">Pfad: gut befahrbar</translation>
+        <translation>Pfad: gut befahrbar</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 834</comment>
-        <translation type="unfinished">Ein Pfad unter 1,5 m Breite mit Senkung der Geschwindkeit und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
+        <translation>Ein Pfad unter 1,5 m Breite mit Geschwindkeitsreduktion und möglichen kleinen Hindernissen wie Steinen, Furchen, Grass, Sand oder Schlamm. Geschwindigkeit 50-75 %.</translation>
     </message>
     <message>
         <source>Track: slow riding</source>
         <comment>Name of symbol 835</comment>
-        <translation type="unfinished">Weg: langsam befahrbar</translation>
+        <translation>Weg: langsam befahrbar</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
