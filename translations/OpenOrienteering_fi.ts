@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei voitu kirjoittaa: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei voi avata:
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi avata:
+        <translation>Tiedostoa ei voi avata:
 %1
 
 %2</translation>
@@ -35,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Virheellinen tiedostomuoto.</translation>
+        <translation>Virheellinen tiedostomuoto.</translation>
     </message>
 </context>
 <context>
@@ -43,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Kysymys</translation>
+        <translation>Kysymys</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Tuodun tiedon mittakaava on 1:%1 kun kartan mittakaava on 1:%2
+        <translation>Tuodun tiedon mittakaava on 1:%1 kun kartan mittakaava on 1:%2
 
 Skaalataanko tuotu tieto?</translation>
     </message>
@@ -60,18 +62,18 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">Version %1 OCD-tiedostoja ei vielä tueta!</translation>
+        <translation>Version %1 OCD-tiedostoja ei vielä tueta!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinaatit ovat mukautettu sopimaan OCAD 8 piirtoalueeseen (-2 m ... 2 m).</translation>
+        <translation>Koordinaatit ovat mukautettu sopimaan OCAD 8 piirtoalueeseen (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Jotkut koordinaatit pysyvät OCAD 8 piirtoalueen ulkopuolella. Ne saattavat olla saavuttamattomia OCADissa.</translation>
+        <translation>Jotkut koordinaatit pysyvät OCAD 8 piirtoalueen ulkopuolella. Ne saattavat olla saavuttamattomia OCADissa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -92,17 +94,17 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Virheellinen spottiväri.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Taustakartan sijainnin tallennus epäonnistui: taustakartta &quot;%1&quot; puuttuu</translation>
+        <translation>Taustakartan sijainnin tallennus epäonnistui: taustakartta &quot;%1&quot; puuttuu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Taustakarttaa ei voi viedä: tiedostomuotoa &quot;%1&quot; ei vielä tueta</translation>
+        <translation>Taustakarttaa ei voi viedä: tiedostomuotoa &quot;%1&quot; ei vielä tueta</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
@@ -125,7 +127,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Koodaus &apos;%1&apos; ei ole käytettävissä. Tarkista asetukset.</translation>
+        <translation>Koodaus &apos;%1&apos; ei ole käytettävissä. Tarkista asetukset.</translation>
     </message>
 </context>
 <context>
@@ -435,22 +437,22 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Linjatiheys:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Määrittelemätön</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rasterikulma:</translation>
     </message>
     <message>
         <source>°</source>
@@ -678,7 +680,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1582,7 +1584,7 @@ Skaalataanko tuotu tieto?</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi tallentaa
+        <translation>Tiedostoa ei voi tallentaa
 %1:
 %2</translation>
     </message>
@@ -1676,27 +1678,27 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Taustakartat</translation>
+        <translation>Taustakartat</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Viivoitetut alueet</translation>
+        <translation>Viivoitetut alueet</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Viivanäkymä</translation>
+        <translation>Viivanäkymä</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Viennin asetukset</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Luo taso jokaiselle symbolille</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2367,7 +2369,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="513"/>
         <source>Help</source>
-        <translation type="unfinished">Ohje</translation>
+        <translation>Ohje</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="534"/>
@@ -2393,33 +2395,33 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Kaikki tiedostot (*.*)</translation>
+        <translation>Kaikki tiedostot (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Oletuskuvake</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Esikatseluleveys:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
@@ -2429,27 +2431,27 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Mukautettu kuvake</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Leveys:</translation>
+        <translation>Leveys:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Tyhjennä</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
@@ -2460,13 +2462,14 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Virhe</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvan tallentaminen epäonnistui:
+% 1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -2479,7 +2482,7 @@ Skaalataanko tuotu tieto?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi avata:
+        <translation>Tiedostoa ei voi avata:
 %1
 
 %2</translation>
@@ -2549,7 +2552,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD-versio %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="200"/>
@@ -2626,7 +2629,9 @@ Skaalataanko tuotu tieto?</translation>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiedostoa ei voi avata:
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -3179,7 +3184,7 @@ Tallennetaanko?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi avata:
+        <translation>Tiedostoa ei voi avata:
 %1
 
 %2</translation>
@@ -3209,7 +3214,7 @@ Skaalataanko symbolit?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="835"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Virheellinen tiedostomuoto.</translation>
+        <translation>Virheellinen tiedostomuoto.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
@@ -3327,14 +3332,14 @@ Paina Ei valitaksesi toisen tiedostomuodon.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="51"/>
         <location filename="../src/gui/main_window_controller.cpp" line="59"/>
         <source>Error</source>
-        <translation type="unfinished">Virhe</translation>
+        <translation>Virhe</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="52"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Kartta ei voi viedä
+        <translation>Kartta ei voi viedä
 &quot;%1&quot;
 tiedostomuoto on tuntematon.</translation>
     </message>
@@ -3343,7 +3348,7 @@ tiedostomuoto on tuntematon.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Karttaa ei voi viedä
+        <translation>Karttaa ei voi viedä
 &quot;%1&quot;
 tallentaminen %2 (.%3) ei ole tuettu.</translation>
     </message>
@@ -4200,19 +4205,19 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Ei tuotavaa.</translation>
+        <translation>Ei tuotavaa.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4139"/>
         <source>Question</source>
-        <translation type="unfinished">Kysymys</translation>
+        <translation>Kysymys</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Tuodun tiedon mittakaava on 1:%1 kun kartan mittakaava on 1:%2
+        <translation>Tuodun tiedon mittakaava on 1:%1 kun kartan mittakaava on 1:%2
 
 Skaalataanko tuotu tieto?</translation>
     </message>
@@ -4333,7 +4338,7 @@ Skaalataanko tuotu tieto?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Karttaa ei voi viedä
+        <translation>Karttaa ei voi viedä
 &quot;%1&quot;
 tallentaminen %2 (.%3) ei ole tuettu.</translation>
     </message>
@@ -4342,7 +4347,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Tiedostoa ei voi tallentaa
+        <translation>Tiedostoa ei voi tallentaa
 %1:
 %2</translation>
     </message>
@@ -4351,18 +4356,18 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>Warning</source>
-        <translation type="unfinished">Varoitus</translation>
+        <translation>Varoitus</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="600"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Kartan vienti aiheutti varoituksia.</translation>
+        <translation>Kartan vienti aiheutti varoituksia.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartan tuonti aiheutti varoituksia.</translation>
+        <translation>Kartan tuonti aiheutti varoituksia.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="848"/>
@@ -4620,7 +4625,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1661"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Vienti</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1702"/>
@@ -5616,12 +5621,12 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1298"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1333"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
+        <translation>Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1323"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
+        <translation>Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
     </message>
 </context>
 <context>
@@ -5840,7 +5845,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2068"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
     </message>
 </context>
 <context>
@@ -5848,22 +5853,22 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1434"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1455"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;,katkoviivojen ryhmiä ei huomioida.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, katkoviivojen ryhmiä ei huomioida.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1466"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1560"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
     </message>
 </context>
 <context>
@@ -5876,12 +5881,12 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
+        <translation>Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1767"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Tekstisymbolissa %1: ohitetaan välistys</translation>
+        <translation>Tekstisymbolissa %1: ohitetaan välistys</translation>
     </message>
 </context>
 <context>
@@ -5904,7 +5909,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1738"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tason luominen epäonnistui: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1876"/>
@@ -6880,7 +6885,7 @@ Haluatko tallentaa muutokset?</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="587"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="594"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukkoa ei voi ladata, keskeytetään.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -6967,29 +6972,29 @@ Haluatko tallentaa muutokset?</translation>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Kartan koordinaatiston origo</translation>
+        <translation>Kartan koordinaatiston origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Georeferoinnin kiintopiste</translation>
+        <translation>Georeferoinnin kiintopiste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">Muu piste,</translation>
+        <translation>Muu piste,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -7106,35 +7111,35 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Uusi mittakaava:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Kartan koordinaatiston origo</translation>
+        <translation>Kartan koordinaatiston origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Georeferoinnin kiintopiste</translation>
+        <translation>Georeferoinnin kiintopiste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Muu piste,</translation>
+        <translation>Muu piste,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7319,7 +7324,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuvake</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7505,7 +7510,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Näytä muokatut kuvakkeet</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -8099,7 +8104,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="276"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Georeferoitu</translation>
+        <translation>Georeferoitu</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="281"/>
@@ -8191,17 +8196,17 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Karttatiedostoa ei voi ladata, keskeytetään.</translation>
+        <translation>Karttatiedostoa ei voi ladata, keskeytetään.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>Warning</source>
-        <translation type="unfinished">Varoitus</translation>
+        <translation>Varoitus</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Kartan tuonti aiheutti varoituksia.</translation>
+        <translation>Kartan tuonti aiheutti varoituksia.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
@@ -8240,7 +8245,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Karttatiedostoa ei voi ladata, keskeytetään.</translation>
+        <translation>Karttatiedostoa ei voi ladata, keskeytetään.</translation>
     </message>
 </context>
 <context>
