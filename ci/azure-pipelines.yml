@@ -44,6 +44,9 @@ jobs:
     vmImage: '$(IMAGE_NAME)'
   steps:
     - template: setup-macos.yml
+    - bash: |
+        echo "##vso[task.setVariable variable=ORIG_TEST_RESULTS]${TEST_RESULTS}"
+        echo "##vso[task.setVariable variable=TEST_RESULTS]"
     - template: build.yml
       parameters:
         cmakeArgs: >
@@ -51,6 +54,22 @@ jobs:
           "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
           -DCMAKE_FIND_FRAMEWORK=LAST
           -DCMAKE_FIND_APPBUNDLE=LAST
+          -DMapper_CI_ENABLE_GDAL=0
+          -DMapper_CI_ENABLE_POSITIONING=0
+        buildArgs: -j5
+    - bash: |
+        rm -Rf superbuild
+        rm -Rf build/default/openorienteering-mapper-ci/Testing
+        echo "##vso[task.setVariable variable=TEST_RESULTS]${ORIG_TEST_RESULTS}"
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          -DCMAKE_FIND_FRAMEWORK=LAST
+          -DCMAKE_FIND_APPBUNDLE=LAST
+          -DMapper_CI_ENABLE_GDAL=1
+          -DMapper_CI_ENABLE_POSITIONING=1
         buildArgs: -j5
     - template: publish.yml
 

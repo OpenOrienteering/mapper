@@ -33,6 +33,7 @@ set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display st
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
 option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
+option(Mapper_CI_ENABLE_GDAL "Mapper: Enable GDAL" ON)
 option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" OFF)
 option(Mapper_CI_MANUAL_PDF "Mapper (git): Provide the manual as PDF file (needs pdflatex)" OFF)
 set(Mapper_CI_GDAL_DATA_DIR "NOTFOUND" CACHE STRING "Mapper (CI): GDAL data directory")
@@ -65,6 +66,7 @@ superbuild_package(
     Mapper_CI_VERSION_DISPLAY
     Mapper_CI_LICENSING_PROVIDER
     Mapper_CI_ENABLE_COVERAGE
+    Mapper_CI_ENABLE_GDAL
     Mapper_CI_ENABLE_POSITIONING
     Mapper_CI_MANUAL_PDF
     Mapper_CI_GDAL_DATA_DIR
@@ -79,7 +81,10 @@ superbuild_package(
       "-DLICENSING_PROVIDER=${Mapper_CI_LICENSING_PROVIDER}"
       "-DMapper_VERSION_DISPLAY=${Mapper_CI_VERSION_DISPLAY}"
       "-DMapper_MANUAL_PDF=$<BOOL:@Mapper_CI_MANUAL_PDF@>"
+      "-DMapper_USE_GDAL=$<BOOL:@Mapper_CI_ENABLE_GDAL@>"
+    $<$<BOOL:@Mapper_CI_ENABLE_GDAL@>:
       "-DGDAL_DATA_DIR=${Mapper_CI_GDAL_DATA_DIR}"
+    >
     $<$<BOOL:@ANDROID@>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5PrintSupport=TRUE"
       "-DKEYSTORE_URL=${KEYSTORE_URL}"
