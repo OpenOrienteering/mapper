@@ -35,8 +35,9 @@
 #include <QDebug>
 #include <QWaitCondition>
 #include <QtSensors/QAccelerometer>
-#include <QtSensors/QMagnetometer>
 #include <QtSensors/QGyroscope>
+#include <QtSensors/QMagnetometer>
+#include <QtSensors/QSensor>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
@@ -243,7 +244,8 @@ public:
 	 , latest_azimuth(-1)
 	{
 		// Try to filter out non-gravity sources of acceleration
-		accelerometer.setAccelerationMode(QAccelerometer::Gravity);
+		if (accelerometer.isFeatureSupported(QSensor::AccelerationMode))
+			accelerometer.setAccelerationMode(QAccelerometer::Gravity);
 
 		// Try to filter out local magnetic interference
 		magnetometer.setReturnGeoValues(true);
