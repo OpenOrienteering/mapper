@@ -514,7 +514,13 @@ private:
 	bool enabled;
 	float latest_azimuth;
 };
-#endif
+#else
+class CompassPrivate
+{
+	friend class Compass;  // grant access to default members
+};
+#endif  // QT_SENSORS_LIB
+
 
 
 // Emit vtable once, in this translation unit
