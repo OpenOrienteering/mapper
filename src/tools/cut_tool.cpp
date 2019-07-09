@@ -226,7 +226,10 @@ void CutTool::clickRelease()
 		// Line split in single point
 		auto split_objects = line_point.object->splitLineAt(line_point);
 		if (!split_objects.empty())
+		{
 			replaceObject(line_point.object, split_objects);
+			updateHoverState(click_pos_map);
+		}
 	}
 }
 
@@ -354,7 +357,9 @@ void CutTool::finishCuttingLine()
 	auto split_objects = edit_object->removeFromLine(drag_part_index, qreal(drag_start_len), qreal(drag_end_len));
 	replaceObject(edit_object, split_objects);
 	
-	finishEditing();
+	if (editingInProgress())
+		finishEditing();
+	updateHoverState(cur_pos_map);
 	updatePreviewObjects();
 }
 
