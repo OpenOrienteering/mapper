@@ -2694,7 +2694,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>記号アイコンを読み込む ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2767,12 +2767,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD バージョン 8,旧実装</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD バージョン %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="200"/>
@@ -2848,7 +2848,9 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開くことができません
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -2875,7 +2877,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="536"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートされていない古いバージョンのファイル形式です。プログラムバージョン v%1 以上を使用して、ファイルを読み込んで更新してください。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
@@ -3096,22 +3098,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="166"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>中間記号の配置:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="168"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="169"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュグループの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>ギャップの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="200"/>
@@ -3161,22 +3163,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="671"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時のキャップ長:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="672"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>終端のキャップ長:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="676"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時のオフセット:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>終端のオフセット:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1724"/>
@@ -3420,7 +3422,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="752"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>記号セットのインポートで警告が生成されました。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="756"/>
@@ -4241,7 +4243,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1140"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1147"/>
@@ -4930,7 +4932,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4004"/>
         <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 または GPX ファイルのインポート</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>
