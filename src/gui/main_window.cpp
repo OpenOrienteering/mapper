@@ -70,6 +70,8 @@ constexpr int MainWindow::max_recent_files;
 
 int MainWindow::num_open_files = 0;
 
+constexpr int MainWindow::exit_code_reboot;
+
 MainWindow::MainWindow(QWidget* parent, Qt::WindowFlags flags)
 : MainWindow { true, parent, flags }
 {

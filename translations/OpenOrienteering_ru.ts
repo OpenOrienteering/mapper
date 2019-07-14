@@ -1572,6 +1572,26 @@
         <translation>Интервал сохранения информации для восстановления:</translation>
     </message>
     <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="411"/>
+        <source>Restart?</source>
+        <translation>Перезапустить?</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="413"/>
+        <source>Do you want to restart now?</source>
+        <translation>Вы хотите перезапустить сейчас?</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="415"/>
+        <source>Restart Now</source>
+        <translation>Перезапустить сейчас</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="416"/>
+        <source>Restart Later</source>
+        <translation>Перезапустить позже</translation>
+    </message>
+    <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="142"/>
         <source>min</source>
         <comment>unit minutes</comment>

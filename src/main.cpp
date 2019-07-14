@@ -97,7 +97,7 @@ void resetActivationWindow()
 #endif
 
 
-int main(int argc, char** argv)
+int run(int argc, char** argv)
 {
 #if MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
@@ -198,4 +198,15 @@ int main(int argc, char** argv)
 	first_window->setVisible(true);
 	first_window->raise();
 	return qapp.exec();
+}
+
+int main(int argc, char** argv)
+{
+	int current_exit_code = 0;
+	
+	do {
+		current_exit_code = run(argc, argv);
+	} while (current_exit_code == MainWindow::exit_code_reboot);
+	
+	return current_exit_code;
 }

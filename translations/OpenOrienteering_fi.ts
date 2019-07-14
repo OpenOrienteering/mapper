@@ -1595,6 +1595,26 @@
         <translation>Tallennusväli:</translation>
     </message>
     <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="411"/>
+        <source>Restart?</source>
+        <translation>Käynnistä uudelleen?</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="413"/>
+        <source>Do you want to restart now?</source>
+        <translation>Haluatko käynnistää uudelleen nyt?</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="415"/>
+        <source>Restart Now</source>
+        <translation>Käynnistä uudelleen nyt</translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="416"/>
+        <source>Restart Later</source>
+        <translation>Käynnistä uudelleen myöhemmin</translation>
+    </message>
+    <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="142"/>
         <source>min</source>
         <comment>unit minutes</comment>

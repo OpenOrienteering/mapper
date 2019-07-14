@@ -1545,6 +1545,26 @@
         <translation>恢复信息的保存时间间隔︰</translation>
     </message>
     <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="411"/>
+        <source>Restart?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="413"/>
+        <source>Do you want to restart now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="415"/>
+        <source>Restart Now</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/general_settings_page.cpp" line="416"/>
+        <source>Restart Later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="142"/>
         <source>min</source>
         <comment>unit minutes</comment>

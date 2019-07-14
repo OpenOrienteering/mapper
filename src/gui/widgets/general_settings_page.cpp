@@ -48,6 +48,7 @@
 #include <QList>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QScreen>
 #include <QSettings> // IWYU pragma: keep
 #include <QSignalBlocker>
@@ -206,14 +207,20 @@ void GeneralSettingsPage::apply()
 		case QLocale::AnyLanguage:
 		case QLocale::C:
 		case QLocale::English:
-			QMessageBox::information(window(), QLatin1String("Notice"), QLatin1String("The program must be restarted for the language change to take effect!"));
+			if (showRestartOnLanguageChangeDialog([](const char* s){ return QString::fromLatin1(s); }))
+			{
+				qApp->exit(MainWindow::exit_code_reboot);
+			}
 			break;
 			
 		default:
 			qApp->installEventFilter(this);
 			qApp->installTranslator(&translation.getQtTranslator());
 			qApp->installTranslator(&translation.getAppTranslator());
-			QMessageBox::information(window(), tr("Notice"), tr("The program must be restarted for the language change to take effect!"));
+			if (showRestartOnLanguageChangeDialog([](const char* s){ return GeneralSettingsPage::tr(s); }))
+			{
+				qApp->exit(MainWindow::exit_code_reboot);
+			}
 			qApp->removeTranslator(&translation.getAppTranslator());
 			qApp->removeTranslator(&translation.getQtTranslator());
 			qApp->removeEventFilter(this);
@@ -423,5 +430,17 @@ bool GeneralSettingsPage::eventFilter(QObject* /* watched */, QEvent* event)
 	return false;
 }
 
+bool GeneralSettingsPage::showRestartOnLanguageChangeDialog(std::function<QString(const char*)> tr)
+{
+	QMessageBox messageBox(window());
+	messageBox.setWindowTitle(tr("Restart?"));
+	messageBox.setText(tr("The program must be restarted for the language change to take effect!"));
+	messageBox.setInformativeText(tr("Do you want to restart now?"));
+	messageBox.setIcon(QMessageBox::Question);
+	auto yesButton = messageBox.addButton(tr("Restart Now"), QMessageBox::YesRole);
+	messageBox.addButton(tr("Restart Later"), QMessageBox::NoRole);
+	messageBox.exec();
+	return messageBox.clickedButton() == yesButton;
+}
 
 }  // namespace OpenOrienteering
