@@ -110,8 +110,8 @@ struct ApplyTemplateTransform
 	
 	void operator()(Object* object) const
 	{ 
-		object->rotate(transform.template_rotation);
 		object->scale(transform.template_scale_x, transform.template_scale_y);
+		object->rotate(transform.template_rotation);
 		object->move(transform.template_x, transform.template_y);
 	}
 };
