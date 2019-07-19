@@ -136,6 +136,7 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 bool operator==(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
 {
 	return lhs.template_x == rhs.template_x
+	        && lhs.template_y == rhs.template_y
 	        && (qFuzzyCompare(lhs.template_rotation, rhs.template_rotation)
 	            || (qIsNull(lhs.template_rotation) && qIsNull(rhs.template_rotation)))
 	        && qFuzzyCompare(lhs.template_scale_x, rhs.template_scale_x)
