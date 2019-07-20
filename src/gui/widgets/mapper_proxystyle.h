@@ -75,7 +75,7 @@ public:
 	 * 
 	 * On Android:
 	 * - QStyle::PM_ButtonIconSize is enlarged to QStyle::PM_IndicatorWidth (checkbox size),
-	 * - QStyle::PM_ToolBarIconSize is adjusted (enlarged) towards QStyle::PM_SmallIconSize.
+	 * - QStyle::PM_SplitterWidth is adjusted (enlarged) towards QStyle::PM_IndicatorWidth.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
 	
