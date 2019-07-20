@@ -333,13 +333,13 @@ private:
 };
 
 
-#endif
-
-
 }  // namespace OpenOrienteering
 
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PrintWidget::TaskFlags)
+
+
+#endif
 
 
 #endif
