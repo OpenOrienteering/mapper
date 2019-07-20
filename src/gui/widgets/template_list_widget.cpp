@@ -110,7 +110,16 @@ struct ApplyTemplateTransform
 	
 	void operator()(Object* object) const
 	{ 
-		object->scale(transform.template_scale_x, transform.template_scale_y);
+		/// \todo Move this if...else into a constructor that sets up a transform member.
+		if (qFuzzyIsNull(transform.template_shear))
+			object->scale(transform.template_scale_x, transform.template_scale_y);
+		else
+		{
+			QTransform scaling(transform.template_scale_x, transform.template_shear,
+			                   transform.template_shear, transform.template_scale_y,
+			                   0, 0);
+			object->transform(scaling);
+		}
 		object->rotate(transform.template_rotation);
 		object->move(transform.template_x, transform.template_y);
 	}

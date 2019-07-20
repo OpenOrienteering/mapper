@@ -94,14 +94,18 @@ Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
 // static
 TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept
 {
-	const auto scale_x  = std::hypot(qt.m11(), qt.m12());
-	const auto scale_y  = std::hypot(qt.m21(), qt.m22());
-	const auto rotation = std::atan2(qt.m21() / scale_y, qt.m11() / scale_x);
+	const auto rotation = std::atan2(qt.m21()-qt.m12(), qt.m11()+qt.m22());
+
+	// Determine the non-rotating, pure scaling aspect.
+	// Note TemplateTransform rotation is opposite to QTransform.
+	// This rotation makes the shear components equal.
+	QTransform scaling = qt * (qFuzzyIsNull(rotation) ? QTransform() : QTransform().rotateRadians(rotation));
 	return { qRound(1000 * qt.m31()),
 	         qRound(1000 * qt.m32()),
 	         rotation,
-	         scale_x,
-	         scale_y };
+	         scaling.m11(),
+	         scaling.m22(),
+	         (scaling.m12()+scaling.m21())/2 };
 }
 
 
@@ -114,6 +118,8 @@ void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 	xml.writeAttribute(QString::fromLatin1("y"), QString::number(template_y));
 	xml.writeAttribute(QString::fromLatin1("scale_x"), QString::number(template_scale_x));
 	xml.writeAttribute(QString::fromLatin1("scale_y"), QString::number(template_scale_y));
+	if (!qFuzzyIsNull(template_shear))
+		xml.writeAttribute(QString::fromLatin1("shear"), QString::number(template_shear));
 	xml.writeAttribute(QString::fromLatin1("rotation"), QString::number(template_rotation));
 	xml.writeEndElement(/*transformation*/);
 }
@@ -130,6 +136,7 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 	template_y = coord.nativeY();
 	template_scale_x = element.attribute<double>(QLatin1String("scale_x"));
 	template_scale_y = element.attribute<double>(QLatin1String("scale_y"));
+	template_shear = element.attribute<double>(QLatin1String("shear")); // 0 if absent
 	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
 
@@ -140,7 +147,9 @@ bool operator==(const TemplateTransform& lhs, const TemplateTransform& rhs) noex
 	        && (qFuzzyCompare(lhs.template_rotation, rhs.template_rotation)
 	            || (qIsNull(lhs.template_rotation) && qIsNull(rhs.template_rotation)))
 	        && qFuzzyCompare(lhs.template_scale_x, rhs.template_scale_x)
-	        && qFuzzyCompare(lhs.template_scale_y, rhs.template_scale_y);
+	        && qFuzzyCompare(lhs.template_scale_y, rhs.template_scale_y)
+	        && (qFuzzyCompare(lhs.template_shear, rhs.template_shear)
+	            || (qFuzzyIsNull(lhs.template_shear) && qFuzzyIsNull(rhs.template_shear)));
 }
 
 bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
@@ -622,8 +631,21 @@ bool Template::trySetTemplateGeoreferenced(bool /*value*/, QWidget* /*dialog_par
 void Template::applyTemplateTransform(QPainter* painter) const
 {
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);
+	// Rotate counter-clockwise.
 	painter->rotate(-transform.template_rotation * (180 / M_PI));
-	painter->scale(transform.template_scale_x, transform.template_scale_y);
+
+	// Scale
+	if (qFuzzyIsNull(transform.template_shear))
+	{
+		painter->scale(transform.template_scale_x, transform.template_scale_y);
+	}
+	else
+	{
+		QTransform scaling(transform.template_scale_x, transform.template_shear,
+		                   transform.template_shear, transform.template_scale_y,
+		                   0, 0);
+		painter->setTransform(scaling, true);
+	}
 }
 
 QRectF Template::getTemplateExtent() const
@@ -906,8 +928,11 @@ void Template::applyTemplatePositionOffset()
 {
 	QTransform t;
 	t.rotate(-qRadiansToDegrees(getTemplateRotation()));
-	t.scale(getTemplateScaleX(), getTemplateScaleY());
-	setTemplatePosition(templatePosition() - MapCoord{t.map(QPointF{accounted_offset})});
+	const double shear = getTemplateShear();
+	QTransform scaling(getTemplateScaleX(), shear,
+	                   shear, getTemplateScaleY(),
+	                   0, 0);
+	setTemplatePosition(templatePosition() - MapCoord{(scaling*t).map(QPointF{accounted_offset})});
 }
 
 void Template::resetTemplatePositionOffset()
@@ -918,16 +943,17 @@ void Template::resetTemplatePositionOffset()
 
 void Template::updateTransformationMatrices()
 {
+	double shear = getTemplateShear();
 	double cosr = cos(-transform.template_rotation);
 	double sinr = sin(-transform.template_rotation);
 	double scale_x = getTemplateScaleX();
 	double scale_y = getTemplateScaleY();
 	
 	template_to_map.setSize(3, 3);
-	template_to_map.set(0, 0, scale_x * cosr);
-	template_to_map.set(0, 1, scale_y * (-sinr));
-	template_to_map.set(1, 0, scale_x * sinr);
-	template_to_map.set(1, 1, scale_y * cosr);
+	template_to_map.set(0, 0, scale_x * cosr -   shear * sinr);
+	template_to_map.set(0, 1,   shear * cosr - scale_y * sinr);
+	template_to_map.set(1, 0, scale_x * sinr +   shear * cosr);
+	template_to_map.set(1, 1,   shear * sinr + scale_y * cosr);
 	template_to_map.set(0, 2, transform.template_x / 1000.0);
 	template_to_map.set(1, 2, transform.template_y / 1000.0);
 	template_to_map.set(2, 0, 0);

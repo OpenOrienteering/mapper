@@ -55,6 +55,9 @@ TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditor
 	QLabel* rotation_label = new QLabel(tr("Rotation:"));
 	rotation_edit = new QLineEdit();
 	rotation_edit->setValidator(new DoubleValidator(-999999, 999999, rotation_edit));
+	QLabel* shear_label = new QLabel(tr("Shear:"));
+	shear_edit = new QLineEdit();
+	shear_edit->setValidator(new DoubleValidator(-999999, 999999, shear_edit));
 	
 	updateValues();
 	
@@ -70,6 +73,8 @@ TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditor
 	layout->addWidget(scale_y_edit, 3, 1);
 	layout->addWidget(rotation_label, 4, 0);
 	layout->addWidget(rotation_edit, 4, 1);
+	layout->addWidget(shear_label, 5, 0);
+	layout->addWidget(shear_edit, 5, 1);
 	child_widget->setLayout(layout);
 	setWidget(child_widget);
 	
@@ -78,6 +83,7 @@ TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditor
 	connect(scale_x_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
 	connect(scale_y_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
 	connect(rotation_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
+	connect(shear_edit, &QLineEdit::textEdited, this, &TemplatePositionDockWidget::valueChanged);
 	
 	connect(controller->getMap(), &Map::templateChanged, this, &TemplatePositionDockWidget::templateChanged);
 	connect(controller->getMap(), &Map::templateDeleted, this, &TemplatePositionDockWidget::templateDeleted);
@@ -91,6 +97,7 @@ void TemplatePositionDockWidget::updateValues()
 	scale_x_edit->setText(QString::number(temp->getTemplateScaleX()));
 	scale_y_edit->setText(QString::number(temp->getTemplateScaleY()));
 	rotation_edit->setText(QString::number(temp->getTemplateRotation() * 180 / M_PI));
+	shear_edit->setText(QString::number(temp->getTemplateShear()));
 }
 
 bool TemplatePositionDockWidget::event(QEvent* event)
@@ -157,6 +164,8 @@ void TemplatePositionDockWidget::valueChanged()
 		temp->setTemplateScaleY(scale_y_edit->text().toDouble());
 	else if (widget == rotation_edit)
 		temp->setTemplateRotation(rotation_edit->text().toDouble() * M_PI / 180.0);
+	else if (widget == shear_edit)
+		temp->setTemplateShear(shear_edit->text().toDouble());
 	
 	// Transform relevant parts of pass points back to map coords
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)

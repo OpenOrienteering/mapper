@@ -253,6 +253,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	{
 		transform.template_scale_x = open_dialog.getMpp() * 1000.0 / map->getScaleDenominator();
 		transform.template_scale_y = transform.template_scale_x;
+		transform.template_shear = 0.0;
 		
 		//transform.template_x = main_view->getPositionX();
 		//transform.template_y = main_view->getPositionY();

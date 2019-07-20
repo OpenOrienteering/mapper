@@ -1227,6 +1227,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateRotation(M_PI / 180 * background.angle);
 	templ->setTemplateScaleX(convertTemplateScale(background.sclx));
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
+	templ->setTemplateShear(0.0);
 	
 	map->templates.insert(map->templates.begin(), templ);
 	
@@ -1317,6 +1318,7 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
+        templ->setTemplateShear(0.0);
         // FIXME: import template view parameters: background.dimming and background.transparent
 		// TODO: import template visibility
         return templ;
