@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -31,6 +31,8 @@ endif()
 
 project(Mapper VERSION 0.9.0 LANGUAGES CXX C)
 
+math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
+
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")
 elseif(CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE MATCHES "Release|MinSizeRel|RelWithDebInfo")
@@ -40,16 +42,6 @@ else()
 endif()
 
 set(Mapper_COPYRIGHT "(C) 2012-2018 The OpenOrienteering developers")
-
-set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
-file(READ "${android_manifest}" current)
-if(NOT current MATCHES " android:versionName=.${Mapper_VERSION_MAJOR}\\.${Mapper_VERSION_MINOR}\\.${Mapper_VERSION_PATCH}. ")
-	set(android_version_name "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
-	math(EXPR android_version_int "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH}")
-	string(REGEX REPLACE "( android:versionName=.)[0-9]*\\.[0-9]*\\.[0-9]*(. )" "\\1${android_version_name}\\2" output "${current}")
-	string(REGEX REPLACE "( android:versionCode=.)[0-9]*(. )" "\\1${android_version_int}\\2" output "${output}")
-	file(WRITE "${android_manifest}" "${output}")
-endif()
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
@@ -205,7 +197,9 @@ if(Mapper_USE_GDAL)
 endif()
 
 find_package(Qt5Core 5.3 REQUIRED)
-if (${Qt5Core_VERSION} VERSION_LESS 5.8.0)
+if (ANDROID AND "${Qt5Core_VERSION}" VERSION_LESS 5.12.1)
+	message(FATAL_ERROR "At least Qt 5.12.1 is required to build for Android")
+elseif ("${Qt5Core_VERSION}" VERSION_LESS 5.8.0)
 	add_definitions("-D'Q_FALLTHROUGH()=(void)0'")
 endif()
 

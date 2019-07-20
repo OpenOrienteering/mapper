@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -24,27 +24,18 @@
 TEMPLATE = app
 TARGET   = Mapper
 
-ANDROID_PACKAGE_SOURCE_DIR = "@PROJECT_SOURCE_DIR@/android"
+ANDROID_VERSION_CODE = "@Mapper_VERSION_CODE@"
+ANDROID_VERSION_NAME = "@Mapper_VERSION_DISPLAY@"
 
-EXPECTED_VERSION = @Mapper_VERSION_MAJOR@\.@Mapper_VERSION_MINOR@\.@Mapper_VERSION_PATCH@
-!system(grep "$$EXPECTED_VERSION" "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml") {
-	error(The version name in AndroidManifest.xml does not match $$EXPECTED_VERSION.)
-}
+ANDROID_PACKAGE_SOURCE_DIR = "@PROJECT_SOURCE_DIR@/android"
 
 @USE_DEV_SUFFIX@ {
   # Don't let unstable packages replace official release packages.
   system(cp -a "$$ANDROID_PACKAGE_SOURCE_DIR" "$$OUT_PWD/")
   ANDROID_PACKAGE_SOURCE_DIR = $$OUT_PWD/android
   system(sed -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
-  system(sed -e $$shell_quote(/<manifest/ s/@Mapper_VERSION@/@Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
   system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> @Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
   system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--")
-}
-
-
-versionAtLeast(QT_VERSION, 5.12) {
-  system(sed -e $$shell_quote(s/minSdkVersion=\"[0-9]*\"/minSdkVersion=\"16\"/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
-  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--")
 }
 
 
