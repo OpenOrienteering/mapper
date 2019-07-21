@@ -84,6 +84,14 @@ public:
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
 	
 	/**
+	 * Returns adjusted widget sizes.
+	 * 
+	 * On Android:
+	 * - QStyle::CT_SizeGrip is enlarged to the (overwritten) PM_ButtonIconSize.
+	 */
+	QSize sizeFromContents(ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w = nullptr) const override;
+	
+	/**
 	 * Returns adjusted standard icons.
 	 * 
 	 * On Android:

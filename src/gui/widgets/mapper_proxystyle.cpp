@@ -200,6 +200,25 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
+QSize MapperProxyStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w) const
+{
+	switch (ct)
+	{
+#ifdef Q_OS_ANDROID
+	case QStyle::CT_SizeGrip:
+		{
+			auto width = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
+			return { width, width };
+		}
+		break;
+#endif
+	default:
+		break;
+	}
+	
+	return QProxyStyle::sizeFromContents(ct, opt, contents_size, w);
+}
+
 QIcon MapperProxyStyle::standardIcon(QStyle::StandardPixmap standard_icon, const QStyleOption* option, const QWidget* widget) const
 {
 	switch (standard_icon)
