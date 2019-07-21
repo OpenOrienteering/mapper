@@ -435,11 +435,11 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 	}
 	else
 	{
+		setEnabled(false);
 		auto hint_text = item->data(hintRole()).toString();
 		if (!hint_text.isEmpty())
 			QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
 		
-		setEnabled(false);
 		qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 		controller->getWindow()->openPath(file_path);
 		setEnabled(true);
