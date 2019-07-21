@@ -4185,6 +4185,9 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 	
 #ifdef Q_OS_ANDROID
 	size_grip = new QSizeGrip(this);
+	size_grip->resize(size_grip->sizeHint());
+	size_grip->setVisible(isTopLevel());
+	connect(this, &QDockWidget::topLevelChanged, size_grip, &QWidget::setVisible);
 #endif
 }
 
@@ -4211,12 +4214,17 @@ bool EditorDockWidget::event(QEvent* event)
 void EditorDockWidget::resizeEvent(QResizeEvent* event)
 {
 #ifdef Q_OS_ANDROID
-	QRect rect(QPoint(0,0), size_grip->sizeHint());
-	rect.moveBottomRight(geometry().bottomRight() - geometry().topLeft());
 	int fw = style()->pixelMetric(QStyle::PM_DockWidgetFrameWidth, 0, this);
-	rect.translate(-fw, -fw);
-	size_grip->setGeometry(rect);
+	size_grip->move(rect().bottomRight() - size_grip->rect().bottomRight() - QPoint{fw, fw});
 	size_grip->raise();
+	
+	if (isTopLevel())
+	{
+		auto const frame = frameGeometry();
+		auto const old_frame = QRect{pos(), event->oldSize() + frame.size() - size()};
+		if (old_frame.united(frame) != frame)
+			editor->getMainWidget()->window()->update();
+	}
 #endif
 	
 	QDockWidget::resizeEvent(event);
