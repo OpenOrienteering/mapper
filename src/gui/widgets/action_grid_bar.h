@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,6 +38,9 @@ namespace OpenOrienteering {
 
 /**
  * A toolbar with a grid layout, whose button size depends on the ppi.
+ * 
+ * \todo Update button size on setting changes (not yet needed for mobile UI).
+ * \todo Use parameter order col,row / colspan,rowspan to match the common x,y / width,height pattern.
  */
 class ActionGridBar : public QWidget
 {
@@ -114,6 +118,7 @@ protected:
 	Direction direction;
 	int rows;
 	int cols;
+	int button_size_px;
 	std::vector< GridItem > items;
 	int next_id;
 	QAction* overflow_action;

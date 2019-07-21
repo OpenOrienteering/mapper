@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,6 +36,7 @@ namespace OpenOrienteering {
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
+, button_size_px(qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal())))
 {
 	this->direction = direction;
 	this->rows = rows;
@@ -113,15 +115,10 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
 {
-	const auto buttonSizePx = Util::mmToPixelPhysical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
-	int icon_size_pixel_row = qRound(row_span * buttonSizePx);
-	int icon_size_pixel_col = qRound(col_span * buttonSizePx);
-	const int button_icon_size_row = icon_size_pixel_row - 12;
-	const int button_icon_size_col = icon_size_pixel_col - 12;
-	if (direction == Horizontal)
-		return QSize(button_icon_size_row, button_icon_size_col);
-	else
-		return QSize(button_icon_size_col, button_icon_size_row);
+	auto size = QSize{col_span * button_size_px - 12, row_span * button_size_px - 12};
+	if (direction == Vertical)
+		size.transpose();
+	return size;
 }
 
 QAction* ActionGridBar::getOverflowAction() const
@@ -146,11 +143,8 @@ QToolButton* ActionGridBar::getButtonForAction(QAction* action)
 
 QSize ActionGridBar::sizeHint() const
 {
-	int height_px = Util::mmToPixelPhysical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
-	if (direction == Horizontal)
-		return QSize(100, height_px);
-	else
-		return QSize(height_px, 100);
+	auto extent = rows * button_size_px;
+	return {extent, extent};
 }
 
 bool ActionGridBar::compareItemPtrId(ActionGridBar::GridItem* a, ActionGridBar::GridItem* b)
@@ -177,8 +171,7 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	hidden_items.clear();
 	
 	int length_px = (direction == Horizontal) ? width() : height();
-	float length_millimeters = Util::pixelToMMPhysical(length_px);
-	cols = qMax(1, qFloor(length_millimeters / Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
+	cols = qMax(1, length_px / button_size_px);
 	
 	delete layout();
 	QGridLayout* new_layout = new QGridLayout(this);
