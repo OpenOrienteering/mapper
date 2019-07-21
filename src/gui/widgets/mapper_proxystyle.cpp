@@ -180,6 +180,7 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 			return s;
 		}
 		break;
+	case QStyle::PM_DockWidgetSeparatorExtent:
 	case QStyle::PM_SplitterWidth:
 		{
 			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;

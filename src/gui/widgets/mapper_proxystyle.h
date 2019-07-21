@@ -79,7 +79,8 @@ public:
 	 * - QStyle::PM_ButtonIconSize is enlarged to QStyle::PM_IndicatorWidth (checkbox size),
 	 * - QStyle::PM_SmallIconSize is enlarged to the (overwritten) PM_ButtonIconSize
 	 *   for dockwidget related widgets.
-	 * - QStyle::PM_SplitterWidth is adjusted (enlarged) towards QStyle::PM_IndicatorWidth.
+	 * - QStyle::PM_DockWidgetSeparatorExtent and
+	 *   QStyle::PM_SplitterWidth are adjusted (enlarged) towards QStyle::PM_IndicatorWidth.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
 	
