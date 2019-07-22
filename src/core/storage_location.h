@@ -46,6 +46,8 @@ void mediaScannerScanFile(const QString& path);
 // noexcept since Qt 5.5
 constexpr bool qstring_is_nothrow_copy_constructible = std::is_nothrow_copy_constructible<QString>::value;
 constexpr bool qstring_is_nothrow_move_constructible = std::is_nothrow_move_constructible<QString>::value;
+constexpr bool qstring_is_nothrow_copy_assignable = std::is_nothrow_copy_assignable<QString>::value;
+constexpr bool qstring_is_nothrow_move_assignable = std::is_nothrow_move_assignable<QString>::value;
 
 
 /**
@@ -72,6 +74,10 @@ public:
 	
 	/** Default move constructor. */
 	StorageLocation(StorageLocation&&) noexcept(qstring_is_nothrow_move_constructible) = default;
+	
+	StorageLocation& operator=(const StorageLocation&) noexcept(qstring_is_nothrow_copy_assignable) = default;
+	
+	StorageLocation& operator=(StorageLocation&&) noexcept(qstring_is_nothrow_copy_assignable) = default;
 	
 	
 	/** Returns the path of this location. */
@@ -108,8 +114,8 @@ public:
 	
 	
 private:
-	const QString m_path;
-	const Hint    m_hint;
+	QString m_path;
+	Hint    m_hint;
 };
 
 
