@@ -335,7 +335,7 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	layout->addWidget(title_label);
 	
 	file_list_widget = makeFileListWidget();
-	connect(file_list_widget, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::fileClicked);
+	connect(file_list_widget, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::itemClicked);
 	layout->addWidget(file_list_widget, 1);
 	
 	auto settings_button = new QPushButton(HomeScreenWidgetDesktop::tr("Settings"));
@@ -413,9 +413,11 @@ void HomeScreenWidgetMobile::showSettings()
 	dialog.exec();
 }
 
-void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
+void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 {
 	auto file_path = item->data(pathRole()).toString();
+	auto hint = static_cast<StorageLocation::Hint>(item->data(hintRole()).toInt());
+	
 	if (file_path == QLatin1String("doc:"))
 	{
 #ifdef Q_OS_ANDROID
@@ -430,15 +432,17 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 	}
 	else if (QFileInfo(file_path).isDir())
 	{
-		history.push_back({file_path, StorageLocation::Hint(item->data(hintRole()).toInt())});
+		history.emplace_back(file_path, hint);
 		updateFileListWidget();
 	}
 	else
 	{
 		setEnabled(false);
-		auto hint_text = item->data(hintRole()).toString();
-		if (!hint_text.isEmpty())
+		if (hint != StorageLocation::HintNormal)
+		{
+			auto hint_text = StorageLocation::fileHintTextTemplate(hint);
 			QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
+		}
 		
 		qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 		controller->getWindow()->openPath(file_path);
@@ -582,25 +586,25 @@ void HomeScreenWidgetMobile::addItemToFileList(const QString& label, const QFile
 	{
 		auto* new_item = new QListWidgetItem(label);
 		new_item->setData(pathRole(), file_path);
+		new_item->setData(hintRole(), hint);
 		new_item->setToolTip(file_path);
 		if (file_info.isDir())
 		{
-			// Use dir icon, numerical hint.
+			// Use dir icon.
 			new_item->setIcon(icon.isNull() ? file_list_widget->style()->standardIcon(QStyle::SP_DirIcon) : icon);
-			new_item->setData(hintRole(), hint);
 		}
 		else if (hint == StorageLocation::HintReadOnly
 		         || (file_info.isWritable() && format->supportsWriting()))
 		{
-			// Use icon/hint as-is.
+			// Use icon as-is.
 			new_item->setIcon(icon);
-			new_item->setData(hintRole(), StorageLocation(file_path, StorageLocation::Hint(hint)).hintText());
 		}
 		else
 		{
 			// Override with read-only warning.
+			new_item->setData(hintRole(), StorageLocation::HintReadOnly);
 			new_item->setIcon(file_list_widget->style()->standardIcon(QStyle::SP_MessageBoxWarning));
-			new_item->setData(hintRole(), StorageLocation(file_path, StorageLocation::HintReadOnly).hintText());
+			new_item->setToolTip(StorageLocation::fileHintTextTemplate(StorageLocation::HintReadOnly).arg(file_path));
 		}
 		file_list_widget->addItem(new_item);
 	}

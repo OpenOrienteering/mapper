@@ -185,7 +185,7 @@ public slots:
 	
 protected:
 	/** Opens a file when its is list item is clicked. */
-	void fileClicked(QListWidgetItem* item);
+	void itemClicked(QListWidgetItem* item);
 	
 	/** Triggers title image adjustment on resize events. */
 	void resizeEvent(QResizeEvent* event) override;
