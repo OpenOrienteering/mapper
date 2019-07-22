@@ -522,7 +522,7 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 		
 #ifdef Q_OS_ANDROID
 		// If there are no recent files, offer a link to the Android storage manual page.
-		if (recent_files.isEmpty())
+		if (file_list_widget->count() == 0)
 		{
 			auto* help_item = new QListWidgetItem(tr("Help"));
 			help_item->setData(pathRole(), QLatin1String("doc:"));
