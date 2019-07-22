@@ -38,6 +38,8 @@
 #include <QProcessEnvironment>
 #include <QVector>
 
+#include "core/app_permissions.h"
+
 
 namespace OpenOrienteering {
 
@@ -48,6 +50,14 @@ namespace Android {
  */
 static std::shared_ptr<const std::vector<StorageLocation>> locations_cache;
 
+
+/**
+ * Returns true when the app has access to "external storage".
+ */
+bool storageAccessGranted()
+{
+	return AppPermissions::checkPermission(AppPermissions::StorageAccess) == AppPermissions::Granted;
+}
 
 void mediaScannerScanFile(const QString& path)
 {
@@ -167,7 +177,8 @@ std::vector<StorageLocation> knownLocations()
 		
 		void addNormalLocation(const QString& path)
 		{
-			data.insert(data.begin() + normal, {path, StorageLocation::HintNormal});
+			auto hint = storageAccessGranted() ? StorageLocation::HintNormal : StorageLocation::HintNoAccess;
+			data.insert(data.begin() + normal, {path, hint});
 			++normal;
 		}
 		
@@ -179,7 +190,8 @@ std::vector<StorageLocation> knownLocations()
 		
 		void addReadOnlyLocation(const QString& path)
 		{
-			data.emplace_back(path, StorageLocation::HintReadOnly);
+			auto hint = storageAccessGranted() ? StorageLocation::HintReadOnly : StorageLocation::HintNoAccess;
+			data.emplace_back(path, hint);
 		};
 	} locations;
 	
@@ -297,6 +309,9 @@ QString StorageLocation::fileHintTextTemplate(Hint hint)
 		
 	case HintReadOnly:
 		return tr("'%1' is not writable. Changes cannot be saved.");
+		
+	case HintNoAccess:
+		return tr("Extra permissions are required to access '%1'.");
 		
 	case HintInvalid:
 		return tr("'%1' is not a valid storage location.");

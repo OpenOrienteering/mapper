@@ -63,6 +63,7 @@ public:
 		HintNormal,       ///< Normal location
 		HintApplication,  ///< Location which might get cleaned unexpectedly
 		HintReadOnly,     ///< Read-only location
+		HintNoAccess,     ///< Location which requires to establish AppPermissions::StorageAccess
 		HintInvalid       ///< Not a valid location at all
 	};
 	
