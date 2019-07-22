@@ -152,11 +152,36 @@ std::vector<QString> getLegacySecondaryStorage(const QString& primary_storage, c
 /**
  * Constructs the cache of known storage locations.
  */
-std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
+std::vector<StorageLocation> knownLocations()
 {
-	std::vector<QString> locations_normal;
-	std::vector<QString> locations_application;
-	std::vector<QString> locations_readonly;
+	struct LocationBuilder 
+	{
+		std::vector<StorageLocation> data;
+		int normal = 0;      // offset
+		int application = 0; // offset
+		
+		LocationBuilder()
+		{
+			data.reserve(10);
+		}
+		
+		void addNormalLocation(const QString& path)
+		{
+			data.insert(data.begin() + normal, {path, StorageLocation::HintNormal});
+			++normal;
+		}
+		
+		void addApplicationLocation(const QString& path)
+		{
+			data.insert(data.begin() + normal + application, {path, StorageLocation::HintApplication});
+			++application;
+		};
+		
+		void addReadOnlyLocation(const QString& path)
+		{
+			data.emplace_back(path, StorageLocation::HintReadOnly);
+		};
+	} locations;
 	
 	// API level 1, single primary external storage
 	auto primary_storage = QAndroidJniObject::callStaticObjectMethod(
@@ -173,18 +198,19 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 	if (primary_storage_oomapper.exists())
 	{
 		const auto path = primary_storage_oomapper.filePath();
-		if (primary_storage_oomapper.isWritable())
-			locations_normal.push_back(path);
-		else
-			locations_readonly.push_back(path);
+		locations.addNormalLocation(path);
 		mediaScannerScanFile(path);
 	}
 	
 	// Volatile: Application-specific directories on external storage.
+	// Access needs no explicit permissions.
+	std::vector<QString> external_files_dirs;
 	if (QtAndroid::androidSdkVersion() >= 19)
 	{
 		// API level 19
-		locations_application = Android::getExternalFilesDirs(nullptr);
+		external_files_dirs = Android::getExternalFilesDirs(nullptr);
+		for (auto path : external_files_dirs)
+			locations.addApplicationLocation(path);
 	}
 	
 	// Difficult: "OOMapper" folder on secondary external storage.
@@ -200,10 +226,10 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 		for (const auto& path : paths)
 			secondary_storage_paths.emplace_back(path + QLatin1String("/OOMapper"));
 	}
-	else if (!locations_application.empty())
+	else if (!external_files_dirs.empty())
 	{
 		// API level 19
-		secondary_storage_paths = Android::getLegacySecondaryStorage(primary_storage, locations_application);
+		secondary_storage_paths = Android::getLegacySecondaryStorage(primary_storage, external_files_dirs);
 	}
 	for (const auto& path : secondary_storage_paths)
 	{
@@ -211,25 +237,13 @@ std::shared_ptr<const std::vector<StorageLocation>> buildLocationCache()
 		if (secondary_storage.exists())
 		{
 			if (secondary_storage.isWritable())
-				locations_normal.push_back(path);
+				locations.addNormalLocation(path);
 			else
-				locations_readonly.push_back(path);
+				locations.addReadOnlyLocation(path);
 			mediaScannerScanFile(path);
 		}
 	}
-	
-	auto locations = std::make_shared<std::vector<StorageLocation>>();
-	locations->reserve(locations_normal.size()
-	                   + locations_application.size()
-	                   + locations_readonly.size());
-	for (const auto& path : locations_normal)
-		locations->emplace_back(path, StorageLocation::HintNormal);
-	for (const auto& path : locations_application)
-		locations->emplace_back(path, StorageLocation::HintApplication);
-	for (const auto& path : locations_readonly)
-		locations->emplace_back(path, StorageLocation::HintReadOnly);
-	
-	return locations;
+	return locations.data;
 }
 
 
@@ -246,23 +260,18 @@ namespace OpenOrienteering {
 std::shared_ptr<const std::vector<StorageLocation>> StorageLocation::knownLocations()
 {
 #ifdef Q_OS_ANDROID
-	auto locations = Android::locations_cache;
-	if (!locations)
-	{
-		locations = Android::buildLocationCache();
-		Android::locations_cache = locations;
-	}
-	Q_ASSERT(locations);
-	return locations;
+	if (!Android::locations_cache)
+		Android::locations_cache = std::make_shared<const std::vector<StorageLocation>>(Android::knownLocations());
+	return Android::locations_cache;
 #else
-	auto locations = std::make_shared<std::vector<StorageLocation>>();
+	auto locations = std::vector<StorageLocation>();
 	auto paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
-	locations->reserve(std::size_t(paths.size()));
+	locations.reserve(std::size_t(paths.size()));
 	for (const auto& path : paths)
 	{
-		locations->emplace_back(path, HintNormal);
+		locations.emplace_back(path, HintNormal);
 	}
-	return locations;
+	return std::make_shared<const std::vector<StorageLocation>>(std::move(locations));
 #endif
 }
 
