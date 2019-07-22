@@ -430,6 +430,10 @@ void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 			history.pop_back();
 		updateFileListWidget();
 	}
+	else if (hint == StorageLocation::HintNoAccess)
+	{
+		AppPermissions::requestPermission(AppPermissions::StorageAccess, this, &HomeScreenWidgetMobile::permissionRequestDone);
+	}
 	else if (QFileInfo(file_path).isDir())
 	{
 		history.emplace_back(file_path, hint);
@@ -447,6 +451,28 @@ void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 		qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
 		controller->getWindow()->openPath(file_path);
 		setEnabled(true);
+	}
+}
+
+void HomeScreenWidgetMobile::permissionRequestDone()
+{
+	auto* item = file_list_widget->currentItem();
+	if (AppPermissions::checkPermission(AppPermissions::StorageAccess) == AppPermissions::Granted
+	    && item != nullptr)
+	{
+		// We only handle permissions for top-level storage locations.
+		auto path = item->data(pathRole()).toString();
+		StorageLocation::refresh();
+		const auto locations = StorageLocation::knownLocations();
+		for (const auto& location : *locations)
+		{
+			if (QFileInfo(location.path()).filePath() == path)
+			{
+				item->setData(hintRole(), location.hint());
+				itemClicked(item);
+				break;
+			}
+		}
 	}
 }
 
@@ -480,22 +506,6 @@ QListWidget* HomeScreenWidgetMobile::makeFileListWidget()
 void HomeScreenWidgetMobile::updateFileListWidget()
 {
 	file_list_widget->clear();
-	
-	auto storage_access = AppPermissions::checkPermission(AppPermissions::StorageAccess);
-	if (storage_access != AppPermissions::Granted)
-	{
-		AppPermissions::requestPermission(AppPermissions::StorageAccess, this, &HomeScreenWidgetMobile::updateFileListWidget);
-		
-		// List examples
-		constexpr auto filters = QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot;
-		constexpr auto flags = QDir::DirsLast | QDir::Name | QDir::IgnoreCase | QDir::LocaleAware;
-		auto const info_list = QDir(QLatin1String("data:/examples")).entryInfoList(filters, flags);
-		for (const auto& file_info : info_list)
-		{
-			addItemToFileList(file_info);
-		}
-		return;
-	}
 	
 	if (history.empty())
 	{
@@ -557,6 +567,7 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 			icon = file_list_widget->style()->standardIcon(QStyle::SP_MessageBoxWarning);
 			break;
 		case StorageLocation::HintNormal:
+		case StorageLocation::HintNoAccess:
 		case StorageLocation::HintInvalid:
 			break;
 		}
@@ -580,6 +591,18 @@ void HomeScreenWidgetMobile::addItemToFileList(const QFileInfo& file_info, int h
 void HomeScreenWidgetMobile::addItemToFileList(const QString& label, const QFileInfo& file_info, int hint, const QIcon& icon)
 {
 	const auto file_path = file_info.filePath();
+	if (hint == StorageLocation::HintNoAccess)
+	{
+		// When there is no access, avoid extra QFileInfo calls.
+		auto* new_item = new QListWidgetItem(label);
+		new_item->setData(pathRole(), file_path);
+		new_item->setData(hintRole(), hint);
+		new_item->setToolTip(StorageLocation::fileHintTextTemplate(StorageLocation::HintNoAccess).arg(file_path));
+		new_item->setIcon(style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+		file_list_widget->addItem(new_item);
+		return;
+	}
+	
 	const auto* format = FileFormats.findFormatForFilename(file_path, &FileFormat::supportsReading);
 	if (file_info.isDir() || 
 	    (format && format->fileType() == FileFormat::MapFile))
