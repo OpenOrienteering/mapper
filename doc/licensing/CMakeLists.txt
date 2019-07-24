@@ -64,6 +64,13 @@ set(LICENSING_NO_ATTRIBUTION "" CACHE STRING
 )
 
 
+# Import the targets of all found packages into this scope.
+get_cmake_property(packages PACKAGES_FOUND)
+foreach(package ${packages})
+	find_package("${package}" QUIET)
+endforeach()
+
+
 # Software and data used directly by Mapper, or set by configuration
 set(third_party_components
   ${LICENSING_ATTRIBUTION}
@@ -128,6 +135,8 @@ if(LICENSING_PROVIDER)
 	message(STATUS "Licensing information provided by: ${LICENSING_PROVIDER}")
 	set(third_party_copyright )
 	set(common_licenses )
+	unset(package)
+	unset(basename)
 	include("${LICENSING_PROVIDER}-licensing.cmake")
 else()
 	set(licensing_warning "
