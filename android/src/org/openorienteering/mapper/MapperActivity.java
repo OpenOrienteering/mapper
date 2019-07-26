@@ -54,6 +54,7 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	
 	private static Toast toast;
 	private static CountDownTimer toast_reset;
+	private static boolean service_started = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -81,7 +82,7 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 			if (action == Intent.ACTION_EDIT || action == Intent.ACTION_VIEW)
 			{
 				result = intent.getDataString();
-				}
+			}
 			setIntent(null);
 		}
 		return result;
@@ -248,5 +249,30 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	public static int getDisplayRotation()
 	{
 		return instance.getWindowManager().getDefaultDisplay().getRotation();
+	}
+	
+	/** Starts a foreground service with the given notification message.
+	 */
+	public static void startService(String message)
+	{
+		if (!service_started)
+		{
+			service_started = true;
+			Intent intent = new Intent(instance, MapperService.class);
+			intent.putExtra("message", message);
+			instance.startService(intent);
+		}
+	}
+	
+	/** Stops the foreground service with the given notification message.
+	 */
+	public static void stopService()
+	{
+		if (service_started)
+		{
+			Intent intent = new Intent(instance, MapperService.class);
+			instance.stopService(intent);
+			service_started = false;
+		}
 	}
 }

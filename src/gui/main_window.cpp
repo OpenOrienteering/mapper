@@ -63,6 +63,7 @@
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/backports.h"  // IWYU pragma: keep
+#include "util/mapper_service_proxy.h"
 
 
 namespace OpenOrienteering {
@@ -498,7 +499,19 @@ void MainWindow::setHasUnsavedChanges(bool value)
 		has_unsaved_changes = value;
 		setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
 	}
+	else
+	{
+		Q_ASSERT(!value);
+		has_unsaved_changes = false;
+		setAutosaveNeeded(false);
+	}
 	setWindowModified(has_unsaved_changes);
+	
+#ifdef Q_OS_ANDROID
+	if (!service_proxy)
+		service_proxy = std::make_unique<MapperServiceProxy>();
+	service_proxy->setActiveWindow(has_unsaved_changes ? this : nullptr);
+#endif
 }
 
 void MainWindow::setStatusBarText(const QString& text)
