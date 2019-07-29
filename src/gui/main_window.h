@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_MAIN_WINDOW_H
 #define OPENORIENTEERING_MAIN_WINDOW_H
 
+#include <memory>
+
 #include <Qt>
 #include <QMainWindow>
 #include <QObject>
@@ -44,6 +46,7 @@ class QWidget;
 namespace OpenOrienteering {
 
 class MainWindowController;
+class MapperServiceProxy;
 
 
 /**
@@ -509,6 +512,8 @@ private:
 	QAction* settings_act;
 	QAction* close_act;
 	QLabel* status_label;
+	
+	std::unique_ptr<MapperServiceProxy> service_proxy;
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")
 	QString current_path;

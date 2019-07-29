@@ -209,6 +209,7 @@ set(Mapper_Common_SRCS
   
   util/encoding.cpp
   util/item_delegates.cpp
+  util/mapper_service_proxy.cpp
   util/matrix.cpp
   util/overriding_shortcut.cpp
   util/recording_translator.cpp
