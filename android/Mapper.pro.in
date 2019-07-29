@@ -35,7 +35,8 @@ ANDROID_PACKAGE_SOURCE_DIR = "@PROJECT_SOURCE_DIR@/android"
   ANDROID_PACKAGE_SOURCE_DIR = $$OUT_PWD/android
   system(sed -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
   system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> @Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
-  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--")
+  system(sed -f "$$ANDROID_PACKAGE_SOURCE_DIR/import_namespace.sed" -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/src/org/openorienteering/mapper/*.java")
+  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/src/org/openorienteering/mapper/*.java--")
 }
 
 
