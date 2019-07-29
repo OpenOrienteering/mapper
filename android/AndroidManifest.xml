@@ -100,6 +100,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.INTERNET"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
 
     <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.
