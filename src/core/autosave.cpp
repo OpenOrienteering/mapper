@@ -35,6 +35,11 @@ AutosavePrivate::AutosavePrivate(Autosave& document)
 : document(document)
 , autosave_needed(false)
 {
+#ifdef QT_TESTLIB_LIB
+	// The AutosaveTest uses a very short interval. By using a precise timer,
+	// we try to avoid occasional AutosaveTest failures on macOS.
+	autosave_timer.setTimerType(Qt::PreciseTimer);
+#endif
 	autosave_timer.setSingleShot(true);
 	connect(&autosave_timer, &QTimer::timeout, this, &AutosavePrivate::autosave);
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &AutosavePrivate::settingsChanged);
