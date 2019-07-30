@@ -221,7 +221,6 @@ set(Mapper_Common_SRCS
 
 # Extra header to be shown in the IDE or to be translated
 set(Mapper_Common_HEADERS
-  core/autosave_p.h
   core/image_transparency_fixup.h
   core/objects/object_operations.h
   core/renderables/renderable.h
