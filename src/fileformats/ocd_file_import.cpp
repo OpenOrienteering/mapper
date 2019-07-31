@@ -363,7 +363,7 @@ namespace {
 void tryParamConvert(int& out, const QString& param_value)
 {
 	bool ok;
-	auto value = param_value.toInt(&ok);
+	auto value = qRound(param_value.toFloat(&ok));
 	if (ok)
 		out = value;
 }
