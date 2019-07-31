@@ -89,6 +89,11 @@ superbuild_package(
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5PrintSupport=TRUE"
       "-DKEYSTORE_URL=${KEYSTORE_URL}"
       "-DKEYSTORE_ALIAS=${KEYSTORE_ALIAS}"
+      $<$<NOT:$<VERSION_LESS:@CMAKE_VERSION@,3.15.0>>:
+        $<0: https://gitlab.kitware.com/cmake/cmake/issues/19515 >
+        "-DCMAKE_C_COMPILER_FRONTEND_VARIANT=GNU"
+        "-DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU"
+      >
     >
     $<$<NOT:$<OR:$<BOOL:@ANDROID@>,$<BOOL:@Mapper_CI_ENABLE_POSITIONING@>>>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Positioning:BOOL=TRUE"
