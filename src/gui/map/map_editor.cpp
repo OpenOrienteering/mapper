@@ -1406,13 +1406,13 @@ void MapEditorController::createMobileGUI()
 	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
 	
 	// Create button for showing the top bar again after hiding it
-	int icon_size_pixel = qRound(Util::mmToPixelLogical(10));
-	const int button_icon_size = icon_size_pixel - 12;
-	QSize icon_size = QSize(button_icon_size, button_icon_size);
+	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
+	const auto icon_size_px = button_size_px - 12;
+	const auto icon_size = QSize{icon_size_px, icon_size_px};
 	
 	QIcon icon = show_top_bar_action->icon();
 	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
-	if (pixmap.width() < button_icon_size)
+	if (pixmap.width() < icon_size_px)
 	{
 		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		icon.addPixmap(pixmap);
@@ -1424,7 +1424,7 @@ void MapEditorController::createMobileGUI()
 	show_top_bar_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	show_top_bar_button->setAutoRaise(true);
 	show_top_bar_button->setIconSize(icon_size);
-	show_top_bar_button->setGeometry(0, 0, button_icon_size, button_icon_size);
+	show_top_bar_button->setGeometry(0, 0, button_size_px, button_size_px);
 	
 	
 	// Create bottom action bar
