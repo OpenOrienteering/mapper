@@ -53,6 +53,15 @@ public:
 	};
 	
 	/**
+	 * Defines possible actual positions of a button.
+	 */
+	enum ButtonDisplay
+	{
+		DisplayNormal,    ///< Regular button display
+		DisplayOverflow,  ///< Button display in overflow action
+	};
+	
+	/**
 	 * Constructs a new ActionGridBar.
 	 * 
 	 * After constructions, add items and either insert the overflow action
@@ -88,10 +97,18 @@ public:
 	/** Configures this bar to put its overflow actions into another bar. */
 	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
 	
-	/** Finds and returns the button corresponding to the given action or nullptr
-	 *  if either the action has not been inserted into the action bar,
-	 *  or the button is hidden because of a collision. */
-	QToolButton* getButtonForAction(QAction* action);
+	/**
+	 * Returns the button corresponding to the given action.
+	 * 
+	 * If the action has not been added to the action bar, this function
+	 * returns nullptr.
+	 */
+	QToolButton* getButtonForAction(const QAction* action) const;
+	
+	/**
+	 * Returns where the given button is displayed.
+	 */
+	ButtonDisplay buttonDisplay(const QToolButton* button) const;
 	
 	QSize sizeHint() const override;
 	

@@ -131,14 +131,25 @@ void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
 	other_bar->include_overflow_from_list.push_back(this);
 }
 
-QToolButton* ActionGridBar::getButtonForAction(QAction* action)
+QToolButton* ActionGridBar::getButtonForAction(const QAction* action) const
 {
 	for (auto& item : items)
 	{
 		if (item.action == action)
-			return item.button_hidden ? nullptr : item.button;
+			return item.button;
 	}
 	return nullptr;
+}
+
+ActionGridBar::ButtonDisplay ActionGridBar::buttonDisplay(const QToolButton* button) const
+{
+	for (auto& item : items)
+	{
+		if (item.button == button)
+			return item.button_hidden ? DisplayOverflow : DisplayNormal;
+	}
+	Q_UNREACHABLE();
+	return DisplayNormal;
 }
 
 QSize ActionGridBar::sizeHint() const

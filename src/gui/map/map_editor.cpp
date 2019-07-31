@@ -1398,7 +1398,7 @@ void MapEditorController::createMobileGUI()
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
 	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
 		auto mappart_button = top_action_bar->getButtonForAction(mappart_action);
-		if (!mappart_button)
+		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
 			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
 		mappart_selector_box->setGeometry(mappart_button->geometry());
 		mappart_selector_box->showPopup();
