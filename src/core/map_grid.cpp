@@ -136,8 +136,8 @@ void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, qrea
 	if (display == AllLines)
 		Util::gridOperation<ProcessLine>(bounding_box, final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, process_line);
 	else if (display == HorizontalLines)
-		Util::hatchingOperation<ProcessLine>(bounding_box, final_vert_spacing, final_vert_offset, final_rotation + M_PI / 2, process_line);
-	else // if (display == VeritcalLines)
+		Util::hatchingOperation<ProcessLine>(bounding_box, final_vert_spacing, final_vert_offset, final_rotation - M_PI / 2, process_line);
+	else // if (display == VerticalLines)
 		Util::hatchingOperation<ProcessLine>(bounding_box, final_horz_spacing, final_horz_offset, final_rotation, process_line);
 }
 

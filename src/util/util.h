@@ -173,9 +173,14 @@ namespace Util
 	void hatchingOperation(const QRectF& extent, double spacing, double offset, double rotation, T& processor)
 	{
 		// Make rotation unique
-		rotation = fmod(1.0 * rotation, M_PI);
+		rotation = fmod(1.0 * rotation, 2 * M_PI);
 		if (rotation < 0)
-			rotation = M_PI + rotation;
+			rotation += 2 * M_PI;
+		if (rotation >= M_PI)
+		{
+			rotation -= M_PI;
+			offset = -offset;
+		}
 		Q_ASSERT(rotation >= 0 && rotation <= M_PI);
 		
 		if (qAbs(rotation - M_PI/2) < 0.0001)
@@ -187,9 +192,11 @@ namespace Util
 				processor.processLine(QPointF(cur, extent.top()), QPointF(cur, extent.bottom()));
 			}
 		}
-		else if (qAbs(rotation - 0) < 0.0001)
+		else if (rotation < 0.0001 || rotation > M_PI - 0.0001)
 		{
 			// Special case: horizontal lines
+			if (rotation > M_PI/2)
+				offset = -offset;
 			double first = offset + ceil((extent.top() - offset) / (spacing)) * spacing;
 			for (double cur = first; cur < extent.bottom(); cur += spacing)
 			{
@@ -301,7 +308,7 @@ namespace Util
 	                   double horz_offset, double vert_offset, double rotation, T& processor)
 	{
 		hatchingOperation(extent, horz_spacing, horz_offset, rotation, processor);
-		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
+		hatchingOperation(extent, vert_spacing, vert_offset, rotation - M_PI / 2, processor);
 	}
 	
 }
