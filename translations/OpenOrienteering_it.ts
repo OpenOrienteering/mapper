@@ -16,7 +16,7 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impossibile aprire file</translation>
     </message>
 </context>
 <context>
@@ -60,7 +60,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">I files OCD di versione %1 non sono supportati!</translation>
+        <translation>I file OCD di versione %1 non sono supportati!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
@@ -76,7 +76,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>La georiferenze non posso essere salvate in OCD versione 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
@@ -86,7 +86,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>La mappa contiene più di 256 colori, il che non è supportato da OCD versione 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
@@ -423,7 +423,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Frequenza monitor:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -433,12 +433,12 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Indefinito</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angolazione schermo:</translation>
     </message>
     <message>
         <source>°</source>
@@ -1652,7 +1652,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Templates</translation>
+        <translation>Modelli</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
@@ -1667,12 +1667,12 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni di esportazione</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un livello per ogni simbolo</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2313,17 +2313,17 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Tutti i files (*.*)</translation>
+        <translation>Tutti i files(*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Icona di default</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2334,17 +2334,17 @@ Riscalare i dati importati?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copia a icona personalizzata</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Icona personalizzata</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
@@ -2354,7 +2354,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Carico...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
@@ -2364,12 +2364,12 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Salva icona simbolo...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2381,12 +2381,13 @@ Riscalare i dati importati?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>impossibile salvare l&apos;immagine:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Carica icona simbolo...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2459,12 +2460,12 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocad versione8, implementazione vecchia</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>versione OCAD %1</translation>
     </message>
     <message>
         <source>Could not parse the data.</source>

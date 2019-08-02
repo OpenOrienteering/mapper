@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを書き込みできません: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開くことができません
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -76,23 +78,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスは OCD バージョン 8 で保存できません。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>マップに、OCD バージョン 8 ではサポートされていない 24 色以上のスポットカラーが含まれています。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>マップに、OCD バージョン 8 ではサポートされていない 256 色以上の色が含まれています。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>スポットカラーが無効です。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
@@ -107,7 +109,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>テキストが &apos;|&apos;) で切り捨てられました: %1</translation>
     </message>
 </context>
 <context>
@@ -442,7 +444,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>画面周波数:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -452,12 +454,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>未定義</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>画面の角度:</translation>
     </message>
     <message>
         <source>°</source>
@@ -1771,7 +1773,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1988"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>結合シンボル %1: インデックス %2 にサポートされていないサブシンボル。</translation>
     </message>
 </context>
 <context>
@@ -1830,12 +1832,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートオプション</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>シンボルごとにレイヤーを作成する</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2623,7 +2625,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトのアイコン</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
@@ -2633,23 +2635,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>プレビュー幅:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation>保存...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタムアイコンにコピー</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタムアイコン</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
@@ -2659,22 +2661,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>読み込み...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>クリア</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>シンボルアイコンを保存 ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2686,12 +2688,13 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>画像の保存に失敗しました:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>記号アイコンを読み込む ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2764,12 +2767,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD バージョン 8,旧実装</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD バージョン %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="200"/>
@@ -2845,7 +2848,9 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルを開くことができません
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -2872,7 +2877,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="536"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>サポートされていない古いバージョンのファイル形式です。プログラムバージョン v%1 以上を使用して、ファイルを読み込んで更新してください。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
@@ -3093,22 +3098,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="166"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>中間記号の配置:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="168"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="169"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>ダッシュグループの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>ギャップの中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="200"/>
@@ -3158,22 +3163,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="671"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時のキャップ長:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="672"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>終端のキャップ長:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="676"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>開始時のオフセット:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>終端のオフセット:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1724"/>
@@ -3417,7 +3422,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="752"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>記号セットのインポートで警告が生成されました。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="756"/>
@@ -4238,7 +4243,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1140"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>ツールバー</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1147"/>
@@ -4927,7 +4932,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4004"/>
         <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 または GPX ファイルのインポート</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>

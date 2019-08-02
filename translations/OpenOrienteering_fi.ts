@@ -2426,7 +2426,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopioi mukautettuun kuvakkeeseen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
@@ -2456,7 +2456,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tallenna symbolin kuvake…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2474,7 +2474,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Lataa symbolin kuvake…</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -4595,7 +4595,7 @@ tallentaminen %2 (.%3) ei ole tuettu.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1140"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Työkalurivit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1351"/>
@@ -5782,7 +5782,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1541"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - kaksoisviiva</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1548"/>
@@ -8743,7 +8743,7 @@ Tuetaan vain versioon %2 asti.</translation>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
