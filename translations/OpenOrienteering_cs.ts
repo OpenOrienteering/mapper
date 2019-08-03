@@ -29,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Nelze otevřít soubor:
+        <translation>Nelze otevřít soubor:
 %1
 
 %2</translation>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Neplatný typ souboru.</translation>
+        <translation>Neplatný typ souboru.</translation>
     </message>
 </context>
 <context>
@@ -45,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Otázka</translation>
+        <translation>Otázka</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Měřítko importovaných dat je 1:%1, ale měřítko mapy je 1:%2.
+        <translation>Měřítko importovaných dat je 1:%1, ale měřítko mapy je 1:%2.
 
 Změnit měřítko importovaných dat na měřítko mapy?</translation>
     </message>
@@ -62,18 +62,18 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">Soubory OCD verze %1 nejsou podporovány!</translation>
+        <translation>Soubory OCD verze %1 nejsou podporovány!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Souřadnice jsou upraveny aby odpovídaly oblasti kresby v OCAD 8 (-2 m ... 2 m).</translation>
+        <translation>Souřadnice jsou upraveny aby odpovídaly oblasti kresby v OCAD 8 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Některé souřadnice zůstávají mimo oblast kresby v OCAD 8. Mohou být v OCADu nedosažitelné.</translation>
+        <translation>Některé souřadnice zůstávají mimo oblast kresby v OCAD 8. Mohou být v OCADu nedosažitelné.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -99,12 +99,12 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Nelze uložit správnou pozici chybějícího podkladu: &quot;%1&quot;</translation>
+        <translation>Nelze uložit správnou pozici chybějícího podkladu: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Nelze exportovat podklad: Souborový typ &quot;%1&quot; není podporován</translation>
+        <translation>Nelze exportovat podklad: Souborový typ &quot;%1&quot; není podporován</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
@@ -127,7 +127,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kódování &apos;%1&apos; není k dispozici. Zkontrolujte nastavení.</translation>
+        <translation>Kódování &apos;%1&apos; není k dispozici. Zkontrolujte nastavení.</translation>
     </message>
 </context>
 <context>
@@ -1605,7 +1605,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nelze uložit soubor:
+        <translation>Nelze uložit soubor:
 %1:
 %2</translation>
     </message>
@@ -1699,17 +1699,17 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Podklady</translation>
+        <translation>Podklady</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Šrafování ploch</translation>
+        <translation>Šrafování ploch</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Zobrazit základní linie</translation>
+        <translation>Zobrazit základní linie</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
@@ -2389,7 +2389,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="513"/>
         <source>Help</source>
-        <translation type="unfinished">Nápověda</translation>
+        <translation>Nápověda</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="534"/>
@@ -2423,12 +2423,12 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Všechny soubory (*.*)</translation>
+        <translation>Všechny soubory (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2438,7 +2438,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2464,7 +2464,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Šířka:</translation>
+        <translation>Šířka:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2490,7 +2490,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Chyba</translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2510,7 +2510,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Nelze otevřít soubor:
+        <translation>Nelze otevřít soubor:
 %1
 
 %2</translation>
@@ -3225,7 +3225,7 @@ Chcete uložit změny?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Nelze otevřít soubor:
+        <translation>Nelze otevřít soubor:
 %1
 
 %2</translation>
@@ -3253,7 +3253,7 @@ Má se změnit velikost symbolů na vybrané měřítko?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="835"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Neplatný typ souboru.</translation>
+        <translation>Neplatný typ souboru.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
@@ -3378,14 +3378,14 @@ Stiskněte Ne pro vyhledání jiného souborového formátu.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="51"/>
         <location filename="../src/gui/main_window_controller.cpp" line="59"/>
         <source>Error</source>
-        <translation type="unfinished">Chyba</translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="52"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Mapu nelze exportovat jako
+        <translation>Mapu nelze exportovat jako
 &quot;%1&quot;,
 protože formát je neznámý.</translation>
     </message>
@@ -3394,7 +3394,7 @@ protože formát je neznámý.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Mapu nelze exportovat jako
+        <translation>Mapu nelze exportovat jako
 &quot;%1&quot;,
 protože uložení jako %2 (.%3) není podporováno.</translation>
     </message>
@@ -3674,7 +3674,7 @@ Importovat data tak jako tak?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Mapu nelze exportovat jako
+        <translation>Mapu nelze exportovat jako
 &quot;%1&quot;,
 protože uložení jako %2 (.%3) není podporováno.</translation>
     </message>
@@ -3683,7 +3683,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nelze uložit soubor:
+        <translation>Nelze uložit soubor:
 %1:
 %2</translation>
     </message>
@@ -3692,18 +3692,18 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>Warning</source>
-        <translation type="unfinished">Varování</translation>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="600"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Při exportu mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při exportu mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Při importu mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při importu mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="848"/>
@@ -3873,19 +3873,19 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Nic k importu.</translation>
+        <translation>Nic k importu.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4139"/>
         <source>Question</source>
-        <translation type="unfinished">Otázka</translation>
+        <translation>Otázka</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Měřítko importovaných dat je 1:%1, ale měřítko mapy je 1:%2.
+        <translation>Měřítko importovaných dat je 1:%1, ale měřítko mapy je 1:%2.
 
 Změnit měřítko importovaných dat na měřítko mapy?</translation>
     </message>
@@ -5693,12 +5693,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1298"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1333"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">V plošném symbolu &quot;%1&quot; vynechávám vzor výplně.</translation>
+        <translation>V plošném symbolu &quot;%1&quot; vynechávám vzor výplně.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1323"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">V plošném symbolu &quot;%1&quot; předpokládám bodový vzor s &quot;posunutými řádky&quot;. To může být správně, ale také to může být chybně.</translation>
+        <translation>V plošném symbolu &quot;%1&quot; předpokládám bodový vzor s &quot;posunutými řádky&quot;. To může být správně, ale také to může být chybně.</translation>
     </message>
 </context>
 <context>
@@ -5941,7 +5941,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2068"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
     </message>
 </context>
 <context>
@@ -5949,22 +5949,22 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1434"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1455"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; se přehlíží seskupení čárek.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; se přehlíží seskupení čárek.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1466"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; je počet čárek v jedné skupině zmenšen na 2.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; je počet čárek v jedné skupině zmenšen na 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1560"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; nemohou být okraje správně exportovány.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nemohou být okraje správně exportovány.</translation>
     </message>
 </context>
 <context>
@@ -5977,12 +5977,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">V textovém symbolu %1: přehlíží se podtržení</translation>
+        <translation>V textovém symbolu %1: přehlíží se podtržení</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1767"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">V textovém symbolu %1: přehlíží se podřezávání</translation>
+        <translation>V textovém symbolu %1: přehlíží se podřezávání</translation>
     </message>
 </context>
 <context>
@@ -7093,12 +7093,12 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -7221,29 +7221,29 @@ Chcete uložit vaše změny?</translation>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Počátek souřadnicového systému mapy</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnicový referenční bod</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jiný bod,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7287,7 +7287,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="81"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Přepnout na změnu velikosti jednotlivých objektů. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
@@ -7429,7 +7429,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikona</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7616,7 +7616,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit vlastní ikony</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="143"/>
@@ -8272,7 +8272,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="276"/>
         <source>Georeferenced</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencováno</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="281"/>
@@ -8343,17 +8343,17 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Nelze nahrát soubor s mapou. Přerušuje se.</translation>
+        <translation>Nelze nahrát soubor s mapou, přerušuji.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>Warning</source>
-        <translation type="unfinished">Varování</translation>
+        <translation>Varování</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Při importu mapy se vyskytla varovná hlášení.</translation>
+        <translation>Při importu mapy se vyskytla varovná hlášení.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
@@ -8379,7 +8379,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze změnit stav georeferencování.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1222"/>
@@ -8392,7 +8392,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Nelze nahrát soubor s mapou. Přerušuje se.</translation>
+        <translation>Nelze nahrát soubor s mapou, přerušuji.</translation>
     </message>
 </context>
 <context>
@@ -8902,7 +8902,7 @@ Nejvyšší podporovaná verze je %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
