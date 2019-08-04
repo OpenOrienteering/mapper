@@ -27,7 +27,6 @@
 #include "settings_page.h"
 
 class QCheckBox;
-class QDoubleSpinBox;
 class QComboBox;
 class QDoubleSpinBox;
 class QSpinBox;
@@ -54,7 +53,7 @@ protected:
 	void updateWidgets();
 	
 private:
-	QDoubleSpinBox* button_size;
+	QDoubleSpinBox* button_size = nullptr;
 	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
