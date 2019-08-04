@@ -128,7 +128,8 @@ QString EditorSettingsPage::title() const
 
 void EditorSettingsPage::apply()
 {
-	setSetting(Settings::ActionGridBar_ButtonSizeMM, button_size->value());
+	if (button_size != nullptr)
+		setSetting(Settings::ActionGridBar_ButtonSizeMM, button_size->value());
 	setSetting(Settings::SymbolWidget_IconSizeMM, icon_size->value());
 	setSetting(Settings::MapDisplay_Antialiasing, antialiasing->isChecked());
 	setSetting(Settings::MapDisplay_TextAntialiasing, text_antialiasing->isChecked());
@@ -152,7 +153,8 @@ void EditorSettingsPage::reset()
 
 void EditorSettingsPage::updateWidgets()
 {
-	button_size->setValue(getSetting(Settings::ActionGridBar_ButtonSizeMM).toFloat());
+	if (button_size != nullptr)
+		button_size->setValue(getSetting(Settings::ActionGridBar_ButtonSizeMM).toDouble());
 	icon_size->setValue(getSetting(Settings::SymbolWidget_IconSizeMM).toInt());
 	antialiasing->setChecked(getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setEnabled(antialiasing->isChecked());
