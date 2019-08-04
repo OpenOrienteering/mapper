@@ -30,10 +30,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.view.Gravity;
@@ -54,6 +56,8 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	
 	private static Toast toast;
 	private static CountDownTimer toast_reset;
+	private static boolean service_started = false;
+	private static boolean optimization_request_done = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -81,11 +85,49 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 			if (action == Intent.ACTION_EDIT || action == Intent.ACTION_VIEW)
 			{
 				result = intent.getDataString();
-				}
+			}
 			setIntent(null);
 		}
 		return result;
 	}
+	
+	/**
+	 * Request android to disable battery optimization for Mapper.
+	 * 
+	 * "An app holding the REQUEST_IGNORE_BATTERY_OPTIMIZATIONS permission can
+	 * trigger a system dialog to let the user add the app to the whitelist
+	 * directly, without going to settings."
+	 * 
+	 * "Google Play policies prohibit apps from requesting direct exemption from
+	 * Power Management features in Android 6.0+ (Doze and App Standby) unless
+	 * the core function of the app is adversely affected."
+	 * 
+	 * @see https://developer.android.com/training/monitoring-device-state/doze-standby#support_for_other_use_cases
+	 */
+	void requestIgnoreBatteryOptimizations()
+	{
+		if (Build.VERSION.SDK_INT < 23)
+		{
+			return;
+		}
+		
+		if (optimization_request_done)
+		{
+			return;
+		}
+		
+		String app_id = BuildConfig.APPLICATION_ID;
+		PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+		if (pm != null && !pm.isIgnoringBatteryOptimizations(app_id))
+		{
+			Intent intent = new Intent();
+			intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+			intent.setData(Uri.parse("package:" + app_id));
+			startActivity(intent);
+		}
+		optimization_request_done = true;  // until app is restarted
+	}
+	
 	
 	// Static methods to be called from C++
 	
@@ -248,5 +290,31 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	public static int getDisplayRotation()
 	{
 		return instance.getWindowManager().getDefaultDisplay().getRotation();
+	}
+	
+	/** Starts a foreground service with the given notification message.
+	 */
+	public static void startService(String message)
+	{
+		if (!service_started)
+		{
+			service_started = true;
+			Intent intent = new Intent(instance, MapperService.class);
+			intent.putExtra("message", message);
+			instance.startService(intent);
+			instance.requestIgnoreBatteryOptimizations();
+		}
+	}
+	
+	/** Stops the foreground service.
+	 */
+	public static void stopService()
+	{
+		if (service_started)
+		{
+			Intent intent = new Intent(instance, MapperService.class);
+			instance.stopService(intent);
+			service_started = false;
+		}
 	}
 }

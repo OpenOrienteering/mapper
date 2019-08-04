@@ -1398,7 +1398,7 @@ void MapEditorController::createMobileGUI()
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
 	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
 		auto mappart_button = top_action_bar->getButtonForAction(mappart_action);
-		if (!mappart_button)
+		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
 			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
 		mappart_selector_box->setGeometry(mappart_button->geometry());
 		mappart_selector_box->showPopup();
@@ -1406,13 +1406,13 @@ void MapEditorController::createMobileGUI()
 	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
 	
 	// Create button for showing the top bar again after hiding it
-	int icon_size_pixel = qRound(Util::mmToPixelLogical(10));
-	const int button_icon_size = icon_size_pixel - 12;
-	QSize icon_size = QSize(button_icon_size, button_icon_size);
+	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
+	const auto icon_size_px = button_size_px - 12;
+	const auto icon_size = QSize{icon_size_px, icon_size_px};
 	
 	QIcon icon = show_top_bar_action->icon();
 	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
-	if (pixmap.width() < button_icon_size)
+	if (pixmap.width() < icon_size_px)
 	{
 		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 		icon.addPixmap(pixmap);
@@ -1424,7 +1424,7 @@ void MapEditorController::createMobileGUI()
 	show_top_bar_button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	show_top_bar_button->setAutoRaise(true);
 	show_top_bar_button->setIconSize(icon_size);
-	show_top_bar_button->setGeometry(0, 0, button_icon_size, button_icon_size);
+	show_top_bar_button->setGeometry(0, 0, button_size_px, button_size_px);
 	
 	
 	// Create bottom action bar
@@ -4185,6 +4185,9 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 	
 #ifdef Q_OS_ANDROID
 	size_grip = new QSizeGrip(this);
+	size_grip->resize(size_grip->sizeHint());
+	size_grip->setVisible(isTopLevel());
+	connect(this, &QDockWidget::topLevelChanged, size_grip, &QWidget::setVisible);
 #endif
 }
 
@@ -4211,12 +4214,17 @@ bool EditorDockWidget::event(QEvent* event)
 void EditorDockWidget::resizeEvent(QResizeEvent* event)
 {
 #ifdef Q_OS_ANDROID
-	QRect rect(QPoint(0,0), size_grip->sizeHint());
-	rect.moveBottomRight(geometry().bottomRight() - geometry().topLeft());
 	int fw = style()->pixelMetric(QStyle::PM_DockWidgetFrameWidth, 0, this);
-	rect.translate(-fw, -fw);
-	size_grip->setGeometry(rect);
+	size_grip->move(rect().bottomRight() - size_grip->rect().bottomRight() - QPoint{fw, fw});
 	size_grip->raise();
+	
+	if (isTopLevel())
+	{
+		auto const frame = frameGeometry();
+		auto const old_frame = QRect{pos(), event->oldSize() + frame.size() - size()};
+		if (old_frame.united(frame) != frame)
+			editor->getMainWidget()->window()->update();
+	}
 #endif
 	
 	QDockWidget::resizeEvent(event);

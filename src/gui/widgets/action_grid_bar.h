@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,6 +38,9 @@ namespace OpenOrienteering {
 
 /**
  * A toolbar with a grid layout, whose button size depends on the ppi.
+ * 
+ * \todo Update button size on setting changes (not yet needed for mobile UI).
+ * \todo Use parameter order col,row / colspan,rowspan to match the common x,y / width,height pattern.
  */
 class ActionGridBar : public QWidget
 {
@@ -46,6 +50,15 @@ public:
 	{
 		Horizontal = 0,
 		Vertical
+	};
+	
+	/**
+	 * Defines possible actual positions of a button.
+	 */
+	enum ButtonDisplay
+	{
+		DisplayNormal,    ///< Regular button display
+		DisplayOverflow,  ///< Button display in overflow action
 	};
 	
 	/**
@@ -84,10 +97,18 @@ public:
 	/** Configures this bar to put its overflow actions into another bar. */
 	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
 	
-	/** Finds and returns the button corresponding to the given action or nullptr
-	 *  if either the action has not been inserted into the action bar,
-	 *  or the button is hidden because of a collision. */
-	QToolButton* getButtonForAction(QAction* action);
+	/**
+	 * Returns the button corresponding to the given action.
+	 * 
+	 * If the action has not been added to the action bar, this function
+	 * returns nullptr.
+	 */
+	QToolButton* getButtonForAction(const QAction* action) const;
+	
+	/**
+	 * Returns where the given button is displayed.
+	 */
+	ButtonDisplay buttonDisplay(const QToolButton* button) const;
 	
 	QSize sizeHint() const override;
 	
@@ -114,6 +135,7 @@ protected:
 	Direction direction;
 	int rows;
 	int cols;
+	int button_size_px;
 	std::vector< GridItem > items;
 	int next_id;
 	QAction* overflow_action;

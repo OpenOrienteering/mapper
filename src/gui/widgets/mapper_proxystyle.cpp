@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 
 #include <Qt>
 #include <QBrush>
+#include <QCommonStyle> // IWYU pragma: keep
 #include <QFlags>
 #include <QFormLayout>  // IWYU pragma: keep
 #include <QPainter>
@@ -35,6 +36,29 @@
 
 
 namespace OpenOrienteering {
+
+namespace  {
+
+/**
+ * This function recognizes dock widget related widgets by the class name
+ * matching "DockWidget".
+ * 
+ * This function helps to customize the style for classes like
+ * "QDockWidgetTitleButton" or "MapEditorDockWidget".
+ */
+bool Q_DECL_UNUSED isDockWidgetRelated(const QWidget* widget)
+{
+	if (widget == nullptr)
+		return false;
+	
+	auto* raw_class_name = widget->metaObject()->className();
+	auto const class_name = QByteArray::fromRawData(raw_class_name, static_cast<int>(qstrlen(raw_class_name)));
+	return class_name.contains("DockWidget");
+}
+
+}  // namespace
+
+
 
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
  : QProxyStyle(base_style)
@@ -149,9 +173,17 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 			static int s = qMax(QProxyStyle::pixelMetric(metric), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
 			return s;
 		}
+	case QStyle::PM_SmallIconSize:
+		if (isDockWidgetRelated(widget))
+		{
+			static int s = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
+			return s;
+		}
+		break;
+	case QStyle::PM_DockWidgetSeparatorExtent:
 	case QStyle::PM_SplitterWidth:
 		{
-			static int s = (QProxyStyle::pixelMetric(metric), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;
+			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;
 			return s;
 		}
 #endif
@@ -167,6 +199,67 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 	}
 	
 	return QProxyStyle::pixelMetric(metric, option, widget);
+}
+
+QSize MapperProxyStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w) const
+{
+	switch (ct)
+	{
+#ifdef Q_OS_ANDROID
+	case QStyle::CT_SizeGrip:
+		{
+			auto width = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
+			return { width, width };
+		}
+		break;
+#endif
+	default:
+		break;
+	}
+	
+	return QProxyStyle::sizeFromContents(ct, opt, contents_size, w);
+}
+
+QIcon MapperProxyStyle::standardIcon(QStyle::StandardPixmap standard_icon, const QStyleOption* option, const QWidget* widget) const
+{
+	switch (standard_icon)
+	{
+#ifdef Q_OS_ANDROID
+	// Cf. https://code.qt.io/cgit/qt/qtbase.git/tree/src/widgets/styles/qfusionstyle.cpp?h=5.12#n3785
+	case QStyle::SP_TitleBarNormalButton:
+	case QStyle::SP_TitleBarCloseButton:
+		if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+		{
+			return common_style->QCommonStyle::standardIcon(standard_icon, option, widget);
+		}
+		break;
+#endif
+	default:
+		break;
+	}
+	
+	return QProxyStyle::standardIcon(standard_icon, option, widget);
+}
+
+QPixmap MapperProxyStyle::standardPixmap(QStyle::StandardPixmap standard_pixmap, const QStyleOption* option, const QWidget* widget) const
+{
+	switch (standard_pixmap)
+	{
+#ifdef Q_OS_ANDROID
+	// Cf. https://code.qt.io/cgit/qt/qtbase.git/tree/src/widgets/styles/qfusionstyle.cpp?h=5.12#n3807
+	case QStyle::SP_TitleBarNormalButton:
+	case QStyle::SP_TitleBarCloseButton:
+		if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+		{
+			return common_style->QCommonStyle::standardPixmap(standard_pixmap, option, widget);
+		}
+		break;
+#endif
+	default:
+		break;
+	}
+	
+	return QProxyStyle::standardPixmap(standard_pixmap, option, widget);
 }
 
 int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* option, const QWidget* widget, QStyleHintReturn* return_data) const

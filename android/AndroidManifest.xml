@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<manifest package="org.openorienteering.mapper" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.9.0" android:versionCode="900" android:installLocation="auto">
+<manifest package="org.openorienteering.mapper" xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="-- %%INSERT_VERSION_NAME%% --" android:versionCode="-- %%INSERT_VERSION_CODE%% --" android:installLocation="auto">
     <application android:hardwareAccelerated="true" android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="@string/long_app_name" android:icon="@drawable/icon">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc"
                   android:name="org.openorienteering.mapper.MapperActivity"
@@ -86,6 +86,8 @@
             <meta-data android:name="android.app.extract_android_style" android:value="default"/>
             <!-- extract android style -->
         </activity>
+        <service android:name="org.openorienteering.mapper.MapperService"
+                 android:exported="false" />
     </application>
 
     <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28"/>
@@ -95,8 +97,10 @@
          Remove the comment if you do not require these default permissions. -->
     <!-- Not used for Mapper: %%INSERT_PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/><!-- PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.INTERNET"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/><!-- PROTECTION_NORMAL -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!-- PROTECTION_DANGEROUS -->
 
     <!-- The following comment will be replaced upon deployment with default features based on the dependencies of the application.

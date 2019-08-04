@@ -29,6 +29,7 @@
 class QCheckBox;
 class QDoubleSpinBox;
 class QComboBox;
+class QDoubleSpinBox;
 class QSpinBox;
 class QWidget;
 
@@ -53,6 +54,7 @@ protected:
 	void updateWidgets();
 	
 private:
+	QDoubleSpinBox* button_size;
 	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
