@@ -22,12 +22,9 @@
 #include "util.h"
 
 #include <QtGlobal>
-#include <QChar>
-#include <QIODevice>
 #include <QObject>
 #include <QObjectList>
 #include <QRect>
-#include <QString>
 
 #include "core/map_coord.h"
 
@@ -190,20 +187,6 @@ bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, cons
 	                                      seg_end.x() - seg_start.x(), seg_end.y() - seg_start.y(),
 	                                      point.x(), point.y(), ok);
 	return ok && param >= 0 && param <= 1;
-}
-
-void loadString(QIODevice* file, QString& str)
-{
-	int length;
-	
-	file->read((char*)&length, sizeof(int));
-	if (length > 0)
-	{
-		str.resize(length);
-		file->read((char*)str.data(), length * sizeof(QChar));
-	}
-	else
-		str.clear();
 }
 
 

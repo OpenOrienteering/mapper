@@ -30,10 +30,8 @@
 #include <QPointF>
 #include <QRectF>
 
-class QIODevice;
 class QObject;
 class QRect;
-class QString;
 // IWYU pragma: no_forward_declare QPointF
 // IWYU pragma: no_forward_declare QRectF
 
@@ -159,10 +157,6 @@ double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double
 /** Checks if the point is on the segment defined by
  *  the given start and end coordinates. */
 bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point);
-
-
-/** Helper functions to save a string to a file and load it again. */
-void loadString(QIODevice* file, QString& str);
 
 
 // TODO: Refactor: put remaining stuff into this namespace, too
