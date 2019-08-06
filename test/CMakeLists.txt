@@ -153,7 +153,7 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/mapper_resource
 	../src/fileformats/file_format
 )
-add_unit_test(grid_t )
+add_unit_test(grid_t ../src/util/util)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
 add_unit_test(ocd_t ../src/fileformats/ocd_types)
