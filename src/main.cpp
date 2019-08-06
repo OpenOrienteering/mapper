@@ -161,19 +161,9 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
-	QStyle* base_style = nullptr;
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-	if (QApplication::platformName() == QLatin1String("xcb"))
-	{
-		// Use the modern 'fusion' style instead of the 
-		// default "windows" style on X11.
-		base_style = QStyleFactory::create(QString::fromLatin1("fusion"));
-	}
-#endif
-	QApplication::setStyle(new MapperProxyStyle(base_style));
-#if !defined(Q_OS_MACOS)
-	QApplication::setPalette(QApplication::style()->standardPalette());
-#endif
+	auto const palette = QApplication::palette();
+	QApplication::setStyle(new MapperProxyStyle());
+	QApplication::setPalette(palette);
 	
 	// Create first main window
 	auto first_window = new MainWindow();
