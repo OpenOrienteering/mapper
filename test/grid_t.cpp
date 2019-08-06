@@ -102,15 +102,15 @@ private slots:
 		QTest::newRow("rotation:-360, offset:-2") << -360.0 <<  -2.0 << QPointF{-60, -2}  << QPointF{+60, -2};
 		
 		QTest::newRow("rotation:+37, offset:0")   << +rot37 <<   0.0 << QPointF{-60, +45} << QPointF{+60, -45};
-		QTest::newRow("rotation:+37, offset:12")  << +rot37 << +12.0 << QPointF{-60, +60} << QPointF{+60, -30};
+		QTest::newRow("rotation:+37, offset:+12") << +rot37 << +12.0 << QPointF{-60, +60} << QPointF{+60, -30};
 		QTest::newRow("rotation:+37, offset:-12") << +rot37 << -12.0 << QPointF{+60, -60} << QPointF{-60, +30};
-		QTest::newRow("rotation:+37, offset:24")  << +rot37 << +24.0 << QPointF{-40, +60} << QPointF{+60, -15};
+		QTest::newRow("rotation:+37, offset:+24") << +rot37 << +24.0 << QPointF{-40, +60} << QPointF{+60, -15};
 		QTest::newRow("rotation:+37, offset:-24") << +rot37 << -24.0 << QPointF{+40, -60} << QPointF{-60, +15};
 		
 		QTest::newRow("rotation:+53, offset:0")   << +rot53 <<   0.0 << QPointF{+45, -60} << QPointF{-45, +60};
-		QTest::newRow("rotation:+53, offset:12")  << +rot53 << +12.0 << QPointF{+60, -60} << QPointF{-30, +60};
+		QTest::newRow("rotation:+53, offset:+12") << +rot53 << +12.0 << QPointF{+60, -60} << QPointF{-30, +60};
 		QTest::newRow("rotation:+53, offset:-12") << +rot53 << -12.0 << QPointF{+30, -60} << QPointF{-60, +60};
-		QTest::newRow("rotation:+53, offset:24")  << +rot53 << +24.0 << QPointF{-15, +60} << QPointF{+60, -40};
+		QTest::newRow("rotation:+53, offset:+24") << +rot53 << +24.0 << QPointF{-15, +60} << QPointF{+60, -40};
 		QTest::newRow("rotation:+53, offset:-24") << +rot53 << -24.0 << QPointF{+15, -60} << QPointF{-60, +40};
 		
 		QTest::newRow("rotation:+90, offset:0")   <<  +90.0 <<   0.0 << QPointF{ 0, -60}  << QPointF{ 0, +60};
@@ -118,9 +118,9 @@ private slots:
 		QTest::newRow("rotation:+90, offset:-2")  <<  +90.0 <<  -2.0 << QPointF{-2, -60}  << QPointF{-2, +60};
 		QTest::newRow("rotation:-270, offset:-2") << -270.0 <<  -2.0 << QPointF{-2, -60}  << QPointF{-2, +60};
 		
-		QTest::newRow("rotation:+179, offset:+1") <<+179.9999<< +1.0 << QPointF{-60, -1}  << QPointF{+60, -1};
 		QTest::newRow("rotation:+180, offset:0")  << +180.0 <<  +0.0 << QPointF{-60,  0}  << QPointF{+60,  0};
 		QTest::newRow("rotation:+180, offset:+1") << +180.0 <<  +1.0 << QPointF{-60, -1}  << QPointF{+60, -1};
+		QTest::newRow("rotation:+179.9999, offset:+1") << +179.9999 << +1.0 << QPointF{-60, -1}  << QPointF{+60, -1};
 		QTest::newRow("rotation:+180, offset:-2") << +180.0 <<  -2.0 << QPointF{-60, +2}  << QPointF{+60, +2};
 		QTest::newRow("rotation:-180, offset:-2") << -180.0 <<  -2.0 << QPointF{-60, +2}  << QPointF{+60, +2};
 		
@@ -130,15 +130,15 @@ private slots:
 		QTest::newRow("rotation:-90, offset:-2")  <<  -90.0 <<  -2.0 << QPointF{+2, -60}  << QPointF{+2, +60};
 		
 		QTest::newRow("rotation:-53, offset:0")   << -rot53 <<   0.0 << QPointF{-45, -60} << QPointF{+45, +60};
-		QTest::newRow("rotation:-53, offset:12")  << -rot53 << +12.0 << QPointF{-60, -60} << QPointF{+30, +60};
+		QTest::newRow("rotation:-53, offset:+12") << -rot53 << +12.0 << QPointF{-60, -60} << QPointF{+30, +60};
 		QTest::newRow("rotation:-53, offset:-12") << -rot53 << -12.0 << QPointF{-30, -60} << QPointF{+60, +60};
-		QTest::newRow("rotation:-53, offset:24")  << -rot53 << +24.0 << QPointF{-60, -40} << QPointF{+15, +60};
+		QTest::newRow("rotation:-53, offset:+24") << -rot53 << +24.0 << QPointF{-60, -40} << QPointF{+15, +60};
 		QTest::newRow("rotation:-53, offset:-24") << -rot53 << -24.0 << QPointF{-15, -60} << QPointF{+60, +40};
 		
 		QTest::newRow("rotation:-37, offset:0")   << -rot37 <<   0.0 << QPointF{-60, -45} << QPointF{+60, +45};
-		QTest::newRow("rotation:-37, offset:12")  << -rot37 << +12.0 << QPointF{-60, -30} << QPointF{+60, +60};
+		QTest::newRow("rotation:-37, offset:+12") << -rot37 << +12.0 << QPointF{-60, -30} << QPointF{+60, +60};
 		QTest::newRow("rotation:-37, offset:-12") << -rot37 << -12.0 << QPointF{-60, -60} << QPointF{+60, +30};
-		QTest::newRow("rotation:-37, offset:24")  << -rot37 << +24.0 << QPointF{-60, -15} << QPointF{+40, +60};
+		QTest::newRow("rotation:-37, offset:+24") << -rot37 << +24.0 << QPointF{-60, -15} << QPointF{+40, +60};
 		QTest::newRow("rotation:-37, offset:-24") << -rot37 << -24.0 << QPointF{-40, -60} << QPointF{+60, +15};
 	}
 	
