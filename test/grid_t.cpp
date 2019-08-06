@@ -17,6 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <functional>
 #include <utility>
 #include <vector>
 
@@ -37,15 +38,15 @@ namespace OpenOrienteering
 namespace
 {
 
-struct Recorder
-{
-	struct Record { QPointF p0, p1; };
-	QVarLengthArray<Record, 2> records;
-	void processLine(const QPointF& a, const QPointF& b)
-	{
+struct Record { QPointF p0, p1; };
+
+template<class T>
+auto makeRecorder(T& records) {
+	return std::function<void (const QPointF&, const QPointF&)>{[&records](const QPointF& a, const QPointF& b) {
 		records.push_back({a, b});
-	}
-};
+	} };
+}
+
 
 }  // namespace
 
@@ -72,13 +73,14 @@ private slots:
 		
 		auto bounding_box = QRectF{ -60, -60, 120, 120 };
 		auto spacing = 200.0;
-		Recorder recorder;
+		QVarLengthArray<Record, 2> records;
+		auto recorder = makeRecorder(records);
 		Util::hatchingOperation(bounding_box, spacing, offset, qDegreesToRadians(rotation), recorder);
 		
-		const auto num_records = int(recorder.records.size());
+		const auto num_records = int(records.size());
 		QCOMPARE(num_records, 1);
 		
-		auto& actual = recorder.records.front();
+		auto& actual = records.front();
 		if (!qFuzzyCompare(actual.p0.x(), bounding_box.left()) && !qFuzzyCompare(actual.p0.y(), bounding_box.top()))
 			std::swap(actual.p0, actual.p1);  // normalize
 		QCOMPARE(actual.p0, p0);
@@ -155,22 +157,23 @@ private slots:
 		
 		auto bounding_box = QRectF{ -5, -5, 10, 10 };
 		auto spacing = 100.0;
-		Recorder recorder;
+		QVarLengthArray<Record, 2> records;
+		auto recorder = makeRecorder(records);
 		Util::gridOperation(bounding_box, spacing, spacing, offset, offset, qDegreesToRadians(rotation), recorder);
 		
-		const auto num_records = int(recorder.records.size());
+		const auto num_records = int(records.size());
 		QCOMPARE(num_records, 2);
 		
-		if (!qIsNull(recorder.records.front().p0.y())
-		    && qFuzzyCompare(recorder.records.front().p0.y(), -recorder.records.front().p1.y())
-		    && !qIsNull(recorder.records.back().p0.x())
-		    && qFuzzyCompare(recorder.records.back().p0.x(), -recorder.records.back().p1.x()))
+		if (!qIsNull(records.front().p0.y())
+		    && qFuzzyCompare(records.front().p0.y(), -records.front().p1.y())
+		    && !qIsNull(records.back().p0.x())
+		    && qFuzzyCompare(records.back().p0.x(), -records.back().p1.x()))
 		{
-			std::swap(recorder.records.front(), recorder.records.back());  // normalize
+			std::swap(records.front(), records.back());  // normalize
 		}
 		
 		{
-			auto& actual = recorder.records.front();
+			auto& actual = records.front();
 			if (!qFuzzyCompare(actual.p0.x(), bounding_box.left()) && !qFuzzyCompare(actual.p0.y(), bounding_box.top()))
 				std::swap(actual.p0, actual.p1);  // normalize
 			QCOMPARE(actual.p0, p00);
@@ -178,7 +181,7 @@ private slots:
 		}
 		
 		{
-			auto& actual = recorder.records.back();
+			auto& actual = records.back();
 			if (!qFuzzyCompare(actual.p0.x(), bounding_box.left()) && !qFuzzyCompare(actual.p0.y(), bounding_box.top()))
 				std::swap(actual.p0, actual.p1);  // normalize
 			QCOMPARE(actual.p0, p10);

@@ -34,23 +34,6 @@
 
 namespace OpenOrienteering {
 
-namespace {
-
-struct ProcessLine
-{
-	QPainter* painter;
-	void processLine(const QPointF& a, const QPointF& b);
-};
-
-void ProcessLine::processLine(const QPointF& a, const QPointF& b)
-{
-	painter->drawLine(a, b);
-}
-
-
-}  // namespace
-
-
 // ### MapGrid ###
 
 MapGrid::MapGrid()
@@ -130,15 +113,16 @@ void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, qrea
 	painter->setBrush(Qt::NoBrush);
 	painter->setOpacity(qAlpha(color) / 255.0);
 	
-	ProcessLine process_line;
-	process_line.painter = painter;
+	auto draw_line = std::function<void (const QPointF&, const QPointF&)>{ [painter](const QPointF& p1, const QPointF& p2) {
+		painter->drawLine(p1, p2);
+	} };
 	
 	if (display == AllLines)
-		Util::gridOperation<ProcessLine>(bounding_box, final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, process_line);
+		Util::gridOperation(bounding_box, final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, draw_line);
 	else if (display == HorizontalLines)
-		Util::hatchingOperation<ProcessLine>(bounding_box, final_vert_spacing, final_vert_offset, final_rotation - M_PI / 2, process_line);
+		Util::hatchingOperation(bounding_box, final_vert_spacing, final_vert_offset, final_rotation - M_PI / 2, draw_line);
 	else // if (display == VerticalLines)
-		Util::hatchingOperation<ProcessLine>(bounding_box, final_horz_spacing, final_horz_offset, final_rotation, process_line);
+		Util::hatchingOperation(bounding_box, final_horz_spacing, final_horz_offset, final_rotation, draw_line);
 }
 
 void MapGrid::calculateFinalParameters(double& final_horz_spacing, double& final_vert_spacing, double& final_horz_offset, double& final_vert_offset, double& final_rotation, Map* map) const
