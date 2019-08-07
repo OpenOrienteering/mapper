@@ -104,6 +104,9 @@ superbuild_package(
     $<$<BOOL:@CMAKE_CROSSCOMPILING@>:
       "-DCMAKE_PROGRAM_PATH=@HOST_DIR@/bin"
     >
+    $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
+      "-DMapper_DEVELOPMENT_BUILD:BOOL=FALSE"
+    >
     INSTALL_COMMAND
       "${CMAKE_COMMAND}" --build . --target package$<IF:$<STREQUAL:@CMAKE_GENERATOR@,Ninja>,,/fast>
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:

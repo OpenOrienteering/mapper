@@ -21,7 +21,6 @@
 #include <iterator>
 #include <vector>
 
-#include <QtGlobal>
 #include <QtTest>
 #include <QByteArray>
 #include <QLatin1Char>
@@ -40,8 +39,12 @@
 
 using namespace OpenOrienteering;
 
+
+#ifndef MAPPER_COMMON_LIB
 // mock stuff to satisfy link-time dependencies
 int XMLFileFormat::active_version = 6;
+#endif
+
 
 Q_DECLARE_METATYPE(OcdGeorefFields)
 
@@ -148,8 +151,9 @@ class GeoreferenceMappingTest : public QObject
 private slots:
 	void initTestCase()
 	{
-		// empty
+		XMLFileFormat::active_version = 6;
 	}
+	
 	void testOcdToMapper_data()
 	{
 		commonTestData();
