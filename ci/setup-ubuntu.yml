@@ -45,9 +45,10 @@ steps:
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
       grep --no-filename $(sha1sum ${CLAZY_IMAGE}) sums.txt
-      sudo cp ${CLAZY_IMAGE} /usr/local/bin/clazy
-      sudo chmod +x /usr/local/bin/clazy
-      echo "##vso[task.setVariable variable=CXX]/usr/local/bin/clazy"
+      chmod +x ${CLAZY_IMAGE}
+      # Extract the app-image, or paths change on every invocation
+      ./${CLAZY_IMAGE} --appimage-extract
+      echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
     fi
     
     case "${CXXFLAGS}" in
