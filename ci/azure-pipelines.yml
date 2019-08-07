@@ -123,7 +123,7 @@ jobs:
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
-    TARGET: arm-linux-androideabi
+    TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
