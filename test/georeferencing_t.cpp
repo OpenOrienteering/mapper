@@ -29,7 +29,10 @@
 using namespace OpenOrienteering;
 
 
+#ifndef MAPPER_COMMON_LIB
+// mock stuff to satisfy link-time dependencies
 int XMLFileFormat::active_version = 6;
+#endif
 
 
 namespace
@@ -53,7 +56,7 @@ namespace
 
 void GeoreferencingTest::initTestCase()
 {
-	// nothing
+	XMLFileFormat::active_version = 6;
 }
 
 

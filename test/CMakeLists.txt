@@ -93,12 +93,21 @@ endfunction()
 # The first filename is also used as the name of the executable file and
 # as the name of the test.
 #
-# A unit test executable is linked only to external libraries by default.
-# It only needs to be rebuild and run when one of its components was modified.
-# Additional link libraries may be added to the executable target as usual.
+# When Mapper_DEVELOPMENT_BUILD is enabled, a unit test executable is linked
+# only to external libraries by default. It only needs to be rebuild and run
+# when its explicit sources are modified.
+# 
+# When Mapper_DEVELOPMENT_BUILD is disabled, the additional explicit sources
+# are ignored, and the unit test executable is linked directly to the
+# Mapper_Common libary. This is a faster choice for one-time builds like CI,
+# and it also avoids problems with collecting test coverage information.
 #
 function(add_unit_test testname)
-	add_test_helper("${testname}" 1 ${ARGN})
+	if(Mapper_DEVELOPMENT_BUILD)
+		add_test_helper("${testname}" 1 ${ARGN})
+	else()
+		add_system_test("${testname}")
+	endif()
 endfunction()
 
 
@@ -182,15 +191,17 @@ add_system_test(undo_manager_t)
 
 # Collect the AUTORUN_TESTS
 get_property(Mapper_AUTORUN_TESTS DIRECTORY PROPERTY Mapper_AUTORUN_TESTS)
-configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
-
-# Unlike the default "test" target, this custom target is displayed in Qt
-# Creator's Projects view, and when build, it prints the output of failed tests.
-# It maybe used as an additional build step or be build from the Projects view.
-# It also provides access to the the script template.
-add_custom_target(AUTORUN_TESTS
-  COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
-  SOURCES AUTORUN_TESTS.cmake.in
-  COMMENT "Running tests for modified sources"
-)
-add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+if(Mapper_AUTORUN_TESTS)
+	configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
+	
+	# Unlike the default "test" target, this custom target is displayed in Qt
+	# Creator's Projects view, and when build, it prints the output of failed
+	# tests. It maybe used as an additional build step, or it can be build from
+	# the Projects view. It also provides access to the the script template.
+	add_custom_target(AUTORUN_TESTS
+	  COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
+	  SOURCES AUTORUN_TESTS.cmake.in
+	  COMMENT "Running tests for modified sources"
+	)
+	add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+endif()
