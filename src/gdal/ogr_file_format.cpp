@@ -31,6 +31,8 @@
 #include <gdal.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
+// IWYU pragma: no_include <cpl_error.h>
+// IWYU pragma: no_include <gdal_version.h>
 
 #if GDAL_VERSION_NUM < GDAL_COMPUTE_VERSION(2,0,0)
 #  include <Qt>

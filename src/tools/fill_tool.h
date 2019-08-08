@@ -56,7 +56,7 @@ public:
 	~FillTool() override;
 	
 protected slots:
-	void setDrawingSymbol(const Symbol* symbol);
+	void setDrawingSymbol(const OpenOrienteering::Symbol* symbol);
 	
 protected:
 	void updateStatusText() override;

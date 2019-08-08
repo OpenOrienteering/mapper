@@ -155,13 +155,13 @@ public:
 	
 signals:
 	/** Emitted when the angle the cursor position is constrained to changes */
-	void activeAngleChanged() const;
+	void activeAngleChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 	/**
 	 * Emitted whenever the display of this tool helper changes.
 	 * This is when the active angle changes or the tool is activated / deactivated.
 	 */
-	void displayChanged() const;
+	void displayChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 	
 private:
@@ -251,7 +251,7 @@ public:
 	
 signals:
 	/** Emitted whenever the snap mark changes position. */
-	void displayChanged() const;
+	void displayChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 private:
 	PointHandles point_handles;

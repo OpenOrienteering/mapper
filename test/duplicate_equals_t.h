@@ -21,6 +21,7 @@
 #define OPENORIENTEERING_DUPLICATE_EQUALS_T_H
 
 #include <QObject>
+// IWYU pragma: no_include <QString>
 
 
 /**

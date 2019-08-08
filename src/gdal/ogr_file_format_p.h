@@ -36,6 +36,7 @@
 #include <gdal.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
+// IWYU pragma: no_include <ogr_core.h>
 
 #include "core/map_coord.h"
 #include "core/symbols/symbol.h"

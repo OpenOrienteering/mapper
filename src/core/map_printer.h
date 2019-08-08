@@ -389,16 +389,16 @@ public slots:
 	
 signals:
 	/** Indicates a new target printer. */
-	void targetChanged(const QPrinterInfo* target) const;
+	void targetChanged(const QPrinterInfo* target) const;  // clazy:exclude=const-signal-or-slot
 	
 	/** Indicates a change in the map area. */
-	void printAreaChanged(const QRectF& area) const;
+	void printAreaChanged(const QRectF& area) const;  // clazy:exclude=const-signal-or-slot
 	
 	/** Indicates a change in the page format. */
-	void pageFormatChanged(const MapPrinterPageFormat& format) const;
+	void pageFormatChanged(const OpenOrienteering::MapPrinterPageFormat& format) const;  // clazy:exclude=const-signal-or-slot
 	
 	/** Indicates a change in the rendering options. */
-	void optionsChanged(const MapPrinterOptions& options) const;
+	void optionsChanged(const OpenOrienteering::MapPrinterOptions& options) const;  // clazy:exclude=const-signal-or-slot
 	
 	/** Emitted during printMap() to indicate progress. You can expect this
 	 *  signal to be emitted at the start of the print process (value = 1),
@@ -407,7 +407,7 @@ signals:
 	 *  @param value Reflects the progress in the range from 1 (just started)
 	 *               to 100 (finished).
 	 *  @param status A verbal representation of what printMap() is doing. */
-	void printProgress(int value, const QString& status) const;
+	void printProgress(int value, const QString& status) const;  // clazy:exclude=const-signal-or-slot
 	
 protected:
 	/** Returns true if vector mode is set. */

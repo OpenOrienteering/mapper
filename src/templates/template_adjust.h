@@ -77,8 +77,8 @@ public:
 	static float cross_radius;
 	
 public slots:
-	void templateChanged(int index, const Template* temp);
-	void templateDeleted(int index, const Template* temp);
+	void templateChanged(int index, const OpenOrienteering::Template* temp);
+	void templateDeleted(int index, const OpenOrienteering::Template* temp);
 	
 private:
 	TemplateAdjustDockWidget* dock;

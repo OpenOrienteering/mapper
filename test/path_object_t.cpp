@@ -505,7 +505,9 @@ void PathObjectTest::atypicalPathTest()
 /*
  * We don't need a real GUI window.
  */
-static auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+namespace {
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 
 
 QTEST_MAIN(PathObjectTest)

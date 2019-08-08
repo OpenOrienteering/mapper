@@ -345,7 +345,7 @@ public slots:
 	 * This two-argument form is undocumented but attempted to call in
 	 * QInputMethod::queryFocusObject before doing the query via an event.
 	 */
-	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;
+	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const;  // clazy:exclude=const-signal-or-slot
 	
 	/** Enables or disables the touch cursor. */
 	void enableTouchCursor(bool enabled);

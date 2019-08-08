@@ -26,10 +26,7 @@
 #include <QCursor>
 #include <QKeyEvent>
 #include <QLocale>
-#include <QPainter>
 #include <QPixmap>
-#include <QPoint>
-#include <QPointF>
 #include <QRectF>
 #include <QString>
 
@@ -39,7 +36,6 @@
 #include "gui/util_gui.h"
 #include "core/objects/object.h"
 #include "gui/modifier_key.h"
-#include "gui/util_gui.h"
 #include "tools/tool.h"
 #include "util/util.h"
 

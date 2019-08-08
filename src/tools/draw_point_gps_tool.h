@@ -56,11 +56,11 @@ public:
 	~DrawPointGPSTool() override;
 	
 public slots:
-	void newGPSPosition(const MapCoordF& coord, float accuracy);
+	void newGPSPosition(const OpenOrienteering::MapCoordF& coord, float accuracy);
 	
 protected slots:
-	void activeSymbolChanged(const Symbol* symbol);
-	void symbolDeleted(int pos, const Symbol* old_symbol);
+	void activeSymbolChanged(const OpenOrienteering::Symbol* symbol);
+	void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 protected:
 	void initImpl() override;

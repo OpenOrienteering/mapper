@@ -184,14 +184,14 @@ protected slots:
 	 * 
 	 * @see Map::symbolChanged()
 	 */
-	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	void symbolChanged(int pos, const OpenOrienteering::Symbol* new_symbol, const OpenOrienteering::Symbol* old_symbol);
 	
 	/**
 	 * @brief Updates the widget and the current selection.
 	 * 
 	 * @see Map::symbolDeleted()
 	 */
-	void symbolDeleted(int pos, const Symbol* old_symbol);
+	void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 	void newPointSymbol();
 	void newLineSymbol();

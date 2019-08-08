@@ -79,7 +79,7 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
-	void setDrawingSymbol(const Symbol* symbol) override;
+	void setDrawingSymbol(const OpenOrienteering::Symbol* symbol) override;
 	
 	/** This slot listens to changes in the map's object selection. */
 	virtual void objectSelectionChanged();

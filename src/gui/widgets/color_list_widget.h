@@ -66,9 +66,9 @@ protected slots:
 	void cellChange(int row, int column);
 	void currentCellChange(int current_row, int current_column, int previous_row, int previous_column);
 	
-	void colorAdded(int index, const MapColor* color);
-	void colorChanged(int index, const MapColor* color);
-	void colorDeleted(int index, const MapColor* color);
+	void colorAdded(int index, const OpenOrienteering::MapColor* color);
+	void colorChanged(int index, const OpenOrienteering::MapColor* color);
+	void colorDeleted(int index, const OpenOrienteering::MapColor* color);
 	
 protected:
 	void showEvent(QShowEvent* event) override;
