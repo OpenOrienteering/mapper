@@ -39,14 +39,12 @@ import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Surface;
-import android.widget.Toast;
 
 
 /**
@@ -60,8 +58,6 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 	private String no_string;
 	private String gps_disabled_string;
 	
-	private static Toast toast;
-	private static CountDownTimer toast_reset;
 	private static boolean service_started = false;
 	private static boolean optimization_request_done = false;
 
@@ -178,52 +174,6 @@ public class MapperActivity extends org.qtproject.qt5.android.bindings.QtActivit
 		instance.yes_string = yes_string;
 		instance.no_string = no_string;
 		instance.gps_disabled_string = gps_disabled_string;
-	}
-	
-	public static void showToast(final String message, final int duration)
-	{
-		instance.runOnUiThread(new Runnable() {
-			public void run() {
-				if (toast_reset != null)
-					toast_reset.cancel();
-				
-				if (toast == null)
-				{
-					toast = Toast.makeText(instance, "", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 4);
-				}
-				
-				toast.setText(message);
-				toast.show();
-				
-				if (duration <= 0)
-					return;
-				
-				toast_reset = new CountDownTimer(duration, 500) {
-					public void onTick(long millisUntilFinished)
-					{
-						toast.show();
-					}
-					
-					public void onFinish() {
-						toast.cancel();
-					}
-				};
-				toast_reset.start();
-			}
-		} );
-	}
-	
-	public static void hideToast()
-	{
-		instance.runOnUiThread(new Runnable() {
-			public void run() {
-				if (toast_reset != null)
-					toast_reset.cancel();
-				if (toast != null)
-					toast.cancel();
-			}
-		} );
 	}
 	
 	/** Locks the current display orientation.
