@@ -47,6 +47,7 @@ namespace OpenOrienteering {
 
 class MainWindowController;
 class MapperServiceProxy;
+class Toast;
 
 
 /**
@@ -512,6 +513,7 @@ private:
 	QAction* settings_act;
 	QAction* close_act;
 	QLabel* status_label;
+	Toast* toast = nullptr;
 	
 	std::unique_ptr<MapperServiceProxy> service_proxy;
 	
