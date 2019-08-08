@@ -79,6 +79,7 @@ PATTERN=" \
   /symbol.cpp \
   symbol_rule_set.cpp \
   symbol_t.cpp \
+  symbol_tooltip.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
   template_list_widget.cpp \

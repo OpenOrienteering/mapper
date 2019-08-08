@@ -26,7 +26,6 @@
 #include <QApplication>
 #include <QCursor>
 #include <QDesktopWidget>
-#include <QFlags>
 #include <QHideEvent>
 #include <QLabel>
 #include <QLatin1Char>
