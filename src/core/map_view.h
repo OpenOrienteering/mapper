@@ -336,7 +336,7 @@ signals:
 	 * 
 	 * @param change The aspects that have changed.
 	 */
-	void viewChanged(ChangeFlags change);
+	void viewChanged(OpenOrienteering::MapView::ChangeFlags change);
 	
 	/**
 	 * Indicates a change of the pan offset.
@@ -350,7 +350,7 @@ signals:
 	 * @param active  The features current state of activation.
 	 * @param temp    If a the feature is a template, a pointer to this template.
 	 */
-	void visibilityChanged(VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
 	
 	
 public:

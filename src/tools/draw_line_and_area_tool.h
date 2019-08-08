@@ -69,10 +69,10 @@ public:
 signals:
 	void dirtyRectChanged(const QRectF& rect);
 	void pathAborted();
-	void pathFinished(PathObject* path);
+	void pathFinished(OpenOrienteering::PathObject* path);
 	
 protected slots:
-	virtual void setDrawingSymbol(const Symbol* symbol);
+	virtual void setDrawingSymbol(const OpenOrienteering::Symbol* symbol);
 	
 protected:
 	/**

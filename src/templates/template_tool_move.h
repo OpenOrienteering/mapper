@@ -56,7 +56,7 @@ public:
 	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 public slots:
-	void templateDeleted(int index, const Template* temp);
+	void templateDeleted(int index, const OpenOrienteering::Template* temp);
 	
 private:
 	void updateDragging(const MapCoordF& mouse_pos_map);

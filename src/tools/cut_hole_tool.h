@@ -83,7 +83,7 @@ public slots:
 	void objectSelectionChanged();
 	void pathDirtyRectChanged(const QRectF& rect);
 	void pathAborted();
-	void pathFinished(PathObject* hole_path);
+	void pathFinished(OpenOrienteering::PathObject* hole_path);
 	
 protected:
 	void updateStatusText();

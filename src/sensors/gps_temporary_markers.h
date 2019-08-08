@@ -57,7 +57,7 @@ public:
 	void paint(QPainter* painter);
 	
 public slots:
-	void newGPSPosition(const MapCoordF& coord, float accuracy);
+	void newGPSPosition(const OpenOrienteering::MapCoordF& coord, float accuracy);
 	
 private:
 	void updateMapWidget();

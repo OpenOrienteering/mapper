@@ -29,6 +29,7 @@
 #include "tools/tool_base.h"
 
 class QAction;
+class QKeyEvent;
 class QPainter;
 class QRectF;
 

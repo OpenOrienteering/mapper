@@ -322,7 +322,7 @@ public slots:
 	 */
 	bool openPath(const QString &path);
 	
-	bool openPath(const QString &path, const FileFormat* format);
+	bool openPath(const QString &path, const OpenOrienteering::FileFormat* format);
 	
 	/**
 	 * Open the file specified in the sending action's data.

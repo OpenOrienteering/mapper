@@ -509,10 +509,11 @@ public slots:
 	void mergeAllMapParts();
 	
 	/** Updates action enabled states after a template has been added */
-	void templateAdded(int pos, const Template* temp);
+	void templateAdded(int pos, const OpenOrienteering::Template* temp);
 	/** Updates action enabled states after a template has been deleted */
-	void templateDeleted(int pos, const Template* temp);
+	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
 	
+public:
 	/**
 	 * Imports another map into this map.
 	 * 
@@ -538,6 +539,7 @@ public slots:
 	/** Shows the import file selector and imports the selected file, if any. */
 	void importClicked();
 	
+public slots:
 	/** Sets the enabled state of actions which change how the map is rendered,
 	 *  such as with grid, with templates, with overprinting simulation. */
 	void setViewOptionsEnabled(bool enabled = true);
@@ -553,9 +555,9 @@ signals:
 	 * @brief Indicates a change of the active symbol.
 	 * @param symbol The new active symbol, or nullptr.
 	 */
-	void activeSymbolChanged(const Symbol* symbol);
+	void activeSymbolChanged(const OpenOrienteering::Symbol* symbol);
 	
-	void templatePositionDockWidgetClosed(Template* temp);
+	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
 
 protected:
 	/**

@@ -211,7 +211,9 @@ void ToolsTest::editTool()
  * Normally, the "offscreen" plugin would be the correct one.
  * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
  */
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 
 
 QTEST_MAIN(ToolsTest)

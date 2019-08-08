@@ -98,7 +98,7 @@ public:
 	
 public slots:
 	/** Changes the type of the print or export task. */
-	void setTask(TaskFlags type);
+	void setTask(OpenOrienteering::PrintWidget::TaskFlags type);
 	
 	/** Saves the print or export settings. */
 	void savePrinterConfig() const;
@@ -117,13 +117,13 @@ public slots:
 	void setTarget(const QPrinterInfo* target);
 	
 	/** Sets the format of a single page. */
-	void setPageFormat(const MapPrinterPageFormat& format);
+	void setPageFormat(const OpenOrienteering::MapPrinterPageFormat& format);
 	
 	/** Sets the exported area. */
 	void setPrintArea(const QRectF& area);
 	
 	/** Sets output options: resolution, overprinting. */
-	void setOptions(const MapPrinterOptions& options);
+	void setOptions(const OpenOrienteering::MapPrinterOptions& options);
 	
 	/** Listens to view feature changes. */
 	void onVisibilityChanged();

@@ -214,7 +214,7 @@ void DuplicateEqualsTest::objects()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

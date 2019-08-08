@@ -105,8 +105,8 @@ protected slots:
 	void changeGeorefClicked();
 	void moreActionClicked(QAction* action);
 	
-	void templateAdded(int pos, const Template* temp);
-	void templatePositionDockWidgetClosed(Template* temp);
+	void templateAdded(int pos, const OpenOrienteering::Template* temp);
+	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
 	
 	void changeTemplateFile(int pos);
 	
@@ -117,7 +117,7 @@ protected slots:
 	 * 
 	 * @see MapView::visibilityChanged
 	 */
-	void updateVisibility(MapView::VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	void updateVisibility(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
 	
 private:
 	void updateAll();
