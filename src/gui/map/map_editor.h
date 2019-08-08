@@ -513,6 +513,9 @@ public slots:
 	/** Updates action enabled states after a template has been deleted */
 	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
 	
+	/** Shows the import file selector and imports the selected file, if any. */
+	void importClicked();
+	
 public:
 	/**
 	 * Imports another map into this map.
@@ -536,8 +539,6 @@ public:
 	bool importGpxFile(const QString& filename);
 	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename, bool show_errors);
-	/** Shows the import file selector and imports the selected file, if any. */
-	void importClicked();
 	
 public slots:
 	/** Sets the enabled state of actions which change how the map is rendered,
