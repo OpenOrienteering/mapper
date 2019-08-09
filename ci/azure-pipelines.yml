@@ -92,6 +92,10 @@ jobs:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - template: publish.yml
+    - bash: |
+        cd ${BUILD_SOURCESDIRECTORY}/build/source/openorienteering-mapper-ci
+        git diff --name-only | sed -e '/CMakeLists.txt/d;s/\(.*\)/##vso[task.logissue type=error;sourcepath=\1;]Source file was modified during build/' 1>&2
+      failOnStderr: true
 
 
 - job: Linux_Coverage
