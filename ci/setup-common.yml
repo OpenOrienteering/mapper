@@ -37,6 +37,9 @@ steps:
     if [ -z "${OUTPUT_SUFFIX}" ] ; then
       echo "##vso[task.setVariable variable=OUTPUT_SUFFIX]${TARGET_SUFFIX}"
     fi
+    if [ -z "${APP_ID_SUFFIX}" ] ; then
+      echo "##vso[task.setVariable variable=APP_ID_SUFFIX].${BUILD_SOURCEBRANCHNAME}"
+    fi
     env | sort
   displayName: 'Update environment'
 

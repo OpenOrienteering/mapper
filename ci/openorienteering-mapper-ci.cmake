@@ -30,6 +30,7 @@
 set(Mapper_CI_GIT_REPOSITORY "mapper" CACHE STRING "Mapper (CI): Repository reference")
 set(Mapper_CI_GIT_TAG  "master" CACHE STRING "Mapper (CI): Tag or commit to checkout")
 set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display string")
+set(Mapper_CI_APP_ID "org.openorienteering.mapper.ci" CACHE STRING "Mapper (CI): Android App ID")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
 option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
@@ -64,6 +65,7 @@ superbuild_package(
 
   USING
     Mapper_CI_VERSION_DISPLAY
+    Mapper_CI_APP_ID
     Mapper_CI_LICENSING_PROVIDER
     Mapper_CI_ENABLE_COVERAGE
     Mapper_CI_ENABLE_GDAL
@@ -87,6 +89,7 @@ superbuild_package(
     >
     $<$<BOOL:@ANDROID@>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5PrintSupport=TRUE"
+      "-DMAPPER_APP_ID=${Mapper_CI_APP_ID}"
       "-DKEYSTORE_URL=${KEYSTORE_URL}"
       "-DKEYSTORE_ALIAS=${KEYSTORE_ALIAS}"
       $<$<NOT:$<VERSION_LESS:@CMAKE_VERSION@,3.15.0>>:
