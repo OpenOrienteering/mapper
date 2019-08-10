@@ -1465,7 +1465,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Schaltflächengröße:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
@@ -7215,7 +7215,7 @@ Sollen die Änderungen gesichert werden?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es sind zusätzliche Berechtigungen nötig, um auf &apos;%1&apos; zuzugreifen.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
