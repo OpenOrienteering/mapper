@@ -137,6 +137,7 @@ jobs:
           -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
           -D$(TARGET)_INSTALL_PREFIX=/usr
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
           -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
@@ -168,6 +169,7 @@ jobs:
           -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
           -D$(TARGET)_INSTALL_PREFIX=/usr
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
           -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
@@ -199,6 +201,7 @@ jobs:
           -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
           -D$(TARGET)_INSTALL_PREFIX=/usr
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
           -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
@@ -230,6 +233,7 @@ jobs:
           -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
           -D$(TARGET)_INSTALL_PREFIX=/usr
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
           -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
           -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
