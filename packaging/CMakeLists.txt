@@ -20,47 +20,60 @@ message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
 option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translations to the packages" OFF)
 
-macro(deploy_qt_translations basename)
-	find_package(Qt5LinguistTools REQUIRED QUIET)
-	get_target_property(LCONVERT_EXECUTABLE Qt5::lconvert IMPORTED_LOCATION)
-	if(NOT QT_TRANSLATIONS_DIR)
+function(deploy_qt_translations basename)
+	find_package(Qt5LinguistTools REQUIRED QUIET) # for Qt5::lconvert
+	
+	if(NOT Qt5Translations_DIR)
 		find_package(Qt5Core REQUIRED QUIET)
 		get_target_property(QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
 		execute_process(
 		  COMMAND "${QMAKE_EXECUTABLE}" -query QT_INSTALL_TRANSLATIONS
-		  OUTPUT_VARIABLE QT_TRANSLATIONS_DIR
+		  OUTPUT_VARIABLE Qt5Translations_DIR
 		)
-		string(STRIP "${QT_TRANSLATIONS_DIR}" QT_TRANSLATIONS_DIR)
+		string(STRIP "${Qt5Translations_DIR}" Qt5Translations_DIR)
+		if(NOT EXISTS ${Qt5Translations_DIR})
+			set(Qt5Translations_DIR "Qt5Translations_DIR-NOTFOUND")
+		endif()
+		set(Qt5Translations_DIR "${Qt5Translations_DIR}" CACHE PATH
+		  "The Qt5 translations directory"
+		)
 	endif()
-	set(install_translations_code )
+	
 	if(Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
-		file(GLOB basename_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename}_??.qm")
+		file(GLOB basename_files RELATIVE "${Qt5Translations_DIR}" "${Qt5Translations_DIR}/${basename}_??.qm")
 	else()
 		unset(basename_files)
 		foreach(_mapper_trans ${Mapper_translations})
 			get_filename_component(basename_file ${_mapper_trans} NAME_WE)
 			string(REPLACE OpenOrienteering ${basename} basename_file ${basename_file})
 			string(REGEX REPLACE "(_..)_..$" "\\1" basename_file ${basename_file})
-			file(GLOB translation_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename_file}*.qm")
+			file(GLOB translation_files RELATIVE "${Qt5Translations_DIR}" "${Qt5Translations_DIR}/${basename_file}*.qm")
 			list(APPEND basename_files ${translation_files})
 		endforeach()
 	endif()
+	
+	install(CODE 
+	  "execute_process(COMMAND \"${CMAKE_COMMAND}\" --build \"${CMAKE_CURRENT_BINARY_DIR}\" --target \"${basename}-translations\")"
+	)
+	
+	set(generated_translations )
 	foreach(basename_file ${basename_files})
-		set(input_files "\"${QT_TRANSLATIONS_DIR}/${basename_file}\"")
+		set(input_files "${Qt5Translations_DIR}/${basename_file}")
 		foreach(arg ${ARGN})
 			string(REPLACE ${basename} ${arg} extra_file ${basename_file})
-			if(EXISTS "${QT_TRANSLATIONS_DIR}/${extra_file}")
-				set(input_files "\"${QT_TRANSLATIONS_DIR}/${extra_file}\" ${input_files}")
+			if(EXISTS "${Qt5Translations_DIR}/${extra_file}")
+				list(INSERT input_files 0 "${Qt5Translations_DIR}/${extra_file}")
 			endif()
 		endforeach()
-		list(APPEND install_translations_code
-		  "execute_process(COMMAND \"${LCONVERT_EXECUTABLE}\" -o \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\" ${input_files})"
-		  "file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/translations\" TYPE FILE FILES \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\")"
+		add_custom_command(OUTPUT "${basename_file}"
+		  COMMAND Qt5::lconvert -o "${basename_file}" ${input_files}
+		  DEPENDS Qt5::lconvert ${input_files}
 		)
+		list(APPEND generated_translations "${basename_file}")
+		install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${basename_file}" DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 	endforeach()
-	string(REPLACE ";" "\n  " install_translations_code "${install_translations_code}")
-	install(CODE "${install_translations_code}")
-endmacro(deploy_qt_translations)
+	add_custom_target(${basename}-translations SOURCES ${generated_translations})
+endfunction(deploy_qt_translations)
 
 
 
