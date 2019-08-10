@@ -22,6 +22,6 @@
 
 #define MAPPER_TEST_SOURCE_DIR "@CMAKE_CURRENT_SOURCE_DIR@"
 
-#define MAP_SYMBOL_TRANSLATIONS "@map_symbols_translations@"
+#define MAP_SYMBOL_TRANSLATIONS "@map_symbols_translations@;@map_symbols_translations_template@"
 
 #endif
