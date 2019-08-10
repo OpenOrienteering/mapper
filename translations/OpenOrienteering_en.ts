@@ -74,11 +74,11 @@
 <context>
     <name>OpenOrienteering::OgrFileImport</name>
     <message numerus="yes">
-        <location filename="../src/gdal/ogr_file_format.cpp" line="731"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="736"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="741"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="746"/>
-        <location filename="../src/gdal/ogr_file_format.cpp" line="751"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="733"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="738"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="743"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="748"/>
+        <location filename="../src/gdal/ogr_file_format.cpp" line="753"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
             <numerusform>Unable to load one object, reason: %1</numerusform>
