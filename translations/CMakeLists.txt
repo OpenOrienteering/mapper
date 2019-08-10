@@ -82,8 +82,11 @@ set(map_symbols_translations_template
   map_symbols_nb.ts
   map_symbols_nl.ts
   map_symbols_pl.ts
+  map_symbols_tr.ts
   map_symbols_template.ts
 )
+# Make translation list available for SymbolSetTool
+set(map_symbols_translations_template ${map_symbols_translations_template} PARENT_SCOPE)
 
 # Translation files which are maintained by hand.
 set(qt_translations

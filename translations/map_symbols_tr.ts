@@ -2175,47 +2175,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi %50</translation>
     </message>
     <message>
         <source>Black below light browns</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kahverengiler altında Siyah</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat mavi</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi %50</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Black 30%</source>
@@ -2225,7 +2225,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50, Sarı</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
@@ -2235,17 +2235,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerine Mat Beyaz</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -2260,17 +2260,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green below light greens</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık yeşiller altında Yeşil</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı %50</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -2285,7 +2285,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -2295,7 +2295,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -2305,7 +2305,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -2325,17 +2325,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değeri</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -3821,7 +3821,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -3831,12 +3831,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Opaque White below Black</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah altında Mat Beyaz</translation>
     </message>
     <message>
         <source>Brown for contours</source>
@@ -3861,7 +3861,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 20%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah %20</translation>
     </message>
     <message>
         <source>Green, Black 50% above Brown</source>
@@ -3896,17 +3896,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black below light browns</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kahverengiler altında Siyah</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat mavi</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <source>Blue 75%</source>
@@ -3926,12 +3926,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Grey</source>
@@ -3941,7 +3941,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50, Sarı</translation>
     </message>
     <message>
         <source>White over Green</source>
@@ -3951,17 +3951,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil, Siyah %50</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -3976,17 +3976,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green below light greens</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık yeşiller altında Yeşil</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı %50</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -4001,7 +4001,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
@@ -4013,7 +4013,7 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol contour (101).</source>
@@ -4023,7 +4023,7 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -4043,17 +4043,17 @@ The relative height difference between neighbouring features must be represented
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değeri</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
@@ -5092,7 +5092,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+        <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5105,7 +5105,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+        <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5848,12 +5848,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Lower Purple</source>
@@ -5868,37 +5868,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi %50</translation>
     </message>
     <message>
         <source>Black below light browns</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kahverengiler altında Siyah</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat mavi</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi %50</translation>
     </message>
     <message>
         <source>Black 30%</source>
@@ -5908,7 +5908,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50, Sarı</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
@@ -5918,7 +5918,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerine Mat Beyaz</translation>
     </message>
     <message>
         <source>Yellow over Green</source>
@@ -5928,12 +5928,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -5948,17 +5948,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green below light greens</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık yeşiller altında Yeşil</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı %50</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -5973,7 +5973,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -5983,7 +5983,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -6003,17 +6003,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değeri</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6975,7 +6975,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7644,7 +7644,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Upper Green</source>
@@ -7654,42 +7654,42 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi %50</translation>
     </message>
     <message>
         <source>Black below light browns</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık kahverengiler altında Siyah</translation>
     </message>
     <message>
         <source>Brown</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kahverengi</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık orienteering Turuncu</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat mavi</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mavi %50</translation>
     </message>
     <message>
         <source>Black 30%</source>
@@ -7699,7 +7699,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil %50, Sarı</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
@@ -7709,17 +7709,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil üzerine Mat Beyaz</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mat Yeşil</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Yeşil</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -7734,17 +7734,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green below light greens</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Açık yeşiller altında Yeşil</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sarı %50</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
@@ -7759,7 +7759,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -7779,7 +7779,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>İndeks eşyükselti</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -7789,7 +7789,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Biçim çizgisi</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
@@ -7809,17 +7809,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değeri</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eşyükselti değerleri büyük yükseklik farklılıklarını değerlendirmeye yardım için kullanılabilir. Diğer ayrıntıları örtmediği pozisyonlarda indeks eşyükselti çizgileri üzerine eklenir. Rakamlar, figürün üst kısmı eşyükseltinin üst tarafında olacak şekilde yönlendirilmelidir.</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toprak set</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -8720,7 +8720,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -9518,7 +9518,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mor</translation>
     </message>
     <message>
         <source>Black for control descriptions</source>
@@ -9543,7 +9543,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Siyah</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nb_NO">
+<TS version="2.1" language="nb">
 <context>
     <name>ISOM2017</name>
     <message>
@@ -41,7 +41,7 @@
     <message>
         <source>Opaque Blue</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig blå</translation>
     </message>
     <message>
         <source>Blue</source>
@@ -211,7 +211,7 @@
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordskrent er en krapp forhøyning i bakkenivå som tydelig kan spilles fra dens omgivelser, f.eks. grus eller sandtak, vei eller jernbanegjennomskjæringer eller diker. Minimumshøyde: 1 m. En jordskrent kan forstyrre løpetakt. Etiketten representerer hele lengden av jordskrenten. For lange jordskrenter tillates det å bruke etiketter kortere enn minimumslengden på endene. Hvis to jordskrenter er tett sammen, kan etikettene utelates. Jordskrenter som det ikke går an å forsere, skal representeres ved symbol 201 (uforserbar skrent).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -231,7 +231,7 @@
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordskrent er en krapp forhøyning i bakkenivå som tydelig kan spilles fra dens omgivelser, f.eks. grus eller sandtak, vei eller jernbanegjennomskjæringer eller diker. Minimumshøyde: 1 m. En jordskrent kan forstyrre løpetakt. Etiketten representerer hele lengden av jordskrenten. For lange jordskrenter tillates det å bruke etiketter kortere enn minimumslengden på endene. Hvis to jordskrenter er tett sammen, kan etikettene utelates. Jordskrenter som det ikke går an å forsere, skal representeres ved symbol 201 (uforserbar skrent).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -251,7 +251,7 @@
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordskrent er en krapp forhøyning i bakkenivå som tydelig kan spilles fra dens omgivelser, f.eks. grus eller sandtak, vei eller jernbanegjennomskjæringer eller diker. Minimumshøyde: 1 m. En jordskrent kan forstyrre løpetakt. Etiketten representerer hele lengden av jordskrenten. For lange jordskrenter tillates det å bruke etiketter kortere enn minimumslengden på endene. Hvis to jordskrenter er tett sammen, kan etikettene utelates. Jordskrenter som det ikke går an å forsere, skal representeres ved symbol 201 (uforserbar skrent).</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -2346,7 +2346,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jordskrent, minimal størrelse</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -2496,7 +2496,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uforserbar skrent</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -3453,7 +3453,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
@@ -3473,7 +3473,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin, minimal størrelse</translation>
     </message>
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
@@ -3523,7 +3523,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høyt tårn</translation>
     </message>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
@@ -3533,7 +3533,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lite tårn</translation>
     </message>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
@@ -3543,7 +3543,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varde</translation>
     </message>
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
@@ -3583,7 +3583,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -3598,7 +3598,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -3608,12 +3608,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster, blåe</translation>
     </message>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsmerke</translation>
     </message>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -3643,7 +3643,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -3693,7 +3693,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The finish is shown by two concentric circles.</source>
@@ -3809,12 +3809,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logo</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logoen</translation>
     </message>
 </context>
 <context>
@@ -3822,7 +3822,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -3832,7 +3832,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Opaque White below Black</source>
@@ -3857,12 +3857,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 30%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 30%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Svart 20%</translation>
     </message>
     <message>
         <source>Green, Black 50% above Brown</source>
@@ -3902,12 +3902,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Blue</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig blå</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Blue 75%</source>
@@ -3927,12 +3927,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-oransje</translation>
     </message>
     <message>
         <source>Grey</source>
@@ -3942,7 +3942,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%, gul</translation>
     </message>
     <message>
         <source>White over Green</source>
@@ -3952,27 +3952,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn, svart 50%</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -3982,22 +3982,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 50%</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit på gul 70%</translation>
     </message>
     <message>
         <source>Yellow 70%</source>
         <comment>Color 35</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 70%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -4846,7 +4846,7 @@ Minimum width: 0.25 mm.</source>
     <message>
         <source>Prominent large tree</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>Markant stort tre</translation>
     </message>
     <message>
         <source>A prominent single tree.</source>
@@ -5093,7 +5093,7 @@ Very large carrying masts shall be represented in plan shape or with the symbol 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+        <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5106,7 +5106,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+        <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5491,7 +5491,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
     <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høyt tårn</translation>
     </message>
     <message>
         <source>A high tower or large pylon. Very large towers shall be represented in plan shape with the symbol building (526.1). The symbol is orientated to north.</source>
@@ -5501,7 +5501,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lite tårn</translation>
     </message>
     <message>
         <source>An obvious small tower, platform or seat. The symbol is orientated to north.</source>
@@ -5589,7 +5589,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.0.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
@@ -5615,7 +5615,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.0.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster, blåe</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
@@ -5627,7 +5627,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsmerke</translation>
     </message>
     <message>
         <source>At least three registration marks shall be placed within the frame of a map in a non-symmetrical arrangement. In addition, a colour check should be possible.</source>
@@ -5657,7 +5657,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -5707,7 +5707,7 @@ North lines may be broken where they obscure small features such as boulders, kn
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The finish is shown by two concentric circles.</source>
@@ -5836,12 +5836,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logo</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logoen</translation>
     </message>
 </context>
 <context>
@@ -5849,12 +5849,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Lower Purple</source>
@@ -5869,7 +5869,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun  50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -5879,47 +5879,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-oransje</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig blå</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 50%</translation>
     </message>
     <message>
         <source>Black 30%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%, gul</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønt på hvitt på grønt</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig hvit over grønn</translation>
     </message>
     <message>
         <source>Yellow over Green</source>
@@ -5929,22 +5929,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -5954,22 +5954,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Yellow</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 50%</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit på gul 70%</translation>
     </message>
     <message>
         <source>Yellow 70%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 70%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -6024,7 +6024,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jordskrent, minimal størrelse</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -6084,7 +6084,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uforserbar skrent</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -6697,7 +6697,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høyt tårn</translation>
     </message>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
@@ -6707,7 +6707,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lite tårn</translation>
     </message>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
@@ -6747,7 +6747,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
@@ -6757,12 +6757,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster, blåe</translation>
     </message>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsmerke</translation>
     </message>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -6792,7 +6792,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -6855,7 +6855,7 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The finish is shown by two concentric circles.</source>
@@ -6966,12 +6966,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logo</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logoen</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -7542,7 +7542,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
@@ -7562,7 +7562,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin, minimal størrelse</translation>
     </message>
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
@@ -7582,7 +7582,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varde</translation>
     </message>
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
@@ -7592,7 +7592,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -7645,7 +7645,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Upper Green</source>
@@ -7655,12 +7655,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun  50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -7670,67 +7670,67 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Brown</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-oransje</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig blå</translation>
     </message>
     <message>
         <source>Blue</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 50%</translation>
     </message>
     <message>
         <source>Black 30%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 50%, gul</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønt på hvitt på grønt</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig hvit over grønn</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ugjennomsiktig grønn</translation>
     </message>
     <message>
         <source>Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 30%</translation>
     </message>
     <message>
         <source>Green below light greens</source>
@@ -7740,22 +7740,22 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 50%</translation>
     </message>
     <message>
         <source>White over Yellow 70%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit på gul 70%</translation>
     </message>
     <message>
         <source>Yellow 70%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gul 70%</translation>
     </message>
     <message>
         <source>Contour</source>
@@ -7830,7 +7830,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jordskrent, minimal størrelse</translation>
     </message>
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
@@ -7890,7 +7890,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Uforserbar skrent</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
@@ -8496,7 +8496,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>Høyt tårn</translation>
     </message>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
@@ -8506,7 +8506,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lite tårn</translation>
     </message>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
@@ -8536,7 +8536,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Magnetic north line</source>
         <comment>Name of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -8551,7 +8551,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magnetisk nordlinje, blå</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
@@ -8561,12 +8561,12 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nordlinjemønster, blåe</translation>
     </message>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsmerke</translation>
     </message>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -8721,7 +8721,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8774,7 +8774,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -8834,7 +8834,7 @@ that it is more clearly visible in the track network.</source>
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The finish is shown by two concentric circles.</source>
@@ -8950,12 +8950,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logo</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering-logoen</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -9446,7 +9446,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin</source>
         <comment>Name of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin</translation>
     </message>
     <message>
         <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
@@ -9466,7 +9466,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruin, minimal størrelse</translation>
     </message>
     <message>
         <source>Very small ruins may be drawn with a solid line.</source>
@@ -9496,7 +9496,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
-        <translation type="unfinished"></translation>
+        <translation>Varde</translation>
     </message>
     <message>
         <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
@@ -9519,7 +9519,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla</translation>
     </message>
     <message>
         <source>Black for control descriptions</source>
@@ -9544,7 +9544,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Svart</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -9561,7 +9561,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
@@ -9611,7 +9611,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Finish</source>
         <comment>Name of symbol 706</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>The finish is shown by two concentric circles.</source>
