@@ -19,6 +19,12 @@
 
 package org.openorienteering.mapper;
 
+// Until Qt Creator and androiddeployqt fully support per-flavor app IDs,
+// we must change the ID in AndroidManifest.xml, and thus the BuildConfig
+// and R classes are generated in the MAPPER_APP_ID namespace.
+import @MAPPER_APP_ID@.BuildConfig;
+import @MAPPER_APP_ID@.R;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
