@@ -27,18 +27,17 @@ TARGET   = Mapper
 ANDROID_VERSION_CODE = "@Mapper_VERSION_CODE@"
 ANDROID_VERSION_NAME = "@Mapper_VERSION_DISPLAY@"
 
-ANDROID_PACKAGE_SOURCE_DIR = "@PROJECT_SOURCE_DIR@/android"
+ANDROID_PACKAGE_SOURCE_DIR = "@ANDROID_PACKAGE_SOURCE_DIR@"
+CMAKE_COMMAND = "@CMAKE_COMMAND@"
+MAPPER_BINARY = "$<TARGET_FILE:Mapper>"
+PROJECT_BINARY_DIR = "@PROJECT_BINARY_DIR@"
 
-@USE_DEV_SUFFIX@ {
-  # Don't let unstable packages replace official release packages.
-  system(cp -a "$$ANDROID_PACKAGE_SOURCE_DIR" "$$OUT_PWD/")
-  ANDROID_PACKAGE_SOURCE_DIR = $$OUT_PWD/android
-  system(sed -e $$shell_quote(/<manifest/ s/org.openorienteering.mapper/org.openorienteering.mapper.dev/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml")
-  system(sed -e $$shell_quote(s/%%INSERT_APP_NAME%% *-->/%%INSERT_APP_NAME%% --> @Mapper_VERSION_DISPLAY@/) -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml")
-  system(sed -f "$$ANDROID_PACKAGE_SOURCE_DIR/import_namespace.sed" -i -- "$$ANDROID_PACKAGE_SOURCE_DIR/src/org/openorienteering/mapper/*.java")
-  system(rm -f "$$ANDROID_PACKAGE_SOURCE_DIR/AndroidManifest.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/res/values/strings.xml--" "$$ANDROID_PACKAGE_SOURCE_DIR/src/org/openorienteering/mapper/*.java--")
-}
-
+# We use resources from some external packages, so lets cleanup the staging dir
+# in CPackConfig.cmake when a package version changes.
+CPACK_CONFIG_CLEANUP_TRIGGER = \
+  GDAL: @GDAL_VERSION@ \
+  PROJ: @PROJ4_VERSION@ \
+  Qt5:  @Qt5Core_VERSION@
 
 # For the generated .pro file to be used in Qt Creator,
 # we must install everything and replace the dummy libMapper.so.
@@ -46,7 +45,7 @@ INSTALLS            += everything
 
 everything.path  = /
 everything.extra = \
-  "@CMAKE_COMMAND@" --build "@PROJECT_BINARY_DIR@" && \
-  "@CMAKE_COMMAND@" -E copy "$<TARGET_FILE:Mapper>" "$$OUT_PWD/" && \
-  "@CMAKE_COMMAND@" -E chdir "@PROJECT_BINARY_DIR@" \
-    "@CMAKE_COMMAND@" "-DCMAKE_INSTALL_PREFIX=$(INSTALL_ROOT)" -P cmake_install.cmake
+  "$$CMAKE_COMMAND" --build "$$PROJECT_BINARY_DIR" && \
+  "$$CMAKE_COMMAND" -E copy "$$MAPPER_BINARY" "$$OUT_PWD/" && \
+  "$$CMAKE_COMMAND" -E chdir "$$PROJECT_BINARY_DIR" \
+    "$$CMAKE_COMMAND" "-DCMAKE_INSTALL_PREFIX=$$ANDROID_PACKAGE_SOURCE_DIR" -P cmake_install.cmake

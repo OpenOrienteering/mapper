@@ -331,6 +331,15 @@ install(TARGETS Mapper
 )
 
 
+# Java sources for Android
+# This target's sources will be build with the APK.
+
+add_custom_target(Mapper_Android SOURCES
+  android/java/org/openorienteering/mapper/MapperActivity.java
+  android/java/org/openorienteering/mapper/MapperService.java
+)
+
+
 # Workaround Qt private include dir issue
 # Cf. https://bugreports.qt.io/browse/QTBUG-37417
 

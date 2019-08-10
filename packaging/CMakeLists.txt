@@ -178,60 +178,8 @@ elseif(APPLE)
 	)
 	
 elseif(ANDROID)
-	# We don't use a CPack generator,
-	# but run androiddeployqt from CPackConfig.cmake
 	set(CPACK_GENERATOR_DEFAULT "")
-	
-	set(KEYSTORE_URL "KEYSTORE_URL-NOTFOUND" CACHE STRING
-	  "URL of the keystore to be used when signing APK packages."
-	)
-	set(KEYSTORE_ALIAS "KEYSTORE_ALIAS-NOTFOUND" CACHE STRING
-	  "Alias in the keystore to be used when signing APK packages."
-	)
-	if(KEYSTORE_URL AND KEYSTORE_ALIAS)
-		set(SIGN_APK 1)
-	else()
-		set(SIGN_APK 0)
-	endif()
-	if("${CMAKE_BUILD_TYPE}" MATCHES "Rel")
-		set(RELEASE_APK 1)
-	else()
-		set(RELEASE_APK 0)
-	endif()
-	if("${Mapper_VERSION_DISPLAY}" STREQUAL "${Mapper_VERSION}")
-		set(USE_DEV_SUFFIX "false")
-	else()
-		set(USE_DEV_SUFFIX "true")
-	endif()
-	configure_file(
-	  "${PROJECT_SOURCE_DIR}/android/CPackConfig.cmake.in"
-	  "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
-	  @ONLY
-	)
-	file(GENERATE
-	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
-	)
-	if(NOT EXISTS "${PROJECT_BINARY_DIR}/CPackConfig.cmake")
-		file(WRITE "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-		  [[# Placeholder to enforce 'package' target creation]]
-		)
-	endif()
-	
-	# For Android, we create a dummy qmake project which provides
-	# - configuration for running androiddeployqt from CPackConfig.cmake, and
-	# - a project for debugging the Android app in Qt Creator
-	# The directory name must match the Mapper binary.
-	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
-	configure_file(
-	  "${PROJECT_SOURCE_DIR}/android/Mapper.pro.in"
-	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
-	  @ONLY
-	)
-	file(GENERATE
-	  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
-	  INPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
-	)
+	# Nothing else here: We always add the 'android' subdirectory.
 	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	# Packaging on Debian or similar
@@ -481,3 +429,6 @@ endif()
 configure_file("custom_install.cmake.in" "custom_install.cmake" @ONLY)
 install(CODE "include(\"${CMAKE_CURRENT_BINARY_DIR}/custom_install.cmake\")")
 
+
+# Always include the android directory, for convenient development.
+add_subdirectory("android")
