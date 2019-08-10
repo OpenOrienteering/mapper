@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte öppna fil
+%1:
+%2</translation>
     </message>
 </context>
 <context>
