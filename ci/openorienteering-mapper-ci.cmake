@@ -39,6 +39,12 @@ option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" OFF)
 option(Mapper_CI_MANUAL_PDF "Mapper (git): Provide the manual as PDF file (needs pdflatex)" OFF)
 set(Mapper_CI_GDAL_DATA_DIR "NOTFOUND" CACHE STRING "Mapper (CI): GDAL data directory")
 
+# Run the AutosaveTest, too, but not on macOS where it is flaky.
+set(patch_command PATCH_COMMAND sed -e s/autosave_t.MANUAL/autosave_t/ -i -- test/CMakeLists.txt)
+if(APPLE)
+	set(patch_command )
+endif()
+
 superbuild_package(
   NAME           openorienteering-mapper
   VERSION        ci
@@ -60,8 +66,7 @@ superbuild_package(
   SOURCE
     GIT_REPOSITORY ${Mapper_CI_GIT_REPOSITORY}
     GIT_TAG        ${Mapper_CI_GIT_TAG}
-    PATCH_COMMAND
-      sed -i -e [[ s/autosave_t MANUAL/autosave_t/ ]] test/CMakeLists.txt
+    ${patch_command}
 
   USING
     Mapper_CI_VERSION_DISPLAY
