@@ -103,6 +103,7 @@ steps:
     if [ ! -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
       echo "##vso[task.setVariable variable=TEST_RESULTS]"
     fi
+  condition: always()
   displayName: 'Process output and test results'
 
 - task: PublishTestResults@2
