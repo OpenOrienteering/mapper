@@ -37,7 +37,6 @@
 
 #if defined(Q_OS_ANDROID)
 #  include <QtAndroid>
-#  include <QAndroidJniObject>
 #  include <QDesktopWidget>
 #  include <QTimer>
 #  include <QUrl>
@@ -60,6 +59,7 @@
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/new_map_dialog.h"
+#include "gui/widgets/toast.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
 #include "util/backports.h"  // IWYU pragma: keep
@@ -99,7 +99,10 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
 	if (mobileMode())
+	{
 		statusBar()->hide();
+		toast = new Toast(this);
+	}
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -513,28 +516,18 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
-#if defined(Q_OS_ANDROID)
-	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
-	QAndroidJniObject::callStaticMethod<void>(
-		"org/openorienteering/mapper/MapperActivity",
-		"showToast",
-		"(Ljava/lang/String;I)V",
-		java_string.object<jstring>(), timeout);
-#else
-	statusBar()->showMessage(text, timeout);
-#endif
+	if (toast)
+		toast->showText(text, timeout);
+	else
+		statusBar()->showMessage(text, timeout);
 }
 
 void MainWindow::clearStatusBarMessage()
 {
-#if defined(Q_OS_ANDROID)
-	QAndroidJniObject::callStaticMethod<void>(
-		"org/openorienteering/mapper/MapperActivity",
-		"hideToast",
-		"()V");
-#else
-	statusBar()->clearMessage();
-#endif
+	if (toast)
+		toast->hide();
+	else
+		statusBar()->clearMessage();
 }
 
 void MainWindow::setShortcutsBlocked(bool blocked)
@@ -562,8 +555,18 @@ bool MainWindow::closeFile()
 
 bool MainWindow::event(QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && shortcutsBlocked())
-		event->accept();
+	switch (event->type())
+	{
+	case QEvent::ShortcutOverride:
+		if (shortcutsBlocked())
+			event->accept();
+		break;
+		
+	case QEvent::Resize:
+		if (toast)
+			toast->adjustPosition(frameGeometry());
+		break;
+	}
 	
 	return QMainWindow::event(event);
 }

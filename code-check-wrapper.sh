@@ -79,11 +79,13 @@ PATTERN=" \
   /symbol.cpp \
   symbol_rule_set.cpp \
   symbol_t.cpp \
+  symbol_tooltip.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
   template_list_widget.cpp \
   template_tool \
   text_brwoser_dialog \
+  toast.cpp \
   track_t.cpp \
   /track.cpp \
   undo_manager.cpp \

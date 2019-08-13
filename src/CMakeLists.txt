@@ -156,6 +156,7 @@ set(Mapper_Common_SRCS
   gui/widgets/template_list_widget.cpp
   gui/widgets/text_alignment_widget.cpp
   gui/widgets/text_browser.cpp
+  gui/widgets/toast.cpp
   
   sensors/compass.cpp
   sensors/gps_display.cpp
