@@ -158,7 +158,7 @@ public:
 
     AdvancedPdfEngine();
     AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
-    ~AdvancedPdfEngine() {}
+    ~AdvancedPdfEngine() Q_DECL_OVERRIDE {}
 
     void setOutputFilename(const QString &filename);
 
@@ -212,7 +212,7 @@ class AdvancedPdfEnginePrivate : public QPaintEnginePrivate
     Q_DECLARE_PUBLIC(AdvancedPdfEngine)
 public:
     AdvancedPdfEnginePrivate();
-    ~AdvancedPdfEnginePrivate();
+    ~AdvancedPdfEnginePrivate() Q_DECL_OVERRIDE;
 
     inline uint requestObject() { return currentObject++; }
 

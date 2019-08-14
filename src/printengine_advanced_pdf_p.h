@@ -71,7 +71,7 @@ class AdvancedPdfPrintEngine : public AdvancedPdfEngine, public QPrintEngine
     Q_DECLARE_PRIVATE(AdvancedPdfPrintEngine)
 public:
     AdvancedPdfPrintEngine(QPrinter::PrinterMode m);
-    virtual ~AdvancedPdfPrintEngine();
+    ~AdvancedPdfPrintEngine() Q_DECL_OVERRIDE;
 
     // reimplementations QPaintEngine
     bool begin(QPaintDevice *pdev) Q_DECL_OVERRIDE;
@@ -84,8 +84,8 @@ public:
 
     bool newPage() Q_DECL_OVERRIDE;
     int metric(QPaintDevice::PaintDeviceMetric) const Q_DECL_OVERRIDE;
-    virtual void setProperty(PrintEnginePropertyKey key, const QVariant &value) Q_DECL_OVERRIDE;
-    virtual QVariant property(PrintEnginePropertyKey key) const Q_DECL_OVERRIDE;
+    void setProperty(PrintEnginePropertyKey key, const QVariant &value) Q_DECL_OVERRIDE;
+    QVariant property(PrintEnginePropertyKey key) const Q_DECL_OVERRIDE;
     // end reimplementations QPrintEngine
 
     QPrinter::PrinterState state;
@@ -102,7 +102,7 @@ class AdvancedPdfPrintEnginePrivate : public AdvancedPdfEnginePrivate
     Q_DECLARE_PUBLIC(AdvancedPdfPrintEngine)
 public:
     AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m);
-    ~AdvancedPdfPrintEnginePrivate();
+    ~AdvancedPdfPrintEnginePrivate() Q_DECL_OVERRIDE;
 
     virtual bool openPrintDevice();
     virtual void closePrintDevice();
