@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include "qprintengine_pdf_p.h"
+#include "printengine_advanced_pdf_p.h"
 
 #ifndef QT_NO_PRINTER
 
@@ -43,7 +43,7 @@
 #include <QtGui/qpagelayout.h>
 
 #ifdef Q_OS_UNIX
-#include "private/qcore_unix_p.h" // overrides QT_OPEN
+#include <private/qcore_unix_p.h> // overrides QT_OPEN
 #endif
 
 #ifdef Q_OS_WIN

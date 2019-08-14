@@ -35,7 +35,7 @@
 #include <qdebug.h>
 #include <qendian.h>
 #include <qpainterpath.h>
-#include "private/qpdf_p.h"
+#include "advanced_pdf_p.h"
 
 #include "qfontsubset_agl.cpp"
 

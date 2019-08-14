@@ -31,8 +31,8 @@
 **
 ****************************************************************************/
 
-#ifndef QPDF_P_H
-#define QPDF_P_H
+#ifndef ADVANCED_PDF_P_H
+#define ADVANCED_PDF_P_H
 
 //
 //  W A R N I N G
@@ -52,9 +52,9 @@
 #include "QtGui/qmatrix.h"
 #include "QtCore/qstring.h"
 #include "QtCore/qvector.h"
-#include "private/qstroker_p.h"
-#include "private/qpaintengine_p.h"
-#include "private/qfontengine_p.h"
+#include <private/qstroker_p.h>
+#include <private/qpaintengine_p.h>
+#include <private/qfontengine_p.h>
 #include "private/qfontsubset_p.h"
 #include "qpagelayout.h"
 
@@ -313,5 +313,5 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_PDF
 
-#endif // QPDF_P_H
+#endif // ADVANCED_PDF_P_H
 

@@ -31,8 +31,8 @@
 **
 ****************************************************************************/
 
-#ifndef QPRINTENGINE_PDF_P_H
-#define QPRINTENGINE_PDF_P_H
+#ifndef PRINTENGINE_ADVANCED_PDF_P_H
+#define PRINTENGINE_ADVANCED_PDF_P_H
 
 //
 //  W A R N I N G
@@ -56,11 +56,11 @@
 #include "QtGui/qpainterpath.h"
 #include "QtCore/qdatastream.h"
 
-#include "private/qfontengine_p.h"
-#include "private/qpdf_p.h"
-#include "private/qpaintengine_p.h"
+#include <private/qfontengine_p.h>
+#include "advanced_pdf_p.h"
+#include <private/qpaintengine_p.h>
 #include "qprintengine.h"
-#include "qprint_p.h"
+#include <private/qprint_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -137,4 +137,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_PRINTER
 
-#endif // QPRINTENGINE_PDF_P_H
+#endif // PRINTENGINE_ADVANCED_PDF_P_H

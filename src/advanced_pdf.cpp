@@ -31,7 +31,7 @@
 **
 ****************************************************************************/
 
-#include "qpdf_p.h"
+#include "advanced_pdf_p.h"
 
 #ifndef QT_NO_PDF
 
@@ -42,7 +42,7 @@
 #include <private/qmath_p.h>
 #include <private/qpainter_p.h>
 #include <qnumeric.h>
-#include "private/qfont_p.h"
+#include <private/qfont_p.h>
 #include <qimagewriter.h>
 #include "qbuffer.h"
 #include "QtCore/qdatetime.h"
