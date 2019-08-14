@@ -1,7 +1,7 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ****************************************************************************/
 /**
@@ -12,7 +12,8 @@
  * This is a modified version of a file from the Qt Toolkit.
  * You can redistribute it and/or modify it under the terms of
  * the GNU General Public License, version 3, as published by
- * the Free Software Foundation.
+ * the Free Software Foundation, or any later version approved
+ * by the KDE Free Qt Foundation
  *
  * OpenOrienteering is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,7 +22,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>
- *
  */
 
 #ifndef PRINTENGINE_ADVANCED_PDF_P_H
@@ -70,22 +70,22 @@ class AdvancedPdfPrintEngine : public AdvancedPdfEngine, public QPrintEngine
 {
     Q_DECLARE_PRIVATE(AdvancedPdfPrintEngine)
 public:
-    AdvancedPdfPrintEngine(QPrinter::PrinterMode m);
-    ~AdvancedPdfPrintEngine() Q_DECL_OVERRIDE;
+    AdvancedPdfPrintEngine(QPrinter::PrinterMode m, AdvancedPdfEngine::PdfVersion version = AdvancedPdfEngine::Version_1_4);
+    ~AdvancedPdfPrintEngine() override;
 
     // reimplementations QPaintEngine
-    bool begin(QPaintDevice *pdev) Q_DECL_OVERRIDE;
-    bool end() Q_DECL_OVERRIDE;
+    bool begin(QPaintDevice *pdev) override;
+    bool end() override;
     // end reimplementations QPaintEngine
 
     // reimplementations QPrintEngine
-    bool abort() Q_DECL_OVERRIDE {return false;}
-    QPrinter::PrinterState printerState() const Q_DECL_OVERRIDE {return state;}
+    bool abort() override {return false;}
+    QPrinter::PrinterState printerState() const override {return state;}
 
-    bool newPage() Q_DECL_OVERRIDE;
-    int metric(QPaintDevice::PaintDeviceMetric) const Q_DECL_OVERRIDE;
-    void setProperty(PrintEnginePropertyKey key, const QVariant &value) Q_DECL_OVERRIDE;
-    QVariant property(PrintEnginePropertyKey key) const Q_DECL_OVERRIDE;
+    bool newPage() override;
+    int metric(QPaintDevice::PaintDeviceMetric) const override;
+    void setProperty(PrintEnginePropertyKey key, const QVariant &value) override;
+    QVariant property(PrintEnginePropertyKey key) const override;
     // end reimplementations QPrintEngine
 
     QPrinter::PrinterState state;
@@ -102,7 +102,7 @@ class AdvancedPdfPrintEnginePrivate : public AdvancedPdfEnginePrivate
     Q_DECLARE_PUBLIC(AdvancedPdfPrintEngine)
 public:
     AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m);
-    ~AdvancedPdfPrintEnginePrivate() Q_DECL_OVERRIDE;
+    ~AdvancedPdfPrintEnginePrivate() override;
 
     virtual bool openPrintDevice();
     virtual void closePrintDevice();
@@ -117,7 +117,6 @@ private:
     QString printProgram;
     QString selectionOption;
 
-    QPrint::DuplexMode duplex;
     bool collate;
     int copies;
     QPrinter::PageOrder pageOrder;

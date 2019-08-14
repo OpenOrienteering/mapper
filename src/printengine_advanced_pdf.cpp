@@ -1,7 +1,7 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ****************************************************************************/
 /**
@@ -12,7 +12,8 @@
  * This is a modified version of a file from the Qt Toolkit.
  * You can redistribute it and/or modify it under the terms of
  * the GNU General Public License, version 3, as published by
- * the Free Software Foundation.
+ * the Free Software Foundation, or any later version approved
+ * by the KDE Free Qt Foundation
  *
  * OpenOrienteering is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -44,10 +45,12 @@
 
 QT_BEGIN_NAMESPACE
 
-AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(QPrinter::PrinterMode m)
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(QPrinter::PrinterMode m, AdvancedPdfEngine::PdfVersion version)
     : AdvancedPdfEngine(*new AdvancedPdfPrintEnginePrivate(m))
 {
     state = QPrinter::Idle;
+
+    setPdfVersion(version);
 }
 
 AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p)
@@ -116,6 +119,8 @@ void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVari
     // The following keys are settings that are unsupported by the PDF PrintEngine
     case PPK_CustomBase:
         break;
+    case PPK_Duplex:
+        break;
 
     // The following keys are properties and settings that are supported by the PDF PrintEngine
     case PPK_CollateCopies:
@@ -136,7 +141,7 @@ void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVari
         else
             d->m_pageLayout.setMode(QPageLayout::StandardMode);
         break;
-    case PPK_CopyCount: // fallthrough
+    case PPK_CopyCount:
     case PPK_NumberOfCopies:
         d->copies = value.toInt();
         break;
@@ -187,9 +192,6 @@ void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVari
     case PPK_FontEmbedding:
         d->embedFonts = value.toBool();
         break;
-    case PPK_Duplex:
-        d->duplex = static_cast<QPrint::DuplexMode>(value.toInt());
-        break;
     case PPK_CustomPaperSize:
         d->m_pageLayout.setPageSize(QPageSize(value.toSizeF(), QPageSize::Point));
         break;
@@ -233,6 +235,7 @@ QVariant AdvancedPdfPrintEngine::property(PrintEnginePropertyKey key) const
     // The following keys are settings that are unsupported by the PDF PrintEngine
     // Return sensible default values to ensure consistent behavior across platforms
     case PPK_CustomBase:
+    case PPK_Duplex:
         // Special case, leave null
         break;
 
@@ -306,9 +309,6 @@ QVariant AdvancedPdfPrintEngine::property(PrintEnginePropertyKey key) const
     case PPK_FontEmbedding:
         ret = d->embedFonts;
         break;
-    case PPK_Duplex:
-        ret = d->duplex;
-        break;
     case PPK_CustomPaperSize:
         ret = d->m_pageLayout.fullRectPoints().size();
         break;
@@ -358,14 +358,14 @@ void AdvancedPdfPrintEnginePrivate::closePrintDevice()
     if (outDevice) {
         outDevice->close();
         if (fd >= 0)
-    #if defined(Q_OS_WIN) && defined(_MSC_VER) && _MSC_VER >= 1400
+    #if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
             ::_close(fd);
     #else
             ::close(fd);
     #endif
         fd = -1;
         delete outDevice;
-        outDevice = 0;
+        outDevice = nullptr;
     }
 }
 
@@ -373,7 +373,6 @@ void AdvancedPdfPrintEnginePrivate::closePrintDevice()
 
 AdvancedPdfPrintEnginePrivate::AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m)
     : AdvancedPdfEnginePrivate(),
-      duplex(QPrint::DuplexNone),
       collate(true),
       copies(1),
       pageOrder(QPrinter::FirstPageFirst),

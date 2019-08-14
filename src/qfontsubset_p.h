@@ -1,7 +1,7 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ****************************************************************************/
 /**
@@ -12,7 +12,8 @@
  * This is a modified version of a file from the Qt Toolkit.
  * You can redistribute it and/or modify it under the terms of
  * the GNU General Public License, version 3, as published by
- * the Free Software Foundation.
+ * the Free Software Foundation, or any later version approved
+ * by the KDE Free Qt Foundation
  *
  * OpenOrienteering is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,7 +38,8 @@
 // We mean it.
 //
 
-#include <private/qfontengine_p.h>
+#include <QtGui/private/qtguiglobal_p.h>
+#include "private/qfontengine_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -71,7 +73,7 @@ public:
     const int object_id;
     bool noEmbed;
     QFontEngine *fontEngine;
-    QList<int> glyph_indices;
+    QVector<int> glyph_indices;
     mutable int downloaded_glyphs;
     mutable bool standard_font;
     int nGlyphs() const { return glyph_indices.size(); }

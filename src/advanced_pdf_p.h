@@ -1,7 +1,7 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ****************************************************************************/
 /**
@@ -12,7 +12,8 @@
  * This is a modified version of a file from the Qt Toolkit.
  * You can redistribute it and/or modify it under the terms of
  * the GNU General Public License, version 3, as published by
- * the Free Software Foundation.
+ * the Free Software Foundation, or any later version approved
+ * by the KDE Free Qt Foundation
  *
  * OpenOrienteering is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -37,7 +38,7 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
+#include <QtGui/private/qtguiglobal_p.h>
 
 #ifndef QT_NO_PDF
 
@@ -154,38 +155,54 @@ class AdvancedPdfEngine : public QPaintEngine
     Q_DECLARE_PRIVATE(AdvancedPdfEngine)
     friend class AdvancedPdfWriter;
 public:
-    static const QPaintEngine::Type paintEngineType() { return QPaintEngine::Type(QPaintEngine::User + 1); }
+    static struct PaintEngineTypeStruct
+    {
+        constexpr operator QPaintEngine::Type() const {
+            return QPaintEngine::Type(QPaintEngine::User + 1);
+        }
+    } PaintEngineType;
+
+    enum PdfVersion
+    {
+        Version_1_4,
+        Version_A1b,
+        Version_1_6
+    };
 
     AdvancedPdfEngine();
     AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
-    ~AdvancedPdfEngine() Q_DECL_OVERRIDE {}
+    ~AdvancedPdfEngine() override {}
 
     void setOutputFilename(const QString &filename);
 
     void setResolution(int resolution);
     int resolution() const;
 
+    void setPdfVersion(PdfVersion version);
+
     // reimplementations QPaintEngine
-    bool begin(QPaintDevice *pdev) Q_DECL_OVERRIDE;
-    bool end() Q_DECL_OVERRIDE;
+    bool begin(QPaintDevice *pdev) override;
+    bool end() override;
 
-    void drawPoints(const QPointF *points, int pointCount) Q_DECL_OVERRIDE;
-    void drawLines(const QLineF *lines, int lineCount) Q_DECL_OVERRIDE;
-    void drawRects(const QRectF *rects, int rectCount) Q_DECL_OVERRIDE;
-    void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode) Q_DECL_OVERRIDE;
-    void drawPath (const QPainterPath & path) Q_DECL_OVERRIDE;
+    void drawPoints(const QPointF *points, int pointCount) override;
+    void drawLines(const QLineF *lines, int lineCount) override;
+    void drawRects(const QRectF *rects, int rectCount) override;
+    void drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode) override;
+    void drawPath (const QPainterPath & path) override;
 
-    void drawTextItem(const QPointF &p, const QTextItem &textItem) Q_DECL_OVERRIDE;
+    void drawTextItem(const QPointF &p, const QTextItem &textItem) override;
 
-    void drawPixmap (const QRectF & rectangle, const QPixmap & pixmap, const QRectF & sr) Q_DECL_OVERRIDE;
+    void drawPixmap (const QRectF & rectangle, const QPixmap & pixmap, const QRectF & sr) override;
     void drawImage(const QRectF &r, const QImage &pm, const QRectF &sr,
-                   Qt::ImageConversionFlags flags = Qt::AutoColor) Q_DECL_OVERRIDE;
-    void drawTiledPixmap (const QRectF & rectangle, const QPixmap & pixmap, const QPointF & point) Q_DECL_OVERRIDE;
+                   Qt::ImageConversionFlags flags = Qt::AutoColor) override;
+    void drawTiledPixmap (const QRectF & rectangle, const QPixmap & pixmap, const QPointF & point) override;
 
-    void updateState(const QPaintEngineState &state) Q_DECL_OVERRIDE;
+    void drawHyperlink(const QRectF &r, const QUrl &url);
+
+    void updateState(const QPaintEngineState &state) override;
 
     int metric(QPaintDevice::PaintDeviceMetric metricType) const;
-    Type type() const Q_DECL_OVERRIDE;
+    Type type() const override;
     // end reimplementations QPaintEngine
 
     // Printer stuff...
@@ -212,7 +229,7 @@ class AdvancedPdfEnginePrivate : public QPaintEnginePrivate
     Q_DECLARE_PUBLIC(AdvancedPdfEngine)
 public:
     AdvancedPdfEnginePrivate();
-    ~AdvancedPdfEnginePrivate() Q_DECL_OVERRIDE;
+    ~AdvancedPdfEnginePrivate() override;
 
     inline uint requestObject() { return currentObject++; }
 
@@ -237,13 +254,14 @@ public:
     QPointF brushOrigin;
     QBrush brush;
     QPen pen;
-    QList<QPainterPath> clips;
+    QVector<QPainterPath> clips;
     bool clipEnabled;
     bool allClipped;
     bool hasPen;
     bool hasBrush;
     bool simplePen;
     qreal opacity;
+    AdvancedPdfEngine::PdfVersion pdfVersion;
 
     QHash<QFontEngine::FaceId, QFontSubset *> fonts;
 
@@ -272,16 +290,19 @@ private:
     int createShadingFunction(const QGradient *gradient, int from, int to, bool reflect, bool alpha);
 
     void writeInfo();
+    int writeXmpMetaData();
+    int writeOutputIntent();
     void writePageRoot();
     void writeFonts();
     void embedFont(QFontSubset *font);
+    qreal calcUserUnit() const;
 
     QVector<int> xrefPositions;
     QDataStream* stream;
     int streampos;
 
     int writeImage(const QByteArray &data, int width, int height, int depth,
-                   int maskObject, int softMaskObject, bool dct = false);
+                   int maskObject, int softMaskObject, bool dct = false, bool isMono = false);
     void writePage();
 
     int addXrefEntry(int object, bool printostr = true);
