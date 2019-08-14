@@ -1,31 +1,37 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtGui module of the Qt Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL21$
+** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
 ** Licensees holding valid commercial Qt licenses may use this file in
 ** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
+** and conditions see https://www.qt.io/terms-conditions. For further
+** information use the contact form at https://www.qt.io/contact-us.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** General Public License version 3 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL3 included in the
+** packaging of this file. Please review the following information to
+** ensure the GNU Lesser General Public License version 3 requirements
+** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 2.0 or (at your option) the GNU General
+** Public license version 3 or any later version approved by the KDE Free
+** Qt Foundation. The licenses are as published by the Free Software
+** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-2.0.html and
+** https://www.gnu.org/licenses/gpl-3.0.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -52,10 +58,12 @@
 
 QT_BEGIN_NAMESPACE
 
-QPdfPrintEngine::QPdfPrintEngine(QPrinter::PrinterMode m)
+QPdfPrintEngine::QPdfPrintEngine(QPrinter::PrinterMode m, QPdfEngine::PdfVersion version)
     : QPdfEngine(*new QPdfPrintEnginePrivate(m))
 {
     state = QPrinter::Idle;
+
+    setPdfVersion(version);
 }
 
 QPdfPrintEngine::QPdfPrintEngine(QPdfPrintEnginePrivate &p)
@@ -124,6 +132,8 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
     // The following keys are settings that are unsupported by the PDF PrintEngine
     case PPK_CustomBase:
         break;
+    case PPK_Duplex:
+        break;
 
     // The following keys are properties and settings that are supported by the PDF PrintEngine
     case PPK_CollateCopies:
@@ -144,7 +154,7 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
         else
             d->m_pageLayout.setMode(QPageLayout::StandardMode);
         break;
-    case PPK_CopyCount: // fallthrough
+    case PPK_CopyCount:
     case PPK_NumberOfCopies:
         d->copies = value.toInt();
         break;
@@ -195,9 +205,6 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
     case PPK_FontEmbedding:
         d->embedFonts = value.toBool();
         break;
-    case PPK_Duplex:
-        d->duplex = static_cast<QPrint::DuplexMode>(value.toInt());
-        break;
     case PPK_CustomPaperSize:
         d->m_pageLayout.setPageSize(QPageSize(value.toSizeF(), QPageSize::Point));
         break;
@@ -241,6 +248,7 @@ QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
     // The following keys are settings that are unsupported by the PDF PrintEngine
     // Return sensible default values to ensure consistent behavior across platforms
     case PPK_CustomBase:
+    case PPK_Duplex:
         // Special case, leave null
         break;
 
@@ -314,9 +322,6 @@ QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
     case PPK_FontEmbedding:
         ret = d->embedFonts;
         break;
-    case PPK_Duplex:
-        ret = d->duplex;
-        break;
     case PPK_CustomPaperSize:
         ret = d->m_pageLayout.fullRectPoints().size();
         break;
@@ -366,14 +371,14 @@ void QPdfPrintEnginePrivate::closePrintDevice()
     if (outDevice) {
         outDevice->close();
         if (fd >= 0)
-    #if defined(Q_OS_WIN) && defined(_MSC_VER) && _MSC_VER >= 1400
+    #if defined(Q_OS_WIN) && defined(Q_CC_MSVC)
             ::_close(fd);
     #else
             ::close(fd);
     #endif
         fd = -1;
         delete outDevice;
-        outDevice = 0;
+        outDevice = nullptr;
     }
 }
 
@@ -381,7 +386,6 @@ void QPdfPrintEnginePrivate::closePrintDevice()
 
 QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
     : QPdfEnginePrivate(),
-      duplex(QPrint::DuplexNone),
       collate(true),
       copies(1),
       pageOrder(QPrinter::FirstPageFirst),

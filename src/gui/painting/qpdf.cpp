@@ -1,31 +1,37 @@
 /****************************************************************************
 **
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016 The Qt Company Ltd.
+** Contact: https://www.qt.io/licensing/
 **
 ** This file is part of the QtGui module of the Qt Toolkit.
 **
-** $QT_BEGIN_LICENSE:LGPL21$
+** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
 ** Licensees holding valid commercial Qt licenses may use this file in
 ** accordance with the commercial license agreement provided with the
 ** Software or, alternatively, in accordance with the terms contained in
 ** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
+** and conditions see https://www.qt.io/terms-conditions. For further
+** information use the contact form at https://www.qt.io/contact-us.
 **
 ** GNU Lesser General Public License Usage
 ** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+** General Public License version 3 as published by the Free Software
+** Foundation and appearing in the file LICENSE.LGPL3 included in the
+** packaging of this file. Please review the following information to
+** ensure the GNU Lesser General Public License version 3 requirements
+** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
 **
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 2.0 or (at your option) the GNU General
+** Public license version 3 or any later version approved by the KDE Free
+** Qt Foundation. The licenses are as published by the Free Software
+** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
+** included in the packaging of this file. Please review the following
+** information to ensure the GNU General Public License requirements will
+** be met: https://www.gnu.org/licenses/gpl-2.0.html and
+** https://www.gnu.org/licenses/gpl-3.0.html.
 **
 ** $QT_END_LICENSE$
 **
@@ -36,16 +42,20 @@
 #ifndef QT_NO_PDF
 
 #include "qplatformdefs.h"
-#include <qdebug.h>
-#include <qfile.h>
-#include <qtemporaryfile.h>
+
+#include <private/qfont_p.h>
 #include <private/qmath_p.h>
 #include <private/qpainter_p.h>
-#include <qnumeric.h>
-#include "private/qfont_p.h"
+
+#include <qbuffer.h>
+#include <qcryptographichash.h>
+#include <qdatetime.h>
+#include <qdebug.h>
+#include <qfile.h>
 #include <qimagewriter.h>
-#include "qbuffer.h"
-#include "QtCore/qdatetime.h"
+#include <qnumeric.h>
+#include <qtemporaryfile.h>
+#include <quuid.h>
 
 #ifndef QT_NO_COMPRESS
 #include <zlib.h>
@@ -61,6 +71,11 @@ static const bool do_compress = true;
 // Can't use it though, as gs generates completely wrong images if this is true.
 static const bool interpolateImages = false;
 
+static void initResources()
+{
+    Q_INIT_RESOURCE(qpdf);
+}
+
 QT_BEGIN_NAMESPACE
 
 inline QPaintEngine::PaintEngineFeatures qt_pdf_decide_features()
@@ -73,6 +88,45 @@ inline QPaintEngine::PaintEngineFeatures qt_pdf_decide_features()
     return f;
 }
 
+extern bool qt_isExtendedRadialGradient(const QBrush &brush);
+
+// helper function to remove transparency from brush in PDF/A-1b mode
+static void removeTransparencyFromBrush(QBrush &brush)
+{
+    if (brush.style() == Qt::SolidPattern) {
+        QColor color = brush.color();
+        if (color.alpha() != 255) {
+            color.setAlpha(255);
+            brush.setColor(color);
+        }
+
+        return;
+    }
+
+    if (qt_isExtendedRadialGradient(brush)) {
+        brush = QBrush(Qt::black); // the safest we can do so far...
+        return;
+    }
+
+    if (brush.style() == Qt::LinearGradientPattern
+        || brush.style() == Qt::RadialGradientPattern
+        || brush.style() == Qt::ConicalGradientPattern) {
+
+        QGradientStops stops = brush.gradient()->stops();
+        for (int i = 0; i < stops.size(); ++i) {
+            if (stops[i].second.alpha() != 255)
+                stops[i].second.setAlpha(255);
+        }
+
+        const_cast<QGradient*>(brush.gradient())->setStops(stops);
+        return;
+    }
+
+    if (brush.style() == Qt::TexturePattern) {
+        // handled inside QPdfEnginePrivate::addImage() already
+        return;
+    }
+}
 
 
 /* also adds a space at the end of the number */
@@ -377,8 +431,8 @@ QByteArray QPdf::generateDashes(const QPen &pen)
         s << dw;
     }
     s << ']';
-    //qDebug() << "dasharray: pen has" << dasharray;
-    //qDebug() << "  => " << result;
+    s << pen.dashOffset() * w;
+    s << " d\n";
     return result;
 }
 
@@ -899,7 +953,18 @@ void QPdfEngine::drawPixmap (const QRectF &rectangle, const QPixmap &pixmap, con
     if (object < 0)
         return;
 
-    *d->currentPage << "q\n/GSa gs\n";
+    *d->currentPage << "q\n";
+
+    if ((d->pdfVersion != QPdfEngine::Version_A1b) && (d->opacity != 1.0)) {
+        int stateObject = d->addConstantAlphaObject(qRound(255 * d->opacity), qRound(255 * d->opacity));
+        if (stateObject)
+            *d->currentPage << "/GState" << stateObject << "gs\n";
+        else
+            *d->currentPage << "/GSa gs\n";
+    } else {
+        *d->currentPage << "/GSa gs\n";
+    }
+
     *d->currentPage
         << QPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
                                            rectangle.x(), rectangle.y()) * (d->simplePen ? QTransform() : d->stroker.matrix));
@@ -927,7 +992,18 @@ void QPdfEngine::drawImage(const QRectF &rectangle, const QImage &image, const Q
     if (object < 0)
         return;
 
-    *d->currentPage << "q\n/GSa gs\n";
+    *d->currentPage << "q\n";
+
+    if ((d->pdfVersion != QPdfEngine::Version_A1b) && (d->opacity != 1.0)) {
+        int stateObject = d->addConstantAlphaObject(qRound(255 * d->opacity), qRound(255 * d->opacity));
+        if (stateObject)
+            *d->currentPage << "/GState" << stateObject << "gs\n";
+        else
+            *d->currentPage << "/GSa gs\n";
+    } else {
+        *d->currentPage << "/GSa gs\n";
+    }
+
     *d->currentPage
         << QPdf::generateMatrix(QTransform(rectangle.width() / sr.width(), 0, 0, rectangle.height() / sr.height(),
                                            rectangle.x(), rectangle.y()) * (d->simplePen ? QTransform() : d->stroker.matrix));
@@ -996,6 +1072,40 @@ void QPdfEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
     *d->currentPage << "Q\n";
 }
 
+void QPdfEngine::drawHyperlink(const QRectF &r, const QUrl &url)
+{
+    Q_D(QPdfEngine);
+
+    const uint annot = d->addXrefEntry(-1);
+    const QByteArray urlascii = url.toEncoded();
+    int len = urlascii.size();
+    QVarLengthArray<char> url_esc;
+    url_esc.reserve(len + 1);
+    for (int j = 0; j < len; j++) {
+        if (urlascii[j] == '(' || urlascii[j] == ')' || urlascii[j] == '\\')
+            url_esc.append('\\');
+        url_esc.append(urlascii[j]);
+    }
+    url_esc.append('\0');
+
+    char buf[256];
+    const QRectF rr = d->pageMatrix().mapRect(r);
+    d->xprintf("<<\n/Type /Annot\n/Subtype /Link\n");
+
+    if (d->pdfVersion == QPdfEngine::Version_A1b)
+        d->xprintf("/F 4\n"); // enable print flag, disable all other
+
+    d->xprintf("/Rect [");
+    d->xprintf("%s ", qt_real_to_string(rr.left(), buf));
+    d->xprintf("%s ", qt_real_to_string(rr.top(), buf));
+    d->xprintf("%s ", qt_real_to_string(rr.right(), buf));
+    d->xprintf("%s", qt_real_to_string(rr.bottom(), buf));
+    d->xprintf("]\n/Border [0 0 0]\n/A <<\n");
+    d->xprintf("/Type /Action\n/S /URI\n/URI (%s)\n", url_esc.constData());
+    d->xprintf(">>\n>>\n");
+    d->xprintf("endobj\n");
+    d->currentPage->annotations.append(annot);
+}
 
 void QPdfEngine::updateState(const QPaintEngineState &state)
 {
@@ -1007,19 +1117,41 @@ void QPdfEngine::updateState(const QPaintEngineState &state)
         d->stroker.matrix = state.transform();
 
     if (flags & DirtyPen) {
-        d->pen = state.pen();
+        if (d->pdfVersion == QPdfEngine::Version_A1b) {
+            QPen pen = state.pen();
+
+            QColor penColor = pen.color();
+            if (penColor.alpha() != 255)
+                penColor.setAlpha(255);
+            pen.setColor(penColor);
+
+            QBrush penBrush = pen.brush();
+            removeTransparencyFromBrush(penBrush);
+            pen.setBrush(penBrush);
+
+            d->pen = pen;
+        } else {
+            d->pen = state.pen();
+        }
         d->hasPen = d->pen.style() != Qt::NoPen;
         d->stroker.setPen(d->pen, state.renderHints());
         QBrush penBrush = d->pen.brush();
+        bool cosmeticPen = qt_pen_is_cosmetic(d->pen, state.renderHints());
         bool oldSimple = d->simplePen;
-        d->simplePen = (d->hasPen && (penBrush.style() == Qt::SolidPattern) && penBrush.isOpaque() && d->opacity == 1.0);
+        d->simplePen = (d->hasPen && !cosmeticPen && (penBrush.style() == Qt::SolidPattern) && penBrush.isOpaque() && d->opacity == 1.0);
         if (oldSimple != d->simplePen)
             flags |= DirtyTransform;
     } else if (flags & DirtyHints) {
         d->stroker.setPen(d->pen, state.renderHints());
     }
     if (flags & DirtyBrush) {
-        d->brush = state.brush();
+        if (d->pdfVersion == QPdfEngine::Version_A1b) {
+            QBrush brush = state.brush();
+            removeTransparencyFromBrush(brush);
+            d->brush = brush;
+        } else {
+            d->brush = state.brush();
+        }
         if (d->brush.color().alpha() == 0 && d->brush.style() == Qt::SolidPattern)
             d->brush.setStyle(Qt::NoBrush);
         d->hasBrush = d->brush.style() != Qt::NoBrush;
@@ -1043,9 +1175,8 @@ void QPdfEngine::updateState(const QPaintEngineState &state)
     } else if (flags & DirtyClipRegion) {
         d->clipEnabled = true;
         QPainterPath path;
-        QVector<QRect> rects = state.clipRegion().rects();
-        for (int i = 0; i < rects.size(); ++i)
-            path.addRect(rects.at(i));
+        for (const QRect &rect : state.clipRegion())
+            path.addRect(rect);
         updateClipPath(path, state.clipOperation());
         flags |= DirtyClipPath;
     } else if (flags & DirtyClipEnabled) {
@@ -1167,7 +1298,7 @@ void QPdfEngine::setPen()
     switch(d->pen.joinStyle()) {
     case Qt::MiterJoin:
     case Qt::SvgMiterJoin:
-        *d->currentPage << d->pen.miterLimit() << "M ";
+        *d->currentPage << qMax(qreal(1.0), d->pen.miterLimit()) << "M ";
         pdfJoinStyle = 0;
         break;
     case Qt::BevelJoin:
@@ -1181,7 +1312,7 @@ void QPdfEngine::setPen()
     }
     *d->currentPage << pdfJoinStyle << "j ";
 
-    *d->currentPage << QPdf::generateDashes(d->pen) << " 0 d\n";
+    *d->currentPage << QPdf::generateDashes(d->pen);
 }
 
 
@@ -1252,6 +1383,12 @@ int QPdfEngine::resolution() const
     return d->resolution;
 }
 
+void QPdfEngine::setPdfVersion(PdfVersion version)
+{
+    Q_D(QPdfEngine);
+    d->pdfVersion = version;
+}
+
 void QPdfEngine::setPageLayout(const QPageLayout &pageLayout)
 {
     Q_D(QPdfEngine);
@@ -1318,6 +1455,9 @@ int QPdfEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
     case QPaintDevice::PdmDevicePixelRatio:
         val = 1;
         break;
+    case QPaintDevice::PdmDevicePixelRatioScaled:
+        val = 1 * QPaintDevice::devicePixelRatioFScale();
+        break;
     default:
         qWarning("QPdfWriter::metric: Invalid metric command");
         return 0;
@@ -1327,11 +1467,13 @@ int QPdfEngine::metric(QPaintDevice::PaintDeviceMetric metricType) const
 
 QPdfEnginePrivate::QPdfEnginePrivate()
     : clipEnabled(false), allClipped(false), hasPen(true), hasBrush(false), simplePen(false),
+      pdfVersion(QPdfEngine::Version_1_4),
       outDevice(0), ownsDevice(false),
       embedFonts(true),
       grayscale(false),
       m_pageLayout(QPageSize(QPageSize::A4), QPageLayout::Portrait, QMarginsF(10, 10, 10, 10))
 {
+    initResources();
     resolution = 1200;
     currentObject = 1;
     currentPage = 0;
@@ -1427,17 +1569,46 @@ void QPdfEnginePrivate::writeHeader()
 {
     addXrefEntry(0,false);
 
-    xprintf("%%PDF-1.4\n");
+    static const QHash<QPdfEngine::PdfVersion, const char *> mapping {
+        {QPdfEngine::Version_1_4, "1.4"},
+        {QPdfEngine::Version_A1b, "1.4"},
+        {QPdfEngine::Version_1_6, "1.6"}
+    };
+    const char *verStr = mapping.value(pdfVersion, "1.4");
+
+    xprintf("%%PDF-%s\n", verStr);
+    xprintf("%%\303\242\303\243\n");
 
     writeInfo();
 
+    int metaDataObj = -1;
+    int outputIntentObj = -1;
+    if (pdfVersion == QPdfEngine::Version_A1b) {
+        metaDataObj = writeXmpMetaData();
+        outputIntentObj = writeOutputIntent();
+    }
+
     catalog = addXrefEntry(-1);
     pageRoot = requestObject();
-    xprintf("<<\n"
-            "/Type /Catalog\n"
-            "/Pages %d 0 R\n"
-            ">>\n"
-            "endobj\n", pageRoot);
+
+    // catalog
+    {
+        QByteArray catalog;
+        QPdf::ByteStream s(&catalog);
+        s << "<<\n"
+          << "/Type /Catalog\n"
+          << "/Pages " << pageRoot << "0 R\n";
+
+        if (pdfVersion == QPdfEngine::Version_A1b) {
+            s << "/OutputIntents [" << outputIntentObj << "0 R]\n";
+            s << "/Metadata " << metaDataObj << "0 R\n";
+        }
+
+        s << ">>\n"
+          << "endobj\n";
+
+        write(catalog);
+    }
 
     // graphics state
     graphicsState = addXrefEntry(-1);
@@ -1467,18 +1638,116 @@ void QPdfEnginePrivate::writeInfo()
     printString(creator);
     xprintf("\n/Producer ");
     printString(QString::fromLatin1("Qt " QT_VERSION_STR));
-    QDateTime now = QDateTime::currentDateTime().toUTC();
+    QDateTime now = QDateTime::currentDateTime();
     QTime t = now.time();
     QDate d = now.date();
-    xprintf("\n/CreationDate (D:%d%02d%02d%02d%02d%02d)\n",
+    xprintf("\n/CreationDate (D:%d%02d%02d%02d%02d%02d",
             d.year(),
             d.month(),
             d.day(),
             t.hour(),
             t.minute(),
             t.second());
+    int offset = now.offsetFromUtc();
+    int hours  = (offset / 60) / 60;
+    int mins   = (offset / 60) % 60;
+    if (offset < 0)
+        xprintf("-%02d'%02d')\n", -hours, -mins);
+    else if (offset > 0)
+        xprintf("+%02d'%02d')\n", hours , mins);
+    else
+        xprintf("Z)\n");
     xprintf(">>\n"
             "endobj\n");
+}
+
+int QPdfEnginePrivate::writeXmpMetaData()
+{
+    const int metaDataObj = addXrefEntry(-1);
+
+    const QString producer(QString::fromLatin1("Qt " QT_VERSION_STR));
+
+    const QDateTime now = QDateTime::currentDateTime();
+    const QDate date = now.date();
+    const QTime time = now.time();
+
+    QString timeStr;
+    timeStr.sprintf("%d-%02d-%02dT%02d:%02d:%02d", date.year(), date.month(), date.day(),
+                                                   time.hour(), time.minute(), time.second());
+
+    const int offset = now.offsetFromUtc();
+    const int hours  = (offset / 60) / 60;
+    const int mins   = (offset / 60) % 60;
+    QString tzStr;
+    if (offset < 0)
+        tzStr.sprintf("-%02d:%02d", -hours, -mins);
+    else if (offset > 0)
+        tzStr.sprintf("+%02d:%02d", hours , mins);
+    else
+        tzStr = QLatin1String("Z");
+
+    const QString metaDataDate = timeStr + tzStr;
+
+    QFile metaDataFile(QLatin1String(":/qpdf/qpdfa_metadata.xml"));
+    metaDataFile.open(QIODevice::ReadOnly);
+    const QByteArray metaDataContent = QString::fromUtf8(metaDataFile.readAll()).arg(producer.toHtmlEscaped(),
+                                                                                     title.toHtmlEscaped(),
+                                                                                     creator.toHtmlEscaped(),
+                                                                                     metaDataDate).toUtf8();
+    xprintf("<<\n"
+            "/Type /Metadata /Subtype /XML\n"
+            "/Length %d\n"
+            ">>\n"
+            "stream\n", metaDataContent.size());
+    write(metaDataContent);
+    xprintf("\nendstream\n"
+            "endobj\n");
+
+    return metaDataObj;
+}
+
+int QPdfEnginePrivate::writeOutputIntent()
+{
+    const int colorProfile = addXrefEntry(-1);
+    {
+        QFile colorProfileFile(QLatin1String(":/qpdf/sRGB2014.icc"));
+        colorProfileFile.open(QIODevice::ReadOnly);
+        const QByteArray colorProfileData = colorProfileFile.readAll();
+
+        QByteArray data;
+        QPdf::ByteStream s(&data);
+        int length_object = requestObject();
+
+        s << "<<\n";
+        s << "/N 3\n";
+        s << "/Alternate /DeviceRGB\n";
+        s << "/Length " << length_object << "0 R\n";
+        s << "/Filter /FlateDecode\n";
+        s << ">>\n";
+        s << "stream\n";
+        write(data);
+        const int len = writeCompressed(colorProfileData);
+        write("\nendstream\n"
+              "endobj\n");
+        addXrefEntry(length_object);
+        xprintf("%d\n"
+                "endobj\n", len);
+    }
+
+    const int outputIntent = addXrefEntry(-1);
+    {
+        xprintf("<<\n");
+        xprintf("/Type /OutputIntent\n");
+        xprintf("/S/GTS_PDFA1\n");
+        xprintf("/OutputConditionIdentifier (sRGB_IEC61966-2-1_black_scaled)\n");
+        xprintf("/DestOutputProfile %d 0 R\n", colorProfile);
+        xprintf("/Info(sRGB IEC61966 v2.1 with black scaling)\n");
+        xprintf("/RegistryName(http://www.color.org)\n");
+        xprintf(">>\n");
+        xprintf("endobj\n");
+    }
+
+    return outputIntent;
 }
 
 void QPdfEnginePrivate::writePageRoot()
@@ -1522,8 +1791,10 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
     int fontstream = requestObject();
     int cidfont = requestObject();
     int toUnicode = requestObject();
+    int cidset = requestObject();
 
     QFontEngine::Properties properties = font->fontEngine->properties();
+    QByteArray postscriptName = properties.postscriptName.replace(' ', '_');
 
     {
         qreal scale = 1000/properties.emSquare.toReal();
@@ -1537,7 +1808,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
             s << (char)('A' + (tag % 26));
             tag /= 26;
         }
-        s <<  '+' << properties.postscriptName << "\n"
+        s <<  '+' << postscriptName << "\n"
             "/Flags " << 4 << "\n"
             "/FontBBox ["
           << properties.boundingBox.x()*scale
@@ -1550,7 +1821,8 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
             "/CapHeight " << properties.capHeight.toReal()*scale << "\n"
             "/StemV " << properties.lineWidth.toReal()*scale << "\n"
             "/FontFile2 " << fontstream << "0 R\n"
-            ">> endobj\n";
+            "/CIDSet " << cidset << "0 R\n"
+            ">>\nendobj\n";
         write(descriptor);
     }
     {
@@ -1568,7 +1840,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
             "stream\n";
         write(header);
         int len = writeCompressed(fontData);
-        write("endstream\n"
+        write("\nendstream\n"
               "endobj\n");
         addXrefEntry(length_object);
         xprintf("%d\n"
@@ -1580,7 +1852,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
         QPdf::ByteStream s(&cid);
         s << "<< /Type /Font\n"
             "/Subtype /CIDFontType2\n"
-            "/BaseFont /" << properties.postscriptName << "\n"
+            "/BaseFont /" << postscriptName << "\n"
             "/CIDSystemInfo << /Registry (Adobe) /Ordering (Identity) /Supplement 0 >>\n"
             "/FontDescriptor " << fontDescriptor << "0 R\n"
             "/CIDToGIDMap /Identity\n"
@@ -1595,7 +1867,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
         xprintf("<< /Length %d >>\n"
                 "stream\n", touc.length());
         write(touc);
-        write("endstream\n"
+        write("\nendstream\n"
               "endobj\n");
     }
     {
@@ -1604,7 +1876,7 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
         QPdf::ByteStream s(&font);
         s << "<< /Type /Font\n"
             "/Subtype /Type0\n"
-            "/BaseFont /" << properties.postscriptName << "\n"
+            "/BaseFont /" << postscriptName << "\n"
             "/Encoding /Identity-H\n"
             "/DescendantFonts [" << cidfont << "0 R]\n"
             "/ToUnicode " << toUnicode << "0 R"
@@ -1612,8 +1884,44 @@ void QPdfEnginePrivate::embedFont(QFontSubset *font)
             "endobj\n";
         write(font);
     }
+    {
+        QByteArray cidSetStream(font->nGlyphs() / 8 + 1, 0);
+        int byteCounter = 0;
+        int bitCounter = 0;
+        for (int i = 0; i < font->nGlyphs(); ++i) {
+            cidSetStream.data()[byteCounter] |= (1 << (7 - bitCounter));
+
+            bitCounter++;
+            if (bitCounter == 8) {
+                bitCounter = 0;
+                byteCounter++;
+            }
+        }
+
+        addXrefEntry(cidset);
+        xprintf("<<\n");
+        xprintf("/Length %d\n", cidSetStream.size());
+        xprintf(">>\n");
+        xprintf("stream\n");
+        write(cidSetStream);
+        xprintf("\nendstream\n");
+        xprintf("endobj\n");
+    }
 }
 
+qreal QPdfEnginePrivate::calcUserUnit() const
+{
+    // PDF standards < 1.6 support max 200x200in pages (no UserUnit)
+    if (pdfVersion < QPdfEngine::Version_1_6)
+        return 1.0;
+
+    const int maxLen = qMax(currentPage->pageSize.width(), currentPage->pageSize.height());
+    if (maxLen <= 14400)
+        return 1.0; // for pages up to 200x200in (14400x14400 units) use default scaling
+
+    // for larger pages, rescale units so we can have up to 381x381km
+    return qMin(maxLen / 14400.0, 75000.0);
+}
 
 void QPdfEnginePrivate::writeFonts()
 {
@@ -1636,19 +1944,26 @@ void QPdfEnginePrivate::writePage()
     uint resources = requestObject();
     uint annots = requestObject();
 
-    addXrefEntry(pages.last());
+    qreal userUnit = calcUserUnit();
+
+    addXrefEntry(pages.constLast());
     xprintf("<<\n"
             "/Type /Page\n"
             "/Parent %d 0 R\n"
             "/Contents %d 0 R\n"
             "/Resources %d 0 R\n"
             "/Annots %d 0 R\n"
-            "/MediaBox [0 0 %d %d]\n"
-            ">>\n"
-            "endobj\n",
+            "/MediaBox [0 0 %s %s]\n",
             pageRoot, pageStream, resources, annots,
             // make sure we use the pagesize from when we started the page, since the user may have changed it
-            currentPage->pageSize.width(), currentPage->pageSize.height());
+            QByteArray::number(currentPage->pageSize.width() / userUnit, 'f').constData(),
+            QByteArray::number(currentPage->pageSize.height() / userUnit, 'f').constData());
+
+    if (pdfVersion >= QPdfEngine::Version_1_6)
+        xprintf("/UserUnit %s\n", QByteArray::number(userUnit, 'f').constData());
+
+    xprintf(">>\n"
+            "endobj\n");
 
     addXrefEntry(resources);
     xprintf("<<\n"
@@ -1701,7 +2016,7 @@ void QPdfEnginePrivate::writePage()
     xprintf("stream\n");
     QIODevice *content = currentPage->stream();
     int len = writeCompressed(content);
-    xprintf("endstream\n"
+    xprintf("\nendstream\n"
             "endobj\n");
 
     addXrefEntry(pageStreamLength);
@@ -1721,15 +2036,28 @@ void QPdfEnginePrivate::writeTail()
     for (int i = 1; i < xrefPositions.size()-1; ++i)
         xprintf("%010d 00000 n \n", xrefPositions[i]);
 
-    xprintf("trailer\n"
-            "<<\n"
-            "/Size %d\n"
-            "/Info %d 0 R\n"
-            "/Root %d 0 R\n"
-            ">>\n"
-            "startxref\n%d\n"
-            "%%%%EOF\n",
-            xrefPositions.size()-1, info, catalog, xrefPositions.last());
+    {
+        QByteArray trailer;
+        QPdf::ByteStream s(&trailer);
+
+        s << "trailer\n"
+          << "<<\n"
+          << "/Size " << xrefPositions.size() - 1 << "\n"
+          << "/Info " << info << "0 R\n"
+          << "/Root " << catalog << "0 R\n";
+
+        if (pdfVersion == QPdfEngine::Version_A1b) {
+            const QString uniqueId = QUuid::createUuid().toString();
+            const QByteArray fileIdentifier = QCryptographicHash::hash(uniqueId.toLatin1(), QCryptographicHash::Md5).toHex();
+            s << "/ID [ <" << fileIdentifier << "> <" << fileIdentifier << "> ]\n";
+        }
+
+        s << ">>\n"
+          << "startxref\n" << xrefPositions.constLast() << "\n"
+          << "%%EOF\n";
+
+        write(trailer);
+    }
 }
 
 int QPdfEnginePrivate::addXrefEntry(int object, bool printostr)
@@ -1747,7 +2075,13 @@ int QPdfEnginePrivate::addXrefEntry(int object, bool printostr)
     return object;
 }
 
-void QPdfEnginePrivate::printString(const QString &string) {
+void QPdfEnginePrivate::printString(const QString &string)
+{
+    if (string.isEmpty()) {
+        write("()");
+        return;
+    }
+
     // The 'text string' type in PDF is encoded either as PDFDocEncoding, or
     // Unicode UTF-16 with a Unicode byte order mark as the first character
     // (0xfeff), with the high-order byte first.
@@ -1762,12 +2096,11 @@ void QPdfEnginePrivate::printString(const QString &string) {
             array.append(part[j]);
         }
     }
-    array.append(")");
+    array.append(')');
     write(array);
 }
 
 
-// For strings up to 10000 bytes only !
 void QPdfEnginePrivate::xprintf(const char* fmt, ...)
 {
     if (!stream)
@@ -1779,12 +2112,18 @@ void QPdfEnginePrivate::xprintf(const char* fmt, ...)
     va_list args;
     va_start(args, fmt);
     int bufsize = qvsnprintf(buf, msize, fmt, args);
-
-    Q_ASSERT(bufsize<msize);
-
     va_end(args);
 
-    stream->writeRawData(buf, bufsize);
+    if (Q_LIKELY(bufsize < msize)) {
+        stream->writeRawData(buf, bufsize);
+    } else {
+        // Fallback for abnormal cases
+        QScopedArrayPointer<char> tmpbuf(new char[bufsize + 1]);
+        va_start(args, fmt);
+        bufsize = qvsnprintf(tmpbuf.data(), bufsize + 1, fmt, args);
+        va_end(args);
+        stream->writeRawData(tmpbuf.data(), bufsize);
+    }
     streampos += bufsize;
 }
 
@@ -1886,7 +2225,7 @@ int QPdfEnginePrivate::writeCompressed(const char *src, int len)
 }
 
 int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height, int depth,
-                                  int maskObject, int softMaskObject, bool dct)
+                                  int maskObject, int softMaskObject, bool dct, bool isMono)
 {
     int image = addXrefEntry(-1);
     xprintf("<<\n"
@@ -1896,8 +2235,13 @@ int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height,
             "/Height %d\n", width, height);
 
     if (depth == 1) {
-        xprintf("/ImageMask true\n"
-                "/Decode [1 0]\n");
+        if (!isMono) {
+            xprintf("/ImageMask true\n"
+                    "/Decode [1 0]\n");
+        } else {
+            xprintf("/BitsPerComponent 1\n"
+                    "/ColorSpace /DeviceGray\n");
+        }
     } else {
         xprintf("/BitsPerComponent 8\n"
                 "/ColorSpace %s\n", (depth == 32) ? "/DeviceRGB" : "/DeviceGray");
@@ -1913,7 +2257,7 @@ int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height,
         xprintf("/Interpolate true\n");
     int len = 0;
     if (dct) {
-        //qDebug() << "DCT";
+        //qDebug("DCT");
         xprintf("/Filter /DCTDecode\n>>\nstream\n");
         write(data);
         len = data.length();
@@ -1924,7 +2268,7 @@ int QPdfEnginePrivate::writeImage(const QByteArray &data, int width, int height,
             xprintf(">>\nstream\n");
         len = writeCompressed(data);
     }
-    xprintf("endstream\n"
+    xprintf("\nendstream\n"
             "endobj\n");
     addXrefEntry(lenobj);
     xprintf("%d\n"
@@ -1938,6 +2282,7 @@ struct QGradientBound {
     int function;
     bool reverse;
 };
+Q_DECLARE_TYPEINFO(QGradientBound, Q_PRIMITIVE_TYPE);
 
 int QPdfEnginePrivate::createShadingFunction(const QGradient *gradient, int from, int to, bool reflect, bool alpha)
 {
@@ -1952,7 +2297,9 @@ int QPdfEnginePrivate::createShadingFunction(const QGradient *gradient, int from
         stops.append(QGradientStop(1, stops.at(stops.size() - 1).second));
 
     QVector<int> functions;
-    for (int i = 0; i < stops.size() - 1; ++i) {
+    const int numStops = stops.size();
+    functions.reserve(numStops - 1);
+    for (int i = 0; i < numStops - 1; ++i) {
         int f = addXrefEntry(-1);
         QByteArray data;
         QPdf::ByteStream s(&data);
@@ -1974,10 +2321,11 @@ int QPdfEnginePrivate::createShadingFunction(const QGradient *gradient, int from
     }
 
     QVector<QGradientBound> gradientBounds;
+    gradientBounds.reserve((to - from) * (numStops - 1));
 
     for (int step = from; step < to; ++step) {
         if (reflect && step % 2) {
-            for (int i = stops.size() - 1; i > 0; --i) {
+            for (int i = numStops - 1; i > 0; --i) {
                 QGradientBound b;
                 b.start = step + 1 - qBound(qreal(0.), stops.at(i).first, qreal(1.));
                 b.stop = step + 1 - qBound(qreal(0.), stops.at(i - 1).first, qreal(1.));
@@ -1986,7 +2334,7 @@ int QPdfEnginePrivate::createShadingFunction(const QGradient *gradient, int from
                 gradientBounds << b;
             }
         } else {
-            for (int i = 0; i < stops.size() - 1; ++i) {
+            for (int i = 0; i < numStops - 1; ++i) {
                 QGradientBound b;
                 b.start = step + qBound(qreal(0.), stops.at(i).first, qreal(1.));
                 b.stop = step + qBound(qreal(0.), stops.at(i + 1).first, qreal(1.));
@@ -2026,7 +2374,8 @@ int QPdfEnginePrivate::createShadingFunction(const QGradient *gradient, int from
         for (int i = 0; i < gradientBounds.size(); ++i)
             s << gradientBounds.at(i).function << "0 R ";
         s << "]\n"
-             ">>\n";
+             ">>\n"
+             "endobj\n";
         write(data);
     } else {
         function = functions.at(0);
@@ -2049,7 +2398,7 @@ int QPdfEnginePrivate::generateLinearGradientShader(const QLinearGradient *gradi
         break;
     case QGradient::ReflectSpread:
         reflect = true;
-        // fall through
+        Q_FALLTHROUGH();
     case QGradient::RepeatSpread: {
         // calculate required bounds
         QRectF pageRect = m_pageLayout.fullRectPixels(resolution);
@@ -2098,9 +2447,9 @@ int QPdfEnginePrivate::generateLinearGradientShader(const QLinearGradient *gradi
 int QPdfEnginePrivate::generateRadialGradientShader(const QRadialGradient *gradient, const QTransform &matrix, bool alpha)
 {
     QPointF p1 = gradient->center();
-    double r1 = gradient->centerRadius();
+    qreal r1 = gradient->centerRadius();
     QPointF p0 = gradient->focalPoint();
-    double r0 = gradient->focalRadius();
+    qreal r0 = gradient->focalRadius();
 
     Q_ASSERT(gradient->coordinateMode() == QGradient::LogicalMode);
 
@@ -2112,7 +2461,7 @@ int QPdfEnginePrivate::generateRadialGradientShader(const QRadialGradient *gradi
         break;
     case QGradient::ReflectSpread:
         reflect = true;
-        // fall through
+        Q_FALLTHROUGH();
     case QGradient::RepeatSpread: {
         Q_ASSERT(qFuzzyIsNull(r0)); // QPainter emulates if this is not 0
 
@@ -2172,8 +2521,10 @@ int QPdfEnginePrivate::generateGradientShader(const QGradient *gradient, const Q
     case QGradient::RadialGradient:
         return generateRadialGradientShader(static_cast<const QRadialGradient *>(gradient), matrix, alpha);
     case QGradient::ConicalGradient:
-    default:
-        qWarning() << "Implement me!";
+        Q_UNIMPLEMENTED(); // ### Implement me!
+        break;
+    case QGradient::NoGradient:
+        break;
     }
     return 0;
 }
@@ -2244,7 +2595,7 @@ int QPdfEnginePrivate::gradientBrush(const QBrush &b, const QTransform &matrix, 
                 ">>\n"
                 "stream\n"
               << content
-              << "endstream\n"
+              << "\nendstream\n"
                 "endobj\n";
 
             int softMaskFormObject = addXrefEntry(-1);
@@ -2353,7 +2704,7 @@ int QPdfEnginePrivate::addBrushPattern(const QTransform &m, bool *specifyColor, 
         ">>\n"
         "stream\n"
       << pattern
-      << "endstream\n"
+      << "\nendstream\n"
         "endobj\n";
 
     int patternObj = addXrefEntry(-1);
@@ -2384,6 +2735,23 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
 
     QImage image = img;
     QImage::Format format = image.format();
+
+    if (pdfVersion == QPdfEngine::Version_A1b) {
+        if (image.hasAlphaChannel()) {
+            // transparent images are not allowed in PDF/A-1b, so we convert it to
+            // a format without alpha channel first
+
+            QImage alphaLessImage(image.width(), image.height(), QImage::Format_RGB32);
+            alphaLessImage.fill(Qt::white);
+
+            QPainter p(&alphaLessImage);
+            p.drawImage(0, 0, image);
+
+            image = alphaLessImage;
+            format = image.format();
+        }
+    }
+
     if (image.depth() == 1 && *bitmap && is_monochrome(img.colorTable())) {
         if (format == QImage::Format_MonoLSB)
             image = image.convertToFormat(QImage::Format_Mono);
@@ -2409,7 +2777,7 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
             memcpy(rawdata, image.constScanLine(y), bytesPerLine);
             rawdata += bytesPerLine;
         }
-        object = writeImage(data, w, h, d, 0, 0);
+        object = writeImage(data, w, h, d, 0, 0, false, is_monochrome(img.colorTable()));
     } else {
         QByteArray softMaskData;
         bool dct = false;
@@ -2506,6 +2874,7 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
         qreal size = ti.fontEngine->fontDef.pixelSize;
         int synthesized = ti.fontEngine->synthesized();
         qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
+        Q_ASSERT(stretch > qreal(0));
 
         QTransform trans;
         // Build text rendering matrix (Trm). We need it to map the text area to user
@@ -2528,7 +2897,12 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
         x2s.setNum(static_cast<double>(x2), 'f');
         y2s.setNum(static_cast<double>(y2), 'f');
         QByteArray rectData = x1s + ' ' + y1s + ' ' + x2s + ' ' + y2s;
-        xprintf("<<\n/Type /Annot\n/Subtype /Link\n/Rect [");
+        xprintf("<<\n/Type /Annot\n/Subtype /Link\n");
+
+        if (pdfVersion == QPdfEngine::Version_A1b)
+            xprintf("/F 4\n"); // enable print flag, disable all other
+
+        xprintf("/Rect [");
         xprintf(rectData.constData());
 #ifdef Q_DEBUG_PDF_LINKS
         xprintf("]\n/Border [16 16 1]\n/A <<\n");
@@ -2582,6 +2956,7 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
         return;
     int synthesized = ti.fontEngine->synthesized();
     qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
+    Q_ASSERT(stretch > qreal(0));
 
     *currentPage << "BT\n"
                  << "/F" << font->object_id << size << "Tf "
@@ -2657,8 +3032,9 @@ void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
 
 QTransform QPdfEnginePrivate::pageMatrix() const
 {
-    qreal scale = 72./resolution;
-    QTransform tmp(scale, 0.0, 0.0, -scale, 0.0, m_pageLayout.fullRectPoints().height());
+    qreal userUnit = calcUserUnit();
+    qreal scale = 72. / userUnit / resolution;
+    QTransform tmp(scale, 0.0, 0.0, -scale, 0.0, m_pageLayout.fullRectPoints().height() / userUnit);
     if (m_pageLayout.mode() != QPageLayout::FullPageMode) {
         QRect r = m_pageLayout.paintRectPixels(resolution);
         tmp.translate(r.left(), r.top());
