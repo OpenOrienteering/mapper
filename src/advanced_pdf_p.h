@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 const char *qt_real_to_string(qreal val, char *buf);
 const char *qt_int_to_string(int val, char *buf);
 
-namespace QPdf {
+namespace AdvancedPdf {
 
     class ByteStream
     {
@@ -137,10 +137,10 @@ namespace QPdf {
 }
 
 
-class QPdfPage : public QPdf::ByteStream
+class AdvancedPdfPage : public AdvancedPdf::ByteStream
 {
 public:
-    QPdfPage();
+    AdvancedPdfPage();
 
     QVector<uint> images;
     QVector<uint> graphicStates;
@@ -154,17 +154,17 @@ public:
 private:
 };
 
-class QPdfWriter;
-class QPdfEnginePrivate;
+class AdvancedPdfWriter;
+class AdvancedPdfEnginePrivate;
 
-class QPdfEngine : public QPaintEngine
+class AdvancedPdfEngine : public QPaintEngine
 {
-    Q_DECLARE_PRIVATE(QPdfEngine)
-    friend class QPdfWriter;
+    Q_DECLARE_PRIVATE(AdvancedPdfEngine)
+    friend class AdvancedPdfWriter;
 public:
-    QPdfEngine();
-    QPdfEngine(QPdfEnginePrivate &d);
-    ~QPdfEngine() {}
+    AdvancedPdfEngine();
+    AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
+    ~AdvancedPdfEngine() {}
 
     void setOutputFilename(const QString &filename);
 
@@ -213,12 +213,12 @@ private:
     void updateClipPath(const QPainterPath & path, Qt::ClipOperation op);
 };
 
-class QPdfEnginePrivate : public QPaintEnginePrivate
+class AdvancedPdfEnginePrivate : public QPaintEnginePrivate
 {
-    Q_DECLARE_PUBLIC(QPdfEngine)
+    Q_DECLARE_PUBLIC(AdvancedPdfEngine)
 public:
-    QPdfEnginePrivate();
-    ~QPdfEnginePrivate();
+    AdvancedPdfEnginePrivate();
+    ~AdvancedPdfEnginePrivate();
 
     inline uint requestObject() { return currentObject++; }
 
@@ -237,8 +237,8 @@ public:
 
     int currentObject;
 
-    QPdfPage* currentPage;
-    QPdf::Stroker stroker;
+    AdvancedPdfPage* currentPage;
+    AdvancedPdf::Stroker stroker;
 
     QPointF brushOrigin;
     QBrush brush;

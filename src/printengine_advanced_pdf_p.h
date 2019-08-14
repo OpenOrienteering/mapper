@@ -71,14 +71,14 @@ class QPointF;
 class QRegion;
 class QFile;
 
-class QPdfPrintEnginePrivate;
+class AdvancedPdfPrintEnginePrivate;
 
-class QPdfPrintEngine : public QPdfEngine, public QPrintEngine
+class AdvancedPdfPrintEngine : public AdvancedPdfEngine, public QPrintEngine
 {
-    Q_DECLARE_PRIVATE(QPdfPrintEngine)
+    Q_DECLARE_PRIVATE(AdvancedPdfPrintEngine)
 public:
-    QPdfPrintEngine(QPrinter::PrinterMode m);
-    virtual ~QPdfPrintEngine();
+    AdvancedPdfPrintEngine(QPrinter::PrinterMode m);
+    virtual ~AdvancedPdfPrintEngine();
 
     // reimplementations QPaintEngine
     bool begin(QPaintDevice *pdev) Q_DECL_OVERRIDE;
@@ -98,24 +98,24 @@ public:
     QPrinter::PrinterState state;
 
 protected:
-    QPdfPrintEngine(QPdfPrintEnginePrivate &p);
+    AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p);
 
 private:
-    Q_DISABLE_COPY(QPdfPrintEngine)
+    Q_DISABLE_COPY(AdvancedPdfPrintEngine)
 };
 
-class QPdfPrintEnginePrivate : public QPdfEnginePrivate
+class AdvancedPdfPrintEnginePrivate : public AdvancedPdfEnginePrivate
 {
-    Q_DECLARE_PUBLIC(QPdfPrintEngine)
+    Q_DECLARE_PUBLIC(AdvancedPdfPrintEngine)
 public:
-    QPdfPrintEnginePrivate(QPrinter::PrinterMode m);
-    ~QPdfPrintEnginePrivate();
+    AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m);
+    ~AdvancedPdfPrintEnginePrivate();
 
     virtual bool openPrintDevice();
     virtual void closePrintDevice();
 
 private:
-    Q_DISABLE_COPY(QPdfPrintEnginePrivate)
+    Q_DISABLE_COPY(AdvancedPdfPrintEnginePrivate)
 
     friend class QCupsPrintEngine;
     friend class QCupsPrintEnginePrivate;

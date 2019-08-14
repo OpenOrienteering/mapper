@@ -52,25 +52,25 @@
 
 QT_BEGIN_NAMESPACE
 
-QPdfPrintEngine::QPdfPrintEngine(QPrinter::PrinterMode m)
-    : QPdfEngine(*new QPdfPrintEnginePrivate(m))
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(QPrinter::PrinterMode m)
+    : AdvancedPdfEngine(*new AdvancedPdfPrintEnginePrivate(m))
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::QPdfPrintEngine(QPdfPrintEnginePrivate &p)
-    : QPdfEngine(p)
+AdvancedPdfPrintEngine::AdvancedPdfPrintEngine(AdvancedPdfPrintEnginePrivate &p)
+    : AdvancedPdfEngine(p)
 {
     state = QPrinter::Idle;
 }
 
-QPdfPrintEngine::~QPdfPrintEngine()
+AdvancedPdfPrintEngine::~AdvancedPdfPrintEngine()
 {
 }
 
-bool QPdfPrintEngine::begin(QPaintDevice *pdev)
+bool AdvancedPdfPrintEngine::begin(QPaintDevice *pdev)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     if (!d->openPrintDevice()) {
         state = QPrinter::Error;
@@ -78,14 +78,14 @@ bool QPdfPrintEngine::begin(QPaintDevice *pdev)
     }
     state = QPrinter::Active;
 
-    return QPdfEngine::begin(pdev);
+    return AdvancedPdfEngine::begin(pdev);
 }
 
-bool QPdfPrintEngine::end()
+bool AdvancedPdfPrintEngine::end()
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
-    QPdfEngine::end();
+    AdvancedPdfEngine::end();
 
     d->closePrintDevice();
     state = QPrinter::Idle;
@@ -93,19 +93,19 @@ bool QPdfPrintEngine::end()
     return true;
 }
 
-bool QPdfPrintEngine::newPage()
+bool AdvancedPdfPrintEngine::newPage()
 {
-    return QPdfEngine::newPage();
+    return AdvancedPdfEngine::newPage();
 }
 
-int QPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
+int AdvancedPdfPrintEngine::metric(QPaintDevice::PaintDeviceMetric m) const
 {
-    return QPdfEngine::metric(m);
+    return AdvancedPdfEngine::metric(m);
 }
 
-void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
+void AdvancedPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &value)
 {
-    Q_D(QPdfPrintEngine);
+    Q_D(AdvancedPdfPrintEngine);
 
     switch (int(key)) {
 
@@ -231,9 +231,9 @@ void QPdfPrintEngine::setProperty(PrintEnginePropertyKey key, const QVariant &va
     }
 }
 
-QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
+QVariant AdvancedPdfPrintEngine::property(PrintEnginePropertyKey key) const
 {
-    Q_D(const QPdfPrintEngine);
+    Q_D(const AdvancedPdfPrintEngine);
 
     QVariant ret;
     switch (int(key)) {
@@ -344,7 +344,7 @@ QVariant QPdfPrintEngine::property(PrintEnginePropertyKey key) const
 }
 
 
-bool QPdfPrintEnginePrivate::openPrintDevice()
+bool AdvancedPdfPrintEnginePrivate::openPrintDevice()
 {
     if (outDevice)
         return false;
@@ -361,7 +361,7 @@ bool QPdfPrintEnginePrivate::openPrintDevice()
     return true;
 }
 
-void QPdfPrintEnginePrivate::closePrintDevice()
+void AdvancedPdfPrintEnginePrivate::closePrintDevice()
 {
     if (outDevice) {
         outDevice->close();
@@ -379,8 +379,8 @@ void QPdfPrintEnginePrivate::closePrintDevice()
 
 
 
-QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
-    : QPdfEnginePrivate(),
+AdvancedPdfPrintEnginePrivate::AdvancedPdfPrintEnginePrivate(QPrinter::PrinterMode m)
+    : AdvancedPdfEnginePrivate(),
       duplex(QPrint::DuplexNone),
       collate(true),
       copies(1),
@@ -395,7 +395,7 @@ QPdfPrintEnginePrivate::QPdfPrintEnginePrivate(QPrinter::PrinterMode m)
         resolution = qt_defaultDpi();
 }
 
-QPdfPrintEnginePrivate::~QPdfPrintEnginePrivate()
+AdvancedPdfPrintEnginePrivate::~AdvancedPdfPrintEnginePrivate()
 {
 }
 

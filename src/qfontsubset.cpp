@@ -100,7 +100,7 @@ QByteArray QFontSubset::glyphName(unsigned short unicode, bool symbol)
     buffer[0] = 'u';
     buffer[1] = 'n';
     buffer[2] = 'i';
-    QPdf::toHex(unicode, buffer+3);
+    AdvancedPdf::toHex(unicode, buffer+3);
     return buffer;
 }
 
@@ -112,7 +112,7 @@ QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> &revers
         return "/.notdef";
 
     QByteArray ba;
-    QPdf::ByteStream s(&ba);
+    AdvancedPdf::ByteStream s(&ba);
     if (reverseMap[glyphIndex] && reverseMap[glyphIndex] < 0x10000) {
         s << '/' << glyphName(reverseMap[glyphIndex], false);
     } else {
@@ -129,7 +129,7 @@ QByteArray QFontSubset::widthArray() const
     QFontEngine::Properties properties = fontEngine->properties();
 
     QByteArray width;
-    QPdf::ByteStream s(&width);
+    AdvancedPdf::ByteStream s(&width);
     QFixed scale = QFixed(1000)/emSquare;
 
     QFixed defWidth = widths[0];
@@ -179,7 +179,7 @@ QByteArray QFontSubset::widthArray() const
     return width;
 }
 
-static void checkRanges(QPdf::ByteStream &ts, QByteArray &ranges, int &nranges)
+static void checkRanges(AdvancedPdf::ByteStream &ts, QByteArray &ranges, int &nranges)
 {
     if (++nranges > 100) {
         ts << nranges << "beginbfrange\n"
@@ -205,7 +205,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
     QVector<int> reverseMap = getReverseMap();
 
     QByteArray touc;
-    QPdf::ByteStream ts(&touc);
+    AdvancedPdf::ByteStream ts(&touc);
     ts << "/CIDInit /ProcSet findresource begin\n"
         "12 dict begin\n"
         "begincmap\n"
@@ -218,7 +218,7 @@ QByteArray QFontSubset::createToUnicodeMap() const
 
     int nranges = 1;
     QByteArray ranges = "<0000> <0000> <0000>\n";
-    QPdf::ByteStream s(&ranges);
+    AdvancedPdf::ByteStream s(&ranges);
 
     char buf[5];
     for (int g = 1; g < nGlyphs(); ) {
@@ -252,14 +252,14 @@ QByteArray QFontSubset::createToUnicodeMap() const
         int endnonlinear = startLinear ? startLinear : g;
         // qDebug("    startLinear=%x endnonlinear=%x", startLinear,endnonlinear);
         if (endnonlinear > start) {
-            s << '<' << QPdf::toHex((ushort)start, buf) << "> <";
-            s << QPdf::toHex((ushort)(endnonlinear - 1), buf) << "> ";
+            s << '<' << AdvancedPdf::toHex((ushort)start, buf) << "> <";
+            s << AdvancedPdf::toHex((ushort)(endnonlinear - 1), buf) << "> ";
             if (endnonlinear == start + 1) {
-                s << '<' << QPdf::toHex((ushort)reverseMap[start], buf) << ">\n";
+                s << '<' << AdvancedPdf::toHex((ushort)reverseMap[start], buf) << ">\n";
             } else {
                 s << '[';
                 for (int i = start; i < endnonlinear; ++i) {
-                    s << '<' << QPdf::toHex((ushort)reverseMap[i], buf) << "> ";
+                    s << '<' << AdvancedPdf::toHex((ushort)reverseMap[i], buf) << "> ";
                 }
                 s << "]\n";
             }
@@ -272,9 +272,9 @@ QByteArray QFontSubset::createToUnicodeMap() const
                 int uc_end = uc_start + len - 1;
                 if ((uc_end >> 8) != (uc_start >> 8))
                     len = 256 - (uc_start & 0xff);
-                s << '<' << QPdf::toHex((ushort)startLinear, buf) << "> <";
-                s << QPdf::toHex((ushort)(startLinear + len - 1), buf) << "> ";
-                s << '<' << QPdf::toHex((ushort)reverseMap[startLinear], buf) << ">\n";
+                s << '<' << AdvancedPdf::toHex((ushort)startLinear, buf) << "> <";
+                s << AdvancedPdf::toHex((ushort)(startLinear + len - 1), buf) << "> ";
+                s << '<' << AdvancedPdf::toHex((ushort)reverseMap[startLinear], buf) << ">\n";
                 checkRanges(ts, ranges, nranges);
                 startLinear += len;
             }
