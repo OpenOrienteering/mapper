@@ -1128,12 +1128,13 @@ void AdvancedPdfEngine::setPen()
 
     QColor rgba = b.color();
     if (d->grayscale) {
-        qreal gray = qGray(rgba.rgba())/255.;
-        *d->currentPage << gray << gray << gray;
+        qreal gray = (255-qGray(rgba.rgba()))/255.0;
+        *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
     } else {
-        *d->currentPage << rgba.redF()
-                        << rgba.greenF()
-                        << rgba.blueF();
+        *d->currentPage << rgba.cyanF()
+                        << rgba.magentaF()
+                        << rgba.yellowF()
+                        << rgba.blackF();
     }
     *d->currentPage << "SCN\n";
 
@@ -1194,12 +1195,13 @@ void AdvancedPdfEngine::setBrush()
     if (specifyColor) {
         QColor rgba = d->brush.color();
         if (d->grayscale) {
-            qreal gray = qGray(rgba.rgba())/255.;
-            *d->currentPage << gray << gray << gray;
+            qreal gray = (255-qGray(rgba.rgba()))/255.0;
+            *d->currentPage << 0.0 << 0.0 << 0.0 << gray;
         } else {
-            *d->currentPage << rgba.redF()
-                            << rgba.greenF()
-                            << rgba.blueF();
+            *d->currentPage << rgba.cyanF()
+                            << rgba.magentaF()
+                            << rgba.yellowF()
+                            << rgba.blackF();
         }
     }
     if (patternObject)
@@ -1446,7 +1448,7 @@ void AdvancedPdfEnginePrivate::writeHeader()
 
     // color space for pattern
     patternColorSpace = addXrefEntry(-1);
-    xprintf("[/Pattern /DeviceRGB]\n"
+    xprintf("[/Pattern /DeviceCMYK]\n"
             "endobj\n");
 }
 
@@ -1646,7 +1648,7 @@ void AdvancedPdfEnginePrivate::writePage()
     xprintf("<<\n"
             "/ColorSpace <<\n"
             "/PCSp %d 0 R\n"
-            "/CSp /DeviceRGB\n"
+            "/CSp /DeviceCMYK\n"
             "/CSpg /DeviceGray\n"
             ">>\n"
             "/ExtGState <<\n"
