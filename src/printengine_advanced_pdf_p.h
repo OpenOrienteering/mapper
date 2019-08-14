@@ -73,7 +73,7 @@ class QFile;
 
 class QPdfPrintEnginePrivate;
 
-class Q_PRINTSUPPORT_EXPORT QPdfPrintEngine : public QPdfEngine, public QPrintEngine
+class QPdfPrintEngine : public QPdfEngine, public QPrintEngine
 {
     Q_DECLARE_PRIVATE(QPdfPrintEngine)
 public:
@@ -104,7 +104,7 @@ private:
     Q_DISABLE_COPY(QPdfPrintEngine)
 };
 
-class Q_PRINTSUPPORT_EXPORT QPdfPrintEnginePrivate : public QPdfEnginePrivate
+class QPdfPrintEnginePrivate : public QPdfEnginePrivate
 {
     Q_DECLARE_PUBLIC(QPdfPrintEngine)
 public:
