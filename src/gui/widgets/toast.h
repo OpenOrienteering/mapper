@@ -75,8 +75,6 @@ public:
 	/**
 	 * Shows a Toast.
 	 * 
-	 * @param region   The global region of interest. The Toast will be placed
-	 *                 in the center of the bottom.
 	 * @param text     The text to be displayed. 
 	 * @param timeout  The time how long the Toast will be visible.
 	 */
