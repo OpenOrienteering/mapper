@@ -154,6 +154,8 @@ class AdvancedPdfEngine : public QPaintEngine
     Q_DECLARE_PRIVATE(AdvancedPdfEngine)
     friend class AdvancedPdfWriter;
 public:
+    static const QPaintEngine::Type paintEngineType() { return QPaintEngine::Type(QPaintEngine::User + 1); }
+
     AdvancedPdfEngine();
     AdvancedPdfEngine(AdvancedPdfEnginePrivate &d);
     ~AdvancedPdfEngine() {}

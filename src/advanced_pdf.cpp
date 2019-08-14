@@ -1229,7 +1229,7 @@ bool AdvancedPdfEngine::newPage()
 
 QPaintEngine::Type AdvancedPdfEngine::type() const
 {
-    return QPaintEngine::Pdf;
+    return paintEngineType();
 }
 
 void AdvancedPdfEngine::setResolution(int resolution)
