@@ -280,7 +280,7 @@ void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 {
 	setEnabled(false);
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 	QString path = item->data(pathRole()).toString();
 	controller->getWindow()->openPath(path);
 	setEnabled(true);
@@ -448,7 +448,7 @@ void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 			QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
 		}
 		
-		qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 		controller->getWindow()->openPath(file_path);
 		setEnabled(true);
 	}

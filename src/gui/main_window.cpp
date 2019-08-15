@@ -1188,7 +1188,7 @@ void MainWindow::showMessageBox(QWidget* parent, const QString& title, const QSt
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
 	// Let Android update the screen.
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 }
 
 

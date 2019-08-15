@@ -734,9 +734,7 @@ void TemplateListWidget::cellChange(int row, int column)
 							auto item_rect = template_table->visualItemRect(template_table->item(row, 1));
 							QToolTip::showText(template_table->mapToGlobal(item_rect.bottomLeft()),
 							                   qApp->translate("OpenOrienteering::MainWindow", "Opening %1").arg(temp->getTemplateFilename()) );
-							// QToolTip seems to need to event loop runs.
-							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-							qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+							QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 						}
 						visibility.visible = true;
 						updateVisibility(temp, visibility);
