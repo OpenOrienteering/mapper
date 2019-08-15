@@ -177,8 +177,24 @@ public:
 	/** Sets the text in the status bar. */ 
 	void setStatusBarText(const QString& text);
 	
-	/** Shows a temporary message in the status bar. */
+	/**
+	 * Shows a temporary message in the status bar.
+	 * 
+	 * Normally, the message won't become visible before control returns
+	 * to the event loop where the GUI update events are processed.
+	 * For messages indicating a potentially long-running operation, use
+	 * showStatusBarMessageImmediately() instead.
+	 */
 	void showStatusBarMessage(const QString& text, int timeout = 0);
+	
+	/**
+	 * Shows a temporary message in the status bar immediately.
+	 * 
+	 * Use this function instead of showStatusBarMessage() when indicating the
+	 * start of potentially long-running operations to ensure that GUI update
+	 * events are processed immediately.
+	 */
+	void showStatusBarMessageImmediately(const QString& text, int timeout = 0);
 	
 	/** Clears temporary messages set in the status bar with showStatusBarMessage(). */
 	void clearStatusBarMessage();
