@@ -27,22 +27,24 @@ AdvancedPdfPrinter::AdvancedPdfPrinter(QPrinter::PrinterMode mode)
  : QPrinter{ mode }
  , engine{ new AdvancedPdfPrintEngine{ mode} }
 {
-	setOutputFormat(PdfFormat);
-	setEngines(engine.get(), engine.get());
+	init();
 }
 
 AdvancedPdfPrinter::AdvancedPdfPrinter(const QPrinterInfo& printer, QPrinter::PrinterMode mode)
  : QPrinter{ printer, mode }
  , engine{ new AdvancedPdfPrintEngine{ mode} }
 {
+	init();
+}
+
+AdvancedPdfPrinter::~AdvancedPdfPrinter() = default;
+
+void AdvancedPdfPrinter::init()
+{
 	setOutputFormat(PdfFormat);
 	setEngines(engine.get(), engine.get());
 }
 
-AdvancedPdfPrinter::~AdvancedPdfPrinter()
-{
-	// Nothing, not inlined
-}
 
 QPaintEngine::Type AdvancedPdfPrinter::paintEngineType()
 {
