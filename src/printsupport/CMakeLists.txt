@@ -25,8 +25,10 @@ set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
 
 if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.3.0)
 	set(FORK_VERSION qt-5.2.1)
-else()
+elseif (${Qt5PrintSupport_VERSION} VERSION_LESS 5.12.0)
 	set(FORK_VERSION qt-5.5.1)
+else()
+	set(FORK_VERSION qt-5.12.4)
 endif()
 
 set(PRINTSUPPORT_SRCS
