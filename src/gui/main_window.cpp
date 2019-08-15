@@ -572,6 +572,9 @@ bool MainWindow::event(QEvent* event)
 		if (toast)
 			toast->adjustPosition(frameGeometry());
 		break;
+		
+	default:
+		; // nothing
 	}
 	
 	return QMainWindow::event(event);
@@ -1318,7 +1321,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 	Q_UNUSED(object)
 	
-	switch(event->type())
+	switch (event->type())
 	{
 	case QEvent::WhatsThisClicked:
 		{
