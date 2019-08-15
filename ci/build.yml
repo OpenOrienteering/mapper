@@ -52,7 +52,7 @@ steps:
       -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
       -DMapper_CI_GIT_REPOSITORY=$(SOURCE_DIR)
       -DMapper_CI_GIT_TAG=$(Build.SourceVersion)
-      -DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranchName)-$(Build.BuildNumber)
+      "-DMapper_CI_VERSION_DISPLAY=$(Build.SourceBranchName) v$(Build.BuildNumber)"
       -DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)
       -DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)
       -DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)
