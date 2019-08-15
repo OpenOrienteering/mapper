@@ -522,6 +522,12 @@ void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 		statusBar()->showMessage(text, timeout);
 }
 
+void MainWindow::showStatusBarMessageImmediately(const QString& text, int timeout)
+{
+	showStatusBarMessage(text, timeout);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
+}
+
 void MainWindow::clearStatusBarMessage()
 {
 	if (toast)
@@ -824,7 +830,7 @@ bool MainWindow::openPath(const QString& path, const FileFormat* format)
 		return true;
 	
 #ifdef Q_OS_ANDROID
-	showStatusBarMessage(tr("Opening %1").arg(QFileInfo(path).fileName()));
+	showStatusBarMessageImmediately(tr("Opening %1").arg(QFileInfo(path).fileName()));
 #else
 	MainWindow* const existing = findMainWindow(path);
 	if (existing)
@@ -1045,7 +1051,7 @@ Autosave::AutosaveResult MainWindow::autosave()
 	}
 	else
 	{
-		showStatusBarMessage(tr("Autosaving..."), 0);
+		showStatusBarMessageImmediately(tr("Autosaving..."), 0);
 		if (controller->exportTo(autosavePath(currentPath()), *autosave_format))
 		{
 			// Success
