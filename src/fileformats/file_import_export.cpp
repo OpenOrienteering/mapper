@@ -204,32 +204,35 @@ void Importer::validate()
 		if (lookup_result == Template::NotFound)
 		{
 			have_lost_template = true;
+			continue;
 		}
-		else if (!view || view->getTemplateVisibility(temp).visible)
+		
+		if (view && !view->getTemplateVisibility(temp).visible)
 		{
-			if (!temp->loadTemplateFile(false))
-			{
-				addWarning(tr("Failed to load template '%1', reason: %2")
-				           .arg(temp->getTemplateFilename(), temp->errorString()));
-			}
-			else
-			{
-				auto error_string = temp->errorString();
-				if (lookup_result == Template::FoundInMapDir)
-				{
-					error_string.prepend(
-					            ::OpenOrienteering::Importer::tr(
-					               "Template \"%1\" has been loaded from the map's directory instead of"
-					               " the relative location to the map file where it was previously."
-					               ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
-				}
-				
-				if (!error_string.isEmpty())
-				{
-					addWarning(tr("Warnings when loading template '%1':\n%2")
-					           .arg(temp->getTemplateFilename(), temp->errorString()));
-				}
-			}
+			continue;
+		}
+		
+		if (!temp->loadTemplateFile(false))
+		{
+			addWarning(tr("Failed to load template '%1', reason: %2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
+			continue;
+		}
+		
+		auto error_string = temp->errorString();
+		if (lookup_result == Template::FoundInMapDir)
+		{
+			error_string.prepend(
+			            ::OpenOrienteering::Importer::tr(
+			                "Template \"%1\" has been loaded from the map's directory instead of"
+			                " the relative location to the map file where it was previously."
+			                ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+		}
+		
+		if (!error_string.isEmpty())
+		{
+			addWarning(tr("Warnings when loading template '%1':\n%2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
 		}
 	}
 	
