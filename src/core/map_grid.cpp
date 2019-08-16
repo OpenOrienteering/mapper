@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -61,12 +61,12 @@ void MapGrid::save(QXmlStreamWriter& xml) const
 	element.writeAttribute(QLatin1String("color"), QColor::fromRgba(color).name(name_format));
 	element.writeAttribute(QLatin1String("display"), display);
 	element.writeAttribute(QLatin1String("alignment"), alignment);
-	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation);
+	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation, 2);
 	element.writeAttribute(QLatin1String("unit"), unit);
-	element.writeAttribute(QLatin1String("h_spacing"), horz_spacing);
-	element.writeAttribute(QLatin1String("v_spacing"), vert_spacing);
-	element.writeAttribute(QLatin1String("h_offset"), horz_offset);
-	element.writeAttribute(QLatin1String("v_offset"), vert_offset);
+	element.writeAttribute(QLatin1String("h_spacing"), horz_spacing, 1);
+	element.writeAttribute(QLatin1String("v_spacing"), vert_spacing, 1);
+	element.writeAttribute(QLatin1String("h_offset"), horz_offset, 1);
+	element.writeAttribute(QLatin1String("v_offset"), vert_offset, 1);
 	element.writeAttribute(QLatin1String("snapping_enabled"), snapping_enabled);
 }
 
