@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -153,6 +153,8 @@ add_unit_test(georef_ocd_mapping_t
 	../src/core/crs_template_implementation
 	../src/fileformats/ocd_georef_fields
 	../src/fileformats/file_format
+	../src/util/xml_stream_util
+	../src/core/map_coord
 )
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/settings
@@ -163,6 +165,8 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
 	../src/fileformats/file_format
+	../src/util/xml_stream_util
+	../src/core/map_coord
 )
 add_unit_test(grid_t ../src/util/util)
 add_unit_test(locale_t ../src/util/translation_util)

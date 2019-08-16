@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,6 +30,7 @@
 #include <QByteArray>
 #include <QChar>
 #include <QIODevice>
+#include <QLatin1Char>
 #include <QScopedValueRollback>
 #include <QTextCodec>
 // IWYU pragma: no_include <qxmlstream.h>
@@ -49,6 +50,23 @@ void writeLineBreak(QXmlStreamWriter& xml)
 		static const QString linebreak = QLatin1String{"\n"};
 		xml.writeCharacters(linebreak);
 	}
+}
+
+
+QString numberToString(double value, int precision)
+{
+	auto number = QString::number(value, 'f', precision);
+	auto i = number.length() - 1;
+	if (number.contains(QLatin1Char('.')))
+	{
+		// Cut off trailing zeros
+		while (i > 0 && number.at(i) == QLatin1Char('0'))
+			--i;
+		if (number.at(i) == QLatin1Char('.'))
+			--i;
+	}
+	number.resize(++i);
+	return number;
 }
 
 
