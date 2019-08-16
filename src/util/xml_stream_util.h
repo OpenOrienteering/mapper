@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,9 +21,7 @@
 #define OPENORIENTEERING_XML_STREAM_UTIL_H
 
 #include <QtGlobal>
-#include <QChar>
 #include <QHash>
-#include <QLatin1Char>
 #include <QLatin1String>
 #include <QRectF>
 #include <QSizeF>
@@ -48,6 +46,11 @@ namespace OpenOrienteering {
  */
 void writeLineBreak(QXmlStreamWriter& xml);
 
+
+/**
+ * Returns the number of characters which are significant for input/output.
+ */
+QString numberToString(double value, int precision);
 
 
 /**
@@ -470,18 +473,7 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const double value, int precision)
 {
-	auto number = QString::number(value, 'f', precision);
-	int i = number.length() - 1;
-	if (number.contains(QLatin1Char('.')))
-	{
-		// Cut off trailing zeros
-		while (i > 0 && number.at(i) == QLatin1Char('0'))
-			--i;
-		if (number.at(i) == QLatin1Char('.'))
-		    --i;
-		
-	}
-	xml.writeAttribute(qualifiedName, QString::fromRawData(number.data(), ++i));
+	xml.writeAttribute(qualifiedName, numberToString(value, precision));
 }
 
 inline
