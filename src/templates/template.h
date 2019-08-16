@@ -119,12 +119,13 @@ public:
 	 */
 	enum State
 	{
-		/// The template is loaded and ready to be displayed
+		/// The template data is loaded and ready to be displayed.
 		Loaded = 0,
-		/// The template has been unloaded, but can be reloaded if needed
+		/// The template data is not yet loaded or has been unloaded.
+		/// It is assumed to be available, so it can be (re-)loaded if needed.
 		Unloaded,
 		/// A required resource cannot be found (e.g. missing image or font),
-		/// so the template is invalid
+		/// so the template data cannot be loaded.
 		Invalid
 	};
 	
@@ -138,7 +139,7 @@ public:
 	
 protected:	
 	/**
-	 * Initializes the template as "invalid".
+	 * Initializes the template as "Unloaded".
 	 */
 	Template(const QString& path, not_null<Map*> map);
 
