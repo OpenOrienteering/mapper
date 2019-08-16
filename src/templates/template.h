@@ -238,7 +238,10 @@ public:
 	 *  - absolute position of template file
 	 *  - template filename in map_directory, if map_directory not empty
 	 * 
-	 * Returns true if successful.
+	 * If successful, changes the state from Invalid to Unloaded if necessary,
+	 * and returns true. Otherwise, changes the state from Unloaded to Invalid
+	 * if necessary, and returns false. (If the state is Loaded, it is left
+	 * unchanged.)
 	 * 
 	 * If out_found_from_map_dir is given, it is set to true if the template file
 	 * is found using the template filename in the map's directory (3rd alternative).

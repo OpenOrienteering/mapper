@@ -481,6 +481,14 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 
 bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
 {
+	// This function normally sets the state either to Invalid or Unloaded.
+	// However, the Loaded state must not be changed here because this would
+	// cause inconsistencies with other data held by templates in this state.
+	auto const set_state = [this](auto proposed_state) {
+		if (template_state != Loaded)
+			template_state = proposed_state;
+	};
+	
 	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
 		map_directory.append(QLatin1Char('/'));
 	
@@ -496,6 +504,7 @@ bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_m
 		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
+			set_state(Unloaded);
 			return true;
 		}
 	}
@@ -503,6 +512,7 @@ bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_m
 	// Second try absolute path
 	if (QFileInfo::exists(template_path))
 	{
+		set_state(Unloaded);
 		return true;
 	}
 	
@@ -513,6 +523,7 @@ bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_m
 		if (QFileInfo::exists(path))
 		{
 			setTemplatePath(path);
+			set_state(Unloaded);
 			if (out_found_in_map_dir)
 				*out_found_in_map_dir = true;
 			return true;
@@ -520,7 +531,7 @@ bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_m
 	}
 	
 	setTemplatePath(old_absolute_path);
-	template_state = Invalid;
+	set_state(Invalid);
 	setErrorString(tr("No such file."));
 	return false;
 }
