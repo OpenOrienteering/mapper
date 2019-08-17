@@ -30,6 +30,7 @@ set(MAPPER_GDAL_HEADERS
 set(MAPPER_GDAL_SOURCES
   gdal_manager.cpp
   gdal_settings_page.cpp
+  gdal_template.cpp
   ogr_file_format.cpp
   ogr_template.cpp
   mapper-osmconf.ini
