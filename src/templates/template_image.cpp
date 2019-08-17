@@ -59,6 +59,10 @@
 #include "util/transformation.h"
 #include "util/util.h"
 
+#ifdef MAPPER_USE_GDAL
+#include "gdal/gdal_template.h"
+#endif
+
 
 namespace OpenOrienteering {
 
@@ -397,7 +401,14 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 		result.push_back({Georeferencing_WorldFile, "World File", temp_crs_spec, pixel_to_world});
 	}
 	
-	/// \todo GeoTIFF
+#ifdef MAPPER_USE_GDAL
+	auto gdal_georef = GdalTemplate::tryReadProjection(template_path);
+	if (gdal_georef.valid)
+	{
+		auto proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
+		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
+	}
+#endif
 	
 	Q_ASSERT(available_georef.back().type == Georeferencing_None);
 	result.push_back(available_georef.back());
@@ -570,16 +581,20 @@ void TemplateImage::applyGeoreferencingOption(const GeoreferencingOption& option
 	}
 	
 	georef.reset(new Georeferencing());
-	if (!temp_crs_spec.isEmpty()
-	    && option.type == Georeferencing_WorldFile)
+	switch (option.type)
 	{
-		georef->setProjectedCRS(QString::fromUtf8(option.source), temp_crs_spec);
-	}
-	else if (!option.crs_spec.isEmpty())
-	{
+	case Georeferencing_WorldFile:
+		if (!temp_crs_spec.isEmpty())
+			georef->setProjectedCRS(QString::fromUtf8(option.source), temp_crs_spec);
+		break;
+	case Georeferencing_GDAL:
+#ifdef MAPPER_USE_GDAL
 		georef->setProjectedCRS(QString::fromUtf8(option.source), option.crs_spec);
+#endif		
+		break;
+	case Georeferencing_None:
+		break;
 	}
-	
 	georef->setTransformationDirectly(option.pixel_to_world);
 	if (map->getGeoreferencing().isValid())
 		updatePosFromGeoreferencing();

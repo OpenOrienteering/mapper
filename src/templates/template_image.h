@@ -64,7 +64,7 @@ public:
 	{
 		Georeferencing_None = 0,
 		Georeferencing_WorldFile,
-		Georeferencing_GeoTiff
+		Georeferencing_GDAL
 	};
 	
 	struct GeoreferencingOption
@@ -75,7 +75,7 @@ public:
 		QTransform pixel_to_world;
 	};
 	
-	using GeoreferencingOptions = QVarLengthArray<GeoreferencingOption, 2>;
+	using GeoreferencingOptions = QVarLengthArray<GeoreferencingOption, 3>;
 	
 	/**
 	 * Returns the filename extensions supported by this template class.
