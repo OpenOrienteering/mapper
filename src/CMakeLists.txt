@@ -167,6 +167,7 @@ set(Mapper_Common_SRCS
   templates/template_adjust.cpp
   templates/template_dialog_reopen.cpp
   templates/template_image.cpp
+  templates/template_image_open_dialog.cpp
   templates/template_map.cpp
   templates/template_position_dock_widget.cpp
   templates/template_positioning_dialog.cpp
