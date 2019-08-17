@@ -61,15 +61,18 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
 	
 	auto const & georeferencing_option = templ->availableGeoreferencing().front();
-	auto const georef_source = georeferencing_option.source;
+	auto georef_source = georeferencing_option.source;
 	auto const georef_radio_enabled = georeferencing_option.type != TemplateImage::Georeferencing_None;
 	
 	// Georeferencing source translations which already existed in this context
 	// and need to be preserved here, until moved to a different file.
-	// Now the source strings come from TemplateImage.
+	// Now the source strings come from TemplateImage and from GDAL (driver names).
 	Q_UNUSED(QT_TR_NOOP("World File"))
 	Q_UNUSED(QT_TR_NOOP("GeoTIFF"))
 	Q_UNUSED(QT_TR_NOOP("no georeferencing information"))
+	// GDAL's GeoTIFF driver reports itselfs as "GTiff".
+	if (georef_source == "GTiff")
+		georef_source = "GeoTIFF";
 	
 	georef_radio = new QRadioButton(tr("Georeferenced (%1)").arg(tr(georef_source)));
 	georef_radio->setEnabled(georef_radio_enabled);
