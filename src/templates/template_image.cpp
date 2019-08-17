@@ -554,7 +554,7 @@ void TemplateImage::calculateGeoreferencing()
 			// TODO: world file lost, disable georeferencing or unload template
 			return;
 		}
-		auto pixel_to_world = world_file.pixel_to_world;
+		auto pixel_to_world = QTransform(world_file);
 		if (georef->isGeographic())
 		{
 			constexpr auto factor = qDegreesToRadians(1.0);

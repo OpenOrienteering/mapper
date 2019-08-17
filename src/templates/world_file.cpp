@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2015-2017 Kai Pastor
+ *    Copyright 2015-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,15 +34,26 @@
 namespace OpenOrienteering {
 
 WorldFile::WorldFile()
+: parameters { 1, 0, 0, 1, 0, 0 }
 {
 	loaded = false;
 }
 
 WorldFile::WorldFile(const QTransform& wld)
-    : loaded{true}
-    , pixel_to_world{wld}
+: loaded { true }
+, parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31(), wld.m32() }
 {
 	// nothing else
+}
+
+
+WorldFile::operator QTransform() const
+{
+	return {
+	  parameters[0], parameters[1], 0,
+	  parameters[2], parameters[3], 0,
+	  parameters[4], parameters[5], 1
+	};
 }
 
 
@@ -57,26 +68,18 @@ bool WorldFile::load(const QString& path)
 	QTextStream text_stream(&file);
 	
 	bool ok = false;
-	double parameters[6];
 	for (auto& parameter : parameters)
 	{
-		auto value = text_stream.readLine().toDouble(&ok);
+		parameter = text_stream.readLine().toDouble(&ok);
 		if (!ok)
 		{
 			file.close();
 			loaded = false;
 			return false;
 		}
-		parameter = value;
 	}
 	
 	file.close();
-	
-	pixel_to_world.setMatrix(
-		parameters[0], parameters[2], parameters[4],
-		parameters[1], parameters[3], parameters[5],
-		0, 0, 1);
-	pixel_to_world = pixel_to_world.transposed();
 	loaded = true;
 	return true;
 }
@@ -90,12 +93,8 @@ bool WorldFile::save(const QString &path)
 	{
 		QTextStream stream(&file);
 		stream.setRealNumberPrecision(10);
-		stream << pixel_to_world.m11() << endl;
-		stream << pixel_to_world.m12() << endl;
-		stream << pixel_to_world.m21() << endl;
-		stream << pixel_to_world.m22() << endl;
-		stream << pixel_to_world.m31() << endl;
-		stream << pixel_to_world.m32() << endl;
+		for (auto value : parameters)
+			stream << value << endl;
 		file.close();
 	}
 	return file.error() == QFileDevice::NoError;

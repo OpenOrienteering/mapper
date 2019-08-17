@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -71,22 +71,27 @@ private slots:
 	{
 		WorldFile world_file;
 		QVERIFY(!world_file.loaded);
-		QCOMPARE(world_file.pixel_to_world, QTransform{});
+		QCOMPARE(QTransform(world_file), QTransform{});
+		
+		auto const verify_parameters = [](auto const & parameters) {
+			QCOMPARE(parameters[0], 0.15);
+			QCOMPARE(parameters[1], 0.0);
+			QCOMPARE(parameters[2], 0.0);
+			QCOMPARE(parameters[3], -0.15);
+			QCOMPARE(parameters[4], 649078.0);
+			QCOMPARE(parameters[5], 394159.0);
+		};
 		
 		QString world_file_path = QStringLiteral("testdata:templates/world-file.pgw");
 		QVERIFY(world_file.load(world_file_path));
 		QVERIFY(world_file.loaded);
-		QCOMPARE(world_file.pixel_to_world.m11(), 0.15);
-		QCOMPARE(world_file.pixel_to_world.m12(), 0.0);
-		QCOMPARE(world_file.pixel_to_world.m21(), 0.0);
-		QCOMPARE(world_file.pixel_to_world.m22(), -0.15);
-		QCOMPARE(world_file.pixel_to_world.dx(), 649078.0);
-		QCOMPARE(world_file.pixel_to_world.dy(), 394159.0);
+		verify_parameters(world_file.parameters);
 		
 		QString image_path = QStringLiteral("testdata:templates/world-file.png");
 		WorldFile world_file_from_image;
 		QVERIFY(world_file_from_image.tryToLoadForImage(image_path));
-		QCOMPARE(world_file_from_image.pixel_to_world, world_file.pixel_to_world);
+		QVERIFY(world_file_from_image.loaded);
+		verify_parameters(world_file_from_image.parameters);
 	}
 	
 	void worldFileTemplateTest()
