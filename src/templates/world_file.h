@@ -41,10 +41,20 @@ struct WorldFile
 	double parameters[6];
 	
 	/// Creates an unloaded world file
-	WorldFile();
+	WorldFile() noexcept;
+	
+	/// Creates a world file with the given parameters (in-order).
+	WorldFile(double xw, double xh, double yw, double yh, double dx, double dy) noexcept;
 
 	/// Creates a loaded world file from a QTransform
-	explicit WorldFile(const QTransform& wld);
+	explicit WorldFile(const QTransform& wld) noexcept;
+	
+	WorldFile(const WorldFile&) noexcept = default;
+	WorldFile(WorldFile&&) noexcept = default;
+	~WorldFile() = default;
+	
+	WorldFile& operator=(const WorldFile&) noexcept = default;
+	WorldFile& operator=(WorldFile&&) noexcept = default;
 	
 	/// Returns a QTransform from pixels to projected coordinates,
 	/// with (0,0) being the top-left corner of the top left pixel.
@@ -55,7 +65,7 @@ struct WorldFile
 	bool load(const QString& path);
 
 	/// Writes the world file to the given path.
-	bool save(const QString& path);
+	bool save(const QString& path) const;
 	
 	/// Tries to find and load a world file for the given image path.
 	bool tryToLoadForImage(const QString& image_path);

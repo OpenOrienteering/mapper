@@ -33,13 +33,19 @@
 
 namespace OpenOrienteering {
 
-WorldFile::WorldFile()
+WorldFile::WorldFile() noexcept
 : parameters { 1, 0, 0, 1, 0, 0 }
 {
 	loaded = false;
 }
 
-WorldFile::WorldFile(const QTransform& wld)
+WorldFile::WorldFile(double xw, double xh, double yw, double yh, double dx, double dy) noexcept
+: parameters { xw, xh, yw, yh, dx, dy }
+{
+	loaded = true;
+}
+
+WorldFile::WorldFile(const QTransform& wld) noexcept
 : loaded { true }
 , parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31(), wld.m32() }
 {
@@ -84,7 +90,7 @@ bool WorldFile::load(const QString& path)
 	return true;
 }
 
-bool WorldFile::save(const QString &path)
+bool WorldFile::save(const QString &path) const
 {
 	if (!loaded) { return false;}
 

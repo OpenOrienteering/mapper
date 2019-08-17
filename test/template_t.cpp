@@ -69,7 +69,15 @@ private slots:
 	
 	void worldFileUnitTest()
 	{
-		WorldFile world_file;
+		auto world_file = WorldFile { 1, 2, 3, 4, 5, 6 };
+		QVERIFY(world_file.loaded);
+		QCOMPARE(QTransform(world_file), QTransform(1, 2, 3, 4, 5, 6));
+		
+		WorldFile world_file_2;
+		QVERIFY(!world_file_2.loaded);
+		QCOMPARE(QTransform(world_file_2), QTransform{});
+		
+		world_file = world_file_2;
 		QVERIFY(!world_file.loaded);
 		QCOMPARE(QTransform(world_file), QTransform{});
 		
@@ -88,10 +96,12 @@ private slots:
 		verify_parameters(world_file.parameters);
 		
 		QString image_path = QStringLiteral("testdata:templates/world-file.png");
-		WorldFile world_file_from_image;
-		QVERIFY(world_file_from_image.tryToLoadForImage(image_path));
-		QVERIFY(world_file_from_image.loaded);
-		verify_parameters(world_file_from_image.parameters);
+		QVERIFY(world_file_2.tryToLoadForImage(image_path));
+		QVERIFY(world_file_2.loaded);
+		verify_parameters(world_file_2.parameters);
+		
+		// Try reading garbage
+		QVERIFY(!world_file.load(image_path));
 	}
 	
 	void worldFileTemplateTest()
