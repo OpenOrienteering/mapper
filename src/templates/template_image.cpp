@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -182,10 +182,11 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 		if (available_georef == Georeferencing_None)
 		{
 			// Image was georeferenced, but georeferencing info is gone -> deny to load template
+			setErrorString(tr("Georeferencing not found"));
 			return false;
 		}
-		else
-			calculateGeoreferencing();
+		
+		calculateGeoreferencing();
 	}
 	
 	return true;
