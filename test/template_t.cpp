@@ -70,7 +70,19 @@ private slots:
 	void worldFileUnitTest()
 	{
 		auto world_file = WorldFile { 1, 2, 3, 4, 5, 6 };
-		QCOMPARE(QTransform(world_file), QTransform(1, 2, 3, 4, 5, 6));
+		QCOMPARE(world_file.parameters[0], 1.0);
+		QCOMPARE(world_file.parameters[1], 2.0);
+		QCOMPARE(world_file.parameters[2], 3.0);
+		QCOMPARE(world_file.parameters[3], 4.0);
+		QCOMPARE(world_file.parameters[4], 5.0);
+		QCOMPARE(world_file.parameters[5], 6.0);
+		
+		auto const transform = QTransform(world_file);
+		QCOMPARE(transform.m11(), 1.0);
+		QCOMPARE(transform.m12(), 2.0);
+		QCOMPARE(transform.m21(), 3.0);
+		QCOMPARE(transform.m22(), 4.0);
+		QCOMPARE(transform.map(QPointF(0.5, 0.5)), QPointF(5, 6));
 		
 		WorldFile world_file_2;
 		QCOMPARE(QTransform(world_file_2), QTransform{});

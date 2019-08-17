@@ -52,7 +52,6 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPainter>
-#include <QPoint>
 #include <QPointF>
 #include <QPrinterInfo>
 #include <QPrintDialog>
@@ -1238,8 +1237,7 @@ void PrintWidget::exportWorldFile(const QString& path) const
 	const auto yscale = mm_to_world.m22() / pixel_per_mm;
 	const auto xskew  = mm_to_world.m12() / pixel_per_mm;
 	const auto yskew  = mm_to_world.m21() / pixel_per_mm;
-	const auto center_of_pixel = QPointF{0.5/pixel_per_mm, 0.5/pixel_per_mm};
-	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft() + center_of_pixel});
+	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft()});
 	const QTransform pixel_to_world(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
 	const WorldFile world_file(pixel_to_world);
 	world_file.save(WorldFile::pathForImage(path));
