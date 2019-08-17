@@ -24,6 +24,7 @@
 
 #include <vector>
 
+#include <QByteArray>
 #include <QColor>
 #include <QImage>
 #include <QObject>
@@ -32,10 +33,11 @@
 #include <QRgb>
 #include <QScopedPointer>
 #include <QString>
+#include <QTransform>
+#include <QVarLengthArray>
 
 #include "templates/template.h"
 
-class QByteArray;
 class QPainter;
 class QPointF;
 class QRectF;
@@ -64,6 +66,16 @@ public:
 		Georeferencing_WorldFile,
 		Georeferencing_GeoTiff
 	};
+	
+	struct GeoreferencingOption
+	{
+		GeoreferencingType type;
+		QByteArray source;
+		QString crs_spec;
+		QTransform pixel_to_world;
+	};
+	
+	using GeoreferencingOptions = QVarLengthArray<GeoreferencingOption, 2>;
 	
 	/**
 	 * Returns the filename extensions supported by this template class.
@@ -97,10 +109,14 @@ public:
 	inline const QImage& getImage() const {return image;}
 	
 	/**
-	 * Returns which georeferencing method (if any) is available.
-	 * (This does not mean that the image is in georeferenced mode)
+	 * Returns which georeferencing methods are known to be available.
+	 * 
+	 * (This does not imply that the image is in georeferenced mode.)
+	 * 
+	 * Invariant: The list is never empty. It always contains at least an entry
+	 * of type Georeferencing_None. This entry is always the last one.
 	 */
-	inline GeoreferencingType getAvailableGeoreferencing() const {return available_georef;}
+	const GeoreferencingOptions& availableGeoreferencing() const { return available_georef; }
 	
 	bool canChangeTemplateGeoreferenced() override;
 	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
@@ -110,6 +126,12 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
+	/**
+	 * Searches for available georeferencing methods.
+	 */
+	GeoreferencingOptions findAvailableGeoreferencing() const;
+	
+	
 	/** Information about an undo step for the paint-on-template functionality. */
 	struct DrawOnImageUndoStep
 	{
@@ -128,6 +150,7 @@ protected:
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
+	void applyGeoreferencingOption(const GeoreferencingOption& option);
 	void updatePosFromGeoreferencing();
 
 	QImage image;
@@ -136,7 +159,7 @@ protected:
 	/// Current index in undo_steps, where 0 means before the first item.
 	int undo_index;
 	
-	GeoreferencingType available_georef;
+	GeoreferencingOptions available_georef;
 	QScopedPointer<Georeferencing> georef;
 	// Temporary storage for crs spec. Use georef instead.
 	QString temp_crs_spec;
