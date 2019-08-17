@@ -27,7 +27,6 @@
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
-#include <QDebug>
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
 #include <QImageReader>
@@ -573,19 +572,19 @@ void TemplateImage::updatePosFromGeoreferencing()
 	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, 0.0), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width(), 0.0), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, image.height()), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	
@@ -606,7 +605,7 @@ void TemplateImage::updatePosFromGeoreferencing()
 	QTransform q_transform;
 	if (!pp_list.estimateNonIsometricSimilarityTransform(&q_transform))
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	transform = TemplateTransform::fromQTransform(q_transform);
