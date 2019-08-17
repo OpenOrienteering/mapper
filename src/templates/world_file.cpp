@@ -34,7 +34,7 @@
 namespace OpenOrienteering {
 
 WorldFile::WorldFile() noexcept
-: parameters { 1, 0, 0, 1, 0, 0 }
+: parameters { 1, 0, 0, 1, 0.5, 0.5 }
 {
 	// nothing else
 }
@@ -46,7 +46,7 @@ WorldFile::WorldFile(double xw, double xh, double yw, double yh, double dx, doub
 }
 
 WorldFile::WorldFile(const QTransform& wld) noexcept
-: parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31(), wld.m32() }
+: parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31() + wld.m11()/2, wld.m32() + wld.m22()/2 }
 {
 	// nothing else
 }
@@ -54,10 +54,14 @@ WorldFile::WorldFile(const QTransform& wld) noexcept
 
 WorldFile::operator QTransform() const
 {
-	return {
+	// The world file parameters refer to the center of the top-left pixel,
+	// but for QTransform, we want the top-left corner of this pixel.
+	auto offset_x = (parameters[0] + parameters[2]) / 2;
+	auto offset_y = (parameters[1] + parameters[3]) / 2;
+	return QTransform {
 	  parameters[0], parameters[1], 0,
 	  parameters[2], parameters[3], 0,
-	  parameters[4], parameters[5], 1
+	  parameters[4] - offset_x, parameters[5] - offset_y, 1
 	};
 }
 

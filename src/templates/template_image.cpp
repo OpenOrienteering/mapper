@@ -542,7 +542,7 @@ void TemplateImage::addUndoStep(const TemplateImage::DrawOnImageUndoStep& new_st
 void TemplateImage::calculateGeoreferencing()
 {
 	// Calculate georeferencing of image coordinates where the coordinate (0, 0)
-	// is mapped to the world position of the middle of the top-left pixel
+	// is mapped to the world position of the top-left corner of the top-left pixel
 	georef.reset(new Georeferencing());
 	if (!temp_crs_spec.isEmpty())
 		georef->setProjectedCRS(QString{}, temp_crs_spec);
@@ -581,19 +581,19 @@ void TemplateImage::updatePosFromGeoreferencing()
 	// Determine map coords of three image corner points
 	// by transforming the points from one Georeferencing into the other
 	bool ok;
-	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, -0.5), &ok);
+	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, 0.0), &ok);
 	if (!ok)
 	{
 		qDebug() << "updatePosFromGeoreferencing() failed";
 		return; // TODO: proper error message?
 	}
-	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width() - 0.5, -0.5), &ok);
+	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width(), 0.0), &ok);
 	if (!ok)
 	{
 		qDebug() << "updatePosFromGeoreferencing() failed";
 		return; // TODO: proper error message?
 	}
-	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, image.height() - 0.5), &ok);
+	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, image.height()), &ok);
 	if (!ok)
 	{
 		qDebug() << "updatePosFromGeoreferencing() failed";
