@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018  Kai Pastor
+ *    Copyright 2012-2019  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -483,13 +483,13 @@ void PrintWidget::setActive(bool active)
 			if (zoom_to_map)
 			{
 				// Ensure the visibility of the whole map.
-				auto map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
+				auto const map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
 				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, MapWidget::ContinuousZoom);
 			}
 			else
 			{
 				// Ensure the visibility of the print area.
-				auto print_area(map_printer->getPrintArea());
+				auto const print_area = map_printer->getPrintArea();
 				editor->getMainWidget()->ensureVisibilityOfRect(print_area, MapWidget::ContinuousZoom);
 			}
 			
@@ -528,52 +528,51 @@ void PrintWidget::updateTargets()
 	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString{};
 	int saved_target_index = -1;
 	int default_printer_index = -1;
+	
+	const QSignalBlocker block(target_combo);
+	target_combo->clear();
+	
+	if (task == PRINT_TASK)
 	{
-		const QSignalBlocker block(target_combo);
-		target_combo->clear();
+		// Exporters
+		target_combo->addItem(tr("Save to PDF"), QVariant(int(PdfExporter)));
+		target_combo->insertSeparator(target_combo->count());
+		target_combo->setCurrentIndex(0);
 		
-		if (task == PRINT_TASK)
+		// Printers
+		auto default_printer_name = QPrinterInfo::defaultPrinterName();
+		printers = QPrinterInfo::availablePrinterNames();
+		for (int i = 0; i < printers.size(); ++i)
 		{
-			// Exporters
-			target_combo->addItem(tr("Save to PDF"), QVariant(int(PdfExporter)));
-			target_combo->insertSeparator(target_combo->count());
-			target_combo->setCurrentIndex(0);
-			
-			// Printers
-			auto default_printer_name = QPrinterInfo::defaultPrinterName();
-			printers = QPrinterInfo::availablePrinterNames();
-			for (int i = 0; i < printers.size(); ++i)
-			{
-				const QString& name = printers[i];
-				if (name == saved_printer_name)
-					saved_target_index = target_combo->count();
-				if (name == default_printer_name)
-					default_printer_index = target_combo->count();
-				target_combo->addItem(name, i);
-			}
+			const QString& name = printers[i];
+			if (name == saved_printer_name)
+				saved_target_index = target_combo->count();
+			if (name == default_printer_name)
+				default_printer_index = target_combo->count();
+			target_combo->addItem(name, i);
 		}
-		
-		// Restore selected target if possible and exit on success
-		if (current_target.isValid())
-		{
-			int index = target_combo->findData(current_target);
-			if (index >= 0)
-			{
-				target_combo->setCurrentIndex(index);
-				return;
-			}
-		}
-		
-		if (saved_target_index >= 0)
-			// Restore saved target if possible
-			target_combo->setCurrentIndex(saved_target_index);
-		else if (default_printer_index >= 0)
-			// Set default printer as current target
-			target_combo->setCurrentIndex(default_printer_index);
-		
-		// Explicitly invoke signal handler
-		targetChanged(target_combo->currentIndex());
 	}
+	
+	// Restore selected target if possible and exit on success
+	if (current_target.isValid())
+	{
+		int index = target_combo->findData(current_target);
+		if (index >= 0)
+		{
+			target_combo->setCurrentIndex(index);
+			return;
+		}
+	}
+	
+	if (saved_target_index >= 0)
+		// Restore saved target if possible
+		target_combo->setCurrentIndex(saved_target_index);
+	else if (default_printer_index >= 0)
+		// Set default printer as current target
+		target_combo->setCurrentIndex(default_printer_index);
+	
+	// Explicitly invoke signal handler
+	targetChanged(target_combo->currentIndex());
 }
 
 // slot
@@ -581,16 +580,20 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 {
 	int target_index = printers.size()-1;
 	if (target == MapPrinter::pdfTarget())
+	{
 		target_index = PdfExporter;
+	}
 	else if (target == MapPrinter::imageTarget())
+	{
 		target_index = ImageExporter;
+	}
 	else
 	{
 		for (; target_index >= 0; target_index--)
 		{
 			if (target && printers[target_index] == target->printerName())
 				break;
-			else if (!target)
+			if (!target)
 				break;
 		}
 	}
@@ -668,35 +671,33 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	QString prev_paper_size_name = paper_size_combo->currentText();
 	bool have_custom_size = false;
 	
-	{
-		const QSignalBlocker block(paper_size_combo);
-		
-		paper_size_combo->clear();
-		QList<QPrinter::PaperSize> size_list;
-		if (target)
-			size_list = target->supportedPaperSizes();
-		if (size_list.isEmpty())
-			size_list = defaultPaperSizes();
-		
-		for (auto size : qAsConst(size_list))
-		{
-			if (size == QPrinter::Custom)
-				have_custom_size = true; // add it once after all other entries
-			else
-				paper_size_combo->addItem(toString(size), size);
-		}
-		
-		if (have_custom_size)
-			paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
+	const QSignalBlocker block(paper_size_combo);
 	
-		int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().paper_size);
-		if (!prev_paper_size_name.isEmpty())
-		{
-			paper_size_index = paper_size_combo->findText(prev_paper_size_name);
-		}
-		paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
-		paperSizeChanged(paper_size_combo->currentIndex());
+	paper_size_combo->clear();
+	QList<QPrinter::PaperSize> size_list;
+	if (target)
+		size_list = target->supportedPaperSizes();
+	if (size_list.isEmpty())
+		size_list = defaultPaperSizes();
+	
+	for (auto size : qAsConst(size_list))
+	{
+		if (size == QPrinter::Custom)
+			have_custom_size = true; // add it once after all other entries
+		else
+			paper_size_combo->addItem(toString(size), size);
 	}
+	
+	if (have_custom_size)
+		paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
+	
+	int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().paper_size);
+	if (!prev_paper_size_name.isEmpty())
+	{
+		paper_size_index = paper_size_combo->findText(prev_paper_size_name);
+	}
+	paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
+	paperSizeChanged(paper_size_combo->currentIndex());
 }
 
 // slot
@@ -1226,27 +1227,22 @@ void PrintWidget::exportToImage()
 			exportWorldFile(path);  /// \todo Handle errors
 		emit finished(0);
 	}
-	return;
 }
 
 void PrintWidget::exportWorldFile(const QString& path) const
 {
 	const auto& georef = map->getGeoreferencing();
-	const auto& ref_transform = georef.mapToProjected();
-
+	const auto& mm_to_world = georef.mapToProjected();
 	qreal pixel_per_mm = (map_printer->getOptions().resolution / 25.4) * map_printer->getScaleAdjustment();
+	const auto xscale = mm_to_world.m11() / pixel_per_mm;
+	const auto yscale = mm_to_world.m22() / pixel_per_mm;
+	const auto xskew  = mm_to_world.m12() / pixel_per_mm;
+	const auto yskew  = mm_to_world.m21() / pixel_per_mm;
 	const auto center_of_pixel = QPointF{0.5/pixel_per_mm, 0.5/pixel_per_mm};
 	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft() + center_of_pixel});
-
-
-	const auto xscale = ref_transform.m11() / pixel_per_mm;
-	const auto yscale = ref_transform.m22() / pixel_per_mm;
-	const auto xskew  = ref_transform.m12() / pixel_per_mm;
-	const auto yskew  = ref_transform.m21() / pixel_per_mm;
-
-	QTransform final_wld(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
-	WorldFile wld(final_wld);
-	wld.save(WorldFile::pathForImage(path));
+	const QTransform pixel_to_world(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
+	const WorldFile world_file(pixel_to_world);
+	world_file.save(WorldFile::pathForImage(path));
 }
 
 void PrintWidget::exportToPdf()
