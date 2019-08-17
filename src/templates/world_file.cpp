@@ -36,18 +36,17 @@ namespace OpenOrienteering {
 WorldFile::WorldFile() noexcept
 : parameters { 1, 0, 0, 1, 0, 0 }
 {
-	loaded = false;
+	// nothing else
 }
 
 WorldFile::WorldFile(double xw, double xh, double yw, double yh, double dx, double dy) noexcept
 : parameters { xw, xh, yw, yh, dx, dy }
 {
-	loaded = true;
+	// nothing else
 }
 
 WorldFile::WorldFile(const QTransform& wld) noexcept
-: loaded { true }
-, parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31(), wld.m32() }
+: parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31(), wld.m32() }
 {
 	// nothing else
 }
@@ -67,33 +66,21 @@ bool WorldFile::load(const QString& path)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		loaded = false;
 		return false;
-	}
-	QTextStream text_stream(&file);
 	
+	QTextStream text_stream(&file);
 	bool ok = false;
 	for (auto& parameter : parameters)
 	{
 		parameter = text_stream.readLine().toDouble(&ok);
 		if (!ok)
-		{
-			file.close();
-			loaded = false;
 			return false;
-		}
 	}
-	
-	file.close();
-	loaded = true;
 	return true;
 }
 
 bool WorldFile::save(const QString &path) const
 {
-	if (!loaded) { return false;}
-
 	QFile file(path);
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{

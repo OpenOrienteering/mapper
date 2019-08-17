@@ -35,18 +35,16 @@ namespace OpenOrienteering {
  */
 struct WorldFile
 {
-	bool loaded;
-	
 	/// The six world file parameters, order as in the text file.
 	double parameters[6];
 	
-	/// Creates an unloaded world file
+	/// Creates an default world file.
 	WorldFile() noexcept;
 	
 	/// Creates a world file with the given parameters (in-order).
 	WorldFile(double xw, double xh, double yw, double yh, double dx, double dy) noexcept;
 
-	/// Creates a loaded world file from a QTransform
+	/// Creates a world file from a QTransform.
 	explicit WorldFile(const QTransform& wld) noexcept;
 	
 	WorldFile(const WorldFile&) noexcept = default;

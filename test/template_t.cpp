@@ -70,15 +70,12 @@ private slots:
 	void worldFileUnitTest()
 	{
 		auto world_file = WorldFile { 1, 2, 3, 4, 5, 6 };
-		QVERIFY(world_file.loaded);
 		QCOMPARE(QTransform(world_file), QTransform(1, 2, 3, 4, 5, 6));
 		
 		WorldFile world_file_2;
-		QVERIFY(!world_file_2.loaded);
 		QCOMPARE(QTransform(world_file_2), QTransform{});
 		
 		world_file = world_file_2;
-		QVERIFY(!world_file.loaded);
 		QCOMPARE(QTransform(world_file), QTransform{});
 		
 		auto const verify_parameters = [](auto const & parameters) {
@@ -92,12 +89,10 @@ private slots:
 		
 		QString world_file_path = QStringLiteral("testdata:templates/world-file.pgw");
 		QVERIFY(world_file.load(world_file_path));
-		QVERIFY(world_file.loaded);
 		verify_parameters(world_file.parameters);
 		
 		QString image_path = QStringLiteral("testdata:templates/world-file.png");
 		QVERIFY(world_file_2.tryToLoadForImage(image_path));
-		QVERIFY(world_file_2.loaded);
 		verify_parameters(world_file_2.parameters);
 		
 		// Try reading garbage
