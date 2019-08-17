@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2015-2017 Kai Pastor
+ *    Copyright 2015-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,13 +36,19 @@ namespace OpenOrienteering {
 struct WorldFile
 {
 	bool loaded;
-	QTransform pixel_to_world;
+	
+	/// The six world file parameters, order as in the text file.
+	double parameters[6];
 	
 	/// Creates an unloaded world file
 	WorldFile();
 
 	/// Creates a loaded world file from a QTransform
-	WorldFile(const QTransform& wld);
+	explicit WorldFile(const QTransform& wld);
+	
+	/// Returns a QTransform from pixels to projected coordinates,
+	/// with (0,0) being the top-left corner of the top left pixel.
+	operator QTransform() const;
 
 	/// Tries to load the given path as world file.
 	/// Returns true on success and sets loaded to true or false.
@@ -56,7 +62,6 @@ struct WorldFile
 	
 	/// Returns the proposed world file path for the given image path.
 	static QString pathForImage(const QString& image_path);
-	
 };
 
 
