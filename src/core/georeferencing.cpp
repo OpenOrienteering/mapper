@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -647,12 +647,12 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-QTransform Georeferencing::mapToProjected() const
+const QTransform& Georeferencing::mapToProjected() const
 {
 	return to_projected;
 }
 
-QTransform Georeferencing::projectedToMap() const
+const QTransform& Georeferencing::projectedToMap() const
 {
 	return from_projected;
 }

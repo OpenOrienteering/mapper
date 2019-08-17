@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2016 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -510,9 +510,9 @@ public:
 	void setTransformationDirectly(const QTransform& transform);
 	
 	
-	QTransform mapToProjected() const;
+	const QTransform& mapToProjected() const;
 	
-	QTransform projectedToMap() const;
+	const QTransform& projectedToMap() const;
 	
 	
 signals:
