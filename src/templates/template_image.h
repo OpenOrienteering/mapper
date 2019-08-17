@@ -25,7 +25,6 @@
 #include <vector>
 
 #include <QColor>
-#include <QDialog>
 #include <QImage>
 #include <QObject>
 #include <QPointF>
@@ -37,11 +36,8 @@
 #include "templates/template.h"
 
 class QByteArray;
-class QLineEdit;
 class QPainter;
 class QPointF;
-class QPushButton;
-class QRadioButton;
 class QRectF;
 class QWidget;
 class QXmlStreamReader;
@@ -144,38 +140,6 @@ protected:
 	QScopedPointer<Georeferencing> georef;
 	// Temporary storage for crs spec. Use georef instead.
 	QString temp_crs_spec;
-};
-
-/**
- * Initial setting dialog when opening a raster image as template,
- * asking for how to position the image.
- * 
- * \todo Move this class to separate files.
- */
-class TemplateImageOpenDialog : public QDialog
-{
-Q_OBJECT
-public:
-	TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent);
-	
-	double getMpp() const;
-	bool isGeorefRadioChecked() const;
-	
-protected slots:
-	void radioClicked();
-	void setOpenEnabled();
-	void doAccept();
-	
-private:
-	QRadioButton* georef_radio;
-	QRadioButton* mpp_radio;
-	QRadioButton* dpi_radio;
-	QLineEdit* mpp_edit;
-	QLineEdit* dpi_edit;
-	QLineEdit* scale_edit;
-	QPushButton* open_button;
-	
-	TemplateImage* templ;
 };
 
 

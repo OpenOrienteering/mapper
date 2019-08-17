@@ -82,6 +82,7 @@ PATTERN=" \
   symbol_tooltip.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
+  template_image_open_dialog.cpp \
   template_list_widget.cpp \
   template_tool \
   text_brwoser_dialog \
