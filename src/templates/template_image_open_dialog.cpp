@@ -22,7 +22,9 @@
 #include "template_image_open_dialog.h"
 
 #include <Qt>
+#include <QtGlobal>
 #include <QAbstractButton>
+#include <QByteArray>
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -58,17 +60,19 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	double scale;
 	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
 	
-	QString georef_type_string;
-	if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_WorldFile)
-		georef_type_string = tr("World file");
-	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_GeoTiff)
-		georef_type_string = tr("GeoTIFF");
-	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_None)
-		georef_type_string = tr("no georeferencing information");
+	auto const & georeferencing_option = templ->availableGeoreferencing().front();
+	auto const georef_source = georeferencing_option.source;
+	auto const georef_radio_enabled = georeferencing_option.type != TemplateImage::Georeferencing_None;
 	
-	georef_radio = new QRadioButton(tr("Georeferenced") +
-		(georef_type_string.isEmpty() ? QString{} : (QLatin1String(" (") + georef_type_string + QLatin1String(")"))));
-	georef_radio->setEnabled(templ->getAvailableGeoreferencing() != TemplateImage::Georeferencing_None);
+	// Georeferencing source translations which already existed in this context
+	// and need to be preserved here, until moved to a different file.
+	// Now the source strings come from TemplateImage.
+	Q_UNUSED(QT_TR_NOOP("World File"))
+	Q_UNUSED(QT_TR_NOOP("GeoTIFF"))
+	Q_UNUSED(QT_TR_NOOP("no georeferencing information"))
+	
+	georef_radio = new QRadioButton(tr("Georeferenced (%1)").arg(tr(georef_source)));
+	georef_radio->setEnabled(georef_radio_enabled);
 	
 	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
 	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : QString{});
