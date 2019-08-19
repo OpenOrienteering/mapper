@@ -25,9 +25,8 @@
 #include <memory>
 
 #include <QtGlobal>
-#include <QDir>
 #include <QFile>
-#include <QFileInfo>
+#include <QFileInfo>  // IWYU pragma: keep
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
@@ -201,9 +200,8 @@ void Importer::validate()
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
 		Template* temp = map->getTemplate(i);
-		bool found_in_map_dir = false;
-		if (!temp->tryToFindTemplateFile(path, &found_in_map_dir)
-		    && !temp->tryToFindTemplateFile(QFileInfo(path).dir().path(), &found_in_map_dir))
+		auto const lookup_result = temp->tryToFindTemplateFile(path);
+		if (lookup_result == Template::NotFound)
 		{
 			have_lost_template = true;
 		}
@@ -217,7 +215,7 @@ void Importer::validate()
 			else
 			{
 				auto error_string = temp->errorString();
-				if (found_in_map_dir)
+				if (lookup_result == Template::FoundInMapDir)
 				{
 					error_string.prepend(
 					            ::OpenOrienteering::Importer::tr(
