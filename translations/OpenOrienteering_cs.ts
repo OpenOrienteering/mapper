@@ -1502,7 +1502,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velikost akčních tlačítek:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
@@ -7381,7 +7381,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvláštní oprávnění jsou vyžadována pro přístup k &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>

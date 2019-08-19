@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke skrive fil: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne fil
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,10 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne fil:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
@@ -449,7 +454,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjermfrekvens:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -459,12 +464,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Udefinert</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjermvinkel:</translation>
     </message>
     <message>
         <source>°</source>
@@ -1717,12 +1722,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksportvalg</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>Opprett et lag for hvert symbol</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2437,7 +2442,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Forvalgt ikon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
@@ -2447,23 +2452,23 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndsvisningsbredde:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lagre …</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopier til egendefinert ikon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Egendefinert ikon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
@@ -2473,12 +2478,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation>Last inn …</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
@@ -2488,7 +2493,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lagre symbolikon …</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2500,7 +2505,8 @@ Skal de importerte dataene omskaleres?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å lagre bildet:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
@@ -2513,7 +2519,10 @@ Skal de importerte dataene omskaleres?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ka ikke åpne fil:
+%1
+
+%2</translation>
     </message>
 </context>
 <context>
@@ -2580,7 +2589,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD-versjon %1</translation>
     </message>
     <message>
         <source>Could not parse the data.</source>
@@ -2661,7 +2670,9 @@ Skal de importerte dataene omskaleres?</translation>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne fil
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -4404,7 +4415,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4004"/>
         <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer %1 eller GPX-fil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4042"/>
@@ -4616,7 +4627,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1140"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktøyslinjer</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1254"/>
@@ -4654,7 +4665,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1661"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporter</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1702"/>
@@ -5954,12 +5965,12 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1695"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å opprette datasett: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1740"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å opprette lag: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1878"/>
@@ -5982,17 +5993,17 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2062"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2108"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å opprette funksjon i lag: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2122"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å opprette lag %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2129"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Klarte ikke å opprette navnefelt: %1</translation>
     </message>
 </context>
 <context>
@@ -7162,7 +7173,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nytt størrelsesforhold</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
@@ -7380,7 +7391,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7561,7 +7572,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis egendefinerte ikoner</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
