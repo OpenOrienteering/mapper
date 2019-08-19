@@ -398,7 +398,7 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 				};
 			}
 		}
-		result.push_back({Georeferencing_WorldFile, "World File", temp_crs_spec, pixel_to_world});
+		result.push_back({Georeferencing_WorldFile, "World file", temp_crs_spec, pixel_to_world});
 	}
 	
 #ifdef MAPPER_USE_GDAL
