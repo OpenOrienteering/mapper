@@ -503,19 +503,20 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 	auto const rel_path = getTemplateRelativePath();
 	if (!rel_path.isEmpty() && !map_path.isEmpty())
 	{
-		auto const abs_path = dir(map_path).absoluteFilePath(rel_path); 
-		if (QFileInfo(abs_path).isFile())
+		auto const abs_path_info = QFileInfo(dir(map_path).absoluteFilePath(rel_path));
+		if (abs_path_info.isFile())
 		{
-			setTemplatePath(abs_path);
+			setTemplateFileInfo(abs_path_info);
 			set_state(Unloaded);
 			return FoundByRelPath;
 		}
 	}
 	
 	// 2. The absolute path of the template
-	if (QFileInfo::exists(getTemplatePath()))
+	auto const template_path_info = QFileInfo(getTemplatePath());
+	if (template_path_info.isFile())
 	{
-		/* setTemplatePath(getTemplatePath()); */
+		/* setTemplateFileInfo(template_path_info); */
 		set_state(Unloaded);
 		return FoundByAbsPath;
 	}
@@ -524,10 +525,10 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 	auto const filename = getTemplateFilename();
 	if (!filename.isEmpty() && !map_path.isEmpty())
 	{
-		auto const abs_path = dir(map_path).absoluteFilePath(filename); 
-		if (QFileInfo(abs_path).isFile())
+		auto const abs_path_info = QFileInfo(dir(map_path).absoluteFilePath(filename));
+		if (abs_path_info.isFile())
 		{
-			setTemplatePath(abs_path);
+			setTemplateFileInfo(abs_path_info);
 			set_state(Unloaded);
 			return FoundInMapDir;
 		}
@@ -779,12 +780,17 @@ void Template::setOtherTransform(const TemplateTransform& transform)
 	other_transform = transform;
 }
 
+void Template::setTemplateFileInfo(const QFileInfo& file_info)
+{
+	template_path = file_info.canonicalFilePath();
+	if (template_path.isEmpty())
+		template_path = file_info.path();
+	template_file = file_info.fileName();
+}
+
 void Template::setTemplatePath(const QString& value)
 {
-	template_path = value;
-	if (! QFileInfo(value).canonicalFilePath().isEmpty())
-		template_path = QFileInfo(value).canonicalFilePath();
-	template_file = QFileInfo(value).fileName();
+	setTemplateFileInfo(QFileInfo(value));
 }
 
 void Template::setHasUnsavedChanges(bool value)
