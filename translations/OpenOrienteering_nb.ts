@@ -2596,16 +2596,16 @@ Skal de importerte dataene omskaleres?</translation>
         <translation type="vanished">Kunne ikke behandle dataene.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="200"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="263"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="285"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="218"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="234"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="281"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="303"/>
         <source>Could not parse the coordinates.</source>
         <translation>Kunne ikke behandle koordinatene.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="240"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="315"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="258"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="333"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>Forventet %1 koordinater, fant %2.</translation>
     </message>
@@ -2660,7 +2660,7 @@ Skal de importerte dataene omskaleres?</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="214"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="751"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Klarte ikke å laste bakgrunnsbilde &apos;%1&apos;, årsak: %2</translation>
     </message>
@@ -3090,144 +3090,144 @@ Skal de importerte dataene omskaleres?</translation>
 <context>
     <name>OpenOrienteering::MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="318"/>
+        <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>&amp;New</source>
         <translation>&amp;Ny</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="321"/>
+        <location filename="../src/gui/main_window.cpp" line="324"/>
         <source>Create a new map</source>
         <translation>Lage et nytt kart</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="325"/>
+        <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Open...</source>
         <translation>&amp;Åpne...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="328"/>
+        <location filename="../src/gui/main_window.cpp" line="331"/>
         <source>Open an existing file</source>
         <translation>Åpne en eksisterende fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="332"/>
+        <location filename="../src/gui/main_window.cpp" line="335"/>
         <source>Open &amp;recent</source>
         <translation>Åpne sist &amp;brukte</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="344"/>
+        <location filename="../src/gui/main_window.cpp" line="347"/>
         <source>&amp;Save</source>
         <translation>&amp;Lagre</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="350"/>
+        <location filename="../src/gui/main_window.cpp" line="353"/>
         <source>Save &amp;as...</source>
         <translation>Lagre &amp;som...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="353"/>
+        <location filename="../src/gui/main_window.cpp" line="356"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="359"/>
+        <location filename="../src/gui/main_window.cpp" line="362"/>
         <source>Settings...</source>
         <translation>Innstillinger...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="364"/>
+        <location filename="../src/gui/main_window.cpp" line="367"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="151"/>
         <source>Close</source>
         <translation>Lukk</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="367"/>
+        <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>Close this file</source>
         <translation>Lukk denne filen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="371"/>
+        <location filename="../src/gui/main_window.cpp" line="374"/>
         <source>E&amp;xit</source>
         <translation>A&amp;vslutt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="374"/>
+        <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>Exit the application</source>
         <translation>Avslutt programmet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="380"/>
+        <location filename="../src/gui/main_window.cpp" line="383"/>
         <source>&amp;File</source>
         <translation>&amp;Fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="399"/>
+        <location filename="../src/gui/main_window.cpp" line="402"/>
         <source>General</source>
         <translation>Generelt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="414"/>
+        <location filename="../src/gui/main_window.cpp" line="417"/>
         <source>Open &amp;Manual</source>
         <translation>Åpne &amp;manual</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="416"/>
+        <location filename="../src/gui/main_window.cpp" line="419"/>
         <source>Show the help file for this application</source>
         <translation>Vis hjelp for dette programmet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="420"/>
+        <location filename="../src/gui/main_window.cpp" line="423"/>
         <source>&amp;About %1</source>
         <translation>&amp;Om %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="422"/>
+        <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Show information about this application</source>
         <translation>Vis info om dette programmet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="425"/>
+        <location filename="../src/gui/main_window.cpp" line="428"/>
         <source>About &amp;Qt</source>
         <translation>Om &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="427"/>
+        <location filename="../src/gui/main_window.cpp" line="430"/>
         <source>Show information about Qt</source>
         <translation>Vis info om Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="432"/>
+        <location filename="../src/gui/main_window.cpp" line="435"/>
         <source>&amp;Help</source>
         <translation>&amp;Hjelp</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="629"/>
+        <location filename="../src/gui/main_window.cpp" line="641"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>Vil du fjerne autolagringsversjonen?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="635"/>
+        <location filename="../src/gui/main_window.cpp" line="647"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Filen er endret.
 Vil du lagre endringene?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="459"/>
-        <location filename="../src/gui/main_window.cpp" line="792"/>
+        <location filename="../src/gui/main_window.cpp" line="462"/>
+        <location filename="../src/gui/main_window.cpp" line="804"/>
         <source>Unsaved file</source>
         <translation>Ulagret fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
-        <location filename="../src/gui/main_window.cpp" line="1091"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
+        <location filename="../src/gui/main_window.cpp" line="1103"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="448"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -3236,12 +3236,12 @@ Do you want to scale the symbols to the selected scale?</source>
 Vil du tilpasse symbolemene til den valgte målestokken?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="848"/>
+        <location filename="../src/gui/main_window.cpp" line="860"/>
         <source>Crash warning</source>
         <translation>Kræsj-melding</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="861"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Det ser ut som %1 kræsjet forrige gang filen ble åpnet:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Skal du virkelig åpne filen på nytt?</translation>
     </message>
@@ -3254,53 +3254,53 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
         <translation type="vanished">Det er en automatisk lagret versjon av &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Last inn denne versjonen?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1045"/>
+        <location filename="../src/gui/main_window.cpp" line="1057"/>
         <source>Autosaving...</source>
         <translation>Autolagring...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1055"/>
+        <location filename="../src/gui/main_window.cpp" line="1067"/>
         <source>Autosaving failed!</source>
         <translation>Feil ved autolagring!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1144"/>
+        <location filename="../src/gui/main_window.cpp" line="1156"/>
         <source>All maps</source>
         <translation>Alle kart</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1148"/>
+        <location filename="../src/gui/main_window.cpp" line="1160"/>
         <source>All files</source>
         <translation>Alle filer</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="803"/>
+        <location filename="../src/gui/main_window.cpp" line="815"/>
         <source>Open file</source>
         <translation>Åpne fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="157"/>
+        <location filename="../src/gui/main_window.cpp" line="160"/>
         <source>You must close the current file before you can open another one.</source>
         <translation>Du må lukke gjeldende fil før du kan åpne en ny.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="824"/>
+        <location filename="../src/gui/main_window.cpp" line="836"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="736"/>
         <source>Opening %1</source>
         <translation>Åpner %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="749"/>
-        <location filename="../src/gui/main_window.cpp" line="837"/>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
-        <location filename="../src/gui/main_window.cpp" line="1236"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
+        <location filename="../src/gui/main_window.cpp" line="761"/>
+        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
+        <location filename="../src/gui/main_window.cpp" line="1248"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="748"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="750"/>
-        <location filename="../src/gui/main_window.cpp" line="838"/>
+        <location filename="../src/gui/main_window.cpp" line="762"/>
+        <location filename="../src/gui/main_window.cpp" line="850"/>
         <source>Cannot open file:
 %1
 
@@ -3308,17 +3308,17 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
         <source>The symbol set import generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="839"/>
+        <location filename="../src/gui/main_window.cpp" line="851"/>
         <source>Invalid file type.</source>
         <translation type="unfinished">Feil filtype.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
         <source>Cannot open file:
 %1
 
@@ -3329,18 +3329,18 @@ File format not recognized.</source>
 Filfomatet er ukjent.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="945"/>
+        <location filename="../src/gui/main_window.cpp" line="957"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>Filen har blitt endret. Vil du fjerne endringene?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="997"/>
+        <location filename="../src/gui/main_window.cpp" line="1009"/>
         <source>&amp;%1 %2</source>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1086"/>
+        <location filename="../src/gui/main_window.cpp" line="1098"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -3351,22 +3351,22 @@ Velg Ja for å lagre i dette formatet.
 Velg Nei for å velge et annet format.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1216"/>
+        <location filename="../src/gui/main_window.cpp" line="1228"/>
         <source>Save file</source>
         <translation>Lagre fil</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1237"/>
+        <location filename="../src/gui/main_window.cpp" line="1249"/>
         <source>File could not be saved:</source>
         <translation>Fil kan ikke lagres:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1238"/>
+        <location filename="../src/gui/main_window.cpp" line="1250"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Det var et problem med bestemmelse av filformatet.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1239"/>
+        <location filename="../src/gui/main_window.cpp" line="1251"/>
         <source>Please report this as a bug.</source>
         <translation>Vennligst rapporter denne feilen.</translation>
     </message>
@@ -6377,108 +6377,108 @@ rull musehjulet for å zoome.</translation>
         <translation type="vanished">Eksportér til PDF eller PS</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="263"/>
+        <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Show templates</source>
         <translation>Vis bakgrunnsbilder</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="274"/>
+        <location filename="../src/gui/print_widget.cpp" line="273"/>
         <source>Show grid</source>
         <translation>Vis rutenett</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="181"/>
+        <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Page orientation:</source>
         <translation>Orientering:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="141"/>
+        <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Printer:</source>
         <translation>Skriver:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="174"/>
+        <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
         <translation>Portrett</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="176"/>
+        <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
         <translation>Landskap</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="155"/>
+        <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
         <translation>Papirstørrelse:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="184"/>
+        <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
         <translation>Kopier:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="197"/>
+        <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
         <translation>Venstre:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="200"/>
+        <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
         <translation>Topp:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="203"/>
+        <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Width:</source>
         <translation>Bredde:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="206"/>
+        <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Height:</source>
         <translation>Høyde:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="304"/>
+        <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
         <translation>Forhåndsvisning...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="189"/>
+        <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
         <translation>Enkelt side</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="190"/>
+        <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
         <translation>Valgt område</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="191"/>
+        <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
         <translation>Kartområde:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="193"/>
+        <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
         <translation>Sentrér utskriftsområde</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="161"/>
-        <location filename="../src/gui/print_widget.cpp" line="165"/>
-        <location filename="../src/gui/print_widget.cpp" line="196"/>
-        <location filename="../src/gui/print_widget.cpp" line="199"/>
-        <location filename="../src/gui/print_widget.cpp" line="202"/>
-        <location filename="../src/gui/print_widget.cpp" line="205"/>
-        <location filename="../src/gui/print_widget.cpp" line="208"/>
+        <location filename="../src/gui/print_widget.cpp" line="160"/>
+        <location filename="../src/gui/print_widget.cpp" line="164"/>
+        <location filename="../src/gui/print_widget.cpp" line="195"/>
+        <location filename="../src/gui/print_widget.cpp" line="198"/>
+        <location filename="../src/gui/print_widget.cpp" line="201"/>
+        <location filename="../src/gui/print_widget.cpp" line="204"/>
+        <location filename="../src/gui/print_widget.cpp" line="207"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="209"/>
+        <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Page overlap:</source>
         <translation>Sideoverlapp:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="213"/>
+        <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>Options</source>
         <translation>Valg</translation>
     </message>
@@ -6491,75 +6491,75 @@ rull musehjulet for å zoome.</translation>
         <translation type="vanished">Fargeseparasjoner</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="247"/>
+        <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Resolution:</source>
         <translation>Oppløsning:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="249"/>
+        <location filename="../src/gui/print_widget.cpp" line="248"/>
         <source>Print in different scale:</source>
         <translation>Skriv ut i forskjellig skala:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="270"/>
+        <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
         <translation>Malvisning kan variere.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="277"/>
+        <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
         <translation>Simulér overprinting</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <location filename="../src/gui/print_widget.cpp" line="238"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="240"/>
+        <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK</source>
         <translation>Standard CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="241"/>
+        <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Color mode:</source>
         <translation>Fargemodus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="306"/>
-        <location filename="../src/gui/print_widget.cpp" line="412"/>
+        <location filename="../src/gui/print_widget.cpp" line="305"/>
+        <location filename="../src/gui/print_widget.cpp" line="411"/>
         <source>Print</source>
         <translation>Skriv ut</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="310"/>
+        <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export...</source>
         <translation>Eksportér...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="419"/>
+        <location filename="../src/gui/print_widget.cpp" line="418"/>
         <source>PDF export</source>
         <translation>PDF-eksport</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="432"/>
+        <location filename="../src/gui/print_widget.cpp" line="431"/>
         <source>Image export</source>
         <translation>Bildeeksport</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="538"/>
+        <location filename="../src/gui/print_widget.cpp" line="537"/>
         <source>Save to PDF</source>
         <translation>Lagre som PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="245"/>
+        <location filename="../src/gui/print_widget.cpp" line="244"/>
         <location filename="../src/gui/print_widget.cpp" line="942"/>
         <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="280"/>
+        <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
         <translation>Lagre world-fil</translation>
     </message>
@@ -6614,41 +6614,41 @@ rull musehjulet for å zoome.</translation>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>PDF-eksport mislyktes.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1267"/>
+        <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
         <source>An error occurred during printing.</source>
         <translation>En feil oppstof under utskrift.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1181"/>
         <location filename="../src/gui/print_widget.cpp" line="1211"/>
-        <location filename="../src/gui/print_widget.cpp" line="1269"/>
-        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1263"/>
+        <location filename="../src/gui/print_widget.cpp" line="1275"/>
         <source>Export map ...</source>
         <translation>Eksportér kart...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1180"/>
-        <location filename="../src/gui/print_widget.cpp" line="1268"/>
+        <location filename="../src/gui/print_widget.cpp" line="1262"/>
         <source>All files (*.*)</source>
         <translation>Alle filer (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
         <source>Failed to prepare the printing.</source>
         <translation>Kunne ikke forberede utskrift.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1315"/>
+        <location filename="../src/gui/print_widget.cpp" line="1309"/>
         <source>Printing Progress</source>
         <translation>Utskriftsfremdrift</translation>
     </message>
@@ -6658,40 +6658,40 @@ rull musehjulet for å zoome.</translation>
         <location filename="../src/gui/print_widget.cpp" line="1130"/>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="146"/>
+        <location filename="../src/gui/print_widget.cpp" line="145"/>
         <source>Properties</source>
         <translation>Egenskaper</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="220"/>
+        <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Vector
 graphics</source>
         <translation>Vektorgrafikk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="221"/>
+        <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Raster
 graphics</source>
         <translation>Rastergrafikk</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="222"/>
+        <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
         <translation>Fargeseparasjoner</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="235"/>
+        <location filename="../src/gui/print_widget.cpp" line="234"/>
         <source>Mode:</source>
         <translation>Modus:</translation>
     </message>
@@ -6707,18 +6707,18 @@ separations</source>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
-        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1285"/>
         <source>Exported successfully to %1</source>
         <translation>Vellykket eksportering til %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Kunne ikke fullføre PDF-eksport.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1297"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1323"/>
         <source>Canceled.</source>
         <translation>Avbrutt.</translation>
     </message>
@@ -6727,24 +6727,24 @@ separations</source>
         <translation type="vanished">Skriver</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
         <source>The print job could not be stopped.</source>
         <translation>Utskriftsjobben kunne ikke avbrytes.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1324"/>
+        <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Successfully created print job</source>
         <translation>Utskriften ble vellykket</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1381"/>
-        <location filename="../src/gui/print_widget.cpp" line="1389"/>
+        <location filename="../src/gui/print_widget.cpp" line="1375"/>
+        <location filename="../src/gui/print_widget.cpp" line="1383"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Ukjent</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Kartområdet er tomt. Utskriften er avbrutt.</translation>
     </message>
@@ -7718,7 +7718,7 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::SymbolToolTip</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="202"/>
+        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"/>
         <source>No description!</source>
         <translation>Ingen beskrivelse!</translation>
     </message>
@@ -8003,17 +8003,22 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="158"/>
+        <location filename="../src/templates/template_image.cpp" line="147"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Ikke nok fritt minne (bildestørrelse: %1x%2 piksler)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="167"/>
+        <source>Georeferencing not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
@@ -8022,8 +8027,8 @@ Lagring av GIF-filer er ikke støttet. Det betyr at endringer i denne malen ikke
 Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="240"/>
-        <location filename="../src/templates/template_image.cpp" line="360"/>
+        <location filename="../src/templates/template_image.cpp" line="223"/>
+        <location filename="../src/templates/template_image.cpp" line="342"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Velg koordinatsystem for koordinater i globalfil</translation>
     </message>
@@ -8031,67 +8036,67 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
 <context>
     <name>OpenOrienteering::TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="632"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
         <translation>Åpner %1</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="634"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
         <source>Image size:</source>
         <translation>Bildestørrelse:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="637"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="55"/>
         <source>Specify how to position or scale the image:</source>
         <translation>Angi hvordan bildet skal plasseres eller skaleres:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="647"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
         <source>World file</source>
         <translation>Globalfil</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="649"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="71"/>
         <source>GeoTIFF</source>
         <translation>GeoTIFF</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="651"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="72"/>
         <source>no georeferencing information</source>
         <translation>ingen georeferanseinformasjon</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="653"/>
-        <source>Georeferenced</source>
-        <translation>Georeferert</translation>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="74"/>
+        <source>Georeferenced (%1)</source>
+        <translation>Georeferert (%1)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="657"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="77"/>
         <source>Meters per pixel:</source>
         <translation>Meter per piksel:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="661"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="81"/>
         <source>Scanned with</source>
         <translation>Skannet med</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="664"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="84"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="666"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="86"/>
         <source>Template scale:  1 :</source>
         <translation>Bakgrunnsbildesala: 1 :</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="692"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="112"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="693"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="113"/>
         <source>Open</source>
         <translation>Åpne</translation>
     </message>
@@ -8245,11 +8250,11 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="440"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="451"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1011"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1009"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
@@ -8268,17 +8273,17 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
         <translation type="obsolete">Vennligst skriv inn et gyldig tall fra 0 til 1, eller angi en prosentverdi fra 0 til 100!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>Vennligst skriv inn et gyldig heltall for å angi en gruppe eller la feltet være tomt for å fjerne bakgrunnsbildet fra gruppen!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1030"/>
         <source>Don&apos;t scale</source>
         <translation>Ikke skalér</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Skalér med opprinnelig kartmålestokk (%1 %)</translation>
     </message>
@@ -8293,49 +8298,49 @@ Hvis du ikke har til hensikt å endre denne malen, er det ikke noe problem.</tra
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">Kan ikke laste kartfil, avbryter.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>Warning</source>
         <translation type="unfinished">Advarsel</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">Kartimporteringen genererte advarsler.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Skelér med eksisterende bakgrunnsbildeskala (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1034"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1064"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1062"/>
         <source>Template import</source>
         <translation>Bakgrunnsbildeimport</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1035"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Hvordan skal symbolene i det importerte bakgrunnsbildet skaleres?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1065"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1063"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Dette bakgrunnsbildet vil ikke være synlig ved simulering av overprinting. Bytt til normal visning?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1222"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
         <source>- Map -</source>
         <translation>- Kart -</translation>
     </message>

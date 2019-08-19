@@ -2392,16 +2392,16 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="200"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="263"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="285"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="218"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="234"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="281"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="303"/>
         <source>Could not parse the coordinates.</source>
         <translation>无法解析坐标。</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="240"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="315"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="258"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="333"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>预期的 %1 坐标，找到 %2。</translation>
     </message>
@@ -2455,7 +2455,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="214"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="751"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>未能加载模板&quot;%1&quot;，原因: %2</translation>
     </message>
@@ -2873,137 +2873,137 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="318"/>
+        <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>&amp;New</source>
         <translation>与新</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="321"/>
+        <location filename="../src/gui/main_window.cpp" line="324"/>
         <source>Create a new map</source>
         <translation>创建一个新的映射</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="325"/>
+        <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Open...</source>
         <translation>与打开......</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="328"/>
+        <location filename="../src/gui/main_window.cpp" line="331"/>
         <source>Open an existing file</source>
         <translation>打开现有的文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="332"/>
+        <location filename="../src/gui/main_window.cpp" line="335"/>
         <source>Open &amp;recent</source>
         <translation>开放与最近</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="344"/>
+        <location filename="../src/gui/main_window.cpp" line="347"/>
         <source>&amp;Save</source>
         <translation>与保存</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="350"/>
+        <location filename="../src/gui/main_window.cpp" line="353"/>
         <source>Save &amp;as...</source>
         <translation>保存与作为...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="353"/>
+        <location filename="../src/gui/main_window.cpp" line="356"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl + Shift + S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="359"/>
+        <location filename="../src/gui/main_window.cpp" line="362"/>
         <source>Settings...</source>
         <translation>设置。。。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="364"/>
+        <location filename="../src/gui/main_window.cpp" line="367"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="151"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="367"/>
+        <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>Close this file</source>
         <translation>关闭此文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="371"/>
+        <location filename="../src/gui/main_window.cpp" line="374"/>
         <source>E&amp;xit</source>
         <translation>E &amp; xit</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="374"/>
+        <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>Exit the application</source>
         <translation>退出应用程序</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="380"/>
+        <location filename="../src/gui/main_window.cpp" line="383"/>
         <source>&amp;File</source>
         <translation>与文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="399"/>
+        <location filename="../src/gui/main_window.cpp" line="402"/>
         <source>General</source>
         <translation>一般</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="414"/>
+        <location filename="../src/gui/main_window.cpp" line="417"/>
         <source>Open &amp;Manual</source>
         <translation>打开 &amp; 手册</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="416"/>
+        <location filename="../src/gui/main_window.cpp" line="419"/>
         <source>Show the help file for this application</source>
         <translation>显示此应用程序的帮助文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="420"/>
+        <location filename="../src/gui/main_window.cpp" line="423"/>
         <source>&amp;About %1</source>
         <translation>&amp; 大约 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="422"/>
+        <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Show information about this application</source>
         <translation>显示有关此应用程序的信息</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="425"/>
+        <location filename="../src/gui/main_window.cpp" line="428"/>
         <source>About &amp;Qt</source>
         <translation>关于与 qt 离散度</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="427"/>
+        <location filename="../src/gui/main_window.cpp" line="430"/>
         <source>Show information about Qt</source>
         <translation>显示有关 qt 离散度的信息</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="432"/>
+        <location filename="../src/gui/main_window.cpp" line="435"/>
         <source>&amp;Help</source>
         <translation>与帮助</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="629"/>
+        <location filename="../src/gui/main_window.cpp" line="641"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>你想要删除自动保存的版本？</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="635"/>
+        <location filename="../src/gui/main_window.cpp" line="647"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>该文件已被修改。
 你想要保存您的更改吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="459"/>
-        <location filename="../src/gui/main_window.cpp" line="792"/>
+        <location filename="../src/gui/main_window.cpp" line="462"/>
+        <location filename="../src/gui/main_window.cpp" line="804"/>
         <source>Unsaved file</source>
         <translation>未保存的文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="750"/>
-        <location filename="../src/gui/main_window.cpp" line="838"/>
+        <location filename="../src/gui/main_window.cpp" line="762"/>
+        <location filename="../src/gui/main_window.cpp" line="850"/>
         <source>Cannot open file:
 %1
 
@@ -3011,20 +3011,20 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
-        <location filename="../src/gui/main_window.cpp" line="1091"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
+        <location filename="../src/gui/main_window.cpp" line="1103"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="448"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
         <source>The symbol set import generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -3033,67 +3033,67 @@ Do you want to scale the symbols to the selected scale?</source>
 你想要缩放到选定的比例符号吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="839"/>
+        <location filename="../src/gui/main_window.cpp" line="851"/>
         <source>Invalid file type.</source>
         <translation type="unfinished">无效的文件类型。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="848"/>
+        <location filename="../src/gui/main_window.cpp" line="860"/>
         <source>Crash warning</source>
         <translation>崩溃的警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="861"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>看来这 %1 坠毁最后一次打开此文件时间: &lt;br /&gt; &lt;tt&gt;%2&lt;/tt&gt; &lt;br /&gt; &lt;br /&gt; 真的重新尝试打开它吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1045"/>
+        <location filename="../src/gui/main_window.cpp" line="1057"/>
         <source>Autosaving...</source>
         <translation>自动保存...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1055"/>
+        <location filename="../src/gui/main_window.cpp" line="1067"/>
         <source>Autosaving failed!</source>
         <translation>自动保存失败 ！</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1144"/>
+        <location filename="../src/gui/main_window.cpp" line="1156"/>
         <source>All maps</source>
         <translation>所有的地图</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1148"/>
+        <location filename="../src/gui/main_window.cpp" line="1160"/>
         <source>All files</source>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="803"/>
+        <location filename="../src/gui/main_window.cpp" line="815"/>
         <source>Open file</source>
         <translation>打开的文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="157"/>
+        <location filename="../src/gui/main_window.cpp" line="160"/>
         <source>You must close the current file before you can open another one.</source>
         <translation>你可以打开另一个之前，必须关闭当前文件。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="824"/>
+        <location filename="../src/gui/main_window.cpp" line="836"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="736"/>
         <source>Opening %1</source>
         <translation>打开 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="749"/>
-        <location filename="../src/gui/main_window.cpp" line="837"/>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
-        <location filename="../src/gui/main_window.cpp" line="1236"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
+        <location filename="../src/gui/main_window.cpp" line="761"/>
+        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
+        <location filename="../src/gui/main_window.cpp" line="1248"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="748"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
         <source>Cannot open file:
 %1
 
@@ -3101,19 +3101,19 @@ File format not recognized.</source>
         <translation>无法打开文件: %1 文件格式无法识别。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="945"/>
+        <location filename="../src/gui/main_window.cpp" line="957"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>该文件已被修改。
 你想要放弃您的更改吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="997"/>
+        <location filename="../src/gui/main_window.cpp" line="1009"/>
         <source>&amp;%1 %2</source>
         <translation>与 %1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1086"/>
+        <location filename="../src/gui/main_window.cpp" line="1098"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -3124,22 +3124,22 @@ Press No to choose a different format.</source>
 按无选择不同的格式。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1216"/>
+        <location filename="../src/gui/main_window.cpp" line="1228"/>
         <source>Save file</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1237"/>
+        <location filename="../src/gui/main_window.cpp" line="1249"/>
         <source>File could not be saved:</source>
         <translation>无法保存文件︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1238"/>
+        <location filename="../src/gui/main_window.cpp" line="1250"/>
         <source>There was a problem in determining the file format.</source>
         <translation>还有一个问题中确定的文件格式。</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1239"/>
+        <location filename="../src/gui/main_window.cpp" line="1251"/>
         <source>Please report this as a bug.</source>
         <translation>请当作一个 bug 报告这。</translation>
     </message>
@@ -6042,184 +6042,184 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::PrintWidget</name>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="263"/>
+        <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Show templates</source>
         <translation>显示模板</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="274"/>
+        <location filename="../src/gui/print_widget.cpp" line="273"/>
         <source>Show grid</source>
         <translation>显示网格</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="181"/>
+        <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Page orientation:</source>
         <translation>页面方向︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="141"/>
+        <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Printer:</source>
         <translation>打印机︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="174"/>
+        <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
         <translation>肖像</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="176"/>
+        <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
         <translation>景观</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="155"/>
+        <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
         <translation>页面格式︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="184"/>
+        <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
         <translation>副本︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="197"/>
+        <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
         <translation>左︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="200"/>
+        <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
         <translation>返回页首：</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="203"/>
+        <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Width:</source>
         <translation>宽度：</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="206"/>
+        <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Height:</source>
         <translation>高度︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="304"/>
+        <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
         <translation>预览。。。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="189"/>
+        <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
         <translation>单个页面</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="190"/>
+        <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
         <translation>自定义区域</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="191"/>
+        <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
         <translation>地图区域︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="193"/>
+        <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
         <translation>中心打印区域</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="161"/>
-        <location filename="../src/gui/print_widget.cpp" line="165"/>
-        <location filename="../src/gui/print_widget.cpp" line="196"/>
-        <location filename="../src/gui/print_widget.cpp" line="199"/>
-        <location filename="../src/gui/print_widget.cpp" line="202"/>
-        <location filename="../src/gui/print_widget.cpp" line="205"/>
-        <location filename="../src/gui/print_widget.cpp" line="208"/>
+        <location filename="../src/gui/print_widget.cpp" line="160"/>
+        <location filename="../src/gui/print_widget.cpp" line="164"/>
+        <location filename="../src/gui/print_widget.cpp" line="195"/>
+        <location filename="../src/gui/print_widget.cpp" line="198"/>
+        <location filename="../src/gui/print_widget.cpp" line="201"/>
+        <location filename="../src/gui/print_widget.cpp" line="204"/>
+        <location filename="../src/gui/print_widget.cpp" line="207"/>
         <source>mm</source>
         <translation>毫米</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="146"/>
+        <location filename="../src/gui/print_widget.cpp" line="145"/>
         <source>Properties</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="209"/>
+        <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Page overlap:</source>
         <translation>页面重叠︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="213"/>
+        <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>Options</source>
         <translation>选项</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="247"/>
+        <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Resolution:</source>
         <translation>分辨率︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="249"/>
+        <location filename="../src/gui/print_widget.cpp" line="248"/>
         <source>Print in different scale:</source>
         <translation>打印在不同的尺度︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="270"/>
+        <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
         <translation>模板的外观可能会有所不同。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="277"/>
+        <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
         <translation>模拟叠印</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="280"/>
+        <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <location filename="../src/gui/print_widget.cpp" line="238"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="240"/>
+        <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK</source>
         <translation>设备 CMYK （实验）</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="241"/>
+        <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Color mode:</source>
         <translation>颜色模式︰</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="306"/>
-        <location filename="../src/gui/print_widget.cpp" line="412"/>
+        <location filename="../src/gui/print_widget.cpp" line="305"/>
+        <location filename="../src/gui/print_widget.cpp" line="411"/>
         <source>Print</source>
         <translation>打印</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="310"/>
+        <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export...</source>
         <translation>出口...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="419"/>
+        <location filename="../src/gui/print_widget.cpp" line="418"/>
         <source>PDF export</source>
         <translation>PDF 导出</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="432"/>
+        <location filename="../src/gui/print_widget.cpp" line="431"/>
         <source>Image export</source>
         <translation>图像导出</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="538"/>
+        <location filename="../src/gui/print_widget.cpp" line="537"/>
         <source>Save to PDF</source>
         <translation>将保存到 PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="245"/>
+        <location filename="../src/gui/print_widget.cpp" line="244"/>
         <location filename="../src/gui/print_widget.cpp" line="942"/>
         <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>dpi</source>
@@ -6276,41 +6276,41 @@ zoom using the mouse wheel, if available.</source>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>准备 PDF 导出失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1267"/>
+        <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
         <source>An error occurred during printing.</source>
         <translation>在打印过程中出现错误。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1181"/>
         <location filename="../src/gui/print_widget.cpp" line="1211"/>
-        <location filename="../src/gui/print_widget.cpp" line="1269"/>
-        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1263"/>
+        <location filename="../src/gui/print_widget.cpp" line="1275"/>
         <source>Export map ...</source>
         <translation>导出映射...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1180"/>
-        <location filename="../src/gui/print_widget.cpp" line="1268"/>
+        <location filename="../src/gui/print_widget.cpp" line="1262"/>
         <source>All files (*.*)</source>
         <translation>所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
         <source>Failed to prepare the printing.</source>
         <translation>准备打印失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1315"/>
+        <location filename="../src/gui/print_widget.cpp" line="1309"/>
         <source>Printing Progress</source>
         <translation>打印进度</translation>
     </message>
@@ -6320,35 +6320,35 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1130"/>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="220"/>
+        <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Vector
 graphics</source>
         <translation>矢量图形</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="221"/>
+        <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Raster
 graphics</source>
         <translation>光栅图形</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="222"/>
+        <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
         <translation>分色</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="235"/>
+        <location filename="../src/gui/print_widget.cpp" line="234"/>
         <source>Mode:</source>
         <translation>模式︰</translation>
     </message>
@@ -6364,40 +6364,40 @@ separations</source>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
-        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1285"/>
         <source>Exported successfully to %1</source>
         <translation>成功导出到 %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
         <source>Failed to finish the PDF export.</source>
         <translation>未能完成 PDF 导出。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1297"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1323"/>
         <source>Canceled.</source>
         <translation>取消了。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
         <source>The print job could not be stopped.</source>
         <translation>不能停止打印作业。</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1324"/>
+        <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Successfully created print job</source>
         <translation>成功创建打印作业</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1381"/>
-        <location filename="../src/gui/print_widget.cpp" line="1389"/>
+        <location filename="../src/gui/print_widget.cpp" line="1375"/>
+        <location filename="../src/gui/print_widget.cpp" line="1383"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>未知</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>映射区为空。取消的输出。</translation>
     </message>
@@ -7332,7 +7332,7 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::SymbolToolTip</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="202"/>
+        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"/>
         <source>No description!</source>
         <translation>没有描述 ！</translation>
     </message>
@@ -7581,17 +7581,22 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="158"/>
+        <location filename="../src/templates/template_image.cpp" line="147"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>没有足够的可用内存 (图像大小: %1 %2 像素 x)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="167"/>
+        <source>Georeferencing not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
@@ -7600,8 +7605,8 @@ If you do not intend to draw on this template however, that is no problem.</sour
 如果你不打算然而在此模板上画画，那是没有问题。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="240"/>
-        <location filename="../src/templates/template_image.cpp" line="360"/>
+        <location filename="../src/templates/template_image.cpp" line="223"/>
+        <location filename="../src/templates/template_image.cpp" line="342"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>在世界文件中选择坐标系的坐标</translation>
     </message>
@@ -7609,67 +7614,67 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="632"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
         <translation>打开 %1</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="634"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
         <source>Image size:</source>
         <translation>图像大小︰</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="637"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="55"/>
         <source>Specify how to position or scale the image:</source>
         <translation>指定如何定位或缩放图像︰</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="647"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
         <source>World file</source>
         <translation>世界文件</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="649"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="71"/>
         <source>GeoTIFF</source>
         <translation>GeoTIFF</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="651"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="72"/>
         <source>no georeferencing information</source>
         <translation>没有地理参考信息</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="653"/>
-        <source>Georeferenced</source>
-        <translation>地理</translation>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="74"/>
+        <source>Georeferenced (%1)</source>
+        <translation>地理  (%1)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="657"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="77"/>
         <source>Meters per pixel:</source>
         <translation>米 / 像素︰</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="661"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="81"/>
         <source>Scanned with</source>
         <translation>用扫描</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="664"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="84"/>
         <source>dpi</source>
         <translation>新闻部</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="666"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="86"/>
         <source>Template scale:  1 :</source>
         <translation>模板规模︰ 1:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="692"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="112"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="693"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="113"/>
         <source>Open</source>
         <translation>开放</translation>
     </message>
@@ -7790,26 +7795,26 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="440"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="451"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1011"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1009"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>请输入一个有效的整数数字来设置一组或将字段留空以取消组合模板 ！</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1030"/>
         <source>Don&apos;t scale</source>
         <translation>不能扩展</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>规模由名义地图规模比 （%1%）</translation>
     </message>
@@ -7837,49 +7842,49 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation>加载模板失败。此文件存在，并且有效吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">无法加载地图文件，中止。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">导入映射生成警告。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>缩放当前模板缩放 （%1%）</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1034"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1064"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1062"/>
         <source>Template import</source>
         <translation>导入模板</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1035"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>应如何缩放的导入的模板地图符号？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1065"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1063"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>该模板将叠印模拟中不可见。切换到普通视图吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1222"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
         <source>- Map -</source>
         <translation>-地图-</translation>
     </message>

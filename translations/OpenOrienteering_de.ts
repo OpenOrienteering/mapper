@@ -2493,16 +2493,16 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <translation type="vanished">Konnte die Daten nicht auswerten.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="200"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="216"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="263"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="285"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="218"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="234"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="281"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="303"/>
         <source>Could not parse the coordinates.</source>
         <translation>Konnte die Koordinaten nicht auswerten.</translation>
     </message>
     <message>
-        <location filename="../src/util/xml_stream_util.cpp" line="240"/>
-        <location filename="../src/util/xml_stream_util.cpp" line="315"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="258"/>
+        <location filename="../src/util/xml_stream_util.cpp" line="333"/>
         <source>Expected %1 coordinates, found %2.</source>
         <translation>%1 Koordinaten erwartet, %2 gefunden.</translation>
     </message>
@@ -2557,7 +2557,7 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="214"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="751"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Vorlage &apos;%1&apos; konnte nicht geladen werden, Grund: %2</translation>
     </message>
@@ -2989,16 +2989,16 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
 <context>
     <name>OpenOrienteering::MainWindow</name>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="749"/>
-        <location filename="../src/gui/main_window.cpp" line="837"/>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
-        <location filename="../src/gui/main_window.cpp" line="1236"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
+        <location filename="../src/gui/main_window.cpp" line="761"/>
+        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
+        <location filename="../src/gui/main_window.cpp" line="1248"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="748"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="865"/>
+        <location filename="../src/gui/main_window.cpp" line="877"/>
         <source>Cannot open file:
 %1
 
@@ -3009,123 +3009,123 @@ File format not recognized.</source>
 Unbekanntes Dateiformat.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="318"/>
+        <location filename="../src/gui/main_window.cpp" line="321"/>
         <source>&amp;New</source>
         <translation>&amp;Neu</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="157"/>
+        <location filename="../src/gui/main_window.cpp" line="160"/>
         <source>You must close the current file before you can open another one.</source>
         <translation>Vor dem Öffnen einer neuen Datei muss die aktuelle Datei geschlossen werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="321"/>
+        <location filename="../src/gui/main_window.cpp" line="324"/>
         <source>Create a new map</source>
         <translation>Eine neue Karte erstellen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="325"/>
+        <location filename="../src/gui/main_window.cpp" line="328"/>
         <source>&amp;Open...</source>
         <translation>Ö&amp;ffnen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="328"/>
+        <location filename="../src/gui/main_window.cpp" line="331"/>
         <source>Open an existing file</source>
         <translation>Eine vorhandene Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="332"/>
+        <location filename="../src/gui/main_window.cpp" line="335"/>
         <source>Open &amp;recent</source>
         <translation>Zu&amp;letzt bearbeitet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="344"/>
+        <location filename="../src/gui/main_window.cpp" line="347"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="350"/>
+        <location filename="../src/gui/main_window.cpp" line="353"/>
         <source>Save &amp;as...</source>
         <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="353"/>
+        <location filename="../src/gui/main_window.cpp" line="356"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="359"/>
+        <location filename="../src/gui/main_window.cpp" line="362"/>
         <source>Settings...</source>
         <translation>Einstellungen...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="364"/>
+        <location filename="../src/gui/main_window.cpp" line="367"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="151"/>
         <source>Close</source>
         <translation>Schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="367"/>
+        <location filename="../src/gui/main_window.cpp" line="370"/>
         <source>Close this file</source>
         <translation>Diese Datei schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="371"/>
+        <location filename="../src/gui/main_window.cpp" line="374"/>
         <source>E&amp;xit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="374"/>
+        <location filename="../src/gui/main_window.cpp" line="377"/>
         <source>Exit the application</source>
         <translatorcomment>Ausführlicher</translatorcomment>
         <translation>Die Anwendung beenden und alle Fenster schließen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="380"/>
+        <location filename="../src/gui/main_window.cpp" line="383"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="399"/>
+        <location filename="../src/gui/main_window.cpp" line="402"/>
         <source>General</source>
         <translation>Allgemein</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="414"/>
+        <location filename="../src/gui/main_window.cpp" line="417"/>
         <source>Open &amp;Manual</source>
         <translatorcomment>Kürzer</translatorcomment>
         <translation>&amp;Handbuch</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="416"/>
+        <location filename="../src/gui/main_window.cpp" line="419"/>
         <source>Show the help file for this application</source>
         <translation>Die Dokumentation zu diesem Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="420"/>
+        <location filename="../src/gui/main_window.cpp" line="423"/>
         <source>&amp;About %1</source>
         <translation>&amp;Über %1</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="427"/>
+        <location filename="../src/gui/main_window.cpp" line="430"/>
         <source>Show information about Qt</source>
         <translation>Informationen über Qt anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="629"/>
+        <location filename="../src/gui/main_window.cpp" line="641"/>
         <source>Do you want to remove the autosaved version?</source>
         <translation>Wollen Sie die automatisch gespeicherte Version entfernen?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="635"/>
+        <location filename="../src/gui/main_window.cpp" line="647"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
         <translation>Die Datei wurde geändert.
 Möchten Sie die Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="750"/>
-        <location filename="../src/gui/main_window.cpp" line="838"/>
+        <location filename="../src/gui/main_window.cpp" line="762"/>
+        <location filename="../src/gui/main_window.cpp" line="850"/>
         <source>Cannot open file:
 %1
 
@@ -3136,12 +3136,12 @@ Möchten Sie die Änderungen speichern?</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
         <source>The symbol set import generated warnings.</source>
         <translation>Beim Import des Symbolsatzes gab es Warnungen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
@@ -3150,23 +3150,23 @@ Do you want to scale the symbols to the selected scale?</source>
 Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="824"/>
+        <location filename="../src/gui/main_window.cpp" line="836"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="736"/>
         <source>Opening %1</source>
         <translation>%1 wird geöffnet</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="839"/>
+        <location filename="../src/gui/main_window.cpp" line="851"/>
         <source>Invalid file type.</source>
         <translation>Ungültiger Dateityp.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="848"/>
+        <location filename="../src/gui/main_window.cpp" line="860"/>
         <source>Crash warning</source>
         <translation>Absturz-Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="849"/>
+        <location filename="../src/gui/main_window.cpp" line="861"/>
         <source>It seems that %1 crashed the last time this file was opened:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Really retry to open it?</source>
         <translation>Anscheinend ist %1 beim letzten Mal abgestürzt, als diese Datei geöffnet wurde:&lt;br /&gt;&lt;tt&gt;%2&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Wirklich erneut versuchen, sie zu öffnen?</translation>
     </message>
@@ -3179,94 +3179,94 @@ Sollen alle Symbole auf den gewählten Maßstab skaliert werden?</translation>
         <translation type="vanished">Es gibt eine Wiederherstellungsdatei von &lt;br /&gt;&lt;tt&gt;%1&lt;/tt&gt;&lt;br /&gt;&lt;br /&gt;Diese Datei laden?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1045"/>
+        <location filename="../src/gui/main_window.cpp" line="1057"/>
         <source>Autosaving...</source>
         <translation>Automatisches Speichern...</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1055"/>
+        <location filename="../src/gui/main_window.cpp" line="1067"/>
         <source>Autosaving failed!</source>
         <translation>Automatisches Speichern fehlgeschlagen!</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1144"/>
+        <location filename="../src/gui/main_window.cpp" line="1156"/>
         <source>All maps</source>
         <translation>Alle Karten</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="803"/>
+        <location filename="../src/gui/main_window.cpp" line="815"/>
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1216"/>
+        <location filename="../src/gui/main_window.cpp" line="1228"/>
         <source>Save file</source>
         <translation>Datei speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1237"/>
+        <location filename="../src/gui/main_window.cpp" line="1249"/>
         <source>File could not be saved:</source>
         <translation>Datei konnte nicht gespeichert werden:</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1238"/>
+        <location filename="../src/gui/main_window.cpp" line="1250"/>
         <source>There was a problem in determining the file format.</source>
         <translation>Beim Ermitteln des Dateiformat ist ein Problem aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1239"/>
+        <location filename="../src/gui/main_window.cpp" line="1251"/>
         <source>Please report this as a bug.</source>
         <translation>Bitte melden Sie das als Programmfehler.</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="422"/>
+        <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Show information about this application</source>
         <translation>Informationen über dieses Programm anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="425"/>
+        <location filename="../src/gui/main_window.cpp" line="428"/>
         <source>About &amp;Qt</source>
         <translation>Über &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="432"/>
+        <location filename="../src/gui/main_window.cpp" line="435"/>
         <source>&amp;Help</source>
         <translation>&amp;Hilfe</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="459"/>
-        <location filename="../src/gui/main_window.cpp" line="792"/>
+        <location filename="../src/gui/main_window.cpp" line="462"/>
+        <location filename="../src/gui/main_window.cpp" line="804"/>
         <source>Unsaved file</source>
         <translation>Ungespeicherte Datei</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="756"/>
-        <location filename="../src/gui/main_window.cpp" line="760"/>
-        <location filename="../src/gui/main_window.cpp" line="1091"/>
+        <location filename="../src/gui/main_window.cpp" line="768"/>
+        <location filename="../src/gui/main_window.cpp" line="772"/>
+        <location filename="../src/gui/main_window.cpp" line="1103"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="448"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="945"/>
+        <location filename="../src/gui/main_window.cpp" line="957"/>
         <source>The file has been modified.
 Do you want to discard your changes?</source>
         <translation>Die Datei wurde verändert.
 Wollen Sie diese Änderungen verwerfen?</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1148"/>
+        <location filename="../src/gui/main_window.cpp" line="1160"/>
         <source>All files</source>
         <translation>Alle Dateien</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="997"/>
+        <location filename="../src/gui/main_window.cpp" line="1009"/>
         <source>&amp;%1 %2</source>
         <translatorcomment>Nicht zu übersetzen</translatorcomment>
         <translation>&amp;%1 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/main_window.cpp" line="1086"/>
+        <location filename="../src/gui/main_window.cpp" line="1098"/>
         <source>This map is being saved as a &quot;%1&quot; file. Information may be lost.
 
 Press Yes to save in this format.
@@ -6252,144 +6252,144 @@ Zoomen ist mit dem Mausrad möglich.</translation>
 <context>
     <name>OpenOrienteering::PrintWidget</name>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="263"/>
+        <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Show templates</source>
         <translation>Vorlagen ausgeben</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="274"/>
+        <location filename="../src/gui/print_widget.cpp" line="273"/>
         <source>Show grid</source>
         <translation>Gitter anzeigen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="181"/>
+        <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Page orientation:</source>
         <translation>Seitenausrichtung:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="141"/>
+        <location filename="../src/gui/print_widget.cpp" line="140"/>
         <source>Printer:</source>
         <translation>Drucker:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="174"/>
+        <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
         <translation>Hochformat</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="176"/>
+        <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
         <translation>Querformat</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="155"/>
+        <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
         <translation>Seitenformat:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="146"/>
+        <location filename="../src/gui/print_widget.cpp" line="145"/>
         <source>Properties</source>
         <translation>Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="184"/>
+        <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
         <translation>Kopien:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="197"/>
+        <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
         <translation>Links:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="200"/>
+        <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
         <translation>Oben:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="203"/>
+        <location filename="../src/gui/print_widget.cpp" line="202"/>
         <source>Width:</source>
         <translation>Breite:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="206"/>
+        <location filename="../src/gui/print_widget.cpp" line="205"/>
         <source>Height:</source>
         <translation>Höhe:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="220"/>
+        <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Vector
 graphics</source>
         <translation>Vektor-
 grafik</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="221"/>
+        <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Raster
 graphics</source>
         <translation>Raster-
 grafik</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="222"/>
+        <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
         <translation>Farbsepa-
 rationen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="235"/>
+        <location filename="../src/gui/print_widget.cpp" line="234"/>
         <source>Mode:</source>
         <translation>Modus:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="280"/>
+        <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
         <translation>World File erzeugen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="304"/>
+        <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
         <translation>Vorschau...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="189"/>
+        <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
         <translation>Einzelne Seite</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="190"/>
+        <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
         <translation>Benutzerdefinierter Bereich</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="191"/>
+        <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
         <translation>Kartenfläche:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="193"/>
+        <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
         <translation>Druckbereich zentrieren</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="161"/>
-        <location filename="../src/gui/print_widget.cpp" line="165"/>
-        <location filename="../src/gui/print_widget.cpp" line="196"/>
-        <location filename="../src/gui/print_widget.cpp" line="199"/>
-        <location filename="../src/gui/print_widget.cpp" line="202"/>
-        <location filename="../src/gui/print_widget.cpp" line="205"/>
-        <location filename="../src/gui/print_widget.cpp" line="208"/>
+        <location filename="../src/gui/print_widget.cpp" line="160"/>
+        <location filename="../src/gui/print_widget.cpp" line="164"/>
+        <location filename="../src/gui/print_widget.cpp" line="195"/>
+        <location filename="../src/gui/print_widget.cpp" line="198"/>
+        <location filename="../src/gui/print_widget.cpp" line="201"/>
+        <location filename="../src/gui/print_widget.cpp" line="204"/>
+        <location filename="../src/gui/print_widget.cpp" line="207"/>
         <source>mm</source>
         <translation>mm</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="209"/>
+        <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Page overlap:</source>
         <translation>Überlappung zwischen Seiten:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="213"/>
+        <location filename="../src/gui/print_widget.cpp" line="212"/>
         <source>Options</source>
         <translation>Optionen</translation>
     </message>
@@ -6402,53 +6402,53 @@ rationen</translation>
         <translation type="vanished">Farbseparationen</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="247"/>
+        <location filename="../src/gui/print_widget.cpp" line="246"/>
         <source>Resolution:</source>
         <translation>Auflösung:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="249"/>
+        <location filename="../src/gui/print_widget.cpp" line="248"/>
         <source>Print in different scale:</source>
         <translation>In anderem Maßstab drucken:</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="270"/>
+        <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
         <translation>Vorlagen können anders erscheinen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="277"/>
+        <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
         <translation>Überdruck-Simulation</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="306"/>
-        <location filename="../src/gui/print_widget.cpp" line="412"/>
+        <location filename="../src/gui/print_widget.cpp" line="305"/>
+        <location filename="../src/gui/print_widget.cpp" line="411"/>
         <source>Print</source>
         <translation>Drucken</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="310"/>
+        <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export...</source>
         <translation>Exportieren...</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="419"/>
+        <location filename="../src/gui/print_widget.cpp" line="418"/>
         <source>PDF export</source>
         <translation>PDF-Export</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="432"/>
+        <location filename="../src/gui/print_widget.cpp" line="431"/>
         <source>Image export</source>
         <translation>Bildexport</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="538"/>
+        <location filename="../src/gui/print_widget.cpp" line="537"/>
         <source>Save to PDF</source>
         <translation>Als PDF speichern</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="245"/>
+        <location filename="../src/gui/print_widget.cpp" line="244"/>
         <location filename="../src/gui/print_widget.cpp" line="942"/>
         <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>dpi</source>
@@ -6500,22 +6500,22 @@ rationen</translation>
         <translation>JPEG</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1267"/>
+        <location filename="../src/gui/print_widget.cpp" line="1261"/>
         <source>PDF</source>
         <translation>PDF</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1181"/>
         <location filename="../src/gui/print_widget.cpp" line="1211"/>
-        <location filename="../src/gui/print_widget.cpp" line="1269"/>
-        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1263"/>
+        <location filename="../src/gui/print_widget.cpp" line="1275"/>
         <source>Export map ...</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Karte exportieren...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1180"/>
-        <location filename="../src/gui/print_widget.cpp" line="1268"/>
+        <location filename="../src/gui/print_widget.cpp" line="1262"/>
         <source>All files (*.*)</source>
         <translation>Alle Dateien (*.*)</translation>
     </message>
@@ -6525,12 +6525,12 @@ rationen</translation>
         <location filename="../src/gui/print_widget.cpp" line="1130"/>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -6542,13 +6542,13 @@ rationen</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
-        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1285"/>
         <source>Exported successfully to %1</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Erfolgreich nach %1 exportiert</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1315"/>
+        <location filename="../src/gui/print_widget.cpp" line="1309"/>
         <source>Printing Progress</source>
         <translation>Druckfortschritt</translation>
     </message>
@@ -6558,8 +6558,8 @@ rationen</translation>
         <translation>Das Bild konnte nicht erstellt werden. Nicht genügend Arbeitsspeicher.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1297"/>
-        <location filename="../src/gui/print_widget.cpp" line="1329"/>
+        <location filename="../src/gui/print_widget.cpp" line="1291"/>
+        <location filename="../src/gui/print_widget.cpp" line="1323"/>
         <source>Canceled.</source>
         <translatorcomment>Check original</translatorcomment>
         <translation>Abgebrochen.</translation>
@@ -6569,39 +6569,39 @@ rationen</translation>
         <translation type="vanished">Drucken</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1333"/>
+        <location filename="../src/gui/print_widget.cpp" line="1327"/>
         <source>The print job could not be stopped.</source>
         <translation>Der Druckauftrag konnte nicht abgebrochen werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1324"/>
+        <location filename="../src/gui/print_widget.cpp" line="1318"/>
         <source>Successfully created print job</source>
         <translation>Druckauftrag erfolgreich erzeugt</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1381"/>
-        <location filename="../src/gui/print_widget.cpp" line="1389"/>
+        <location filename="../src/gui/print_widget.cpp" line="1375"/>
+        <location filename="../src/gui/print_widget.cpp" line="1383"/>
         <source>Unknown</source>
         <comment>Paper size</comment>
         <translation>Unbekannt</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1397"/>
+        <location filename="../src/gui/print_widget.cpp" line="1391"/>
         <source>The map area is empty. Output canceled.</source>
         <translation>Der Kartenbereich ist leer. Ausgabe abgebrochen.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="239"/>
+        <location filename="../src/gui/print_widget.cpp" line="238"/>
         <source>Default</source>
         <translation>Standard</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="240"/>
+        <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK</source>
         <translation>Geräteabhängiges CMYK</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="241"/>
+        <location filename="../src/gui/print_widget.cpp" line="240"/>
         <source>Color mode:</source>
         <translation>Farbmodus:</translation>
     </message>
@@ -6611,22 +6611,22 @@ rationen</translation>
         <translation>Die Vorschau konnte nicht erstellt werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1257"/>
+        <location filename="../src/gui/print_widget.cpp" line="1251"/>
         <source>Failed to prepare the PDF export.</source>
         <translation>Fehler beim Vorbereiten des PDF-Exports.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1287"/>
+        <location filename="../src/gui/print_widget.cpp" line="1281"/>
         <source>Failed to finish the PDF export.</source>
         <translation>Der PDF-Export konnte nicht abgeschlossen werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1306"/>
+        <location filename="../src/gui/print_widget.cpp" line="1300"/>
         <source>Failed to prepare the printing.</source>
         <translation>Fehler beim Vorbereiten des Druckens.</translation>
     </message>
     <message>
-        <location filename="../src/gui/print_widget.cpp" line="1320"/>
+        <location filename="../src/gui/print_widget.cpp" line="1314"/>
         <source>An error occurred during printing.</source>
         <translation>Beim Drucken ist ein Fehler aufgetreten.</translation>
     </message>
@@ -7599,7 +7599,7 @@ verwahrlosten Taxi quer durch Bayern
 <context>
     <name>OpenOrienteering::SymbolToolTip</name>
     <message>
-        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="202"/>
+        <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"/>
         <source>No description!</source>
         <translation>Keine Beschreibung!</translation>
     </message>
@@ -7853,17 +7853,22 @@ verwahrlosten Taxi quer durch Bayern
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="158"/>
+        <location filename="../src/templates/template_image.cpp" line="147"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Nicht genügend freier Arbeitsspeicher (Bildgröße: %1x%2 Pixel)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="167"/>
+        <source>Georeferencing not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="198"/>
+        <location filename="../src/templates/template_image.cpp" line="181"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
@@ -7871,8 +7876,8 @@ If you do not intend to draw on this template however, that is no problem.</sour
 Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlagen können nicht gespeichert werden.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="240"/>
-        <location filename="../src/templates/template_image.cpp" line="360"/>
+        <location filename="../src/templates/template_image.cpp" line="223"/>
+        <location filename="../src/templates/template_image.cpp" line="342"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Wählen Sie das Koordinatenbezugssystem der Koordinaten in der Weltdatei</translation>
     </message>
@@ -7880,67 +7885,67 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
 <context>
     <name>OpenOrienteering::TemplateImageOpenDialog</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="632"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
         <translation>%1 öffnen</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="634"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
         <source>Image size:</source>
         <translation>Bildgröße:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="637"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="55"/>
         <source>Specify how to position or scale the image:</source>
         <translation>Geben Sie an, wie das Bild positioniert oder skaliert werden soll:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="647"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
         <source>World file</source>
         <translation>Weltdatei</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="649"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="71"/>
         <source>GeoTIFF</source>
         <translation>GeoTIFF</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="651"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="72"/>
         <source>no georeferencing information</source>
         <translation>nicht georeferenziert</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="653"/>
-        <source>Georeferenced</source>
-        <translation>Georeferenziert</translation>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="74"/>
+        <source>Georeferenced (%1)</source>
+        <translation>Georeferenziert (%1)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="657"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="77"/>
         <source>Meters per pixel:</source>
         <translation>Meter pro Bildpunkt:</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="661"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="81"/>
         <source>Scanned with</source>
         <translation>Gescannt mit</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="664"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="84"/>
         <source>dpi</source>
         <translation>dpi</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="666"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="86"/>
         <source>Template scale:  1 :</source>
         <translation>Vorlagenmaßstab: 1 :</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="692"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="112"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="693"/>
+        <location filename="../src/templates/template_image_open_dialog.cpp" line="113"/>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
@@ -8081,11 +8086,11 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="440"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="451"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1011"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1009"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
@@ -8100,64 +8105,64 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <translation>Konnte Vorlage nicht laden. Existiert die Datei und ist sie in Ordnung?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="788"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="786"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>Geben Sie eine ganze Zahl ein, um eine Gruppe festzulegen, oder lassen Sie das Feld frei, um die Gruppierung dieser Vorlage aufzuheben!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1006"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
         <source>Cannot load map file, aborting.</source>
         <translation>Kann Kartendatei nicht laden; Abbruch.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1016"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>The map import generated warnings.</source>
         <translation>Beim Kartenimport sind Warnmeldungen aufgetreten.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1030"/>
         <source>Don&apos;t scale</source>
         <translation>Nicht skalieren</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Skalieren nach Kartenmaßstabsverhältnis (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1029"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Skalieren nach aktueller Vorlagenausrichtung (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1034"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1064"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1032"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1062"/>
         <source>Template import</source>
         <translation>Vorlagenimport</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1035"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Wie sollen die Symbole der importierten Vorlage skaliert werden?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1065"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1063"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Die Vorlage wird in der Überdruck-Simulation nicht sichtbar sein. In normale Ansicht wechseln?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1103"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
         <translation>Georeferenzierung kann nicht geändert werden.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1222"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
         <source>- Map -</source>
         <translation>- Karte -</translation>
     </message>
