@@ -67,7 +67,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	// Georeferencing source translations which already existed in this context
 	// and need to be preserved here, until moved to a different file.
 	// Now the source strings come from TemplateImage and from GDAL (driver names).
-	Q_UNUSED(QT_TR_NOOP("World File"))
+	Q_UNUSED(QT_TR_NOOP("World file"))
 	Q_UNUSED(QT_TR_NOOP("GeoTIFF"))
 	Q_UNUSED(QT_TR_NOOP("no georeferencing information"))
 	// GDAL's GeoTIFF driver reports itselfs as "GTiff".
