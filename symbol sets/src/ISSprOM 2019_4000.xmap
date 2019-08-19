@@ -76,19 +76,19 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
         </color>
-        <color priority="10" name="Opaque Blue above Brown" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="10" name="Opaque Blue above Brown" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.13" g="0.82" b="1"/>
+            <rgb method="spotcolor" r="0" g="1" b="1"/>
         </color>
-        <color priority="11" name="Blue above Brown" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="11" name="Blue above Brown" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors>
                 <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.13" g="0.82" b="1"/>
+            <rgb method="spotcolor" r="0" g="1" b="1"/>
         </color>
         <color priority="12" name="Green above Brown" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors>
@@ -119,40 +119,40 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
-        <color priority="16" name="Opaque Blue" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="16" name="Opaque Blue" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.13" g="0.82" b="1"/>
+            <rgb method="spotcolor" r="0" g="1" b="1"/>
         </color>
-        <color priority="17" name="Blue" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="17" name="Blue" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.13" g="0.82" b="1"/>
+            <rgb method="cmyk" r="0" g="1" b="1"/>
         </color>
-        <color priority="18" name="Blue 75%" c="0.653" m="0.135" y="0" k="0" opacity="1">
+        <color priority="18" name="Blue 75%" c="0.75" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.75" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.348" g="0.865" b="1"/>
+            <rgb method="spotcolor" r="0.25" g="1" b="1"/>
         </color>
-        <color priority="19" name="Blue 30%" c="0.261" m="0.054" y="0" k="0" opacity="1">
+        <color priority="19" name="Blue 30%" c="0.3" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.739" g="0.946" b="1"/>
+            <rgb method="spotcolor" r="0.7" g="1" b="1"/>
         </color>
-        <color priority="20" name="OpenOrienteering Blue 50%" c="0.435" m="0.09" y="0" k="0" opacity="1">
+        <color priority="20" name="OpenOrienteering Blue 50%" c="0.5" m="0" y="0" k="0" opacity="1">
             <spotcolors>
                 <component factor="0.5" spotcolor="17"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.565" g="0.91" b="1"/>
+            <rgb method="spotcolor" r="0.5" g="1" b="1"/>
         </color>
         <color priority="21" name="Brown" c="0" m="0.56" y="1" k="0.18" opacity="1">
             <spotcolors>
