@@ -37,6 +37,7 @@
 class QByteArray;
 class QColor;
 class QDir;
+class QFileInfo;
 class QPainter;
 class QRectF;
 class QTransform;
@@ -488,6 +489,9 @@ public:
 	inline Map* getMap() const {return map;}
 	
 	inline const QString& getTemplateFilename() const {return template_file;}
+	
+	/// Changes the path and filename only. Does not do any reloading etc.
+	void setTemplateFileInfo(const QFileInfo& file_info);
 	
 	inline const QString& getTemplatePath() const {return template_path;}
 	/// Changes the path and filename only. Does not do any reloading etc.
