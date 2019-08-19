@@ -479,7 +479,7 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 
 
 
-bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
+Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 {
 	// This function normally sets the state either to Invalid or Unloaded.
 	// However, the Loaded state must not be changed here because this would
@@ -489,57 +489,59 @@ bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_m
 			template_state = proposed_state;
 	};
 	
-	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
-		map_directory.append(QLatin1Char('/'));
+	// Determining the directory from a file or directory
+	auto const dir = [](const QString& path) -> QDir {
+		auto const path_info = QFileInfo(path);
+		if (path_info.isFile())
+			return path_info.dir();
+		if (path_info.isDir())
+			return { path };
+		return {};
+	};
 	
-	if (out_found_in_map_dir)
-		*out_found_in_map_dir = false;
-	
-	const QString old_absolute_path = getTemplatePath();
-	
-	// First try relative path (if this information is available)
-	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
+	// 1. The relative path with regard to the map directory, if both are valid
+	auto const rel_path = getTemplateRelativePath();
+	if (!rel_path.isEmpty() && !map_path.isEmpty())
 	{
-		auto path = QString{ map_directory + getTemplateRelativePath() };
-		if (QFileInfo::exists(path))
+		auto const abs_path = dir(map_path).absoluteFilePath(rel_path); 
+		if (QFileInfo(abs_path).isFile())
 		{
-			setTemplatePath(path);
+			setTemplatePath(abs_path);
 			set_state(Unloaded);
-			return true;
+			return FoundByRelPath;
 		}
 	}
 	
-	// Second try absolute path
-	if (QFileInfo::exists(template_path))
+	// 2. The absolute path of the template
+	if (QFileInfo::exists(getTemplatePath()))
 	{
+		/* setTemplatePath(getTemplatePath()); */
 		set_state(Unloaded);
-		return true;
+		return FoundByAbsPath;
 	}
 	
-	// Third try the template filename in the map's directory
-	if (!map_directory.isEmpty())
+	// 3. The map directory, if valid, for the filename of the template
+	auto const filename = getTemplateFilename();
+	if (!filename.isEmpty() && !map_path.isEmpty())
 	{
-		auto path = QString{ map_directory + getTemplateFilename() };
-		if (QFileInfo::exists(path))
+		auto const abs_path = dir(map_path).absoluteFilePath(filename); 
+		if (QFileInfo(abs_path).isFile())
 		{
-			setTemplatePath(path);
+			setTemplatePath(abs_path);
 			set_state(Unloaded);
-			if (out_found_in_map_dir)
-				*out_found_in_map_dir = true;
-			return true;
+			return FoundInMapDir;
 		}
 	}
 	
-	setTemplatePath(old_absolute_path);
 	set_state(Invalid);
 	setErrorString(tr("No such file."));
-	return false;
+	return NotFound;
 }
 
 
-bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
-	return tryToFindTemplateFile(map_directory, out_loaded_from_map_dir)
+	return tryToFindTemplateFile(map_path) != NotFound
 	       && loadTemplateFile(false);
 }
 

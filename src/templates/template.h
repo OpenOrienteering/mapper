@@ -130,6 +130,17 @@ public:
 	};
 	
 	/**
+	 * The result of template file lookup attempts.
+	 */
+	enum LookupResult
+	{
+		NotFound       = 0,  ///< File not found at all.
+		FoundInMapDir  = 1,  ///< File name found in the map's directory.
+		FoundByRelPath = 2,  ///< File found by relative path from the map's directory.
+		FoundByAbsPath = 3,  ///< File found by absolute path.
+	};
+	
+	/**
 	 * Indicates arguments which must not be nullptr.
 	 * \todo Use the Guideline Support Library
 	 */
@@ -233,20 +244,32 @@ public:
 	/**
 	 * Tries to find the template file non-interactively.
 	 * 
-	 * This function searches for the template in the following locations:
-	 *  - saved relative position to map file, if available and map_directory is not empty
-	 *  - absolute position of template file
-	 *  - template filename in map_directory, if map_directory not empty
-	 * 
+	 * Thus function updates the path and name variables, and the template state.
 	 * If successful, changes the state from Invalid to Unloaded if necessary,
 	 * and returns true. Otherwise, changes the state from Unloaded to Invalid
 	 * if necessary, and returns false. (If the state is Loaded, it is left
-	 * unchanged.)
+	 * unchanged.) It returns an indication of its success.
 	 * 
-	 * If out_found_from_map_dir is given, it is set to true if the template file
-	 * is found using the template filename in the map's directory (3rd alternative).
+	 * This function searches for the template in the following locations:
+	 * 
+	 *  1. The relative path with regard to the map directory, if both are valid.
+	 *     This alternative has precedence because it should always work,
+	 *     especially after coyping or moving a whole working directory on the
+	 *     same computer or to another one.
+	 * 
+	 *  2. The absolute path of the template.
+	 *     This is the most explicit alternative. It works on the same computer
+	 *     when the map file is copied or moved to another location.
+	 * 
+	 *  3. The map directory, if valid, for the filename of the template.
+	 *     This is a fallback for use cases where a map and selected templates
+	 *     are moved to the same flat folder, e.g. when receiving them via
+	 *     individual e-mail attachements.
+	 * 
+	 * \param map_path  Either the full filepath of the map, or an arbitrary
+	 *                  directory which shall be regarded as the map directory.
 	 */
-	bool tryToFindTemplateFile(QString map_directory, bool* out_found_from_map_dir = nullptr);
+	LookupResult tryToFindTemplateFile(const QString& map_path);
 	
 	/**
 	 * Tries to find and load the template file non-interactively.
@@ -258,7 +281,7 @@ public:
 	 * 
 	 * \see tryToFindTemplateFile
 	 */
-	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = nullptr);
+	bool tryToFindAndReloadTemplateFile(const QString& map_path);
 	
 	
 	/** 
