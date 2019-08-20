@@ -7860,7 +7860,7 @@ verwahrlosten Taxi quer durch Bayern
     <message>
         <location filename="../src/templates/template_image.cpp" line="167"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferenzierung nicht gefunden</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="181"/>
