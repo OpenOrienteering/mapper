@@ -88,8 +88,15 @@ if(TARGET Qt5::Positioning)
 endif()
 if(TARGET Qt5::Sensors)
 	list(APPEND third_party_components qtsensors)
+	if(NOT TARGET Qt5::QGeoPositionInfoSourceFactorySerialNmea
+	   AND EXISTS "${Qt5Positioning_DIR}/Qt5Positioning_QGeoPositionInfoSourceFactorySerialNmea.cmake")
+		include("${Qt5Positioning_DIR}/Qt5Positioning_QGeoPositionInfoSourceFactorySerialNmea.cmake")
+	endif()
+	if(TARGET Qt5::QGeoPositionInfoSourceFactorySerialNmea)
+		find_package(Qt5SerialPort QUIET)
+	endif()
 endif()
-if(TARGET Qt5::Serialport)
+if(TARGET Qt5::SerialPort)
 	list(APPEND third_party_components qtserialport)
 endif()
 if(TARGET QtSingleApplication)
@@ -104,6 +111,8 @@ endif()
 if(Mapper_PACKAGE_ASSISTANT)
 	list(APPEND third_party_components qttools)
 endif()
+
+message(STATUS "Direct third-party components: ${third_party_components}")
 
 
 # Licences used directly by Mapper
@@ -193,6 +202,7 @@ endforeach()
 
 list(SORT third_party_components)
 if(LICENSING_NO_ATTRIBUTION)
+	string(REPLACE "," ";" LICENSING_NO_ATTRIBUTION "${LICENSING_NO_ATTRIBUTION}")
 	list(REMOVE_ITEM third_party_components ${LICENSING_NO_ATTRIBUTION})
 endif()
 list(REMOVE_DUPLICATES third_party_components)
