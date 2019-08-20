@@ -333,10 +333,11 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		// Loaded state is implied by canChangeTemplateGeoreferenced().
 		Q_ASSERT(getTemplateState() == Template::Loaded);
 		
-		if (value && temp_crs_spec.isEmpty())
+		if (value)
 		{
 			// Cf. postLoadConfiguration
-			if (available_georef.front().type == Georeferencing_WorldFile)
+			if (available_georef.front().type == Georeferencing_WorldFile
+			    && temp_crs_spec.isEmpty())
 			{
 				// Let user select the coordinate reference system, as this is not specified in world files
 				SelectCRSDialog dialog(
@@ -348,14 +349,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 					return is_georeferenced;
 				temp_crs_spec = dialog.currentCRSSpec();
 			}
-			else
-			{
-				return is_georeferenced;
-			}
-		}
-		
-		if (value)
-		{
+			
 			setTemplateAreaDirty();
 			is_georeferenced = true;
 			calculateGeoreferencing();
