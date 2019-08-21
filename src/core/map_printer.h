@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018  Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -239,6 +239,11 @@ public:
 	/** Constructs a new MapPrinter for the given map and (optional) view. */
 	MapPrinter(Map& map, const MapView* view, QObject* parent = nullptr);
 	
+	MapPrinter(const MapPrinter&) = delete;
+	MapPrinter(MapPrinter&&) = delete;
+	MapPrinter& operator=(const MapPrinter&) = delete;
+	MapPrinter& operator=(MapPrinter&&) = delete;
+	
 	/** Destructor. */
 	~MapPrinter() override;
 	
@@ -353,10 +358,10 @@ public slots:
 	void setPageSize(QPageSize::PageSizeId size);
 	
 	/** Sets a custom paper size with the given dimensions. */
-	void setCustomPageSize(const QSizeF dimensions);
+	void setCustomPageSize(const QSizeF& dimensions);
 	
 	/** Sets the page orientation. */
-	void setPageOrientation(const MapPrinterPageFormat::Orientation orientation);
+	void setPageOrientation(MapPrinterPageFormat::Orientation orientation);
 	
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
@@ -369,18 +374,18 @@ public slots:
 	void setResolution(int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
-	void setScale(const unsigned int value);
+	void setScale(unsigned int value);
 	
 	/** Sets the printing mode. */
-	void setMode(const MapPrinterOptions::MapPrinterMode mode);
+	void setMode(MapPrinterOptions::MapPrinterMode mode);
 	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(const bool visible);
+	void setPrintTemplates(bool visible);
 	
 	/** Controls whether to print the map grid. */
-	void setPrintGrid(const bool visible);
+	void setPrintGrid(bool visible);
 	
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
@@ -438,12 +443,12 @@ protected:
 	
 	Map& map;
 	const MapView* view;
-	const QPrinterInfo* target;
+	const QPrinterInfo* target = nullptr;
 	QPrinterInfo target_copy;
 	qreal scale_adjustment;
 	std::vector<qreal> h_page_pos;
 	std::vector<qreal> v_page_pos;
-	bool cancel_print_map;
+	bool cancel_print_map = false;
 };
 
 #endif

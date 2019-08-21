@@ -402,21 +402,18 @@ const QHash< int, const char* >& MapPrinter::paperSizeNames()
 
 
 MapPrinter::MapPrinter(Map& map, const MapView* view, QObject* parent)
-: QObject(parent),
-  MapPrinterConfig(map.printerConfig()),
-  map(map),
-  view(view),
-  target(nullptr)
+: QObject(parent)
+, MapPrinterConfig(map.printerConfig())
+, map(map)
+, view(view)
 {
 	scale_adjustment = map.getScaleDenominator() / qreal(options.scale);
 	updatePaperDimensions();
 	connect(&map.getGeoreferencing(), &Georeferencing::transformationChanged, this, &MapPrinter::mapScaleChanged);
 }
 
-MapPrinter::~MapPrinter()
-{
-	// Do not remove.
-}
+MapPrinter::~MapPrinter() = default;
+
 
 void MapPrinter::saveConfig() const
 {
@@ -462,19 +459,19 @@ std::unique_ptr<QPrinter> MapPrinter::makePrinter() const
 	std::unique_ptr<QPrinter> printer;
 	if (!target)
 	{
-		printer.reset(new QPrinter(QPrinter::HighResolution));
+		printer = std::make_unique<QPrinter>(QPrinter::HighResolution);
 	}
 	else if (isPrinter())
 	{
-		printer.reset(new QPrinter(*target, QPrinter::HighResolution));
+		printer = std::make_unique<QPrinter>(*target, QPrinter::HighResolution);
 	}
 	else if (options.color_mode == MapPrinterOptions::DeviceCmyk)
 	{
-		printer.reset(new AdvancedPdfPrinter(*target, QPrinter::HighResolution));
+		printer = std::make_unique<AdvancedPdfPrinter>(*target, QPrinter::HighResolution);
 	}
 	else
 	{
-		printer.reset(new QPrinter(*target, QPrinter::HighResolution));
+		printer = std::make_unique<QPrinter>(*target, QPrinter::HighResolution);
 		printer->setOutputFormat(QPrinter::PdfFormat);
 	}
 	
@@ -562,7 +559,7 @@ void MapPrinter::setPageSize(QPageSize::PageSizeId size)
 }
 
 // slot
-void MapPrinter::setCustomPageSize(const QSizeF dimensions)
+void MapPrinter::setCustomPageSize(const QSizeF& dimensions)
 {
 	if ((page_format.page_size != QPageSize::Custom || 
 	     page_format.paper_dimensions != dimensions) &&
