@@ -78,8 +78,13 @@ public:
 	 *  page format. */
 	static MapPrinterPageFormat fromDefaultPrinter();
 	
-	/** The nominal page size (of type QPageSize::PageSizeId) */
-	int page_size;
+#ifdef QT_PRINTSUPPORT_LIB
+	/** The nominal page size */
+	QPageSize::PageSizeId page_size;
+#else
+	/** The page size as textual key for import/export */
+	QString page_size;
+#endif
 	
 	/** The orientation of the paper. */
 	Orientation orientation;
@@ -344,8 +349,8 @@ public slots:
 	/** Sets the map area which is to be printed. */
 	void setPrintArea(const QRectF& area);
 	
-	/** Sets the QPageSize::PageSizeId to be used. */
-	void setPageSize(const int size);
+	/** Sets the page size ID to be used. */
+	void setPageSize(QPageSize::PageSizeId size);
 	
 	/** Sets a custom paper size with the given dimensions. */
 	void setCustomPageSize(const QSizeF dimensions);
