@@ -26,7 +26,6 @@
 #include <Qt>
 #include <QtMath>
 #include <QColor>
-#include <QDebug>
 #include <QHash>
 #include <QImage>
 #include <QLatin1String>
@@ -208,7 +207,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 		else if (mode == literal::separations)
 			options.mode = MapPrinterOptions::Separations;
 		else
-			qDebug() << "Unsupported map printing mode:" << mode;
+			qDebug("Unsupported map printing mode: %s", mode.toUtf8().constData());
 	}
 	QStringRef color_mode = printer_config_element.attribute<QStringRef>(literal::color_mode);
 	if (!color_mode.isEmpty())
@@ -218,7 +217,7 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 		else if (color_mode == literal::device_cmyk)
 			options.color_mode = MapPrinterOptions::DeviceCmyk;
 		else
-			qDebug() << "Unsupported map color mode:" << color_mode;
+			qDebug("Unsupported map color mode: %s", color_mode.toUtf8().constData());
 	}
 	
 	while (xml.readNextStartElement())
@@ -307,7 +306,7 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 		break;
 	default:
 		// Do not fail on saving
-		qDebug() << "Unsupported map printing mode:" << options.mode;
+		qDebug("Unsupported map printing mode: %d", int(options.mode));
 	}
 
 	switch (options.color_mode)
@@ -321,7 +320,7 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 		break;
 	default:
 		// Do not fail on saving
-		qDebug() << "Unsupported map color mode:" << options.color_mode;
+		qDebug("Unsupported map color mode: %d", int(options.color_mode));
 	}
 
 	{
