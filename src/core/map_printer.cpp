@@ -756,6 +756,16 @@ bool MapPrinter::isOutputEmpty() const
 	);
 }
 
+QSizeF MapPrinter::getPrintAreaPaperSize() const
+{
+	return getPrintArea().size() * scale_adjustment;
+}
+
+QSizeF MapPrinter::getPageRectPrintAreaSize() const
+{
+	return page_format.page_rect.size() / scale_adjustment;
+}
+
 
 bool MapPrinter::engineMayRasterize() const
 {
