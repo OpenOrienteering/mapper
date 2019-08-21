@@ -225,7 +225,10 @@ public:
 	static const QPrinterInfo* imageTarget();
 	
 	/** Returns a reference to a hash which maps paper sizes to names as C strings.
-	 *  These strings are not translated. */
+	 *  These strings are not translated.
+	 *
+	 * @deprecated Use QPageSize::key() instead.
+	 */
 	static const QHash< int, const char* >& paperSizeNames();
 	
 	/** Constructs a new MapPrinter for the given map and (optional) view. */

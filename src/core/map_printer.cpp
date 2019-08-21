@@ -232,10 +232,14 @@ MapPrinterConfig::MapPrinterConfig(const Map& map, QXmlStreamReader& xml)
 #ifdef QT_PRINTSUPPORT_LIB
 			value = page_format_element.attribute<QString>(literal::paper_size);
 			const QHash< int, const char* >& paper_size_names = MapPrinter::paperSizeNames();
-			for (int i = 0; i < paper_size_names.count(); ++i)
+			for (int i = 0; i <= static_cast<int>(QPageSize::PageSizeId::LastPageSize); ++i)
 			{
-				if (value == QLatin1String(paper_size_names[i]))
+				if (value == QPageSize::key(static_cast<QPageSize::PageSizeId>(i))
+				    || (paper_size_names.contains(i) && value == QLatin1String(paper_size_names[i])) )
+				{
 					page_format.page_size = i;
+					break;
+				}
 			}
 #endif
 			
@@ -322,7 +326,7 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 		XmlElementWriter page_format_element(xml, literal::page_format);
 #ifdef QT_PRINTSUPPORT_LIB
 		page_format_element.writeAttribute(literal::paper_size,
-		  MapPrinter::paperSizeNames()[page_format.page_size]);
+		  QPageSize::key(static_cast<QPageSize::PageSizeId>(page_format.page_size)));
 #endif
 		page_format_element.writeAttribute(literal::orientation,
 		  (page_format.orientation == MapPrinterPageFormat::Portrait) ? literal::portrait : literal::landscape );
@@ -361,21 +365,18 @@ const QPrinterInfo* MapPrinter::imageTarget()
 	return &image_target;
 }
 
+
+// QPageSize (::key(), ::name()) made this list mostly obsolete.
+// But we keep it in v0.9 for loading maps where we used names
+// different from QPageSize::key().
+/// @todo Remove MapPrinter::paperSizeNames() in Mapper 1.0.
+
+// static
 const QHash< int, const char* >& MapPrinter::paperSizeNames()
 {
 	static QHash< int, const char* > names;
 	if (names.empty())
 	{
-		names[QPrinter::A0]        = "A0";
-		names[QPrinter::A1]        = "A1";
-		names[QPrinter::A2]        = "A2";
-		names[QPrinter::A3]        = "A3";
-		names[QPrinter::A4]        = "A4";
-		names[QPrinter::A5]        = "A5";
-		names[QPrinter::A6]        = "A6";
-		names[QPrinter::A7]        = "A7";
-		names[QPrinter::A8]        = "A8";
-		names[QPrinter::A9]        = "A9";
 		names[QPrinter::B0]        = "B0";
 		names[QPrinter::B1]        = "B1";
 		names[QPrinter::B2]        = "B2";
@@ -390,13 +391,7 @@ const QHash< int, const char* >& MapPrinter::paperSizeNames()
 		names[QPrinter::C5E]       = "C5E";
 		names[QPrinter::DLE]       = "DLE";
 		names[QPrinter::Executive] = "Executive";
-		names[QPrinter::Folio]     = "Folio";
-		names[QPrinter::Ledger]    = "Ledger";
-		names[QPrinter::Legal]     = "Legal";
-		names[QPrinter::Letter]    = "Letter";
-		names[QPrinter::Tabloid]   = "Tabloid";
 		names[QPrinter::Comm10E]   = "US Common #10 Envelope";
-		names[QPrinter::Custom]    = "Custom";
 	}
 	return names;
 }
