@@ -166,6 +166,17 @@ MapPrinterOptions::MapPrinterOptions(unsigned int scale, int resolution, MapPrin
 	// nothing
 }
 
+bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
+{
+	return     lhs.mode                  == rhs.mode
+	        && lhs.color_mode            == rhs.color_mode
+	        && lhs.resolution            == rhs.resolution
+	        && lhs.scale                 == rhs.scale
+	        && lhs.show_templates        == rhs.show_templates
+	        && lhs.show_grid             == rhs.show_grid
+	        && lhs.simulate_overprinting == rhs.simulate_overprinting;
+}
+
 
 
 // ### MapPrinterConfig ###
@@ -349,6 +360,17 @@ void MapPrinterConfig::save(QXmlStreamWriter& xml, const QLatin1String& element_
 		print_area_element.writeAttribute(literal::center_area, center_print_area);
 		print_area_element.writeAttribute(literal::single_page, single_page_print_area);
 	}
+}
+
+
+bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
+{
+	return     lhs.printer_name           == rhs.printer_name
+	        && lhs.print_area             == rhs.print_area
+	        && lhs.page_format            == rhs.page_format
+	        && lhs.options                == rhs.options
+	        && lhs.center_print_area      == rhs.center_print_area
+	        && lhs.single_page_print_area == rhs.single_page_print_area;
 }
 
 
@@ -1362,6 +1384,8 @@ void MapPrinter::cancelPrintMap()
 {
 	cancel_print_map = true;
 }
+
+
 
 #endif  // QT_PRINTSUPPORT_LIB
 

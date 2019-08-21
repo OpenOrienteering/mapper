@@ -468,17 +468,7 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 //### MapPrinterOptions inline code ###
 
 /** Returns true iff the MapPrinterOptions values are equal. */
-inline
-bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
-{
-	return     lhs.mode                  == rhs.mode
-	        && lhs.color_mode            == rhs.color_mode
-	        && lhs.resolution            == rhs.resolution
-	        && lhs.scale                 == rhs.scale
-	        && lhs.show_templates        == rhs.show_templates
-	        && lhs.show_grid             == rhs.show_grid
-	        && lhs.simulate_overprinting == rhs.simulate_overprinting;
-}
+bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs);
 
 /** Returns true iff the MapPrinterOptions values are not equal. */
 inline
@@ -492,16 +482,7 @@ bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 // ### MapPrinterConfig ###
 
 /** Returns true iff the MapPrinterConfig values are equal. */
-inline
-bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
-{
-	return     lhs.printer_name           == rhs.printer_name
-	        && lhs.print_area             == rhs.print_area
-	        && lhs.page_format            == rhs.page_format
-	        && lhs.options                == rhs.options
-	        && lhs.center_print_area      == rhs.center_print_area
-	        && lhs.single_page_print_area == rhs.single_page_print_area;
-}
+bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs);
 
 /** Returns true iff the MapPrinterConfig values are not equal. */
 inline
