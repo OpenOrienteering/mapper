@@ -39,7 +39,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFormLayout>
-#include <QHash>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QImage>
@@ -50,11 +49,11 @@
 #include <QLineEdit>
 #include <QMargins>
 #include <QMessageBox>
-#include <QPagedPaintDevice>
+#include <QPageSize>
 #include <QPainter>
 #include <QPointF>
+#include <QPrinter>
 #include <QPrinterInfo>
-#include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPushButton>
 #include <QRadioButton>
@@ -403,9 +402,9 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 					policy = CustomArea;
 					policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				}
-				if (map_printer->getPageFormat().paper_size == QPrinter::Custom)
+				if (map_printer->getPageFormat().page_size == QPageSize::Custom)
 				{
-					map_printer->setPaperSize(map->printerConfig().page_format.paper_size);
+					map_printer->setPageSize(map->printerConfig().page_format.page_size);
 				}
 				// TODO: Set target to most recently used printer
 				emit taskChanged(tr("Print"));
@@ -425,7 +424,7 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				policy = SinglePage;
 				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
 				{
-					map_printer->setCustomPaperSize(map_printer->getPrintAreaPaperSize());
+					map_printer->setCustomPageSize(map_printer->getPrintAreaPaperSize());
 					policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				}
 				emit taskChanged(tr("Image export"));
@@ -673,24 +672,24 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	const QSignalBlocker block(paper_size_combo);
 	
 	paper_size_combo->clear();
-	QList<QPrinter::PaperSize> size_list;
+	QList<QPageSize> size_list;
 	if (target)
-		size_list = target->supportedPaperSizes();
+		size_list = target->supportedPageSizes();
 	if (size_list.isEmpty())
-		size_list = defaultPaperSizes();
+		size_list = defaultPageSizes();
 	
-	for (auto size : qAsConst(size_list))
+	for (auto const & size : qAsConst(size_list))
 	{
-		if (size == QPrinter::Custom)
-			have_custom_size = true; // add it once after all other entries
+		if (size.id() == QPageSize::Custom)
+			have_custom_size = true; // add it once after all other entires
 		else
-			paper_size_combo->addItem(toString(size), size);
+			paper_size_combo->addItem(size.name(), size.id());
 	}
 	
 	if (have_custom_size)
-		paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
+		paper_size_combo->addItem(QPageSize(QPageSize::Custom).name(), QPageSize::Custom);
 	
-	int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().paper_size);
+	int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().page_size);
 	if (!prev_paper_size_name.isEmpty())
 	{
 		paper_size_index = paper_size_combo->findText(prev_paper_size_name);
@@ -707,12 +706,12 @@ void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 	            page_width_edit, page_height_edit,
 	            overlap_edit
 	);
-	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
+	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.page_size));
 	page_orientation_group->button(format.orientation)->setChecked(true);
 	page_width_edit->setValue(format.paper_dimensions.width());
-	page_width_edit->setEnabled(format.paper_size == QPrinter::Custom);
+	page_width_edit->setEnabled(format.page_size == QPageSize::Custom);
 	page_height_edit->setValue(format.paper_dimensions.height());
-	page_height_edit->setEnabled(format.paper_size == QPrinter::Custom);
+	page_height_edit->setEnabled(format.page_size == QPageSize::Custom);
 	// We only have a single overlap edit field, but MapPrinter supports 
 	// distinct horizontal and vertical overlap. Choose the minimum.
 	overlap_edit->setValue(qMin(format.h_overlap, format.v_overlap));
@@ -724,8 +723,8 @@ void PrintWidget::paperSizeChanged(int index) const
 {
 	if (index >= 0)
 	{
-		QPrinter::PaperSize paper_size = QPrinter::PaperSize(paper_size_combo->itemData(index).toInt());
-		map_printer->setPaperSize(paper_size);
+		auto paper_size = QPageSize::PageSizeId(paper_size_combo->itemData(index).toInt());
+		map_printer->setPageSize(paper_size);
 	}
 }
 
@@ -733,7 +732,7 @@ void PrintWidget::paperSizeChanged(int index) const
 void PrintWidget::paperDimensionsChanged() const
 {
 	const QSizeF dimensions(page_width_edit->value(), page_height_edit->value());
-	map_printer->setCustomPaperSize(dimensions);
+	map_printer->setCustomPageSize(dimensions);
 }
 
 // slot
@@ -819,14 +818,14 @@ void PrintWidget::setPrintArea(const QRectF& area)
 	
 	if (policy == SinglePage)
 	{
-		if (map_printer->getPageFormat().paper_size == QPrinter::Custom || !task.testFlag(MULTIPAGE_FLAG))
+		if (map_printer->getPageFormat().page_size == QPageSize::Custom || !task.testFlag(MULTIPAGE_FLAG))
 		{
 			// Update custom paper size from print area size
 			QSizeF area_dimensions = area.size() * map_printer->getScaleAdjustment();
 			if (map_printer->getPageFormat().page_rect.size() != area_dimensions)
 			{
 				// Don't force a custom paper size unless necessary
-				map_printer->setCustomPaperSize(area_dimensions);
+				map_printer->setCustomPageSize(area_dimensions);
 			}
 		}
 		else
@@ -1328,61 +1327,45 @@ void PrintWidget::print()
 	}
 }
 
-QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
+QList<QPageSize> PrintWidget::defaultPageSizes() const
 {
 	// TODO: Learn from user's past choices, present reduced list unless asked for more.
-	static QList<QPrinter::PaperSize> default_paper_sizes(QList<QPrinter::PaperSize>()
-	  << QPrinter::A4
-	  << QPrinter::Letter
-	  << QPrinter::Legal
-	  << QPrinter::Executive
-	  << QPrinter::A0
-	  << QPrinter::A1
-	  << QPrinter::A2
-	  << QPrinter::A3
-	  << QPrinter::A5
-	  << QPrinter::A6
-	  << QPrinter::A7
-	  << QPrinter::A8
-	  << QPrinter::A9
-	  << QPrinter::B0
-	  << QPrinter::B1
-	  << QPrinter::B10
-	  << QPrinter::B2
-	  << QPrinter::B3
-	  << QPrinter::B4
-	  << QPrinter::B5
-	  << QPrinter::B6
-	  << QPrinter::B7
-	  << QPrinter::B8
-	  << QPrinter::B9
-	  << QPrinter::C5E
-	  << QPrinter::Comm10E
-	  << QPrinter::DLE
-	  << QPrinter::Folio
-	  << QPrinter::Ledger
-	  << QPrinter::Tabloid
-	  << QPrinter::Custom
+	static QList<QPageSize> default_paper_sizes(QList<QPageSize>()
+	  << QPageSize{ QPageSize::A4 }
+	  << QPageSize{ QPageSize::Letter }
+	  << QPageSize{ QPageSize::Legal }
+	  << QPageSize{ QPageSize::Executive }
+	  << QPageSize{ QPageSize::A0 }
+	  << QPageSize{ QPageSize::A1 }
+	  << QPageSize{ QPageSize::A2 }
+	  << QPageSize{ QPageSize::A3 }
+	  << QPageSize{ QPageSize::A5 }
+	  << QPageSize{ QPageSize::A6 }
+	  << QPageSize{ QPageSize::A7 }
+	  << QPageSize{ QPageSize::A8 }
+	  << QPageSize{ QPageSize::A9 }
+	  << QPageSize{ QPageSize::B0 }
+	  << QPageSize{ QPageSize::B1 }
+	  << QPageSize{ QPageSize::B10 }
+	  << QPageSize{ QPageSize::B2 }
+	  << QPageSize{ QPageSize::B3 }
+	  << QPageSize{ QPageSize::B4 }
+	  << QPageSize{ QPageSize::B5 }
+	  << QPageSize{ QPageSize::B6 }
+	  << QPageSize{ QPageSize::B7 }
+	  << QPageSize{ QPageSize::B8 }
+	  << QPageSize{ QPageSize::B9 }
+	  << QPageSize{ QPageSize::C5E }
+	  << QPageSize{ QPageSize::Comm10E }
+	  << QPageSize{ QPageSize::DLE }
+	  << QPageSize{ QPageSize::Folio }
+	  << QPageSize{ QPageSize::Ledger }
+	  << QPageSize{ QPageSize::Tabloid }
+	  << QPageSize{ QPageSize::Custom }
 	);
 	return default_paper_sizes;
 }
 
-QString PrintWidget::toString(QPrinter::PaperSize size)
-{
-#if defined(Q_OS_ANDROID)
-	// Qt for Android has no QPrintDialog
-	Q_UNUSED(size);
-	return tr("Unknown", "Paper size");
-#else
-	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
-	if (paper_size_names.contains(size))
-		// These translations are not used in QPrintDialog, 
-		// but in Qt's qpagesetupdialog_unix.cpp.
-		return QPrintDialog::tr(paper_size_names[size]);
-	else
-		return tr("Unknown", "Paper size");
-#endif
-}
 
 bool PrintWidget::checkForEmptyMap()
 {

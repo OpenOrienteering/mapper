@@ -197,6 +197,7 @@ if(Mapper_USE_GDAL)
 endif()
 
 find_package(Qt5Core 5.3 REQUIRED)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050300)
 if (ANDROID AND "${Qt5Core_VERSION}" VERSION_LESS 5.12.1)
 	message(FATAL_ERROR "At least Qt 5.12.1 is required to build for Android")
 elseif ("${Qt5Core_VERSION}" VERSION_LESS 5.8.0)

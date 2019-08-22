@@ -27,7 +27,6 @@
 #include <QFlags>
 #include <QList>
 #include <QObject>
-#include <QPrinter>
 // IWYU pragma: no_include <QRectF>
 #include <QSize>
 #include <QString>
@@ -43,6 +42,7 @@ class QDialogButtonBox;
 class QDoubleSpinBox;
 class QFormLayout;
 class QLabel;
+class QPageSize;
 class QPushButton;
 class QPrinterInfo;
 class QRectF;
@@ -92,9 +92,6 @@ public:
 	
 	/** Indicates the default widget size. */
 	QSize sizeHint() const override;
-	
-	/** Returns a translated name for the given paper size. */
-	static QString toString(QPrinter::PaperSize size);
 	
 public slots:
 	/** Changes the type of the print or export task. */
@@ -242,7 +239,7 @@ protected:
 	
 	/** A list of paper sizes which is used when the target does not specify
 	 *  supported paper sizes. */
-	QList<QPrinter::PaperSize> defaultPaperSizes() const;
+	QList<QPageSize> defaultPageSizes() const;
 	
 	/** Moves the given rectangle to a position where it is centered on the
 	 *  map for the current output options. */

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018  Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -78,8 +78,13 @@ public:
 	 *  page format. */
 	static MapPrinterPageFormat fromDefaultPrinter();
 	
-	/** The nominal paper size (of type QPrinter::PaperSize) */
-	int paper_size;
+#ifdef QT_PRINTSUPPORT_LIB
+	/** The nominal page size */
+	QPageSize::PageSizeId page_size;
+#else
+	/** The page size as textual key for import/export */
+	QString page_size;
+#endif
 	
 	/** The orientation of the paper. */
 	Orientation orientation;
@@ -225,36 +230,59 @@ public:
 	static const QPrinterInfo* imageTarget();
 	
 	/** Returns a reference to a hash which maps paper sizes to names as C strings.
-	 *  These strings are not translated. */
+	 *  These strings are not translated.
+	 *
+	 * @deprecated Use QPageSize::key() instead.
+	 */
 	static const QHash< int, const char* >& paperSizeNames();
 	
 	/** Constructs a new MapPrinter for the given map and (optional) view. */
 	MapPrinter(Map& map, const MapView* view, QObject* parent = nullptr);
 	
+	MapPrinter(const MapPrinter&) = delete;
+	MapPrinter(MapPrinter&&) = delete;
+	MapPrinter& operator=(const MapPrinter&) = delete;
+	MapPrinter& operator=(MapPrinter&&) = delete;
+	
 	/** Destructor. */
 	~MapPrinter() override;
 	
 	/** Returns the configured target printer in terms of QPrinterInfo. */
-	const QPrinterInfo* getTarget() const;
+	const QPrinterInfo* getTarget() const
+	{
+		return target;
+	}
 	
 	/** Returns true if a real printer is configured. */
 	bool isPrinter() const;
 	
 	/** Returns the page format specification. */
-	const MapPrinterPageFormat& getPageFormat() const;
+	const MapPrinterPageFormat& getPageFormat() const
+	{
+		return page_format;
+	}
 	
 	/** Returns the map area to be printed. */
-	const QRectF& getPrintArea() const;
+	const QRectF& getPrintArea() const
+	{
+		return print_area;
+	}
 	
 	/** Returns the rendering options. */
-	const MapPrinterOptions& getOptions() const;
+	const MapPrinterOptions& getOptions() const
+	{
+		return options;
+	}
 	
 	/** Returns true if the current print area and rendering options will 
 	 *  result in empty pages. (The grid is not considered.) */
 	bool isOutputEmpty() const;
 
 	/** Returns the quotient of map scale denominator and print scale denominator. */
-	qreal getScaleAdjustment() const;
+	qreal getScaleAdjustment() const
+	{
+		return scale_adjustment;
+	}
 	
 	/** Returns the paper size which is required by the current print area and scale. */
 	QSizeF getPrintAreaPaperSize() const;
@@ -263,10 +291,16 @@ public:
 	QSizeF getPageRectPrintAreaSize() const;
 	
 	/** Returns a list of horizontal page positions on the map. */
-	const std::vector< qreal >& horizontalPagePositions() const;
+	const std::vector< qreal >& horizontalPagePositions() const
+	{
+		return h_page_pos;
+	}
 	
 	/** Returns a list of vertical page positions on the map. */
-	const std::vector< qreal >& verticalPagePositions() const;
+	const std::vector< qreal >& verticalPagePositions() const
+	{
+		return v_page_pos;
+	}
 	
 	
 	/**
@@ -331,7 +365,10 @@ public:
 	void drawSeparationPages(QPrinter* printer, QPainter* device_painter, const QRectF& page_extent) const;
 	
 	/** Returns the current configuration. */
-	const MapPrinterConfig& config() const;
+	const MapPrinterConfig& config() const
+	{
+		return *this;
+	}
 	
 public slots:
 	/** Sets the target QPrinterInfo.
@@ -341,14 +378,14 @@ public slots:
 	/** Sets the map area which is to be printed. */
 	void setPrintArea(const QRectF& area);
 	
-	/** Sets the QPrinter::PaperSize to be used. */
-	void setPaperSize(const int size);
+	/** Sets the page size ID to be used. */
+	void setPageSize(QPageSize::PageSizeId size);
 	
 	/** Sets a custom paper size with the given dimensions. */
-	void setCustomPaperSize(const QSizeF dimensions);
+	void setCustomPageSize(const QSizeF& dimensions);
 	
 	/** Sets the page orientation. */
-	void setPageOrientation(const MapPrinterPageFormat::Orientation orientation);
+	void setPageOrientation(MapPrinterPageFormat::Orientation orientation);
 	
 	/** Sets the overlapping of the pages at the margins. */
 	void setOverlap(qreal h_overlap, qreal v_overlap);
@@ -361,18 +398,18 @@ public slots:
 	void setResolution(int dpi);
 	
 	/** Sets the denominator of the map scale for printing. */
-	void setScale(const unsigned int value);
+	void setScale(unsigned int value);
 	
 	/** Sets the printing mode. */
-	void setMode(const MapPrinterOptions::MapPrinterMode mode);
+	void setMode(MapPrinterOptions::MapPrinterMode mode);
 	
 	/** Controls whether to print templates. 
 	 *  If a MapView is given when enabling template printing, 
 	 *  it will determine the visibility of map and templates. */
-	void setPrintTemplates(const bool visible);
+	void setPrintTemplates(bool visible);
 	
 	/** Controls whether to print the map grid. */
-	void setPrintGrid(const bool visible);
+	void setPrintGrid(bool visible);
 	
 	/** Controls whether to print in overprinting simulation mode. */
 	void setSimulateOverprinting(bool enabled);
@@ -411,13 +448,22 @@ signals:
 	
 protected:
 	/** Returns true if vector mode is set. */
-	bool vectorModeSelected() const;
+	bool vectorModeSelected() const
+	{
+		return options.mode == MapPrinterOptions::Vector;
+	}
 	
 	/** Returns true if raster mode is set. */
-	bool rasterModeSelected() const;
+	bool rasterModeSelected() const
+	{
+		return options.mode == MapPrinterOptions::Raster;
+	}
 	
 	/** Returns true if separations mode is set. */
-	bool separationsModeSelected() const;
+	bool separationsModeSelected() const
+	{
+		return options.mode == MapPrinterOptions::Separations;
+	}
 	
 	/** Updates the paper dimensions from paper format and orientation. */
 	void updatePaperDimensions();
@@ -430,12 +476,12 @@ protected:
 	
 	Map& map;
 	const MapView* view;
-	const QPrinterInfo* target;
+	const QPrinterInfo* target = nullptr;
 	QPrinterInfo target_copy;
 	qreal scale_adjustment;
 	std::vector<qreal> h_page_pos;
 	std::vector<qreal> v_page_pos;
-	bool cancel_print_map;
+	bool cancel_print_map = false;
 };
 
 #endif
@@ -452,20 +498,10 @@ bool operator!=(const MapPrinterPageFormat& lhs, const MapPrinterPageFormat& rhs
 
 
 
-//### MapPrinterOptions inline code ###
+//### Free functions for MapPrinterOptions ###
 
 /** Returns true iff the MapPrinterOptions values are equal. */
-inline
-bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
-{
-	return     lhs.mode                  == rhs.mode
-	        && lhs.color_mode            == rhs.color_mode
-	        && lhs.resolution            == rhs.resolution
-	        && lhs.scale                 == rhs.scale
-	        && lhs.show_templates        == rhs.show_templates
-	        && lhs.show_grid             == rhs.show_grid
-	        && lhs.simulate_overprinting == rhs.simulate_overprinting;
-}
+bool operator==(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs);
 
 /** Returns true iff the MapPrinterOptions values are not equal. */
 inline
@@ -476,19 +512,10 @@ bool operator!=(const MapPrinterOptions& lhs, const MapPrinterOptions& rhs)
 
 
 
-// ### MapPrinterConfig ###
+// ### Free functions for MapPrinterConfig ###
 
 /** Returns true iff the MapPrinterConfig values are equal. */
-inline
-bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
-{
-	return     lhs.printer_name           == rhs.printer_name
-	        && lhs.print_area             == rhs.print_area
-	        && lhs.page_format            == rhs.page_format
-	        && lhs.options                == rhs.options
-	        && lhs.center_print_area      == rhs.center_print_area
-	        && lhs.single_page_print_area == rhs.single_page_print_area;
-}
+bool operator==(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs);
 
 /** Returns true iff the MapPrinterConfig values are not equal. */
 inline
@@ -497,91 +524,6 @@ bool operator!=(const MapPrinterConfig& lhs, const MapPrinterConfig& rhs)
 	return !(lhs == rhs);
 }
 
-
-
-// ### MapPrinter inline code ###
-
-#ifdef QT_PRINTSUPPORT_LIB
-
-inline
-const MapPrinterConfig& MapPrinter::config() const
-{
-	return *this;
-}
-
-inline
-const QPrinterInfo* MapPrinter::getTarget() const
-{
-	return target;
-}
-
-inline
-const MapPrinterPageFormat& MapPrinter::getPageFormat() const
-{
-	return page_format;
-}
-
-inline
-const QRectF& MapPrinter::getPrintArea() const
-{
-	return print_area;
-}
-
-inline
-const MapPrinterOptions& MapPrinter::getOptions() const
-{
-	return options;
-}
-
-inline
-qreal MapPrinter::getScaleAdjustment() const
-{
-	return scale_adjustment;
-}
-
-inline
-QSizeF MapPrinter::getPrintAreaPaperSize() const
-{
-	return getPrintArea().size() * scale_adjustment;
-}
-
-inline
-QSizeF MapPrinter::getPageRectPrintAreaSize() const
-{
-	return page_format.page_rect.size() / scale_adjustment;
-}
-
-inline
-const std::vector< qreal >& MapPrinter::horizontalPagePositions() const
-{
-	return h_page_pos;
-}
-
-inline
-const std::vector< qreal >& MapPrinter::verticalPagePositions() const
-{
-	return v_page_pos;
-}
-
-inline
-bool MapPrinter::vectorModeSelected() const
-{
-	return options.mode == MapPrinterOptions::Vector;
-}
-
-inline
-bool MapPrinter::rasterModeSelected() const
-{
-	return options.mode == MapPrinterOptions::Raster;
-}
-
-inline
-bool MapPrinter::separationsModeSelected() const
-{
-	return options.mode == MapPrinterOptions::Separations;
-}
-
-#endif
 
 
 }  // namespace OpenOrienteering

@@ -637,7 +637,7 @@ void SymbolSetTool::processSymbolSet()
 		printer_config.single_page_print_area = true;
 		printer_config.center_print_area = true;
 		printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
-		printer_config.page_format.paper_size = QPrinter::A4; 
+		printer_config.page_format.page_size = QPageSize::A4; 
 		printer_config.print_area = printer_config.page_format.page_rect;
 		map.setPrinterConfig(printer_config);
 	}
