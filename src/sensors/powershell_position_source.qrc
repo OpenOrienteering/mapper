@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sensors">
+        <file>powershell_position_source.ps1</file>
+    </qresource>
+</RCC>

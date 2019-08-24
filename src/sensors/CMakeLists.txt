@@ -26,6 +26,8 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
+set(MAPPER_SENSORS_RESOURCES )
+
 # Extra header to be shown in the IDE (e.g. private) or to be translated
 set(MAPPER_SENSORS_HEADERS
   # not needed ATM
@@ -38,6 +40,15 @@ set(MAPPER_SENSORS_SOURCES
   gps_track_recorder.cpp
 )
 
+if(TARGET Qt5::Positioning)
+	list(APPEND MAPPER_SENSORS_SOURCES
+	  powershell_position_source.cpp
+	)
+	qt5_add_resources(MAPPER_SENSORS_RESOURCES
+	  "${CMAKE_CURRENT_SOURCE_DIR}/powershell_position_source.qrc"
+	)
+endif()
+
 mapper_translations_sources(
   ${MAPPER_SENSORS_HEADERS}
   ${MAPPER_SENSORS_SOURCES}
@@ -46,6 +57,7 @@ mapper_translations_sources(
 add_library(mapper-sensors STATIC
   ${MAPPER_SENSORS_HEADERS}
   ${MAPPER_SENSORS_SOURCES}
+  ${MAPPER_SENSORS_RESOURCES}
 )
 
 target_compile_definitions(mapper-sensors

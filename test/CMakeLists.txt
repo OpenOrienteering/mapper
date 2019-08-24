@@ -21,6 +21,7 @@ find_package(Qt5Network REQUIRED)
 find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Positioning)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -192,6 +193,10 @@ add_system_test(track_t)  # Could be unit test, but needs Georeferencing
 add_system_test(transform_t)
 add_system_test(undo_manager_t)
 
+if(TARGET Qt5::Positioning)
+	add_system_test(sensors_t)
+	target_link_libraries(sensors_t Qt5::Positioning mapper-sensors Mapper_Common)
+endif()
 
 # Collect the AUTORUN_TESTS
 get_property(Mapper_AUTORUN_TESTS DIRECTORY PROPERTY Mapper_AUTORUN_TESTS)

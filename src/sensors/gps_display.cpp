@@ -54,6 +54,9 @@
 #include "gui/util_gui.h"
 #include "gui/map/map_widget.h"
 #include "sensors/compass.h"
+#ifdef WIN32
+#  include "sensors/powershell_position_source.h"
+#endif
 #include "util/backports.h"  // IWYU pragma: keep
 
 
@@ -108,6 +111,14 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 {
 #if defined(QT_POSITIONING_LIB)
 	source = QGeoPositionInfoSource::createDefaultSource(this);
+#if defined(Q_OS_WIN)
+	if (!source)
+	{
+		auto powershell_source = std::make_unique<PowershellPositionSource>(this);
+		if (powershell_source->error() == QGeoPositionInfoSource::NoError)
+			source = powershell_source.release();
+	}
+#endif
 	if (!source)
 	{
 		qDebug("Cannot create QGeoPositionInfoSource!");
