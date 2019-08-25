@@ -100,7 +100,6 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	statusBar()->setSizeGripEnabled(as_main_window);
 	if (mobileMode())
 	{
-		statusBar()->hide();
 		toast = new Toast(this);
 	}
 	
@@ -254,6 +253,8 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		createFileMenu();
 	
 	controller = new_controller;
+	menuBar()->setVisible(new_controller->menuBarVisible());
+	statusBar()->setVisible(new_controller->statusBarVisible());
 	controller->attach(this);
 	
 	if (create_menu)

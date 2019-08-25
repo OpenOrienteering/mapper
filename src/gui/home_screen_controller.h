@@ -46,6 +46,9 @@ public:
 	/** Destroys the HomeScreenController and its children. */
 	~HomeScreenController() override;
 	
+	/** The home screen widgets do not use a status bar. */
+	bool statusBarVisible() override;
+	
 	/** Activates the HomeScreenController for the given main window. */
 	void attach(MainWindow* window) override;
 	

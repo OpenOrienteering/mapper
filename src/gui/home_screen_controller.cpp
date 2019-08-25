@@ -40,6 +40,11 @@ HomeScreenController::HomeScreenController()
 HomeScreenController::~HomeScreenController() = default;
 
 
+bool HomeScreenController::statusBarVisible()
+{
+	return false;
+}
+
 void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
@@ -51,8 +56,6 @@ void HomeScreenController::attach(MainWindow* window)
 	else
 	{
 		widget = new HomeScreenWidgetDesktop(this);
-		window->statusBar()->hide();
-		window->setStatusBarText(QString{});
 	}
 	
 	window->setCentralWidget(widget);
@@ -64,10 +67,6 @@ void HomeScreenController::attach(MainWindow* window)
 
 void HomeScreenController::detach()
 {
-	if (!MainWindow::mobileMode())
-	{
-		window->statusBar()->show();
-	}
 	window->setCentralWidget(nullptr);
 	widget->deleteLater();
 	

@@ -35,6 +35,17 @@ namespace OpenOrienteering {
 MainWindowController::~MainWindowController() = default;
 
 
+bool MainWindowController::menuBarVisible()
+{
+	return !MainWindow::mobileMode();
+}
+
+bool MainWindowController::statusBarVisible()
+{
+	return !MainWindow::mobileMode();
+}
+
+
 bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*format*/)
 {
 	return false;

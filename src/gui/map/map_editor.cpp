@@ -326,6 +326,14 @@ MapEditorController::~MapEditorController()
 	delete map;
 }
 
+bool MapEditorController::menuBarVisible()
+{
+	if (mode == SymbolEditor)
+		return false;
+	
+	return MainWindowController::menuBarVisible();
+}
+
 bool MapEditorController::isInMobileMode() const
 {
 	return mobile_mode;
