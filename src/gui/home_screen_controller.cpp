@@ -49,7 +49,7 @@ void HomeScreenController::attach(MainWindow* window)
 {
 	this->window = window;
 	
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		widget = new HomeScreenWidgetMobile(this);
 	}

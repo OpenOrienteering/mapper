@@ -40,7 +40,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "gui/main_window.h"
+#include "settings.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/editor_settings_page.h"
 #include "gui/widgets/general_settings_page.h"
@@ -64,7 +64,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	auto layout = new QVBoxLayout(this);
 	
 	auto buttons = QDialogButtonBox::StandardButtons{ QDialogButtonBox::Ok };
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		if (parent)
 			setGeometry(parent->geometry());

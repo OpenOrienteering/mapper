@@ -60,7 +60,6 @@
 
 #include "settings.h"
 #include "gui/file_dialog.h"
-#include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/home_screen_widget.h"
 #include "gui/widgets/settings_page.h"
@@ -86,7 +85,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	language_layout->addWidget(language_box);
 	
 	auto language_file_button = new QToolButton();
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		language_file_button->setVisible(false);
 	}
@@ -374,7 +373,7 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	double old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	auto dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		dialog->setGeometry(window()->geometry());
 	}

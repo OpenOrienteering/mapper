@@ -32,7 +32,6 @@
 #include <QWidget>
 
 #include "settings.h"
-#include "gui/main_window.h"
 #include "gui/modifier_key.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/settings_page.h"
@@ -45,7 +44,7 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 {
 	auto layout = new QFormLayout(this);
 	
-	if (MainWindow::mobileMode())
+	if (Settings::getInstance().touchModeEnabled())
 	{
 		button_size = Util::SpinBox::create(1, 3.0, 26.0, tr("mm", "millimeters"), 0.1);
 		layout->addRow(tr("Action button size:"), button_size);

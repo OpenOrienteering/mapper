@@ -82,7 +82,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 : QMainWindow           { parent, flags }
 , controller            { nullptr }
 , create_menu           { as_main_window }
-, show_menu             { create_menu && !mobileMode() }
+, show_menu             { create_menu && !Settings::mobileModeEnforced() }
 , shortcuts_blocked     { false }
 , general_toolbar       { nullptr }
 , file_menu             { nullptr }
@@ -98,7 +98,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-	if (mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		toast = new Toast(this);
 	}
@@ -186,12 +186,6 @@ QString MainWindow::appName() const
 	return APP_NAME;
 }
 
-#ifndef Q_OS_ANDROID
-bool MainWindow::mobileMode()
-{
-	return Settings::mobileModeEnforced();
-}
-#endif
 
 void MainWindow::setCentralWidget(QWidget* widget)
 {

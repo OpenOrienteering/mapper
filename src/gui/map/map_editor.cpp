@@ -239,7 +239,7 @@ QString OpenOrienteeringObjects()
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* map_view)
 : MainWindowController()
-, mobile_mode(MainWindow::mobileMode())
+, mobile_mode(Settings::getInstance().touchModeEnabled())
 , active_symbol(nullptr)
 , template_list_widget(nullptr)
 , mappart_remove_act(nullptr)
