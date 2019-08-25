@@ -189,10 +189,7 @@ QString MainWindow::appName() const
 #ifndef Q_OS_ANDROID
 bool MainWindow::mobileMode()
 {
-	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
-	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
-	                          : 0;
-	return mobile_mode;
+	return Settings::mobileModeEnforced();
 }
 #endif
 

@@ -117,6 +117,28 @@ public:
 	qreal getRectangleToolHelperCrossRadiusPx();
 	int getStartDragDistancePx();
 	
+	
+#ifdef Q_OS_ANDROID
+	constexpr static bool mobileModeEnforced() noexcept { return true; }
+#else
+	/**
+	 * Returns true if the developer wants a PC user experience most closely to
+	 * mobile devices.
+	 * 
+	 * This is intended as a utility for developers wanting to test or to debug
+	 * Android features without taking the slow deployment path to a real device.
+	 * 
+	 * The property does not change during execution. On Android, it is constexpr
+	 * true, giving the compile the chance for extra optimizations. On PCs, it
+	 * is enabled by setting the environment variable MAPPER_MOBILE_GUI to a
+	 * value different from '0'.
+	 * 
+	 * Controllers and widgets shall use this property to enable at run-time
+	 * what is otherwise enabled by compile-time macros for Android.
+	 */
+	static bool mobileModeEnforced() noexcept;
+#endif
+	
 signals:
 	void settingsChanged();
 	

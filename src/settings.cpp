@@ -337,4 +337,18 @@ int Settings::getStartDragDistancePx()
 }
 
 
+#ifndef Q_OS_ANDROID
+
+// static
+bool Settings::mobileModeEnforced() noexcept
+{
+	static bool const mobile_mode_enforced = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                                         ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                                         : false;
+	return mobile_mode_enforced;
+}
+
+#endif
+
+
 }  // namespace OpenOrienteering
