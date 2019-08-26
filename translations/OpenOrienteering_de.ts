@@ -6538,7 +6538,7 @@ rationen</translation>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
         <translatorcomment>Check original.</translatorcomment>
-        <translation>Bild konnte nicht gespeichert werden. Pfad nicht vorhanden oder Berechtigungen unzureichend.</translation>
+        <translation>Bild konnte nicht gespeichert werden. Pfad nicht vorhanden oder Berechtigungen unzureichend?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
