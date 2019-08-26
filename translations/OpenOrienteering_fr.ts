@@ -6862,7 +6862,7 @@ des couleurs</translation>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
         <translation>La table des correspondances a été modifiée.
-Voulez-vous sauvegarder les modifications?</translation>
+Voulez-vous sauvegarder les modifications ?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="520"/>
