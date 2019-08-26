@@ -305,11 +305,27 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/windowsprintersupport
 	  styles/qmacstyle
 	)
+	set(MAPPER_QT_MODULES
+	  Gui
+	  Positioning
+	  PrintSupport
+	  Sensors
+	  Sql
+	  Widgets
+	)
+
 	if(ANDROID)
 		set(MAPPER_QT_PLUGINS ) # Ignore for now, handled by androiddeployqt
+		list(REMOVE_ITEM MAPPER_QT_MODULES Sql) # Not deploying Qt Assistant
 	endif()
+	
+	find_package(Qt5Positioning QUIET)
+	if(TARGET Qt5::Positioning)
+		list(APPEND MAPPER_QT_MODULES SerialPort) # Always with serialport NMEA
+	endif()
+	
 	set(QT_PLUGIN_TARGETS )
-	foreach(module Gui Positioning PrintSupport Sensors Sql Widgets)
+	foreach(module ${MAPPER_QT_MODULES})
 		find_package(Qt5${module} QUIET)
 		if(module STREQUAL "Positioning" AND Qt5Positioning_DIR)
 			# Workaround for QTBUG-58812 CMake: Plugin config not loaded
