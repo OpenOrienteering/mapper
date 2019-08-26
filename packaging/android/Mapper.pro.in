@@ -45,7 +45,7 @@ INSTALLS            += everything
 
 everything.path  = /
 everything.extra = \
-  "$$CMAKE_COMMAND" --build "$$PROJECT_BINARY_DIR" && \
+  "$$CMAKE_COMMAND" --build "$$PROJECT_BINARY_DIR" -- -j$$QMAKE_HOST.cpu_count && \
   "$$CMAKE_COMMAND" -E copy "$$MAPPER_BINARY" "$$OUT_PWD/" && \
   "$$CMAKE_COMMAND" -E chdir "$$PROJECT_BINARY_DIR" \
     "$$CMAKE_COMMAND" "-DCMAKE_INSTALL_PREFIX=$$ANDROID_PACKAGE_SOURCE_DIR" -P cmake_install.cmake
