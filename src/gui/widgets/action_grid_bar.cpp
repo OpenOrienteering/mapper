@@ -37,6 +37,7 @@ namespace OpenOrienteering {
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
 , button_size_px(qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal())))
+, margin_size_px(button_size_px / 4)
 {
 	this->direction = direction;
 	this->rows = rows;
@@ -115,7 +116,7 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
 {
-	auto size = QSize{col_span * button_size_px - 12, row_span * button_size_px - 12};
+	auto size = QSize{col_span * button_size_px - margin_size_px, row_span * button_size_px - margin_size_px};
 	if (direction == Vertical)
 		size.transpose();
 	return size;

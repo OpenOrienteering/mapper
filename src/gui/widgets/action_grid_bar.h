@@ -136,6 +136,7 @@ protected:
 	int rows;
 	int cols;
 	int button_size_px;
+	int margin_size_px;
 	std::vector< GridItem > items;
 	int next_id;
 	QAction* overflow_action;
