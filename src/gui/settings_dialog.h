@@ -29,6 +29,8 @@ class QAbstractButton;
 class QCloseEvent;
 class QDialogButtonBox;
 class QKeyEvent;
+class QResizeEvent;
+class QScrollArea;
 class QStackedWidget;
 class QTabWidget;
 class QWidget;
@@ -81,6 +83,10 @@ protected:
 	
 	void keyPressEvent(QKeyEvent* event) override;
 	
+	void resizeEvent(QResizeEvent* event) override;
+	
+	void resizeToFit(QScrollArea& widget);
+	
 private slots:
 	/**
 	 * Reacts to dialog buttons (OK, Cancel, Rest).
@@ -102,6 +108,8 @@ private:
 	 * The box of standard dialog buttons.
 	 */
 	QDialogButtonBox* button_box;
+	
+	int scrollbar_extent;
 };
 
 
