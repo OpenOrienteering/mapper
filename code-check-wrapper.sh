@@ -46,6 +46,7 @@ ENABLE_CLANG_TIDY=true
 ENABLE_IWYU=true
 
 PATTERN=" \
+  action_grid_bar.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   crs_param_widgets.cpp \
