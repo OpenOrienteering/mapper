@@ -244,6 +244,7 @@ void SettingsDialog::addPage(SettingsPage* page)
 		auto const table_widgets = page->findChildren<QTableWidget*>(QString{}, Qt::FindDirectChildrenOnly);
 		for (auto* table_widget : table_widgets)
 		{
+			table_widget->setEditTriggers(QAbstractItemView::SelectedClicked);
 			table_widget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 			connect(table_widget->model(), &QAbstractItemModel::rowsInserted, this, [this, scrollarea]() { resizeToFit(*scrollarea); });
 		}
