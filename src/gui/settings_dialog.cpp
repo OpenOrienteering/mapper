@@ -26,6 +26,7 @@
 #include <QtGlobal>
 #include <QAbstractButton> // IWYU pragma: keep
 #include <QAbstractItemModel>
+#include <QAbstractItemView>
 #include <QAction>
 #include <QDialogButtonBox>
 #include <QFormLayout>

@@ -78,6 +78,7 @@ PATTERN=" \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  settings_dialog.cpp \
   /symbol.cpp \
   symbol_rule_set.cpp \
   symbol_t.cpp \
