@@ -21,6 +21,7 @@
 #define OPENORIENTEERING_GEOREFERENCING_TEST_H
 
 #include <QObject>
+#include <QString>
 
 #include "core/georeferencing.h"
 

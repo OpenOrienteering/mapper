@@ -19,11 +19,21 @@
 
 #include "georeferencing_t.h"
 
+#include <cmath>
+#include <cstddef>
+
+#include <QtMath>
 #include <QtTest>
+#include <QLatin1String>
+#include <QLineF>
+#include <QPoint>
+#include <QPointF>
 
 #include <proj_api.h>
 
 #include "core/crs_template.h"
+#include "core/latlon.h"
+#include "core/map_coord.h"
 #include "fileformats/xml_file_format.h"
 
 using namespace OpenOrienteering;
@@ -96,13 +106,13 @@ void GeoreferencingTest::testGridScaleFactor()
 	
 	// Standard Mercator scale factor is as simple as:
 	//
-	//   auto scale_factor = 1.0 / cos(Georeferencing::degToRad(50.0));
+	//   scale_factor = 1.0 / cos(degToRad(50.0));
 	//
 	// EPSG:3857 aka Web Mercator scale factor is more complicated, and
 	// different E/W vs. N/S. For our test, we need the east/west scale factor:
 	auto e = 0.081819191; // WGS84 eccentricity
-	auto phi = Georeferencing::degToRad(50.0); // Latitude as used for UTM above
-	auto scale_factor = pow(1.0 - e * e * sin(phi) * sin(phi), 0.5) / cos(phi);
+	auto phi = qDegreesToRadians(50.0); // Latitude as used for UTM above
+	auto scale_factor = std::pow(1.0 - e * e * std::sin(phi) * std::sin(phi), 0.5) / std::cos(phi);
 	QVERIFY(scale_factor != 1.0);
 	mercator_georef.setGridScaleFactor(scale_factor);
 	QCOMPARE(mercator_georef.getGridScaleFactor(), scale_factor);
@@ -110,7 +120,7 @@ void GeoreferencingTest::testGridScaleFactor()
 	// With the scale factor applied, we should get the same ground distance.
 	auto ground_distance_utm  = QLineF(point_a_utm, point_b_utm).length();
 	auto ground_distance_mercator  = QLineF(point_a_mercator, point_b_mercator).length();
-	auto equal_ground_distance = (qAbs(ground_distance_mercator / scale_factor - ground_distance_utm) < 1.0); // meter
+	auto equal_ground_distance = (std::fabs(ground_distance_mercator / scale_factor - ground_distance_utm) < 1.0); // meter
 	if (!equal_ground_distance)
 	{
 		// Fail with clear output
@@ -120,7 +130,7 @@ void GeoreferencingTest::testGridScaleFactor()
 	// With the scale factor applied, we should get the same paper distance.
 	auto map_distance_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_b_utm)).length();
 	auto map_distance_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_b_mercator)).length();
-	equal_ground_distance = (qAbs(map_distance_mercator - map_distance_utm) < 1000.0); // millimeters, scale is 1:1
+	equal_ground_distance = (std::fabs(map_distance_mercator - map_distance_utm) < 1000.0); // millimeters, scale is 1:1
 	if (!equal_ground_distance)
 	{
 		// Fail with clear output
@@ -208,18 +218,18 @@ void GeoreferencingTest::testProjection()
 	QPointF proj_coord = georef.toProjectedCoords(lat_lon, &ok);
 	QVERIFY(ok);
 	
-	if (fabs(proj_coord.x() - easting) > max_dist_error)
+	if (std::fabs(proj_coord.x() - easting) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.x(), 'f'), QString::number(easting, 'f'));
-	if (fabs(proj_coord.y() - northing) > max_dist_error)
+	if (std::fabs(proj_coord.y() - northing) > max_dist_error)
 		QCOMPARE(QString::number(proj_coord.y(), 'f'), QString::number(northing, 'f'));
 	
 	// projected to geographic
 	proj_coord = QPointF(easting, northing);
 	lat_lon = georef.toGeographicCoords(proj_coord, &ok);
 	QVERIFY(ok);
-	if (fabs(lat_lon.latitude() - latitude) > max_angl_error)
+	if (std::fabs(lat_lon.latitude() - latitude) > max_angl_error)
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
-	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error * cos(Georeferencing::degToRad(latitude))))
+	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 }
 
