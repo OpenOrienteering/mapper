@@ -187,7 +187,7 @@ void GeoreferencingTest::testProjection()
 {
 #if PJ_VERSION >= 480
 	const double max_dist_error = 2.2; // meter
-	const double max_angl_error = 0.00004; // degrees
+	const double max_angl_error = 0.00005; // degrees
 #else
 	const double max_dist_error = 5.5; // meter
 	const double max_angl_error = 0.00007; // degrees
@@ -219,7 +219,7 @@ void GeoreferencingTest::testProjection()
 	QVERIFY(ok);
 	if (fabs(lat_lon.latitude() - latitude) > max_angl_error)
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
-	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error / cos(latitude)))
+	if (fabs(lat_lon.longitude() - longitude) > (max_angl_error * cos(Georeferencing::degToRad(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
 }
 
