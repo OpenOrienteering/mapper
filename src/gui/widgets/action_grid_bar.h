@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QSize>
+#include <QString>
 #include <QWidget>
 
 class QAction;
@@ -75,10 +76,10 @@ public:
 	ActionGridBar(Direction direction, int height_items, QWidget* parent = nullptr);
 	
 	/** Returns the number of grid rows. */
-	int getRows() const;
+	int rowCount() const;
 	
 	/** Returns the number of grid columns. */
-	int getCols() const;
+	int columnCount() const;
 	
 	/** Adds an action to the grid. */
 	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool at_end = false);
@@ -116,34 +117,33 @@ protected slots:
 	void overflowActionClicked();
 	
 protected:
+	void resizeEvent(QResizeEvent* event) override;
+	
 	struct GridItem
 	{
+		QAction* action;
+		QToolButton* button;
 		int id; // sequential id for sorting in overflow item chooser
 		int row;
 		int col;
 		int row_span;
 		int col_span;
 		bool at_end;
-		QAction* action;
-		QToolButton* button;
-		bool button_hidden;
+		bool button_hidden = false;
 	};
 	
-	static bool compareItemPtrId(GridItem* a, GridItem* b);
-	void resizeEvent(QResizeEvent* event) override;
-	
+	std::vector<GridItem> items;
+	std::vector<GridItem*> hidden_items;
+	std::vector<ActionGridBar*> include_overflow_from_list;
+	QAction* overflow_action;
+	QToolButton* overflow_button = nullptr;
+	QMenu* overflow_menu;
 	Direction direction;
-	int rows;
-	int cols;
+	int next_id = 0;
+	int row_count;
+	int column_count = 1;
 	int button_size_px;
 	int margin_size_px;
-	std::vector< GridItem > items;
-	int next_id;
-	QAction* overflow_action;
-	QToolButton* overflow_button;
-	QMenu* overflow_menu;
-	std::vector< GridItem* > hidden_items;
-	std::vector< ActionGridBar* > include_overflow_from_list;
 };
 
 
