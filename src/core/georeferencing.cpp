@@ -638,7 +638,7 @@ double Georeferencing::getConvergence() const
 	if (fabs(denominator) < 0.00000000001)
 		return 0.0;
 	
-	return roundDeclination(RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator));
+	return roundDeclination(qRadiansToDegrees(atan((projected_ref_point.x() - projected_other.x()) / denominator)));
 }
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation)
@@ -844,12 +844,12 @@ QString Georeferencing::getErrorText() const
 
 double Georeferencing::radToDeg(double val)
 {
-	return RAD_TO_DEG * val;
+	return qRadiansToDegrees(val);
 }
 
 double Georeferencing::degToRad(double val)
 {
-	return DEG_TO_RAD * val;
+	return qDegreesToRadians(val);
 }
 
 QString Georeferencing::degToDMS(double val)
