@@ -82,7 +82,7 @@ namespace OpenOrienteering {
 
 namespace
 {
-	/** Helper for PROJ.4 initialization.
+	/** Helper for PROJ initialization.
 	 *
 	 * To be used as static object in the right place.
 	 */
@@ -100,13 +100,13 @@ namespace
 			}
 			
 #if defined(Q_OS_ANDROID)
-			// Register file finder function needed by Proj.4
+			// Register file finder function needed by RROJ
 			registerProjFileHelper();
 #endif
 		}
 	};
 	
-	/** Helper for PROJ.4 initialization.
+	/** Helper for PROJ initialization.
 	 * 
 	 * This helper adds "+no_defs" if it is not already part of the
 	 * specification. It also takes care of resetting the pj errno.
@@ -123,7 +123,7 @@ namespace
 	
 	
 	/**
-	 * List of substitutions for specifications which are known to be broken in Proj.4.
+	 * List of substitutions for specifications which are known to be broken in PROJ.
 	 */
 	const char* spec_substitutions[][2] = {
 	    // #542, S-JTSK (Greenwich) / Krovak East North
@@ -869,7 +869,7 @@ QByteArray c_string;  // buffer for const char*
 extern "C"
 {
 	/**
-	 * @brief Provides required files for Proj.4 library.
+	 * @brief Provides required files for RROJ library.
 	 * 
 	 * This C function implements the interface required by pj_set_finder().
 	 * 

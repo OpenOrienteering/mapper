@@ -45,7 +45,7 @@ namespace OpenOrienteering {
 #if defined(Q_OS_ANDROID)
 
 /**
- * Registers a file finder function needed by Proj.4 on Android.
+ * Registers a file finder function needed by PROJ on Android.
  */
 extern "C" void registerProjFileHelper();
 
@@ -66,7 +66,7 @@ extern "C" void registerProjFileHelper();
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification
  * of the coordinate reference system of the projected coordinates. The actual
- * geographic transformation is done by the PROJ.4 library for geographic 
+ * geographic transformation is done by the PROJ library for geographic 
  * projections. 
  *
  * If no (valid) specification is given, the projected coordinates are regarded
@@ -96,7 +96,7 @@ public:
 	
 	
 	/**
-	 * A shared PROJ.4 specification of a WGS84 geographic CRS.
+	 * A shared PROJ specification of a WGS84 geographic CRS.
 	 */
 	static const QString geographic_crs_spec;
 	
@@ -196,7 +196,7 @@ public:
 	/**
 	 * Returns true if the "projected CRS" is actually geographic.
 	 * 
-	 * \see pj_is_latlong(projPJ pj) in PROJ.4
+	 * \see pj_is_latlong(projPJ pj) in RROJ
 	 */
 	bool isGeographic() const;
 	
@@ -360,7 +360,7 @@ public:
 	/** 
 	 * Returns the specification of the coordinate reference system (CRS) of the
 	 * projected coordinates
-	 * @return a PROJ.4 specification of the CRS
+	 * @return a PROJ specification of the CRS
 	 */
 	QString getProjectedCRSSpec() const { return projected_crs_spec; }
 	
@@ -373,7 +373,7 @@ public:
 	 * declination and grivation.
 	 * 
 	 * @param id  an identifier
-	 * @param spec the PROJ.4 specification of the CRS
+	 * @param spec the PROJ specification of the CRS
 	 * @param params parameter values (ignore for empty spec)
 	 * @return true if the specification is valid or empty, false otherwise
 	 */

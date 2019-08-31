@@ -750,7 +750,7 @@ void applyGridAndZone(Georeferencing& georef,
 		return;
 	}
 
-	// get PROJ.4 spec template from the CRS
+	// get PROJ spec template from the CRS
 	auto spec = crs_template->specificationTemplate();
 
 	// we are handling templates with single parameter only get template's first
