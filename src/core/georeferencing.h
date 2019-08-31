@@ -37,7 +37,11 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QPointF
 
-typedef void* projPJ;
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+using ProjTransformData = void*;
+#else
+using ProjTransformData = struct PJconsts;
+#endif
 
 namespace OpenOrienteering {
 
@@ -65,9 +69,9 @@ struct ProjTransform
 	QString errorText() const;
 	
 private:
-	ProjTransform(projPJ pj) noexcept;
+	ProjTransform(ProjTransformData* pj) noexcept;
 	
-	projPJ pj = nullptr;
+	ProjTransformData* pj = nullptr;
 	
 };
 
@@ -216,7 +220,7 @@ public:
 	/**
 	 * Returns true if the "projected CRS" is actually geographic.
 	 * 
-	 * \see pj_is_latlong(projPJ pj) in RROJ
+	 * \see proj_angular_output(PJ *, enum PJ_DIRECTION) in PROJ
 	 */
 	bool isGeographic() const;
 	

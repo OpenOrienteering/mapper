@@ -29,7 +29,9 @@
 #include <QPoint>
 #include <QPointF>
 
-#include <proj_api.h>
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+#  include <proj.h>
+#endif
 
 #include "core/crs_template.h"
 #include "core/latlon.h"
@@ -237,10 +239,13 @@ void GeoreferencingTest::testProjection()
 
 
 
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+
 namespace {
 	static bool finder_called;
 
-	const char* projFinderTestFakeCRS(const char* name)
+	extern "C"
+	const char* projFinderTestFakeCRS(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
 	{
 		finder_called = true;
 		[name]() {
@@ -250,17 +255,19 @@ namespace {
 	}
 }
 
-void GeoreferencingTest::testPjSetFinder()
+void GeoreferencingTest::testProjContextSetFileFinder()
 {
 	finder_called = false;
 	
-	pj_set_finder(&projFinderTestFakeCRS);
+	proj_context_set_file_finder(nullptr, &projFinderTestFakeCRS, nullptr);
 	QVERIFY(!finder_called);
 	
 	Georeferencing fake_georef;
 	fake_georef.setProjectedCRS(QStringLiteral("Fake CRS"), QString::fromLatin1("+init=fake_crs:123"));
 	QVERIFY(finder_called);
 }
+
+#endif
 
 
 

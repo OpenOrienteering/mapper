@@ -37,7 +37,11 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include <proj_api.h>
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+#  include <proj_api.h>
+#else
+#  include <proj.h>
+#endif
 
 #include "core/crs_template.h"
 #include "fileformats/file_format.h"
@@ -83,7 +87,7 @@ namespace OpenOrienteering {
 namespace
 {
 	extern "C"
-	const char* projFileHelperAndroid(const char *name);
+	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/);
 	
 	/** Helper for PROJ initialization.
 	 *
@@ -94,6 +98,7 @@ namespace
 	public:
 		ProjSetup()
 		{
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
 			if (proj_data.exists())
 			{
@@ -102,10 +107,23 @@ namespace
 				pj_set_searchpath(1, &data);
 			}
 			
+			// no Android file finder support for deprecated PROJ API
+#else
+			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
+
+			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
+			if (proj_data.exists())
+			{
+				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
+				static auto* const data = location.constData();
+				proj_context_set_search_paths(nullptr, 1, &data);
+			}
+
 #if defined(Q_OS_ANDROID)
 			// Register file finder function needed by Proj.4
-			pj_set_finder(&projFileHelperAndroid);
-#endif
+			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
+#endif  // defined(Q_OS_ANDROID)
+#endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		}
 	};
 	
@@ -134,7 +152,9 @@ namespace
 
 //### ProjTransform ###
 
-ProjTransform::ProjTransform(projPJ pj) noexcept
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+
+ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
 : pj{pj}
 {}
 
@@ -216,6 +236,73 @@ QString ProjTransform::errorText() const
 	auto err_no = *pj_get_errno_ref();
 	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
 }
+
+#else
+
+ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
+: pj{pj}
+{}
+
+ProjTransform::ProjTransform(ProjTransform&& other) noexcept
+{
+	operator=(std::move(other));
+}
+
+ProjTransform::ProjTransform(const QString& crs_spec)
+: pj(proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), crs_spec.toLatin1(), nullptr))
+{
+	if (pj)
+		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
+}
+
+ProjTransform::~ProjTransform()
+{
+	if (pj)
+		proj_destroy(pj);
+}
+
+ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
+{
+	std::swap(pj, other.pj);
+	return *this;
+}
+
+bool ProjTransform::isValid() const noexcept
+{
+	return pj != nullptr;
+}
+
+bool ProjTransform::isGeographic() const
+{
+	/// \todo Evaluate proj_get_type() instead
+	return isValid() && proj_angular_output(pj, PJ_FWD);
+}
+
+QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
+{
+	proj_errno_reset(pj);
+	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, 0));
+	if (ok)
+		*ok = proj_errno(pj) == 0;
+	return {pj_coord.xy.x, pj_coord.xy.y};
+}
+
+LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
+{
+	proj_errno_reset(pj);
+	auto pj_coord = proj_trans(pj, PJ_INV, proj_coord(projected_coords.x(), projected_coords.y(), 0, 0));
+	if (ok)
+		*ok = proj_errno(pj) == 0;
+	return {pj_coord.lp.phi, pj_coord.lp.lam};
+}
+
+QString ProjTransform::errorText() const
+{
+	auto err_no = proj_errno(pj);
+	return (err_no == 0) ? QString() : QString::fromLatin1(proj_errno_string(err_no));
+}
+
+#endif
 
 
 
@@ -890,7 +977,7 @@ namespace
 	/**
 	 * @brief Provides required files for RROJ library.
 	 * 
-	 * This function implements the interface required by pj_set_finder().
+	 * This function implements the interface required by proj_context_set_file_finder().
 	 * 
 	 * This functions checks if the requested file name is available in a
 	 * temporary directory. If not, it tries to copy the file from the proj
@@ -902,7 +989,7 @@ namespace
 	 * Otherwise it returns nullptr.
 	 */
 	extern "C"
-	const char* projFileHelperAndroid(const char *name)
+	const char* projFileHelperAndroid(PJ_CONTEXT* /*got_ctx*/, const char* name, void* /*user_data*/)
 	{
 		static QTemporaryDir temp_dir;
 		if (temp_dir.isValid())
