@@ -42,17 +42,6 @@ typedef void* projPJ;
 namespace OpenOrienteering {
 
 
-#if defined(Q_OS_ANDROID)
-
-/**
- * Registers a file finder function needed by PROJ on Android.
- */
-extern "C" void registerProjFileHelper();
-
-#endif
-
-
-
 /**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
  * paper) and coordinates in the real world. It provides functions for 

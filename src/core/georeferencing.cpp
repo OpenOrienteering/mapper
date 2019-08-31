@@ -82,6 +82,9 @@ namespace OpenOrienteering {
 
 namespace
 {
+	extern "C"
+	const char* projFileHelperAndroid(const char *name);
+	
 	/** Helper for PROJ initialization.
 	 *
 	 * To be used as static object in the right place.
@@ -94,14 +97,14 @@ namespace
 			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
 			if (proj_data.exists())
 			{
-				static const auto location = proj_data.absoluteFilePath().toLocal8Bit();
-				static auto data = location.constData();
+				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
+				static auto* data = location.constData();
 				pj_set_searchpath(1, &data);
 			}
 			
 #if defined(Q_OS_ANDROID)
-			// Register file finder function needed by RROJ
-			registerProjFileHelper();
+			// Register file finder function needed by Proj.4
+			pj_set_finder(&projFileHelperAndroid);
 #endif
 		}
 	};
@@ -857,21 +860,15 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 }
 
 
-}  // namespace OpenOrienteering
-
-
 
 #if defined(Q_OS_ANDROID)
 
-QScopedPointer<QTemporaryDir> temp_dir;  // removed upon destruction
-QByteArray c_string;  // buffer for const char*
-
-extern "C"
+namespace
 {
 	/**
 	 * @brief Provides required files for RROJ library.
 	 * 
-	 * This C function implements the interface required by pj_set_finder().
+	 * This function implements the interface required by pj_set_finder().
 	 * 
 	 * This functions checks if the requested file name is available in a
 	 * temporary directory. If not, it tries to copy the file from the proj
@@ -882,35 +879,29 @@ extern "C"
 	 * This string becomes invalid the next time this function is called.
 	 * Otherwise it returns nullptr.
 	 */
+	extern "C"
 	const char* projFileHelperAndroid(const char *name)
 	{
-		if (temp_dir->isValid())
+		static QTemporaryDir temp_dir;
+		if (temp_dir.isValid())
 		{
-			QString path = QDir(temp_dir->path()).filePath(QString::fromUtf8(name));
+			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
 			QFile file(path);
 			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
 			{
-				c_string = path.toLocal8Bit();
+				static auto c_string = path.toLocal8Bit();
 				return c_string.constData();
 			}
-		}
-		qDebug() << "Could not projection data file" << name;
-		return nullptr;
-	}
-	
-	void registerProjFileHelper()
-	{
-		// QTemporaryDir must not be constructed before QApplication
-		temp_dir.reset(new QTemporaryDir());
-		if (temp_dir->isValid())
-		{
-			pj_set_finder(&projFileHelperAndroid);
+			qDebug("Could not provide projection data file '%s'", name);
 		}
 		else
 		{
-			qDebug() << "Could not create a temporary directory for projection data.";
+			qDebug("Could not create a temporary directory for projection data");
 		}
+		return nullptr;
 	}
-}
+}  // namespace
 
 #endif  // defined(Q_OS_ANDROID)
+
+}  // namespace OpenOrienteering
