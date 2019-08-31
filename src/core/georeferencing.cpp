@@ -109,21 +109,6 @@ namespace
 		}
 	};
 	
-	/** Helper for PROJ initialization.
-	 * 
-	 * This helper adds "+no_defs" if it is not already part of the
-	 * specification. It also takes care of resetting the pj errno.
-	 */
-	projPJ pj_init_plus_no_defs(const QString& spec)
-	{
-		auto spec_latin1 = spec.toLatin1();
-		if (!spec_latin1.contains("+no_defs"))
-			spec_latin1.append(" +no_defs");
-		
-		*pj_get_errno_ref() = 0;
-		return pj_init_plus(spec_latin1);
-	}
-	
 	
 	/**
 	 * List of substitutions for specifications which are known to be broken in PROJ.
@@ -147,6 +132,93 @@ namespace
 
 
 
+//### ProjTransform ###
+
+ProjTransform::ProjTransform(projPJ pj) noexcept
+: pj{pj}
+{}
+
+ProjTransform::ProjTransform(ProjTransform&& other) noexcept
+{
+	operator=(std::move(other));
+}
+
+ProjTransform::ProjTransform(const QString& crs_spec)
+{
+	auto spec_latin1 = crs_spec.toLatin1();
+	if (!spec_latin1.contains("+no_defs"))
+		spec_latin1.append(" +no_defs");
+	
+	*pj_get_errno_ref() = 0;
+	pj = pj_init_plus(spec_latin1);
+}
+
+ProjTransform::~ProjTransform()
+{
+	if (pj)
+		pj_free(pj);
+}
+
+ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
+{
+	std::swap(pj, other.pj);
+	return *this;
+}
+
+bool ProjTransform::isValid() const noexcept
+{
+	return pj != nullptr;
+}
+
+bool ProjTransform::isGeographic() const
+{
+	return isValid() && pj_is_latlong(pj);
+}
+
+QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
+{
+	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	
+	double easting = qDegreesToRadians(lat_lon.longitude()), northing = qDegreesToRadians(lat_lon.latitude());
+	if (geographic_crs.isValid())
+	{
+		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &easting, &northing, nullptr);
+		if (ok)
+			*ok = (ret == 0);
+	}
+	else if (ok)
+	{
+		*ok = false;
+	}
+	return {easting, northing};
+}
+
+LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
+{
+	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	
+	double easting = projected_coords.x(), northing = projected_coords.y();
+	if (geographic_crs.isValid())
+	{
+		auto ret = pj_transform(pj, geographic_crs.pj, 1, 1, &easting, &northing, nullptr);
+		if (ok)
+			*ok = (ret == 0);
+	}
+	else if (ok)
+	{
+		*ok = false;
+	}
+	return LatLon::fromRadiant(northing, easting);
+}
+
+QString ProjTransform::errorText() const
+{
+	auto err_no = *pj_get_errno_ref();
+	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
+}
+
+
+
 //### Georeferencing ###
 
 const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=latlong +datum=WGS84"));
@@ -166,9 +238,6 @@ Georeferencing::Georeferencing()
 	updateTransformation();
 	
 	projected_crs_id = QString::fromLatin1("Local");
-	projected_crs  = nullptr;
-	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs);
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
@@ -184,22 +253,13 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
+  proj_transform(projected_crs_spec),
   geographic_ref_point(other.geographic_ref_point)
 {
 	updateTransformation();
-	
-	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs);
-	projected_crs  = pj_init_plus_no_defs(projected_crs_spec);
 }
 
-Georeferencing::~Georeferencing()
-{
-	if (projected_crs)
-		pj_free(projected_crs);
-	if (geographic_crs)
-		pj_free(geographic_crs);
-}
+Georeferencing::~Georeferencing() = default;
 
 Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
@@ -220,11 +280,8 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;
+	proj_transform           = ProjTransform(other.projected_crs_spec);
 	geographic_ref_point     = other.geographic_ref_point;
-	
-	if (projected_crs)
-		pj_free(projected_crs);
-	projected_crs       = pj_init_plus_no_defs(projected_crs_spec);
 	
 	emit stateChanged();
 	emit transformationChanged();
@@ -238,7 +295,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return projected_crs && pj_is_latlong(projected_crs);
+	return proj_transform.isGeographic();
 }
 
 
@@ -363,10 +420,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit declinationChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
-		if (projected_crs)
-			pj_free(projected_crs);
-		projected_crs = pj_init_plus_no_defs(projected_crs_spec);
-		if (0 == *pj_get_errno_ref())
+		proj_transform = {projected_crs_spec};
+		if (proj_transform.isValid())
 		{
 			state = Normal;
 			emit stateChanged();
@@ -683,22 +738,19 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	    || !std::equal(begin(params), end(params), begin(projected_crs_parameters))
 	    || (!ok && !spec.isEmpty()) )
 	{
-		if (projected_crs)
-			pj_free(projected_crs);
-		
 		projected_crs_id = id;
 		projected_crs_spec = spec;
 		if (projected_crs_spec.isEmpty())
 		{
 			projected_crs_parameters.clear();
-			projected_crs = nullptr;
+			proj_transform = {};
 			ok = (state != Normal);
 		}
 		else
 		{
 			projected_crs_parameters.swap(params); // params was passed by value!
-			projected_crs = pj_init_plus_no_defs(projected_crs_spec);
-			ok = (0 == *pj_get_errno_ref());
+			proj_transform = {projected_crs_spec};
+			ok = proj_transform.isValid();
 			if (ok && state != Normal)
 				setState(Normal);
 		}
@@ -736,30 +788,12 @@ LatLon Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok)
 
 LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
 {
-	if (ok)
-		*ok = false;
-
-	double easting = projected_coords.x(), northing = projected_coords.y();
-	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
-		if (ok) 
-			*ok = (ret == 0);
-	}
-	return LatLon::fromRadiant(northing, easting);
+	return proj_transform.isValid() ? proj_transform.inverse(projected_coords, ok) : LatLon{};
 }
 
 QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 {
-	if (ok)
-		*ok = false;
-	
-	double easting = degToRad(lat_lon.longitude()), northing = degToRad(lat_lon.latitude());
-	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-		if (ok) 
-			*ok = (ret == 0);
-	}
-	return QPointF(easting, northing);
+	return proj_transform.isValid() ? proj_transform.forward(lat_lon, ok) : QPointF{};
 }
 
 MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
@@ -780,44 +814,32 @@ MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoor
 			*ok = true;
 		return map_coords;
 	}
-	else if (isLocal() || other->isLocal())
+	
+	if (isLocal() || other->isLocal())
 	{
 		if (ok)
 			*ok = true;
 		return toMapCoordF(other->toProjectedCoords(map_coords));
 	}
-	else
-	{
-		if (ok)
-			*ok = false;
-		
-		QPointF projected_coords = other->toProjectedCoords(map_coords);
-		double easting = projected_coords.x(), northing = projected_coords.y();
-		if (projected_crs && other->projected_crs) {
-			// Direct transformation:
-			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-			// Use geographic coordinates as intermediate step to enforce
-			// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec:
-			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
-			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-			
-			if (ret != 0)
-			{
-				if (ok) 
-					*ok = false;
-				return MapCoordF(easting, northing);
-			}
-			if (ok)
-				*ok = true;
-		}
-		return toMapCoordF(QPointF(easting, northing));
+	
+	bool ok_forward = proj_transform.isValid();
+	bool ok_inverse = other->proj_transform.isValid();
+	QPointF projected = other->toProjectedCoords(map_coords);
+	if (ok_forward && ok_inverse) {
+		// Use geographic coordinates as intermediate step to enforce
+		// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec.
+		/// \todo Use direct pipeline instead of intermediate WGS84
+		bool ok_inverse, ok_forward;
+		projected = proj_transform.forward(other->proj_transform.inverse(projected, &ok_inverse), &ok_forward);
 	}
+	if (ok)
+		*ok = ok_inverse && ok_forward;
+	return toMapCoordF(projected);
 }
 
 QString Georeferencing::getErrorText() const
 {
-	int err_no = *pj_get_errno_ref();
-	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
+	return proj_transform.errorText();
 }
 
 double Georeferencing::radToDeg(double val)

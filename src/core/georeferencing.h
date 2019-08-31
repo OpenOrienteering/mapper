@@ -43,6 +43,37 @@ namespace OpenOrienteering {
 
 
 /**
+ * A utility which encapsulates PROJ API variants and resource management.
+ */
+struct ProjTransform
+{
+	ProjTransform() noexcept = default;
+	ProjTransform(const ProjTransform&) = delete;
+	ProjTransform(ProjTransform&& other) noexcept;
+	ProjTransform(const QString& crs_spec);
+	~ProjTransform();
+	
+	ProjTransform& operator=(const ProjTransform& other) = delete;
+	ProjTransform& operator=(ProjTransform&& other) noexcept;
+	
+	bool isValid() const noexcept;
+	bool isGeographic() const;
+	
+	QPointF forward(const LatLon& lat_lon, bool* ok) const;
+	LatLon inverse(const QPointF& projected, bool* ok) const;
+	
+	QString errorText() const;
+	
+private:
+	ProjTransform(projPJ pj) noexcept;
+	
+	projPJ pj = nullptr;
+	
+};
+
+
+
+/**
  * A Georeferencing defines a mapping between "map coordinates" (as measured on
  * paper) and coordinates in the real world. It provides functions for 
  * converting coordinates from one coordinate system to another.
@@ -553,11 +584,10 @@ private:
 	QString projected_crs_id;
 	QString projected_crs_spec;
 	std::vector< QString > projected_crs_parameters;
-	projPJ projected_crs;
+	
+	ProjTransform proj_transform;
 	
 	LatLon geographic_ref_point;
-	
-	projPJ geographic_crs;
 	
 };
 
@@ -602,7 +632,7 @@ double Georeferencing::roundDeclination(double value)
 inline
 bool Georeferencing::isValid() const
 {
-	return state == Local || projected_crs;
+	return state == Local || proj_transform.isValid();
 }
 
 inline
