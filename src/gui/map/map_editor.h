@@ -111,6 +111,11 @@ public:
 	/** Destroys the MapEditorController. */
 	~MapEditorController() override;
 	
+	/**
+	 * In SymbolEditor mode, this controller doesn't want a menu bar.
+	 */
+	bool menuBarVisible() override;
+	
 	/** Returns if the editor is in mobile mode. */
 	bool isInMobileMode() const;
 	

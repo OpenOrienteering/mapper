@@ -158,12 +158,18 @@ Settings::Settings()
 	// Set antialiasing default depending on screen pixels per inch
 	registerSetting(MapDisplay_Antialiasing, "MapDisplay/antialiasing", Util::isAntialiasingRequired(getSetting(General_PixelsPerInch).toReal()));
 	
+	QSettings settings;
+	
+#ifndef Q_OS_ANDROID
+	// Overwrite default value with actual setting
+	touch_mode_enabled = mobileModeEnforced() || settings.value(QLatin1String("General/touch_mode_enabled"), touch_mode_enabled).toBool();
+#endif
+	
 	// Migrate old settings
 	static bool migration_checked = false;
 	if (!migration_checked)
 	{
 		QVariant current_version { QLatin1String("0.8") };
-		QSettings settings;
 		auto settings_version = settings.value(QLatin1String("version")).toString();
 		if (!settings_version.isEmpty() && settings_version != current_version)
 		{
@@ -335,6 +341,30 @@ int Settings::getStartDragDistancePx()
 {
 	return getSettingCached(Settings::General_StartDragDistance).toInt();
 }
+
+
+#ifndef Q_OS_ANDROID
+
+void Settings::setTouchModeEnabled(bool enabled)
+{
+	if (!mobileModeEnforced() && touch_mode_enabled != enabled)
+	{
+		touch_mode_enabled = enabled;
+		QSettings().setValue(QLatin1String("General/touch_mode_enabled"), enabled);
+		emit settingsChanged();
+	}
+}
+
+// static
+bool Settings::mobileModeEnforced() noexcept
+{
+	static bool const mobile_mode_enforced = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
+	                                         ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
+	                                         : false;
+	return mobile_mode_enforced;
+}
+
+#endif
 
 
 }  // namespace OpenOrienteering

@@ -26,6 +26,7 @@
 #endif
 #if defined(QT_POSITIONING_LIB)
 #  include <QGeoCoordinate>
+#  include <QGeoPositionInfo>
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep
 #endif
 
@@ -53,6 +54,9 @@
 #include "gui/util_gui.h"
 #include "gui/map/map_widget.h"
 #include "sensors/compass.h"
+#ifdef WIN32
+#  include "sensors/powershell_position_source.h"
+#endif
 #include "util/backports.h"  // IWYU pragma: keep
 
 
@@ -107,6 +111,14 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 {
 #if defined(QT_POSITIONING_LIB)
 	source = QGeoPositionInfoSource::createDefaultSource(this);
+#if defined(Q_OS_WIN)
+	if (!source)
+	{
+		auto powershell_source = std::make_unique<PowershellPositionSource>(this);
+		if (powershell_source->error() == QGeoPositionInfoSource::NoError)
+			source = powershell_source.release();
+	}
+#endif
 	if (!source)
 	{
 		qDebug("Cannot create QGeoPositionInfoSource!");
@@ -346,9 +358,9 @@ void GPSDisplay::timerEvent(QTimerEvent* e)
 }
 
 
-#if defined(QT_POSITIONING_LIB)
 void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 {
+#if defined(QT_POSITIONING_LIB)
 	gps_updated = true;
 	tracking_lost = false;
 	has_valid_position = true;
@@ -367,11 +379,13 @@ void GPSDisplay::positionUpdated(const QGeoPositionInfo& info)
 	}
 	
 	updateMapWidget();
+#endif
 }
 
-void GPSDisplay::error(QGeoPositionInfoSource::Error positioningError)
+void GPSDisplay::error()
 {
-	if (positioningError != QGeoPositionInfoSource::NoError)
+#if defined(QT_POSITIONING_LIB)
+	if (source->error() != QGeoPositionInfoSource::NoError)
 	{
 		if (!tracking_lost)
 		{
@@ -380,6 +394,7 @@ void GPSDisplay::error(QGeoPositionInfoSource::Error positioningError)
 			updateMapWidget();
 		}
 	}
+#endif
 }
 
 void GPSDisplay::updateTimeout()
@@ -392,7 +407,6 @@ void GPSDisplay::updateTimeout()
 		updateMapWidget();
 	}
 }
-#endif
 
 void GPSDisplay::debugPositionUpdate()
 {
@@ -441,7 +455,7 @@ MapCoordF GPSDisplay::calcLatestGPSCoord(bool& ok)
 		return latest_gps_coord;
 	}
 	
-	latest_pos_info = source->lastKnownPosition(true);
+	const auto latest_pos_info = source->lastKnownPosition(true);
 	latest_gps_coord_accuracy = latest_pos_info.hasAttribute(QGeoPositionInfo::HorizontalAccuracy)
 	                            ? float(latest_pos_info.attribute(QGeoPositionInfo::HorizontalAccuracy))
 	                            : -1;

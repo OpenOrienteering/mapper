@@ -117,6 +117,57 @@ public:
 	qreal getRectangleToolHelperCrossRadiusPx();
 	int getStartDragDistancePx();
 	
+	
+#ifdef Q_OS_ANDROID
+	constexpr bool touchModeEnabled() const noexcept { return true; }
+	void setTouchModeEnabled(bool /* ignored */) {};
+	constexpr static bool mobileModeEnforced() noexcept { return true; }
+#else
+	/**
+	 * Returns true if the user wants to use a touch device.
+	 * 
+	 * Main window controllers may use this property to adjust their user
+	 * interface, e.g. to select child widget types or to hide menubar and
+	 * statusbar.
+	 * 
+	 * On PCs, the setting may be changed while multiple windows are opened.
+	 * For consistent behaviour, main window controllers and widgets are
+	 * expected to not adapt instantaneously to a change, but to capture the
+	 * current setting at construction time, and to tear down accordingly on
+	 * destruction.
+	 * 
+	 * On Android, or with enforced mobile mode, touch mode is always active
+	 * (constexpr true) and cannot be disabled.
+	 */
+	bool touchModeEnabled() const noexcept { return touch_mode_enabled; }
+	
+	/**
+	 * Enables or disables touch mode on PCs.
+	 * 
+	 * On Android, or with enforced mobile mode, this function does nothing.
+	 */
+	void setTouchModeEnabled(bool enabled);
+	
+	/**
+	 * Returns true if the developer wants a PC user experience most closely to
+	 * mobile devices.
+	 * 
+	 * This is intended as a utility for developers wanting to test or to debug
+	 * Android features without taking the slow deployment path to a real device.
+	 * 
+	 * The property does not change during execution. On Android, it is constexpr
+	 * true, giving the compile the chance for extra optimizations. On PCs, it
+	 * is enabled by setting the environment variable MAPPER_MOBILE_GUI to a
+	 * value different from '0'.
+	 * 
+	 * Controllers and widgets shall use this property to enable at run-time
+	 * what is otherwise enabled by compile-time macros for Android.
+	 * 
+	 * Enabling this property enforces touch mode, too.
+	 */
+	static bool mobileModeEnforced() noexcept;
+#endif
+	
 signals:
 	void settingsChanged();
 	
@@ -134,6 +185,10 @@ private:
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;
 	QHash<SettingsEnum, QVariant> setting_defaults;
+	
+#ifndef Q_OS_ANDROID
+	bool touch_mode_enabled = false;
+#endif
 };
 
 

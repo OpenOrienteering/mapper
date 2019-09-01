@@ -49,7 +49,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "gui/main_window.h"
+#include "settings.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/editor_settings_page.h"
 #include "gui/widgets/general_settings_page.h"
@@ -74,7 +74,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	auto layout = new QVBoxLayout(this);
 	
 	auto buttons = QDialogButtonBox::StandardButtons{ QDialogButtonBox::Ok };
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		if (parent)
 			setGeometry(parent->geometry());
@@ -100,7 +100,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	
 	button_box = new QDialogButtonBox(buttons, Qt::Horizontal);
 	connect(button_box, &QDialogButtonBox::clicked, this, &SettingsDialog::buttonPressed);
-	if (MainWindow::mobileMode())
+	if (stack_widget)
 	{
 		int left, top, right, bottom;
 		layout->getContentsMargins(&left, &top, &right, &bottom);
@@ -126,7 +126,7 @@ SettingsDialog::~SettingsDialog() = default;
 
 void SettingsDialog::closeEvent(QCloseEvent* event)
 {
-	if (MainWindow::mobileMode())
+	if (stack_widget)
 		callOnAllPages(&SettingsPage::apply);
 	QDialog::closeEvent(event);
 }
@@ -137,7 +137,7 @@ void SettingsDialog::keyPressEvent(QKeyEvent* event)
 	{
 	case Qt::Key_Back:
 	case Qt::Key_Escape:
-		if (MainWindow::mobileMode() && stack_widget->currentIndex() > 0)
+		if (stack_widget && stack_widget->currentIndex() > 0)
 		{
 			stack_widget->setCurrentIndex(0);
 			auto buttons = button_box->standardButtons();
@@ -216,7 +216,7 @@ void SettingsDialog::addPages()
 
 void SettingsDialog::addPage(SettingsPage* page)
 {
-	if (MainWindow::mobileMode())
+	if (stack_widget)
 	{
 		if (auto form_layout = qobject_cast<QFormLayout*>(page->layout()))
 		{
@@ -258,9 +258,9 @@ void SettingsDialog::addPage(SettingsPage* page)
 
 void SettingsDialog::callOnAllPages(void (SettingsPage::*member)())
 {
-	auto pages = MainWindow::mobileMode() ? stack_widget->findChildren<SettingsPage*>()
-	                                      : tab_widget->findChildren<SettingsPage*>();
-	for (auto page : qAsConst(pages))
+	auto const pages = stack_widget ? stack_widget->findChildren<SettingsPage*>()
+	                                : tab_widget->findChildren<SettingsPage*>();
+	for (auto* page : pages)
 		(page->*member)();
 }
 
@@ -271,7 +271,7 @@ void SettingsDialog::buttonPressed(QAbstractButton* button)
 	{
 	case QDialogButtonBox::Ok:
 		callOnAllPages(&SettingsPage::apply);
-		if (MainWindow::mobileMode() && stack_widget->currentIndex() > 0)
+		if (stack_widget && stack_widget->currentIndex() > 0)
 		{
 			stack_widget->setCurrentIndex(0);
 			button_box->setStandardButtons(button_box->standardButtons() & ~QDialogButtonBox::Reset);

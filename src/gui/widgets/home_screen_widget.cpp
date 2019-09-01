@@ -32,6 +32,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QScroller>
+#include <QSettings>
 #include <QVBoxLayout>
 
 #include "settings.h"
@@ -153,6 +154,10 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	
 	menu_layout->addStretch(1);
 	
+	auto* button_touch = makeButton(tr("Touch mode"), QIcon{QLatin1String(":/images/tool-touch-cursor.png")});
+	button_touch->setCheckable(true);
+	button_touch->setChecked(Settings::getInstance().touchModeEnabled());
+	menu_layout->addWidget(button_touch);
 	QAbstractButton* button_settings = makeButton(
 	  tr("Settings"), QIcon(QString::fromLatin1(":/images/settings.png")));
 	menu_layout->addWidget(button_settings);
@@ -168,6 +173,7 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	
 	connect(button_new_map, &QAbstractButton::clicked, window, &MainWindow::showNewMapWizard);
 	connect(button_open_map, &QAbstractButton::clicked, window, &MainWindow::showOpenDialog);
+	connect(button_touch, &QAbstractButton::toggled, this, [](bool enabled) { Settings::getInstance().setTouchModeEnabled(enabled); });
 	connect(button_settings, &QAbstractButton::clicked, window, &MainWindow::showSettings);
 	connect(button_about, &QAbstractButton::clicked, window, &MainWindow::showAbout);
 	connect(button_help, &QAbstractButton::clicked, window, &MainWindow::showHelp);

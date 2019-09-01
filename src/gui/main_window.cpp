@@ -82,7 +82,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 : QMainWindow           { parent, flags }
 , controller            { nullptr }
 , create_menu           { as_main_window }
-, show_menu             { create_menu && !mobileMode() }
+, show_menu             { create_menu && !Settings::mobileModeEnforced() }
 , shortcuts_blocked     { false }
 , general_toolbar       { nullptr }
 , file_menu             { nullptr }
@@ -98,9 +98,8 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-	if (mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
-		statusBar()->hide();
 		toast = new Toast(this);
 	}
 	
@@ -187,15 +186,6 @@ QString MainWindow::appName() const
 	return APP_NAME;
 }
 
-#ifndef Q_OS_ANDROID
-bool MainWindow::mobileMode()
-{
-	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
-	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
-	                          : 0;
-	return mobile_mode;
-}
-#endif
 
 void MainWindow::setCentralWidget(QWidget* widget)
 {
@@ -254,6 +244,8 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		createFileMenu();
 	
 	controller = new_controller;
+	menuBar()->setVisible(new_controller->menuBarVisible());
+	statusBar()->setVisible(new_controller->statusBarVisible());
 	controller->attach(this);
 	
 	if (create_menu)

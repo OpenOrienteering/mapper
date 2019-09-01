@@ -45,6 +45,24 @@ public:
 	
 	~MainWindowController() override;
 	
+	
+	/**
+	 * Returns true when the controller wants a menu bar to be shown.
+	 * 
+	 * The default implementation returns false for mobile mode,
+	 * true otherwise.
+	 */
+	virtual bool menuBarVisible();
+	
+	/**
+	 * Returns true when the controller wants a status bar to be shown.
+	 * 
+	 * The default implementation returns false for mobile mode,
+	 * true otherwise.
+	 */
+	virtual bool statusBarVisible();
+	
+	
 	/** Save to a file.
 	 *  @param path the path to save to
 	 *  @param format the file format

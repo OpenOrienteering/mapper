@@ -24,6 +24,7 @@
 #include <QtGlobal>
 #include <QMessageBox>
 
+#include "settings.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "gui/main_window.h"
@@ -33,6 +34,17 @@
 namespace OpenOrienteering {
 
 MainWindowController::~MainWindowController() = default;
+
+
+bool MainWindowController::menuBarVisible()
+{
+	return !Settings::getInstance().touchModeEnabled();
+}
+
+bool MainWindowController::statusBarVisible()
+{
+	return !Settings::getInstance().touchModeEnabled();
+}
 
 
 bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*format*/)

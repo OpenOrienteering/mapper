@@ -239,7 +239,7 @@ QString OpenOrienteeringObjects()
 
 MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* map_view)
 : MainWindowController()
-, mobile_mode(MainWindow::mobileMode())
+, mobile_mode(Settings::getInstance().touchModeEnabled())
 , active_symbol(nullptr)
 , template_list_widget(nullptr)
 , mappart_remove_act(nullptr)
@@ -324,6 +324,14 @@ MapEditorController::~MapEditorController()
 	delete gps_track_recorder;
 	delete compass_display;
 	delete map;
+}
+
+bool MapEditorController::menuBarVisible()
+{
+	if (mode == SymbolEditor)
+		return false;
+	
+	return MainWindowController::menuBarVisible();
 }
 
 bool MapEditorController::isInMobileMode() const

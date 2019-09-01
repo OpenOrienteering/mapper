@@ -105,22 +105,6 @@ public:
 	
 	
 	/**
-	 * Returns whether the window is operating in mobile mode.
-	 * 
-	 * On the desktop, the default (desktop) mode may be overwritten by
-	 * setting the environment variable MAPPER_MOBILE_GUI to 0 or 1.
-	 * 
-	 * For Android, this evaluates to constexpr true so that the compiler
-	 * may optimize away desktop code in conditional blocks.
-	 */
-#ifndef Q_OS_ANDROID
-	static bool mobileMode();
-#else
-	static constexpr bool mobileMode() { return true; }
-#endif
-	
-	
-	/**
 	 * Changes the controller.
 	 *
 	 * The new controller does not edit a file.
