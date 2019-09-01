@@ -21,6 +21,7 @@
 #define OPENORIENTEERING_GEOREFERENCING_TEST_H
 
 #include <QObject>
+#include <QString>
 
 #include "core/georeferencing.h"
 
@@ -70,13 +71,15 @@ private slots:
 	
 	void testProjection_data();
 	
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 	/**
-	 * Tests whether the `pj_set_finder()` function is working.
-	 * The `pj_set_finder()` function is deprecated API in PROJ 6.0.0, but a 
-	 * substitute is not available. Mapper relies on this function to extract
-	 * data files on Android. This test covers this function in native builds.
+	 * Tests whether the `proj_context_set_file_finder()` function is working.
+	 * 
+	 * Mapper relies on this function to extract data files on Android.
+	 * This test covers this function in native builds.
 	 */
-	void testPjSetFinder();
+	void testProjContextSetFileFinder();
+#endif
 	
 private:
 	Georeferencing georef;

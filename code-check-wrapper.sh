@@ -58,6 +58,7 @@ PATTERN=" \
   file_format_t.cpp \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
+  georeferencing_t.cpp \
   gdal_manager.cpp \
   gdal_template.cpp \
   gps_display.cpp \

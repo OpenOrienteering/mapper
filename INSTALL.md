@@ -18,7 +18,7 @@ components. Direct dependencies are:
    https://www.qt.io/download-open-source/
  - Clipper library (aka libpolyclipping) >= 6.1.3.a
    http://www.angusj.com/delphi/clipper.php
- - PROJ.4 Cartographic Projections Library >= 4.8
+ - PROJ Cartographic Projections Library >= 4.8
    https://proj4.org/
  - GDAL Geospatial Data Abstraction Library
    https://www.gdal.org/
@@ -156,4 +156,4 @@ available together with the release binaries.
 Packages for macOS and Windows are built using CPack which comes with CMake.
 Android APKs are build in the same way, although not using a CPack generator.
 These packages bundle all 3rd-party components (Qt binaries and translations,
-PROJ.4 and GDAL binaries and data, etc.). 
+PROJ and GDAL binaries and data, etc.). 
