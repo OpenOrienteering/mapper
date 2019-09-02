@@ -38,7 +38,7 @@ class QXmlStreamWriter;
 // IWYU pragma: no_forward_declare QPointF
 
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
-using ProjTransformData = void*;
+using ProjTransformData = void;
 #else
 using ProjTransformData = struct PJconsts;
 #endif
