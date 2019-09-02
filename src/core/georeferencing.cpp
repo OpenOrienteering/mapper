@@ -86,8 +86,45 @@ namespace OpenOrienteering {
 
 namespace
 {
+#ifdef Q_OS_ANDROID
+	/**
+	 * @brief Provides required files for RROJ library.
+	 * 
+	 * This function implements the interface required by
+	 * proj_context_set_file_finder().
+	 * 
+	 * This functions checks if the requested file name is available in a
+	 * temporary directory. If not, it tries to copy the file from the proj
+	 * subfolder of the assets folder to this temporary directory.
+	 * 
+	 * If the file exists in the temporary folder (or copying was successful)
+	 * this function returns the full path of this file as a C string.
+	 * This string becomes invalid the next time this function is called.
+	 * Otherwise it returns nullptr.
+	 */
 	extern "C"
-	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/);
+	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
+	{
+		static QTemporaryDir temp_dir;
+		if (temp_dir.isValid())
+		{
+			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
+			QFile file(path);
+			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
+			{
+				static auto c_string = path.toLocal8Bit();
+				return c_string.constData();
+			}
+			qDebug("Could not provide projection data file '%s'", name);
+		}
+		else
+		{
+			qDebug("Could not create a temporary directory for projection data");
+		}
+		return nullptr;
+	}
+#endif
+	
 	
 	/** Helper for PROJ initialization.
 	 *
@@ -971,49 +1008,5 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 	return dbg.space();
 }
 
-
-
-#if defined(Q_OS_ANDROID)
-
-namespace
-{
-	/**
-	 * @brief Provides required files for RROJ library.
-	 * 
-	 * This function implements the interface required by proj_context_set_file_finder().
-	 * 
-	 * This functions checks if the requested file name is available in a
-	 * temporary directory. If not, it tries to copy the file from the proj
-	 * subfolder of the assets folder to this temporary directory.
-	 * 
-	 * If the file exists in the temporary folder (or copying was successful)
-	 * this function returns the full path of this file as a C string.
-	 * This string becomes invalid the next time this function is called.
-	 * Otherwise it returns nullptr.
-	 */
-	extern "C"
-	const char* projFileHelperAndroid(PJ_CONTEXT* /*got_ctx*/, const char* name, void* /*user_data*/)
-	{
-		static QTemporaryDir temp_dir;
-		if (temp_dir.isValid())
-		{
-			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
-			QFile file(path);
-			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
-			{
-				static auto c_string = path.toLocal8Bit();
-				return c_string.constData();
-			}
-			qDebug("Could not provide projection data file '%s'", name);
-		}
-		else
-		{
-			qDebug("Could not create a temporary directory for projection data");
-		}
-		return nullptr;
-	}
-}  // namespace
-
-#endif  // defined(Q_OS_ANDROID)
 
 }  // namespace OpenOrienteering
