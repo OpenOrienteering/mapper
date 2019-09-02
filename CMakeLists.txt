@@ -190,7 +190,9 @@ if(NOT TARGET PROJ4::proj)
 	set(PROJ4_FOUND false)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
-if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6)
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
+	# New PROJ API missing or incomplete.
+	# (proj_normalize_for_visualization() came in 6.1.)
 	add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 endif()
 
