@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peut pas écrire le fichier</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,7 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peut pas ouvrir le fichier</translation>
     </message>
 </context>
 <context>
