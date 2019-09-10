@@ -707,7 +707,7 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 	if (projected_ref_point != point || state == Normal)
 	{
 		projected_ref_point = point;
-		bool ok;
+		bool ok = {};
 		LatLon new_geo_ref_point;
 		
 		switch (state)
@@ -777,7 +777,7 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (state != Normal)
 			setState(Normal);
 		
-		bool ok;
+		bool ok = {};
 		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
 		if (ok && new_projected_ref != projected_ref_point)
 		{
