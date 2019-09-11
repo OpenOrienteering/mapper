@@ -1458,7 +1458,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер кнопок действий:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
@@ -7077,7 +7077,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Для доступа к &apos;%1&apos; требуются дополнительные права.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -7717,7 +7717,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image.cpp" line="167"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Геопривязка не найдена</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="181"/>
