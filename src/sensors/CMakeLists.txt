@@ -70,6 +70,7 @@ set(MAPPER_SENSORS_SOURCES
   gps_display.cpp
   gps_temporary_markers.cpp
   gps_track_recorder.cpp
+  sensors_settings_page.cpp
 )
 
 set(MAPPER_SENSORS_DEFINITIONS
