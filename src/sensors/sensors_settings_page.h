@@ -50,6 +50,8 @@ protected:
 	
 private:
 	QComboBox* position_source_box = nullptr;
+	QComboBox* nmea_serialport_box = nullptr;
+	
 };
 
 

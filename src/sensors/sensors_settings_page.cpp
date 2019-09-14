@@ -25,10 +25,15 @@
 #include <QLabel>
 #include <QLatin1String>
 #include <QSpacerItem>
+#include <QStringList>
 #include <QVariant>
 
 #ifdef QT_POSITIONING_LIB
 #  include <QGeoPositionInfoSource>
+#endif
+
+#ifdef QT_SERIALPORT_LIB
+#  include <QSerialPortInfo>
 #endif
 
 #include "settings.h"
@@ -47,6 +52,18 @@ SensorsSettingsPage::SensorsSettingsPage(QWidget* parent)
 	
 	position_source_box = new QComboBox();
 	form_layout->addRow(tr("Source:"), position_source_box);
+	
+#ifdef QT_SERIALPORT_LIB
+	if (QGeoPositionInfoSource::availableSources().contains(QLatin1String("serialnmea")))
+	{
+		nmea_serialport_box = new QComboBox();
+		form_layout->addRow(tr("Serial port (NMEA):"), nmea_serialport_box);
+		
+		connect(position_source_box, &QComboBox::currentTextChanged, nmea_serialport_box, [this]() {
+			nmea_serialport_box->setEnabled(position_source_box->currentData() == QLatin1String("serialnmea"));
+		});
+	}
+#endif
 	
 	form_layout->addItem(Util::SpacerItem::create(this));
 #endif
@@ -68,6 +85,8 @@ void SensorsSettingsPage::apply()
 	auto& settings = Settings::getInstance();
 	
 	settings.setPositionSource(position_source_box->currentData().toString());
+	if (nmea_serialport_box)
+		settings.setNmeaSerialPort(nmea_serialport_box->currentText());
 	
 	Settings::getInstance().applySettings();
 }
@@ -113,6 +132,26 @@ void SensorsSettingsPage::updateWidgets()
 	{
 		add_position_source(source);
 	}
+	
+#ifdef QT_SERIALPORT_LIB
+	if (nmea_serialport_box)
+	{
+		nmea_serialport_box->clear();
+		auto const current_port_name = Settings::getInstance().nmeaSerialPort();
+		auto add_serialport = [this, &current_port_name](const QString& display_name, bool is_default = false) {
+			nmea_serialport_box->addItem(display_name);
+			if (display_name == current_port_name || (is_default && display_name.isEmpty()))
+				nmea_serialport_box->setCurrentIndex(nmea_serialport_box->count()-1);
+		};
+		
+		auto const ports = QSerialPortInfo::availablePorts();
+		add_serialport(tr("Default"), true);
+		for (auto const& port: ports)
+		{
+			add_serialport(port.portName());
+		}
+	}
+#endif  // QT_SERIALPORT_LIB
 #endif  // QT_POSITIONING_LIB
 }
 
