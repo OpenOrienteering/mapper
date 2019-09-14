@@ -26,12 +26,8 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
-set(MAPPER_SENSORS_RESOURCES )
 
-# Extra header to be shown in the IDE (e.g. private) or to be translated
-set(MAPPER_SENSORS_HEADERS
-  # not needed ATM
-)
+# Mapper sensors
 
 set(MAPPER_SENSORS_SOURCES
   compass.cpp
@@ -40,40 +36,29 @@ set(MAPPER_SENSORS_SOURCES
   gps_track_recorder.cpp
 )
 
-if(TARGET Qt5::Positioning)
-	list(APPEND MAPPER_SENSORS_SOURCES
-	  powershell_position_source.cpp
-	)
-	qt5_add_resources(MAPPER_SENSORS_RESOURCES
-	  "${CMAKE_CURRENT_SOURCE_DIR}/powershell_position_source.qrc"
-	)
-endif()
-
-mapper_translations_sources(
-  ${MAPPER_SENSORS_HEADERS}
-  ${MAPPER_SENSORS_SOURCES}
-)
-
-add_library(mapper-sensors STATIC
-  ${MAPPER_SENSORS_HEADERS}
-  ${MAPPER_SENSORS_SOURCES}
-  ${MAPPER_SENSORS_RESOURCES}
-)
-
-target_compile_definitions(mapper-sensors
-  PUBLIC
-    MAPPER_USE_SENSORS
+set(MAPPER_SENSORS_DEFINITIONS
   PRIVATE
     QT_NO_CAST_FROM_ASCII
     QT_NO_CAST_TO_ASCII
     QT_USE_QSTRINGBUILDER
 )
 
-target_include_directories(mapper-sensors
-  PRIVATE
-    "${PROJECT_SOURCE_DIR}/src"
-)
+if(TARGET Qt5::Positioning OR TARGET Qt5::Sensors)
+	list(APPEND MAPPER_SENSORS_DEFINITIONS  PUBLIC MAPPER_USE_SENSORS)
+endif()
 
+if(TARGET Qt5::Positioning)
+	list(APPEND MAPPER_SENSORS_SOURCES
+	  powershell_position_source.cpp
+	)
+	qt5_add_resources(MAPPER_SENSORS_SOURCES
+	  "${CMAKE_CURRENT_SOURCE_DIR}/powershell_position_source.qrc"
+	)
+endif()
+
+add_library(mapper-sensors STATIC  ${MAPPER_SENSORS_SOURCES})
+target_compile_definitions(mapper-sensors  ${MAPPER_SENSORS_DEFINITIONS})
+target_include_directories(mapper-sensors  PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(mapper-sensors
   PUBLIC
     Qt5::Core
@@ -82,6 +67,13 @@ target_link_libraries(mapper-sensors
 )
 foreach(lib Qt5::Positioning Qt5::Sensors Qt5::AndroidExtras)
 	if(TARGET ${lib})
-		target_link_libraries(mapper-sensors PRIVATE ${lib})
+		target_link_libraries(mapper-sensors  PRIVATE ${lib})
 	endif()
 endforeach()
+
+
+# Translations
+
+mapper_translations_sources(
+  ${MAPPER_SENSORS_SOURCES}
+)
