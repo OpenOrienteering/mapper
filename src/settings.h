@@ -168,6 +168,25 @@ public:
 	static bool mobileModeEnforced() noexcept;
 #endif
 	
+	
+	/**
+	 * Returns the name of the position source to be used.
+	 * 
+	 * If this is empty, the system's default source shall be used.
+	 * 
+	 * \see QGeoPositionInfoSource::createSource
+	 * \see QGeoPositionInfoSource::createDefaultSource
+	 */
+	QString positionSource() const { return sensors.position_source; }
+	
+	/**
+	 * Changes the name of the position source.
+	 * 
+	 * Setting this to an empty string selects the system's default source.
+	 */
+	void setPositionSource(const QString& name);
+	
+	
 signals:
 	void settingsChanged();
 	
@@ -185,6 +204,10 @@ private:
 	QHash<SettingsEnum, QVariant> settings_cache;
 	QHash<SettingsEnum, QString> setting_paths;
 	QHash<SettingsEnum, QVariant> setting_defaults;
+	
+	struct {
+		QString position_source = {};
+	} sensors;
 	
 #ifndef Q_OS_ANDROID
 	bool touch_mode_enabled = false;

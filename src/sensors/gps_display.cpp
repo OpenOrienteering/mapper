@@ -38,6 +38,7 @@
 #include <QtMath>
 #include <QColor>
 #include <QFlags>
+#include <QLatin1String>
 #include <QPainter>
 #include <QPen>
 #include <QPoint>
@@ -48,6 +49,7 @@
 #include <QTimer>  // IWYU pragma: keep
 #include <QTimerEvent>
 
+#include "settings.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map_view.h"
@@ -107,10 +109,21 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
  , georeferencing(georeferencing)
 {
 #if defined(QT_POSITIONING_LIB)
-	source = QGeoPositionInfoSource::createDefaultSource(this);
+	auto const & settings = Settings::getInstance();
+	auto source_name = settings.positionSource();
+	if (source_name.isEmpty())
+	{
+		source_name = QLatin1String("default");
+		source = QGeoPositionInfoSource::createDefaultSource(this);
+	}
+	else
+	{
+		source = QGeoPositionInfoSource::createSource(source_name, this);	
+	}
+	
 	if (!source)
 	{
-		qDebug("Cannot create QGeoPositionInfoSource!");
+		qDebug("Cannot create QGeoPositionInfoSource '%s'!", qPrintable(source_name));
 		return;
 	}
 	

@@ -165,6 +165,8 @@ Settings::Settings()
 	touch_mode_enabled = mobileModeEnforced() || settings.value(QLatin1String("General/touch_mode_enabled"), touch_mode_enabled).toBool();
 #endif
 	
+	sensors.position_source = settings.value(QLatin1String("Sensors/position_source"), sensors.position_source).toString();
+	
 	// Migrate old settings
 	static bool migration_checked = false;
 	if (!migration_checked)
@@ -365,6 +367,17 @@ bool Settings::mobileModeEnforced() noexcept
 }
 
 #endif
+
+
+void Settings::setPositionSource(const QString& name)
+{
+	if (name != sensors.position_source)
+	{
+		sensors.position_source = name;
+		QSettings().setValue(QLatin1String("Sensors/position_source"), name);
+		emit settingsChanged();
+	}
+}
 
 
 }  // namespace OpenOrienteering
