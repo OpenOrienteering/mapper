@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QString>
 
 class QPainter;
 // IWYU pragma: no_forward_declare QPointF

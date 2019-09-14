@@ -19,9 +19,21 @@
 
 #include "powershell_position_source.h"
 
+#include <algorithm>
+#include <iterator>
+
+#include <Qt>
+#include <QtGlobal>
+#include <QtNumeric>
+#include <QDateTime>
 #include <QFile>
 #include <QFileDevice>
+#include <QGeoCoordinate>
+#include <QIODevice>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QStandardPaths>
+#include <QStringList>
 
 
 inline void initPowershellPositionResources()

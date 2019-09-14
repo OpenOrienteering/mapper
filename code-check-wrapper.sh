@@ -61,7 +61,6 @@ PATTERN=" \
   georeferencing_t.cpp \
   gdal_manager.cpp \
   gdal_template.cpp \
-  gps_display.cpp \
   key_button_bar.cpp \
   line_symbol.cpp \
   /map.cpp \
@@ -101,6 +100,7 @@ PATTERN=" \
   xml_stream_util.cpp \
   \
   ocd \
+  src/sensors/ \
   src/tools/ \
   settings \
   \

@@ -20,7 +20,13 @@
 
 #include "gps_track_recorder.h"
 
+#include <QDateTime>
+#include <QtGlobal>
+
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_view.h"
+#include "core/track.h"
 #include "gui/map/map_widget.h"
 #include "sensors/gps_display.h"
 #include "templates/template_track.h"

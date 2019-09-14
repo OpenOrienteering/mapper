@@ -22,6 +22,7 @@
 #define OPENORIENTEERING_GPS_TRACK_RECORDER_H
 
 #include <QObject>
+#include <QString>
 #include <QTimer>
 
 namespace OpenOrienteering {

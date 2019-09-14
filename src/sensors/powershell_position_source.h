@@ -25,7 +25,9 @@
 #include <QByteArray>
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
+#include <QObject>
 #include <QProcess>
+#include <QString>
 #include <QTimer>
 
 namespace OpenOrienteering
