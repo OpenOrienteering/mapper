@@ -25,6 +25,7 @@
 #include <memory>
 
 #include <QObject>
+#include <QString>
 
 class QMetaMethod;
 

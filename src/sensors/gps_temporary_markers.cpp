@@ -21,11 +21,20 @@
 
 #include "gps_temporary_markers.h"
 
+#include <Qt>
+#include <QtGlobal>
+#include <QBrush>
 #include <QPainter>
+#include <QPen>
+#include <QRgb>
 
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "gui/map/map_widget.h"
-#include "gps_display.h"
+#include "sensors/gps_display.h"
 #include "tools/tool.h"
+
+class QPointF;
 
 
 namespace OpenOrienteering {

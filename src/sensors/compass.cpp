@@ -20,30 +20,39 @@
 
 #include "compass.h"
 
-#include <cmath>
-
-#include <QtMath>  // IWYU pragma: keep
 #include <QtGlobal>  // IWYU pragma: keep
 #include <QMetaMethod>
 #include <QMetaObject>
-#include <QMutex>  // IWYU pragma: keep
-#include <QTime>
 
 #ifdef QT_SENSORS_LIB
 
+#include <cmath>
+#include <cstring>
+
+#include <Qt>
+#include <QtMath>
+#include <QAccelerometer>
+#include <QAccelerometerReading>
+#include <QGyroscope>
+#include <QGyroscopeFilter>
+#include <QGyroscopeReading>
+#include <QList>
+#include <QMagnetometer>
+#include <QMagnetometerReading>
+#include <QMutex>
+#include <QSensor>
 #include <QThread>
-#include <QDebug>
 #include <QWaitCondition>
-#include <QtSensors/QAccelerometer>
-#include <QtSensors/QGyroscope>
-#include <QtSensors/QMagnetometer>
-#include <QtSensors/QSensor>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
-#endif  // # QT_SENSORS_LIB
+#else  // no Qt Sensors lib
+
+#include <QTime>
+
+#endif  // QT_SENSORS_LIB
 
 
 // clazy:excludeall=missing-qobject-macro

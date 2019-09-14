@@ -24,6 +24,7 @@
 
 #include <Qt>
 #include <QtGlobal>
+#include <QtPlugin>
 #include <QApplication>
 #include <QLatin1String>
 #include <QLocale>
@@ -57,6 +58,11 @@
 // IWYU pragma: no_forward_declare QTranslator
 
 using namespace OpenOrienteering;
+
+
+#if defined(Q_OS_WIN32) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
+Q_IMPORT_PLUGIN(PowershellPositionPlugin)
+#endif
 
 
 // From map.h

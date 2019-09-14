@@ -60,6 +60,10 @@
 #  include "gdal/gdal_settings_page.h"
 #endif
 
+#ifdef MAPPER_USE_SENSORS
+#  include "sensors/sensors_settings_page.h"
+#endif
+
 
 namespace OpenOrienteering {
 
@@ -211,6 +215,9 @@ void SettingsDialog::addPages()
 	addPage(new EditorSettingsPage(this));
 #ifdef MAPPER_USE_GDAL
 	addPage(new GdalSettingsPage(this));
+#endif
+#ifdef MAPPER_USE_SENSORS
+	addPage(new SensorsSettingsPage(this));
 #endif
 }
 

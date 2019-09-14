@@ -20,12 +20,12 @@
 #ifndef OPENORIENTEERING_POWERSHELL_POSITION_SOURCE_H
 #define OPENORIENTEERING_POWERSHELL_POSITION_SOURCE_H
 
-#ifdef QT_POSITIONING_LIB
-
 #include <QByteArray>
 #include <QGeoPositionInfo>
 #include <QGeoPositionInfoSource>
+#include <QObject>
 #include <QProcess>
+#include <QString>
 #include <QTimer>
 
 namespace OpenOrienteering
@@ -129,7 +129,5 @@ private:
 
 
 }  // namespace OpenOrienteering
-
-#endif  // QT_POSITIONING_LIB
 
 #endif  // OPENORIENTEERING_POWERSHELL_POSITION_SOURCE_H

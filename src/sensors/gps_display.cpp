@@ -38,6 +38,7 @@
 #include <QtMath>
 #include <QColor>
 #include <QFlags>
+#include <QLatin1String>
 #include <QPainter>
 #include <QPen>
 #include <QPoint>
@@ -48,15 +49,13 @@
 #include <QTimer>  // IWYU pragma: keep
 #include <QTimerEvent>
 
+#include "settings.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map_view.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_widget.h"
 #include "sensors/compass.h"
-#ifdef WIN32
-#  include "sensors/powershell_position_source.h"
-#endif
 #include "util/backports.h"  // IWYU pragma: keep
 
 
@@ -110,18 +109,27 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
  , georeferencing(georeferencing)
 {
 #if defined(QT_POSITIONING_LIB)
-	source = QGeoPositionInfoSource::createDefaultSource(this);
-#if defined(Q_OS_WIN)
-	if (!source)
+	auto const & settings = Settings::getInstance();
+	auto source_name = settings.positionSource();
+	if (source_name.isEmpty())
 	{
-		auto powershell_source = std::make_unique<PowershellPositionSource>(this);
-		if (powershell_source->error() == QGeoPositionInfoSource::NoError)
-			source = powershell_source.release();
+		source_name = QLatin1String("default");
+		source = QGeoPositionInfoSource::createDefaultSource(this);
 	}
-#endif
+	else
+	{
+		auto const nmea_serialport = settings.nmeaSerialPort();
+		if (source_name == QLatin1String("serialnmea") && !nmea_serialport.isEmpty())
+		{
+			qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
+			source_name += QLatin1String(" from ") + nmea_serialport;
+		}
+		source = QGeoPositionInfoSource::createSource(source_name, this);	
+	}
+	
 	if (!source)
 	{
-		qDebug("Cannot create QGeoPositionInfoSource!");
+		qDebug("Cannot create QGeoPositionInfoSource '%s'!", qPrintable(source_name));
 		return;
 	}
 	
