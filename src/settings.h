@@ -187,6 +187,26 @@ public:
 	void setPositionSource(const QString& name);
 	
 	
+	/**
+	 * Returns the name of the serial port for reading NMEA data.
+	 * 
+	 * If this is empty, port selection is left to Qt which either reads the
+	 * port name from the environment variable QT_NMEA_SERIAL_PORT, or
+	 * recognizes a few GPS chipsets by serial port vendor IDs.
+	 * 
+	 * \see qtlocation/src/plugins/position/serialnmea/qgeopositioninfosourcefactory_serialnmea.cpp
+	 */
+	QString nmeaSerialPort() const { return sensors.nmea_serialport; }
+	
+	/**
+	 * Changes the name of the serial port for reading NMEA data.
+	 * 
+	 * Setting this to an empty string activates Qt's default port selection
+	 * behaviour.
+	 */
+	void setNmeaSerialPort(const QString& name);
+	
+	
 signals:
 	void settingsChanged();
 	
@@ -207,6 +227,7 @@ private:
 	
 	struct {
 		QString position_source = {};
+		QString nmea_serialport = {};
 	} sensors;
 	
 #ifndef Q_OS_ANDROID
