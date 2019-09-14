@@ -25,6 +25,7 @@
 
 #include "gui/widgets/settings_page.h"
 
+class QComboBox;
 class QWidget;
 
 namespace OpenOrienteering {
@@ -48,7 +49,7 @@ protected:
 	void updateWidgets();
 	
 private:
-	// Widgets ...
+	QComboBox* position_source_box = nullptr;
 };
 
 
