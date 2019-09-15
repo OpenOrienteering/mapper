@@ -34,7 +34,7 @@ namespace
 	 * bezier curves with straight segments.
 	 * TODO: make configurable
 	 */
-	const PathCoord::length_type bezier_error = 0.005;
+	const double bezier_error = 0.005;
 	
 	/**
 	 * Global maximum length of generated PathCoord segments for curves.
@@ -44,7 +44,7 @@ namespace
 	 * curve parameter to real position is not linear, which would result in problems.
 	 * This is counteracted by generating many segments.
 	 */
-	const PathCoord::length_type bezier_segment_maxlen_squared = 1.0;
+	const double bezier_segment_maxlen_squared = 1.0;
 	
 	
 }  // namespace
@@ -54,7 +54,7 @@ namespace
 // ### PathCoord ###
 
 // static
-PathCoord::length_type PathCoord::bezierError()
+double PathCoord::bezierError()
 {
 	return bezier_error;
 }
@@ -170,7 +170,7 @@ double PathCoordVector::calculateArea() const
 	auto end_index = size() - 1;
 	auto j = end_index;  // The last vertex is the 'previous' one to the first
 	
-	for (auto i = 0u; i <= end_index; ++i)
+	for (size_type i = 0u; i <= end_index; ++i)
 	{
 		area += ((*this)[j].pos.x() + (*this)[i].pos.x()) * ((*this)[j].pos.y() - (*this)[i].pos.y()); 
 		j = i;
@@ -245,7 +245,7 @@ void PathCoordVector::curveToPathCoord(
         float p1 )
 {
 	// Common
-	auto p_half = (p0 + p1) * 0.5;
+	auto p_half = (double(p0) + double(p1)) * 0.5;
 	MapCoordF c12((c1.x() + c2.x()) * 0.5, (c1.y() + c2.y()) * 0.5);
 	
 	auto inner_len_sq = c0.distanceSquaredTo(c3);
@@ -258,11 +258,11 @@ void PathCoordVector::curveToPathCoord(
 	else
 	{
 		// Split in two
-		MapCoordF c01((c0.x() + c1.x()) * 0.5f, (c0.y() + c1.y()) * 0.5f);
-		MapCoordF c23((c2.x() + c3.x()) * 0.5f, (c2.y() + c3.y()) * 0.5f);
-		MapCoordF c012((c01.x() + c12.x()) * 0.5f, (c01.y() + c12.y()) * 0.5f);
-		MapCoordF c123((c12.x() + c23.x()) * 0.5f, (c12.y() + c23.y()) * 0.5f);
-		MapCoordF c0123((c012.x() + c123.x()) * 0.5f, (c012.y() + c123.y()) * 0.5f);
+		MapCoordF c01((c0.x() + c1.x()) * 0.5, (c0.y() + c1.y()) * 0.5);
+		MapCoordF c23((c2.x() + c3.x()) * 0.5, (c2.y() + c3.y()) * 0.5);
+		MapCoordF c012((c01.x() + c12.x()) * 0.5, (c01.y() + c12.y()) * 0.5);
+		MapCoordF c123((c12.x() + c23.x()) * 0.5, (c12.y() + c23.y()) * 0.5);
+		MapCoordF c0123((c012.x() + c123.x()) * 0.5, (c012.y() + c123.y()) * 0.5);
 		
 		curveToPathCoord(c0, c01, c012, c0123, edge_start, p0, p_half);
 		curveToPathCoord(c0123, c123, c23, c3, edge_start, p_half, p1);
@@ -654,7 +654,7 @@ void VirtualPath::copy(
 		out_coords.back().setCurveStart(first.is_curve_start);
 		
 		auto stop_index = last.index;
-		if (last.param == 0.0)
+		if (last.param == 0.0f)
 		{
 			stop_index -= last.is_curve_end ? 3 : 1;
 		}
@@ -682,7 +682,7 @@ void VirtualPath::copy(
 	}
 	
 	out_coords.emplace_back(last.pos);
-	if (last.param == 0.0)
+	if (last.param == 0.0f)
 	{
 		out_coords.back().setHolePoint(flags[last.index].isHolePoint());
 		out_coords.back().setClosePoint(flags[last.index].isClosePoint());
@@ -726,7 +726,7 @@ void VirtualPath::copy(
 		out_flags.back().setCurveStart(first.is_curve_start);
 		
 		auto stop_index = last.index;
-		if (last.param == 0.0)
+		if (last.param == 0.0f)
 		{
 			stop_index -= last.is_curve_end ? 3 : 1;
 		}
@@ -759,7 +759,7 @@ void VirtualPath::copy(
 	
 	out_flags.emplace_back();
 	out_coords.emplace_back(last.pos);
-	if (last.param == 0.0)
+	if (last.param == 0.0f)
 	{
 		out_flags.back().setHolePoint(flags[last.index].isHolePoint());
 		out_flags.back().setClosePoint(flags[last.index].isClosePoint());
@@ -796,7 +796,7 @@ void VirtualPath::copyLengths(
 		after_curve_start = first.is_curve_start;
 		
 		auto stop_index = last.index;
-		if (last.param == 0.0)
+		if (last.param == 0.0f)
 		{
 			stop_index -= last.is_curve_end ? 3 : 1;
 		}
