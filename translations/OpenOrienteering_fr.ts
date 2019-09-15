@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation>Ne peut pas écrire le fichier</translation>
+        <translation>Ne peut pas écrire le fichier : %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation>Ne peut pas ouvrir le fichier</translation>
+        <translation>Ne peut pas ouvrir le fichier
+%1 :
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Impossible d&apos;ouvrir le fichier:
+        <translation>Impossible d&apos;ouvrir le fichier :
 %1
 
 %2</translation>
@@ -2499,7 +2501,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Impossible d&apos;ouvrir le fichier:
+        <translation>Impossible d&apos;ouvrir le fichier :
 %1
 
 %2</translation>
@@ -2646,7 +2648,9 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne peut pas ouvrir le fichier
+%1 :
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="231"/>
@@ -3198,7 +3202,7 @@ Voulez-vous enregistrer vos modifications ?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished">Impossible d&apos;ouvrir le fichier:
+        <translation>Impossible d&apos;ouvrir le fichier :
 %1
 
 %2</translation>
@@ -5863,7 +5867,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1434"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Pour le symbole ligne &quot;%1&quot;,impossible de dessiner la combinaison entre l&apos;extrémité et la jointure.</translation>
+        <translation type="unfinished">Pour le symbole ligne &quot;%1&quot;, impossible de dessiner la combinaison entre l&apos;extrémité et la jointure.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1455"/>
@@ -6841,7 +6845,7 @@ des couleurs</translation>
 %1
 
 %2</source>
-        <translation>Impossible d&apos;ouvrir le fichier:
+        <translation>Impossible d&apos;ouvrir le fichier :
 %1
 
 %2</translation>
@@ -6991,12 +6995,12 @@ Voulez-vous sauvegarder les modifications ?</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X :</translation>
+        <translation>X :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y :</translation>
+        <translation>Y :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -7136,12 +7140,12 @@ Voulez-vous sauvegarder les modifications ?</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X :</translation>
+        <translation>X :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y :</translation>
+        <translation>Y :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
