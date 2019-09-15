@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -639,11 +639,11 @@ void VirtualPath::copy(
 	{
 		out_coords.emplace_back(first.pos);
 	}
-	else
-	{
-		out_coords.back().setHolePoint(false);
-		out_coords.back().setClosePoint(false);
-	}
+	
+	auto first_flags = out_coords.back().flags() & MapCoord::MaskCopiedFlagsAtStart;
+	if (first.param == 0.0f)
+		first_flags |= flags[first.index].flags() & MapCoord::MaskCopiedFlagsAtStart;
+	out_coords.back().setFlags(first_flags);
 	
 	if (first.index == last.index)
 	{
@@ -684,8 +684,7 @@ void VirtualPath::copy(
 	out_coords.emplace_back(last.pos);
 	if (last.param == 0.0f)
 	{
-		out_coords.back().setHolePoint(flags[last.index].isHolePoint());
-		out_coords.back().setClosePoint(flags[last.index].isClosePoint());
+		out_coords.back().setFlags(flags[last.index].flags() & MapCoord::MaskCopiedFlagsAtEnd);
 	}
 }
 
@@ -711,11 +710,11 @@ void VirtualPath::copy(
 		out_coords.emplace_back(first.pos);
 		out_flags.emplace_back();
 	}
-	else
-	{
-		out_flags.back().setHolePoint(false);
-		out_flags.back().setClosePoint(false);
-	}
+	
+	auto first_flags = out_flags.back().flags() & MapCoord::MaskCopiedFlagsAtStart;
+	if (first.param == 0.0f)
+		first_flags |= flags[first.index].flags() & MapCoord::MaskCopiedFlagsAtStart;
+	out_flags.back().setFlags(first_flags);
 	
 	if (first.index == last.index)
 	{
@@ -761,8 +760,7 @@ void VirtualPath::copy(
 	out_coords.emplace_back(last.pos);
 	if (last.param == 0.0f)
 	{
-		out_flags.back().setHolePoint(flags[last.index].isHolePoint());
-		out_flags.back().setClosePoint(flags[last.index].isClosePoint());
+		out_flags.back().setFlags(flags[last.index].flags() & MapCoord::MaskCopiedFlagsAtEnd);
 	}
 	
 	Q_ASSERT(out_coords.size() == out_flags.size());
