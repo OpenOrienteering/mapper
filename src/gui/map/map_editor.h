@@ -793,7 +793,7 @@ private:
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
-	QToolBar* toolbar_mapparts;
+	QToolBar* toolbar_mapparts = nullptr;
 	
 	// For mobile UI
 	ActionGridBar* bottom_action_bar;
@@ -802,7 +802,7 @@ private:
 	QAction* mobile_symbol_selector_action;
 	QMenu* mobile_symbol_button_menu;
 	
-	QComboBox* mappart_selector_box;
+	QPointer<QComboBox> mappart_selector_box;
 	
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
