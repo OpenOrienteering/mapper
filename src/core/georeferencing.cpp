@@ -21,6 +21,7 @@
 #include "georeferencing.h"
 
 #include <algorithm>
+#include <cmath> // IWYU pragma: keep
 #include <iterator>
 
 #include <QtGlobal>
@@ -321,7 +322,7 @@ bool ProjTransform::isGeographic() const
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 {
 	proj_errno_reset(pj);
-	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, 0));
+	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, HUGE_VAL));
 	if (ok)
 		*ok = proj_errno(pj) == 0;
 	return {pj_coord.xy.x, pj_coord.xy.y};
@@ -330,7 +331,7 @@ QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
 LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
 {
 	proj_errno_reset(pj);
-	auto pj_coord = proj_trans(pj, PJ_INV, proj_coord(projected_coords.x(), projected_coords.y(), 0, 0));
+	auto pj_coord = proj_trans(pj, PJ_INV, proj_coord(projected_coords.x(), projected_coords.y(), 0, HUGE_VAL));
 	if (ok)
 		*ok = proj_errno(pj) == 0;
 	return {pj_coord.lp.phi, pj_coord.lp.lam};
