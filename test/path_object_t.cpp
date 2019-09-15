@@ -222,6 +222,68 @@ void PathObjectTest::copyFromTest()
 
 
 
+void PathObjectTest::changePathBoundsTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::changePathBoundsTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
+	proto.updatePathCoords();
+	
+	{
+		// full path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// sub-path starting at begin
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, 4.0);
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+	
+	{
+		// sub-path ending at original end
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// inner sub-path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, 4.0);
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+}
+
+
+
 void PathObjectTest::splitLineTest_data()
 {
 	QTest::addColumn<int>("dash_point_index");
