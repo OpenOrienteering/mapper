@@ -318,6 +318,8 @@ MapEditorController::~MapEditorController()
 	delete mappart_merge_act;
 	delete mappart_merge_menu;
 	delete mappart_move_menu;
+	if (mappart_selector_box)
+		delete mappart_selector_box;
 	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
 		delete widget;
 	delete gps_display;
@@ -3915,11 +3917,11 @@ void MapEditorController::setMapAndView(Map* map, MapView* map_view)
 		{
 			this->map->disconnect(symbol_widget);
 		}
-		updateMapPartsUI();
 	}
 	
 	this->map = map;
 	this->main_view = map_view;
+	updateMapPartsUI();
 	
 	connect(&map->undoManager(), &UndoManager::canRedoChanged, this, &MapEditorController::undoStepAvailabilityChanged);
 	connect(&map->undoManager(), &UndoManager::canUndoChanged, this, &MapEditorController::undoStepAvailabilityChanged);
