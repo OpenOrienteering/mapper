@@ -1,0 +1,84 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+steps:
+- bash: |
+    set -e
+    MAPPER_RELEASE=${BUILD_SOURCEBRANCHNAME}-v${BUILD_BUILDNUMBER}
+    ISSUES_BADGE=
+    case "${BUILD_SOURCEBRANCH}" in
+    release)
+      MAPPER_RELEASE=v0.x.x
+      BADGE_LABEL="Official release"
+      BADGE_SPEC="Quality-Official_Release-brightgreen"
+      ISSUES_BADGE="[![Known issues](https://img.shields.io/badge/dynamic/json.svg?label=Known%20issues&query=%24.length&url=https%3A%2F%2Fapi.github.com%2Frepos%2Fopenorienteering%2Fmapper%2Fissues%3Flabels%3Dknown%2520issues%2520${MAPPER_RELEASE}%26state%3Dall&style=for-the-badge&color=informational)](https://github.com/OpenOrienteering/mapper/issues?q=label:\"known%20issues%20${MAPPER_RELEASE}\")"
+      ;;
+    master)
+      BADGE_LABEL="Enhancements and minor changes"
+      BADGE_SPEC="Quality-Stable-yellowgreen"
+      ;;
+    dev)
+      BADGE_LABEL="New features and major changes"
+      BADGE_SPEC="Quality-Experimental-red"
+      ;;
+    *)
+      BADGE_LABEL="Work in progress"
+      BADGE_SPEC="Quality-Work_in_Progress-lightgrey"
+      ;;
+    esac
+    curl https://dev.azure.com/OpenOrienteering/Mapper/_apis/build/builds/${OPENORIENTEERING_SUPERBUILD_BUILDID}?api-version=5.1 -o superbuild.json
+    SUPERBUILD_BUILDNUMBER=$(cat superbuild.json | sed '/buildNumber/!d;s/.*"buildNumber":"//;s/".*//')
+    cat <<END_SUMMARY
+    Summary:
+      Superbuild build ID:      ${OPENORIENTEERING_SUPERBUILD_BUILDID}
+      Superbuild build number:  ${SUPERBUILD_BUILDNUMBER}
+      Superbuild GH release:    v${SUPERBUILD_BUILDNUMBER%.*}
+      Mapper source branch:     ${BUILD_SOURCEBRANCH}
+      Mapper build ID:          ${BUILD_BUILDID}
+      Mapper build number:      ${BUILD_BUILDNUMBER}
+      Mapper GH release:        ${MAPPER_RELEASE}
+    END_SUMMARY
+    mkdir RELEASE_NOTES
+    cat > RELEASE_NOTES/RELEASE_NOTES <<END_RELEASE_NOTES
+    ![${BADGE_LABEL}](https://img.shields.io/badge/${BADGE_SPEC}.svg?style=for-the-badge) \
+    [![GitHub Releases](https://img.shields.io/github/downloads/openorienteering/mapper/${MAPPER_RELEASE}/total.svg?style=for-the-badge&label=Downloads)](https://github.com/OpenOrienteering/mapper/releases/tag/${MAPPER_RELEASE}) \
+    ${ISSUES_BADGE}
+    
+    Continuous integration build [${BUILD_BUILDID}](https://dev.azure.com/OpenOrienteering/Mapper/_build/results?buildId=${BUILD_BUILDID}), \
+    based on Superbuild [${SUPERBUILD_BUILDNUMBER%.*}](https://github.com/OpenOrienteering/superbuild/releases/tag/v${SUPERBUILD_BUILDNUMBER%.*}).
+    
+    [All changes since previous ${BUILD_SOURCEBRANCHNAME} build](https://github.com/OpenOrienteering/mapper/compare/${BUILD_SOURCEBRANCHNAME}...${BUILD_SOURCEBRANCHNAME}-v${BUILD_BUILDNUMBER})
+    END_RELEASE_NOTES
+  displayName: 'Create release notes'
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'Release Notes'
+    targetPath: $(Build.SourcesDirectory)/RELEASE_NOTES
+  displayName: 'Publish release notes'
+

@@ -35,6 +35,14 @@ jobs:
     - template: codespell.yml
 
 
+- job: Release_Notes
+  displayName: Release Notes
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: release-notes.yml
+
+
 - job: macOS
   displayName: macOS (Release)
   variables:

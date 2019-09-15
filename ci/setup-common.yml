@@ -29,6 +29,13 @@
 
 steps:
 - bash: |
+    if [ "${BUILD_SOURCEBRANCH}" = "release" ] ; then
+      # Release build: version to be inserted by Mapper build system
+      echo "##vso[task.setVariable variable=VERSION_DISPLAY]"
+    else
+      # Default display version: full source branch and build number
+      echo "##vso[task.setVariable variable=VERSION_DISPLAY]${BUILD_SOURCEBRANCH} v${BUILD_BUILDNUMBER}"
+    fi
     echo "##vso[task.setVariable variable=SOURCE_DIR]${BUILD_SOURCESDIRECTORY}"
     echo "##vso[task.setVariable variable=TEST_RESULTS]${BUILD_SOURCESDIRECTORY}/build/default/openorienteering-mapper-ci/Testing"
     echo "##vso[task.setVariable variable=CMAKE_WRAPPING]-E env bash ${BUILD_SOURCESDIRECTORY}/ci/shell.sh cmake"
