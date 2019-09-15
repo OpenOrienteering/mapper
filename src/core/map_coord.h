@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -85,6 +85,10 @@ public:
 		HolePoint  = 1 << 4,
 		DashPoint  = 1 << 5,
 		//...
+		// Special masks for VirtualPath::copy().
+		// CurveStart is handled explicitly there.
+		MaskCopiedFlagsAtStart = GapPoint | DashPoint,
+		MaskCopiedFlagsAtEnd   = GapPoint | DashPoint | HolePoint | ClosePoint,
 	};
 	Q_DECLARE_FLAGS(Flags, Flag)
 	

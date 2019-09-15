@@ -98,7 +98,7 @@ public:
 	 * 
 	 * @todo Make bezier error configurable
 	 */
-	static length_type bezierError();
+	static double bezierError();
 	
 	
 	/**

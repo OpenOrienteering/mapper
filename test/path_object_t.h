@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015, 2016 Kai Pastor
+ *    Copyright 2015, 2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,6 +45,18 @@ private slots:
 	
 	/** Tests VirtualPath. */
 	void virtualPathTest();
+	
+	/** Tests PathObject::copyFrom(). */
+	void copyFromTest();
+	void copyFromTest_data();
+	
+	/** Tests PathObject::changePathBounds(). */
+	void changePathBoundsTest();
+	void changePathBoundsTest_data();
+	
+	/** Tests properties of lines after splitting. */
+	void splitLineTest();
+	void splitLineTest_data();
 	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();

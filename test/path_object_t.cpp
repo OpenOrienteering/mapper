@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015, 2016 Kai Pastor
+ *    Copyright 2015, 2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -168,6 +168,163 @@ void PathObjectTest::virtualPathTest()
 	QCOMPARE(right.y(), sqrt(2.0)/2);
 	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
+}
+
+
+
+void PathObjectTest::copyFromTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::copyFromTest()
+{
+	// Simple path
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({4.0, 2.0});
+	proto.addCoordinate({4.0, -2.0});
+	
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
+	{
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
+	}
+	
+	// Closed path with a hole
+	proto.addCoordinate({0.0, 2.0, MapCoord::ClosePoint});
+	proto.addCoordinate({0.5, 1.5, MapCoord::HolePoint});
+	proto.addCoordinate({3.5, 1.5});
+	proto.addCoordinate({3.5, 0.0});
+	proto.addCoordinate({0.5, 1.5, MapCoord::ClosePoint});
+	
+	{
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
+	}
+}
+
+
+
+void PathObjectTest::changePathBoundsTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::changePathBoundsTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
+	proto.updatePathCoords();
+	
+	{
+		// full path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// sub-path starting at begin
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, 4.0);
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+	
+	{
+		// sub-path ending at original end
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// inner sub-path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, 4.0);
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+}
+
+
+
+void PathObjectTest::splitLineTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::splitLineTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	if (dash_point_index >= 0)
+		proto.getCoordinateRef(std::size_t(dash_point_index)).setDashPoint(true);
+	
+	auto object_path_coord = ObjectPathCoord { &proto };
+	auto const distance_sq = object_path_coord.findClosestPointTo({1.0, 1.0});
+	QVERIFY(qIsNull(distance_sq));
+	QCOMPARE(object_path_coord.pos, MapCoordF(1.0, 1.0));
+	
+	auto const split_paths = proto.splitLineAt(object_path_coord);
+	QCOMPARE(split_paths.size(), std::size_t(2));
+	
+	auto const *split_0 = split_paths[0];
+	QCOMPARE(split_0->getCoordinateCount(), std::size_t(2));
+	QCOMPARE(split_0->getCoordinate(0), proto.getCoordinate(0));
+	QCOMPARE(split_0->getCoordinate(1), MapCoord(1.0, 1.0, MapCoord::HolePoint));
+	delete split_0;
+	
+	auto const *split_1 = split_paths[1];
+	QCOMPARE(split_1->getCoordinateCount(), std::size_t(3));
+	QCOMPARE(split_1->getCoordinate(0), MapCoord(1.0, 1.0));
+	QCOMPARE(split_1->getCoordinate(1), proto.getCoordinate(1));
+	QCOMPARE(split_1->getCoordinate(2), proto.getCoordinate(2));
+	delete split_1;
 }
 
 
