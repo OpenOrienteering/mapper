@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015, 2016 Kai Pastor
+ *    Copyright 2015, 2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -168,6 +168,56 @@ void PathObjectTest::virtualPathTest()
 	QCOMPARE(right.y(), sqrt(2.0)/2);
 	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
+}
+
+
+
+void PathObjectTest::copyFromTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::copyFromTest()
+{
+	// Simple path
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({4.0, 2.0});
+	proto.addCoordinate({4.0, -2.0});
+	
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
+	{
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
+	}
+	
+	// Closed path with a hole
+	proto.addCoordinate({0.0, 2.0, MapCoord::ClosePoint});
+	proto.addCoordinate({0.5, 1.5, MapCoord::HolePoint});
+	proto.addCoordinate({3.5, 1.5});
+	proto.addCoordinate({3.5, 0.0});
+	proto.addCoordinate({0.5, 1.5, MapCoord::ClosePoint});
+	
+	{
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
+	}
 }
 
 
