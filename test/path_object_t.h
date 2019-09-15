@@ -50,6 +50,10 @@ private slots:
 	void copyFromTest();
 	void copyFromTest_data();
 	
+	/** Tests properties of lines after splitting. */
+	void splitLineTest();
+	void splitLineTest_data();
+	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();
 	

@@ -222,6 +222,51 @@ void PathObjectTest::copyFromTest()
 
 
 
+void PathObjectTest::splitLineTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::splitLineTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	if (dash_point_index >= 0)
+		proto.getCoordinateRef(std::size_t(dash_point_index)).setDashPoint(true);
+	
+	auto object_path_coord = ObjectPathCoord { &proto };
+	auto const distance_sq = object_path_coord.findClosestPointTo({1.0, 1.0});
+	QVERIFY(qIsNull(distance_sq));
+	QCOMPARE(object_path_coord.pos, MapCoordF(1.0, 1.0));
+	
+	auto const split_paths = proto.splitLineAt(object_path_coord);
+	QCOMPARE(split_paths.size(), std::size_t(2));
+	
+	auto const *split_0 = split_paths[0];
+	QCOMPARE(split_0->getCoordinateCount(), std::size_t(2));
+	QCOMPARE(split_0->getCoordinate(0), proto.getCoordinate(0));
+	QCOMPARE(split_0->getCoordinate(1), MapCoord(1.0, 1.0, MapCoord::HolePoint));
+	delete split_0;
+	
+	auto const *split_1 = split_paths[1];
+	QCOMPARE(split_1->getCoordinateCount(), std::size_t(3));
+	QCOMPARE(split_1->getCoordinate(0), MapCoord(1.0, 1.0));
+	QCOMPARE(split_1->getCoordinate(1), proto.getCoordinate(1));
+	QCOMPARE(split_1->getCoordinate(2), proto.getCoordinate(2));
+	delete split_1;
+}
+
+
+
 void PathObjectTest::calcIntersectionsTest()
 {
 	{
