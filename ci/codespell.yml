@@ -32,6 +32,9 @@ steps:
     set -e
     sudo apt-get update
     sudo apt-get install codespell
+  displayName: 'Setup codespell'
+- bash: |
+    set -e
     codespell -q 7 \
       'CMakeLists.txt' \
       'INSTALL.md' \
@@ -48,4 +51,5 @@ steps:
       'symbol sets/src' \
       'translations/future_translations.cpp' \
     | sed -e 's,^\([^:]*\):\([0-9]*\): *,##vso[task.LogIssue type=warning;sourcepath=\1;linenumber=\2;],'
+  displayName: 'Run codespell'
 
