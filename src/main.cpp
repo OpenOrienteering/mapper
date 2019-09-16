@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,6 +42,7 @@
 #if defined(QT_NETWORK_LIB)
 #  define MAPPER_USE_QTSINGLEAPPLICATION 1
 #  include <QtSingleApplication>  // IWYU pragma: keep
+#  include <QFileInfo>
 #else
 #  define MAPPER_USE_QTSINGLEAPPLICATION 0
 #endif
@@ -111,7 +112,10 @@ int main(int argc, char** argv)
 	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
 	if (qapp.isRunning()) {
 		// Send a message to activate the running app, and optionally open a file
-		qapp.sendMessage(QString::fromUtf8((argc > 1) ? argv[1] : ""));
+		QString filepath = {};
+		if (argc > 1)
+			filepath = QFileInfo(QString::fromLocal8Bit(argv[1])).absoluteFilePath();
+		qapp.sendMessage(filepath);
 		return 0;
 	}
 #else
