@@ -10,7 +10,7 @@
     { include: [ "\"util/qasconst.h\"", "private", "\"util/backports.h\"", "public" ] },
     { include: [ "\"util/qoverload.h\"", "private", "\"util/backports.h\"", "public" ] },
     
-    { include: [ "\"qtsingleapplication.h\"", "private", "<QtSingleApplication>", "public" ] },
+    { include: [ "<qtsingleapplication.h>", "private", "<QtSingleApplication>", "public" ] },
     
     # GDAL
     { include: [ "<gdal_version.h>", "private", "<gdal.h>", "public" ] },

@@ -24,24 +24,24 @@
 
 #include <Qt>
 #include <QtGlobal>
-#include <QtPlugin>
+#include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
 #include <QLatin1String>
 #include <QLocale>
 #include <QObject>
+#include <QPalette>
 #include <QPointer>
-#include <QSettings>  // IWYU pragma: keep
+#include <QSettings>
 #include <QString>
 #include <QStringList>
-#include <QStyle>
-#include <QStyleFactory>
 #include <QTranslator>
+#include <QWidget>
 
 #include <mapper_config.h>
 
 #if defined(QT_NETWORK_LIB)
 #  define MAPPER_USE_QTSINGLEAPPLICATION 1
-#  include <QtSingleApplication>  // IWYU pragma: keep
+#  include <QtSingleApplication>
 #  include <QFileInfo>
 #else
 #  define MAPPER_USE_QTSINGLEAPPLICATION 0
