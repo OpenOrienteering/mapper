@@ -226,6 +226,7 @@ private slots:
 			const char* path;
 			qreal pixel_per_mm;
 		} const render_test_files[] = {
+		    { "testdata:symbols/area-symbol-line-pattern.omap", 80 },
 		    { "testdata:symbols/line-symbol-border-variants.omap", 50 },
 		    { "testdata:symbols/line-symbol-cap-variants.omap", 50 },
 		    { "testdata:symbols/line-symbol-start-end-symbol.omap", 50 },
