@@ -279,8 +279,10 @@ void AreaSymbol::FillPattern::createRenderables(
         qreal rotation,
         ObjectRenderables& output ) const
 {
-	auto extent = outline.getExtent();
-	extent.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
+	// Canvas is the entire rectangle which will be filled with renderables.
+	// It will be clipped by the outline, later.
+	auto canvas = outline.getExtent();
+	canvas.adjust(-point_extent.right(), -point_extent.bottom(), -point_extent.left(), -point_extent.top());
 	
 	MapCoordF first, second;
 	
@@ -308,22 +310,22 @@ void AreaSymbol::FillPattern::createRenderables(
 		// Special case: vertical lines
 		delta_along_line_offset = -delta_along_line_offset;
 		
-		double first_offset = offset + ceil((extent.left() - offset) / line_spacing_f) * line_spacing_f;
-		for (double cur = first_offset; cur < extent.right(); cur += line_spacing_f)
+		double first_offset = offset + ceil((canvas.left() - offset) / line_spacing_f) * line_spacing_f;
+		for (double cur = first_offset; cur < canvas.right(); cur += line_spacing_f)
 		{
-			first = MapCoordF(cur, extent.top());
-			second = MapCoordF(cur, extent.bottom());
+			first = MapCoordF(cur, canvas.top());
+			second = MapCoordF(cur, canvas.bottom());
 			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 		}
 	}
 	else if (qAbs(rotation - 0) < 0.0001)
 	{
 		// Special case: horizontal lines
-		double first_offset = offset + ceil((extent.top() - offset) / line_spacing_f) * line_spacing_f;
-		for (double cur = first_offset; cur < extent.bottom(); cur += line_spacing_f)
+		double first_offset = offset + ceil((canvas.top() - offset) / line_spacing_f) * line_spacing_f;
+		for (double cur = first_offset; cur < canvas.bottom(); cur += line_spacing_f)
 		{
-			first = MapCoordF(extent.left(), cur);
-			second = MapCoordF(extent.right(), cur);
+			first = MapCoordF(canvas.left(), cur);
+			second = MapCoordF(canvas.right(), cur);
 			createLine<T>(first, second, delta_along_line_offset, line, delta_rotation, outline, output);
 		}
 	}
@@ -344,28 +346,28 @@ void AreaSymbol::FillPattern::createRenderables(
 		if (rotation < M_PI/2)
 		{
 			// Start with the upper left corner
-			offset_x += (-extent.top()) / tan(rotation);
-			offset_y -= extent.left() * tan(rotation);
-			auto start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-			auto start_y = extent.top();
-			auto end_x = extent.left();
-			auto end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
+			offset_x += (-canvas.top()) / tan(rotation);
+			offset_y -= canvas.left() * tan(rotation);
+			auto start_x = offset_x + ceil((canvas.x() - offset_x) / dist_x) * dist_x;
+			auto start_y = canvas.top();
+			auto end_x = canvas.left();
+			auto end_y = offset_y + ceil((canvas.y() - offset_y) / dist_y) * dist_y;
 			
 			do
 			{
 				// Correct coordinates
-				if (start_x > extent.right())
+				if (start_x > canvas.right())
 				{
-					start_y += ((start_x - extent.right()) / dist_x) * dist_y;
-					start_x = extent.right();
+					start_y += ((start_x - canvas.right()) / dist_x) * dist_y;
+					start_x = canvas.right();
 				}
-				if (end_y > extent.bottom())
+				if (end_y > canvas.bottom())
 				{
-					end_x += ((end_y - extent.bottom()) / dist_y) * dist_x;
-					end_y = extent.bottom();
+					end_x += ((end_y - canvas.bottom()) / dist_y) * dist_x;
+					end_y = canvas.bottom();
 				}
 				
-				if (start_y > extent.bottom())
+				if (start_y > canvas.bottom())
 					break;
 				
 				// Create the renderable(s)
@@ -381,28 +383,28 @@ void AreaSymbol::FillPattern::createRenderables(
 		else
 		{
 			// Start with left lower corner
-			offset_x += (-extent.bottom()) / tan(rotation);
-			offset_y -= extent.x() * tan(rotation);
-			auto start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-			auto start_y = extent.bottom();
-			auto end_x = extent.x();
-			auto end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
+			offset_x += (-canvas.bottom()) / tan(rotation);
+			offset_y -= canvas.x() * tan(rotation);
+			auto start_x = offset_x + ceil((canvas.x() - offset_x) / dist_x) * dist_x;
+			auto start_y = canvas.bottom();
+			auto end_x = canvas.x();
+			auto end_y = offset_y + ceil((canvas.bottom() - offset_y) / dist_y) * dist_y;
 			
 			do
 			{
 				// Correct coordinates
-				if (start_x > extent.right())
+				if (start_x > canvas.right())
 				{
-					start_y += ((start_x - extent.right()) / dist_x) * dist_y;
-					start_x = extent.right();
+					start_y += ((start_x - canvas.right()) / dist_x) * dist_y;
+					start_x = canvas.right();
 				}
-				if (end_y < extent.y())
+				if (end_y < canvas.y())
 				{
-					end_x += ((end_y - extent.y()) / dist_y) * dist_x;
-					end_y = extent.y();
+					end_x += ((end_y - canvas.y()) / dist_y) * dist_x;
+					end_y = canvas.y();
 				}
 				
-				if (start_y < extent.y())
+				if (start_y < canvas.y())
 					break;
 				
 				// Create the renderable(s)
