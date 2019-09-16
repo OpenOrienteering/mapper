@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -452,7 +452,7 @@ void AreaSymbol::FillPattern::createRenderables(const AreaRenderable& outline, q
 			line.setLineWidth(line_width_f);
 			
 			auto margin = line_width_f / 2;
-			auto point_extent = QRectF{-margin, -margin, margin, margin};
+			auto point_extent = QRectF{-margin, -margin, line_width_f, line_width_f};
 			createRenderables<LinePattern>(outline, delta_rotation, pattern_origin, point_extent, &line, rotation, output);
 		}
 		break;
