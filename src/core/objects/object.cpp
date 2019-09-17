@@ -22,9 +22,22 @@
 #include "object.h"
 
 #include <cmath>
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <stdexcept>
+#include <type_traits>
 
+#include <Qt>
 #include <QtMath>
 #include <QtNumeric>
+#include <QFlags>
+#include <QLatin1String>
+#include <QPoint>
+#include <QPointF>
+#include <QScopedPointer>
+#include <QStringRef>
+#include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -38,10 +51,13 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "core/virtual_coord_vector.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
+
+class QRectF;
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
