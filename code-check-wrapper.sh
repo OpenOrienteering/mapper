@@ -68,6 +68,7 @@ PATTERN=" \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \
+  /object.cpp \
   object_mover.cpp \
   object_query.cpp \
   ocd_file_format.cpp \
