@@ -28,7 +28,7 @@
 #include <QRectF>
 
 #include "core/map.h"
-#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 
 
@@ -37,12 +37,12 @@ namespace OpenOrienteering {
 ObjectSelector::ObjectSelector(Map* map)
  : map(map)
 {
-	// nothing esle
+	// nothing else
 }
 
 
 
-bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
+bool ObjectSelector::selectAt(const MapCoordF& position, double tolerance, bool toggle)
 {
 	bool selection_changed;
 	
@@ -132,7 +132,7 @@ bool ObjectSelector::selectAt(MapCoordF position, double tolerance, bool toggle)
 }
 
 
-bool ObjectSelector::selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle)
+bool ObjectSelector::selectBox(const MapCoordF& corner1, const MapCoordF& corner2, bool toggle)
 {
 	bool selection_changed = false;
 	

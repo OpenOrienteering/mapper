@@ -70,12 +70,13 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "util/util.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 // IWYU pragma: no_forward_declare QColor
 // IWYU pragma: no_forward_declare QFormLayout
@@ -402,8 +403,8 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		const Symbol* original_symbol = nullptr;
 		auto original_icon = QImage{};
 		auto original_string = QString{};
-		auto compatible_symbols = int(Symbol::AllSymbols);
-		const auto replacement_symbol = item.symbol;
+		auto compatible_symbols = Symbol::TypeCombination(Symbol::AllSymbols);
+		const auto* replacement_symbol = item.symbol;
 		
 		if (item.query.getOperator() == ObjectQuery::OperatorSymbol
 		    && item.query.symbolOperand())
@@ -452,7 +453,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 			}
 			
 			const Symbol* unique_symbol = nullptr;
-			auto matching_types = int(Symbol::NoSymbol);
+			auto matching_types = Symbol::TypeCombination(Symbol::NoSymbol);
 			auto update_matching = [&unique_symbol, &matching_types](Object* object) {
 				if (auto symbol = object->getSymbol())
 				{
@@ -561,16 +562,42 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 	auto symbol_set = std::unique_ptr<Map>{};
 	while (!symbol_set)
 	{
-		auto path = MainWindow::getOpenFileName(parent, tr("Choose map file to load symbols from"),
-		                                        FileFormat::MapFile);
-		if (path.isEmpty())
+		auto selected = MainWindow::getOpenFileName(
+		                    parent,
+		                    tr("Choose map file to load symbols from"),
+		                    FileFormat::MapFile);
+		if (!selected)
+		{
+			// canceled
 			return false;
+		}
+		
+		if (!selected.fileFormat())
+		{
+			/// \todo More precise message
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
+			return false;
+		}
 		
 		symbol_set.reset(new Map);
-		if (!symbol_set->loadFrom(path, parent, nullptr, true))
+		auto importer = selected.fileFormat()->makeImporter(selected.filePath(), symbol_set.get(), nullptr);
+		if (!importer)
 		{
-			QMessageBox::warning(parent, tr("Error"), tr("Cannot load map file, aborting."));
+			/// \todo More precise message
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
 			return false;
+		}
+		
+		if (!importer->doImport())
+		{
+			/// \todo Show error from importer
+			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
+			return false;
+		}
+		
+		if (!importer->warnings().empty())
+		{
+			MainWindow::showMessageBox(parent, tr("Warning"), tr("The symbol set import generated warnings."), importer->warnings());
 		}
 		
 		if (symbol_set->getScaleDenominator() != object_map.getScaleDenominator())

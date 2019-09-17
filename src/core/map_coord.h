@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,22 +36,6 @@ class QXmlStreamReader;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
-
-#ifndef NO_NATIVE_FILE_FORMAT
-	
-/**
- * The legacy MapCoord structure, only used for legacy native file format.
- * 
- * @deprecated
- */
-struct LegacyMapCoord
-{
-	qint64 x;
-	qint64 y;
-};
-
-#endif
-
 
 
 /**
@@ -101,6 +85,10 @@ public:
 		HolePoint  = 1 << 4,
 		DashPoint  = 1 << 5,
 		//...
+		// Special masks for VirtualPath::copy().
+		// CurveStart is handled explicitly there.
+		MaskCopiedFlagsAtStart = GapPoint | DashPoint,
+		MaskCopiedFlagsAtEnd   = GapPoint | DashPoint | HolePoint | ClosePoint,
 	};
 	Q_DECLARE_FLAGS(Flags, Flag)
 	
@@ -171,16 +159,6 @@ public:
 	/** Copy constructor. */
 	constexpr MapCoord(const MapCoord&) noexcept = default;
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	
-	/** Creates a MapCoord from the legacy structure.
-	 * 
-	 * @deprecated
-	 */
-	MapCoord(const LegacyMapCoord& coord) noexcept;
-
-#endif	
-	
 	/** Creates a MapCoord from a position given in millimeters on the map.
 	 * 
 	 * This is a convenience constructor for efficient construction of a point
@@ -222,13 +200,13 @@ public:
 	MapCoord(qreal x, qreal y, int flags) = delete;
 	
 	/** Creates a MapCoord with the position taken from a QPointF. */
-	explicit constexpr MapCoord(QPointF point) noexcept;
+	explicit constexpr MapCoord(const QPointF& point) noexcept;
 	
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
-	constexpr MapCoord(QPointF point, Flags flags) noexcept;
+	constexpr MapCoord(const QPointF& point, Flags flags) noexcept;
 	
 	/** Creates a MapCoord with the given flags and with the position taken from a QPointF. */
-	constexpr MapCoord(QPointF point, Flag flag) noexcept;
+	constexpr MapCoord(const QPointF& point, Flag flag) noexcept;
 	
 	MapCoord(QPointF point, int flags) = delete;
 	
@@ -416,7 +394,7 @@ public:
 	 * std::invalid_argument if the (beginning of) text does not
 	 * contain valid data.
 	 *
-	 * This constructor will initialize the boundsOffset() if neccessary.
+	 * This constructor will initialize the boundsOffset() if necessary.
 	 * Otherwise it will apply the BoundsOffset() and throw a std::range_error
 	 * if the adjusted coordinates are out of bounds for qint32.
 	 */
@@ -428,7 +406,7 @@ public:
 	
 	/** Loads the MapCoord in xml format from the stream.
 	 *
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
@@ -436,7 +414,7 @@ public:
 	
 	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
 	 * 
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
@@ -446,13 +424,13 @@ public:
 	
 	/** Creates a MapCoord from map coordinates in millimeters, with offset handling.
 	 * 
-	 * This will initialize the boundsOffset() if neccessary. Otherwise it will
+	 * This will initialize the boundsOffset() if necessary. Otherwise it will
 	 * apply the BoundsOffset() and throw a std::range_error if the adjusted
 	 * coordinates are out of bounds for qint32.
 	 */
-	static MapCoord load(QPointF p, MapCoord::Flags flags);
+	static MapCoord load(const QPointF& p, MapCoord::Flags flags);
 	
-	static MapCoord load(QPointF p, int flags) = delete;
+	static MapCoord load(const QPointF& p, int flags) = delete;
 	
 	
 	friend constexpr bool operator==(const MapCoord& lhs, const MapCoord& rhs);
@@ -520,7 +498,7 @@ public:
 	constexpr MapCoordF(qreal x, qreal y) noexcept;
 	
 	/** Creates a MapCoordF from a MapCoord, dropping its flags. */
-	explicit constexpr MapCoordF(MapCoord coord) noexcept;
+	explicit constexpr MapCoordF(const MapCoord& coord) noexcept;
 	
 	/** Copy constructor. */
 	constexpr MapCoordF(const MapCoordF&) noexcept = default;
@@ -570,7 +548,7 @@ public:
 	 * Changes the length of the vector.
 	 * 
 	 * The MapCoordF is interpreted as a vector and adjusted to a vector of the
-	 * same direction but having the given lenght.
+	 * same direction but having the given length.
 	 * It does nothing if the vector is very close to (0, 0).
 	 */
 	void setLength(qreal new_length);
@@ -733,19 +711,19 @@ constexpr MapCoord::MapCoord(qreal x, qreal y, Flag flag) noexcept
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point) noexcept
  : MapCoord { point.x(), point.y() }
 {
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point, Flags flags) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point, Flags flags) noexcept
  : MapCoord { point.x(), point.y(), flags }
 {
 	// nothing else
 }
 
-constexpr MapCoord::MapCoord(QPointF point, Flag flag) noexcept
+constexpr MapCoord::MapCoord(const QPointF& point, Flag flag) noexcept
  : MapCoord { point.x(), point.y(), flag }
 {
 	// nothing else
@@ -1030,7 +1008,7 @@ constexpr MapCoordF::MapCoordF(qreal x, qreal y) noexcept
 	// Nothing else
 }
 
-constexpr MapCoordF::MapCoordF(MapCoord coord) noexcept
+constexpr MapCoordF::MapCoordF(const MapCoord& coord) noexcept
  : QPointF { coord.x(), coord.y() }
 {
 	// Nothing else

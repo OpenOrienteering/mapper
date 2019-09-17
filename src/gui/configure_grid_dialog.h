@@ -25,6 +25,7 @@
 #include <QDialog>
 #include <QObject>
 #include <QRgb>
+#include <QString>
 
 #include "core/map_grid.h"
 

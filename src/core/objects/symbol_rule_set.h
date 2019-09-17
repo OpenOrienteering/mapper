@@ -44,7 +44,7 @@ class Symbol;
  */
 struct SymbolRule
 {
-	// Intentionally no user-defined constructors, destructor, assignement.
+	// Intentionally no user-defined constructors, destructor, assignment.
 	// Default ones are fine.
 	
 	enum RuleType
@@ -68,7 +68,7 @@ struct SymbolRule
 class SymbolRuleSet : public std::vector<SymbolRule>
 {
 public:
-	// Intentionally no user-defined constructors, destructor, assignement.
+	// Intentionally no user-defined constructors, destructor, assignment.
 	// Default ones are fine.
 	
 	/** 
@@ -92,7 +92,7 @@ public:
 	 * Sorts the items by original symbol number and name if possible.
 	 * 
 	 * The symbol number and name are only available for queries with operator
-	 * ObjectQuery::OperatorSymbol. Othe rules are moved to the end.
+	 * ObjectQuery::OperatorSymbol. Other rules are moved to the end.
 	 */
 	void sortByQuerySymbol();
 	
@@ -101,7 +101,7 @@ public:
 	 * 
 	 * The tag key and value are only available for queries with operator
 	 * ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, and
-	 * ObjectQuery::OperatorIs. Othe rules are moved to the end.
+	 * ObjectQuery::OperatorIs. Other rules are moved to the end.
 	 */
 	void sortByQueryKeyAndValue();
 	

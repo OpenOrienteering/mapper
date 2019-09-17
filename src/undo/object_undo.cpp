@@ -23,8 +23,6 @@
 
 #include <algorithm>
 
-#include <QIODevice>
-
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
@@ -98,21 +96,7 @@ void ObjectModifyingUndoStep::getModifiedObjects(int part_index, ObjectSet& out)
 	}
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool ObjectModifyingUndoStep::load(QIODevice* file, int version)
-{
-	Q_UNUSED(version);
-	file->read((char*)&part_index, sizeof(int));
-	int size;
-	file->read((char*)&size, sizeof(int));
-	modified_objects.resize(size);
-	for (int i = 0; i < size; ++i)
-		file->read((char*)&modified_objects[i], sizeof(int));
-	return true;
-}
-
-#endif
 
 void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -120,15 +104,21 @@ void ObjectModifyingUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	
 	XmlElementWriter element(xml, QLatin1String("affected_objects"));
 	element.writeAttribute(QLatin1String("part"), part_index);
-	int size = modified_objects.size();
+	auto size = modified_objects.size();
 	if (size > 8)
 		element.writeAttribute(QLatin1String("count"), size);
 	
-	for (int i = 0; i < size; ++i)
+	for (auto object_index : modified_objects)
 	{
 		XmlElementWriter ref(xml, QLatin1String("ref"));
-		ref.writeAttribute(QLatin1String("object"), modified_objects[i]);
+		ref.writeAttribute(QLatin1String("object"), object_index);
+		saveObject(ref, object_index);
 	}
+}
+
+void ObjectModifyingUndoStep::saveObject(XmlElementWriter&, int) const
+{
+	// nothing
 }
 
 void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict)
@@ -137,15 +127,18 @@ void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& 
 	{
 		XmlElementReader element(xml);
 		part_index = element.attribute<int>(QLatin1String("part"));
-		int size = element.attribute<int>(QLatin1String("count"));
+		auto size = element.attribute<std::size_t>(QLatin1String("count"));
 		if (size)
 			modified_objects.reserve(size);
+		
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("ref"))
 			{
 				XmlElementReader ref(xml);
-				modified_objects.push_back(ref.attribute<int>(QLatin1String("object")));
+				auto object_index = ref.attribute<int>(QLatin1String("object"));
+				modified_objects.push_back(object_index);
+				loadObject(ref, object_index);
 			}
 			else
 			{
@@ -157,6 +150,11 @@ void ObjectModifyingUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& 
 	{
 		UndoStep::loadImpl(xml, symbol_dict);
 	}
+}
+
+void ObjectModifyingUndoStep::loadObject(XmlElementReader&, int)
+{
+	// nothing
 }
 
 
@@ -203,28 +201,6 @@ void ObjectCreatingUndoStep::addObject(Object* existing, Object* object)
 	addObject(index, object);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool ObjectCreatingUndoStep::load(QIODevice* file, int version)
-{
-	if (!ObjectModifyingUndoStep::load(file, version))
-		return false;
-	
-	int size = (int)modified_objects.size();
-	objects.resize(size);
-	for (int i = 0; i < size; ++i)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
-		if (!objects[i])
-			return false;
-		objects[i]->load(file, version, map);
-	}
-	return true;
-}
-
-#endif
 void ObjectCreatingUndoStep::getModifiedObjects(int part_index, ObjectSet& out) const
 {
 	if (part_index == getPartIndex())
@@ -529,16 +505,6 @@ UndoStep* SwitchPartUndoStep::undo()
 	return undo;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-// virtual
-bool SwitchPartUndoStep::load(QIODevice *, int)
-{
-	Q_ASSERT(false); // Not used in legacy file format
-	return false;
-}
-
-#endif
 
 // virtual
 void SwitchPartUndoStep::saveImpl(QXmlStreamWriter &xml) const
@@ -611,25 +577,7 @@ UndoStep* SwitchSymbolUndoStep::undo()
 	return undo_step;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool SwitchSymbolUndoStep::load(QIODevice* file, int version)
-{
-	if (!ObjectModifyingUndoStep::load(file, version))
-		return false;
-	
-	int size = (int)modified_objects.size();
-	target_symbols.resize(size);
-	for (int i = 0; i < size; ++i)
-	{
-		int index;
-		file->read((char*)&index, sizeof(int));
-		target_symbols[i] = map->getSymbol(index);
-	}
-	return true;
-}
-
-#endif
 
 void SwitchSymbolUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -767,60 +715,15 @@ UndoStep* ObjectTagsUndoStep::undo()
 	return redo_step;
 }
 
-void ObjectTagsUndoStep::saveImpl(QXmlStreamWriter &xml) const
+void ObjectTagsUndoStep::saveObject(XmlElementWriter& xml, int index) const
 {
-	UndoStep::saveImpl(xml);
-	
-	// Note: For reducing file size, this implementation copies, not calls,
-	// the parent's implementation.
-	XmlElementWriter element(xml, QLatin1String("affected_objects"));
-	element.writeAttribute(QLatin1String("part"), getPartIndex());
-	std::size_t size = modified_objects.size();
-	if (size > 8)
-		element.writeAttribute(QLatin1String("count"), size);
-	
-	for (const auto& object_tags : object_tags_map)
-	{
-		namespace literal = XmlStreamLiteral;
-		
-		XmlElementWriter tags_element(xml, QLatin1String("ref"));
-		tags_element.writeAttribute(literal::object, object_tags.first);
-		tags_element.write(object_tags.second);
-	}
+	/// \todo Write tags in deterministic order
+	xml.write(object_tags_map.at(index));
 }
 
-void ObjectTagsUndoStep::loadImpl(QXmlStreamReader &xml, SymbolDictionary &symbol_dict)
+void ObjectTagsUndoStep::loadObject(XmlElementReader& xml, int index)
 {
-	namespace literal = XmlStreamLiteral;
-	
-	// Note: This implementation copies, not calls, the parent's implementation.
-	if (xml.name() == QLatin1String("affected_objects"))
-	{
-		XmlElementReader element(xml);
-		setPartIndex(element.attribute<int>(QLatin1String("part")));
-		int size = element.attribute<int>(QLatin1String("count"));
-		if (size)
-			modified_objects.reserve(size);
-		
-		while (xml.readNextStartElement())
-		{
-			if (xml.name() == QLatin1String("ref"))
-			{
-				XmlElementReader tags_element(xml);
-				int index = tags_element.attribute<int>(literal::object);
-				modified_objects.push_back(index);
-				tags_element.read(object_tags_map[index]);
-			}
-			else
-			{
-				xml.skipCurrentElement();
-			}
-		}
-	}
-	else
-	{
-		UndoStep::loadImpl(xml, symbol_dict);
-	}
+	xml.read(object_tags_map[index]);
 }
 
 

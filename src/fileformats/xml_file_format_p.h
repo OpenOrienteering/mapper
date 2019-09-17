@@ -36,12 +36,12 @@ class XMLFileExporter : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::XMLFileExporter)
 	
 public:
-	XMLFileExporter(QIODevice* stream, Map *map, MapView *view);
+	XMLFileExporter(const QString& path, const Map* map, const MapView* view);
 	~XMLFileExporter() override {}
 	
-	void doExport() override;
-	
 protected:
+	bool exportImplementation() override;
+	
 	void exportGeoreferencing();
 	void exportColors();
 	void exportSymbols();
@@ -63,17 +63,17 @@ class XMLFileImporter : public Importer
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::XMLFileImporter)
 	
 public:
-	XMLFileImporter(QIODevice* stream, Map *map, MapView *view);
+	XMLFileImporter(const QString& path, Map *map, MapView *view);
 	~XMLFileImporter() override {}
-
-protected:
-	void import(bool load_symbols_only) override;
 	
-	void importElements(bool load_symbols_only);
+protected:
+	bool importImplementation() override;
+	
+	void importElements();
 	
 	void addWarningUnsupportedElement();
 	void importMapNotes();
-	void importGeoreferencing(bool load_symbols_only);
+	void importGeoreferencing();
 	void importColors();
 	void importSymbols();
 	void importMapParts();

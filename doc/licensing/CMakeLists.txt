@@ -1,5 +1,5 @@
 #
-#    Copyright 2014-2017 Kai Pastor
+#    Copyright 2014-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -53,8 +53,27 @@ set(LICENSING_PROVIDER "${default_provider}" CACHE STRING
 )
 
 
-# Software and data used directly by Mapper
+# Software and data used by Mapper, as given by configuration
+set(LICENSING_ATTRIBUTION "" CACHE STRING
+  "Third-party components for which attribution must be deployed"
+)
+
+# A way to remove attributions which is required by default.
+set(LICENSING_NO_ATTRIBUTION "" CACHE STRING
+  "Third-party components for which attribution shall not be deployed"
+)
+
+
+# Import the targets of all found packages into this scope.
+get_cmake_property(packages PACKAGES_FOUND)
+foreach(package ${packages})
+	find_package("${package}" QUIET)
+endforeach()
+
+
+# Software and data used directly by Mapper, or set by configuration
 set(third_party_components
+  ${LICENSING_ATTRIBUTION}
   libpolyclipping
   proj
   qtbase
@@ -69,8 +88,15 @@ if(TARGET Qt5::Positioning)
 endif()
 if(TARGET Qt5::Sensors)
 	list(APPEND third_party_components qtsensors)
+	if(NOT TARGET Qt5::QGeoPositionInfoSourceFactorySerialNmea
+	   AND EXISTS "${Qt5Positioning_DIR}/Qt5Positioning_QGeoPositionInfoSourceFactorySerialNmea.cmake")
+		include("${Qt5Positioning_DIR}/Qt5Positioning_QGeoPositionInfoSourceFactorySerialNmea.cmake")
+	endif()
+	if(TARGET Qt5::QGeoPositionInfoSourceFactorySerialNmea)
+		find_package(Qt5SerialPort QUIET)
+	endif()
 endif()
-if(TARGET Qt5::Serialport)
+if(TARGET Qt5::SerialPort)
 	list(APPEND third_party_components qtserialport)
 endif()
 if(TARGET QtSingleApplication)
@@ -85,6 +111,8 @@ endif()
 if(Mapper_PACKAGE_ASSISTANT)
 	list(APPEND third_party_components qttools)
 endif()
+
+message(STATUS "Direct third-party components: ${third_party_components}")
 
 
 # Licences used directly by Mapper
@@ -116,6 +144,8 @@ if(LICENSING_PROVIDER)
 	message(STATUS "Licensing information provided by: ${LICENSING_PROVIDER}")
 	set(third_party_copyright )
 	set(common_licenses )
+	unset(package)
+	unset(basename)
 	include("${LICENSING_PROVIDER}-licensing.cmake")
 else()
 	set(licensing_warning "
@@ -171,6 +201,10 @@ foreach(entry ${package_names})
 endforeach()
 
 list(SORT third_party_components)
+if(LICENSING_NO_ATTRIBUTION)
+	string(REPLACE "," ";" LICENSING_NO_ATTRIBUTION "${LICENSING_NO_ATTRIBUTION}")
+	list(REMOVE_ITEM third_party_components ${LICENSING_NO_ATTRIBUTION})
+endif()
 list(REMOVE_DUPLICATES third_party_components)
 foreach(basename ${third_party_components})
 	if(LICENSING_PROVIDER AND NOT DEFINED explicit_copyright_${basename})

@@ -42,7 +42,6 @@
 #include <QSizePolicy>
 #include <QSpacerItem>
 #include <QStackedWidget>
-#include <QString>
 #include <QToolButton>
 #include <QVariant>
 #include <QVBoxLayout>
@@ -55,7 +54,7 @@
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/color_dropdown.h"
 #include "gui/util_gui.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/scoped_signals_blocker.h"
 
 
@@ -125,7 +124,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	fill_pattern_layout->addItem(Util::SpacerItem::create(this));
 	
 	
-	/* From here, stacked widgets are used to unify the layout of pattern type dependant fields. */
+	/* From here, stacked widgets are used to unify the layout of pattern type dependent fields. */
 	auto single_line_headline = new QStackedWidget();
 	connect(this, &AreaSymbolSettings::switchPatternEdits, single_line_headline, &QStackedWidget::setCurrentIndex);
 	fill_pattern_layout->addRow(single_line_headline);
@@ -202,8 +201,9 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	
 	fill_pattern_layout->addRow(Util::Headline::create(tr("Fill rotation")));
 	
-	pattern_angle_edit = Util::SpinBox::create(1, 0.0, 360.0, trUtf8("°"));
-	pattern_angle_edit->setWrapping(true);
+	pattern_angle_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	pattern_angle_edit->setDecimals(1);
+	pattern_angle_edit->setRange(0, 360);
 	fill_pattern_layout->addRow(tr("Angle:"), pattern_angle_edit);
 	
 	pattern_rotatable_check = new QCheckBox(tr("adjustable per object"));
@@ -267,6 +267,8 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 		emit propertiesModified();
 	});
 	
+	first_pattern_tab = count();
+	
 	updateAreaGeneral();
 	updatePatternWidgets();
 	loadPatterns();
@@ -305,7 +307,7 @@ void AreaSymbolSettings::clearPatterns()
 	for (const auto& pattern : symbol->patterns)
 	{
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
-			removePropertiesGroup(2);
+			removePropertiesGroup(first_pattern_tab);
 	}
 }
 
@@ -313,7 +315,6 @@ void AreaSymbolSettings::clearPatterns()
 void AreaSymbolSettings::loadPatterns()
 {
 	Q_ASSERT(pattern_list->count() == 0);
-	Q_ASSERT(count() == 2); // General + Area tab
 	
 	for (const auto& pattern : symbol->patterns)
 	{
@@ -337,12 +338,13 @@ void AreaSymbolSettings::updatePatternNames()
 	{
 		if (pattern.type == AreaSymbol::FillPattern::PointPattern)
 		{
+			auto pattern_tab = first_pattern_tab + point_pattern_num;
 			++point_pattern_num;
 			QString name = tr("Pattern fill %1").arg(point_pattern_num);
 			pattern.name = name;
 			pattern.point->setName(name);
 			pattern_list->item(i)->setText(name);
-			renamePropertiesGroup(point_pattern_num + 1, name);
+			renamePropertiesGroup(pattern_tab, name);
 		}
 		else
 		{

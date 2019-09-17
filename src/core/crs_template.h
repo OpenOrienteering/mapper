@@ -74,7 +74,7 @@ public:
 	using WidgetObserver = CRSParameterWidgetObserver;
 	
 	/**
-	 * Constructs a new parameter with the given key and description.
+	 * Constructs a new parameter with the given identifier and name.
 	 */
 	CRSTemplateParameter(const QString& id, const QString& name);
 	
@@ -164,8 +164,8 @@ public:
 	 * parameter values when calling coordinatesName().
 	 */
 	CRSTemplate(
-	        const QString& template_id,
-	        const QString& template_name,
+	        const QString& id,
+	        const QString& name,
 	        const QString& coordinates_name,
 	        const QString& spec_template,
 	        ParameterList&& parameters

@@ -46,7 +46,7 @@ class Template;
 
 /**
  * Widget showing the list of templates, including the map layer.
- * Allows to load templates, set their view properties and reoder them,
+ * Allows to load templates, set their view properties and reorder them,
  * and do various other actions like adjusting template positions.
  */
 class TemplateListWidget : public QWidget
@@ -102,10 +102,11 @@ protected slots:
 	//void groupClicked();
 	void positionClicked(bool checked);
 	void importClicked();
+	void changeGeorefClicked();
 	void moreActionClicked(QAction* action);
 	
-	void templateAdded(int pos, const Template* temp);
-	void templatePositionDockWidgetClosed(Template* temp);
+	void templateAdded(int pos, const OpenOrienteering::Template* temp);
+	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
 	
 	void changeTemplateFile(int pos);
 	
@@ -116,7 +117,7 @@ protected slots:
 	 * 
 	 * @see MapView::visibilityChanged
 	 */
-	void updateVisibility(MapView::VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	void updateVisibility(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
 	
 private:
 	void updateAll();
@@ -140,13 +141,13 @@ private:
 	QAction* move_by_hand_action;
 	QAction* position_action;
 	QAction* import_action;
+	QAction* georef_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;
 	QToolButton* delete_button;
 	QToolButton* move_up_button;
 	QToolButton* move_down_button;
-	QToolButton* georef_button;
 	QToolButton* move_by_hand_button;
 	QToolButton* adjust_button;
 	QToolButton* edit_button;

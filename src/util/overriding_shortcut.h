@@ -24,6 +24,7 @@
 #include <QKeySequence>
 #include <QObject>
 #include <QShortcut>
+#include <QString>
 #include <QElapsedTimer>
 
 class QEvent;

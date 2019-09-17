@@ -120,6 +120,6 @@ set_source_files_properties(${CLIPPER_SOURCES} PROPERTIES GENERATED TRUE)
 
 add_library(polyclipping STATIC ${CLIPPER_SOURCES})
 
-target_include_directories(polyclipping  PUBLIC ${SOURCE_DIR}/cpp)
+target_include_directories(polyclipping SYSTEM PUBLIC ${SOURCE_DIR}/cpp)
 
 add_dependencies(polyclipping Clipper)

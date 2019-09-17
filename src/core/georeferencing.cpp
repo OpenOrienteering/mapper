@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,10 +20,9 @@
 
 #include "georeferencing.h"
 
-#include <cstddef>
 #include <algorithm>
+#include <cmath> // IWYU pragma: keep
 #include <iterator>
-#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -39,7 +38,11 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-#include <proj_api.h>
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+#  include <proj_api.h>
+#else
+#  include <proj.h>
+#endif
 
 #include "core/crs_template.h"
 #include "fileformats/file_format.h"
@@ -84,7 +87,47 @@ namespace OpenOrienteering {
 
 namespace
 {
-	/** Helper for PROJ.4 initialization.
+#ifdef Q_OS_ANDROID
+	/**
+	 * @brief Provides required files for RROJ library.
+	 * 
+	 * This function implements the interface required by
+	 * proj_context_set_file_finder().
+	 * 
+	 * This functions checks if the requested file name is available in a
+	 * temporary directory. If not, it tries to copy the file from the proj
+	 * subfolder of the assets folder to this temporary directory.
+	 * 
+	 * If the file exists in the temporary folder (or copying was successful)
+	 * this function returns the full path of this file as a C string.
+	 * This string becomes invalid the next time this function is called.
+	 * Otherwise it returns nullptr.
+	 */
+	extern "C"
+	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
+	{
+		static QTemporaryDir temp_dir;
+		if (temp_dir.isValid())
+		{
+			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
+			QFile file(path);
+			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
+			{
+				static auto c_string = path.toLocal8Bit();
+				return c_string.constData();
+			}
+			qDebug("Could not provide projection data file '%s'", name);
+		}
+		else
+		{
+			qDebug("Could not create a temporary directory for projection data");
+		}
+		return nullptr;
+	}
+#endif
+	
+	
+	/** Helper for PROJ initialization.
 	 *
 	 * To be used as static object in the right place.
 	 */
@@ -93,39 +136,38 @@ namespace
 	public:
 		ProjSetup()
 		{
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
 			if (proj_data.exists())
 			{
-				static const auto location = proj_data.absoluteFilePath().toLocal8Bit();
-				static auto data = location.constData();
+				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
+				static auto* data = location.constData();
 				pj_set_searchpath(1, &data);
 			}
 			
+			// no Android file finder support for deprecated PROJ API
+#else
+			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
+
+			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
+			if (proj_data.exists())
+			{
+				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
+				static auto* const data = location.constData();
+				proj_context_set_search_paths(nullptr, 1, &data);
+			}
+
 #if defined(Q_OS_ANDROID)
 			// Register file finder function needed by Proj.4
-			registerProjFileHelper();
-#endif
+			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
+#endif  // defined(Q_OS_ANDROID)
+#endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		}
 	};
 	
-	/** Helper for PROJ.4 initialization.
-	 * 
-	 * This helper adds "+no_defs" if it is not already part of the
-	 * specification. It also takes care of resetting the pj errno.
-	 */
-	projPJ pj_init_plus_no_defs(const QString& spec)
-	{
-		auto spec_latin1 = spec.toLatin1();
-		if (!spec_latin1.contains("+no_defs"))
-			spec_latin1.append(" +no_defs");
-		
-		*pj_get_errno_ref() = 0;
-		return pj_init_plus(spec_latin1);
-	}
-	
 	
 	/**
-	 * List of substitutions for specifications which are known to be broken in Proj.4.
+	 * List of substitutions for specifications which are known to be broken in PROJ.
 	 */
 	const char* spec_substitutions[][2] = {
 	    // #542, S-JTSK (Greenwich) / Krovak East North
@@ -143,6 +185,165 @@ namespace
 	
 	
 }  // namespace
+
+
+
+//### ProjTransform ###
+
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+
+ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
+: pj{pj}
+{}
+
+ProjTransform::ProjTransform(ProjTransform&& other) noexcept
+{
+	operator=(std::move(other));
+}
+
+ProjTransform::ProjTransform(const QString& crs_spec)
+{
+	auto spec_latin1 = crs_spec.toLatin1();
+	if (!spec_latin1.contains("+no_defs"))
+		spec_latin1.append(" +no_defs");
+	
+	*pj_get_errno_ref() = 0;
+	pj = pj_init_plus(spec_latin1);
+}
+
+ProjTransform::~ProjTransform()
+{
+	if (pj)
+		pj_free(pj);
+}
+
+ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
+{
+	std::swap(pj, other.pj);
+	return *this;
+}
+
+bool ProjTransform::isValid() const noexcept
+{
+	return pj != nullptr;
+}
+
+bool ProjTransform::isGeographic() const
+{
+	return isValid() && pj_is_latlong(pj);
+}
+
+QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
+{
+	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	
+	double easting = qDegreesToRadians(lat_lon.longitude()), northing = qDegreesToRadians(lat_lon.latitude());
+	if (geographic_crs.isValid())
+	{
+		auto ret = pj_transform(geographic_crs.pj, pj, 1, 1, &easting, &northing, nullptr);
+		if (ok)
+			*ok = (ret == 0);
+	}
+	else if (ok)
+	{
+		*ok = false;
+	}
+	return {easting, northing};
+}
+
+LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
+{
+	static auto const geographic_crs = ProjTransform(Georeferencing::geographic_crs_spec);
+	
+	double easting = projected_coords.x(), northing = projected_coords.y();
+	if (geographic_crs.isValid())
+	{
+		auto ret = pj_transform(pj, geographic_crs.pj, 1, 1, &easting, &northing, nullptr);
+		if (ok)
+			*ok = (ret == 0);
+	}
+	else if (ok)
+	{
+		*ok = false;
+	}
+	return LatLon::fromRadiant(northing, easting);
+}
+
+QString ProjTransform::errorText() const
+{
+	auto err_no = *pj_get_errno_ref();
+	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
+}
+
+#else
+
+ProjTransform::ProjTransform(ProjTransformData* pj) noexcept
+: pj{pj}
+{}
+
+ProjTransform::ProjTransform(ProjTransform&& other) noexcept
+{
+	operator=(std::move(other));
+}
+
+ProjTransform::ProjTransform(const QString& crs_spec)
+{
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	auto spec_latin1 = crs_spec.toLatin1();
+	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
+	if (pj)
+		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
+}
+
+ProjTransform::~ProjTransform()
+{
+	if (pj)
+		proj_destroy(pj);
+}
+
+ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
+{
+	std::swap(pj, other.pj);
+	return *this;
+}
+
+bool ProjTransform::isValid() const noexcept
+{
+	return pj != nullptr;
+}
+
+bool ProjTransform::isGeographic() const
+{
+	/// \todo Evaluate proj_get_type() instead
+	return isValid() && proj_angular_output(pj, PJ_FWD);
+}
+
+QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
+{
+	proj_errno_reset(pj);
+	auto pj_coord = proj_trans(pj, PJ_FWD, proj_coord(lat_lon.longitude(), lat_lon.latitude(), 0, HUGE_VAL));
+	if (ok)
+		*ok = proj_errno(pj) == 0;
+	return {pj_coord.xy.x, pj_coord.xy.y};
+}
+
+LatLon ProjTransform::inverse(const QPointF& projected_coords, bool* ok) const
+{
+	proj_errno_reset(pj);
+	auto pj_coord = proj_trans(pj, PJ_INV, proj_coord(projected_coords.x(), projected_coords.y(), 0, HUGE_VAL));
+	if (ok)
+		*ok = proj_errno(pj) == 0;
+	return {pj_coord.lp.phi, pj_coord.lp.lam};
+}
+
+QString ProjTransform::errorText() const
+{
+	auto err_no = proj_errno(pj);
+	return (err_no == 0) ? QString() : QString::fromLatin1(proj_errno_string(err_no));
+}
+
+#endif
 
 
 
@@ -165,9 +366,6 @@ Georeferencing::Georeferencing()
 	updateTransformation();
 	
 	projected_crs_id = QString::fromLatin1("Local");
-	projected_crs  = nullptr;
-	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs);
 }
 
 Georeferencing::Georeferencing(const Georeferencing& other)
@@ -183,22 +381,13 @@ Georeferencing::Georeferencing(const Georeferencing& other)
   projected_crs_id(other.projected_crs_id),
   projected_crs_spec(other.projected_crs_spec),
   projected_crs_parameters(other.projected_crs_parameters),
+  proj_transform(projected_crs_spec),
   geographic_ref_point(other.geographic_ref_point)
 {
 	updateTransformation();
-	
-	geographic_crs = pj_init_plus_no_defs(geographic_crs_spec);
-	Q_ASSERT(geographic_crs);
-	projected_crs  = pj_init_plus_no_defs(projected_crs_spec);
 }
 
-Georeferencing::~Georeferencing()
-{
-	if (projected_crs)
-		pj_free(projected_crs);
-	if (geographic_crs)
-		pj_free(geographic_crs);
-}
+Georeferencing::~Georeferencing() = default;
 
 Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 {
@@ -219,11 +408,8 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	projected_crs_id         = other.projected_crs_id;
 	projected_crs_spec       = other.projected_crs_spec;
 	projected_crs_parameters = other.projected_crs_parameters;
+	proj_transform           = ProjTransform(other.projected_crs_spec);
 	geographic_ref_point     = other.geographic_ref_point;
-	
-	if (projected_crs)
-		pj_free(projected_crs);
-	projected_crs       = pj_init_plus_no_defs(projected_crs_spec);
 	
 	emit stateChanged();
 	emit transformationChanged();
@@ -237,7 +423,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return projected_crs && pj_is_latlong(projected_crs);
+	return proj_transform.isGeographic();
 }
 
 
@@ -362,10 +548,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit declinationChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
-		if (projected_crs)
-			pj_free(projected_crs);
-		projected_crs = pj_init_plus_no_defs(projected_crs_spec);
-		if (0 == *pj_get_errno_ref())
+		proj_transform = {projected_crs_spec};
+		if (proj_transform.isValid())
 		{
 			state = Normal;
 			emit stateChanged();
@@ -510,7 +694,7 @@ void Georeferencing::setDeclinationAndGrivation(double declination, double griva
 	}
 }
 
-void Georeferencing::setMapRefPoint(MapCoord point)
+void Georeferencing::setMapRefPoint(const MapCoord& point)
 {
 	if (map_ref_point != point)
 	{
@@ -519,19 +703,19 @@ void Georeferencing::setMapRefPoint(MapCoord point)
 	}
 }
 
-void Georeferencing::setProjectedRefPoint(QPointF point, bool update_grivation)
+void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_grivation)
 {
 	if (projected_ref_point != point || state == Normal)
 	{
 		projected_ref_point = point;
-		bool ok;
+		bool ok = {};
 		LatLon new_geo_ref_point;
 		
 		switch (state)
 		{
 		default:
 			qWarning("Undefined georeferencing state");
-			// fall through
+			Q_FALLTHROUGH();
 		case Local:
 			break;
 		case Normal:
@@ -582,7 +766,7 @@ double Georeferencing::getConvergence() const
 	if (fabs(denominator) < 0.00000000001)
 		return 0.0;
 	
-	return roundDeclination(RAD_TO_DEG * atan((projected_ref_point.x() - projected_other.x()) / denominator));
+	return roundDeclination(qRadiansToDegrees(atan((projected_ref_point.x() - projected_other.x()) / denominator)));
 }
 
 void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation)
@@ -594,7 +778,7 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (state != Normal)
 			setState(Normal);
 		
-		bool ok;
+		bool ok = {};
 		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
 		if (ok && new_projected_ref != projected_ref_point)
 		{
@@ -649,12 +833,12 @@ void Georeferencing::setTransformationDirectly(const QTransform& transform)
 	}
 }
 
-QTransform Georeferencing::mapToProjected() const
+const QTransform& Georeferencing::mapToProjected() const
 {
 	return to_projected;
 }
 
-QTransform Georeferencing::projectedToMap() const
+const QTransform& Georeferencing::projectedToMap() const
 {
 	return from_projected;
 }
@@ -663,7 +847,7 @@ QTransform Georeferencing::projectedToMap() const
 
 bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vector<QString> params)
 {
-	// Default return value if no change is neccessary
+	// Default return value if no change is necessary
 	bool ok = (state == Normal || projected_crs_spec.isEmpty());
 	
 	for (const auto& substitution : spec_substitutions)
@@ -682,22 +866,19 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 	    || !std::equal(begin(params), end(params), begin(projected_crs_parameters))
 	    || (!ok && !spec.isEmpty()) )
 	{
-		if (projected_crs)
-			pj_free(projected_crs);
-		
 		projected_crs_id = id;
 		projected_crs_spec = spec;
 		if (projected_crs_spec.isEmpty())
 		{
 			projected_crs_parameters.clear();
-			projected_crs = nullptr;
+			proj_transform = {};
 			ok = (state != Normal);
 		}
 		else
 		{
 			projected_crs_parameters.swap(params); // params was passed by value!
-			projected_crs = pj_init_plus_no_defs(projected_crs_spec);
-			ok = (0 == *pj_get_errno_ref());
+			proj_transform = {projected_crs_spec};
+			ok = proj_transform.isValid();
 			if (ok && state != Normal)
 				setState(Normal);
 		}
@@ -735,30 +916,12 @@ LatLon Georeferencing::toGeographicCoords(const MapCoordF& map_coords, bool* ok)
 
 LatLon Georeferencing::toGeographicCoords(const QPointF& projected_coords, bool* ok) const
 {
-	if (ok)
-		*ok = false;
-
-	double easting = projected_coords.x(), northing = projected_coords.y();
-	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
-		if (ok) 
-			*ok = (ret == 0);
-	}
-	return LatLon::fromRadiant(northing, easting);
+	return proj_transform.isValid() ? proj_transform.inverse(projected_coords, ok) : LatLon{};
 }
 
 QPointF Georeferencing::toProjectedCoords(const LatLon& lat_lon, bool* ok) const
 {
-	if (ok)
-		*ok = false;
-	
-	double easting = degToRad(lat_lon.longitude()), northing = degToRad(lat_lon.latitude());
-	if (projected_crs && geographic_crs) {
-		int ret = pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-		if (ok) 
-			*ok = (ret == 0);
-	}
-	return QPointF(easting, northing);
+	return proj_transform.isValid() ? proj_transform.forward(lat_lon, ok) : QPointF{};
 }
 
 MapCoord Georeferencing::toMapCoords(const LatLon& lat_lon, bool* ok) const
@@ -779,54 +942,42 @@ MapCoordF Georeferencing::toMapCoordF(const Georeferencing* other, const MapCoor
 			*ok = true;
 		return map_coords;
 	}
-	else if (isLocal() || other->isLocal())
+	
+	if (isLocal() || other->isLocal())
 	{
 		if (ok)
 			*ok = true;
 		return toMapCoordF(other->toProjectedCoords(map_coords));
 	}
-	else
-	{
-		if (ok)
-			*ok = false;
-		
-		QPointF projected_coords = other->toProjectedCoords(map_coords);
-		double easting = projected_coords.x(), northing = projected_coords.y();
-		if (projected_crs && other->projected_crs) {
-			// Direct transformation:
-			//int ret = pj_transform(other->projected_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-			// Use geographic coordinates as intermediate step to enforce
-			// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec:
-			int ret = pj_transform(other->projected_crs, geographic_crs, 1, 1, &easting, &northing, nullptr);
-			ret |= pj_transform(geographic_crs, projected_crs, 1, 1, &easting, &northing, nullptr);
-			
-			if (ret != 0)
-			{
-				if (ok) 
-					*ok = false;
-				return MapCoordF(easting, northing);
-			}
-			if (ok)
-				*ok = true;
-		}
-		return toMapCoordF(QPointF(easting, northing));
+	
+	bool ok_forward = proj_transform.isValid();
+	bool ok_inverse = other->proj_transform.isValid();
+	QPointF projected = other->toProjectedCoords(map_coords);
+	if (ok_forward && ok_inverse) {
+		// Use geographic coordinates as intermediate step to enforce
+		// that coordinates are assumed to have WGS84 datum if datum is specified in only one CRS spec.
+		/// \todo Use direct pipeline instead of intermediate WGS84
+		bool ok_inverse, ok_forward;
+		projected = proj_transform.forward(other->proj_transform.inverse(projected, &ok_inverse), &ok_forward);
 	}
+	if (ok)
+		*ok = ok_inverse && ok_forward;
+	return toMapCoordF(projected);
 }
 
 QString Georeferencing::getErrorText() const
 {
-	int err_no = *pj_get_errno_ref();
-	return (err_no == 0) ? QString() : QString::fromLatin1(pj_strerrno(err_no));
+	return proj_transform.errorText();
 }
 
 double Georeferencing::radToDeg(double val)
 {
-	return RAD_TO_DEG * val;
+	return qRadiansToDegrees(val);
 }
 
 double Georeferencing::degToRad(double val)
 {
-	return DEG_TO_RAD * val;
+	return qDegreesToRadians(val);
 }
 
 QString Georeferencing::degToDMS(double val)
@@ -860,59 +1011,3 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 
 
 }  // namespace OpenOrienteering
-
-
-
-#if defined(Q_OS_ANDROID)
-
-QScopedPointer<QTemporaryDir> temp_dir;  // removed upon destruction
-QByteArray c_string;  // buffer for const char*
-
-extern "C"
-{
-	/**
-	 * @brief Provides required files for Proj.4 library.
-	 * 
-	 * This C function implements the interface required by pj_set_finder().
-	 * 
-	 * This functions checks if the requested file name is available in a
-	 * temporary directory. If not, it tries to copy the file from the proj
-	 * subfolder of the assets folder to this temporary directory.
-	 * 
-	 * If the file exists in the temporary folder (or copying was successful)
-	 * this function returns the full path of this file as a C string.
-	 * This string becomes invalid the next time this function is called.
-	 * Otherwise it returns nullptr.
-	 */
-	const char* projFileHelperAndroid(const char *name)
-	{
-		if (temp_dir->isValid())
-		{
-			QString path = QDir(temp_dir->path()).filePath(QString::fromUtf8(name));
-			QFile file(path);
-			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
-			{
-				c_string = path.toLocal8Bit();
-				return c_string.constData();
-			}
-		}
-		qDebug() << "Could not projection data file" << name;
-		return nullptr;
-	}
-	
-	void registerProjFileHelper()
-	{
-		// QTemporaryDir must not be constructed before QApplication
-		temp_dir.reset(new QTemporaryDir());
-		if (temp_dir->isValid())
-		{
-			pj_set_finder(&projFileHelperAndroid);
-		}
-		else
-		{
-			qDebug() << "Could not create a temporary directory for projection data.";
-		}
-	}
-}
-
-#endif  // defined(Q_OS_ANDROID)

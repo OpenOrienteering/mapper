@@ -24,7 +24,6 @@
 
 #include <QtNumeric>
 #include <QDebug>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -35,20 +34,6 @@
 
 
 namespace OpenOrienteering {
-
-#ifndef NO_NATIVE_FILE_FORMAT
-
-void Matrix::load(QIODevice* file)
-{
-	int new_n, new_m;
-	file->read((char*)&new_n, sizeof(int));
-	file->read((char*)&new_m, sizeof(int));
-	
-	setSize(new_n, new_m);
-	file->read((char*)d, n*m * sizeof(double));
-}
-
-#endif
 
 void Matrix::save(QXmlStreamWriter& xml, const QString& role) const
 {

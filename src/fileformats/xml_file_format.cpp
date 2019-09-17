@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017  Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,15 +22,15 @@
 #include "xml_file_format.h"
 #include "xml_file_format_p.h"
 
+#include <algorithm>
+#include <cstddef>
 #include <memory>
 #include <vector>
 
 #include <QtGlobal>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QDir>
 #include <QExplicitlySharedDataPointer>
-#include <QFileDevice>
 #include <QFileInfo>
 #include <QFlags>
 #include <QIODevice>
@@ -67,7 +67,7 @@ namespace OpenOrienteering {
 // ### XMLFileFormat definition ###
 
 constexpr int XMLFileFormat::minimum_version = 2;
-constexpr int XMLFileFormat::current_version = 7;
+constexpr int XMLFileFormat::current_version = 8;
 
 int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
@@ -75,39 +75,64 @@ int XMLFileFormat::active_version = 5; // updated by XMLFileExporter::doExport()
 
 namespace {
 
-const char* magic_string = "<?xml ";
-
 QString mapperNamespace()
 {
 	// Use a https URL with next major version
 	return QStringLiteral("http://openorienteering.org/apps/mapper/xml/v2");
 }
 
+
 }  // namespace
 
 
 
 XMLFileFormat::XMLFileFormat()
- : FileFormat(MapFile, "XML", ::OpenOrienteering::ImportExport::tr("OpenOrienteering Mapper"), QString::fromLatin1("omap"),
-              ImportSupported | ExportSupported) 
+ : FileFormat(MapFile,
+              "XML",
+              ::OpenOrienteering::ImportExport::tr("OpenOrienteering Mapper"),
+              QString::fromLatin1("omap"),
+              Feature::FileOpen | Feature::FileImport |
+              Feature::FileSave | Feature::FileSaveAs )
 {
 	addExtension(QString::fromLatin1("xmap"));
 }
 
-bool XMLFileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffer, int size) const
 {
-	static const uint len = qstrlen(magic_string);
-	return (sz >= len && qstrncmp(reinterpret_cast<const char*>(buffer), magic_string, len) == 0);
+	const auto data = QByteArray::fromRawData(buffer, size);
+	if (size >= 4 && qstrncmp(buffer, "OMAP", 4) == 0)
+	    return FullySupported;  // Legacy binary format. Final error raised in doImport().
+	
+	if (size > 38)  // length of "<?xml ...>"
+	{
+		QXmlStreamReader xml(data);
+		if (xml.readNextStartElement())
+		{
+			if (xml.name() != QLatin1String("map"))
+				return NotSupported;
+			else if (xml.namespaceUri() == mapperNamespace())
+				return FullySupported;
+			else if (xml.namespaceUri() == QLatin1String("http://oorienteering.sourceforge.net/mapper/xml/v2"))
+			    return FullySupported;
+		}
+	}
+	auto trimmed = data.trimmed();
+	if (!trimmed.isEmpty() && !trimmed.startsWith('<'))
+		return NotSupported;
+		
+	return Unknown;
 }
 
-Importer *XMLFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> XMLFileFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return new XMLFileImporter(stream, map, view);
+	return std::make_unique<XMLFileImporter>(path, map, view);
 }
 
-Exporter *XMLFileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+std::unique_ptr<Exporter> XMLFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return new XMLFileExporter(stream, map, view);
+	return std::make_unique<XMLFileExporter>(path, map, view);
 }
 
 
@@ -140,6 +165,8 @@ namespace literal
 	static const QLatin1String spotcolors("spotcolors");
 	static const QLatin1String knockout("knockout");
 	static const QLatin1String namedcolor("namedcolor");
+	static const QLatin1String screen_angle("screen_angle");
+	static const QLatin1String screen_frequency("screen_frequency");
 	static const QLatin1String component("component");
 	static const QLatin1String factor("factor");
 	static const QLatin1String c("c");
@@ -184,18 +211,18 @@ namespace literal
 
 // ### XMLFileExporter definition ###
 
-XMLFileExporter::XMLFileExporter(QIODevice* stream, Map *map, MapView *view)
-: Exporter(stream, map, view),
-  xml(stream)
+XMLFileExporter::XMLFileExporter(const QString& path, const Map* map, const MapView* view)
+: Exporter(path, map, view)
 {
 	// Determine auto-formatting default from filename, if possible.
-	auto file = qobject_cast<const QFileDevice*>(stream);
-	bool auto_formatting = (file && file->fileName().contains(QLatin1String(".xmap")));
+	bool auto_formatting = path.endsWith(QLatin1String(".xmap"));
 	setOption(QString::fromLatin1("autoFormatting"), auto_formatting);
 }
 
-void XMLFileExporter::doExport()
+bool XMLFileExporter::exportImplementation()
 {
+	xml.setDevice(device());
+	
 	if (option(QString::fromLatin1("autoFormatting")).toBool())
 		xml.setAutoFormatting(true);
 	
@@ -232,7 +259,7 @@ void XMLFileExporter::doExport()
 		if (XMLFileFormat::active_version >= 6)
 		{
 			// Prevent Mapper versions < 0.6.0 from crashing
-			// when compatibilty mode is NOT activated
+			// when compatibility mode is NOT activated
 			// Incompatible feature: dense coordinates
 			barrier = new XmlElementWriter(xml, literal::barrier);
 			barrier->writeAttribute(literal::version, 6);
@@ -255,7 +282,7 @@ void XMLFileExporter::doExport()
 		{
 			{
 				// Prevent Mapper versions < 0.6.0 from crashing
-				// when compatibilty mode IS activated
+				// when compatibility mode IS activated
 				// Incompatible feature: new undo step types
 				XmlElementWriter barrier(xml, literal::barrier);
 				barrier.writeAttribute(literal::version, 6);
@@ -269,6 +296,7 @@ void XMLFileExporter::doExport()
 	}
 	
 	xml.writeEndDocument();
+	return true;
 }
 
 void XMLFileExporter::exportGeoreferencing()
@@ -305,7 +333,15 @@ void XMLFileExporter::exportColors()
 			switch(color->getSpotColorMethod())
 			{
 				case MapColor::SpotColor:
-					xml.writeTextElement(literal::namedcolor, color->getSpotColorName());
+					{
+						XmlElementWriter color_element(xml, literal::namedcolor);
+						if (color->getScreenFrequency() > 0)
+						{
+							color_element.writeAttribute(literal::screen_angle, color->getScreenAngle(), 1);
+							color_element.writeAttribute(literal::screen_frequency, color->getScreenFrequency(), 1);
+						}
+						xml.writeCharacters(color->getSpotColorName());
+					}
 					break;
 				case MapColor::CustomColor:
 					for (auto&& component : color->getComponents())
@@ -390,26 +426,16 @@ void XMLFileExporter::exportMapParts()
 
 void XMLFileExporter::exportTemplates()
 {
-	// Update the relative paths of templates
-	if (auto file = qobject_cast<const QFileDevice*>(stream))
+	QDir map_dir;
+	const QDir* map_dir_ptr = nullptr;
+	if (!path.isEmpty())
 	{
-		auto filename = file->fileName();
-		auto map_dir = QFileInfo(filename).absoluteDir();
-		if (!filename.isEmpty() && map_dir.exists())
-		{
-			for (int i = 0; i < map->getNumTemplates(); ++i)
-			{
-				auto temp = map->getTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
-			for (int i = 0; i < map->getNumClosedTemplates(); ++i)
-			{
-				auto temp = map->getClosedTemplate(i);
-				if (temp->getTemplateState() != Template::Invalid)
-					temp->setTemplateRelativePath(map_dir.relativeFilePath(temp->getTemplatePath()));
-			}
-		}
+		map_dir = QFileInfo(path).absoluteDir();
+		map_dir_ptr = &map_dir;
+		
+		/// \todo Update the relative paths in memory when saving to another directory.
+		///       Otherwise opening templates in the reloaded saved map may
+		///       behave different from the current map in memory.
 	}
 	
 	XmlElementWriter templates_element(xml, literal::templates);
@@ -420,12 +446,12 @@ void XMLFileExporter::exportTemplates()
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getTemplate(i)->saveTemplateConfiguration(xml, true);
+		map->getTemplate(i)->saveTemplateConfiguration(xml, true, map_dir_ptr);
 	}
 	for (int i = 0; i < map->getNumClosedTemplates(); ++i)
 	{
 		writeLineBreak(xml);
-		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false);
+		map->getClosedTemplate(i)->saveTemplateConfiguration(xml, false, map_dir_ptr);
 	}
 	
 	{
@@ -481,9 +507,8 @@ void XMLFileExporter::exportRedo()
 
 // ### XMLFileImporter definition ###
 
-XMLFileImporter::XMLFileImporter(QIODevice* stream, Map *map, MapView *view)
-: Importer(stream, map, view),
-  xml(stream)
+XMLFileImporter::XMLFileImporter(const QString& path, Map *map, MapView *view)
+: Importer(path, map, view)
 {
 	//NOP
 }
@@ -497,11 +522,24 @@ void XMLFileImporter::addWarningUnsupportedElement()
 	);
 }
 
-void XMLFileImporter::import(bool load_symbols_only)
+bool XMLFileImporter::importImplementation()
 {
+	xml.setDevice(device());
 	if (!xml.readNextStartElement() || xml.name() != literal::map)
 	{
-		xml.raiseError(::OpenOrienteering::Importer::tr("Unsupported file format."));
+		if (device()->seek(0))
+		{
+			char data[4] = {};
+			device()->read(data, 4);
+			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
+			{
+				throw FileFormatException(::OpenOrienteering::Importer::tr(
+				  "Unsupported obsolete file format version. "
+				  "Please use program version v%1 or older "
+				  "to load and update the file.").arg(QLatin1String("0.8")));
+			}
+		}
+		throw FileFormatException(::OpenOrienteering::Importer::tr("Unsupported file format."));
 	}
 	
 	XmlElementReader map_element(xml);
@@ -516,10 +554,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 	QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 	MapCoord::boundsOffset().reset(true);
 	georef_offset_adjusted = false;
-	importElements(load_symbols_only);
+	importElements();
 	
 	auto offset = MapCoord::boundsOffset();
-	if (!load_symbols_only && !offset.isZero())
+	if (!loadSymbolsOnly() && !offset.isZero())
 	{
 		addWarning(tr("Some coordinates were out of bounds for printing. Map content was adjusted."));
 		
@@ -548,9 +586,10 @@ void XMLFileImporter::import(bool load_symbols_only)
 			map->setGeoreferencing(georef);
 		}
 	}
+	return true;
 }
 
-void XMLFileImporter::importElements(bool load_symbols_only)
+void XMLFileImporter::importElements()
 {
 	while (xml.readNextStartElement())
 	{
@@ -561,7 +600,7 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 		else if (name == literal::symbols)
 			importSymbols();
 		else if (name == literal::georeferencing)
-			importGeoreferencing(load_symbols_only);
+			importGeoreferencing();
 		else if (name == literal::view)
 			importView();
 		else if (name == literal::barrier)
@@ -577,10 +616,10 @@ void XMLFileImporter::importElements(bool load_symbols_only)
 			}
 			else
 			{
-				importElements(load_symbols_only);
+				importElements();
 			}
 		}
-		else if (load_symbols_only)
+		else if (loadSymbolsOnly())
 			xml.skipCurrentElement();
 		/******************************************************
 		* The remainder is skipped when loading a symbol set! *
@@ -623,14 +662,14 @@ void XMLFileImporter::importMapNotes()
 	}
 }
 
-void XMLFileImporter::importGeoreferencing(bool load_symbols_only)
+void XMLFileImporter::importGeoreferencing()
 {
 	Q_ASSERT(xml.name() == literal::georeferencing);
 	
 	bool check_for_offset = MapCoord::boundsOffset().check_for_offset;
 	
 	Georeferencing georef;
-	georef.load(xml, load_symbols_only);
+	georef.load(xml, loadSymbolsOnly());
 	map->setGeoreferencing(georef);
 	if (!georef.isValid())
 	{
@@ -708,6 +747,12 @@ void XMLFileImporter::importColors()
 					{
 						if (xml.name() == literal::namedcolor)
 						{
+							XmlElementReader color_element(xml);
+							if (color_element.hasAttribute(literal::screen_frequency))
+							{
+								color->setScreenAngle(color_element.attribute<double>(literal::screen_angle));
+								color->setScreenFrequency(std::max(0.0, color_element.attribute<double>(literal::screen_frequency)));
+							}
 							color->setSpotColorName(xml.readElementText());
 							color->setKnockout(knockout);
 						}
@@ -843,7 +888,7 @@ void XMLFileImporter::importSymbols()
 	{
 		if (xml.name() == literal::symbol)
 		{
-			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict));
+			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict).release());
 		}
 		else
 		{

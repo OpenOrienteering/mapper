@@ -105,7 +105,7 @@ bool EditPointTool::addDashPointDefault() const
 	         hover_object->getSymbol()->asLine()->getDashSymbol() != nullptr );
 }
 
-bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mousePressEvent(event, map_coord, widget))
@@ -121,7 +121,7 @@ bool EditPointTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
-bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mouseMoveEvent(event, map_coord, widget))
@@ -137,7 +137,7 @@ bool EditPointTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
-bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditPointTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	// TODO: port TextObjectEditorHelper to MapEditorToolBase
 	if (text_editor && text_editor->mouseReleaseEvent(event, map_coord, widget))
@@ -189,7 +189,7 @@ void EditPointTool::clickPress()
 			hover_point = path->subdivide(path_coord);
 			if (addDashPointDefault() ^ switch_dash_points)
 			{
-				MapCoord point = path->getCoordinate(hover_point);
+				auto point = path->getCoordinate(hover_point);
 				point.setDashPoint(true);
 				path->setCoordinate(hover_point, point);
 				map()->emitSelectionEdited();
@@ -212,8 +212,9 @@ void EditPointTool::clickPress()
 			// Switch point between dash / normal point
 			createReplaceUndoStep(hover_object);
 			
-			MapCoord& hover_coord = hover_object->getCoordinate(hover_point);
+			auto hover_coord = hover_object->getCoordinate(hover_point);
 			hover_coord.setDashPoint(!hover_coord.isDashPoint());
+			hover_object->setCoordinate(hover_point, hover_coord);
 			hover_object->update();
 			updateDirtyRect();
 			waiting_for_mouse_release = true;
@@ -622,7 +623,7 @@ void EditPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 			
 			if (num_selected_objects <= max_objects_for_handle_display)
 			{
-				for (const auto object: map()->selectedObjects())
+				for (const auto* object: map()->selectedObjects())
 				{
 					auto active = hover_state.testFlag(OverObjectNode) && hover_object == object;
 					auto hover_point = active ? this->hover_point : no_point;
@@ -770,7 +771,7 @@ void EditPointTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditPointTool::updateHoverState(MapCoordF cursor_pos)
+void EditPointTool::updateHoverState(const MapCoordF& cursor_pos)
 {
 	HoverState new_hover_state = OverNothing;
 	const Object* new_hover_object = nullptr;
@@ -786,7 +787,7 @@ void EditPointTool::updateHoverState(MapCoordF cursor_pos)
 		{
 			// Try to find object node.
 			auto best_distance_sq = std::numeric_limits<double>::max();
-			for (const auto object : map()->selectedObjects())
+			for (const auto* object : map()->selectedObjects())
 			{
 				MapCoordF handle_pos;
 				auto hover_point = findHoverPoint(cur_map_widget->mapToViewport(cursor_pos), cur_map_widget, object, true, &handle_pos);

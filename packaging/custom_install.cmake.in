@@ -29,99 +29,6 @@ macro(handle_crosscompiling)
 endmacro()
 
 
-# This function is an Android variant of BundleUtilities' fixup_bundle().
-function(fixup_bundle_android runtime dirs)
-	# First, collect all dependencies
-	set(resolved )
-	set(remaining "libMapper.so")
-	string(MAKE_C_IDENTIFIER "${remaining}" id)
-	set(resolved_${id} "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}${runtime_destination}/${remaining}")
-	while(remaining)
-		list(GET remaining 0 current)
-		list(REMOVE_AT remaining 0)
-		list(APPEND resolved "${current}")
-		
-		string(MAKE_C_IDENTIFIER "${current}" current_id)
-		execute_process(
-		  COMMAND "@ANDROID_NDK_ROOT@/ndk-depends" "${resolved_${current_id}}"
-		  COMMAND grep ".so"
-		  COMMAND grep -v ":"
-		  OUTPUT_VARIABLE output
-		  ERROR_VARIABLE  error
-		  RESULT_VARIABLE result
-		  OUTPUT_STRIP_TRAILING_WHITESPACE
-		)
-		if(result)
-			message(FATAL_ERROR "ndk-depends failed: ${error}")
-		endif()
-		string(REGEX REPLACE "[\n\r ]+" ";" output "${output}")
-		foreach(item ${output})
-			if(NOT item OR item STREQUAL current)
-				continue()
-			endif()
-			list(APPEND depends_${current_id} "${item}")
-			string(MAKE_C_IDENTIFIER "${item}" id)
-			if(item AND NOT DEFINED resolved_${id})
-				set(resolved_${id} "NOTFOUND")
-				foreach(dir ${dirs})
-					if(NOT resolved_${id} AND dir AND EXISTS "${dir}/${item}")
-						message(STATUS "Found '${item}' in '${dir}'")
-						list(APPEND remaining "${item}")
-						set(resolved_${id} "${dir}/${item}")
-					endif()
-				endforeach()
-			endif()
-		endforeach()
-	endwhile()
-	
-	# Second, record QT libs, and topologically sort ANDROID_EXTRA_LIBS
-	set(qt )
-	set(android_extra_libs )
-	set(remaining "${resolved}")
-	list(LENGTH remaining length_before)
-	list(APPEND remaining "MAYBE-STOP")
-	while(NOT remaining STREQUAL "MAYBE-STOP")
-		list(GET remaining 0 current)
-		list(REMOVE_AT remaining 0)
-		string(MAKE_C_IDENTIFIER "${current}" id)
-		if(current STREQUAL "MAYBE-STOP")
-			list(LENGTH remaining length_after)
-			if(length_before EQUAL length_after)
-				message(FATAL_ERROR "Cannot resolve circular dependencies of ${remaining}")
-			endif()
-			set(length_before ${length_after})
-			list(APPEND remaining "MAYBE-STOP")
-		elseif(current MATCHES "libMapper.so|libQt5Core|libQt5Gui")
-			continue()
-		elseif(current MATCHES "libQt5")
-			string(REPLACE "libQt5" "" lib "${current}")
-			string(REPLACE ".so" "" lib "${lib}")
-			string(TOLOWER "${lib}" lib)
-			set(qt "${qt} ${lib}")
-		elseif(resolved_${id})
-			set(depends )
-			foreach(item ${depends_${id}})
-				list(FIND remaining "${item}" index)
-				if(NOT index EQUAL -1)
-					list(APPEND depends "${item}")
-				endif()
-			endforeach()
-			if(depends)
-				list(APPEND remaining "${current}") # Redo after dependencies
-			else()
-				set(android_extra_libs "${android_extra_libs} \\\n  ${resolved_${id}}")
-			endif()
-		endif()
-	endwhile()
-	
-	# Finally, write ANDROID_EXTRA_LIBS to mapper_libs.pri
-	file(WRITE "@CMAKE_CURRENT_BINARY_DIR@/Mapper/mapper_libs.pri" "
-QT += ${qt}
-ANDROID_EXTRA_LIBS = ${android_extra_libs}
-")
-endfunction()
-
-
 # This function wraps BundleUtilities' fixup_bundle()
 # to make it work for cross-builds.
 function(fixup_bundle_portable runtime dirs)
@@ -168,7 +75,7 @@ function(fixup_bundle_portable runtime dirs)
 			endforeach()
 		endif()
 	elseif(ANDROID)
-		fixup_bundle_android("${runtime}" "${dirs}")
+		# Do nothing
 	elseif(UNIX)
 		# Add required symlinks.
 		execute_process(COMMAND ldconfig -n "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}@MAPPER_LIBRARY_DESTINATION@")

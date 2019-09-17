@@ -172,12 +172,12 @@ void SymbolRuleSet::matchQuerySymbolName(const Map& other_map)
 
 void SymbolRuleSet::matchQuerySymbolNumber(const Map& other_map)
 {
-	auto findMatchingSymbol = [&other_map](const Symbol* original, bool ignore_trailing_zeros)->const Symbol*
+	auto findMatchingSymbol = [&other_map](const Symbol* original, auto compare)->const Symbol*
 	{
 		for (int k = 0; k < other_map.getNumSymbols(); ++k)
 		{
 			auto other_symbol = other_map.getSymbol(k);
-			if (original->numberEquals(other_symbol, ignore_trailing_zeros)
+			if ((original->*compare)(other_symbol)
 				&& Symbol::areTypesCompatible(original->getType(), other_symbol->getType()))
 			{
 				return other_symbol;
@@ -195,10 +195,10 @@ void SymbolRuleSet::matchQuerySymbolNumber(const Map& other_map)
 		if (!original)
 			continue;
 		
-		auto candidate = findMatchingSymbol(original, false);
+		auto candidate = findMatchingSymbol(original, &Symbol::numberEquals);
 		if (!candidate)
 		{
-			candidate = findMatchingSymbol(original, true);
+			candidate = findMatchingSymbol(original, &Symbol::numberEqualsRelaxed);
 		}
 		if (candidate != item.symbol)
 		{
@@ -283,7 +283,7 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 					second_field = query.tagOperands()->value;
 					break;
 				}
-				// fall through
+				Q_FALLTHROUGH();
 			case ObjectQuery::OperatorIsNot:
 			case ObjectQuery::OperatorContains:
 				if (query.tagOperands())

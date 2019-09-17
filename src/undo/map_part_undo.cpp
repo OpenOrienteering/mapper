@@ -139,13 +139,7 @@ void MapPartUndoStep::getModifiedObjects(int, ObjectSet &) const
 	// nothing
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-bool MapPartUndoStep::load(QIODevice *, int )
-{
-	// not supported
-	return false;
-}
-#endif
+
 
 // virtual
 void MapPartUndoStep::saveImpl(QXmlStreamWriter &xml) const

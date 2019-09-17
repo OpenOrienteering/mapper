@@ -124,9 +124,9 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 TextObject::TextObject(const Symbol* symbol)
  : Object(Object::Text, symbol)
+ , rotation(0)
  , h_align(AlignHCenter)
  , v_align(AlignVCenter)
- , rotation(0.0f)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
 	coords.reserve(2); // Extra element used during saving
@@ -136,9 +136,9 @@ TextObject::TextObject(const Symbol* symbol)
 TextObject::TextObject(const TextObject& proto)
  : Object(proto)
  , text(proto.text)
+ , rotation(proto.rotation)
  , h_align(proto.h_align)
  , v_align(proto.v_align)
- , rotation(proto.rotation)
  , has_single_anchor(proto.has_single_anchor)
  , size(proto.size)
  , line_infos(proto.line_infos)
@@ -175,14 +175,14 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoord coord)
+void TextObject::setAnchorPosition(const MapCoord& coord)
 {
 	has_single_anchor = true;
 	coords[0] = coord;
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoordF coord)
+void TextObject::setAnchorPosition(const MapCoordF& coord)
 {
 	has_single_anchor = true;
 	coords[0].setX(coord.x());
@@ -238,7 +238,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 	else
 	{
 		QTransform transform;
-		transform.rotate(-qRadiansToDegrees(qreal(getRotation())));
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 		
 		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
 		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));
@@ -251,7 +251,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 
 
 
-void TextObject::scale(MapCoordF center, double factor)
+void TextObject::scale(const MapCoordF& center, double factor)
 {
 	coords.front() = MapCoord{center + (MapCoordF{coords.front()} - center) * factor};
 	if (!has_single_anchor)
@@ -322,7 +322,7 @@ void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
 	setOutputDirty();
 }
 
-void TextObject::setRotation(float new_rotation)
+void TextObject::setRotation(qreal new_rotation)
 {
 	rotation = new_rotation;
 	setOutputDirty();
@@ -333,13 +333,13 @@ bool TextObject::intersectsBox(const QRectF& box) const
 	return getExtent().intersects(box);
 }
 
-int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
+int TextObject::calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
-int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
+int TextObject::calcTextPositionAt(const QPointF& point, bool find_line_only) const
 {
 	auto click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	

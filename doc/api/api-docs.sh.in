@@ -31,9 +31,10 @@ done
 "$1" Doxyfile 2>&1 \
 | sed -e "s/${SOURCE_DIR}//g" > html/doxygen-warnings.txt
 
-sed -i -e "
+sed -e "
   s/\( ([^( ]* rev ......., [A-Za-z0-9 ]*)\)\(<\/a>\)/\2\1/ # Footer of class documentation
   s/\([^( ]*\) rev \(.......\), /<a href=\"https:\/\/github.com\/OpenOrienteering\/mapper\/blob\/\2\/\1\"><tt>\2<\/tt><\/a> on /
   s/\"${DOC_DIR}/\"/g
   s/\"${SOURCE_DIR}/\"/g
-" html/*.html
+" -i -- html/*.html \
+&& rm -f html/*.html--

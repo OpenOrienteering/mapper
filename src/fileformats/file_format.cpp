@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,7 +20,7 @@
 
 #include "file_format.h"
 
-#include <QCoreApplication>
+#include "file_import_export.h"
 
 
 namespace OpenOrienteering {
@@ -39,7 +40,7 @@ const char* FileFormatException::what() const noexcept
 
 // ### FileFormat ###
 
-FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, FileFormat::FormatFeatures features)
+FileFormat::FileFormat(FileFormat::FileType file_type, const char* id, const QString& description, const QString& file_extension, Features features)
  : file_type(file_type),
    format_id(id),
    format_description(description),
@@ -61,27 +62,34 @@ void FileFormat::addExtension(const QString& file_extension)
 	format_filter = QString::fromLatin1("%1 (*.%2)").arg(format_description, file_extensions.join(QString::fromLatin1(" *.")));
 }
 
-bool FileFormat::understands(const unsigned char *buffer, std::size_t sz) const
+
+bool FileFormat::supportsReading() const
 {
-	Q_UNUSED(buffer);
-	Q_UNUSED(sz);
-	return false;
+	return supportsFileOpen() || supportsFileImport();
 }
 
-Importer *FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+bool FileFormat::supportsWriting() const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Importer", "Format (%1) does not support import").arg(description()));
+	return supportsFileSave() || supportsFileSaveAs() || supportsFileExport();
 }
 
-Exporter *FileFormat::createExporter(QIODevice* stream, Map *map, MapView *view) const
+
+FileFormat::ImportSupportAssumption FileFormat::understands(const char* /*buffer*/, int /*size*/) const
 {
-	Q_UNUSED(stream);
-	Q_UNUSED(map);
-	Q_UNUSED(view);
-	throw FileFormatException(QCoreApplication::translate("OpenOrienteering::Exporter", "Format (%1) does not support export").arg(description()));
+	return supportsReading() ? Unknown : NotSupported;
+}
+
+
+std::unique_ptr<Importer> FileFormat::makeImporter(const QString& /*path*/, Map* /*map*/, MapView* /*view*/) const
+{
+	qWarning("Format '%s' does not support import", format_id);
+	return nullptr;
+}
+
+std::unique_ptr<Exporter> FileFormat::makeExporter(const QString& /*path*/, const Map* /*map*/, const MapView* /*view*/) const
+{
+	qWarning("Format '%s' does not support export", format_id);
+	return nullptr;
 }
 
 

@@ -240,7 +240,7 @@ void TagsWidget::cellChange(int row, int column)
 			{
 				if (value.isEmpty() && old_key.isEmpty())
 				{
-					// New key, empty value - dont insert yet
+					// New key, empty value - don't insert yet
 					tags_table->item(row, 0)->setData(Qt::UserRole, QLatin1String("ABOUT TO INSERT NEW VALUE"));
 					tags_table->setCurrentCell(row, 1);
 				}

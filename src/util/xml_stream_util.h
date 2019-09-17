@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +20,6 @@
 #ifndef OPENORIENTEERING_XML_STREAM_UTIL_H
 #define OPENORIENTEERING_XML_STREAM_UTIL_H
 
-#include <vector>
-
 #include <QtGlobal>
 #include <QHash>
 #include <QLatin1String>
@@ -33,7 +31,7 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
-// IWYU pragma: no_include "core/map_coord.h"
+#include "core/map_coord.h"
 
 class QRectF;
 class QSizeF;
@@ -42,16 +40,17 @@ class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
-class MapCoord;  // IWYU pragma: keep
-
-using MapCoordVector = std::vector<MapCoord>;
-
 
 /**
  * Writes a line break to the XML stream unless auto formatting is active.
  */
 void writeLineBreak(QXmlStreamWriter& xml);
 
+
+/**
+ * Returns the number of characters which are significant for input/output.
+ */
+QString numberToString(double value, int precision);
 
 
 /**
@@ -65,7 +64,7 @@ void writeLineBreak(QXmlStreamWriter& xml);
  * was initialized.
  * 
  * In a single recovery attempt, the utility tries to handle all offending
- * characters from the element for wich the tool was constructed. For each
+ * characters from the element for which the tool was constructed. For each
  * offending character, the whole XML data is parsed again from the start.
  * That's why multiple corrections may take a long time to run.
  * 
@@ -474,19 +473,19 @@ void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const double value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(value, 'f', precision));
+	xml.writeAttribute(qualifiedName, numberToString(value, precision));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value)
 {
-	xml.writeAttribute(qualifiedName, QString::number(double(value)));
+	writeAttribute(qualifiedName, double(value));
 }
 
 inline
 void XmlElementWriter::writeAttribute(const QLatin1String& qualifiedName, const float value, int precision)
 {
-	xml.writeAttribute(qualifiedName, QString::number(double(value), 'f', precision));
+	writeAttribute(qualifiedName, double(value), precision);
 }
 
 inline

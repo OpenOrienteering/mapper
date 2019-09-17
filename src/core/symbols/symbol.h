@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,12 @@
 #ifndef OPENORIENTEERING_SYMBOL_H
 #define OPENORIENTEERING_SYMBOL_H
 
+#include <array>
+#include <cstddef>
+#include <memory>
+#include <type_traits>
+#include <vector>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QFlags>
@@ -31,7 +37,6 @@
 #include <QRgb>
 #include <QString>
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -57,15 +62,6 @@ class VirtualCoordVector;
 typedef QHash<QString, Symbol*> SymbolDictionary;
 
 
-// From gui/util_gui.h, but avoiding extra dependencies
-namespace Util {
-
-QString plainText(QString maybe_markup);
-
-
-}  // namespace Util
-
-
 /**
  * Abstract base class for map symbols.
  * 
@@ -75,19 +71,23 @@ QString plainText(QString maybe_markup);
 class Symbol
 {
 public:
-	/** Enumeration of all possible symbol types,
-	 *  must be able to be used as bits in a bitmask. */
+	/** 
+	 * Enumeration of all possible symbol types.
+	 * 
+	 * Values are chosen to be able to be used as bits in a bitmask.
+	 */
 	enum Type
 	{
-		Point = 1,
-		Line = 2,
-		Area = 4,
-		Text = 8,
+		Point    = 1,
+		Line     = 2,
+		Area     = 4,
+		Text     = 8,
 		Combined = 16,
 		
 		NoSymbol = 0,
 		AllSymbols = Point | Line | Area | Text | Combined
 	};
+	Q_DECLARE_FLAGS(TypeCombination, Type)
 	
 	/**
 	 * RenderableOptions denominate variations in painting symbols.
@@ -100,33 +100,59 @@ public:
 	};
 	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
 	
-	/** Constructs an empty symbol */
-	Symbol(Type type) noexcept;
 	
-	Symbol(const Symbol&) = delete;
-	Symbol(Symbol&&) = delete;
-	
+	explicit Symbol(Type type) noexcept;
 	virtual ~Symbol();
 	
-	virtual Symbol* duplicate(const MapColorMap* color_map = nullptr) const = 0;
+protected:
+	explicit Symbol(const Symbol& proto);
+	virtual Symbol* duplicate() const = 0;
+	
+public:
+	/**
+	 * Duplicates a symbol.
+	 * 
+	 * This template function mitigates the incompatibility of std::unique_ptr
+	 * with covariant return types when duplicating instances of the
+	 * polymorphic type Symbol.
+	 * 
+	 * For convenient use outside of (child class) method implementatations,
+	 * there is a free template function duplicate(const Derived& d).
+	 */
+	template<class S>
+	static std::unique_ptr<S> duplicate(const S& s)
+	{
+		return std::unique_ptr<S>(static_cast<S*>(static_cast<const Symbol&>(s).duplicate()));
+	}
 	
 	Symbol& operator=(const Symbol&) = delete;
 	Symbol& operator=(Symbol&&) = delete;
+	
 	
 	virtual bool validate() const;
 	
 	
 	/**
 	 * Checks for equality to the other symbol.
+	 * 
+	 * This function does not check the equality of the state
+	 * (protected/hidden). Use stateEquals(Symbol*) for this comparison.
+	 * 
 	 * @param other The symbol to compare with.
 	 * @param case_sensitivity Comparison mode for strings, e.g. symbol names.
-	 * @param compare_state If true, also compares symbol state (protected / hidden).
 	 */
-	bool equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive, bool compare_state = false) const;
+	bool equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity = Qt::CaseSensitive) const;
+	
+	/**
+	 * Checks protected/hidden state for equality to the other symbol.
+	 */
+	bool stateEquals(const Symbol* other) const;
 	
 	
-	/** Returns the type of the symbol */
-	inline Type getType() const {return type;}
+	/**
+	 * Returns the type of the symbol.
+	 */
+	Type getType() const { return type; }
 	
 	// Convenience casts with type checking
 	/** Case to PointSymbol with type checking */
@@ -150,46 +176,57 @@ public:
 	/** Case to CombinedSymbol with type checking */
 	CombinedSymbol* asCombined();
 	
-	/** Returns the or-ed together bitmask of all symbol types
-	 *  this symbol contains */
-	virtual Type getContainedTypes() const {return getType();}
-	
+	/**
+	 * Returns the combined bitmask of all symbol types this symbol contains.
+	 */
+	virtual TypeCombination getContainedTypes() const;
 	
 	/**
 	 * Checks if the symbol can be applied to the given object.
-	 * TODO: refactor: use static areTypesCompatible() instead with the type of the object's symbol
 	 */
 	bool isTypeCompatibleTo(const Object* object) const;
 	
-	/** Returns if the symbol numbers are identical. */
-	bool numberEquals(const Symbol* other, bool ignore_trailing_zeros) const;
 	
+	/**
+	 * Returns if the symbol numbers are exactly equal.
+	 */
+	bool numberEquals(const Symbol* other) const;
 	
-	// Saving and loading
+	/**
+	 * Returns if the symbol numbers are equal, ignoring trailing zeros.
+	 */
+	bool numberEqualsRelaxed(const Symbol* other) const;
 	
-	/** Loads the symbol in the old "native" file format. */
-	bool load(QIODevice* file, int version, Map* map);
 	
 	/**
 	 * Saves the symbol in xml format.
+	 * 
+	 * This function invokes saveImpl(...) which may be overridden by child classes.
+	 * 
 	 * @param xml Stream to save to.
-	 * @param map Reference to the map containing the symbol. Needed to find
-	 *     symbol indices.
+	 * @param map Reference to the map containing the symbol.
 	 */
 	void save(QXmlStreamWriter& xml, const Map& map) const;
-	/**
-	 * Load the symbol in xml format.
-	 * @param xml Stream to load from.
-	 * @param map Reference to the map containing the symbol.
-	 * @param symbol_dict Dictionary mapping symbol IDs to symbol pointers.
-	 */
-	static Symbol* load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	
 	/**
-	 * Called after loading of the map is finished.
-	 *  Can do tasks that need to reference other symbols or map objects.
+	 * Load the symbol in xml format.
+	 * 
+	 * This function invokes loadImpl(...) which may be overridden by child classes.
+	 * It does not add the symbol to the map.
+	 * 
+	 * @param xml Stream to load from.
+	 * @param map Reference to the map which will eventually contain the symbol.
+	 * @param symbol_dict Dictionary mapping symbol IDs to symbols.
 	 */
-	virtual bool loadFinished(Map* map);
+	static std::unique_ptr<Symbol> load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	
+	/**
+	 * Called when loading the map is finished.
+	 * 
+	 * This event handler can be overridden in order to do tasks that need to
+	 * access other symbols or map objects.
+	 */
+	virtual bool loadingFinishedEvent(Map* map);
 	
 	
 	/**
@@ -197,10 +234,9 @@ public:
 	 * 
 	 * This will create the renderables according to the object's properties
 	 * and the given coordinates.
-	 * 
-	 * NOTE: methods which implement this should use the given coordinates
-	 * instead of the object's coordinates, as those can be an updated,
-	 * transformed version of the object's coords!
+	 *  
+	 * Implementations must use the coordinates (coords) instead of the object's
+	 * coordinates.
 	 */
 	virtual void createRenderables(
 	        const Object *object,
@@ -236,44 +272,83 @@ public:
 	        ObjectRenderables &output,
 	        const MapColor* color) const;
 	
-	/**
-	 * Called by the map in which the symbol is to notify it of a color being
-	 * deleted (pointer becomes invalid, indices change).
-	 */
-	virtual void colorDeleted(const MapColor* color) = 0;
 	
-	/** Must return if the given color is used by this symbol. */
+	/**
+	 * Called when a color is removed from the map.
+	 * 
+	 * Symbols need to remove all references to the given color when this event
+	 * occurs.
+	 */
+	virtual void colorDeletedEvent(const MapColor* color) = 0;
+	
+	/**
+	 * Returns if the given color is used by this symbol.
+	 */
 	virtual bool containsColor(const MapColor* color) const = 0;
 	
 	/**
-	 * Returns the dominant color of this symbol, or a guess for this color
-	 * in case it is impossible to determine it uniquely.
+	 * Returns the dominant color of this symbol.
+	 * 
+	 * If it is not possible to efficiently determine this color exactly,
+	 * an appropriate heuristic should be used.
 	 */
 	virtual const MapColor* guessDominantColor() const = 0;
 	
 	/**
-	 * Called by the map in which the symbol is to notify it of a symbol being
-	 * changed (pointer becomes invalid).
-	 * If !new_symbol, the symbol is being deleted.
-	 * Must return true if this symbol contained the deleted symbol.
+	 * Replaces colors used by this symbol.
 	 */
-	virtual bool symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol);
+	virtual void replaceColors(const MapColorMap& color_map) = 0;
+	
 	
 	/**
-	 * Must return if the given symbol is referenced by this symbol.
-	 * Should NOT return true if the argument is itself.
+	 * Called when a symbol was changed, replaced, or removed.
+	 * 
+	 * Symbol need top update or remove references to the given old_symbol.
+	 * If new_symbol is nullptr, the symbol is about to be deleted.
+	 * 
+	 * Returns true if this symbol contained the deleted symbol.
+	 */
+	virtual bool symbolChangedEvent(const Symbol* old_symbol, const Symbol* new_symbol);
+	
+	/**
+	 * Returns true if the given symbol is referenced by this symbol.
+	 * 
+	 * A symbol does not contain itself, so it must return true when the given
+	 * symbol is identical to the symbol this function is being called for.
 	 */
 	virtual bool containsSymbol(const Symbol* symbol) const;
 	
-	/** Scales the whole symbol */
+	
+	/**
+	 * Scales the symbol.
+	 */
 	virtual void scale(double factor) = 0;
 	
 	
 	/**
+	 * Returns the custom symbol icon. 
+	 */
+	QImage getCustomIcon() const { return custom_icon; }
+	
+	/**
+	 * Sets a custom symbol icon.
+	 * 
+	 * The custom icon takes precedence over the generated one when custom icon
+	 * display is enabled.
+	 * Like the generated icon, it is not part of the symbol state which is
+	 * compared by the `equals` functions.
+	 * However, it is copied when duplicating an icon.
+	 * 
+	 * To clear the custom icon, this function can be called with a null QImage.
+	 */
+	void setCustomIcon(const QImage& image);
+	
+	/**
 	 * Returns the symbol's icon.
 	 * 
-	 * This icon uses a default size and zoom, and it is cached, making
-	 * repeated calls cheap.
+	 * This function returns (a scaled version of) the custom symbol icon if
+	 * it is set and custom icon display is enabled, or a generated one.
+	 * The icon is cached, making repeated calls cheap.
 	 */
 	QImage getIcon(const Map* map) const;
 	
@@ -289,7 +364,9 @@ public:
 	/**
 	 * Clear the symbol's cached icon.
 	 * 
-	 * It will be recreated the next time getIcon() gets called.
+	 * Call this function after changes to the symbol definition, custom icon,
+	 * or general size/zoom/visibility settings.
+	 * The cached icon will be recreated the next time getIcon() gets called.
 	 */
 	void resetIcon();
 	
@@ -308,53 +385,94 @@ public:
 	
 	// Getters / Setters
 	
-	/** Returns the symbol name. */
-	inline const QString& getName() const {return name;}
-	/** Returns the symbol name after stripping all HTML. */
-	QString getPlainTextName() const { return Util::plainText(name); }
-	/** Sets the symbol name. */
-	inline void setName(const QString& new_name) {name = new_name;}
+	/**
+	 * Returns the symbol name.
+	 */
+	const QString& getName() const { return name; }
 	
-	/** Returns the symbol number as string. */
+	/**
+	 * Returns the symbol name with all HTML markup stripped.
+	 */
+	QString getPlainTextName() const;
+	
+	/**
+	 * Sets the symbol name.
+	 */
+	void setName(const QString& new_name) { name = new_name; }
+	
+	
+	/**
+	 * Returns the symbol number as string
+	 */
 	QString getNumberAsString() const;
-	/** Returns the i-th component of the symbol number as int. */
-	inline int getNumberComponent(int i) const {Q_ASSERT(i >= 0 && i < number_components); return number[i];}
-	/** Sets the i-th component of the symbol number. */
-	inline void setNumberComponent(int i, int new_number) {Q_ASSERT(i >= 0 && i < number_components); number[i] = new_number;}
 	
-	/** Returns the symbol description. */
-	inline const QString& getDescription() const {return description;}
-	/** Sets the symbol description. */
-	inline void setDescription(const QString& new_description) {description = new_description;}
+	/**
+	 * Returns the i-th component of the symbol number as int.
+	 */
+	int getNumberComponent(int i) const { Q_ASSERT(i >= 0 && i < int(number_components)); return number[std::size_t(i)]; }
 	
-	/** Returns if this is a helper symbol (which is not printed in the final map) */
-	inline bool isHelperSymbol() const {return is_helper_symbol;}
-	/** Sets if this is a helper symbol, see isHelperSymbol(). */
-	inline void setIsHelperSymbol(bool value) {is_helper_symbol = value;}
+	/**
+	 * Sets the i-th component of the symbol number.
+	 */
+	void setNumberComponent(int i, int new_number) { Q_ASSERT(i >= 0 && i < int(number_components)); number[std::size_t(i)] = new_number; }
 	
-	/** Returns if this symbol is hidden. */
-	inline bool isHidden() const {return is_hidden;}
-	/** Sets the hidden state of this symbol. */
-	inline void setHidden(bool value) {is_hidden = value;}
 	
-	/** Returns if this symbol is protected, i.e. objects with this symbol
-	 *  cannot be edited. */
-	inline bool isProtected() const {return is_protected;}
-	/** Sets the protected state of this symbol. */
-	inline void setProtected(bool value) {is_protected = value;}
+	/**
+	 * Returns the symbol description.
+	 */
+	const QString& getDescription() const { return description; }
 	
-	/** Creates a properties widget for the symbol. */
-	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog);
+	/**
+	 * Sets the symbol description.
+	 */
+	void setDescription(const QString& new_description) { description = new_description; }
+	
+	
+	/**
+	 * Returns if this is a helper symbol (which is not printed in the final map).
+	 */
+	bool isHelperSymbol() const { return is_helper_symbol; }
+	
+	/**
+	 * Sets if this is a helper symbol, see isHelperSymbol().
+	 */
+	void setIsHelperSymbol(bool value) { is_helper_symbol = value; }
+	
+	
+	/**
+	 * Returns if this symbol is hidden.
+	 */
+	bool isHidden() const { return is_hidden; }
+	
+	/**
+	 * Sets the hidden state of this symbol.
+	 */
+	void setHidden(bool value) { is_hidden = value; }
+	
+	
+	/**
+	 * Returns if this symbol is protected.
+	 * 
+	 * Objects with a protected symbol cannot be selected or edited.
+	 */
+	bool isProtected() const { return is_protected; }
+	
+	/**
+	 * Sets the protected state of this symbol.
+	 */
+	void setProtected(bool value) { is_protected = value; }
+	
+	
+	/**
+	 * Creates a properties widget for the symbol.
+	 */
+	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) = 0;
 	
 	
 	// Static
 	
 	/** Returns a newly created symbol of the given type */
-	static Symbol* getSymbolForType(Type type);
-	
-	/** Static read function; reads the type number, creates a symbol of
-	 *  this type and loads it. Returns true if successful. */
-	static bool loadSymbol(Symbol*& symbol, QIODevice* stream, int version, Map* map);
+	static std::unique_ptr<Symbol> makeSymbolForType(Type type);
 	
 	/**
 	 * Returns if the symbol types can be applied to the same object types
@@ -365,106 +483,119 @@ public:
 	 * Returns a bitmask of all types which can be applied to
 	 * the same objects as the given type.
 	 */
-	static int getCompatibleTypes(Type type);
+	static TypeCombination getCompatibleTypes(Type type);
 
 	
 	/**
-	 * @brief Compares two symbols by number.
+	 * Compares two symbols by number.
+	 * 
 	 * @return True if the number of s1 is less than the number of s2.
 	 */
-	static bool compareByNumber(const Symbol* s1, const Symbol* s2);
+	static bool lessByNumber(const Symbol* s1, const Symbol* s2);
 	
 	/**
-	 * @brief Compares two symbols by the dominant colors' priorities.
+	 * Compares two symbols by the dominant colors' priorities.
+	 * 
 	 * @return True if s1's dominant color's priority is lower than s2's dominant color's priority.
 	 */
-	static bool compareByColorPriority(const Symbol* s1, const Symbol* s2);
+	static bool lessByColorPriority(const Symbol* s1, const Symbol* s2);
 	
 	/**
-	 * @brief Functor for comparing symbols by dominant colors.
+	 * A functor for comparing symbols by dominant colors.
 	 * 
-	 * Other than compareByColorPriority(), this comparison uses the lowest
-	 * priority which exists for a particular color in the map. All map colors
-	 * are preprocessed in the constructor. Thus the functor becomes invalid as
-	 * soon as colors are changed.
+	 * Other than lessByColorPriority(), this comparison uses the lowest
+	 * priority which exists for a particular RGB color in the map, i.e.
+	 * it groups colors by RGB values (and orders the result by priority).
+	 * 
+	 * All map colors are preprocessed in the constructor. Thus the functor
+	 * becomes invalid as soon as colors are changed.
 	 */
-	struct compareByColor
+	struct lessByColor
 	{
 		/**
-		 * @brief Constructs the functor.
-		 * @param map The map which defines all colors.
+		 * Constructs the functor for the given map.
 		 */
-		compareByColor(Map* map);
+		lessByColor(const Map* map);
 		
 		/**
-		 * @brief Operator which compares two symbols by dominant colors.
-		 * @return True if s1's dominant color exists with lower prority then s2's dominant color.
+		 * Operator which compares two symbols by dominant colors.
+		 * 
+		 * \return True if s1's dominant color exists with lower priority then s2's dominant color.
 		 */
-		bool operator() (const Symbol* s1, const Symbol* s2);
+		bool operator() (const Symbol* s1, const Symbol* s2) const;
 		
 	private:
 		/**
-		 * @brief Maps color code to priority.
+		 * RGB values ordered by color priority.
 		 */
-		QHash<QRgb, int> color_map;
+		std::vector<QRgb> colors;
 	};
-
+	
+	
 	/**
 	 * Number of components of symbol numbers.
 	 */
-	static const int number_components = 3;
+	constexpr static auto number_components = 3u;
+	
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Must be overridden to load type-specific symbol properties. See saveImpl()
-	 */
-	virtual bool loadImpl(QIODevice* file, int version, Map* map) = 0;
-#endif
-	
 	/**
 	 * Must be overridden to save type-specific symbol properties.
-	 * The map pointer can be used to get persistent indices to any pointers on map data
+	 * 
+	 * The map pointer can be used to get persistent indices to any pointers on map data.
 	 */
 	virtual void saveImpl(QXmlStreamWriter& xml, const Map& map) const = 0;
 	
 	/**
-	 * Must be overridden to load type-specific symbol properties. See saveImpl().
-	 * Return false if the current xml tag does not belong to the symbol and
+	 * Must be overridden to load type-specific symbol properties.
+	 * 
+	 * \see saveImpl()
+	 * 
+	 * Returns false if the current xml tag does not belong to the symbol and
 	 * should be skipped, true if the element has been read completely.
 	 */
 	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) = 0;
 	
 	/**
-	 * Must be overridden to compare symbol-specific attributes.
+	 * Must be overridden to compare specific attributes.
 	 */
 	virtual bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const = 0;
 	
-	/**
-	 * Duplicates properties which are common for all
-	 * symbols from other to this object
-	 */
-	void duplicateImplCommon(const Symbol* other);
-	
 	
 private:
-	/** Symbol icon. If icon.isNull() is true, it is not generated yet. */
-	mutable QImage icon;
-	/** Symbol name */
+	mutable QImage icon;  ///< Cached symbol icon
+	QImage custom_icon;   ///< Custom symbol icon
 	QString name;
-	/** Symbol description */
 	QString description;
-	/** The symbol type, determined by the subclass */
+	std::array<int, number_components> number;
 	Type type;
-	/** Symbol number */
-	int number[number_components];
-	/** Helper symbol flag, see isHelperSymbol() */
-	bool is_helper_symbol;
-	/** Hidden flag, see isHidden() */
-	mutable bool is_hidden;
-	/** Protected flag, see isProtected() */
-	bool is_protected;
+	bool is_helper_symbol;    /// \see isHelperSymbol()
+	bool is_hidden;           /// \see isHidden()
+	bool is_protected;        /// \see isProtected()
 };
+
+
+
+/**
+ * Duplicates a symbol.
+ * 
+ * This free template function mitigates the incompatibility of std::unique_ptr
+ * with covariant return types when duplicating instances of the
+ * polymorphic type Symbol.
+ * 
+ * Synopsis:
+ * 
+ *    AreaSymbol s;
+ *    auto s1 = duplicate(s);          // unique_ptr<AreaSymbol>
+ *    auto s2 = duplicate<Symbol>(s);  // unique_ptr<Symbol>
+ *    std::unique_ptr<Symbol> s3 = std::move(s1);
+ */
+template<class S>
+typename std::enable_if<std::is_base_of<Symbol, S>::value, std::unique_ptr<S>>::type
+/*std::unique_ptr<S>*/ duplicate(const S& s)
+{
+	return Symbol::duplicate<S>(s);
+}
 
 
 }  // namespace OpenOrienteering
@@ -472,6 +603,7 @@ private:
 
 Q_DECLARE_METATYPE(const OpenOrienteering::Symbol*)
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::TypeCombination)
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Symbol::RenderableOptions)
 
 

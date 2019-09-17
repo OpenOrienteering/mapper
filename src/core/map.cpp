@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,30 +23,20 @@
 
 #include <algorithm>
 #include <cmath>
-#include <exception>
 #include <iterator>
 #include <memory>
+#include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
-#include <QCoreApplication>
 #include <QDebug>
-#include <QEventLoop>
-#include <QFile>
-#include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1String>
-#include <QLocale>
-#include <QMessageBox>
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
-#include <QSaveFile>
-#include <QStringList>
-#include <QTextDocument>
 #include <QTimer>
 #include <QTranslator>
 
@@ -65,11 +55,10 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/xml_file_format_p.h"
 #include "gui/map/map_widget.h"
-#include "gui/text_browser_dialog.h"
 #include "templates/template.h"
 #include "undo/map_part_undo.h"
 #include "undo/object_undo.h"
@@ -79,10 +68,6 @@
 #include "util/transformation.h"
 
 // IWYU pragma: no_forward_declare QRectF
-
-#ifdef Q_OS_ANDROID
-#include "core/storage_location.h"
-#endif
 
 
 namespace OpenOrienteering {
@@ -124,26 +109,6 @@ struct MapColorSetMergeItem
 /** The mapping of all colors in a source MapColorSet
  *  to colors in a destination MapColorSet. */
 typedef std::vector<MapColorSetMergeItem> MapColorSetMergeList;
-
-
-/**
- * Shows a message box for a list of unformatted messages.
- */
-void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
-{
-	QString document;
-	if (!headline.isEmpty())
-		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
-	for (const auto& message : messages)
-		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
-	
-	TextBrowserDialog dialog(document, parent);
-	dialog.setWindowTitle(title);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
-	// Let Android update the screen.
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
-}
 
 
 }  // namespace
@@ -644,249 +609,21 @@ void Map::setMapNotes(const QString& text)
 	map_notes = text;
 }
 
-bool Map::saveTo(const QString& path, MapView* view)
-{
-	bool success = exportTo(path, view);
-	if (success)
-	{
-		colors_dirty = false;
-		symbols_dirty = false;
-		templates_dirty = false;
-		objects_dirty = false;
-		other_dirty = false;
-		unsaved_changes = false;
-		undoManager().setClean();
-	}
-	return success;
-}
 
-bool Map::exportTo(const QString& path, MapView* view, const FileFormat* format)
-{
-	Q_ASSERT(view && "Saving a file without view information is not supported!");
-	
-	if (!format)
-		format = FileFormats.findFormatForFilename(path);
-
-	if (!format)
-		format = FileFormats.findFormat(FileFormats.defaultFormat());
-	
-	if (!format)
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause the format is unknown.").arg(path));
-		return false;
-	}
-	else if (!format->supportsExport())
-	{
-		QMessageBox::warning(nullptr, tr("Error"), tr("Cannot export the map as\n\"%1\"\nbecause saving as %2 (.%3) is not supported.").
-		                     arg(path, format->description(), format->fileExtensions().join(QLatin1String(", "))));
-		return false;
-	}
-	
-	QSaveFile file(path);
-	QScopedPointer<Exporter> exporter(format->createExporter(&file, this, view));
-	bool success = false;
-	if (file.open(QIODevice::WriteOnly))
-	{
-		try
-		{
-			exporter->doExport();
-		}
-		catch (std::exception &e)
-		{
-			file.cancelWriting();
-			const QString error = QString::fromLocal8Bit(e.what());
-			QMessageBox::warning(nullptr, tr("Error"), tr("Internal error while saving:\n%1").arg(error));
-			return false;
-		}
-		
-		success = file.commit();
-#ifdef Q_OS_ANDROID
-		if (success)
-		{
-			// Make the MediaScanner aware of the *updated* file. This is an
-			// attempt to resolve issues with files being transferred
-			// incompletely to the PC (#1115).
-			Android::mediaScannerScanFile(QFileInfo(path).absolutePath());
-		}
-#endif
-	}
-	
-	if (!success)
-	{
-		QMessageBox::warning(
-		  nullptr,
-		  tr("Error"),
-		  tr("Cannot save file\n%1:\n%2").arg(path, file.errorString())
-		);
-	}
-	else if (!exporter->warnings().empty())
-	{
-		showMessageBox(nullptr,
-		               tr("Warning"),
-		               tr("The map export generated warnings."),
-		               exporter->warnings() );
-	}
-	
-	return success;
-}
-
-bool Map::loadFrom(const QString& path, QWidget* dialog_parent, MapView* view, bool load_symbols_only, bool show_error_messages)
-{
-	// Ensure the file exists and is readable.
-	QFile file(path);
-	if (!file.open(QIODevice::ReadOnly))
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			  dialog_parent,
-			  tr("Error"),
-			  tr("Cannot open file:\n%1\nfor reading.").arg(path)
-			);
-		return false;
-	}
-	
-	// Delete previous objects
-	reset();
-
-	// Read a block at the beginning of the file, that we can use for magic number checking.
-	unsigned char buffer[256];
-	size_t total_read = file.read((char *)buffer, 256);
-	file.seek(0);
-
-	bool import_complete = false;
-	QString error_msg = tr("Invalid file type.");
-	for (auto format : FileFormats.formats())
-	{
-		// If the format supports import, and thinks it can understand the file header, then proceed.
-		if (format->supportsImport() && format->understands(buffer, total_read))
-		{
-			Importer *importer = nullptr;
-			// Wrap everything in a try block, so we can gracefully recover if the importer balks.
-			try {
-				// Create an importer instance for this file and map.
-				importer = format->createImporter(&file, this, view);
-
-				// Run the first pass.
-				importer->doImport(load_symbols_only, QFileInfo(path).absolutePath());
-
-				// Are there any actions the user must take to complete the import?
-				if (!importer->actions().empty())
-				{
-					// TODO: prompt the user to resolve the action items. All-in-one dialog.
-				}
-
-				// Finish the import.
-				importer->finishImport();
-				
-				file.close();
-
-				// Display any warnings.
-				if (!importer->warnings().empty() && show_error_messages)
-				{
-					showMessageBox(nullptr,
-					               tr("Warning"),
-					               tr("The map import generated warnings."),
-					               importer->warnings() );
-				}
-
-				import_complete = true;
-			}
-			catch (FileFormatException &e)
-			{
-				error_msg = e.message();
-			}
-			catch (std::exception &e)
-			{
-				qDebug() << "Exception:" << e.what();
-				error_msg = QString::fromLatin1(e.what());
-			}
-			if (importer) delete importer;
-		}
-		// If the last importer finished successfully
-		if (import_complete) break;
-	}
-	
-	if (view)
-	{
-		view->setPanOffset(QPoint(0, 0));
-	}
-
-	if (!import_complete)
-	{
-		if (show_error_messages)
-			QMessageBox::warning(
-			 dialog_parent,
-			 tr("Error"),
-			 tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg)
-			);
-		return false;
-	}
-
-	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
-	updateAllObjects(); // TODO: is the comment above still applicable?
-	
-	setHasUnsavedChanges(false);
-
-	return true;
-}
-
-void Map::importMap(
-        const Map* other,
+QHash<const Symbol*, Symbol*> Map::importMap(
+        const Map& imported_map,
         ImportMode mode,
-        QWidget* dialog_parent,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols,
-        QHash<const Symbol*, Symbol*>* out_symbol_map )
+        bool merge_duplicate_symbols)
 {
-	// Check if there is something to import
-	if (other->getNumColors() == 0
-	    && other->getNumSymbols() == 0
-	    && other->getNumObjects() == 0)
-	{
-		QMessageBox::critical(dialog_parent, tr("Error"), tr("Nothing to import."));
-		return;
-	}
-	
-	// Check scale
-	if ((mode & 0x0f) != ColorImport
-	    && other->getNumSymbols() > 0
-	    && other->getScaleDenominator() != getScaleDenominator())
-	{
-		int answer = QMessageBox::question(dialog_parent, tr("Question"),
-		                                   tr("The scale of the imported data is 1:%1 which is different from this map's scale of 1:%2.\n\nRescale the imported data?")
-		                                   .arg(QLocale().toString(other->getScaleDenominator()),
-		                                        QLocale().toString(getScaleDenominator())),
-		                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-		if (answer == QMessageBox::Yes)
-		{
-			/// \todo No need to clone iff the other map is discarded after import.
-			Map clone;
-			clone.setGeoreferencing(other->getGeoreferencing());
-			clone.importMap(other, mode, dialog_parent, filter, -1, false, out_symbol_map);
-			clone.changeScale(getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
-			QHash<const Symbol*, Symbol*> symbol_map; // clone symbol -> this map's symbol
-			importMap(&clone, mode, dialog_parent, nullptr, symbol_insert_pos, merge_duplicate_symbols, &symbol_map);
-			if (out_symbol_map) // original imported symbol -> clone symbol
-			{
-				Q_ASSERT(symbol_map.size() == out_symbol_map->size());
-				for (auto& symbol : *out_symbol_map)
-				{
-					Q_ASSERT(symbol_map.contains(symbol));
-					symbol = symbol_map.value(symbol); // original imported symbol -> this map's symbol
-				}
-			}
-			return;
-		}
-	}
-	
 	QTransform q_transform;
 	if (mode.testFlag(GeorefImport))
 	{
 		/// \todo Test and review import of georeferenced and non-georeferenced maps, in all combinations.
 		/// \todo Handle rotation of patterns and text, cf. Object::transform.
 		const auto& georef = getGeoreferencing();
-		const auto& other_georef = other->getGeoreferencing();
+		const auto& other_georef = imported_map.getGeoreferencing();
 		const auto src_origin = MapCoordF { other_georef.getMapRefPoint() };
 		
 		bool ok0, ok1, ok2;
@@ -907,20 +644,31 @@ void Map::importMap(
 		}
 	}
 	
-	auto symbol_map = importMap(*other, mode, filter, symbol_insert_pos, merge_duplicate_symbols, q_transform);
-	if (out_symbol_map)
-		*out_symbol_map = symbol_map;
+	return importMap(imported_map, mode & ~GeorefImport, q_transform, filter, symbol_insert_pos, merge_duplicate_symbols);
+}
+
+
+bool Map::loadFrom(const QString& path, MapView* view)
+{
+	auto importer = FileFormats.makeImporter(path, *this, view);
+	return importer && importer->doImport();
 }
 
 
 QHash<const Symbol*, Symbol*> Map::importMap(
         const Map& imported_map,
         ImportMode mode,
+        const QTransform& transform,
         std::vector<bool>* filter,
         int symbol_insert_pos,
-        bool merge_duplicate_symbols,
-        const QTransform& transform)
+        bool merge_duplicate_symbols)
 {
+	if (imported_map.getScaleDenominator() != getScaleDenominator())
+		qWarning("Map::importMap() called for different map scale");
+	
+	if (mode.testFlag(GeorefImport))
+		qWarning("Map::importMap() called with GeorefImport flag set");
+	
 	// Determine which symbols and colors to import
 	std::vector<bool> color_filter(std::size_t(imported_map.getNumColors()), true);
 	std::vector<bool> symbol_filter(std::size_t(imported_map.getNumSymbols()), true);
@@ -1022,47 +770,26 @@ QHash<const Symbol*, Symbol*> Map::importMap(
 
 
 
-bool Map::exportToIODevice(QIODevice* stream)
+bool Map::exportToIODevice(QIODevice& device) const
 {
-	stream->open(QIODevice::WriteOnly);
-	Exporter* exporter = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		exporter = native_format->createExporter(stream, this, nullptr);
-		exporter->doExport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (exporter)
-			delete exporter;
-		return false;
-	}
-	if (exporter)
-		delete exporter;
-	return true;
+	XMLFileExporter exporter({}, this, nullptr);
+	exporter.setDevice(&device);
+	auto success = exporter.doExport();
+	device.close();
+	return success;
 }
 
-bool Map::importFromIODevice(QIODevice* stream)
+
+bool Map::importFromIODevice(QIODevice& device)
 {
-	Importer* importer = nullptr;
-	try {
-		const FileFormat* native_format = FileFormats.findFormat("XML");
-		importer = native_format->createImporter(stream, this, nullptr);
-		importer->doImport(false);
-		importer->finishImport();
-		stream->close();
-	}
-	catch (std::exception &e)
-	{
-		if (importer)
-			delete importer;
-		return false;
-	}
-	if (importer)
-		delete importer;
-	return true;
+	XMLFileImporter importer {{}, this, nullptr};
+	importer.setDevice(&device);
+	auto success = importer.doImport();
+	device.close();
+	return success;
 }
+
+
 
 void Map::draw(QPainter* painter, const RenderConfig& config)
 {
@@ -1262,6 +989,12 @@ void Map::drawSelection(QPainter* painter, bool force_min_size, MapWidget* widge
 void Map::addObjectToSelection(Object* object, bool emit_selection_changed)
 {
 	Q_ASSERT(!isObjectSelected(object));
+
+	// we omit hidden and protected objects from any kind of selection
+	const auto* object_symbol = object->getSymbol();
+	if (object_symbol->isProtected() || object_symbol->isHidden())
+		return;
+
 	object_selection.insert(object);
 	addSelectionRenderables(object);
 	if (!first_selected_object)
@@ -1535,12 +1268,12 @@ void Map::deleteColor(int pos)
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() == Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	for (Symbol* symbol : symbols)
 	{
 		if (symbol->getType() != Symbol::Combined)
-			symbol->colorDeleted(color);
+			symbol->colorDeletedEvent(color);
 	}
 	emit colorDeleted(pos, color);
 	
@@ -1611,7 +1344,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 		if (out[c])
 			continue;
 		
-		const auto color = getColor(int(c));
+		const auto* color = getColor(int(c));
 		if (color->getSpotColorMethod() != MapColor::SpotColor)
 			continue;
 		
@@ -1620,7 +1353,7 @@ void Map::determineColorsInUse(const std::vector< bool >& by_which_symbols, std:
 			if (!out[o])
 				continue;
 			
-			const auto other = getColor(int(o));
+			const auto* other = getColor(int(o));
 			if (other->getSpotColorMethod() != MapColor::CustomColor)
 				continue;
 			
@@ -1697,7 +1430,7 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 			{
 				// Check if symbol is already present
 				auto match = std::find_if(begin(symbols), end(symbols), [symbol](auto s) {
-					return s->equals(symbol, Qt::CaseInsensitive, false);
+					return s->equals(symbol, Qt::CaseInsensitive);
 				});
 				if (match != end(symbols))
 				{
@@ -1707,7 +1440,8 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 				}
 			}
 			
-			auto new_symbol = symbol->duplicate(&color_map);
+			auto new_symbol = duplicate(*symbol).release();  /// \todo Leverage unique_ptr
+			new_symbol->replaceColors(color_map);
 			out_pointermap.insert(symbol, new_symbol);
 			created_symbols.push_back(new_symbol);
 		}
@@ -1717,19 +1451,19 @@ QHash<const Symbol*, Symbol*> Map::importSymbols(
 	// Add the created symbols
 	if (insert_pos < 0)
 		insert_pos = getNumSymbols();
-	for (const auto symbol : created_symbols)
+	for (auto* symbol : created_symbols)
 	{
 		addSymbol(symbol, insert_pos);
 		++insert_pos;
 	}
 	
 	// Notify the created symbols of the new context (mind combined symbols)
-	for (const auto symbol : created_symbols)
+	for (auto* symbol : created_symbols)
 	{
 		for (auto it = out_pointermap.constBegin(); it != out_pointermap.constEnd(); ++it)
 		{
 			// symbol is what was created by duplicate() above.
-			symbol->symbolChanged(it.key(), it.value());
+			symbol->symbolChangedEvent(it.key(), it.value());
 		}
 	}
 	
@@ -1856,7 +1590,7 @@ void Map::setSymbol(Symbol* symbol, int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], symbol))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], symbol))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	
@@ -1881,7 +1615,7 @@ void Map::deleteSymbol(int pos)
 		if (i == pos)
 			continue;
 		
-		if (symbols[i]->symbolChanged(symbols[pos], nullptr))
+		if (symbols[i]->symbolChangedEvent(symbols[pos], nullptr))
 			updateAllObjectsWithSymbol(symbols[i]);
 	}
 	
@@ -2023,7 +1757,7 @@ void Map::updateSymbolIconZoom()
 	// the mean of the line symbol widths.
 	auto values = std::vector<qreal>();
 	values.reserve(symbols.size());
-	for (const auto symbol : symbols)
+	for (const auto* symbol : symbols)
 	{
 		if (symbol->isHelperSymbol())
 			continue;
@@ -2051,7 +1785,7 @@ void Map::updateSymbolIconZoom()
 	if (!qFuzzyCompare(new_scale, symbol_icon_scale))
 	{
 		symbol_icon_scale = new_scale;
-		for (const auto symbol : symbols)
+		for (auto* symbol : symbols)
 			symbol->resetIcon();
 		emit symbolIconZoomChanged();
 	}
@@ -2402,7 +2136,7 @@ void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 }
 
 void Map::findObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2414,7 +2148,7 @@ void Map::findObjectsAt(
 }
 
 void Map::findAllObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -2427,8 +2161,8 @@ void Map::findAllObjectsAt(
 }
 
 void Map::findObjectsAtBox(
-        MapCoordF corner1,
-        MapCoordF corner2,
+        const MapCoordF& corner1,
+        const MapCoordF& corner2,
         bool include_hidden_objects,
         bool include_protected_objects,
         std::vector< Object* >& out ) const
@@ -2459,6 +2193,13 @@ void Map::applyOnMatchingObjects(const std::function<void (Object*)>& operation,
 }
 
 
+void Map::applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const
+{
+	for (const MapPart* part : parts)
+		part->applyOnMatchingObjects(operation, condition);
+}
+
+
 void Map::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
 {
 	for (auto part : parts)
@@ -2469,6 +2210,13 @@ void Map::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, in
 void Map::applyOnAllObjects(const std::function<void (Object*)>& operation)
 {
 	for (auto part : parts)
+		part->applyOnAllObjects(operation);
+}
+
+
+void Map::applyOnAllObjects(const std::function<void (const Object*)>& operation) const
+{
+	for (const MapPart* part : parts)
 		part->applyOnAllObjects(operation);
 }
 

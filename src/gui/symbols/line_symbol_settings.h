@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "gui/symbols/symbol_properties_widget.h"
 
@@ -89,7 +90,7 @@ protected:
 	void updateBorderContents(LineSymbolBorder& border, BorderWidgets& widgets);
 	
 	/** 
-	 * Ensures that a particular widget is visible in the scoll area. 
+	 * Ensures that a particular widget is visible in the scroll area. 
 	 */
 	void ensureWidgetVisible(QWidget* widget);
 	
@@ -111,7 +112,8 @@ protected slots:
 	void minimumDimensionsEdited();
 	void lineCapChanged(int index);
 	void lineJoinChanged(int index);
-	void pointedLineCapLengthChanged(double value);
+	void startOffsetChanged(double value);
+	void endOffsetChanged(double value);
 	void dashedChanged(bool checked);
 	void segmentLengthChanged(double value);
 	void endLengthChanged(double value);
@@ -121,6 +123,7 @@ protected slots:
 	void dashGroupsChanged(int index);
 	void inGroupBreakLengthChanged(double value);
 	void halfOuterDashesChanged(bool checked);
+	void midSymbolPlacementChanged(int index);
 	void midSymbolsPerDashChanged(int value);
 	void midSymbolDistanceChanged(double value);
 	void borderCheckClicked(bool checked);
@@ -130,7 +133,7 @@ protected slots:
 	void scaleDashSymbolClicked(bool checked);
 	
 private slots:
-	/** Ensure that a predetermined widget is visible in the scoll area.
+	/** Ensure that a predetermined widget is visible in the scroll area.
 	 *  The widget is set in advance by ensureWidgetVisible(QWidget* widget).
 	 */
 	void ensureWidgetVisible();
@@ -147,8 +150,10 @@ private:
 	std::vector<QWidget*> line_settings_list;
 	QComboBox* line_cap_combo;
 	QComboBox* line_join_combo;
-	QLabel* pointed_cap_length_label;
-	QDoubleSpinBox* pointed_cap_length_edit;
+	QLabel* start_offset_label;
+	QDoubleSpinBox* start_offset_edit;
+	QLabel* end_offset_label;
+	QDoubleSpinBox* end_offset_edit;
 	QCheckBox* dashed_check;
 	
 	// dashed == false && mid_symbol
@@ -170,6 +175,7 @@ private:
 	
 	// mid_symbol
 	std::vector<QWidget*> mid_symbol_widget_list;
+	QComboBox* mid_symbol_placement_combo;
 	QSpinBox* mid_symbol_per_spot_edit;
 	QLabel* mid_symbol_distance_label;
 	QDoubleSpinBox* mid_symbol_distance_edit;

@@ -89,6 +89,7 @@ public:
 		DrawText      = 7,
 		DrawFreehand  = 8,
 		Pan           = 9,
+		Scribble      = 10,
 		Other         = 0
 	};
 	
@@ -159,10 +160,10 @@ public:
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
 	// Mouse input
-	virtual bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
-	virtual bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	virtual bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
+	virtual bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
+	virtual bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
+	virtual bool mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
 	virtual void leaveEvent(QEvent* event);
 	
 	// Key input
@@ -192,7 +193,7 @@ public:
 	
 	
 	/**
-	 * @brief Returns the action which repesents this tool.
+	 * @brief Returns the action which represents this tool.
 	 */
 	QAction* toolAction() const { return tool_action; }
 	
@@ -338,7 +339,7 @@ protected:
 	 * 
 	 * Returns no_point if not hovering over a point.
 	 */
-	MapCoordVector::size_type findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
+	MapCoordVector::size_type findHoverPoint(const QPointF& cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos = nullptr) const;
 	
 	
 	/**

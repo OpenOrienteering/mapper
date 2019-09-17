@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "core/symbols/area_symbol.h"
 #include "gui/symbols/symbol_properties_widget.h"
@@ -116,6 +117,8 @@ private:
 	QDoubleSpinBox* pattern_pointdist_edit;
 	
 	QComboBox*      pattern_clipping_edit;
+	
+	int             first_pattern_tab;
 };
 
 

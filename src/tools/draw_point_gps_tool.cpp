@@ -83,7 +83,7 @@ void DrawPointGPSTool::initImpl()
 	}
 }
 
-void DrawPointGPSTool::newGPSPosition(MapCoordF coord, float accuracy)
+void DrawPointGPSTool::newGPSPosition(const MapCoordF& coord, float accuracy)
 {
 	auto point = reinterpret_cast<PointSymbol*>(editor->activeSymbol());
 	

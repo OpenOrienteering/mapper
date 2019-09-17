@@ -24,7 +24,6 @@
 
 #include <QRgb>
 
-class QIODevice;
 class QPainter;
 class QRectF;
 class QXmlStreamReader;
@@ -74,8 +73,6 @@ public:
 	/** Creates a new map grid with default settings. */
 	MapGrid();
 	
-	/** Loads the grid in the old "native" format from the given file. */
-	const MapGrid& load(QIODevice* file, int version);
 	
 	/** Saves the grid in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml) const;

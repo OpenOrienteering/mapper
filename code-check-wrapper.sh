@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017, 2018 Kai Pastor
 #
 #    This file is part of OpenOrienteering.
 #    
@@ -46,38 +46,62 @@ ENABLE_CLANG_TIDY=true
 ENABLE_IWYU=true
 
 PATTERN=" \
+  action_grid_bar.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
+  crs_param_widgets.cpp \
+  crs_template.cpp \
+  crs_template_implementation.cpp \
+  duplicate_equals_t.cpp \
   file_dialog.cpp \
+  /file_format.cpp \
+  file_format_t.cpp \
   file_import_export.cpp \
   georeferencing_dialog.cpp \
+  georeferencing_t.cpp \
   gdal_manager.cpp \
-  gps_display.cpp \
+  gdal_template.cpp \
   key_button_bar.cpp \
+  line_symbol.cpp \
+  main.cpp \
   /map.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \
   object_mover.cpp \
   object_query.cpp \
+  ocd_file_format.cpp \
+  ocd_t.cpp \
   ogr_file_format.cpp \
   ogr_template.cpp \
   overriding_shortcut.cpp \
+  point_symbol.cpp \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  settings_dialog.cpp \
+  /symbol.cpp \
   symbol_rule_set.cpp \
+  symbol_t.cpp \
+  symbol_tooltip.cpp \
   tag_select_widget.cpp \
   template_image.cpp \
+  template_image_open_dialog.cpp \
+  template_list_widget.cpp \
   template_tool \
   text_brwoser_dialog \
+  toast.cpp \
+  track_t.cpp \
+  /track.cpp \
   undo_manager.cpp \
   /util.cpp \
   /util_gui.cpp \
   world_file.cpp \
   xml_file_format.cpp \
+  xml_stream_util.cpp \
   \
   ocd \
+  src/sensors/ \
   src/tools/ \
   settings \
   \
@@ -90,7 +114,6 @@ if echo "$@" | grep -q "${PATTERN}"; then
 	*clang-tidy*)
 		if ${ENABLE_CLANG_TIDY}; then
 			"${PROGRAM}" \
-			  -checks=-*,modernize-*,cert-*,misc-*,readability-*,-cert-err58-cpp,-readability-implicit-bool-cast,-readability-braces-around-statements,-readability-else-after-return \
 			  "$@" \
 			|| exit 1
 		fi
@@ -101,6 +124,8 @@ if echo "$@" | grep -q "${PATTERN}"; then
 			  -Xiwyu --mapping_file=${0%/*}/iwyu-mapper.imp \
 			  -Xiwyu --check_also=*_p.h \
 			  -Xiwyu --max_line_length=160 \
+			  "-DqPrintable(...)=(void(__VA_ARGS__), \"\")" \
+			  "-DqUtf8Printable(...)=(void(__VA_ARGS__), \"\")" \
 			  "$@" \
 			|| exit 1
 		fi

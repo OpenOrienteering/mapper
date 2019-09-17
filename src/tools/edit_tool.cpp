@@ -79,7 +79,7 @@ void EditTool::createReplaceUndoStep(Object* object)
 }
 
 
-bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
+bool EditTool::pointOverRectangle(const QPointF& point, const QRectF& rect) const
 {
 	auto click_tolerance = clickTolerance();
 	if (point.x() < rect.left() - click_tolerance) return false;
@@ -96,29 +96,28 @@ bool EditTool::pointOverRectangle(QPointF point, const QRectF& rect) const
 
 MapCoordF EditTool::closestPointOnRect(MapCoordF point, const QRectF& rect)
 {
-	MapCoordF result = point;
-	if (result.x() < rect.left()) result.setX(rect.left());
-	if (result.y() < rect.top()) result.setY(rect.top());
-	if (result.x() > rect.right()) result.setX(rect.right());
-	if (result.y() > rect.bottom()) result.setY(rect.bottom());
+	if (point.x() < rect.left()) point.setX(rect.left());
+	if (point.y() < rect.top()) point.setY(rect.top());
+	if (point.x() > rect.right()) point.setX(rect.right());
+	if (point.y() > rect.bottom()) point.setY(rect.bottom());
 	if (rect.height() > 0 && rect.width() > 0)
 	{
-		if ((result.x() - rect.left()) / rect.width() > (result.y() - rect.top()) / rect.height())
+		if ((point.x() - rect.left()) / rect.width() > (point.y() - rect.top()) / rect.height())
 		{
-			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
-				result.setX(rect.right());
+			if ((point.x() - rect.left()) / rect.width() > (rect.bottom() - point.y()) / rect.height())
+				point.setX(rect.right());
 			else
-				result.setY(rect.top());
+				point.setY(rect.top());
 		}
 		else
 		{
-			if ((result.x() - rect.left()) / rect.width() > (rect.bottom() - result.y()) / rect.height())
-				result.setY(rect.bottom());
+			if ((point.x() - rect.left()) / rect.width() > (rect.bottom() - point.y()) / rect.height())
+				point.setY(rect.bottom());
 			else
-				result.setX(rect.left());
+				point.setX(rect.left());
 		}
 	}
-	return result;
+	return point;
 }
 
 
@@ -145,7 +144,7 @@ void EditTool::setupAngleHelperFromEditedObjects()
 		}
 		else if (object->getType() == Object::Path)
 		{
-			auto path = object->asPath();
+			const auto* path = object->asPath();
 			// Maps angles to the path distance covered by them
 			std::map<qreal, qreal> path_directions;
 			

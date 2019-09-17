@@ -1,0 +1,51 @@
+#
+#    Copyright 2017-2019 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# This qmake project file is to create a configuration for androiddeployqt.
+
+!android:error("This project is for Android only.")
+
+TEMPLATE = app
+TARGET   = Mapper
+
+ANDROID_VERSION_CODE = "@Mapper_VERSION_CODE@"
+ANDROID_VERSION_NAME = "@Mapper_VERSION_DISPLAY@"
+
+ANDROID_PACKAGE_SOURCE_DIR = "@ANDROID_PACKAGE_SOURCE_DIR@"
+CMAKE_COMMAND = "@CMAKE_COMMAND@"
+MAPPER_BINARY = "$<TARGET_FILE:Mapper>"
+PROJECT_BINARY_DIR = "@PROJECT_BINARY_DIR@"
+
+# We use resources from some external packages, so lets cleanup the staging dir
+# in CPackConfig.cmake when a package version changes.
+CPACK_CONFIG_CLEANUP_TRIGGER = \
+  GDAL: @GDAL_VERSION@ \
+  PROJ: @PROJ4_VERSION@ \
+  Qt5:  @Qt5Core_VERSION@
+
+# For the generated .pro file to be used in Qt Creator,
+# we must install everything and replace the dummy libMapper.so.
+INSTALLS            += everything
+
+everything.path  = /
+everything.extra = \
+  "$$CMAKE_COMMAND" --build "$$PROJECT_BINARY_DIR" -- -j$$QMAKE_HOST.cpu_count && \
+  "$$CMAKE_COMMAND" -E copy "$$MAPPER_BINARY" "$$OUT_PWD/" && \
+  "$$CMAKE_COMMAND" -E chdir "$$PROJECT_BINARY_DIR" \
+    "$$CMAKE_COMMAND" "-DCMAKE_INSTALL_PREFIX=$$ANDROID_PACKAGE_SOURCE_DIR" -P cmake_install.cmake

@@ -346,7 +346,7 @@ void FillTool::drawObjectIDs(Map* map, QPainter* painter, const RenderConfig &co
 	}
 }
 
-int FillTool::traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary)
+int FillTool::traceBoundary(const QImage& image, const QPoint& free_pixel, const QPoint& boundary_pixel, std::vector<QPoint>& out_boundary)
 {
 	Q_ASSERT(image.pixel(free_pixel) == background);
 	Q_ASSERT(image.pixel(boundary_pixel) != background);
@@ -520,7 +520,7 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 	
 	path->closeAllParts();
 	
-	// Obsolete: The resultung path is as simple as the bounding objects,
+	// Obsolete: The resulting path is as simple as the bounding objects,
 	// so better avoid the loss in precision from PathObject::simplify.
 	//   const auto simplify_epsilon = 1e-2;
 	//   path->simplify(nullptr, simplify_epsilon);

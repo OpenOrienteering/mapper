@@ -68,7 +68,7 @@ const QCursor& PrintTool::getCursor() const
 	return cursor;
 }
 
-bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool PrintTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (event->button() == Qt::LeftButton)
 	{
@@ -89,7 +89,7 @@ bool PrintTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidg
 	return false;
 }
 
-bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool PrintTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (dragging && event->buttons() & Qt::LeftButton)
 	{
@@ -108,7 +108,7 @@ bool PrintTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidge
 	return false;
 }
 
-bool PrintTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool PrintTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (dragging && event->button() == Qt::LeftButton)
 	{
@@ -252,7 +252,7 @@ void PrintTool::updatePrintArea()
 	editor->getMap()->setDrawingBoundingBox(QRectF(-1000000, -1000000, 2000000, 2000000), 0);
 }
 
-void PrintTool::updateDragging(MapCoordF mouse_pos_map)
+void PrintTool::updateDragging(const MapCoordF& mouse_pos_map)
 {
 	QPointF delta = QPointF(mouse_pos_map - click_pos_map);
 	QRectF area = map_printer->getPrintArea();
@@ -298,7 +298,7 @@ void PrintTool::updateDragging(MapCoordF mouse_pos_map)
 	}
 }
 
-void PrintTool::mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget)
+void PrintTool::mouseMoved(const MapCoordF& mouse_pos_map, MapWidget* widget)
 {
 	Q_ASSERT(!dragging); // No change while dragging!
 	

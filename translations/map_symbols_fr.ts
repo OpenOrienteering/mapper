@@ -5572,7 +5572,7 @@ Les pylônes très importants seront représentés en plan ou avec le symbole 53
             <translation>Mur infranchissable &lt;span style=&quot;color:magenta&quot;&gt;(franchissement interdit)&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+            <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5588,7 +5588,7 @@ Le concurrent qui ne respecte pas cette règle sera disqualifié.&lt;/span&gt;</
             <translation>Mur infranchissable, plan &lt;span style=&quot;color:magenta&quot;&gt;(interdit)&lt;/span&gt;</translation>
         </message>
         <message>
-            <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+            <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -9349,7 +9349,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+            <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
             <comment>Description of symbol 813</comment>
             <translation type="unfinished"></translation>
         </message>

@@ -56,7 +56,7 @@ class SymbolToolTip;
  * 
  * SymbolRenderWidget lets the user select symbols and perform actions on them.
  * It is a plain widget which does not implement scrolling but takes as much
- * height as neccessary for given width and number of symbols. Scrolling is
+ * height as necessary for given width and number of symbols. Scrolling is
  * realized by SymbolWidget.
  */
 class SymbolRenderWidget : public QWidget
@@ -130,7 +130,7 @@ public:
 	/**
 	 * @brief Opens the context menu at the given global position.
 	 */
-	void showContextMenu(QPoint global_pos);
+	void showContextMenu(const QPoint& global_pos);
 	
 public slots:
 	/**
@@ -184,14 +184,14 @@ protected slots:
 	 * 
 	 * @see Map::symbolChanged()
 	 */
-	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	void symbolChanged(int pos, const OpenOrienteering::Symbol* new_symbol, const OpenOrienteering::Symbol* old_symbol);
 	
 	/**
 	 * @brief Updates the widget and the current selection.
 	 * 
 	 * @see Map::symbolDeleted()
 	 */
-	void symbolDeleted(int pos, const Symbol* old_symbol);
+	void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 	void newPointSymbol();
 	void newLineSymbol();
@@ -215,6 +215,7 @@ protected slots:
 	void sortByNumber();
 	void sortByColor();
 	void sortByColorPriority();
+	void setCustomIconsVisible(bool checked);
 	
 protected:
 	void resizeEvent(QResizeEvent* event) override;
@@ -238,7 +239,7 @@ protected:
 	 * @brief Returns the index of the symbol represented at a particular location
 	 * @param pos The location
 	 */
-	int symbolIndexAt(QPoint pos) const;
+	int symbolIndexAt(const QPoint& pos) const;
 	
 	
 	void paintEvent(QPaintEvent* event) override;
@@ -263,7 +264,7 @@ protected:
 	 * @brief Handles hovering over the icons, i.e. controlling the tool tip.
 	 * @param pos The current location of the pointing device.
 	 */
-	void hover(QPoint pos);
+	void hover(const QPoint& pos);
 	
 	
 	void dragEnterEvent(QDragEnterEvent* event) override;
@@ -277,7 +278,7 @@ protected:
 	 * @param pos_in_row The position in the row where to insert the dropped symbol.
 	 * @return If there is a valid drop position, returns true, otherwise false.
 	 */
-	bool dropPosition(QPoint pos, int& row, int& pos_in_row);
+	bool dropPosition(const QPoint& pos, int& row, int& pos_in_row);
 	
 	/**
 	 * @brief Determines a drop indicator rectangle for a given location in the icons.
@@ -310,7 +311,7 @@ protected:
 	 * An active tool could catch the selectedSymbolsChanged() signal and
 	 * finish its editing for that reason. It would than insert a new object to
 	 * the map and so trigger another change of selection. Emitting
-	 * selectedSymbolsChanged() via this method supresses behavior by setting
+	 * selectedSymbolsChanged() via this method suppresses behavior by setting
 	 * the selection_locked flag before emitting the actual signal and resetting
 	 * the flag on return.
 	 */
@@ -361,6 +362,7 @@ private:
 	QAction* select_objects_additionally_action;
 	QAction* deselect_objects_action;
 	QAction* sort_manual_action;
+	QAction* show_custom_icons;
 	
 	SymbolToolTip* tooltip;
 	

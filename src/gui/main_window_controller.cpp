@@ -22,9 +22,12 @@
 #include "main_window_controller.h"
 
 #include <QtGlobal>
+#include <QMessageBox>
 
+#include "settings.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 
 
@@ -33,23 +36,55 @@ namespace OpenOrienteering {
 MainWindowController::~MainWindowController() = default;
 
 
-bool MainWindowController::save(const QString& path)
+bool MainWindowController::menuBarVisible()
 {
-	Q_UNUSED(path);
+	return !Settings::getInstance().touchModeEnabled();
+}
+
+bool MainWindowController::statusBarVisible()
+{
+	return !Settings::getInstance().touchModeEnabled();
+}
+
+
+bool MainWindowController::saveTo(const QString& /*path*/, const FileFormat& /*format*/)
+{
 	return false;
 }
 
-bool MainWindowController::exportTo(const QString& path, const FileFormat* format)
+bool MainWindowController::exportTo(const QString& path)
 {
-	Q_UNUSED(path);
-	Q_UNUSED(format);
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsWriting);
+	if (!format)
+		format = FileFormats.findFormat(FileFormats.defaultFormat());
+	if (!format)
+	{
+		QMessageBox::warning(window,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n\"%1\"\n"
+		                        "because the format is unknown.").arg(path));
+		return false;
+	}
+	if (!format->supportsWriting())
+	{
+		QMessageBox::warning(window,
+		                     tr("Error"),
+		                     tr("Cannot export the map as\n\"%1\"\n"
+		                        "because saving as %2 (.%3) is not supported.").
+		                     arg(path, format->description(),
+		                         format->fileExtensions().join(QLatin1String(", "))));
+		return false;
+	}
+	return exportTo(path, *format);
+}
+
+bool MainWindowController::exportTo(const QString& /*path*/, const FileFormat& /*format*/)
+{
 	return false;
 }
 
-bool MainWindowController::load(const QString& path, QWidget* dialog_parent)
+bool MainWindowController::loadFrom(const QString& /*path*/, const FileFormat& /*format*/, QWidget* /*dialog_parent*/)
 {
-	Q_UNUSED(path);
-	Q_UNUSED(dialog_parent);
 	return false;
 }
 
@@ -77,8 +112,7 @@ bool MainWindowController::keyReleaseEventFilter(QKeyEvent* event)
 
 MainWindowController* MainWindowController::controllerForFile(const QString& filename)
 {
-	const FileFormat* format = FileFormats.findFormatForFilename(filename);
-	if (format && format->supportsImport()) 
+	if (FileFormats.findFormatForFilename(filename, &FileFormat::supportsReading))
 		return new MapEditorController(MapEditorController::MapEditor);
 	
 	return nullptr;

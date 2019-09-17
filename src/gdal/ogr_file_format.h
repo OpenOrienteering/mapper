@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,15 +20,16 @@
 #ifndef OPENORIENTEERING_OGR_FILE_FORMAT_H
 #define OPENORIENTEERING_OGR_FILE_FORMAT_H
 
-#include <cstddef>
+#include <memory>
+
+#include <QString>
 
 #include "fileformats/file_format.h"
-
-class QIODevice;
 
 namespace OpenOrienteering {
 
 class Importer;
+class Exporter;
 class Map;
 class MapView;
 
@@ -41,26 +42,33 @@ class MapView;
  * so it can be imported into an existing map. This is the major reason for
  * implementing the OGR support as a FileFormat.
  */
-class OgrFileFormat : public FileFormat
+class OgrFileImportFormat : public FileFormat
 {
 public:
 	/**
-	 * Constructs a new OgrFileFormat.
+	 * Constructs a new OgrFileImportFormat.
 	 */
-	OgrFileFormat();
+	OgrFileImportFormat();
+	
 	
 	/**
-	 * Always returns true.
-	 * 
-	 * There is no cheap way to determine the answer via OGR.
+	 * Creates an importer for files supported by OGR.
 	 */
-	bool understands(const unsigned char* buffer, std::size_t size) const override;
-	
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
+};
+
+class OgrFileExportFormat : public FileFormat
+{
+public:
 	/**
-	 * Creates an importer object and configures it for the given input stream
-	 * and output map and view.
-	 */
-	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	  * Constructs a new OgrFileExportFormat.
+	  */
+	OgrFileExportFormat();
+
+	/**
+	  * Creates an exporter for files supported by OGR.
+	  */
+	std::unique_ptr<Exporter> makeExporter(const QString &path, const Map *map, const MapView *view) const override;
 };
 
 

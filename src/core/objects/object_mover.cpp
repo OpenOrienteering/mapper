@@ -197,7 +197,7 @@ void ObjectMover::calculateConstraints()
 	// Points
 	for (auto& item : points)
 	{
-		PathObject* path = item.first;
+		const PathObject* path = item.first;
 		auto& point_set = item.second;
 		
 		// If end points of closed paths are contained in the move set,
@@ -265,7 +265,7 @@ void ObjectMover::calculateConstraints()
 				    path->getCoordinate(part.prevCoordIndex(curve_anchor_index)).isCurveStart())
 				{
 					OppositeHandleConstraint constraint;
-					constraint.object = path;
+					constraint.object = const_cast<PathObject*>(path);  // = item.first
 					constraint.moved_handle_index = index;
 					constraint.curve_anchor_index = index - 1;
 					constraint.opposite_handle_index = curve_anchor_index - 1;
@@ -285,7 +285,7 @@ void ObjectMover::calculateConstraints()
 				    path->getCoordinate(curve_anchor_index).isCurveStart())
 				{
 					OppositeHandleConstraint constraint;
-					constraint.object = path;
+					constraint.object = const_cast<PathObject*>(path);  // = item.first
 					constraint.moved_handle_index = index;
 					constraint.curve_anchor_index = curve_anchor_index;
 					constraint.opposite_handle_index = curve_anchor_index + 1;

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -31,7 +31,6 @@
 #include "core/map_coord.h"  // IWYU pragma: keep
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -56,27 +55,36 @@ using MapCoordVector = std::vector<MapCoord>;
 using MapCoordVectorF = std::vector<MapCoordF>;
 
 
-/** Settings for a line symbol's border. */
+/**
+ * Settings for a line symbol's border.
+ */
 struct LineSymbolBorder
 {
-	const MapColor* color;
-	int width;
-	int shift;
-	bool dashed;
-	int dash_length;
-	int break_length;
+	const MapColor* color = nullptr;
+	int width             = 0;
+	int shift             = 0;
+	int dash_length       = 2000;
+	int break_length      = 1000;
+	bool dashed           = false;
 	
-	void reset() noexcept;
-	bool load(QIODevice* file, int version, Map* map);
+	// Default special member functions are fine.
+	
 	void save(QXmlStreamWriter& xml, const Map& map) const;
 	bool load(QXmlStreamReader& xml, const Map& map);
-	bool equals(const LineSymbolBorder* other) const;
-	void assign(const LineSymbolBorder& other, const MapColorMap* color_map);
 	
 	bool isVisible() const;
-	void createSymbol(LineSymbol& out) const;
+	void setupSymbol(LineSymbol& out) const;
 	void scale(double factor);
 };
+
+
+bool operator==(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept;
+
+inline bool operator!=(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept
+{
+	return !(lhs == rhs);
+}
+
 
 
 /** Symbol for PathObjects which displays a line along the path. */
@@ -101,11 +109,26 @@ public:
 		RoundJoin = 2
 	};
 	
+	/**
+	 * Mid symbol placement on dashed lines.
+	 */
+	enum MidSymbolPlacement
+	{
+		CenterOfDash      = 0,  ///< Mid symbols on every dash
+		CenterOfDashGroup = 1,  ///< Mid symbols on the center of a dash group
+		CenterOfGap       = 2,  ///< Mid symbols on the main gap (i.e. not between dashes in a group)
+		NoMidSymbols      = 99
+	};
+	
 	/** Constructs an empty line symbol. */
 	LineSymbol() noexcept;
 	~LineSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
+protected:
+	explicit LineSymbol(const LineSymbol& proto);
+	LineSymbol* duplicate() const override;
+	
+public:
 	bool validate() const override;
 	
 	void createRenderables(
@@ -121,23 +144,20 @@ public:
 	        Symbol::RenderableOptions options ) const override;
 	
 	/**
-	 * Creates the renderables for a single path.
+	 * Creates the renderables for a single path (i.e. a single part).
 	 * 
-	 * @deprecated
-	 * 
-	 * Calls to this function need to be replaced by calls to createPathCoordRenderables()
-	 * as soon as it is no longer neccesary to update the PathCoordVector in advance.
+	 * For the single path part represented by VirtualPath, this function
+	 * takes care of all renderables for the main line, borders, mid symbol
+	 * and dash symbol being added to the output. It does not deal with
+	 * start symbols and end symbols.
 	 */
-	void createPathRenderables(const Object* object, bool path_closed, const MapCoordVector& flags, const MapCoordVectorF& coords, ObjectRenderables& output) const;
+	void createSinglePathRenderables(const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
 	
-	/**
-	 * Creates the renderables for a single VirtualPath.
-	 */
-	void createPathCoordRenderables(const Object* object, const VirtualPath& path, bool path_closed, ObjectRenderables& output) const;
 	
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	/**
@@ -192,8 +212,13 @@ public:
 	inline void setCapStyle(CapStyle style) {cap_style = style;}
 	inline JoinStyle getJoinStyle() const {return join_style;}
 	inline void setJoinStyle(JoinStyle style) {join_style = style;}
-	inline int getPointedCapLength() const {return pointed_cap_length;}
-	inline void setPointedCapLength(int value) {pointed_cap_length = value;}
+	
+	int startOffset() const { return start_offset; }
+	void setStartOffset(int value) { start_offset = value; }
+	
+	int endOffset() const { return end_offset; }
+	void setEndOffset(int value) { end_offset = value; }
+	
 	inline bool isDashed() const {return dashed;}
 	inline void setDashed(bool value) {dashed = value;}
 	
@@ -210,6 +235,8 @@ public:
 	inline void setMidSymbolsPerSpot(int value) {mid_symbols_per_spot = value;}
 	inline int getMidSymbolDistance() const {return mid_symbol_distance;}
 	inline void setMidSymbolDistance(int value) {mid_symbol_distance = value;}
+	inline MidSymbolPlacement getMidSymbolPlacement() const { return mid_symbol_placement; }
+	void setMidSymbolPlacement(MidSymbolPlacement placement);
 	
 	inline bool getSuppressDashSymbolAtLineEnds() const {return suppress_dash_symbol_at_ends;}
 	inline void setSuppressDashSymbolAtLineEnds(bool value) {suppress_dash_symbol_at_ends = value;}
@@ -240,7 +267,7 @@ public:
 	
 	inline bool hasBorder() const {return have_border_lines;}
 	inline void setHasBorder(bool value) {have_border_lines = value;}
-	inline bool areBordersDifferent() const {return !border.equals(&right_border);}
+	inline bool areBordersDifferent() const {return border != right_border;}
 	
 	inline LineSymbolBorder& getBorder() {return border;}
 	inline const LineSymbolBorder& getBorder() const {return border;}
@@ -250,27 +277,22 @@ public:
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	PointSymbol* loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
+	/**
+	 * Creates the border lines' renderables for a single path (i.e. a single part).
+	 * 
+	 * For the single path part represented by VirtualPath, this function takes
+	 * care of all renderables for the border lines being added to the output.
+	 */
 	void createBorderLines(
-	        const Object* object,
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        ObjectRenderables& output
-	) const;
-	
-	void createBorderLine(
-	        const Object* object,
-	        const VirtualPath& path,
-	        bool path_closed,
-	        ObjectRenderables& output,
-	        const LineSymbolBorder& border,
-	        double main_shift
 	) const;
 	
 	void shiftCoordinates(
@@ -280,15 +302,19 @@ protected:
 	        MapCoordVectorF& out_coords
 	) const;
 	
+	/**
+	 * Creates flags and coords for a continuous line segment, and 
+	 * adds pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 */
 	void processContinuousLine(
 	        const VirtualPath& path,
 	        const SplitPathCoord& start,
 	        const SplitPathCoord& end,
-	        bool has_start,
-	        bool has_end,
+	        bool set_mid_symbols,
 	        MapCoordVector& processed_flags,
 	        MapCoordVectorF& processed_coords,
-	        bool set_mid_symbols,
 	        ObjectRenderables& output
 	) const;
 	
@@ -300,14 +326,35 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Creates flags and coords for a single dashed path (i.e. a single part)
+	 * which may consist of multiple sections separated by dash points,
+	 * and adds pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 */
 	void processDashedLine(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords,
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Creates flags and coords for a single dashed path section, and adds
+	 * pointed line caps and mid symbol renderables to the output.
+	 * 
+	 * This is the main function determining the layout of dash patterns.
+	 * A path section is delimited by the part start, the part end, and/or
+	 * by dash points.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 * 
+	 * \see LineSymbol::createMidSymbolRenderables
+	 */
 	SplitPathCoord createDashGroups(
 	        const VirtualPath& path,
 	        bool path_closed,
@@ -327,23 +374,44 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Adds just the mid symbol renderables for a single solid path
+	 * (i.e. a single part) to the output.
+	 * 
+	 * This is the main function determining the layout of mid symbols
+	 * when the path is solid, not dashed.
+	 * 
+	 * Note that this function does not create LineRenderables.
+	 * 
+	 * \see LineSymbol::createDashGroups
+	 */
 	void createMidSymbolRenderables(
 	        const VirtualPath& path,
+	        const SplitPathCoord& start,
+	        const SplitPathCoord& end,
 	        bool path_closed,
 	        ObjectRenderables& output
 	) const;
 	
+	/**
+	 * Adds just the start and end symbol renderables to the output.
+	 * 
+	 * The start symbol is placed at the start of the first part,
+	 * and the end symbols is placed at the end of the last part.
+	 */
+	void createStartEndSymbolRenderables(
+	        const PathPartVector& path_parts,
+	        ObjectRenderables& output
+	) const;
+	
+	
 	void replaceSymbol(PointSymbol*& old_symbol, PointSymbol* replace_with, const QString& name);
 	
-	// Base line
-	int line_width;		// in 1/1000 mm
-	const MapColor* color;
-	int minimum_length;
-	CapStyle cap_style;
-	JoinStyle join_style;
-	int pointed_cap_length;
+	// Members ordered for minimizing padding
 	
-	bool dashed;
+	// Border line details
+	LineSymbolBorder border;
+	LineSymbolBorder right_border;
 	
 	// Point symbols
 	PointSymbol* start_symbol;
@@ -351,29 +419,39 @@ protected:
 	PointSymbol* end_symbol;
 	PointSymbol* dash_symbol;
 	
+	// Base line
+	const MapColor* color;
+	int line_width;		// in 1/1000 mm
+	int minimum_length;
+	int start_offset;
+	int end_offset;
+	
 	int mid_symbols_per_spot;
 	int mid_symbol_distance;
-	bool suppress_dash_symbol_at_ends;
-	bool scale_dash_symbol;
+	int minimum_mid_symbol_count;
+	int minimum_mid_symbol_count_when_closed;
 	
 	// Not dashed
 	int segment_length;
 	int end_length;
-	bool show_at_least_one_symbol;
-	int minimum_mid_symbol_count;
-	int minimum_mid_symbol_count_when_closed;
 	
 	// Dashed
 	int dash_length;
 	int break_length;
 	int dashes_in_group;
 	int in_group_break_length;
-	bool half_outer_dashes;
 	
-	// Border lines
+	CapStyle cap_style;
+	JoinStyle join_style;
+	MidSymbolPlacement mid_symbol_placement;
+	
+	// Various flags
+	bool dashed;
+	bool half_outer_dashes;
+	bool show_at_least_one_symbol;
+	bool suppress_dash_symbol_at_ends;
+	bool scale_dash_symbol;
 	bool have_border_lines;
-	LineSymbolBorder border;
-	LineSymbolBorder right_border;
 };
 
 

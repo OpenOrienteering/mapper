@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2016  Kai Pastor
+ *    Copyright 2014-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,7 +34,6 @@
 
 #include "map_coord.h"
 
-class QIODevice;
 class QLatin1String;
 class QRectF;
 class QXmlStreamReader;
@@ -118,8 +117,6 @@ public:
 	/** Destroys the map view. */
 	~MapView() override;
 	
-	/** Loads the map view in the old "native" format from the file. */
-	void load(QIODevice* file, int version);
 	
 	/**
 	 * Saves the map view state to an XML stream.
@@ -144,24 +141,18 @@ public:
 	void updateAllMapWidgets();
 	
 	
-	/** Converts x, y (with origin at the center of the view) to map coordinates */
-	MapCoord viewToMap(double x, double y) const;
+	/** Converts the point (with origin at the center of the view) to map coordinates */
+	MapCoord viewToMap(const QPointF& point) const;
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
-	MapCoord viewToMap(QPointF point) const;
-	
-	/** Converts x, y (with origin at the center of the view) to map coordinates */
-	MapCoordF viewToMapF(double x, double y) const;
-	
-	/** Converts the point (with origin at the center of the view) to map coordinates */
-	MapCoordF viewToMapF(QPointF point) const;
+	MapCoordF viewToMapF(const QPointF& point) const;
 	
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	QPointF mapToView(MapCoord coords) const;
+	QPointF mapToView(const MapCoord& coords) const;
 	
 	/// Converts map coordinates to view coordinates (with origin at the center of the view)
-	QPointF mapToView(MapCoordF coords) const;
+	QPointF mapToView(const QPointF& coords) const;
 	
 	
 	/**
@@ -204,14 +195,14 @@ public:
 	QPoint panOffset() const;
 	
 	/** Sets the current pan offset while the map is being dragged. */
-	void setPanOffset(QPoint offset);
+	void setPanOffset(const QPoint& offset);
 	
 	/**
 	 * Finishes panning the map.
 	 * 
 	 * @param offset The final offset, relative to the start of the operation.
 	 */
-	void finishPanning(QPoint offset);
+	void finishPanning(const QPoint& offset);
 	
 	
 	/** Returns the map this view is defined on. */
@@ -228,7 +219,7 @@ public:
 	 * @param cursor_pos_view The cursor position in view coordinates, must be
 	 *     set if preserve_cursor_pos is used.
 	 */
-	void zoomSteps(double num_steps, QPointF cursor_pos_view);
+	void zoomSteps(double num_steps, const QPointF& cursor_pos_view);
 	
 	/**
 	 * Zooms the maps (in steps), preserving the center of the view.
@@ -247,7 +238,7 @@ public:
 	double getZoom() const;
 	
 	/** Sets the zoom factor relative to the given point.*/
-	void setZoom(double value, QPointF center);
+	void setZoom(double value, const QPointF& center);
 	
 	/** Sets the zoom factor. */
 	void setZoom(double value);
@@ -256,7 +247,7 @@ public:
 	/** Returns the view rotation (in radians). */
 	double getRotation() const;
 	
-	/** Sets the view roation (in radians). */
+	/** Sets the view rotation (in radians). */
 	void setRotation(double value);
 	
 	
@@ -264,7 +255,7 @@ public:
 	MapCoord center() const;
 	
 	/** Sets the position of the view center. */
-	void setCenter(MapCoord pos);
+	void setCenter(const MapCoord& pos);
 	
 	
 	// Map and template visibilities
@@ -343,14 +334,14 @@ signals:
 	/**
 	 * Indicates a change of the viewed area of the map.
 	 * 
-	 * @param change The aspects that have chaneged.
+	 * @param change The aspects that have changed.
 	 */
-	void viewChanged(ChangeFlags change);
+	void viewChanged(OpenOrienteering::MapView::ChangeFlags change);
 	
 	/**
 	 * Indicates a change of the pan offset.
 	 */
-	void panOffsetChanged(QPoint offset);
+	void panOffsetChanged(const QPoint& offset);
 	
 	/**
 	 * Indicates a particular change of visibility.
@@ -359,7 +350,7 @@ signals:
 	 * @param active  The features current state of activation.
 	 * @param temp    If a the feature is a template, a pointer to this template.
 	 */
-	void visibilityChanged(VisibilityFeature feature, bool active, const Template* temp = nullptr);
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
 	
 	
 public:
@@ -421,7 +412,6 @@ private:
 	
 	QTransform view_to_map;
 	QTransform map_to_view;
-	QTransform world_transform;
 	
 	TemplateVisibility map_visibility;
 	TemplateVisibilityVector template_visibilities;
@@ -455,21 +445,21 @@ bool operator!=(TemplateVisibility lhs, TemplateVisibility rhs)
 // ### MapView inline code ###
 
 inline
-MapCoord MapView::viewToMap(QPointF point) const
+MapCoord MapView::viewToMap(const QPointF& point) const
 {
-	return viewToMap(point.x(), point.y());
+	return MapCoord(view_to_map.map(point));
 }
 
 inline
-MapCoordF MapView::viewToMapF(QPointF point) const
+MapCoordF MapView::viewToMapF(const QPointF& point) const
 {
-	return viewToMapF(point.x(), point.y());
+	return MapCoordF(view_to_map.map(point));
 }
 
 inline
 const QTransform& MapView::worldTransform() const
 {
-	return world_transform;
+	return map_to_view;
 }
 
 inline

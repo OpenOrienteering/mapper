@@ -25,7 +25,6 @@
 #include <iterator>
 
 #include <QtGlobal>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QObject>
 #include <QStringRef>
@@ -77,29 +76,6 @@ void MapPart::setName(const QString& new_name)
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool MapPart::load(QIODevice* file, int version, Map* map)
-{
-	loadString(file, name);
-	
-	int size;
-	file->read((char*)&size, sizeof(int));
-	objects.resize(size, nullptr);
-	
-	for (Object*& object : objects)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		object = Object::getObjectForType(static_cast<Object::Type>(save_type), nullptr);
-		if (!object)
-			return false;
-		object->load(file, version, map);
-	}
-	return true;
-}
-
-#endif
 
 void MapPart::save(QXmlStreamWriter& xml) const
 {
@@ -256,7 +232,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 }
 
 void MapPart::findObjectsAt(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
@@ -279,8 +255,8 @@ void MapPart::findObjectsAt(
 }
 
 void MapPart::findObjectsAtBox(
-        MapCoordF corner1,
-        MapCoordF corner2,
+        const MapCoordF& corner1,
+        const MapCoordF& corner2,
         bool include_hidden_objects,
         bool include_protected_objects,
         std::vector< Object* >& out ) const
@@ -316,7 +292,7 @@ int MapPart::countObjectsInRect(const QRectF& map_coord_rect, bool include_hidde
 QRectF MapPart::calculateExtent(bool include_helper_symbols) const
 {
 	QRectF rect;
-	for (const auto object : objects)
+	for (const auto* object : objects)
 	{
 		if (!object->getSymbol()->isHidden()
 		    && (include_helper_symbols || !object->getSymbol()->isHelperSymbol()) )
@@ -345,6 +321,15 @@ void MapPart::applyOnMatchingObjects(const std::function<void (Object*)>& operat
 }
 
 
+void MapPart::applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const
+{
+	std::for_each(objects.rbegin(), objects.rend(), [&operation, &condition](auto object) {
+		if (condition(object))
+			operation(object);
+	});
+}
+
+
 void MapPart::applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition)
 {
 	for (auto i = objects.size(); i > 0; )
@@ -358,6 +343,12 @@ void MapPart::applyOnMatchingObjects(const std::function<void (Object*, MapPart*
 
 
 void MapPart::applyOnAllObjects(const std::function<void (Object*)>& operation)
+{
+	std::for_each(objects.rbegin(), objects.rend(), operation);
+}
+
+
+void MapPart::applyOnAllObjects(const std::function<void (const Object*)>& operation) const
 {
 	std::for_each(objects.rbegin(), objects.rend(), operation);
 }

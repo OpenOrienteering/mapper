@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2014, 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,11 +20,13 @@
 #ifndef OPENORIENTEERING_OCD_FILE_FORMAT
 #define OPENORIENTEERING_OCD_FILE_FORMAT
 
-#include <cstddef>
+#include <memory>
+#include <vector>
+
+#include <QtGlobal>
+#include <QString>
 
 #include "fileformats/file_format.h"
-
-class QIODevice;
 
 namespace OpenOrienteering {
 
@@ -41,9 +43,30 @@ class OcdFileFormat : public FileFormat
 {
 public:
 	/**
-	 * Constructs a new OcdFileFormat.
+	 * Returns the file format ID string for the given version.
 	 */
-	OcdFileFormat();
+	static const char* idForVersion(quint16 version);
+	
+	/**
+	 * Returns a container of all supported variants of this format.
+	 */
+	static std::vector<std::unique_ptr<OcdFileFormat>> makeAll();
+	
+	
+	/**
+	 * Constructs a new OcdFileFormat.
+	 * 
+	 * Supported explicit OCD versions for export are 8 to 12.
+	 * In addition to these versions, the following special values are valid:
+	 * - `autoDeterminedVersion()` supports import only. It determines the
+	 *   version from the imported data.
+	 * - `legacyVersion()` selects the old implementations of OCD export or
+	 *   import.
+	 * 
+	 * Supplying an unsupported version will cause the program to abort.
+	 */
+	OcdFileFormat(quint16 version);
+	
 	
 	/**
 	 * Detects whether the buffer may be the start of a valid OCD file.
@@ -51,13 +74,27 @@ public:
 	 * At the moment, it requires at least two bytes of data.
 	 * It will return false if compiled for a big endian system.
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
+	
 	
 	/// \copydoc FileFormat::createImporter()
-	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 	
 	/// \copydoc FileFormat::createExporter()
-	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
+	
+	/// The name of the property where the importer can record the imported version.
+	static constexpr const char* versionProperty() { return "OcdFileFormat::version"; }
+	
+	/// A special value which indicates the usage of an auto-detected (or default) version.
+	static constexpr quint16 autoDeterminedVersion() { return 0; }
+	
+	/// A special value which indicates the usage of the legacy import/export.
+	static constexpr quint16 legacyVersion() { return 1; }
+	
+private:
+	quint16 version = 0;
+	
 };
 
 

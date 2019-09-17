@@ -26,6 +26,7 @@
 
 #include <QObject>
 #include <QPoint>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/draw_line_and_area_tool.h"
@@ -62,10 +63,10 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	bool keyPressEvent(QKeyEvent* event) override;
     bool keyReleaseEvent(QKeyEvent* event) override;
@@ -88,7 +89,7 @@ protected:
 	void undoLastPoint();
 	
 	/** Picks a direction from an existing object. */
-	void pickDirection(MapCoordF coord, MapWidget* widget);
+	void pickDirection(const MapCoordF& coord, MapWidget* widget);
 	
 	/** Checks if the current drawing direction is parallel to the angle. */
 	bool drawingParallelTo(double angle) const;

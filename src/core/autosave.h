@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014, 2017 Kai Pastor
+ *    Copyright 2014, 2017, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,13 +20,52 @@
 #ifndef OPENORIENTEERING_AUTOSAVE_H
 #define OPENORIENTEERING_AUTOSAVE_H
 
-#include <QScopedPointer>
+#include <QObject>
+#include <QTimer>
 
 class QString;
 
 namespace OpenOrienteering {
 
-class AutosavePrivate;
+class Autosave;
+
+
+/**
+ * @brief AutosavePrivate is a helper class of Autosave.
+ * 
+ * AutosavePrivate implements most of Autosave's behaviour.
+ * Autosave is meant to be used through inheritance.
+ * Due to the implementation of QObject and moc, only the first inherited class
+ * may be derived from QObject. That is why Autosave itself is not derived from
+ * QObject, but rather uses this helper class.
+ */
+class AutosavePrivate : public QObject
+{
+	Q_OBJECT
+	
+public:	
+	explicit AutosavePrivate(Autosave& autosave);
+	
+	~AutosavePrivate() override;
+	
+	bool autosaveNeeded() const;
+	
+	void setAutosaveNeeded(bool needed);
+	
+public slots:
+	void autosave();
+	
+	void settingsChanged();
+	
+private:
+	Q_DISABLE_COPY(AutosavePrivate)
+	
+	Autosave& document;
+	QTimer autosave_timer;
+	int  autosave_interval = 0;
+	bool autosave_needed = false;
+};
+
 
 
 /**
@@ -41,8 +80,8 @@ class AutosavePrivate;
  * setAutosaveNeeded() when changes need to be taken care of by Autosave, or
  * when normal saving has terminated the need to perform autosaving.
  * 
- * Autosaving, as implemented by autosave(), may succeed, fail temporary (e.g.
- * during editing), or fail permanent (e.g. for lack of disk space).
+ * Autosaving, as implemented by autosave(), may succeed, fail temporarily
+ * (e.g. during editing), or fail permanently (e.g. for lack of disk space).
  * On success or permanent failure, autosave() will be called again after the
  * regular autosaving period.
  * On temporary failure, autosave() will be called again after five seconds.
@@ -83,7 +122,7 @@ protected:
 private:
 	friend class AutosavePrivate;
 	
-	QScopedPointer<AutosavePrivate> autosave_controller;
+	AutosavePrivate autosave_controller;
 };
 
 

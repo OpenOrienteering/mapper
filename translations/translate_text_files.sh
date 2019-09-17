@@ -38,10 +38,11 @@ done | sed -e "
   s/&apos;/'/
 " > desktop_file_comment.txt
 
-sed -i "../packaging/linux/Mapper.desktop" -e '
+sed -e '
   /^Comment=/ r desktop_file_comment.txt
   /^Comment\[/ d
-'
+' -i -- "../packaging/linux/Mapper.desktop" \
+&& rm -f "../packaging/linux/Mapper.desktop--"
 
 for FILE
 do
@@ -63,8 +64,9 @@ done | sed -e "
   s/&apos;/'/
 " > mime_type_comment.txt
 
-sed -i "../packaging/linux/openorienteering-mapper.xml" -e '
+sed -e '
   /^ *<comment>/ r mime_type_comment.txt
   /^ *<comment [^>]*lang=/ d
-'
+' -i -- "../packaging/linux/openorienteering-mapper.xml" \
+&& rm -f "../packaging/linux/openorienteering-mapper.xml--"
 

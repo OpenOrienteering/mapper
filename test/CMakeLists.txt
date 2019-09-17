@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -18,11 +18,10 @@
 
 
 find_package(Qt5Network REQUIRED)
-find_package(Qt5Positioning)
 find_package(Qt5PrintSupport REQUIRED)
-find_package(Qt5Sensors)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Positioning)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -67,9 +66,12 @@ function(add_test_helper testname autorun)
 	target_link_libraries(${testname}
 	  PROJ4::proj
 	  Qt5::Test
-	  Qt5::Widgets
+	  Qt5::Gui
 	  Polyclipping::Polyclipping
 	)
+	if("${ARGN}" MATCHES "crs_template_implementation")
+		target_link_libraries(${testname} Qt5::Widgets)
+	endif()
 	if(NOT manual_test)
 		configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
 		add_test(${testname} ${CMAKE_COMMAND} -P ${testname}-RUN.cmake)
@@ -90,12 +92,23 @@ endfunction()
 # The first filename is also used as the name of the executable file and
 # as the name of the test.
 #
-# A unit test executable is linked only to external libraries by default.
-# It only needs to be rebuild and run when one of its components was modified.
-# Additional link libraries may be added to the executable target as usual.
+# When Mapper_DEVELOPMENT_BUILD is enabled, a unit test executable is linked
+# only to external libraries by default. It only needs to be rebuild and run
+# when its explicit sources are modified.
+# 
+# When Mapper_DEVELOPMENT_BUILD is disabled, the additional explicit sources
+# are ignored, and the unit test executable is linked directly to the
+# Mapper_Common libary. This is a faster choice for one-time builds like CI,
+# and it also avoids problems with collecting test coverage information.
 #
 function(add_unit_test testname)
-	add_test_helper("${testname}" 1 ${ARGN})
+	if(Mapper_DEVELOPMENT_BUILD)
+		add_test_helper("${testname}" 1 ${ARGN})
+	elseif("${ARGN}" MATCHES "MANUAL")
+		add_system_test("${testname}" MANUAL)
+	else()
+		add_system_test("${testname}")
+	endif()
 endfunction()
 
 
@@ -113,11 +126,12 @@ function(add_system_test testname)
 	target_link_libraries(${testname}
 	  Mapper_Common
 	  libocad
+	  Qt5::Widgets
 	)
 endfunction()
 
 
-# Include generated files (moc ouput, build configuration)
+# Include generated files (moc output, build configuration)
 include_directories("${PROJECT_BINARY_DIR}/src")
 include_directories("${PROJECT_SOURCE_DIR}/src")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
@@ -129,6 +143,18 @@ add_unit_test(autosave_t MANUAL ../src/core/autosave
 	../src/settings
 )
 add_unit_test(encoding_t ../src/util/encoding)
+add_unit_test(georef_ocd_mapping_t
+	../src/settings
+	../src/gui/util_gui
+	../src/gui/widgets/crs_param_widgets
+	../src/core/georeferencing
+	../src/core/crs_template
+	../src/core/crs_template_implementation
+	../src/fileformats/ocd_georef_fields
+	../src/fileformats/file_format
+	../src/util/xml_stream_util
+	../src/core/map_coord
+)
 add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/settings
 	../src/core/crs_template
@@ -138,9 +164,13 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/gui/widgets/crs_param_widgets
 	../src/mapper_resource
 	../src/fileformats/file_format
+	../src/util/xml_stream_util
+	../src/core/map_coord
 )
+add_unit_test(grid_t ../src/util/util)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)
+add_unit_test(ocd_t ../src/fileformats/ocd_types)
 add_unit_test(qpainter_t)
 add_unit_test(util_t ../src/util/util
 	../src/settings
@@ -156,23 +186,31 @@ add_system_test(map_t)
 add_system_test(object_query_t)
 add_system_test(path_object_t)
 add_system_test(symbol_set_t)
+add_system_test(symbol_t)
 add_system_test(template_t)
 add_system_test(tools_t)
+add_system_test(track_t)  # Could be unit test, but needs Georeferencing
 add_system_test(transform_t)
 add_system_test(undo_manager_t)
 
+if(TARGET Qt5::Positioning)
+	add_system_test(sensors_t)
+	target_link_libraries(sensors_t Qt5::Positioning mapper-sensors Mapper_Common)
+endif()
 
 # Collect the AUTORUN_TESTS
 get_property(Mapper_AUTORUN_TESTS DIRECTORY PROPERTY Mapper_AUTORUN_TESTS)
-configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
-
-# Unlike the default "test" target, this custom target is displayed in Qt
-# Creator's Projects view, and when build, it prints the output of failed tests.
-# It maybe used as an additional build step or be build from the Projects view.
-# It also provides access to the the script template.
-add_custom_target(AUTORUN_TESTS
-  COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
-  SOURCES AUTORUN_TESTS.cmake.in
-  COMMENT "Running tests for modified sources"
-)
-add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+if(Mapper_AUTORUN_TESTS)
+	configure_file(AUTORUN_TESTS.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/AUTORUN_TESTS.cmake @ONLY)
+	
+	# Unlike the default "test" target, this custom target is displayed in Qt
+	# Creator's Projects view, and when build, it prints the output of failed
+	# tests. It maybe used as an additional build step, or it can be build from
+	# the Projects view. It also provides access to the the script template.
+	add_custom_target(AUTORUN_TESTS
+	  COMMAND "${CMAKE_COMMAND}" -P AUTORUN_TESTS.cmake
+	  SOURCES AUTORUN_TESTS.cmake.in
+	  COMMENT "Running tests for modified sources"
+	)
+	add_dependencies(AUTORUN_TESTS ${Mapper_AUTORUN_TESTS})
+endif()

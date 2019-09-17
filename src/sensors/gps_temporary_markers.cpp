@@ -21,11 +21,20 @@
 
 #include "gps_temporary_markers.h"
 
+#include <Qt>
+#include <QtGlobal>
+#include <QBrush>
 #include <QPainter>
+#include <QPen>
+#include <QRgb>
 
+#include "core/map_coord.h"
+#include "core/map_view.h"
 #include "gui/map/map_widget.h"
-#include "gps_display.h"
+#include "sensors/gps_display.h"
 #include "tools/tool.h"
+
+class QPointF;
 
 
 namespace OpenOrienteering {
@@ -109,7 +118,7 @@ void GPSTemporaryMarkers::paint(QPainter* painter)
 	painter->restore();
 }
 
-void GPSTemporaryMarkers::newGPSPosition(MapCoordF coord, float accuracy)
+void GPSTemporaryMarkers::newGPSPosition(const MapCoordF& coord, float accuracy)
 {
 	Q_UNUSED(accuracy);
 

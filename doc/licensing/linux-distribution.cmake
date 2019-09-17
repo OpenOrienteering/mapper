@@ -41,9 +41,9 @@ list(APPEND easy_dependencies
   qtimageformats
   qttranslations
   # qtandroidextras ?
-  # qtlocation ?
-  # qtsensors ?
-  # qtserialport ?
+  qtlocation
+  qtsensors
+  qtserialport
   # qtsingleapplication : Linked statically, attribution required!
   # gdal dependencies
     # libarmadillo4

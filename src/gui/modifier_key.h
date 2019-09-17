@@ -67,7 +67,7 @@ public:
 	
 	/** Returns a string representation for user interface purposes.
 	 * 
-	 * This operator is intented to be used for implicit type casts. */
+	 * This operator is intended to be used for implicit type casts. */
 	operator QString() const;
 	
 	/** Returns a shared Alt modifier key. */

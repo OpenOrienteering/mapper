@@ -44,6 +44,8 @@ public:
 	static QPaintEngine::Type paintEngineType();
 	
 private:
+	void init();
+	
 	std::unique_ptr<AdvancedPdfPrintEngine> engine;
 };
 

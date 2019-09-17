@@ -61,7 +61,7 @@
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
 #include "undo/undo_manager.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 using namespace OpenOrienteering;
@@ -85,7 +85,7 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 	});
 	QVERIFY(found == end(entries));
 	entries.push_back({context, source, comment, {} });
-	// n occurences of ';' means n+1 translations, plus translation template -> n+2
+	// n occurrences of ';' means n+1 translations, plus translation template -> n+2
 	entries.back().translations.reserve(std::size_t(map_symbol_translations.count(';')) + 2);
 }
 
@@ -196,6 +196,7 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 }  // namespace
 
 
+
 void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
 {
 	if (source.isEmpty())
@@ -245,17 +246,18 @@ void saveIfDifferent(const QString& path, Map* map, MapView* view = nullptr)
 		new_data.reserve(existing_data.size()*2);
 	}
 	
-	QBuffer buffer(&new_data);
-	buffer.open(QFile::WriteOnly);
-	XMLFileExporter exporter(&buffer, map, view);
+	XMLFileExporter exporter({}, map, view);
 	auto is_src_format = path.contains(QLatin1String(".xmap"));
 	exporter.setOption(QString::fromLatin1("autoFormatting"), is_src_format);
 	auto retain_compatibility = is_src_format && map->getNumParts() == 1
 	                            && !path.contains(QLatin1String("ISOM2017"));
 	Settings::getInstance().setSetting(Settings::General_RetainCompatiblity, retain_compatibility);
+	
+	QBuffer buffer(&new_data);
+	exporter.setDevice(&buffer);
 	exporter.doExport();
-	QVERIFY(exporter.warnings().empty());
 	buffer.close();
+	QVERIFY(exporter.warnings().empty());
 	
 	if (new_data != existing_data)
 	{
@@ -326,7 +328,7 @@ void SymbolSetTool::initTestCase()
 	translations_dir.cd(QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("../translations")));
 	QVERIFY(translations_dir.exists());
 	
-	Template::pathForSaving = &Template::getTemplateRelativePath;
+	Template::suppressAbsolutePaths = true;
 	
 	translations_complete = false;
 }
@@ -394,7 +396,7 @@ void SymbolSetTool::processSymbolSet()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
@@ -635,7 +637,7 @@ void SymbolSetTool::processSymbolSet()
 		printer_config.single_page_print_area = true;
 		printer_config.center_print_area = true;
 		printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
-		printer_config.page_format.paper_size = QPrinter::A4; 
+		printer_config.page_format.page_size = QPageSize::A4; 
 		printer_config.print_area = printer_config.page_format.page_rect;
 		map.setPrinterConfig(printer_config);
 	}
@@ -818,7 +820,7 @@ void SymbolSetTool::processExamples()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
@@ -860,7 +862,7 @@ void SymbolSetTool::processTestData()
 	
 	Map map;
 	MapView view{ &map };
-	map.loadFrom(source_path, nullptr, &view, false, false);
+	map.loadFrom(source_path, &view);
 	
 	map.undoManager().clear();
 	saveIfDifferent(source_path, &map, &view);
@@ -875,7 +877,7 @@ void SymbolSetTool::processTestData()
  */
 #ifndef Q_OS_MACOS
 namespace {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

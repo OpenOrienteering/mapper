@@ -1,0 +1,62 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+steps:
+- template: setup-common.yml
+- bash: |
+    set -x
+    set -e
+    
+    sudo apt-get update
+    sudo apt-get install doxygen graphviz ninja-build python-lxml
+    
+    if [ "${TARGET}" = "x86_64-w64-mingw32" ] ; then
+      sudo apt-get install g++-mingw-w64-x86-64
+    fi
+    
+    if [ -n "${CLAZY_VERSION}" ] ; then
+      CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
+      curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
+      curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
+      grep --no-filename $(sha1sum ${CLAZY_IMAGE}) sums.txt
+      chmod +x ${CLAZY_IMAGE}
+      # Extract the app-image, or paths change on every invocation
+      ./${CLAZY_IMAGE} --appimage-extract
+      echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
+    fi
+    
+    case "${CXXFLAGS}" in
+      *coverage*)
+        sudo apt-get install g++ libgcc-5-dev python-pip
+        sudo pip install gcovr
+        sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
+        ;;
+    esac
+  displayName: 'Prepare Ubuntu build tools'
+

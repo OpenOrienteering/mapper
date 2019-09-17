@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,31 +26,21 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
-#include <QAbstractButton>
 #include <QByteArray>
-#include <QDebug>
+#include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
-#include <QFlags>
-#include <QHBoxLayout>
-#include <QIcon>
 #include <QImageReader>
-#include <QIntValidator>
-#include <QLabel>
 #include <QLatin1String>
-#include <QLineEdit>
 #include <QList>
 #include <QMessageBox>
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPen>
 #include <QPoint>
-#include <QPushButton>
-#include <QRadioButton>
 #include <QRect>
 #include <QSize>
 #include <QStringRef>
 #include <QTransform>
-#include <QVBoxLayout>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -61,16 +51,17 @@
 #include "core/storage_location.h"  // IWYU pragma: keep
 #include "gui/georeferencing_dialog.h"
 #include "gui/select_crs_dialog.h"
-#include "gui/util_gui.h"
 #ifdef QT_PRINTSUPPORT_LIB
 #include "printsupport/advanced_pdf_printer.h"
 #endif
+#include "templates/template_image_open_dialog.h"
 #include "templates/world_file.h"
 #include "util/transformation.h"
 #include "util/util.h"
 
-// IWYU pragma: no_forward_declare QHBoxLayout
-// IWYU pragma: no_forward_declare QVBoxLayout
+#ifdef MAPPER_USE_GDAL
+#include "gdal/gdal_template.h"
+#endif
 
 
 namespace OpenOrienteering {
@@ -92,6 +83,7 @@ TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map
 {
 	undo_index = 0;
 	georef.reset(new Georeferencing());
+	available_georef.push_back({Georeferencing_None, "no georeferencing information", {}, {}});
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
@@ -113,20 +105,6 @@ bool TemplateImage::saveTemplateFile() const
 	return result;
 }
 
-
-#ifndef NO_NATIVE_FILE_FORMAT
-bool TemplateImage::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	Q_UNUSED(version);
-	
-	if (is_georeferenced)
-	{
-		loadString(stream, temp_crs_spec);
-	}
-	
-	return true;
-}
-#endif
 
 
 void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
@@ -183,24 +161,18 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
-	// Check if georeferencing information is available
-	available_georef = Georeferencing_None;
-	
-	// TODO: GeoTIFF
-	
-	WorldFile world_file;
-	if (available_georef == Georeferencing_None && world_file.tryToLoadForImage(template_path))
-		available_georef = Georeferencing_WorldFile;
+	available_georef = findAvailableGeoreferencing();
 	
 	if (!configuring && is_georeferenced)
 	{
-		if (available_georef == Georeferencing_None)
+		if (available_georef.front().type == Georeferencing_None)
 		{
 			// Image was georeferenced, but georeferencing info is gone -> deny to load template
+			setErrorString(tr("Georeferencing not found"));
 			return false;
 		}
-		else
-			calculateGeoreferencing();
+		
+		calculateGeoreferencing();
 	}
 	
 	return true;
@@ -245,7 +217,7 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 				continue;
 		}
 		
-		if (open_dialog.isGeorefRadioChecked() && available_georef == Georeferencing_WorldFile)
+		if (open_dialog.isGeorefRadioChecked() && available_georef.front().type == Georeferencing_WorldFile)
 		{
 			// Let user select the coordinate reference system, as this is not specified in world files
 			SelectCRSDialog dialog(
@@ -347,11 +319,97 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 	return center;
 }
 
+
+bool TemplateImage::canChangeTemplateGeoreferenced()
+{
+	return available_georef.front().type != Georeferencing_None;
+}
+
+bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent)
+{
+	if (canChangeTemplateGeoreferenced()
+	    && isTemplateGeoreferenced() != value)
+	{
+		// Loaded state is implied by canChangeTemplateGeoreferenced().
+		Q_ASSERT(getTemplateState() == Template::Loaded);
+		
+		if (value)
+		{
+			// Cf. postLoadConfiguration
+			if (available_georef.front().type == Georeferencing_WorldFile
+			    && temp_crs_spec.isEmpty())
+			{
+				// Let user select the coordinate reference system, as this is not specified in world files
+				SelectCRSDialog dialog(
+				            map->getGeoreferencing(),
+				            dialog_parent,
+				            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
+				            tr("Select the coordinate reference system of the coordinates in the world file") );
+				if (dialog.exec() == QDialog::Rejected)
+					return is_georeferenced;
+				temp_crs_spec = dialog.currentCRSSpec();
+			}
+			
+			setTemplateAreaDirty();
+			is_georeferenced = true;
+			calculateGeoreferencing();
+			setTemplateAreaDirty();
+		}
+		else
+		{
+			is_georeferenced = false;
+		}
+		setHasUnsavedChanges(true);
+	}
+	return is_georeferenced;
+}
+
 void TemplateImage::updateGeoreferencing()
 {
 	if (is_georeferenced && template_state == Template::Loaded)
 		updatePosFromGeoreferencing();
 }
+
+TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing() const
+{
+	GeoreferencingOptions result;
+	
+	WorldFile world_file;
+	if (world_file.tryToLoadForImage(template_path))
+	{
+		auto pixel_to_world = QTransform(world_file);
+		if (!temp_crs_spec.isEmpty())
+		{
+			Georeferencing tmp_georef;
+			tmp_georef.setProjectedCRS(QString{}, temp_crs_spec);
+			if (tmp_georef.isGeographic())
+			{
+				constexpr auto factor = qDegreesToRadians(1.0);
+				pixel_to_world = {
+				    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
+				    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
+				    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
+				};
+			}
+		}
+		result.push_back({Georeferencing_WorldFile, "World file", temp_crs_spec, pixel_to_world});
+	}
+	
+#ifdef MAPPER_USE_GDAL
+	auto gdal_georef = GdalTemplate::tryReadProjection(template_path);
+	if (gdal_georef.valid)
+	{
+		auto proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
+		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
+	}
+#endif
+	
+	Q_ASSERT(available_georef.back().type == Georeferencing_None);
+	result.push_back(available_georef.back());
+	
+	return result;
+}
+
 
 Template* TemplateImage::duplicateImpl() const
 {
@@ -503,36 +561,35 @@ void TemplateImage::addUndoStep(const TemplateImage::DrawOnImageUndoStep& new_st
 void TemplateImage::calculateGeoreferencing()
 {
 	// Calculate georeferencing of image coordinates where the coordinate (0, 0)
-	// is mapped to the world position of the middle of the top-left pixel
+	// is mapped to the world position of the top-left corner of the top-left pixel
+	applyGeoreferencingOption(available_georef.front());
+}
+
+void TemplateImage::applyGeoreferencingOption(const GeoreferencingOption& option)
+{
+	if (option.type == Georeferencing_None)
+	{
+		qWarning("%s shall not be called for Georeferencing_None", Q_FUNC_INFO);
+		georef->setTransformationDirectly({});
+		return;
+	}
+	
 	georef.reset(new Georeferencing());
-	if (!temp_crs_spec.isEmpty())
-		georef->setProjectedCRS(QString{}, temp_crs_spec);
-	
-	if (available_georef == Georeferencing_WorldFile)
+	switch (option.type)
 	{
-		WorldFile world_file;
-		if (!world_file.tryToLoadForImage(template_path))
-		{
-			// TODO: world file lost, disable georeferencing or unload template
-			return;
-		}
-		auto pixel_to_world = world_file.pixel_to_world;
-		if (georef->isGeographic())
-		{
-			constexpr auto factor = qDegreesToRadians(1.0);
-			pixel_to_world = {
-			    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
-			    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
-			    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
-			};
-		}
-		georef->setTransformationDirectly(pixel_to_world);
+	case Georeferencing_WorldFile:
+		if (!temp_crs_spec.isEmpty())
+			georef->setProjectedCRS(QString::fromUtf8(option.source), temp_crs_spec);
+		break;
+	case Georeferencing_GDAL:
+#ifdef MAPPER_USE_GDAL
+		georef->setProjectedCRS(QString::fromUtf8(option.source), option.crs_spec);
+#endif		
+		break;
+	case Georeferencing_None:
+		break;
 	}
-	else if (available_georef == Georeferencing_GeoTiff)
-	{
-		// TODO: GeoTIFF
-	}
-	
+	georef->setTransformationDirectly(option.pixel_to_world);
 	if (map->getGeoreferencing().isValid())
 		updatePosFromGeoreferencing();
 }
@@ -542,22 +599,22 @@ void TemplateImage::updatePosFromGeoreferencing()
 	// Determine map coords of three image corner points
 	// by transforming the points from one Georeferencing into the other
 	bool ok;
-	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, -0.5), &ok);
+	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, 0.0), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width() - 0.5, -0.5), &ok);
+	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width(), 0.0), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(-0.5, image.height() - 0.5), &ok);
+	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, image.height()), &ok);
 	if (!ok)
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	
@@ -578,150 +635,11 @@ void TemplateImage::updatePosFromGeoreferencing()
 	QTransform q_transform;
 	if (!pp_list.estimateNonIsometricSimilarityTransform(&q_transform))
 	{
-		qDebug() << "updatePosFromGeoreferencing() failed";
+		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
 	transform = TemplateTransform::fromQTransform(q_transform);
 	updateTransformationMatrices();
-}
-
-
-// ### TemplateImageOpenDialog ###
-
-TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent)
- : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), templ(templ)
-{
-	setWindowTitle(tr("Opening %1").arg(templ->getTemplateFilename()));
-	
-	QLabel* size_label = new QLabel(QLatin1String("<b>") + tr("Image size:") + QLatin1String("</b> ")
-	                                + QString::number(templ->getImage().width()) + QLatin1String(" x ")
-	                                + QString::number(templ->getImage().height()));
-	QLabel* desc_label = new QLabel(tr("Specify how to position or scale the image:"));
-	
-	bool use_meters_per_pixel;
-	double meters_per_pixel;
-	double dpi;
-	double scale;
-	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
-	
-	QString georef_type_string;
-	if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_WorldFile)
-		georef_type_string = tr("World file");
-	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_GeoTiff)
-		georef_type_string = tr("GeoTIFF");
-	else if (templ->getAvailableGeoreferencing() == TemplateImage::Georeferencing_None)
-		georef_type_string = tr("no georeferencing information");
-	
-	georef_radio = new QRadioButton(tr("Georeferenced") +
-		(georef_type_string.isEmpty() ? QString{} : (QLatin1String(" (") + georef_type_string + QLatin1String(")"))));
-	georef_radio->setEnabled(templ->getAvailableGeoreferencing() != TemplateImage::Georeferencing_None);
-	
-	mpp_radio = new QRadioButton(tr("Meters per pixel:"));
-	mpp_edit = new QLineEdit((meters_per_pixel > 0) ? QString::number(meters_per_pixel) : QString{});
-	mpp_edit->setValidator(new DoubleValidator(0, 999999, mpp_edit));
-	
-	dpi_radio = new QRadioButton(tr("Scanned with"));
-	dpi_edit = new QLineEdit((dpi > 0) ? QString::number(dpi) : QString{});
-	dpi_edit->setValidator(new DoubleValidator(1, 999999, dpi_edit));
-	QLabel* dpi_label = new QLabel(tr("dpi"));
-	
-	QLabel* scale_label = new QLabel(tr("Template scale:  1 :"));
-	scale_edit = new QLineEdit((scale > 0) ? QString::number(scale) : QString{});
-	scale_edit->setValidator(new QIntValidator(1, 999999, scale_edit));
-	
-	if (georef_radio->isEnabled())
-		georef_radio->setChecked(true);
-	else if (use_meters_per_pixel)
-		mpp_radio->setChecked(true);
-	else
-		dpi_radio->setChecked(true);
-	
-	auto mpp_layout = new QHBoxLayout();
-	mpp_layout->addWidget(mpp_radio);
-	mpp_layout->addWidget(mpp_edit);
-	mpp_layout->addStretch(1);
-	auto dpi_layout = new QHBoxLayout();
-	dpi_layout->addWidget(dpi_radio);
-	dpi_layout->addWidget(dpi_edit);
-	dpi_layout->addWidget(dpi_label);
-	dpi_layout->addStretch(1);
-	auto scale_layout = new QHBoxLayout();
-	scale_layout->addSpacing(16);
-	scale_layout->addWidget(scale_label);
-	scale_layout->addWidget(scale_edit);
-	scale_layout->addStretch(1);
-	
-	auto cancel_button = new QPushButton(tr("Cancel"));
-	open_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("Open"));
-	open_button->setDefault(true);
-	
-	auto buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(open_button);
-	
-	auto layout = new QVBoxLayout();
-	layout->addWidget(size_label);
-	layout->addSpacing(16);
-	layout->addWidget(desc_label);
-	layout->addWidget(georef_radio);
-	layout->addLayout(mpp_layout);
-	layout->addLayout(dpi_layout);
-	layout->addLayout(scale_layout);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
-	setLayout(layout);
-	
-	connect(mpp_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
-	connect(dpi_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
-	connect(scale_edit, &QLineEdit::textEdited, this, &TemplateImageOpenDialog::setOpenEnabled);
-	connect(cancel_button, &QAbstractButton::clicked, this, &QDialog::reject);
-	connect(open_button, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::doAccept);
-	connect(georef_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
-	connect(mpp_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
-	connect(dpi_radio, &QAbstractButton::clicked, this, &TemplateImageOpenDialog::radioClicked);
-	
-	radioClicked();
-}
-double TemplateImageOpenDialog::getMpp() const
-{
-	if (mpp_radio->isChecked())
-		return mpp_edit->text().toDouble();
-	else
-	{
-		double dpi = dpi_edit->text().toDouble();			// dots/pixels per inch(on map)
-		double ipd = 1.0 / dpi;								// inch(on map) per pixel
-		double mpd = ipd * 0.0254;							// meters(on map) per pixel	
-		double mpp = mpd * scale_edit->text().toDouble();	// meters(in reality) per pixel
-		return mpp;
-	}
-}
-bool TemplateImageOpenDialog::isGeorefRadioChecked() const
-{
-	return georef_radio->isChecked();
-}
-void TemplateImageOpenDialog::radioClicked()
-{
-	bool mpp_checked = mpp_radio->isChecked();
-	bool dpi_checked = dpi_radio->isChecked();
-	dpi_edit->setEnabled(dpi_checked);
-	scale_edit->setEnabled(dpi_checked);
-	mpp_edit->setEnabled(mpp_checked);
-	setOpenEnabled();
-}
-void TemplateImageOpenDialog::setOpenEnabled()
-{
-	if (mpp_radio->isChecked())
-		open_button->setEnabled(!mpp_edit->text().isEmpty());
-	else if (dpi_radio->isChecked())
-		open_button->setEnabled(!scale_edit->text().isEmpty() && !dpi_edit->text().isEmpty());
-	else //if (georef_radio->isChecked())
-		open_button->setEnabled(true);
-}
-void TemplateImageOpenDialog::doAccept()
-{
-	templ->getMap()->setImageTemplateDefaults(mpp_radio->isChecked(), mpp_edit->text().toDouble(), dpi_edit->text().toDouble(), scale_edit->text().toDouble());
-	accept();
 }
 
 

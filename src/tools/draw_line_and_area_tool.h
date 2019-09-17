@@ -27,6 +27,7 @@
 
 #include <QObject>
 #include <QRectF>
+#include <QString>
 
 #include "tools/tool.h"
 
@@ -68,10 +69,10 @@ public:
 signals:
 	void dirtyRectChanged(const QRectF& rect);
 	void pathAborted();
-	void pathFinished(PathObject* path);
+	void pathFinished(OpenOrienteering::PathObject* path);
 	
 protected slots:
-	virtual void setDrawingSymbol(const Symbol* symbol);
+	virtual void setDrawingSymbol(const OpenOrienteering::Symbol* symbol);
 	
 protected:
 	/**
@@ -92,7 +93,7 @@ protected:
 	 * @param points_index The index of the points set; there are two sets,
 	 *     so the preview points can be displayed at two positions at the same time.
 	 */
-	void setPreviewPointsPosition(MapCoordF map_coord, int points_index = 0);
+	void setPreviewPointsPosition(const MapCoordF& map_coord, int points_index = 0);
 	
 	/** Hides all preview points. */
 	void hidePreviewPoints();

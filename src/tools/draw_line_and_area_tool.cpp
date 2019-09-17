@@ -26,11 +26,11 @@
 #include <iterator>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QPainter>
 #include <QPoint>
 
 #include "core/map.h"
-#include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
@@ -49,7 +49,7 @@ namespace OpenOrienteering {
 
 DrawLineAndAreaTool::DrawLineAndAreaTool(MapEditorController* editor, Type type, QAction* tool_action, bool is_helper_tool)
 : MapEditorTool(editor, type, tool_action)
-, path_combination(Map::getCoveringCombinedLine()->duplicate()->asCombined())
+, path_combination(duplicate(*Map::getCoveringCombinedLine()))
 , renderables(new MapRenderables(map()))
 , is_helper_tool(is_helper_tool)
 {
@@ -128,14 +128,14 @@ void DrawLineAndAreaTool::createPreviewPoints()
 	{
 		preview_point_vector.resize(preview_point_symbols.size());
 		std::transform(begin(preview_point_symbols), end(preview_point_symbols), begin(preview_point_vector),
-		               [](const auto symbol) { return new PointObject(symbol); });
+		               [](const auto* symbol) { return new PointObject(symbol); });
 	}
 }
 
-void DrawLineAndAreaTool::setPreviewPointsPosition(MapCoordF map_coord, int points_index)
+void DrawLineAndAreaTool::setPreviewPointsPosition(const MapCoordF& map_coord, int points_index)
 {
 	const auto& preview_point_vector = preview_points[std::size_t(points_index)];
-	for (const auto preview_point : preview_point_vector)
+	for (auto* preview_point : preview_point_vector)
 	{
 		if (preview_points_shown)
 			renderables->removeRenderablesOfObject(preview_point, false);
@@ -152,7 +152,7 @@ void DrawLineAndAreaTool::hidePreviewPoints()
 	{
 		for (const auto& preview_point_vector : preview_points)
 		{
-			for (const auto preview_point : preview_point_vector)
+			for (const auto* preview_point : preview_point_vector)
 				renderables->removeRenderablesOfObject(preview_point, false);
 		}
 		
@@ -169,7 +169,7 @@ void DrawLineAndAreaTool::includePreviewRects(QRectF& rect)
 	{
 		for (const auto& preview_point_vector : preview_points)
 		{
-			for (const auto preview_point : preview_point_vector)
+			for (const auto* preview_point : preview_point_vector)
 				rectIncludeSafe(rect, preview_point->getExtent());
 		}
 	}
@@ -300,13 +300,13 @@ void DrawLineAndAreaTool::deletePreviewObjects()
 {
 	for (auto& preview_point_vector : preview_points)
 	{
-		for (const auto preview_point : preview_point_vector)
+		for (const auto* preview_point : preview_point_vector)
 			renderables->removeRenderablesOfObject(preview_point, false);
 		preview_point_vector.clear();
 	}
 	
 	auto is_external = begin(preview_point_symbols_external);
-	for (const auto symbol : preview_point_symbols)
+	for (auto* symbol : preview_point_symbols)
 	{
 		if (!*is_external)
 			delete symbol;

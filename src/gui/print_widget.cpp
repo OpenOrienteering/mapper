@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018  Kai Pastor
+ *    Copyright 2012-2019  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,7 +39,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QFormLayout>
-#include <QHash>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QImage>
@@ -50,12 +49,11 @@
 #include <QLineEdit>
 #include <QMargins>
 #include <QMessageBox>
-#include <QPagedPaintDevice>
+#include <QPageSize>
 #include <QPainter>
-#include <QPoint>
 #include <QPointF>
+#include <QPrinter>
 #include <QPrinterInfo>
-#include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPushButton>
 #include <QRadioButton>
@@ -94,7 +92,7 @@
 #include "gui/map/map_widget.h"
 #include "templates/template.h" // IWYU pragma: keep
 #include "templates/world_file.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/scoped_signals_blocker.h"
 
 
@@ -404,9 +402,9 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 					policy = CustomArea;
 					policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				}
-				if (map_printer->getPageFormat().paper_size == QPrinter::Custom)
+				if (map_printer->getPageFormat().page_size == QPageSize::Custom)
 				{
-					map_printer->setPaperSize(map->printerConfig().page_format.paper_size);
+					map_printer->setPageSize(map->printerConfig().page_format.page_size);
 				}
 				// TODO: Set target to most recently used printer
 				emit taskChanged(tr("Print"));
@@ -426,7 +424,7 @@ void PrintWidget::setTask(PrintWidget::TaskFlags type)
 				policy = SinglePage;
 				if (policy_combo->itemData(policy_combo->currentIndex()) != policy)
 				{
-					map_printer->setCustomPaperSize(map_printer->getPrintAreaPaperSize());
+					map_printer->setCustomPageSize(map_printer->getPrintAreaPaperSize());
 					policy_combo->setCurrentIndex(policy_combo->findData(policy));
 				}
 				emit taskChanged(tr("Image export"));
@@ -483,13 +481,13 @@ void PrintWidget::setActive(bool active)
 			if (zoom_to_map)
 			{
 				// Ensure the visibility of the whole map.
-				auto map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
+				auto const map_extent = map->calculateExtent(true, !main_view->areAllTemplatesHidden(), main_view);
 				editor->getMainWidget()->ensureVisibilityOfRect(map_extent, MapWidget::ContinuousZoom);
 			}
 			else
 			{
 				// Ensure the visibility of the print area.
-				auto print_area(map_printer->getPrintArea());
+				auto const print_area = map_printer->getPrintArea();
 				editor->getMainWidget()->ensureVisibilityOfRect(print_area, MapWidget::ContinuousZoom);
 			}
 			
@@ -524,56 +522,55 @@ void PrintWidget::setActive(bool active)
 void PrintWidget::updateTargets()
 {
 	QVariant current_target = target_combo->itemData(target_combo->currentIndex());
-	const auto saved_printer = map_printer->getTarget();
+	const auto* saved_printer = map_printer->getTarget();
 	const QString saved_printer_name = saved_printer ? saved_printer->printerName() : QString{};
 	int saved_target_index = -1;
 	int default_printer_index = -1;
+	
+	const QSignalBlocker block(target_combo);
+	target_combo->clear();
+	
+	if (task == PRINT_TASK)
 	{
-		const QSignalBlocker block(target_combo);
-		target_combo->clear();
+		// Exporters
+		target_combo->addItem(tr("Save to PDF"), QVariant(int(PdfExporter)));
+		target_combo->insertSeparator(target_combo->count());
+		target_combo->setCurrentIndex(0);
 		
-		if (task == PRINT_TASK)
+		// Printers
+		auto default_printer_name = QPrinterInfo::defaultPrinterName();
+		printers = QPrinterInfo::availablePrinterNames();
+		for (int i = 0; i < printers.size(); ++i)
 		{
-			// Exporters
-			target_combo->addItem(tr("Save to PDF"), QVariant(int(PdfExporter)));
-			target_combo->insertSeparator(target_combo->count());
-			target_combo->setCurrentIndex(0);
-			
-			// Printers
-			auto default_printer_name = QPrinterInfo::defaultPrinterName();
-			printers = QPrinterInfo::availablePrinterNames();
-			for (int i = 0; i < printers.size(); ++i)
-			{
-				const QString& name = printers[i];
-				if (name == saved_printer_name)
-					saved_target_index = target_combo->count();
-				if (name == default_printer_name)
-					default_printer_index = target_combo->count();
-				target_combo->addItem(name, i);
-			}
+			const QString& name = printers[i];
+			if (name == saved_printer_name)
+				saved_target_index = target_combo->count();
+			if (name == default_printer_name)
+				default_printer_index = target_combo->count();
+			target_combo->addItem(name, i);
 		}
-		
-		// Restore selected target if possible and exit on success
-		if (current_target.isValid())
-		{
-			int index = target_combo->findData(current_target);
-			if (index >= 0)
-			{
-				target_combo->setCurrentIndex(index);
-				return;
-			}
-		}
-		
-		if (saved_target_index >= 0)
-			// Restore saved target if possible
-			target_combo->setCurrentIndex(saved_target_index);
-		else if (default_printer_index >= 0)
-			// Set default printer as current target
-			target_combo->setCurrentIndex(default_printer_index);
-		
-		// Explicitly invoke signal handler
-		targetChanged(target_combo->currentIndex());
 	}
+	
+	// Restore selected target if possible and exit on success
+	if (current_target.isValid())
+	{
+		int index = target_combo->findData(current_target);
+		if (index >= 0)
+		{
+			target_combo->setCurrentIndex(index);
+			return;
+		}
+	}
+	
+	if (saved_target_index >= 0)
+		// Restore saved target if possible
+		target_combo->setCurrentIndex(saved_target_index);
+	else if (default_printer_index >= 0)
+		// Set default printer as current target
+		target_combo->setCurrentIndex(default_printer_index);
+	
+	// Explicitly invoke signal handler
+	targetChanged(target_combo->currentIndex());
 }
 
 // slot
@@ -581,16 +578,20 @@ void PrintWidget::setTarget(const QPrinterInfo* target)
 {
 	int target_index = printers.size()-1;
 	if (target == MapPrinter::pdfTarget())
+	{
 		target_index = PdfExporter;
+	}
 	else if (target == MapPrinter::imageTarget())
+	{
 		target_index = ImageExporter;
+	}
 	else
 	{
 		for (; target_index >= 0; target_index--)
 		{
 			if (target && printers[target_index] == target->printerName())
 				break;
-			else if (!target)
+			if (!target)
 				break;
 		}
 	}
@@ -668,35 +669,33 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	QString prev_paper_size_name = paper_size_combo->currentText();
 	bool have_custom_size = false;
 	
-	{
-		const QSignalBlocker block(paper_size_combo);
-		
-		paper_size_combo->clear();
-		QList<QPrinter::PaperSize> size_list;
-		if (target)
-			size_list = target->supportedPaperSizes();
-		if (size_list.isEmpty())
-			size_list = defaultPaperSizes();
-		
-		for (auto size : qAsConst(size_list))
-		{
-			if (size == QPrinter::Custom)
-				have_custom_size = true; // add it once after all other entires
-			else
-				paper_size_combo->addItem(toString(size), size);
-		}
-		
-		if (have_custom_size)
-			paper_size_combo->addItem(toString(QPrinter::Custom), QPrinter::Custom);
+	const QSignalBlocker block(paper_size_combo);
 	
-		int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().paper_size);
-		if (!prev_paper_size_name.isEmpty())
-		{
-			paper_size_index = paper_size_combo->findText(prev_paper_size_name);
-		}
-		paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
-		paperSizeChanged(paper_size_combo->currentIndex());
+	paper_size_combo->clear();
+	QList<QPageSize> size_list;
+	if (target)
+		size_list = target->supportedPageSizes();
+	if (size_list.isEmpty())
+		size_list = defaultPageSizes();
+	
+	for (auto const & size : qAsConst(size_list))
+	{
+		if (size.id() == QPageSize::Custom)
+			have_custom_size = true; // add it once after all other entires
+		else
+			paper_size_combo->addItem(size.name(), size.id());
 	}
+	
+	if (have_custom_size)
+		paper_size_combo->addItem(QPageSize(QPageSize::Custom).name(), QPageSize::Custom);
+	
+	int paper_size_index = paper_size_combo->findData(map_printer->getPageFormat().page_size);
+	if (!prev_paper_size_name.isEmpty())
+	{
+		paper_size_index = paper_size_combo->findText(prev_paper_size_name);
+	}
+	paper_size_combo->setCurrentIndex(qMax(0, paper_size_index));
+	paperSizeChanged(paper_size_combo->currentIndex());
 }
 
 // slot
@@ -707,12 +706,12 @@ void PrintWidget::setPageFormat(const MapPrinterPageFormat& format)
 	            page_width_edit, page_height_edit,
 	            overlap_edit
 	);
-	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.paper_size));
+	paper_size_combo->setCurrentIndex(paper_size_combo->findData(format.page_size));
 	page_orientation_group->button(format.orientation)->setChecked(true);
 	page_width_edit->setValue(format.paper_dimensions.width());
-	page_width_edit->setEnabled(format.paper_size == QPrinter::Custom);
+	page_width_edit->setEnabled(format.page_size == QPageSize::Custom);
 	page_height_edit->setValue(format.paper_dimensions.height());
-	page_height_edit->setEnabled(format.paper_size == QPrinter::Custom);
+	page_height_edit->setEnabled(format.page_size == QPageSize::Custom);
 	// We only have a single overlap edit field, but MapPrinter supports 
 	// distinct horizontal and vertical overlap. Choose the minimum.
 	overlap_edit->setValue(qMin(format.h_overlap, format.v_overlap));
@@ -724,8 +723,8 @@ void PrintWidget::paperSizeChanged(int index) const
 {
 	if (index >= 0)
 	{
-		QPrinter::PaperSize paper_size = QPrinter::PaperSize(paper_size_combo->itemData(index).toInt());
-		map_printer->setPaperSize(paper_size);
+		auto paper_size = QPageSize::PageSizeId(paper_size_combo->itemData(index).toInt());
+		map_printer->setPageSize(paper_size);
 	}
 }
 
@@ -733,7 +732,7 @@ void PrintWidget::paperSizeChanged(int index) const
 void PrintWidget::paperDimensionsChanged() const
 {
 	const QSizeF dimensions(page_width_edit->value(), page_height_edit->value());
-	map_printer->setCustomPaperSize(dimensions);
+	map_printer->setCustomPageSize(dimensions);
 }
 
 // slot
@@ -819,14 +818,14 @@ void PrintWidget::setPrintArea(const QRectF& area)
 	
 	if (policy == SinglePage)
 	{
-		if (map_printer->getPageFormat().paper_size == QPrinter::Custom || !task.testFlag(MULTIPAGE_FLAG))
+		if (map_printer->getPageFormat().page_size == QPageSize::Custom || !task.testFlag(MULTIPAGE_FLAG))
 		{
 			// Update custom paper size from print area size
 			QSizeF area_dimensions = area.size() * map_printer->getScaleAdjustment();
 			if (map_printer->getPageFormat().page_rect.size() != area_dimensions)
 			{
 				// Don't force a custom paper size unless necessary
-				map_printer->setCustomPaperSize(area_dimensions);
+				map_printer->setCustomPageSize(area_dimensions);
 			}
 		}
 		else
@@ -897,9 +896,6 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	
 	switch (options.mode)
 	{
-	default:
-		qWarning("Unhandled MapPrinterMode");
-		// fall through in release build
 	case MapPrinterOptions::Vector:
 		vector_mode_button->setChecked(true);
 		setEnabledAndChecked(show_templates_check, options.show_templates);
@@ -931,9 +927,6 @@ void PrintWidget::setOptions(const MapPrinterOptions& options)
 	
 	switch (options.color_mode)
 	{
-	default:
-		qWarning("Unhandled ColorMode");
-		// fall through in release build
 	case MapPrinterOptions::DefaultColorMode:
 		color_mode_combo->setCurrentIndex(0);
 		break;
@@ -1232,27 +1225,21 @@ void PrintWidget::exportToImage()
 			exportWorldFile(path);  /// \todo Handle errors
 		emit finished(0);
 	}
-	return;
 }
 
 void PrintWidget::exportWorldFile(const QString& path) const
 {
 	const auto& georef = map->getGeoreferencing();
-	const auto& ref_transform = georef.mapToProjected();
-
+	const auto& mm_to_world = georef.mapToProjected();
 	qreal pixel_per_mm = (map_printer->getOptions().resolution / 25.4) * map_printer->getScaleAdjustment();
-	const auto center_of_pixel = QPointF{0.5/pixel_per_mm, 0.5/pixel_per_mm};
-	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft() + center_of_pixel});
-
-
-	const auto xscale = ref_transform.m11() / pixel_per_mm;
-	const auto yscale = ref_transform.m22() / pixel_per_mm;
-	const auto xskew  = ref_transform.m12() / pixel_per_mm;
-	const auto yskew  = ref_transform.m21() / pixel_per_mm;
-
-	QTransform final_wld(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
-	WorldFile wld(final_wld);
-	wld.save(WorldFile::pathForImage(path));
+	const auto xscale = mm_to_world.m11() / pixel_per_mm;
+	const auto yscale = mm_to_world.m22() / pixel_per_mm;
+	const auto xskew  = mm_to_world.m12() / pixel_per_mm;
+	const auto yskew  = mm_to_world.m21() / pixel_per_mm;
+	const auto top_left = georef.toProjectedCoords(MapCoord{map_printer->getPrintArea().topLeft()});
+	const QTransform pixel_to_world(xscale, yskew, 0, xskew, yscale, 0, top_left.x(), top_left.y());
+	const WorldFile world_file(pixel_to_world);
+	world_file.save(WorldFile::pathForImage(path));
 }
 
 void PrintWidget::exportToPdf()
@@ -1340,61 +1327,45 @@ void PrintWidget::print()
 	}
 }
 
-QList<QPrinter::PaperSize> PrintWidget::defaultPaperSizes() const
+QList<QPageSize> PrintWidget::defaultPageSizes() const
 {
 	// TODO: Learn from user's past choices, present reduced list unless asked for more.
-	static QList<QPrinter::PaperSize> default_paper_sizes(QList<QPrinter::PaperSize>()
-	  << QPrinter::A4
-	  << QPrinter::Letter
-	  << QPrinter::Legal
-	  << QPrinter::Executive
-	  << QPrinter::A0
-	  << QPrinter::A1
-	  << QPrinter::A2
-	  << QPrinter::A3
-	  << QPrinter::A5
-	  << QPrinter::A6
-	  << QPrinter::A7
-	  << QPrinter::A8
-	  << QPrinter::A9
-	  << QPrinter::B0
-	  << QPrinter::B1
-	  << QPrinter::B10
-	  << QPrinter::B2
-	  << QPrinter::B3
-	  << QPrinter::B4
-	  << QPrinter::B5
-	  << QPrinter::B6
-	  << QPrinter::B7
-	  << QPrinter::B8
-	  << QPrinter::B9
-	  << QPrinter::C5E
-	  << QPrinter::Comm10E
-	  << QPrinter::DLE
-	  << QPrinter::Folio
-	  << QPrinter::Ledger
-	  << QPrinter::Tabloid
-	  << QPrinter::Custom
+	static QList<QPageSize> default_paper_sizes(QList<QPageSize>()
+	  << QPageSize{ QPageSize::A4 }
+	  << QPageSize{ QPageSize::Letter }
+	  << QPageSize{ QPageSize::Legal }
+	  << QPageSize{ QPageSize::Executive }
+	  << QPageSize{ QPageSize::A0 }
+	  << QPageSize{ QPageSize::A1 }
+	  << QPageSize{ QPageSize::A2 }
+	  << QPageSize{ QPageSize::A3 }
+	  << QPageSize{ QPageSize::A5 }
+	  << QPageSize{ QPageSize::A6 }
+	  << QPageSize{ QPageSize::A7 }
+	  << QPageSize{ QPageSize::A8 }
+	  << QPageSize{ QPageSize::A9 }
+	  << QPageSize{ QPageSize::B0 }
+	  << QPageSize{ QPageSize::B1 }
+	  << QPageSize{ QPageSize::B10 }
+	  << QPageSize{ QPageSize::B2 }
+	  << QPageSize{ QPageSize::B3 }
+	  << QPageSize{ QPageSize::B4 }
+	  << QPageSize{ QPageSize::B5 }
+	  << QPageSize{ QPageSize::B6 }
+	  << QPageSize{ QPageSize::B7 }
+	  << QPageSize{ QPageSize::B8 }
+	  << QPageSize{ QPageSize::B9 }
+	  << QPageSize{ QPageSize::C5E }
+	  << QPageSize{ QPageSize::Comm10E }
+	  << QPageSize{ QPageSize::DLE }
+	  << QPageSize{ QPageSize::Folio }
+	  << QPageSize{ QPageSize::Ledger }
+	  << QPageSize{ QPageSize::Tabloid }
+	  << QPageSize{ QPageSize::Custom }
 	);
 	return default_paper_sizes;
 }
 
-QString PrintWidget::toString(QPrinter::PaperSize size)
-{
-#if defined(Q_OS_ANDROID)
-	// Qt for Android has no QPrintDialog
-	Q_UNUSED(size);
-	return tr("Unknown", "Paper size");
-#else
-	const QHash< int, const char*>& paper_size_names = MapPrinter::paperSizeNames();
-	if (paper_size_names.contains(size))
-		// These translations are not used in QPrintDialog, 
-		// but in Qt's qpagesetupdialog_unix.cpp.
-		return QPrintDialog::tr(paper_size_names[size]);
-	else
-		return tr("Unknown", "Paper size");
-#endif
-}
 
 bool PrintWidget::checkForEmptyMap()
 {

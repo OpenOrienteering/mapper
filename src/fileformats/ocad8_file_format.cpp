@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2017  Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,11 +47,12 @@
 #include "core/symbols/text_symbol.h"
 #include "fileformats/xml_file_format.h"
 #include "fileformats/file_import_export.h"
+#include "fileformats/ocd_file_format.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
-#include "util/util.h"
 #include "util/encoding.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
@@ -59,32 +60,44 @@ namespace OpenOrienteering {
 // ### OCAD8FileFormat ###
 
 OCAD8FileFormat::OCAD8FileFormat()
- : FileFormat(MapFile, "OCAD78", ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"), QString::fromLatin1("ocd"),
-              ImportSupported | ExportSupported | ExportLossy)
+ : FileFormat(MapFile,
+              "OCAD78",
+              ::OpenOrienteering::ImportExport::tr("OCAD Versions 7, 8"),
+              QString::fromLatin1("ocd"),
+              Feature::FileOpen | Feature::FileImport | Feature::ReadingLossy |
+              Feature::FileSave | Feature::FileSaveAs | Feature::WritingLossy )
 {
 	// Nothing
 }
 
-bool OCAD8FileFormat::understands(const unsigned char* buffer, std::size_t sz) const
+
+FileFormat::ImportSupportAssumption OCAD8FileFormat::understands(const char* buffer, int size) const
 {
     // The first two bytes of the file must be AD 0C.
-    if (sz >= 2 && buffer[0] == 0xAD && buffer[1] == 0x0C) return true;
-    return false;
+	if (size < 2)
+		return Unknown;
+	else if (quint8(buffer[0]) == 0xAD && buffer[1] == 0x0C)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
-Importer* OCAD8FileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OCAD8FileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	return new OCAD8FileImport(stream, map, view);
+	return std::make_unique<OCAD8FileImport>(path, map, view);
 }
 
-Exporter* OCAD8FileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OCAD8FileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-    return new OCAD8FileExport(stream, map, view);
+	return std::make_unique<OCAD8FileExport>(path, map, view);
 }
+
+
 
 // ### OCAD8FileImport ###
 
-OCAD8FileImport::OCAD8FileImport(QIODevice* stream, Map* map, MapView* view) : Importer(stream, map, view), file(nullptr)
+OCAD8FileImport::OCAD8FileImport(const QString& path, Map* map, MapView* view) : Importer(path, map, view), file(nullptr)
 {
     ocad_init();
     const QByteArray enc_name = Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toByteArray();
@@ -108,25 +121,28 @@ bool OCAD8FileImport::isRasterImageFile(const QString &filename)
 	return QImageReader::supportedImageFormats().contains(extension.toLatin1());
 }
 
-void OCAD8FileImport::import(bool load_symbols_only)
+bool OCAD8FileImport::importImplementation()
 {
     //qint64 start = QDateTime::currentMSecsSinceEpoch();
 	
-	u32 size = stream->bytesAvailable();
+	auto& device = *this->device();
+	u32 size = device.bytesAvailable();
 	u8* buffer = (u8*)malloc(size);
 	if (!buffer)
 		throw FileFormatException(tr("Could not allocate buffer."));
-	if (stream->read((char*)buffer, size) != size)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
+	if (device.read((char*)buffer, size) != size)
+		throw FileFormatException(device.errorString());
 	int err = ocad_file_open_memory(&file, buffer, size);
-    if (err != 0) throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("libocad returned %1").arg(err)));
+    if (err != 0) throw FileFormatException(tr("libocad returned %1").arg(err));
 	
 	if (file->header->major <= 5 || file->header->major >= 9)
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("OCAD files of version %1 are not supported!").arg(file->header->major)));
+		throw FileFormatException(tr("OCAD files of version %1 are not supported!").arg(file->header->major));
 
     //qDebug() << "file version is" << file->header->major << ", type is"
     //         << ((file->header->ftype == 2) ? "normal" : "other");
     //qDebug() << "map scale is" << file->setup->scale;
+
+	map->setProperty(OcdFileFormat::versionProperty(), file->header->major);
 
 	// Scale and georeferencing parameters
 	Georeferencing georef;
@@ -284,7 +300,7 @@ void OCAD8FileImport::import(bool load_symbols_only)
         }
     }
 
-    if (!load_symbols_only)
+    if (!loadSymbolsOnly())
 	{
 		// Load objects
 
@@ -362,6 +378,8 @@ void OCAD8FileImport::import(bool load_symbols_only)
 
 	emit map->currentMapPartIndexChanged(map->current_part_index);
 	emit map->currentMapPartChanged(map->getPart(map->current_part_index));
+	
+	return true;
 }
 
 void OCAD8FileImport::setStringEncodings(const char *narrow, const char *wide) {
@@ -426,13 +444,14 @@ Symbol *OCAD8FileImport::importLineSymbol(const OCADLineSymbol *ocad_symbol)
 			main_line->join_style = LineSymbol::MiterJoin;
 		}
 
+		main_line->start_offset = convertSize(ocad_symbol->bdist);
+		main_line->end_offset = convertSize(ocad_symbol->edist);
 		if (main_line->cap_style == LineSymbol::PointedCap)
 		{
-			if (ocad_symbol->bdist != ocad_symbol->edist)
-				addWarning(tr("In dashed line symbol %1, pointed cap lengths for begin and end are different (%2 and %3). Using %4.")
-				.arg(0.1 * ocad_symbol->number).arg(ocad_symbol->bdist).arg(ocad_symbol->edist).arg((ocad_symbol->bdist + ocad_symbol->edist) / 2));
-			main_line->pointed_cap_length = convertSize((ocad_symbol->bdist + ocad_symbol->edist) / 2); // FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
-			main_line->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OCAD always draws round joins if the line cap is pointed!
+			// Note: While the property in the file may be different
+			// (cf. what is set in the first place), OC*D always
+			// draws round joins if the line cap is pointed!
+			main_line->join_style = LineSymbol::RoundJoin;
 		}
 		
 		// Handle the dash pattern
@@ -1535,8 +1554,8 @@ double OCAD8FileImport::convertTemplateScale(double ocad_scale)
 
 // ### OCAD8FileExport ###
 
-OCAD8FileExport::OCAD8FileExport(QIODevice* stream, Map* map, MapView* view)
- : Exporter(stream, map, view),
+OCAD8FileExport::OCAD8FileExport(const QString& path, const Map* map, const MapView* view)
+ : Exporter(path, map, view),
    uses_registration_color(false),
    file(nullptr)
 {
@@ -1552,7 +1571,7 @@ OCAD8FileExport::~OCAD8FileExport()
 	delete origin_point_object;
 }
 
-void OCAD8FileExport::doExport()
+bool OCAD8FileExport::exportImplementation()
 {
 	uses_registration_color = map->isColorUsedByASymbol(map->getRegistrationColor());
 	if (map->getNumColors() > (uses_registration_color ? 255 : 256))
@@ -1560,9 +1579,9 @@ void OCAD8FileExport::doExport()
 	
 	// Create struct in memory
 	int err = ocad_file_new(&file);
-	if (err != 0) throw FileFormatException(::OpenOrienteering::Exporter::tr("Could not create new file: %1").arg(tr("libocad returned %1").arg(err)));
+	if (err != 0) throw FileFormatException(tr("libocad returned %1").arg(err));
 	
-	// Check for a neccessary offset (and add related warnings early).
+	// Check for a necessary offset (and add related warnings early).
 	auto area_offset = calculateAreaOffset();
 	
 	// Fill header struct
@@ -1892,9 +1911,10 @@ void OCAD8FileExport::doExport()
 		}
 	}
 	
-	stream->write((char*)file->buffer, file->size);
+	device()->write((char*)file->buffer, file->size);
 	
 	ocad_file_close(file);
+	return true;
 }
 
 
@@ -1924,7 +1944,7 @@ MapCoord OCAD8FileExport::calculateAreaOffset()
 			{
 				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
-				auto calculate_average_center = [&area_offset, &count](Object* object)
+				auto calculate_average_center = [&area_offset, &count](const Object* object)
 				{
 					area_offset *= qreal(count)/qreal(count+1);
 					++count;
@@ -2216,11 +2236,8 @@ s16 OCAD8FileExport::exportLineSymbol(const LineSymbol* line)
 			ocad_symbol->ends = 0;
 	}
 	
-	if (line->getCapStyle() == LineSymbol::PointedCap)
-	{
-		ocad_symbol->bdist = convertSize(line->getPointedCapLength());
-		ocad_symbol->edist = convertSize(line->getPointedCapLength());
-	}
+	ocad_symbol->bdist = convertSize(line->startOffset());
+	ocad_symbol->edist = convertSize(line->endOffset());
 	
 	// Dash pattern
 	if (line->isDashed())

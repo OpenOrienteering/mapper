@@ -28,6 +28,7 @@
 
 class QCheckBox;
 class QComboBox;
+class QDoubleSpinBox;
 class QSpinBox;
 class QWidget;
 
@@ -52,12 +53,13 @@ protected:
 	void updateWidgets();
 	
 private:
+	QDoubleSpinBox* button_size = nullptr;
 	QSpinBox* icon_size;
 	QCheckBox* antialiasing;
 	QCheckBox* text_antialiasing;
 	QSpinBox* tolerance;
 	QSpinBox* snap_distance;
-	QSpinBox* fixed_angle_stepping;
+	QDoubleSpinBox* fixed_angle_stepping;
 	QCheckBox* select_symbol_of_objects;
 	QCheckBox* zoom_out_away_from_cursor;
 	QCheckBox* draw_last_point_on_right_click;

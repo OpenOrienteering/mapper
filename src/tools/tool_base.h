@@ -32,6 +32,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QPointF>
+#include <QString>
 
 #include <QPointer>
 
@@ -72,7 +73,7 @@ Q_OBJECT
 	 * The duplicate is owned by this item.
 	 * The duplicate may be used when for restoring the active's object's data
 	 * when aborting editing,
-	 * or it can be transfered to an undo step when committing the changes.
+	 * or it can be transferred to an undo step when committing the changes.
 	 */
 	struct EditedItem
 	{
@@ -137,11 +138,11 @@ public:
 	 * This function is called by the other mouse*Event handlers of this class.
 	 * Derived classes which override the handlers may wish to call this, too.
 	 */
-	void mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget);
+	void mousePositionEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget);
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	bool keyPressEvent(QKeyEvent* event) override;
 	bool keyReleaseEvent(QKeyEvent* event) override;
@@ -165,7 +166,7 @@ protected:
 	/// Can do additional initializations at a time where no other tool is active (in contrast to the constructor)
 	virtual void initImpl();
 	/// Must include the area of all custom drawings into the rect,
-	/// which aleady contains the area of the selection preview and activated tool helpers when this method is called.
+	/// which already contains the area of the selection preview and activated tool helpers when this method is called.
 	/// Must return the size of the pixel border, or -1 to clear the drawing.
 	virtual int updateDirtyRectImpl(QRectF& rect);
 	/// Must draw the tool's graphics.
@@ -261,7 +262,7 @@ protected:
 	 * this to be able to visualize the effect of the change. Overrides of
 	 * mouse*Event handlers shall call mousePositionEvent() instead. This is
 	 * also done by the default implementation of these handlers. Thus it is not
-	 * neccessary to call this explicitly from clickPress(), clickRelease(),
+	 * necessary to call this explicitly from clickPress(), clickRelease(),
 	 * mouseMove(), dragStart(), dragMove(), or dragFinish() handlers.
 	 */
 	void updateConstrainedPositions();

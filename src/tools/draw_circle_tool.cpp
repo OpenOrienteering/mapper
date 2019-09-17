@@ -77,7 +77,7 @@ const QCursor& DrawCircleTool::getCursor() const
 	return cursor;
 }
 
-bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawCircleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -119,7 +119,7 @@ bool DrawCircleTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, Ma
 	return false;
 }
 
-bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -167,7 +167,7 @@ bool DrawCircleTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, Map
 	return true;
 }
 
-bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawCircleTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	

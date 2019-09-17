@@ -66,7 +66,7 @@ const QCursor& DrawFreehandTool::getCursor() const
 
 
 
-bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -85,7 +85,7 @@ bool DrawFreehandTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, 
 }
 
 
-bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -103,7 +103,7 @@ bool DrawFreehandTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, M
 }
 
 
-bool DrawFreehandTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawFreehandTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	

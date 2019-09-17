@@ -24,8 +24,8 @@
 
 #include <vector>
 
+#include <QByteArray>
 #include <QColor>
-#include <QDialog>
 #include <QImage>
 #include <QObject>
 #include <QPointF>
@@ -33,16 +33,13 @@
 #include <QRgb>
 #include <QScopedPointer>
 #include <QString>
+#include <QTransform>
+#include <QVarLengthArray>
 
 #include "templates/template.h"
 
-class QByteArray;
-class QIODevice;
-class QLineEdit;
 class QPainter;
 class QPointF;
-class QPushButton;
-class QRadioButton;
 class QRectF;
 class QWidget;
 class QXmlStreamReader;
@@ -67,8 +64,18 @@ public:
 	{
 		Georeferencing_None = 0,
 		Georeferencing_WorldFile,
-		Georeferencing_GeoTiff
+		Georeferencing_GDAL
 	};
+	
+	struct GeoreferencingOption
+	{
+		GeoreferencingType type;
+		QByteArray source;
+		QString crs_spec;
+		QTransform pixel_to_world;
+	};
+	
+	using GeoreferencingOptions = QVarLengthArray<GeoreferencingOption, 3>;
 	
 	/**
 	 * Returns the filename extensions supported by this template class.
@@ -81,9 +88,6 @@ public:
 	bool isRasterGraphics() const override {return true;}
 
 	bool saveTemplateFile() const override;
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version) override;
-#endif
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
@@ -105,15 +109,29 @@ public:
 	inline const QImage& getImage() const {return image;}
 	
 	/**
-	 * Returns which georeferencing method (if any) is available.
-	 * (This does not mean that the image is in georeferenced mode)
+	 * Returns which georeferencing methods are known to be available.
+	 * 
+	 * (This does not imply that the image is in georeferenced mode.)
+	 * 
+	 * Invariant: The list is never empty. It always contains at least an entry
+	 * of type Georeferencing_None. This entry is always the last one.
 	 */
-	inline GeoreferencingType getAvailableGeoreferencing() const {return available_georef;}
+	const GeoreferencingOptions& availableGeoreferencing() const { return available_georef; }
+	
+	bool canChangeTemplateGeoreferenced() override;
+	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
+	
 	
 public slots:
 	void updateGeoreferencing();
 	
 protected:
+	/**
+	 * Searches for available georeferencing methods.
+	 */
+	GeoreferencingOptions findAvailableGeoreferencing() const;
+	
+	
 	/** Information about an undo step for the paint-on-template functionality. */
 	struct DrawOnImageUndoStep
 	{
@@ -132,6 +150,7 @@ protected:
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
+	void applyGeoreferencingOption(const GeoreferencingOption& option);
 	void updatePosFromGeoreferencing();
 
 	QImage image;
@@ -140,42 +159,10 @@ protected:
 	/// Current index in undo_steps, where 0 means before the first item.
 	int undo_index;
 	
-	GeoreferencingType available_georef;
+	GeoreferencingOptions available_georef;
 	QScopedPointer<Georeferencing> georef;
 	// Temporary storage for crs spec. Use georef instead.
 	QString temp_crs_spec;
-};
-
-/**
- * Initial setting dialog when opening a raster image as template,
- * asking for how to position the image.
- * 
- * \todo Move this class to separate files.
- */
-class TemplateImageOpenDialog : public QDialog
-{
-Q_OBJECT
-public:
-	TemplateImageOpenDialog(TemplateImage* templ, QWidget* parent);
-	
-	double getMpp() const;
-	bool isGeorefRadioChecked() const;
-	
-protected slots:
-	void radioClicked();
-	void setOpenEnabled();
-	void doAccept();
-	
-private:
-	QRadioButton* georef_radio;
-	QRadioButton* mpp_radio;
-	QRadioButton* dpi_radio;
-	QLineEdit* mpp_edit;
-	QLineEdit* dpi_edit;
-	QLineEdit* scale_edit;
-	QPushButton* open_button;
-	
-	TemplateImage* templ;
 };
 
 

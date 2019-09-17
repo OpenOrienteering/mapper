@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,15 +23,14 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstddef>
 #include <iterator>
 #include <memory>
 
 #include <QtMath>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QPainterPath>
-#include <QPoint>
-#include <QPointF>
+#include <QRectF>
 #include <QString>
 #include <QStringRef>
 #include <QXmlStreamAttributes>
@@ -56,57 +55,50 @@
 namespace OpenOrienteering {
 
 PointSymbol::PointSymbol() noexcept
-: Symbol{Symbol::Point}
-, rotatable{false}
-, inner_radius{1000}
-, inner_color{nullptr}
-, outer_width{0}
-, outer_color{nullptr}
+: Symbol { Symbol::Point }
+, inner_color { nullptr }
+, outer_color { nullptr }
+, inner_radius { 1000 }
+, outer_width { 0 }
+, rotatable { false }
 {
 	// nothing else
 }
 
 
-PointSymbol::~PointSymbol()
+PointSymbol::PointSymbol(const PointSymbol& proto)
+: Symbol { proto }
+, inner_color { proto.inner_color }
+, outer_color { proto.outer_color }
+, inner_radius { proto.inner_radius }
+, outer_width { proto.outer_width }
+, rotatable { proto.rotatable }
 {
-	for (auto object : objects)
-		delete object;
-	for (auto symbol : symbols)
-		delete symbol;
+	elements.reserve(proto.elements.size());
+	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [this](const auto& element) {
+		auto new_element = Element { Symbol::duplicate(*element.symbol),
+		                             std::unique_ptr<Object>(element.object->duplicate()) };
+		new_element.object->setSymbol(new_element.symbol.get(), true);
+		return new_element;
+	});
 }
 
 
-Symbol* PointSymbol::duplicate(const MapColorMap* color_map) const
+PointSymbol::~PointSymbol() = default;
+
+
+PointSymbol* PointSymbol::duplicate() const
 {
-	auto new_point = new PointSymbol();
-	new_point->duplicateImplCommon(this);
-	
-	new_point->rotatable = rotatable;
-	new_point->inner_radius = inner_radius;
-	new_point->inner_color = color_map ? color_map->value(inner_color) : inner_color;
-	new_point->outer_width = outer_width;
-	new_point->outer_color = color_map ? color_map->value(outer_color) : outer_color;
-	
-	new_point->symbols.resize(symbols.size());
-	for (int i = 0; i < (int)symbols.size(); ++i)
-		new_point->symbols[i] = symbols[i]->duplicate(color_map);
-	
-	new_point->objects.resize(objects.size());
-	for (int i = 0; i < (int)objects.size(); ++i)
-	{
-		new_point->objects[i] = objects[i]->duplicate();
-		new_point->objects[i]->setSymbol(new_point->symbols[i], true);
-	}
-	
-	return new_point;
+	return new PointSymbol(*this);
 }
 
 
 
 bool PointSymbol::validate() const
 {
-	return std::all_of(begin(symbols), end(symbols), [](auto& symbol) { return symbol->validate(); })
-	       && std::all_of(begin(objects), end(objects), [](auto& object) { return object->validate(); });
+	return std::all_of(begin(elements), end(elements), [](auto& element) {
+		return element.symbol->validate() && element.object->validate();
+	});
 }
 
 
@@ -118,7 +110,7 @@ void PointSymbol::createRenderables(
         RenderableOptions options ) const
 {
 	auto point = object->asPoint();
-	auto rotation = isRotatable() ? -point->getRotation() : 0.0f;
+	auto rotation = isRotatable() ? -point->getRotation() : qreal(0);
 	
 	if (options.testFlag(Symbol::RenderBaselines))
 	{
@@ -129,45 +121,43 @@ void PointSymbol::createRenderables(
 			const MapColor* temp_color = point->getInnerColor();
 			point->setInnerColor(dominant_color);
 			
-			point->createRenderablesScaled(coords[0], rotation, output, 1.0f);
+			point->createRenderablesScaled(coords[0], rotation, output);
 			
 			point->setInnerColor(temp_color);
 		}
 	}
 	else
 	{
-		createRenderablesScaled(coords[0], rotation, output, 1.0f);
+		createRenderablesScaled(coords[0], rotation, output);
 	}
 }
 
-void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale) const
+void PointSymbol::createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale) const
 {
 	if (inner_color && inner_radius > 0)
 		output.insertRenderable(new DotRenderable(this, coord));
 	if (outer_color && outer_width > 0)
 		output.insertRenderable(new CircleRenderable(this, coord));
 	
-	if (!objects.empty())
+	if (!elements.empty())
 	{
 		auto offset_x = coord.x();
 		auto offset_y = coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = cos(rotation);
 			sinr = sin(rotation);
 		}
 		
-		// Add elements which possibly need to be moved and rotated
-		auto size = objects.size();
-		for (auto i = 0u; i < size; ++i)
+		for (auto& element : elements)
 		{
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!objects[i]->getMap());
+			Q_ASSERT(!element.object->getMap());
 			
-			const MapCoordVector& object_coords = objects[i]->getRawCoordinateVector();
+			const MapCoordVector& object_coords = element.object->getRawCoordinateVector();
 			
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(object_coords.size());
@@ -181,13 +171,13 @@ void PointSymbol::createRenderablesScaled(MapCoordF coord, float rotation, Objec
 			
 			// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 			// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-			symbols[i]->createRenderables(objects[i], VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
+			element.symbol->createRenderables(element.object.get(), VirtualCoordVector(object_coords, transformed_coords), output, Symbol::RenderNormal);
 		}
 	}
 }
 
 
-void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfCenterInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (outline->contains(point_coord))
 	{
@@ -202,31 +192,27 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 		}
 	}
 	
-	if (!objects.empty())
+	if (!elements.empty())
 	{
 		auto offset_x = point_coord.x();
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);
 		}
 		
 		// Add elements which possibly need to be moved and rotated
-		auto size = objects.size();
-		for (auto i = 0u; i < size; ++i)
+		for (auto& element : elements)
 		{
-			const auto symbol = symbols[i];
-			const auto object = objects[i];
-			
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!object->getMap());
+			Q_ASSERT(!element.object->getMap());
 			
 			MapCoordF center{};
-			const MapCoordVector& element_coords = object->getRawCoordinateVector();
+			const MapCoordVector& element_coords = element.object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -243,14 +229,14 @@ void PointSymbol::createRenderablesIfCenterInside(MapCoordF point_coord, qreal r
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				element.symbol->createRenderables(element.object.get(), VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
 }
 
 
-void PointSymbol::createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfCompletelyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -278,42 +264,39 @@ void PointSymbol::createPrimitivesIfCompletelyInside(MapCoordF point_coord, cons
 }
 
 
-void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfCompletelyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	createPrimitivesIfCompletelyInside(point_coord, outline, output);
 	
-	if (!objects.empty())
+	if (!elements.empty())
 	{
 		auto offset_x = point_coord.x();
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);
 		}
 		
 		// Add elements which possibly need to be moved and rotated
-		auto size = objects.size();
-		for (auto i = 0u; i < size; ++i)
+		for (auto& element : elements)
 		{
-			const auto symbol = symbols[i];
-			const auto object = objects[i];
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!object->getMap());
+			Q_ASSERT(!element.object->getMap());
 			
-			if (symbol->getType() == Symbol::Point)
+			if (element.symbol->getType() == Symbol::Point)
 			{
-				auto coord = object->getRawCoordinateVector().front();
+				auto coord = element.object->getRawCoordinateVector().front();
 				auto transformed_coord = MapCoordF{ coord.x() * cosr - coord.y() * sinr + offset_x,
 				                                    coord.y() * cosr + coord.x() * sinr + offset_y};
-				static_cast<const PointSymbol*>(symbol)->createPrimitivesIfCompletelyInside(transformed_coord, outline, output);
+				static_cast<const PointSymbol*>(element.symbol.get())->createPrimitivesIfCompletelyInside(transformed_coord, outline, output);
 				continue;
 			}
 			
-			const MapCoordVector& element_coords = object->getRawCoordinateVector();
+			const MapCoordVector& element_coords = element.object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -333,14 +316,14 @@ void PointSymbol::createRenderablesIfCompletelyInside(MapCoordF point_coord, qre
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				element.symbol->createRenderables(element.object.get(), VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
 }
 
 
-void PointSymbol::createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createPrimitivesIfPartiallyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	if (inner_color && inner_radius > 0)
 	{
@@ -368,43 +351,40 @@ void PointSymbol::createPrimitivesIfPartiallyInside(MapCoordF point_coord, const
 }
 
 
-void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
+void PointSymbol::createRenderablesIfPartiallyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const
 {
 	createPrimitivesIfPartiallyInside(point_coord, outline, output);
 	
-	if (!objects.empty())
+	if (!elements.empty())
 	{
 		auto offset_x = point_coord.x();
 		auto offset_y = point_coord.y();
 		auto cosr = 1.0;
 		auto sinr = 0.0;
-		if (rotation != 0.0)
+		if (!qIsNull(rotation))
 		{
 			cosr = qCos(rotation);
 			sinr = qSin(rotation);
 		}
 		
 		// Add elements which possibly need to be moved and rotated
-		auto size = objects.size();
-		for (auto i = 0u; i < size; ++i)
+		for (auto& element : elements)
 		{
-			const auto symbol = symbols[i];
-			const auto object = objects[i];
 			// Point symbol elements should not be entered into the map,
 			// otherwise map settings like area hatching affect them
-			Q_ASSERT(!object->getMap());
+			Q_ASSERT(!element.object->getMap());
 			
-			if (symbol->getType() == Symbol::Point)
+			if (element.symbol->getType() == Symbol::Point)
 			{
-				auto coord = object->getRawCoordinateVector().front();
+				auto coord = element.object->getRawCoordinateVector().front();
 				auto transformed_coord = MapCoordF{ coord.x() * cosr - coord.y() * sinr + offset_x,
 				                                    coord.y() * cosr + coord.x() * sinr + offset_y};
-				static_cast<const PointSymbol*>(symbol)->createPrimitivesIfPartiallyInside(transformed_coord, outline, output);
+				static_cast<const PointSymbol*>(element.symbol.get())->createPrimitivesIfPartiallyInside(transformed_coord, outline, output);
 				continue;
 			}
 			
 			bool is_partially_inside = false;
-			const MapCoordVector& element_coords = object->getRawCoordinateVector();
+			const MapCoordVector& element_coords = element.object->getRawCoordinateVector();
 			MapCoordVectorF transformed_coords;
 			transformed_coords.reserve(element_coords.size());
 			for (auto& coord : element_coords)
@@ -421,7 +401,7 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 			{
 				// TODO: if this point is rotated, it has to pass it on to its children to make it work that rotatable point objects can be children.
 				// But currently only basic, rotationally symmetric points can be children, so it does not matter for now.
-				symbol->createRenderables(object, VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
+				element.symbol->createRenderables(element.object.get(), VirtualCoordVector(element_coords, transformed_coords), output, Symbol::RenderNormal);
 			}
 		}
 	}
@@ -431,56 +411,57 @@ void PointSymbol::createRenderablesIfPartiallyInside(MapCoordF point_coord, qrea
 
 int PointSymbol::getNumElements() const
 {
-	return (int)objects.size();
+	return int(elements.size());
 }
+
 void PointSymbol::addElement(int pos, Object* object, Symbol* symbol)
 {
-	objects.insert(objects.begin() + pos, object);
-	symbols.insert(symbols.begin() + pos, symbol);
+	elements.insert(elements.begin() + pos, { std::unique_ptr<Symbol>(symbol), std::unique_ptr<Object>(object) });
 }
+
 Object* PointSymbol::getElementObject(int pos)
 {
-	return objects[pos];
+	return const_cast<Object*>(static_cast<const PointSymbol*>(this)->getElementObject(pos));
 }
+
 const Object* PointSymbol::getElementObject(int pos) const
 {
-    return objects[pos];
+	return elements[std::size_t(pos)].object.get();
 }
+
 Symbol* PointSymbol::getElementSymbol(int pos)
 {
-	return symbols[pos];
+	return const_cast<Symbol*>(static_cast<const PointSymbol*>(this)->getElementSymbol(pos));
 }
+
 const Symbol* PointSymbol::getElementSymbol(int pos) const
 {
-    return symbols[pos];
+	return elements[std::size_t(pos)].symbol.get();
 }
+
 void PointSymbol::deleteElement(int pos)
 {
-	delete objects[pos];
-	objects.erase(objects.begin() + pos);
-	delete symbols[pos];
-	symbols.erase(symbols.begin() + pos);
+	elements.erase(elements.begin() + pos);
 }
 
 bool PointSymbol::isEmpty() const
 {
-	return getNumElements() == 0 && (!inner_color || inner_radius == 0) && (!outer_color || outer_width == 0);
-}
-bool PointSymbol::isSymmetrical() const
-{
-	int num_elements = (int)objects.size();
-	for (int i = 0; i < num_elements; ++i)
-	{
-		if (symbols[i]->getType() != Symbol::Point)
-			return false;
-		PointObject* point = reinterpret_cast<PointObject*>(objects[i]);
-		if (point->getCoordF() != MapCoordF(0, 0))
-			return false;
-	}
-	return true;
+	return getNumElements() == 0
+	        && (!inner_color || inner_radius == 0)
+	        && (!outer_color || outer_width == 0);
 }
 
-void PointSymbol::colorDeleted(const MapColor* color)
+bool PointSymbol::isSymmetrical() const
+{
+	return std::none_of(begin(elements), end(elements), [](auto& element) {
+		return element.symbol->getType() != Symbol::Point
+		       || static_cast<const PointObject*>(element.object.get())->getCoord().isPositionEqualTo({0,0});
+	});
+}
+
+
+
+void PointSymbol::colorDeletedEvent(const MapColor* color)
 {
 	bool change = false;
 	
@@ -495,16 +476,16 @@ void PointSymbol::colorDeleted(const MapColor* color)
 		change = true;
 	}
 	
-	int num_elements = (int)objects.size();
-	for (int i = 0; i < num_elements; ++i)
+	for (auto& element : elements)
 	{
-		symbols[i]->colorDeleted(color);
+		element.symbol->colorDeletedEvent(color);
 		change = true;
 	}
 	
 	if (change)
 		resetIcon();
 }
+
 bool PointSymbol::containsColor(const MapColor* color) const
 {
 	if (color == inner_color)
@@ -512,14 +493,9 @@ bool PointSymbol::containsColor(const MapColor* color) const
 	if (color == outer_color)
 		return true;
 	
-	int num_elements = (int)objects.size();
-	for (int i = 0; i < num_elements; ++i)
-	{
-		if (symbols[i]->containsColor(color))
-			return true;
-	}
-	
-	return false;
+	return std::any_of(begin(elements), end(elements), [color](const auto& element) {
+		return element.symbol->containsColor(color);
+	});
 }
 
 const MapColor* PointSymbol::guessDominantColor() const
@@ -537,26 +513,34 @@ const MapColor* PointSymbol::guessDominantColor() const
 		else
 			return (qPow(inner_radius, 2) * M_PI > qPow(inner_radius + outer_width, 2) * M_PI - qPow(inner_radius, 2) * M_PI) ? inner_color : outer_color;
 	}
-	else
+	else if (!elements.empty())
 	{
 		// Hope that the first element's color is representative
-		if (symbols.size() > 0)
-			return symbols[0]->guessDominantColor();
-		else
-			return nullptr;
+		return elements.front().symbol->guessDominantColor();
 	}
+	return nullptr;
 }
+
+
+void PointSymbol::replaceColors(const MapColorMap& color_map)
+{
+	inner_color = color_map.value(inner_color);
+	outer_color = color_map.value(outer_color);
+	for (auto& element : elements)
+		element.symbol->replaceColors(color_map);
+}
+
+
 
 void PointSymbol::scale(double factor)
 {
 	inner_radius = qRound(inner_radius * factor);
 	outer_width = qRound(outer_width * factor);
 	
-	int size = (int)objects.size();
-	for (int i = 0; i < size; ++i)
+	for (auto& element : elements)
 	{
-		symbols[i]->scale(factor);
-		objects[i]->scale(MapCoordF(0, 0), factor);
+		element.symbol->scale(factor);
+		element.object->scale(factor, factor);
 	}
 	
 	resetIcon();
@@ -592,47 +576,6 @@ qreal PointSymbol::dimensionForIcon() const
 
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool PointSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	file->read((char*)&rotatable, sizeof(bool));
-	
-	file->read((char*)&inner_radius, sizeof(int));
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	inner_color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	
-	file->read((char*)&outer_width, sizeof(int));
-	file->read((char*)&temp, sizeof(int));
-	outer_color = (temp >= 0) ? map->getColor(temp) : nullptr;
-	
-	int num_elements;
-	file->read((char*)&num_elements, sizeof(int));
-	objects.resize(num_elements);
-	symbols.resize(num_elements);
-	for (int i = 0; i < num_elements; ++i)
-	{
-		int save_type;
-		file->read((char*)&save_type, sizeof(int));
-		symbols[i] = Symbol::getSymbolForType(static_cast<Symbol::Type>(save_type));
-		if (!symbols[i])
-			return false;
-		if (!symbols[i]->load(file, version, map))
-			return false;
-		
-		file->read((char*)&save_type, sizeof(int));
-		objects[i] = Object::getObjectForType(static_cast<Object::Type>(save_type), symbols[i]);
-		if (!objects[i])
-			return false;
-		objects[i]->load(file, version, nullptr);
-	}
-	
-	return true;
-}
-
-#endif
-
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QString::fromLatin1("point_symbol"));
@@ -642,13 +585,13 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(inner_color)));
 	xml.writeAttribute(QString::fromLatin1("outer_width"), QString::number(outer_width));
 	xml.writeAttribute(QString::fromLatin1("outer_color"), QString::number(map.findColorIndex(outer_color)));
-	int num_elements = (int)objects.size();
+	int num_elements = getNumElements();
 	xml.writeAttribute(QString::fromLatin1("elements"), QString::number(num_elements));
-	for (int i = 0; i < num_elements; ++i)
+	for (auto& element : elements)
 	{
 		xml.writeStartElement(QString::fromLatin1("element"));
-		symbols[i]->save(xml, map);
-		objects[i]->save(xml);
+		element.symbol->save(xml, map);
+		element.object->save(xml);
 		xml.writeEndElement(/*element*/);
 	}
 	xml.writeEndElement(/*point_symbol*/);
@@ -669,20 +612,27 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 	outer_color = map.getColor(temp);
 	int num_elements = attributes.value(QLatin1String("elements")).toInt();
 	
-	symbols.reserve(qMin(num_elements, 10)); // 10 is not a limit
-	objects.reserve(qMin(num_elements, 10)); // 10 is not a limit
+	elements.reserve(qMin(num_elements, 10)); // 10 is not a limit
 	for (int i = 0; xml.readNextStartElement(); ++i)
 	{
 		if (xml.name() == QLatin1String("element"))
 		{
+			auto symbol = std::unique_ptr<Symbol> {};
 			while (xml.readNextStartElement())
 			{
-				if (xml.name() == QLatin1String("symbol"))
-					symbols.push_back(Symbol::load(xml, map, symbol_dict));
-				else if (xml.name() == QLatin1String("object"))
-					objects.push_back(Object::load(xml, nullptr, symbol_dict, symbols.back()));
+				if (xml.name() == QLatin1String("symbol") && !symbol)
+				{
+					symbol = Symbol::load(xml, map, symbol_dict);
+				}
+				else if (xml.name() == QLatin1String("object") && symbol)
+				{
+					auto object = Object::load(xml, nullptr, symbol_dict, symbol.get());
+					elements.push_back({std::move(symbol), std::unique_ptr<Object>(object)});
+				}
 				else
+				{
 					xml.skipCurrentElement(); // unknown element
+				}
 			}
 		}
 		else
@@ -706,19 +656,12 @@ bool PointSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensi
 	if (outer_color && outer_width != point->outer_width)
 		return false;
 	
-	if (symbols.size() != point->symbols.size())
+	if (elements.size() != point->elements.size())
 		return false;
-	// TODO: Comparing the contained elements in fixed order does not find every case of identical points symbols
-	// (but at least if the point symbol has not been changed, it is always seen as identical). Could be improved.
-	for (int i = 0, size = (int)objects.size(); i < size; ++i)
-	{
-		if (!symbols[i]->equals(point->symbols[i], case_sensitivity))
-			return false;
-		if (!objects[i]->equals(point->objects[i], false))
-			return false;
-	}
-	
-	return true;
+	return std::equal(begin(elements), end(elements), begin(point->elements), [case_sensitivity](auto& lhs, auto& rhs) {
+		return lhs.symbol->equals(rhs.symbol.get(), case_sensitivity)
+		       && lhs.object->equals(rhs.object.get(), false);
+	});
 }
 
 

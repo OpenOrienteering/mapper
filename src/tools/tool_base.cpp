@@ -21,12 +21,16 @@
 
 #include "tool_base.h"
 
-#include <cstdlib>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <cstdlib>
+#endif
 #include <iterator>
 #include <type_traits>
 
 #include <QtGlobal>
-#include <QCoreApplication>
+#ifdef MAPPER_DEVELOPMENT_BUILD
+#  include <QCoreApplication>
+#endif
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>
@@ -154,7 +158,7 @@ const QCursor& MapEditorToolBase::getCursor() const
 
 
 
-void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	active_modifiers = event->modifiers();
 	cur_pos = event->pos();
@@ -180,7 +184,7 @@ void MapEditorToolBase::mousePositionEvent(QMouseEvent* event, MapCoordF map_coo
 }
 
 
-bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -200,7 +204,7 @@ bool MapEditorToolBase::mousePressEvent(QMouseEvent* event, MapCoordF map_coord,
 	}
 }
 
-bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -223,7 +227,7 @@ bool MapEditorToolBase::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, 
 	}
 }
 
-bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool MapEditorToolBase::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -256,7 +260,7 @@ bool MapEditorToolBase::keyPressEvent(QKeyEvent* event)
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
-	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// This is in contradiction to the documentation for QKeyEvent::modifiers(),
 	// but the documented behaviour of (parent) QInputEvent::modifiers().
 	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
 	switch (event->key())
@@ -286,7 +290,7 @@ bool MapEditorToolBase::keyReleaseEvent(QKeyEvent* event)
 #if defined(Q_OS_MACOS)
 	// FIXME: On Mac, QKeyEvent::modifiers() seems to return the keyboard 
 	// modifier flags that existed immediately before the event occurred.
-	// This is in contradiction to the documenation for QKeyEvent::modifiers(),
+	// This is in contradiction to the documentation for QKeyEvent::modifiers(),
 	// but the documented behaviour of (parent) QInputEvent::modifiers().
 	// Qt5 doc says QKeyEvent::modifiers() "cannot always be trusted." ...
 	switch (event->key())
@@ -678,7 +682,7 @@ void MapEditorToolBase::generateNextSimulatedEvent()
 			QMouseEvent release(QEvent::MouseButtonRelease, next_pos, Qt::LeftButton, Qt::LeftButton, active_modifiers);
 			qApp->sendEvent(mapWidget(), &release);
 		}
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		simulation_state = 0;
 	}

@@ -51,14 +51,14 @@ public:
 	 * @param toggle corresponds to the shift key modifier.
 	 * @return true if the selection has changed.
 	 */
-	bool selectAt(MapCoordF position, double tolerance, bool toggle);
+	bool selectAt(const MapCoordF& position, double tolerance, bool toggle);
 	
 	/**
 	 * Applies box selection.
 	 * @param toggle corresponds to the shift key modifier.
 	 * @return true if the selection has changed.
 	 */
-	bool selectBox(MapCoordF corner1, MapCoordF corner2, bool toggle);
+	bool selectBox(const MapCoordF& corner1, const MapCoordF& corner2, bool toggle);
 	
 	// TODO: move to other place? util.h/cpp or object.h/cpp
 	static bool sortObjects(const std::pair<int, Object*>& a, const std::pair<int, Object*>& b);

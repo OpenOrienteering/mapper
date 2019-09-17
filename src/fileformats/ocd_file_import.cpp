@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -25,29 +25,33 @@
 #include <algorithm>
 #include <cmath>
 #include <iterator>
+#include <limits>
 #include <memory>
+#include <stdexcept>
 #include <type_traits>
 #include <vector>
 
-#include <QBuffer>
+#include <QtGlobal>
+#include <QtMath>
 #include <QChar>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
+#include <QImage>
 #include <QImageReader>
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QList>
 #include <QPointF>
-#include <QStringRef>
+#include <QTextCodec>
 #include <QTextDecoder>
 #include <QVariant>
 
 #include "settings.h"
-#include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_color.h"
@@ -62,11 +66,15 @@
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
 #include "fileformats/file_format.h"
-#include "fileformats/ocad8_file_format_p.h"
-#include "fileformats/ocd_types_v10.h"
-#include "fileformats/ocd_types_v11.h"
-#include "fileformats/ocd_types_v12.h"
+#include "fileformats/ocd_file_format.h"
+#include "fileformats/ocd_georef_fields.h"
+#include "fileformats/ocd_icon.h"
+#include "fileformats/ocd_types_v8.h"
 #include "fileformats/ocd_types_v9.h"
+#include "fileformats/ocd_types_v10.h"
+#include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
+#include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
+#include "fileformats/ocd_types_v2018.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
@@ -90,14 +98,13 @@ static QTextCodec* codecFromSettings()
 
 
 
-OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject()
-{
-	// nothing, not inlined
-}
 
-OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
- : Importer { stream, map, view }
- , delegate { nullptr }
+OcdFileImport::OcdImportedPathObject::~OcdImportedPathObject() = default;
+
+
+
+OcdFileImport::OcdFileImport(const QString& path, Map* map, MapView* view)
+ : Importer { path, map, view }
  , custom_8bit_encoding { codecFromSettings() }
 {
 	if (!custom_8bit_encoding)
@@ -107,10 +114,7 @@ OcdFileImport::OcdFileImport(QIODevice* stream, Map* map, MapView* view)
 	}
 }
 
-OcdFileImport::~OcdFileImport()
-{
-	// nothing
-}
+OcdFileImport::~OcdFileImport() = default;
 
 
 void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
@@ -118,6 +122,45 @@ void OcdFileImport::setCustom8BitEncoding(QTextCodec* encoding)
 	custom_8bit_encoding = encoding;
 }
 
+
+template< unsigned char N >
+QString OcdFileImport::convertOcdString(const Ocd::PascalString<N>& src) const
+{
+	return custom_8bit_encoding->toUnicode(src.data, src.length);
+}
+
+template< unsigned char N >
+QString OcdFileImport::convertOcdString(const Ocd::Utf8PascalString<N>& src) const
+{
+	return QString::fromUtf8(src.data, src.length);
+}
+
+template< std::size_t N >
+QString OcdFileImport::convertOcdString(const Ocd::Utf16PascalString<N>& src) const
+{
+	Q_STATIC_ASSERT(N <= std::numeric_limits<unsigned int>::max() / 2);
+	return convertOcdString(src.data, N);
+}
+
+template< >
+QString OcdFileImport::convertOcdString< Ocd::Custom8BitEncoding >(const char* src, uint len) const
+{
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
+	return custom_8bit_encoding->toUnicode(src, int(len));
+}
+
+template< >
+QString OcdFileImport::convertOcdString< Ocd::Utf8Encoding >(const char* src, uint len) const
+{
+	len = qMin(uint(std::numeric_limits<int>::max()), qstrnlen(src, len));
+	return QString::fromUtf8(src, int(len));
+}
+
+template< class E >
+QString OcdFileImport::convertOcdString(const QByteArray& data) const
+{
+	return OcdFileImport::convertOcdString< E >(data.constData(), uint(data.length()));
+}
 
 QString OcdFileImport::convertOcdString(const QChar* src, uint maxlen) const
 {
@@ -130,10 +173,70 @@ QString OcdFileImport::convertOcdString(const QChar* src, uint maxlen) const
 			--maxlen;
 		}
 	}
+	/// \todo Create and use static decoder
 	QTextCodec* utf16 = QTextCodec::codecForName("UTF-16LE");
 	Q_ASSERT(utf16);
 	auto decoder = std::unique_ptr<QTextDecoder>(utf16->makeDecoder(QTextCodec::ConvertInvalidToNull));
 	return decoder->toUnicode(reinterpret_cast<const char*>(src), 2*int(last - src));
+}
+
+
+MapCoord OcdFileImport::convertOcdPoint(const Ocd::OcdPoint32& ocd_point) const
+{
+	qint32 ocad_x = ocd_point.x >> 8;
+	qint32 ocad_y = ocd_point.y >> 8;
+	// Recover from broken coordinate export from Mapper 0.6.2 ... 0.6.4 (#749)
+	// Cf. broken::convertPointMember in file_format_ocad8.cpp:
+	// The values -4 ... -1 (-0.004 mm ... -0.001 mm) were converted to 0x80000000u instead of 0.
+	// This is the maximum value. Thus it is okay to assume it won't occur in regular data,
+	// and we can safely replace it with 0 here.
+	// But the input parameter were already subject to right shift ...
+	constexpr auto invalid_value = qint32(0x80000000u) >> 8; // ... so we use this value here.
+	if (ocad_x == invalid_value)
+		ocad_x = 0;
+	if (ocad_y == invalid_value)
+		ocad_y = 0;
+	return MapCoord::fromNative(ocad_x * 10, ocad_y * -10);
+}
+
+
+qreal OcdFileImport::convertAngle(int ocd_angle) const
+{
+	// OC*D uses tenths of a degree, counterclockwise
+	// BUG: if sin(rotation) is < 0 for a hatched area pattern, the pattern's createRenderables() will go into an infinite loop.
+	// So until that's fixed, we keep a between 0 and PI
+	return qDegreesToRadians(0.1 * ((ocd_angle + 3600) % 3600));
+}
+
+
+int OcdFileImport::convertLength(qint16 ocd_length) const
+{
+	return convertLength<qint16, int>(ocd_length);
+}
+
+int OcdFileImport::convertLength(quint16 ocd_length) const
+{
+	return convertLength<quint16, int>(ocd_length);
+}
+
+template< class T, class R >
+R OcdFileImport::convertLength(T ocd_length) const
+{
+	// OC*D uses hundredths of a millimeter.
+	// oo-mapper uses 1/1000 mm
+	return static_cast<R>(ocd_length) * 10;
+}
+
+
+const MapColor* OcdFileImport::convertColor(int ocd_color)
+{
+	if (!color_index.contains(ocd_color))
+	{
+		addWarning(tr("Color id not found: %1, ignoring this color").arg(ocd_color));
+		return nullptr;
+	}
+	
+	return color_index[ocd_color];
 }
 
 
@@ -160,7 +263,6 @@ void OcdFileImport::addSymbolWarning(const TextSymbol* symbol, const QString& wa
 
 // Heuristic detection of implementation errors
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint8 >(quint8 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -171,7 +273,6 @@ qint64 OcdFileImport::convertLength< quint8 >(quint8 ocd_length) const
 }
 
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint16 >(quint16 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -182,7 +283,6 @@ qint64 OcdFileImport::convertLength< quint16 >(quint16 ocd_length) const
 }
 
 template< >
-inline
 qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 {
 	// OC*D uses hundredths of a millimeter.
@@ -195,45 +295,31 @@ qint64 OcdFileImport::convertLength< quint32 >(quint32 ocd_length) const
 #endif // !NDEBUG
 
 
-void OcdFileImport::importImplementationLegacy(bool load_symbols_only)
-{
-	QBuffer new_stream(&buffer);
-	new_stream.open(QIODevice::ReadOnly);
-	delegate.reset(new OCAD8FileImport(&new_stream, map, view));
-	
-	delegate->import(load_symbols_only);
-	
-	for (auto&& w : delegate->warnings())
-	{
-		addWarning(w);
-	}
-	
-	for (auto&& a : delegate->actions())
-	{
-		addAction(a);
-	}
-}
-
 template< class F >
-void OcdFileImport::importImplementation(bool load_symbols_only)
+void OcdFileImport::importImplementation()
 {
 	const OcdFile<F> file(buffer);
+	if (!file.header())
+	{
+		qWarning("*** OcdFileImport: Incomplete or missing header");
+		return;
+	}
+
 #ifdef MAPPER_DEVELOPMENT_BUILD
 	if (!qApp->applicationName().endsWith(QLatin1String("Test")))
 	{
 		qDebug("*** OcdFileImport: Importing a version %d.%d file", file.header()->version, file.header()->subversion);
-		for (const auto& string : file.strings())
+		for (const auto ocd_string : file.strings())
 		{
-			qDebug(" %d \t%s", string.type, qPrintable(convertOcdString< typename F::Encoding >(file[string])));
+			qDebug(" %d \t%s", ocd_string.entry->type, qPrintable(convertOcdString< typename F::Encoding >(ocd_string)));
 		}
 	}
 #endif
 	
-	map->setSymbolSetId(QStringLiteral("OCD"));
 	importGeoreferencing(file);
 	importColors(file);
 	importSymbols(file);
-	if (!load_symbols_only)
+	if (!loadSymbolsOnly())
 	{
 		importExtras(file);
 		importObjects(file);
@@ -243,13 +329,18 @@ void OcdFileImport::importImplementation(bool load_symbols_only)
 			importView(file);
 		}
 	}
+	
+	// No deep copy during import
+	Q_ASSERT(file.byteArray().constData() == buffer.constData());
 }
 
 
 void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::FileHeaderV8* header = file.header();
-	const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
+	const Ocd::SetupV8* setup = Ocd::getBlockChecked<Ocd::SetupV8>(file.byteArray(), header->setup_pos);
+	if (Q_UNLIKELY(!setup))
+		return;
 	
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
@@ -267,15 +358,30 @@ void OcdFileImport::importGeoreferencing(const OcdFile< F >& file)
 	handleStrings(file, { { 1039, &OcdFileImport::importGeoreferencing } });
 }
 
-void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_version*/)
+namespace {
+
+void tryParamConvert(int& out, const QString& param_value)
+{
+	bool ok;
+	auto value = qRound(param_value.toFloat(&ok));
+	if (ok)
+		out = value;
+}
+
+}  // anonymous namespace
+
+void OcdFileImport::importGeoreferencing(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
+	// si_ScalePar (type 1039) contains both georeferencing and map grid
+	// display parameters. Georeferencing data is extracted into a structure
+	// and passed on to a dedicated class. Screen grid parameters are
+	// processed below.
+	auto add_warning = [this](const QString& w){ addWarning(w); };
 	Georeferencing georef;
-	QString combined_grid_zone;
-	QPointF proj_ref_point;
-	bool x_ok = false, y_ok = false;
-	
+	OcdGeorefFields fields;
+
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
 	; // skip first word for this entry type
 	while (i >= 0)
@@ -287,24 +393,26 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 		switch (param_string[i+1].toLatin1())
 		{
 		case 'm':
-			{
-				double scale = param_value.toDouble(&ok);
-				if (ok && scale >= 0)
-					georef.setScaleDenominator(qRound(scale));
-			}
+			tryParamConvert(fields.m, param_value);
+			break;
+		case 'x':
+			tryParamConvert(fields.x, param_value);
+			break;
+		case 'y':
+			tryParamConvert(fields.y, param_value);
+			break;
+		case 'i':
+			tryParamConvert(fields.i, param_value);
+			break;
+		case 'r':
+			tryParamConvert(fields.r, param_value);
 			break;
 		case 'a':
 			{
-				double angle = param_value.toDouble(&ok);
-				if (ok && qAbs(angle) >= 0.01)
-					georef.setGrivation(angle);
+				auto double_param = param_value.toDouble(&ok);
+				if (ok)
+					fields.a = double_param;
 			}
-			break;
-		case 'x':
-			proj_ref_point.setX(param_value.toDouble(&x_ok));
-			break;
-		case 'y':
-			proj_ref_point.setY(param_value.toDouble(&y_ok));
 			break;
 		case 'd':
 			{
@@ -319,9 +427,6 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 				}
 			}
 			break;
-		case 'i':
-			combined_grid_zone = param_value;
-			break;
 		case '\t':
 			// empty item, fall through
 		default:
@@ -330,100 +435,46 @@ void OcdFileImport::importGeoreferencing(const QString& param_string, int /*ocd_
 		i = next_i;
 	}
 	
-	if (!combined_grid_zone.isEmpty())
-	{
-		applyGridAndZone(georef, combined_grid_zone);
-	}
-	
-	if (x_ok && y_ok)
-	{
-		georef.setProjectedRefPoint(proj_ref_point, false);
-	}
-	
+	fields.setupGeoref(georef, add_warning);
+
 	map->setGeoreferencing(georef);
 }
-
-void OcdFileImport::applyGridAndZone(Georeferencing& georef, const QString& combined_grid_zone)
-{
-	bool zone_ok = false;
-	const CRSTemplate* crs_template = nullptr;
-	QString id;
-	QString spec;
-	std::vector<QString> values;
-	
-	if (combined_grid_zone.startsWith(QLatin1String("20")))
-	{
-		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
-		zone_ok &= (zone >= 1 && zone <= 60);
-		if (zone_ok)
-		{
-			id = QLatin1String{"UTM"};
-			crs_template = CRSTemplateRegistry().find(id);
-			values.reserve(1);
-			values.push_back(QString::number(zone));
-		}
-	}
-	else if (combined_grid_zone.startsWith(QLatin1String("80")))
-	{
-		auto zone = combined_grid_zone.midRef(2).toUInt(&zone_ok);
-		if (zone_ok)
-		{
-			id = QLatin1String{"Gauss-Krueger, datum: Potsdam"};
-			crs_template = CRSTemplateRegistry().find(id);
-			values.reserve(1);
-			values.push_back(QString::number(zone));
-		}
-	}
-	else if (combined_grid_zone == QLatin1String("6005"))
-	{
-		id = QLatin1String{"EPSG"};
-		crs_template = CRSTemplateRegistry().find(id);
-		values.reserve(1);
-		values.push_back(QLatin1String{"3067"});
-	}
-	else if (combined_grid_zone == QLatin1String("14001"))
-	{
-		id = QLatin1String{"EPSG"};
-		crs_template = CRSTemplateRegistry().find(id);
-		values.reserve(1);
-		values.push_back(QLatin1String{"21781"});
-	}
-	else if (combined_grid_zone == QLatin1String("1000"))
-	{
-		return;
-	}
-	
-	if (crs_template)
-	{
-		spec = crs_template->specificationTemplate();
-		auto param = crs_template->parameters().begin();
-		for (const auto& value : values)
-		{
-			for (const auto& spec_value : (*param)->specValues(value))
-			{
-				spec = spec.arg(spec_value);
-			}
-			++param;
-		}
-	}
-	
-	if (spec.isEmpty())
-	{
-		addWarning(tr("Could not load the coordinate reference system '%1'.").arg(combined_grid_zone));
-	}
-	else
-	{
-		georef.setProjectedCRS(id, spec, std::move(values));
-	}
-}
-
 
 void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 {
 	const Ocd::SymbolHeaderV8 & symbol_header = file.header()->symbol_header;
-	int num_colors = symbol_header.num_colors;
 	
-	for (int i = 0; i < num_colors && i < 256; i++)
+	if (symbol_header.cmyk_screen != Ocd::CmykScreenV8{})
+	{
+		qDebug("Ignoring unusual CMYK configuration");
+	}
+	
+	auto num_separations = qMin(quint16(24), symbol_header.num_separations);
+	if (num_separations > 0)
+	{
+		spot_colors.reserve(num_separations);
+		for (auto i = 0u; i < num_separations; i++)
+		{
+			const auto& separation_info = symbol_header.separation_info[i];
+			const auto name = convertOcdString(separation_info.name);
+			auto color = new MapColor(name, MapColor::Undefined);
+			color->setSpotColorName(name);
+			// OCD stores CMYK values as integers from 0-200.
+			const MapColorCmyk cmyk(
+			  0.005f * separation_info.cmyk.cyan,
+			  0.005f * separation_info.cmyk.magenta,
+			  0.005f * separation_info.cmyk.yellow,
+			  0.005f * separation_info.cmyk.black );
+			color->setCmyk(cmyk);
+			color->setOpacity(1.0f);
+			color->setScreenAngle(0.1 * separation_info.raster_angle);
+			color->setScreenFrequency(0.1 * separation_info.raster_freq);
+			spot_colors.push_back(color);
+		}
+	}
+	
+	auto num_colors = symbol_header.num_colors;
+	for (auto i = 0u; i < num_colors && i < 256; i++)
 	{
 		const Ocd::ColorInfoV8& color_info = symbol_header.color_info[i];
 		const QString name = convertOcdString(color_info.name);
@@ -439,21 +490,156 @@ void OcdFileImport::importColors(const OcdFile<Ocd::FormatV8>& file)
 		color->setCmyk(cmyk);
 		color->setOpacity(1.0f);
 		
-		map->addColor(color, color_pos);
-		color_index[color_info.number] = color;
+		SpotColorComponents components;
+		for (auto j = 0u; j < num_separations; ++j)
+		{
+			const auto ocd_halftone = color_info.separations[j];
+			if (ocd_halftone <= 200)
+			{
+				components.reserve(std::size_t(num_separations));  // reserves only once for same capacity
+				components.push_back(SpotColorComponent(spot_colors[j], 0.005f * ocd_halftone));  // clazy:exclude=reserve-candidates
+			}
+		}
+		if (!components.empty())
+		{
+			color->setSpotColorComposition(components);
+			const MapColorCmyk cmyk(color->getCmyk());
+			color->setCmykFromSpotColors();
+			if (cmyk != color->getCmyk())
+				// The color's CMYK was customized.
+				color->setCmyk(cmyk);
+		}
+		
+		if ((i == 0 && color->isBlack() && color->getName() == QLatin1String("Registration black"))
+		    || (!components.empty() && components.size() == num_separations
+		        && color_info.cmyk.cyan == 200
+		        && color_info.cmyk.magenta == 200
+		        && color_info.cmyk.yellow == 200
+		        && color_info.cmyk.black == 200
+		        && std::all_of(color_info.separations, color_info.separations + num_separations,
+		                       [](const auto& s) { return s == 200; }) ) )
+		{
+			addWarning(tr("Color \"%1\" is imported as special color \"Registration black\".").arg(color->getName()));
+			delete color;
+			color_index[color_info.number] = Map::getRegistrationColor();
+			// NOTE: This does not make a difference in output
+			// as long as no spot colors are created,
+			// but as a special color, it is protected from modification,
+			// and it will be saved as number 0 in OCD export.
+		}
+		else
+		{
+			map->addColor(color, color_pos);
+			color_index[color_info.number] = color;
+		}
 	}
 	
-	addWarning(OcdFileImport::tr("Spot color information was ignored."));
+	// Insert the spot colors into the map
+	for (auto i = 0u; i < num_separations; ++i)
+	{
+		map->addColor(spot_colors[i], map->getNumColors());
+	}
 }
 
 template< class F >
 void OcdFileImport::importColors(const OcdFile< F >& file)
 {
+	spot_colors.clear();
+	spot_colors.reserve(10);
+	handleStrings(file, { { 10, &OcdFileImport::importSpotColor } });
 	handleStrings(file, { { 9, &OcdFileImport::importColor } });
-	addWarning(OcdFileImport::tr("Spot color information was ignored."));
+	std::sort(begin(spot_colors), end(spot_colors), [](const auto a, const auto b) {
+		return a->getPriority() < b->getPriority();
+	});
+	// Insert the spot colors into the map after (below) the regular colors.
+	for (auto spot_color : spot_colors)
+	{
+		map->addColor(spot_color, map->getNumColors());
+	}
 }
 
-void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/)
+void OcdFileImport::importSpotColor(const QString& param_string)
+{
+	const QChar* unicode = param_string.unicode();
+	
+	int i = param_string.indexOf(QLatin1Char('\t'), 0);
+	const QString name = param_string.left(qMax(-1, i)); // copied
+	
+	int number = -1;
+	bool number_ok = false;
+	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
+	double screen_angle = 45;
+	double screen_frequency = 150;
+	
+	SpotColorComponents components;
+	
+	while (i >= 0)
+	{
+		float f_value;
+		bool ok;
+		int next_i = param_string.indexOf(QLatin1Char('\t'), i+1);
+		int len = (next_i > 0 ? next_i : param_string.length()) - i - 2;
+		const QString param_value = QString::fromRawData(unicode+i+2, len); // no copying!
+		switch (param_string[i+1].toLatin1())
+		{
+		case '\t':
+			// empty item
+			break;
+		case 'n':
+			number = param_value.toInt(&number_ok);
+			break;
+		case 'v':
+			if (param_value != QLatin1String("1"))
+				qInfo("Spot color %s: Unknown value v:%s", qUtf8Printable(name), qUtf8Printable(param_value));
+			break;
+		case 'c':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.c = 0.01f * f_value;
+			break;
+		case 'm':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.m = 0.01f * f_value;
+			break;
+		case 'y':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.y = 0.01f * f_value;
+			break;
+		case 'k':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0 && f_value <= 100)
+				cmyk.k = 0.01f * f_value;
+			break;
+		case 'f':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0)
+				screen_frequency = 0.1 * double(f_value);
+			break;
+		case 'a':
+			f_value = param_value.toFloat(&ok);
+			if (ok && f_value >= 0)
+				screen_angle = double(f_value);
+			break;
+		default:
+			; // nothing
+		}
+		i = next_i;
+	}
+	
+	if (!number_ok)
+		return;
+	
+	auto color = new MapColor(name, number);
+	color->setSpotColorName(name);
+	color->setCmyk(cmyk);
+	color->setScreenAngle(screen_angle);
+	color->setScreenFrequency(screen_frequency);
+	spot_colors.push_back(color);
+}
+
+void OcdFileImport::importColor(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -465,6 +651,9 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 	MapColorCmyk cmyk { 0.0, 0.0, 0.0, 0.0 };
 	bool overprinting = false;
 	float opacity = 1.0f;
+	
+	SpotColorComponents components;
+	QString spot_color_name;
 	
 	while (i >= 0)
 	{
@@ -512,6 +701,23 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 			if (ok && f_value >= 0.f && f_value <= 100.f)
 				opacity = 0.01f * f_value;
 			break;
+		case 's':
+			spot_color_name = param_value;
+			break;
+		case 'p':
+			if (!spot_color_name.isEmpty())
+			{
+				auto spot_color = std::find_if(begin(spot_colors), end(spot_colors), [&spot_color_name](const auto s) {
+					return s->getName() == spot_color_name;
+				});
+				if (spot_color != end(spot_colors))
+				{
+					i_value = param_value.toInt(&ok);
+					components.push_back({*spot_color, qBound(0, i_value, 100)/100.0f});
+				}
+			}
+			spot_color_name.clear();
+			break;
 		default:
 			; // nothing
 		}
@@ -521,13 +727,36 @@ void OcdFileImport::importColor(const QString& param_string, int /*ocd_version*/
 	if (!number_ok)
 		return;
 		
+	if ((cmyk.isBlack() && name == QLatin1String("Registration black"))
+	    || (!components.empty() && components.size() == spot_colors.size()
+	        && qFuzzyCompare(cmyk.c, 1)
+	        && qFuzzyCompare(cmyk.m, 1)
+	        && qFuzzyCompare(cmyk.y, 1)
+	        && qFuzzyCompare(cmyk.k, 1)
+	        && std::all_of(begin(components), end(components),
+	                       [](const auto& c) { return qFuzzyCompare(c.factor, 1); }) ) )
+	{
+		color_index[number] = Map::getRegistrationColor();
+		return;
+	}
+	
 	int color_pos = map->getNumColors();
 	auto color = new MapColor(name, color_pos);
 	color->setCmyk(cmyk);
-	color->setKnockout(!overprinting);
 	color->setOpacity(opacity);
 	map->addColor(color, color_pos);
 	color_index[number] = color;
+
+	if (!components.empty())
+	{
+		color->setSpotColorComposition(components);
+		const MapColorCmyk cmyk(color->getCmyk());
+		color->setCmykFromSpotColors();
+		if (cmyk != color->getCmyk())
+			// The color's CMYK was customized.
+			color->setCmyk(cmyk);
+		color->setKnockout(!overprinting);
+	}
 }
 
 namespace {
@@ -548,9 +777,10 @@ namespace {
 template< class F >
 void OcdFileImport::importSymbols(const OcdFile< F >& file)
 {
-	auto ocd_version = file.header()->version;
-	for (const auto& ocd_symbol : file.symbols())
+	for (auto ocd_symbol_entry : file.symbols())
 	{
+		auto& ocd_symbol = *ocd_symbol_entry.entity;
+		
 		// When extra symbols are created, we want to insert the main symbol
 		// before them. That is why pos needs to be determined first.
 		auto pos = map->getNumSymbols();
@@ -559,23 +789,23 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		switch (symbolType(ocd_symbol))
 		{
 		case Ocd::SymbolTypePoint:
-			symbol = importPointSymbol(reinterpret_cast<const typename F::PointSymbol&>(ocd_symbol), ocd_version);
+			symbol = importPointSymbol(reinterpret_cast<const typename F::PointSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeLine:
-			symbol = importLineSymbol(reinterpret_cast<const typename F::LineSymbol&>(ocd_symbol), ocd_version);
+			symbol = importLineSymbol(reinterpret_cast<const typename F::LineSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeArea:
-			symbol = importAreaSymbol(reinterpret_cast<const typename F::AreaSymbol&>(ocd_symbol), ocd_version);
+			symbol = importAreaSymbol(reinterpret_cast<const typename F::AreaSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeText:
-			symbol = importTextSymbol(reinterpret_cast<const typename F::TextSymbol&>(ocd_symbol), ocd_version);
+			symbol = importTextSymbol(reinterpret_cast<const typename F::TextSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeRectangle_V8:
 		case Ocd::SymbolTypeRectangle_V9:
 			symbol = importRectangleSymbol(reinterpret_cast<const typename F::RectangleSymbol&>(ocd_symbol));
 			break;
 		case Ocd::SymbolTypeLineText:
-			symbol = importLineTextSymbol(reinterpret_cast<const typename F::LineTextSymbol&>(ocd_symbol), ocd_version);
+			symbol = importLineTextSymbol(reinterpret_cast<const typename F::LineTextSymbol&>(ocd_symbol));
 			break;
 		default:
 			addWarning(OcdFileImport::tr("Unable to import symbol %1.%2 \"%3\": %4") .
@@ -590,6 +820,13 @@ void OcdFileImport::importSymbols(const OcdFile< F >& file)
 		symbol_index[ocd_symbol.number] = symbol;
 	}
 	resolveSubsymbols();
+	
+	for (auto ocd_symbol_entry : file.symbols())
+	{
+		auto& ocd_symbol = *ocd_symbol_entry.entity;
+		if (symbol_index.contains(ocd_symbol.number))
+			dropRedundantIcon(symbol_index[ocd_symbol.number], ocd_symbol);
+	}
 }
 
 void OcdFileImport::resolveSubsymbols()
@@ -615,15 +852,14 @@ void OcdFileImport::resolveSubsymbols()
 
 void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 {
-	auto ocd_version = file.header()->version;
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (const auto& object_entry : file.objects())
+	for (auto ocd_object : file.objects())
 	{
-		if (object_entry.symbol)
+		if (ocd_object.entry->symbol)
 		{
-			if (auto object = importObject(file[object_entry], part, ocd_version))
+			if (auto object = importObject(*ocd_object.entity, part))
 				part->addObject(object, part->getNumObjects());
 		}
 	}
@@ -632,17 +868,16 @@ void OcdFileImport::importObjects(const OcdFile<Ocd::FormatV8>& file)
 template< class F >
 void OcdFileImport::importObjects(const OcdFile< F >& file)
 {
-	auto ocd_version = file.header()->version;
 	MapPart* part = map->getCurrentPart();
 	Q_ASSERT(part);
 	
-	for (const auto& object_entry : file.objects())
+	for (auto ocd_object : file.objects())
 	{
-		if ( object_entry.symbol
-		     && object_entry.status != Ocd::ObjectDeleted
-		     && object_entry.status != Ocd::ObjectDeletedForUndo )
+		if ( ocd_object.entry->symbol
+		     && ocd_object.entry->status != Ocd::ObjectDeleted
+		     && ocd_object.entry->status != Ocd::ObjectDeletedForUndo )
 		{
-			if (auto object = importObject(file[object_entry], part, ocd_version))
+			if (auto object = importObject(*ocd_object.entity, part))
 				part->addObject(object, part->getNumObjects());
 		}
 	}
@@ -655,7 +890,7 @@ void OcdFileImport::importTemplates(const OcdFile< F >& file)
 	handleStrings(file, { { 8, &OcdFileImport::importTemplate } });
 }
 
-void OcdFileImport::importTemplate(const QString& param_string, int ocd_version)
+void OcdFileImport::importTemplate(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -775,12 +1010,11 @@ const std::initializer_list<OcdFileImport::StringHandler> OcdFileImport::extraSt
     { 1061, &OcdFileImport::appendNotes }
 };
 
-void OcdFileImport::appendNotes(const QString& param_string, int ocd_version)
+void OcdFileImport::appendNotes(const QString& param_string)
 {
-	QString notes = map->getMapNotes();
+	auto notes = map->getMapNotes();
 	notes.append(param_string);
-	if (ocd_version <= 10)
-		notes.append(QLatin1Char('\n'));
+	notes.replace(QLatin1String("\r\n"), QLatin1String("\n"));
 	map->setMapNotes(notes);
 }
 
@@ -790,11 +1024,13 @@ void OcdFileImport::importView(const OcdFile<Ocd::FormatV8>& file)
 	if (view)
 	{
 		const Ocd::FileHeaderV8* header = file.header();
-		const Ocd::SetupV8* setup = reinterpret_cast< const Ocd::SetupV8* >(file.byteArray().data() + header->setup_pos);
-		
+		const Ocd::SetupV8* setup = Ocd::getBlockChecked<const Ocd::SetupV8>(file.byteArray(), header->setup_pos);
+		if (Q_UNLIKELY(!setup))
+			return;
+
 		if (setup->zoom >= MapView::zoom_out_limit && setup->zoom <= MapView::zoom_in_limit)
 			view->setZoom(setup->zoom);
-		
+
 		view->setCenter(convertOcdPoint(setup->center));
 	}
 }
@@ -805,7 +1041,7 @@ void OcdFileImport::importView(const OcdFile< F >& file)
 	handleStrings(file, { { 1030, &OcdFileImport::importView } });
 }
 
-void OcdFileImport::importView(const QString& param_string, int /*ocd_version*/)
+void OcdFileImport::importView(const QString& param_string)
 {
 	const QChar* unicode = param_string.unicode();
 	
@@ -856,129 +1092,163 @@ void OcdFileImport::importView(const QString& param_string, int /*ocd_version*/)
 }
 
 
-template< class S >
-void OcdFileImport::setupBaseSymbol(Symbol* symbol, const S& ocd_symbol)
+template< class OcdBaseSymbol >
+void OcdFileImport::setupBaseSymbol(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
 {
-	typedef typename S::BaseSymbol BaseSymbol;
-	const BaseSymbol& base_symbol = ocd_symbol.base;
 	// common fields are name, number, description, helper_symbol, hidden/protected status
-	symbol->setName(convertOcdString(base_symbol.description));
-	symbol->setNumberComponent(0, base_symbol.number / BaseSymbol::symbol_number_factor);
-	symbol->setNumberComponent(1, base_symbol.number % BaseSymbol::symbol_number_factor);
+	symbol->setName(convertOcdString(ocd_base_symbol.description));
+	symbol->setNumberComponent(0, ocd_base_symbol.number / OcdBaseSymbol::symbol_number_factor);
+	symbol->setNumberComponent(1, ocd_base_symbol.number % OcdBaseSymbol::symbol_number_factor);
 	symbol->setNumberComponent(2, -1);
 	symbol->setIsHelperSymbol(false);
-	symbol->setProtected(base_symbol.status & Ocd::SymbolProtected);
-	symbol->setHidden(base_symbol.status & Ocd::SymbolHidden);
+	symbol->setProtected(ocd_base_symbol.status & Ocd::SymbolProtected);
+	symbol->setHidden(ocd_base_symbol.status & Ocd::SymbolHidden);
+	setupIcon(symbol, ocd_base_symbol);
 }
 
+
+template< >
+void OcdFileImport::setupIcon<Ocd::BaseSymbolV8>(Symbol* symbol, const Ocd::BaseSymbolV8& ocd_base_symbol)
+try
+{
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
+		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon.uncompress()));
+	else
+		symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+}
+catch (std::logic_error& e)
+{
+	addWarning(tr(e.what()));
+}
+
+template< class OcdBaseSymbol >
+void OcdFileImport::setupIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
+{
+	symbol->setCustomIcon(OcdIcon::toQImage(ocd_base_symbol.icon));
+}
+
+
+template<>
+void OcdFileImport::dropRedundantIcon<Ocd::BaseSymbolV8>(Symbol* symbol, const Ocd::BaseSymbolV8& ocd_base_symbol)
+try
+{
+	const auto imported = symbol->getCustomIcon();
+	if (imported.isNull())
+		return;
+	
+	// The comparison is done in OCD format, due to the limited color palette.
+	symbol->setCustomIcon({});
+	auto ocd_icon = OcdIcon{*map, *symbol};
+	if (ocd_base_symbol.flags & Ocd::SymbolIconCompressedV8)
+	{
+		if (ocd_base_symbol.icon.uncompress() != ocd_icon)
+			symbol->setCustomIcon(imported);
+	}
+	else
+	{
+		if (ocd_base_symbol.icon != ocd_icon)
+			symbol->setCustomIcon(imported);
+	}
+}
+catch (std::logic_error&)
+{
+	// In general, ocd_base_symbol.icon.uncompress() can throw. But here,
+	// it is called after successful icon import - which indicates that
+	// uncompress() does not fail for ocd_base_symbol.icon.
+}
+
+template<class OcdBaseSymbol>
+void OcdFileImport::dropRedundantIcon(Symbol* symbol, const OcdBaseSymbol& ocd_base_symbol)
+{
+	const auto imported = symbol->getCustomIcon();
+	if (imported.isNull())
+		return;
+	
+	// The comparison is done in OCD format, due to the limited color palette.
+	symbol->setCustomIcon({});
+	if (ocd_base_symbol.icon != OcdIcon{*map, *symbol})
+		symbol->setCustomIcon(imported);
+}
+
+
 template< class S >
-PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol, int ocd_version)
+PointSymbol* OcdFileImport::importPointSymbol(const S& ocd_symbol)
 {
 	auto symbol = new OcdImportedPointSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
-	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements, ocd_version);
-	symbol->setRotatable(ocd_symbol.base.flags & 1);
+	setupBaseSymbol(symbol, ocd_symbol.base);
+	setupPointSymbolPattern(symbol, ocd_symbol.data_size, ocd_symbol.begin_of_elements);
+	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }
 
 template< class S >
-Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol, int ocd_version)
+Symbol* OcdFileImport::importLineSymbol(const S& ocd_symbol)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
+	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
-	OcdImportedLineSymbol* line_for_borders = nullptr;
-	
-	// Import a main line?
-	OcdImportedLineSymbol* main_line = nullptr;
-	if (ocd_symbol.common.double_mode == 0 || ocd_symbol.common.line_width > 0)
-	{
-		main_line = importLineSymbolBase(ocd_symbol.common);
-		setupBaseSymbol(main_line, ocd_symbol);
-		line_for_borders = main_line;
-	}
+	// Import a main line.
+	auto main_line = new OcdImportedLineSymbol();
+	setupBaseSymbol(main_line, ocd_symbol.base);
+	importLineSymbolBase(main_line, ocd_symbol.common);
+	setupLineSymbolPointSymbols(main_line, ocd_symbol.common, ocd_symbol.begin_of_elements);
 	
 	// Import a 'framing' line?
 	OcdImportedLineSymbol* framing_line = nullptr;
 	if (ocd_symbol.common.framing_width > 0 && ocd_version >= 7)
 	{
-		framing_line = importLineSymbolFraming(ocd_symbol.common, main_line);
-		setupBaseSymbol(framing_line, ocd_symbol);
-		if (!line_for_borders)
-			line_for_borders = framing_line;
+		framing_line = main_line;
+		if ((main_line->line_width && main_line->color)
+		    || (main_line->mid_symbol && !main_line->mid_symbol->isEmpty()) )
+		{ 
+			framing_line = new OcdImportedLineSymbol();
+			setupBaseSymbol(framing_line, ocd_symbol.base);
+		}
+		setupLineSymbolFraming(framing_line, ocd_symbol.common, main_line);
+		if (framing_line == main_line)
+			framing_line = nullptr;
 	}
 	
-	// Import a 'double' line?
-	bool has_border_line =
-	        (ocd_symbol.common.double_mode != 0) &&
-	        (ocd_symbol.common.double_left_width > 0 || ocd_symbol.common.double_right_width > 0);
-	OcdImportedLineSymbol *double_line = nullptr;
-	if (ocd_symbol.common.double_flags & LineStyle::DoubleFillColorOn
-	    || (has_border_line && !line_for_borders) )
+	// Import a 'double' line, including an optional filling?
+	OcdImportedLineSymbol* double_line = nullptr;
+	if (ocd_symbol.common.double_mode != OcdLineSymbolCommon::DoubleLineOff)
 	{
-		double_line = importLineSymbolDoubleBorder(ocd_symbol.common);
-		setupBaseSymbol(double_line, ocd_symbol);
-		line_for_borders = double_line;
+		double_line = main_line;
+		if (main_line->dashed
+		    || (main_line->line_width && main_line->color)
+		    || (main_line->mid_symbol && !main_line->mid_symbol->isEmpty()) )
+		{
+			double_line = new OcdImportedLineSymbol();
+			setupBaseSymbol(double_line, ocd_symbol.base);
+		}
+		setupLineSymbolDoubleBorder(double_line, ocd_symbol.common);
+		if (double_line == main_line)
+			double_line = nullptr;
 	}
-	else if (ocd_symbol.common.double_flags & LineStyle::DoubleBackgroundColorOn)
+	
+	if (ocd_symbol.common.double_flags & OcdLineSymbolCommon::DoubleFlagBackgroundColorOn)
 	{
-		auto symbol = std::unique_ptr<LineSymbol>(importLineSymbolDoubleBorder(ocd_symbol.common));
-		addSymbolWarning(symbol.get(),
+		addSymbolWarning(main_line,
 		  OcdFileImport::tr("Unsupported line style '%1'.").arg(QLatin1String("LineStyle::DoubleBackgroundColorOn")) );
 	}
 	
-	// Border lines
-	if (has_border_line)
-	{
-		Q_ASSERT(line_for_borders);
-		setupLineSymbolForBorder(line_for_borders, ocd_symbol.common);
-	}
-	
-	// Create point symbols along line; middle ("normal") dash, corners, start, and end.
-	OcdImportedLineSymbol* symbol_line = main_line ? main_line : double_line;	// Find the line to attach the symbols to
-	if (!symbol_line)
-	{
-		main_line = new OcdImportedLineSymbol();
-		symbol_line = main_line;
-		setupBaseSymbol(main_line, ocd_symbol);
-		
-		main_line->segment_length = convertLength(ocd_symbol.common.main_length);
-		main_line->end_length = convertLength(ocd_symbol.common.end_length);
-	}
-	
-	setupLineSymbolPointSymbol(symbol_line, ocd_symbol.common, ocd_symbol.begin_of_elements, ocd_version);
-	
 	// TODO: taper fields (tmode and tlast)
 	
-	if (!main_line && !framing_line)
-	{
-		return double_line;
-	}
-	else if (!double_line && !framing_line)
-	{
+	if (!double_line && !framing_line)
 		return main_line;
-	}
-	else if (!main_line && !double_line)
-	{
-		return framing_line;
-	}
-	else
-	{
-		auto full_line = new CombinedSymbol();
-		setupBaseSymbol(full_line, ocd_symbol);
-		mergeLineSymbol(full_line, main_line, framing_line, double_line);
-		addSymbolWarning(symbol_line, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
-		return full_line;
-	}
+	
+	auto combined_line = new CombinedSymbol();
+	setupBaseSymbol(combined_line, ocd_symbol.base);
+	mergeLineSymbol(combined_line, main_line, framing_line, double_line);
+	return combined_line;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const Ocd::LineSymbolCommonV8& attributes)
+void OcdFileImport::importLineSymbolBase(OcdImportedLineSymbol* symbol, const Ocd::LineSymbolCommonV8& attributes)
 {
 	using LineStyle = Ocd::LineSymbolCommonV8;
 	
 	// Basic line options
-	auto symbol = new OcdImportedLineSymbol();
 	symbol->line_width = convertLength(attributes.line_width);
-	symbol->color = convertColor(attributes.line_color);
+	symbol->color = symbol->line_width ? convertColor(attributes.line_color) : nullptr;
 	
 	// Cap and join styles
 	switch (attributes.line_style)
@@ -987,7 +1257,7 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 		addSymbolWarning( symbol,
 		                  tr("Unsupported line style '%1'.").
 		                  arg(attributes.line_style) );
-		// fall through
+		Q_FALLTHROUGH();
 	case LineStyle::BevelJoin_FlatCap:
 		symbol->join_style = LineSymbol::BevelJoin;
 		symbol->cap_style = LineSymbol::FlatCap;
@@ -1014,28 +1284,14 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 		break;
 	}
 	
+	symbol->start_offset = std::max(0, convertLength(attributes.dist_from_start));
+	symbol->end_offset = std::max(0, convertLength(attributes.dist_from_end));
 	if (symbol->cap_style == LineSymbol::PointedCap)
 	{
-		auto ocd_length = attributes.dist_from_start;
-		if (attributes.dist_from_start != attributes.dist_from_end)
-		{
-			// FIXME: Different lengths for start and end length of pointed line ends are not supported yet, so take the average
-			ocd_length = (attributes.dist_from_start + attributes.dist_from_end) / 2;
-			addSymbolWarning( symbol,
-			  tr("Different lengths for pointed caps at begin (%1 mm) and end (%2 mm) are not supported. Using %3 mm.").
-			  arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
-			      locale.toString(0.001f * convertLength(attributes.dist_from_end)),
-			      locale.toString(0.001f * convertLength(ocd_length))) );
-		}
-		symbol->pointed_cap_length = convertLength(ocd_length);
-		symbol->join_style = LineSymbol::RoundJoin;	// NOTE: while the setting may be different (see what is set in the first place), OC*D always draws round joins if the line cap is pointed!
-	}
-	else if (attributes.dist_from_start > 0 || attributes.dist_from_end > 0)
-	{
-		addSymbolWarning(symbol,
-		                 tr("Distances from start (%1 mm) or end (%2 mm) are not supported.")
-		                 .arg(locale.toString(0.001f * convertLength(attributes.dist_from_start)),
-		                      locale.toString(0.001f * convertLength(attributes.dist_from_end))) );
+		// Note: While the property in the file may be different
+		// (cf. what is set in the first place), OC*D always
+		// draws round joins if the line cap is pointed!
+		symbol->join_style = LineSymbol::RoundJoin;
 	}
 	
 	// Handle the dash pattern
@@ -1119,18 +1375,15 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolBase(const 
 		symbol->segment_length = convertLength(attributes.main_length);
 		symbol->end_length = convertLength(attributes.end_length);
 	}
-	
-	return symbol;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolFraming(const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
+void OcdFileImport::setupLineSymbolFraming(OcdFileImport::OcdImportedLineSymbol* framing_line, const Ocd::LineSymbolCommonV8& attributes, const LineSymbol* main_line)
 {
 	using LineStyle = Ocd::LineSymbolCommonV8;
 	
 	// Basic line options
-	auto framing_line = new OcdImportedLineSymbol();
 	framing_line->line_width = convertLength(attributes.framing_width);
-	framing_line->color = convertColor(attributes.framing_color);
+	framing_line->color = framing_line->line_width ? convertColor(attributes.framing_color) : nullptr;
 	
 	// Cap and join styles
 	switch (attributes.framing_style)
@@ -1152,102 +1405,110 @@ OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolFraming(con
 		                  tr("Unsupported framing line style '%1'.").
 		                  arg(attributes.line_style) );
 	}
-	
-	return framing_line;
 }
 
-OcdFileImport::OcdImportedLineSymbol* OcdFileImport::importLineSymbolDoubleBorder(const Ocd::LineSymbolCommonV8& attributes)
+void OcdFileImport::setupLineSymbolDoubleBorder(OcdFileImport::OcdImportedLineSymbol* double_line, const Ocd::LineSymbolCommonV8& attributes)
 {
-	using LineStyle = Ocd::LineSymbolCommonV8;
+	using OcdLineSymbolCommon = Ocd::LineSymbolCommonV8;
 	
-	auto double_line = new OcdImportedLineSymbol();
 	double_line->line_width = convertLength(attributes.double_width);
-	double_line->cap_style = LineSymbol::FlatCap;
-	double_line->join_style = LineSymbol::MiterJoin;
-	double_line->segment_length = convertLength(attributes.main_length);
-	double_line->end_length = convertLength(attributes.end_length);
-	
-	if (attributes.double_flags & LineStyle::DoubleFillColorOn)
+	if (double_line->line_width
+	    && attributes.double_flags & OcdLineSymbolCommon::DoubleFlagFillColorOn)
 		double_line->color = convertColor(attributes.double_color);
 	else
 		double_line->color = nullptr;
+	double_line->cap_style = LineSymbol::FlatCap;
+	double_line->join_style = LineSymbol::MiterJoin;
 	
-	return double_line;
-}
-
-void OcdFileImport::setupLineSymbolForBorder(OcdFileImport::OcdImportedLineSymbol* line_for_borders, const Ocd::LineSymbolCommonV8& attributes)
-{
-	line_for_borders->have_border_lines = true;
-	LineSymbolBorder& border = line_for_borders->getBorder();
-	LineSymbolBorder& right_border = line_for_borders->getRightBorder();
+	double_line->have_border_lines = true;
+	LineSymbolBorder& border = double_line->getBorder();
+	LineSymbolBorder& right_border = double_line->getRightBorder();
 	
 	// Border color and width
-	border.color = convertColor(attributes.double_left_color);
 	border.width = convertLength(attributes.double_left_width);
-	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	border.color = border.width ? convertColor(attributes.double_left_color) : nullptr;
+	border.shift = convertLength(attributes.double_left_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
-	right_border.color = convertColor(attributes.double_right_color);
 	right_border.width = convertLength(attributes.double_right_width);
-	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - line_for_borders->line_width) / 2;
+	right_border.color = right_border.width ? convertColor(attributes.double_right_color) : nullptr;
+	right_border.shift = convertLength(attributes.double_right_width) / 2 + (convertLength(attributes.double_width) - double_line->line_width) / 2;
 	
-	// The borders may be dashed
-	if (attributes.double_gap > 0 && attributes.double_mode > 1)
+	// The borders and the filling may be dashed
+	if (attributes.double_gap > 0 && attributes.double_mode != OcdLineSymbolCommon::DoubleLineContinuous)
 	{
 		border.dashed = true;
 		border.dash_length = convertLength(attributes.double_length);
 		border.break_length = convertLength(attributes.double_gap);
 		
-		// If ocd_symbol->dmode == 2, only the left border should be dashed
-		if (attributes.double_mode > 2)
+		if (attributes.double_mode != OcdLineSymbolCommon::DoubleLineLeftBorderDashed)
 		{
 			right_border.dashed = border.dashed;
 			right_border.dash_length = border.dash_length;
 			right_border.break_length = border.break_length;
+			
+			if (attributes.double_mode == OcdLineSymbolCommon::DoubleLineAllDashed)
+			{
+				double_line->setDashed(true);
+				double_line->setDashesInGroup(1);
+				double_line->setDashLength(border.dash_length);
+				double_line->setBreakLength(border.break_length);
+				double_line->setHalfOuterDashes(false);
+			}
 		}
 	}
 }
 
-void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements, int ocd_version)
+void OcdFileImport::setupLineSymbolPointSymbols(OcdFileImport::OcdImportedLineSymbol* line_symbol, const Ocd::LineSymbolCommonV8& attributes, const Ocd::PointSymbolElementV8* elements)
 {
 	const Ocd::OcdPoint32* coords = reinterpret_cast<const Ocd::OcdPoint32*>(elements);
 	
-	line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
-	line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
-	line_symbol->mid_symbol = new OcdImportedPointSymbol();
-	setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements, ocd_version);
-	coords += attributes.primary_data_size;
-	
-	if (attributes.secondary_data_size > 0)
+	// Special case main_gap == 0: swapped in Mapper
+	auto gaps_swapped = attributes.sec_gap && !attributes.main_gap && attributes.main_length;
+	if (attributes.primary_data_size > 0)
 	{
-		//symbol_line->dash_symbol = importPattern( ocd_symbol->ssnpts, symbolptr);
-		coords += attributes.secondary_data_size;
-		addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
+		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfDashGroup : LineSymbol::CenterOfGap;
+		line_symbol->mid_symbols_per_spot = attributes.num_prim_sym;
+		line_symbol->mid_symbol_distance = convertLength(attributes.prim_sym_dist);
+		line_symbol->show_at_least_one_symbol = true;
+		line_symbol->mid_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.primary_data_size, elements);
+		if (attributes.secondary_data_size > 0)
+			addSymbolWarning(line_symbol, tr("Skipped secondary point symbol."));
+		coords += attributes.primary_data_size;
 	}
+	else if (attributes.secondary_data_size > 0)
+	{
+		line_symbol->mid_symbol_placement = gaps_swapped ? LineSymbol::CenterOfGap : LineSymbol::CenterOfDashGroup;
+		line_symbol->mid_symbols_per_spot = 1;
+		line_symbol->show_at_least_one_symbol = true;
+		line_symbol->mid_symbol = new OcdImportedPointSymbol();
+		setupPointSymbolPattern(line_symbol->mid_symbol, attributes.secondary_data_size, elements);
+	}
+	// FIXME: not really sure how this translates... need test cases
+	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
+	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
+	coords += attributes.secondary_data_size;
+	
 	if (attributes.corner_data_size > 0)
 	{
 		line_symbol->dash_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		setupPointSymbolPattern(line_symbol->dash_symbol, attributes.corner_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
 		line_symbol->dash_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Dash symbol"));
 		coords += attributes.corner_data_size;
 	}
 	if (attributes.start_data_size > 0)
 	{
 		line_symbol->start_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		setupPointSymbolPattern(line_symbol->start_symbol, attributes.start_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
 		line_symbol->start_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "Start symbol"));
 		coords += attributes.start_data_size;
 	}
 	if (attributes.end_data_size > 0)
 	{
 		line_symbol->end_symbol = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords), ocd_version);
+		setupPointSymbolPattern(line_symbol->end_symbol, attributes.end_data_size, reinterpret_cast<const Ocd::PointSymbolElementV8*>(coords));
 		line_symbol->end_symbol->setName(QCoreApplication::translate("OpenOrienteering::LineSymbolSettings", "End symbol"));
 	}
-	
-	// FIXME: not really sure how this translates... need test cases
-	line_symbol->minimum_mid_symbol_count = 0; //1 + ocd_symbol->smin;
-	line_symbol->minimum_mid_symbol_count_when_closed = 0; //1 + ocd_symbol->smin;
-	line_symbol->show_at_least_one_symbol = false; // NOTE: this works in a different way than OC*D's 'at least X symbols' setting (per-segment instead of per-object)
 	
 	// Suppress dash symbol at line ends if both start symbol and end symbol exist,
 	// but don't create a warning unless a dash symbol is actually defined
@@ -1265,56 +1526,56 @@ void OcdFileImport::setupLineSymbolPointSymbol(OcdFileImport::OcdImportedLineSym
 void OcdFileImport::mergeLineSymbol(CombinedSymbol* full_line, LineSymbol* main_line, LineSymbol* framing_line, LineSymbol* double_line)
 {
 	full_line->setNumParts(3); // reserve
+	
 	int part = 0;
-	if (main_line)
-	{
-		full_line->setPart(part++, main_line, true);
-		main_line->setHidden(false);
-		main_line->setProtected(false);
-	}
+	full_line->setPart(part++, main_line, true);
+	main_line->setHidden(false);
+	main_line->setProtected(false);
+	main_line->setName(main_line->getName() + tr(" - main line"));
+
 	if (double_line)
 	{
 		full_line->setPart(part++, double_line, true);
 		double_line->setHidden(false);
 		double_line->setProtected(false);
+		double_line->setName(double_line->getName() + tr(" - double line"));
 	}
 	if (framing_line)
 	{
 		full_line->setPart(part++, framing_line, true);
 		framing_line->setHidden(false);
 		framing_line->setProtected(false);
+		framing_line->setName(framing_line->getName() + tr(" - framing"));
 	}
 	full_line->setNumParts(part);
 }
 
-Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol, int ocd_version)
+Symbol* OcdFileImport::importAreaSymbol(const Ocd::AreaSymbolV8& ocd_symbol)
 {
 	Q_ASSERT(ocd_version <= 8);
 	auto symbol = new OcdImportedAreaSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
 	            ocd_symbol.fill_on,
 	            ocd_symbol.common,
 	            ocd_symbol.data_size,
-	            ocd_symbol.begin_of_elements,
-	            ocd_version);
+	            ocd_symbol.begin_of_elements);
 	return symbol;
 }
 
 template< class S >
-Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
+Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol)
 {
 	Q_ASSERT(ocd_version >= 9);
 	auto symbol = new OcdImportedAreaSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setupAreaSymbolCommon(
 	            symbol,
 	            ocd_symbol.common.fill_on_V9,
 	            ocd_symbol.common,
 	            ocd_symbol.data_size,
-	            ocd_symbol.begin_of_elements,
-	            ocd_version);
+	            ocd_symbol.begin_of_elements);
 	if (!ocd_symbol.common.border_on_V9)
 	{
 		return symbol;
@@ -1327,19 +1588,18 @@ Symbol* OcdFileImport::importAreaSymbol(const S& ocd_symbol, int ocd_version)
 	}
 	
 	auto combined = new CombinedSymbol();
-	setupBaseSymbol(combined, ocd_symbol);
+	setupBaseSymbol(combined, ocd_symbol.base);
 	combined->setNumParts(2);
 	combined->setPart(0, symbol, true);
-	auto border = map->getUndefinedLine()->duplicate();
+	auto border = duplicate(*map->getUndefinedLine());
 	border->setNumberComponent(0, symbol->getNumberComponent(0));
 	border->setNumberComponent(1, symbol->getNumberComponent(1));
 	border->setNumberComponent(2, static_cast<int>(ocd_symbol.border_symbol));
-	combined->setPart(1, border, true);
-	addSymbolWarning(symbol, OcdFileImport::tr("This symbol cannot be saved as a proper OCD symbol again."));
+	combined->setPart(1, border.release(), true);
 	return combined;
 }
 
-void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int ocd_version)
+void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fill_on, const Ocd::AreaSymbolCommonV8& ocd_symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
 {
 	// Basic area symbol fields: minimum_area, color
 	symbol->minimum_area = 0;
@@ -1356,8 +1616,8 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		pattern.setRotatable(true);
 		pattern.line_spacing = convertLength(ocd_symbol.hatch_dist);
 		pattern.line_offset = 0;
-		pattern.line_color = convertColor(ocd_symbol.hatch_color);
 		pattern.line_width = convertLength(ocd_symbol.hatch_line_width);
+		pattern.line_color = pattern.line_width ? convertColor(ocd_symbol.hatch_color) : nullptr;
 		if (ocd_version <= 8)
 		{
 			pattern.line_spacing += pattern.line_width;
@@ -1385,7 +1645,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		// FIXME: somebody needs to own this symbol and be responsible for deleting it
 		// Right now it looks like a potential memory leak
 		pattern.point = new OcdImportedPointSymbol();
-		setupPointSymbolPattern(pattern.point, data_size, elements, ocd_version);
+		setupPointSymbolPattern(pattern.point, data_size, elements);
 		
 		// OC*D 8 has a "staggered" pattern mode, where successive rows are shifted width/2 relative
 		// to each other. We need to simulate this in Mapper with two overlapping patterns, each with
@@ -1397,17 +1657,17 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 			
 			pattern.line_offset = pattern.line_spacing / 2;
 			pattern.offset_along_line = pattern.point_distance / 2;
-			pattern.point = pattern.point->duplicate()->asPoint();
+			pattern.point = duplicate(*pattern.point).release();
 		}
 		symbol->patterns.push_back(pattern);
 	}
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
+TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 {
 	auto symbol = new OcdImportedTextSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setSpecialAttributes(symbol, ocd_symbol.special);
 	setFraming(symbol, ocd_symbol.framing);
@@ -1415,10 +1675,10 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol, int /*ocd_versi
 }
 
 template< class S >
-TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol, int /*ocd_version*/)
+TextSymbol* OcdFileImport::importLineTextSymbol(const S& ocd_symbol)
 {
 	auto symbol = new OcdImportedTextSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setFraming(symbol, ocd_symbol.framing);
 	
@@ -1431,10 +1691,10 @@ template< class S >
 LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 {
 	auto symbol = new OcdImportedLineSymbol();
-	setupBaseSymbol(symbol, ocd_symbol);
+	setupBaseSymbol(symbol, ocd_symbol.base);
 	
 	symbol->line_width = convertLength(ocd_symbol.line_width);
-	symbol->color = convertColor(ocd_symbol.line_color);
+	symbol->color = symbol->line_width ? convertColor(ocd_symbol.line_color) : nullptr;
 	symbol->cap_style = LineSymbol::RoundCap;
 	symbol->join_style = LineSymbol::RoundJoin;
 	
@@ -1446,14 +1706,14 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 	if (rect.has_grid)
 	{
 		auto inner_line = new OcdImportedLineSymbol();
-		setupBaseSymbol(inner_line, ocd_symbol);
+		setupBaseSymbol(inner_line, ocd_symbol.base);
 		inner_line->setNumberComponent(2, 1);  // TODO: Dynamic
 		inner_line->line_width = qRound(1000 * 0.15);
 		inner_line->color = symbol->color;
 		map->addSymbol(inner_line, map->getNumSymbols());
 		
 		auto text = new OcdImportedTextSymbol();
-		setupBaseSymbol(text, ocd_symbol);
+		setupBaseSymbol(text, ocd_symbol.base);
 		text->setNumberComponent(2, 2);  // TODO: Dynamic
 		text->font_family = QString::fromLatin1("Arial");
 		text->font_size = qRound(1000 * (15 / 72.0 * 25.4));
@@ -1470,12 +1730,13 @@ LineSymbol* OcdFileImport::importRectangleSymbol(const S& ocd_symbol)
 		rect.unnumbered_cells = ocd_symbol.unnumbered_cells;
 		rect.unnumbered_text = convertOcdString(ocd_symbol.unnumbered_text);
 	}
-	rectangle_info.insert(ocd_symbol.base.number, rect);
+	/// \todo review symbol number signedness @symbol vs. @object
+	rectangle_info.insert(int(ocd_symbol.base.number), rect);
 	
 	return symbol;
 }
 
-void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements, int version)
+void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t data_size, const Ocd::PointSymbolElementV8* elements)
 {
 	Q_ASSERT(symbol);
 	
@@ -1517,8 +1778,8 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 		case Ocd::PointSymbolElementV8::TypeCircle:
 			{
 				decltype(element->diameter) element_radius =
-				        (version <= 8) ? (element->diameter / 2 - element->line_width)
-				                       : ((element->diameter - element->line_width) / 2);
+				        (ocd_version <= 8) ? (element->diameter / 2 - element->line_width)
+				                           : ((element->diameter - element->line_width) / 2);
 				if (element_radius > 0 && element->line_width > 0)
 				{
 					bool can_use_base_symbol = (!base_symbol_used && (!element->num_coords || (!coords[0].x && !coords[0].y)));
@@ -1556,7 +1817,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 				{
 				default:
 					qDebug("Ocd::PointSymbolElementV8: Unknown flags value %d", element->flags);
-					// fall through
+					Q_FALLTHROUGH();
 				case Ocd::PointSymbolElementV8::NoFlags:
 					element_symbol->setCapStyle(LineSymbol::FlatCap);
 					element_symbol->setJoinStyle(LineSymbol::BevelJoin);
@@ -1594,7 +1855,7 @@ void OcdFileImport::setupPointSymbolPattern(PointSymbol* symbol, std::size_t dat
 }
 
 template< class O >
-Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_version)
+Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part)
 {
 	Symbol* symbol = nullptr;
 	if (ocd_object.symbol >= 0)
@@ -1661,7 +1922,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 	else if (symbol->getType() == Symbol::Text)
 	{
 		auto t = new TextObject(symbol);
-		t->setText(getObjectText(ocd_object, ocd_version));
+		t->setText(getObjectText(ocd_object));
 		t->setRotation(convertAngle(ocd_object.angle));
 		t->setHorizontalAlignment(text_halign_map.value(symbol));
 		// Vertical alignment is set in fillTextPathCoords().
@@ -1683,7 +1944,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 		p->setPatternRotation(convertAngle(ocd_object.angle));
 		
 		// Normal path
-		fillPathCoords(p, symbol->getType() == Symbol::Area, ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords));
+		fillPathCoords(p, symbol->getContainedTypes() & Symbol::Area, ocd_object.num_items, reinterpret_cast<const Ocd::OcdPoint32 *>(ocd_object.coords));
 		p->recalculateParts();
 		p->setMap(map);
 		return p;
@@ -1692,7 +1953,7 @@ Object* OcdFileImport::importObject(const O& ocd_object, MapPart* part, int ocd_
 	return nullptr;
 }
 
-QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_version) const
+QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object) const
 {
 	auto input  = ocd_object.coords + ocd_object.num_items;
 	auto maxlen = uint(sizeof(Ocd::OcdPoint32) * ocd_object.num_text);
@@ -1716,8 +1977,7 @@ QString OcdFileImport::getObjectText(const Ocd::ObjectV8& ocd_object, int ocd_ve
 }
 
 template< class O >
-inline
-QString OcdFileImport::getObjectText(const O& ocd_object, int /*ocd_version*/) const
+QString OcdFileImport::getObjectText(const O& ocd_object) const
 {
 	auto data = reinterpret_cast<const QChar *>(ocd_object.coords + ocd_object.num_items);
 	if (data[0] == QLatin1Char{'\r'} && data[1] == QLatin1Char{'\n'})
@@ -1881,13 +2141,8 @@ void OcdFileImport::setPointFlags(OcdImportedPathObject* object, quint32 pos, bo
 		object->coords[pos-1].setCurveStart(true);
 	if ((ocd_point.y & Ocd::OcdPoint32::FlagDash) || (ocd_point.y & Ocd::OcdPoint32::FlagCorner))
 		object->coords[pos].setDashPoint(true);
-	if (ocd_point.y & Ocd::OcdPoint32::FlagHole)
-	{
-		if (!is_area)
-			setPathHolePoint(object, pos);
-		else if (pos > 0)
-			setPathHolePoint(object, pos - 1);
-	}
+	if (ocd_point.y & Ocd::OcdPoint32::FlagHole && pos > 1 && is_area)
+		setPathHolePoint(object, pos - 1);
 }
 
 /** Translates the OC*D path given in the last two arguments into an Object.
@@ -1899,10 +2154,10 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 	{
 		object->coords[i] = convertOcdPoint(ocd_points[i]);
 		setPointFlags(object, i, is_area, ocd_points[i]);
-    }
-    
-    // For path objects, create closed parts where the position of the last point is equal to that of the first point
-    if (object->getType() == Object::Path)
+	}
+	
+	// For path objects, create closed parts where the position of the last point is equal to that of the first point
+	if (object->getType() == Object::Path)
 	{
 		size_t start = 0;
 		for (size_t i = 0; i < object->coords.size(); ++i)
@@ -1910,23 +2165,35 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
 			if (!object->coords[i].isHolePoint() && i < object->coords.size() - 1)
 				continue;
 			
-			if (object->coords[i].isPositionEqualTo(object->coords[start]))
+			auto coord = object->coords[start];
+			coord.setHolePoint(object->coords[i].isHolePoint());
+			coord.setClosePoint(true);
+			coord.setCurveStart(false);
+			if (object->coords[i].isPositionEqualTo(coord))
 			{
-				MapCoord coord = object->coords[start];
-				coord.setCurveStart(false);
-				coord.setHolePoint(true);
-				coord.setClosePoint(true);
-				object->coords[i] = coord;
+				// This segment has the canonical closed form: The coordinates
+				// of the last point are identical to the first point.
+				object->coords[i].setFlags(coord.flags());
+			}
+			else if (is_area)
+			{
+				// We need to turn the segment into the canonical closed form
+				// by inserting an extra end point.
+				using difference_type = decltype(object->coords)::difference_type;
+				auto const after_i = begin(object->coords) + static_cast<difference_type>(i + 1);
+				object->coords.insert(after_i, coord);
+				object->coords[i].setHolePoint(false);
+				++i;
 			}
 			
 			switch (i - start)
 			{
 			default:
 				object->coords[i-2].setCurveStart(false);
-				// fall through
+				Q_FALLTHROUGH();
 			case 1:
 				object->coords[i-1].setCurveStart(false);
-				// fall through
+				Q_FALLTHROUGH();
 			case 0:
 				; // nothing
 			}
@@ -1942,9 +2209,9 @@ void OcdFileImport::fillPathCoords(OcdImportedPathObject *object, bool is_area, 
  */
 bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, quint32 npts, const Ocd::OcdPoint32 *ocd_points)
 {
-    // text objects either have 1 point (free anchor) or 2 (midpoint/size)
-    // OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
-    if (npts == 0) return false;
+	// text objects either have 1 point (free anchor) or 2 (midpoint/size)
+	// OCAD appears to always have 5 or 4 points (possible single anchor, then 4 corner coordinates going clockwise from anchor).
+	if (npts == 0) return false;
 	
 	if (npts == 4)
 	{
@@ -1962,7 +2229,7 @@ bool OcdFileImport::fillTextPathCoords(TextObject *object, TextSymbol *symbol, q
 		top_right = MapCoord(top_right.x() + adjust_vector.x(), top_right.y() + adjust_vector.y());
 		
 		object->setBox((bottom_left.nativeX() + top_right.nativeX()) / 2, (bottom_left.nativeY() + top_right.nativeY()) / 2,
-					   top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
+		               top_left.distanceTo(top_right), top_left.distanceTo(bottom_left));
 		object->setVerticalAlignment(TextObject::AlignTop);
 	}
 	else
@@ -2008,7 +2275,7 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 	case Ocd::HAlignJustified:
 		/// \todo Implement justified alignment
 		addSymbolWarning(symbol, tr("Justified alignment is not supported."));
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		text_halign_map[symbol] = TextObject::AlignHCenter;
 	}
@@ -2023,7 +2290,7 @@ void OcdFileImport::setBasicAttributes(OcdFileImport::OcdImportedTextSymbol* sym
 		break;
 	default:
 		addSymbolWarning(symbol, tr("Vertical alignment '%1' is not supported.").arg(attributes.alignment & Ocd::VAlignMask));
-		// fall through
+		Q_FALLTHROUGH();
 	case Ocd::VAlignBottom:
 		text_valign_map[symbol] = TextObject::AlignBaseline;
 	}
@@ -2050,8 +2317,8 @@ void OcdFileImport::setSpecialAttributes(OcdFileImport::OcdImportedTextSymbol* s
 	symbol->paragraph_spacing = convertLength(attributes.para_spacing);
 	
 	symbol->line_below = attributes.line_below_on;
-	symbol->line_below_color = convertColor(attributes.line_below_color);
 	symbol->line_below_width = convertLength(attributes.line_below_width);
+	symbol->line_below_color = symbol->line_below_width ? convertColor(attributes.line_below_color) : nullptr;
 	symbol->line_below_distance = convertLength(attributes.line_below_offset);
 	
 	symbol->custom_tabs.resize(attributes.num_tabs);
@@ -2083,88 +2350,73 @@ void OcdFileImport::setFraming(OcdFileImport::OcdImportedTextSymbol* symbol, con
 	case Ocd::FramingRectangle:
 	default:
 		addSymbolWarning(symbol, tr("Ignoring text framing (mode %1).").arg(framing.mode));
-		// fall through
+		Q_FALLTHROUGH();
 	case Ocd::FramingNone:
 		symbol->framing = false;
 	}
 }
 
-void OcdFileImport::import(bool load_symbols_only)
+bool OcdFileImport::importImplementation()
 {
-	Q_ASSERT(buffer.isEmpty());
-	
-	buffer.clear();
-	buffer.append(stream->readAll());
+	buffer = device()->readAll();
 	if (buffer.isEmpty())
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(stream->errorString()));
+		throw FileFormatException(device()->errorString());
 	
-	if (size_t(buffer.size()) < sizeof(Ocd::FormatGeneric::FileHeader))
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+	if (size_t(buffer.size()) < sizeof(Ocd::FileHeaderGeneric))
+		throw FileFormatException(tr("Invalid data."));
 	
-	const OcdFile<Ocd::FormatGeneric> generic_file(buffer);
-	if (generic_file.header()->vendor_mark != 0x0cad) // This also tests correct endianess...
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read file: %1").arg(tr("Invalid data.")));
+	auto header = reinterpret_cast<const Ocd::FileHeaderGeneric*>(buffer.constData());
+	if (header->vendor_mark != 0x0cad) // This also tests correct endianness...
+		throw FileFormatException(tr("Invalid data."));
 	
-	int version = generic_file.header()->version;
-	switch (version)
+	ocd_version = header->version;
+	map->setSymbolSetId(QStringLiteral("OCD"));
+	map->setProperty(OcdFileFormat::versionProperty(), ocd_version);
+	switch (ocd_version)
 	{
 	case 6:
 	case 7:
 	case 8:
-		// Note: Version 6 and 7 do have some differences, which will need to be
-		//       handled in the version 8 implementation by looking up the
-		//       actual format version in the file header.
-		if (Settings::getInstance().getSetting(Settings::General_NewOcd8Implementation).toBool())
-			importImplementation< Ocd::FormatV8 >(load_symbols_only);
-		else
-			importImplementationLegacy(load_symbols_only);
+		// Version 6 and 7 do have some differences from version 8, which need
+		// to be handled in the version 8 implementation by looking up the
+		// actual format version in the file header.
+		importImplementation<Ocd::FormatV8>();
 		break;
 	case 9:
 	case 10:
-		using FormatV10Assumption = std::is_same<Ocd::FormatV10, Ocd::FormatV9>;
-		Q_STATIC_ASSERT(FormatV10Assumption::value);
-		importImplementation< Ocd::FormatV9 >(load_symbols_only);
+		Q_STATIC_ASSERT((std::is_same<Ocd::FormatV10, Ocd::FormatV9>::value));
+		importImplementation<Ocd::FormatV9>();
 		break;
 	case 11:
-		importImplementation< Ocd::FormatV11 >(load_symbols_only);
+		importImplementation<Ocd::FormatV11>();
 		break;
 	case 12:
-		importImplementation< Ocd::FormatV12 >(load_symbols_only);
+		importImplementation<Ocd::FormatV12>();
+		break;
+	case 2018:
+		addWarning(tr("Support for OCD version %1 files is experimental.").arg(ocd_version));
+		Q_STATIC_ASSERT((std::is_same<Ocd::FormatV2018, Ocd::FormatV12>::value));
+		importImplementation<Ocd::FormatV12>();
+		map->setProperty(OcdFileFormat::versionProperty(), 12);  // save as V12 for now
 		break;
 	default:
-		throw FileFormatException(
-		            ::OpenOrienteering::Importer::tr("Could not read file: %1").
-		            arg(tr("OCD files of version %1 are not supported!").arg(version))
-		            );
+		throw FileFormatException(tr("OCD files of version %1 are not supported!").arg(ocd_version));
 	}
+	return true;
 }
 
-void OcdFileImport::finishImport()
-{
-	if (delegate)
-	{
-		// The current warnings and actions are already propagated.
-		auto warnings_size = ptrdiff_t(delegate->warnings().size());
-		auto actions_size = ptrdiff_t(delegate->actions().size());
-		
-		delegate->finishImport();
-		
-		// Propagate new warnings and actions from the delegate to this importer.
-		std::for_each(begin(delegate->warnings()) + warnings_size, end(delegate->warnings()), [this](const QString& w) { addWarning(w); });
-		std::for_each(begin(delegate->actions()) + actions_size, end(delegate->actions()), [this](const ImportAction& a) { addAction(a); });
-	}
-}
+
 
 template< class F >
 void OcdFileImport::handleStrings(const OcdFile<F>& file, std::initializer_list<StringHandler> handlers)
 {
-	for (const auto& string : file.strings())
+	for (const auto ocd_string : file.strings())
 	{
 		for (const auto& handler : handlers)
 		{
-			if (string.type == handler.type)
+			if (ocd_string.entry->type == handler.type)
 			{
-				(this->*handler.callback)(convertOcdString<typename F::Encoding>(file[string]), file.header()->version);
+				(this->*handler.callback)(convertOcdString<typename F::Encoding>(ocd_string));
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +21,7 @@
 #ifndef OPENORIENTEERING_OCAD8_FILE_FORMAT_H
 #define OPENORIENTEERING_OCAD8_FILE_FORMAT_H
 
-#include <cstddef>
+#include <memory>
 
 #include "file_format.h"
 
@@ -41,9 +42,9 @@ class OCAD8FileFormat : public FileFormat
 public:
 	OCAD8FileFormat();
 	
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
-	Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const override;
-	Exporter* createExporter(QIODevice* stream, Map* map, MapView* view) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map *map, MapView *view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
 };
 
 

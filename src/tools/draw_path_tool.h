@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/draw_line_and_area_tool.h"
@@ -66,10 +67,10 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseDoubleClickEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseDoubleClickEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	bool keyPressEvent(QKeyEvent* event) override;
 	bool keyReleaseEvent(QKeyEvent* event) override;
@@ -78,7 +79,7 @@ public:
 	
 protected slots:
 	void updateDirtyRect();
-	void setDrawingSymbol(const Symbol* symbol) override;
+	void setDrawingSymbol(const OpenOrienteering::Symbol* symbol) override;
 	
 	/** This slot listens to changes in the map's object selection. */
 	virtual void objectSelectionChanged();
@@ -102,7 +103,7 @@ protected:
 	 *  Returns true if the path was modified or deleted. */
 	bool removeLastPointFromSelectedPath();
 	void updateAngleHelper();
-	bool pickAngle(MapCoordF coord, MapWidget* widget);
+	bool pickAngle(const MapCoordF& coord, MapWidget* widget);
 	void updateSnapHelper();
 	
 	/** Starts appending to another, existing object */
@@ -117,10 +118,10 @@ protected:
 	 * Checks if the user dragged the mouse away a certain minimum distance from
 	 * the click point and if yes, returns the drag angle, otherwise returns 0.
 	 */
-	qreal calculateRotation(QPoint mouse_pos, MapCoordF mouse_pos_map) const;
+	qreal calculateRotation(const QPoint& mouse_pos, const MapCoordF& mouse_pos_map) const;
 	/**
 	 * Activates or deactivates dash point drawing depending on if a line symbol
-	 * with dash symbols is selcted.
+	 * with dash symbols is selected.
 	 */
 	void updateDashPointDrawing();
 	void updateStatusText();

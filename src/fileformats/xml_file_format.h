@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013, 2014 Pete Curtis, Kai Pastor
+ *    Copyright 2012-2014 Pete Curtis
+ *    Copyright 2012-2014, 2016, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,11 +21,11 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_XML_H
 #define OPENORIENTEERING_FILE_FORMAT_XML_H
 
-#include <cstddef>
+#include <memory>
+
+#include <QString>
 
 #include "fileformats/file_format.h"
-
-class QIODevice;
 
 namespace OpenOrienteering {
 
@@ -43,19 +44,20 @@ public:
 	 */
 	XMLFileFormat();
 	
-	/** @brief Returns true if the file starts with the character sequence "<?xml".
-	 * 
-	 *  @todo Needs to deal with different encodings. Provide test cases.
+	
+	/** @brief Returns true for an XML file using the Mapper namespace.
 	 */
-	bool understands(const unsigned char *buffer, std::size_t sz) const override;
+	ImportSupportAssumption understands(const char* buffer, int size) const override;
+	
 	
 	/** @brief Creates an importer for XML files.
 	 */
-	Importer *createImporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Importer> makeImporter(const QString& path, Map* map, MapView* view) const override;
 	
 	/** @brief Creates an exporter for XML files.
 	 */
-	Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const override;
+	std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const override;
+	
 	
 	/** @brief The minimum XML file format version supported by this implementation.
 	 */
@@ -75,5 +77,34 @@ public:
 
 
 }  // namespace OpenOrienteering
+
+
+/**
+  
+\page file_format OpenOrienteering Mapper XML File Format Documentation
+
+\date 2018-03-10
+\author Kai Pastor
+
+\todo Review and update.
+
+
+\section changes Changes
+
+\subsection version-8 Version 8
+
+- 2018-10-08 Added `screen_angle` and `screen_frequency` attributes to element
+             `color/spotcolors/namedcolor` element.
+- 2018-09-16 Added `start_offset` and `end_offset` attributes to the `line_symbol`
+             element, replacing the now deprecated `pointed_cap_length` attribute.
+- 2018-08-25 Added optional `icon` element to symbol `element`.
+- 2018-03-10 Added `mid_symbol_placement` attribute to `line_symbol` element.
+
+
+\subsection version-7 Version 7
+
+- 2018-03-10 First file format changelog entry
+
+*/
 
 #endif // OPENORIENTEERING_FILE_FORMAT_XML_H

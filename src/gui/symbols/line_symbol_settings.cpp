@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -90,6 +90,12 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	auto minimum_length_label = new QLabel(tr("Minimum line length:"));
 	minimum_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
+	auto line_join_label = new QLabel(tr("Line join:"));
+	line_join_combo = new QComboBox();
+	line_join_combo->addItem(tr("miter"), QVariant(LineSymbol::MiterJoin));
+	line_join_combo->addItem(tr("round"), QVariant(LineSymbol::RoundJoin));
+	line_join_combo->addItem(tr("bevel"), QVariant(LineSymbol::BevelJoin));
+	
 	auto line_cap_label = new QLabel(tr("Line cap:"));
 	line_cap_combo = new QComboBox();
 	line_cap_combo->addItem(tr("flat"), QVariant(LineSymbol::FlatCap));
@@ -97,14 +103,11 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	line_cap_combo->addItem(tr("square"), QVariant(LineSymbol::SquareCap));
 	line_cap_combo->addItem(tr("pointed"), QVariant(LineSymbol::PointedCap));
 	
-	pointed_cap_length_label = new QLabel(tr("Cap length:"));
-	pointed_cap_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
+	start_offset_label = new QLabel();  // later
+	start_offset_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
-	auto line_join_label = new QLabel(tr("Line join:"));
-	line_join_combo = new QComboBox();
-	line_join_combo->addItem(tr("miter"), QVariant(LineSymbol::MiterJoin));
-	line_join_combo->addItem(tr("round"), QVariant(LineSymbol::RoundJoin));
-	line_join_combo->addItem(tr("bevel"), QVariant(LineSymbol::BevelJoin));
+	end_offset_label = new QLabel();  // later
+	end_offset_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
 	
 	dashed_check = new QCheckBox(tr("Line is dashed"));
 	
@@ -114,7 +117,8 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	    minimum_length_label, minimum_length_edit,
 	    line_cap_label, line_cap_combo,
 	    line_join_label, line_join_combo,
-	    pointed_cap_length_label, pointed_cap_length_edit,
+	    start_offset_label, start_offset_edit,
+	    end_offset_label, end_offset_edit,
 	    border_check,
 	};
 	
@@ -122,14 +126,17 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	layout->addWidget(minimum_length_label, row, col++);
 	layout->addWidget(minimum_length_edit, row, col, 1, -1);
 	row++; col = 0;
+	layout->addWidget(line_join_label, row, col++);
+	layout->addWidget(line_join_combo, row, col, 1, -1);
+	row++; col = 0;
 	layout->addWidget(line_cap_label, row, col++);
 	layout->addWidget(line_cap_combo, row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(pointed_cap_length_label, row, col++);
-	layout->addWidget(pointed_cap_length_edit, row, col, 1, -1);
+	layout->addWidget(start_offset_label, row, col++);
+	layout->addWidget(start_offset_edit, row, col, 1, -1);
 	row++; col = 0;
-	layout->addWidget(line_join_label, row, col++);
-	layout->addWidget(line_join_combo, row, col, 1, -1);
+	layout->addWidget(end_offset_label, row, col++);
+	layout->addWidget(end_offset_edit, row, col, 1, -1);
 	
 	row++; col = 0;
 	layout->addWidget(new QWidget(), row, col, 1, -1);
@@ -156,12 +163,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	
 	half_outer_dashes_check = new QCheckBox(tr("Half length of first and last dash"));
 	
+	auto mid_symbol_placement_label = new QLabel(tr("Mid symbols placement:"));
+	mid_symbol_placement_combo = new QComboBox();
+	mid_symbol_placement_combo->addItem(tr("Center of dashes"), QVariant(LineSymbol::CenterOfDash));
+	mid_symbol_placement_combo->addItem(tr("Center of dash groups"), QVariant(LineSymbol::CenterOfDashGroup));
+	mid_symbol_placement_combo->addItem(tr("Center of gaps"), QVariant(LineSymbol::CenterOfGap));
+	
 	dashed_widget_list = {
 	    dash_length_label, dash_length_edit,
 	    break_length_label, break_length_edit,
 	    dash_group_label, dash_group_combo,
 	    in_group_break_length_label, in_group_break_length_edit,
 	    half_outer_dashes_check,
+	    mid_symbol_placement_label, mid_symbol_placement_combo,
 	};
 	
 	row++; col = 0;
@@ -185,25 +199,11 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(Util::Headline::create(tr("Mid symbols")), row, col, 1, -1);
 	
-	
 	auto mid_symbol_per_spot_label = new QLabel(tr("Mid symbols per spot:"));
 	mid_symbol_per_spot_edit = Util::SpinBox::create(1, 99);
 	
 	mid_symbol_distance_label = new QLabel(tr("Mid symbol distance:"));
 	mid_symbol_distance_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
-	
-	mid_symbol_widget_list = {
-	  mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
-	  mid_symbol_distance_label, mid_symbol_distance_edit,
-	};
-	
-	row++; col = 0;
-	layout->addWidget(mid_symbol_per_spot_label, row, col++);
-	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
-	row++; col = 0;
-	layout->addWidget(mid_symbol_distance_label, row, col++);
-	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
-	
 	
 	auto segment_length_label = new QLabel(tr("Distance between spots:"));
 	segment_length_edit = Util::SpinBox::create(2, 0.0, 999999.9, tr("mm"));
@@ -219,14 +219,15 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	auto minimum_mid_symbol_count_when_closed_label = new QLabel(tr("Minimum mid symbol count when closed:"));
 	minimum_mid_symbol_count_when_closed_edit = Util::SpinBox::create(0, 99);
 	
-	undashed_widget_list = {
-	    segment_length_label, segment_length_edit,
-	    end_length_label, end_length_edit,
-	    show_at_least_one_symbol_check,
-	    minimum_mid_symbol_count_label, minimum_mid_symbol_count_edit,
-	    minimum_mid_symbol_count_when_closed_label, minimum_mid_symbol_count_when_closed_edit,
-	};
-	
+	row++; col = 0;
+	layout->addWidget(mid_symbol_placement_label, row, col++);
+	layout->addWidget(mid_symbol_placement_combo, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_per_spot_label, row, col++);
+	layout->addWidget(mid_symbol_per_spot_edit, row, col, 1, -1);
+	row++; col = 0;
+	layout->addWidget(mid_symbol_distance_label, row, col++);
+	layout->addWidget(mid_symbol_distance_edit, row, col, 1, -1);
 	row++; col = 0;
 	layout->addWidget(segment_length_label, row, col++);
 	layout->addWidget(segment_length_edit, row, col, 1, -1);
@@ -241,6 +242,19 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	row++; col = 0;
 	layout->addWidget(minimum_mid_symbol_count_when_closed_label, row, col++);
 	layout->addWidget(minimum_mid_symbol_count_when_closed_edit, row, col, 1, -1);
+	
+	mid_symbol_widget_list = {
+	    mid_symbol_placement_label, mid_symbol_placement_combo,
+	    mid_symbol_per_spot_label, mid_symbol_per_spot_edit,
+	    show_at_least_one_symbol_check,
+	};
+	
+	undashed_widget_list = {
+	    segment_length_label, segment_length_edit,
+	    end_length_label, end_length_edit,
+	    minimum_mid_symbol_count_label, minimum_mid_symbol_count_edit,
+	    minimum_mid_symbol_count_when_closed_label, minimum_mid_symbol_count_when_closed_edit,
+	};
 	
 	
 	row++; col = 0;
@@ -318,7 +332,8 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(minimum_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::minimumDimensionsEdited);
 	connect(line_cap_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::lineCapChanged);
 	connect(line_join_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::lineJoinChanged);
-	connect(pointed_cap_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::pointedLineCapLengthChanged);
+	connect(start_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::startOffsetChanged);
+	connect(end_offset_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::endOffsetChanged);
 	connect(dashed_check, &QAbstractButton::clicked, this, &LineSymbolSettings::dashedChanged);
 	connect(segment_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::segmentLengthChanged);
 	connect(end_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::endLengthChanged);
@@ -330,6 +345,7 @@ LineSymbolSettings::LineSymbolSettings(LineSymbol* symbol, SymbolSettingDialog* 
 	connect(dash_group_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::dashGroupsChanged);
 	connect(in_group_break_length_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::inGroupBreakLengthChanged);
 	connect(half_outer_dashes_check, &QAbstractButton::clicked, this, &LineSymbolSettings::halfOuterDashesChanged);
+	connect(mid_symbol_placement_combo, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LineSymbolSettings::midSymbolPlacementChanged);
 	connect(mid_symbol_per_spot_edit, QOverload<int>::of(&QSpinBox::valueChanged), this, &LineSymbolSettings::midSymbolsPerDashChanged);
 	connect(mid_symbol_distance_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &LineSymbolSettings::midSymbolDistanceChanged);
 	connect(border_check, &QAbstractButton::clicked, this, &LineSymbolSettings::borderCheckClicked);
@@ -383,9 +399,15 @@ void LineSymbolSettings::lineJoinChanged(int index)
 	emit propertiesModified();
 }
 
-void LineSymbolSettings::pointedLineCapLengthChanged(double value)
+void LineSymbolSettings::startOffsetChanged(double value)
 {
-	symbol->pointed_cap_length = qRound(1000.0 * value);
+	symbol->start_offset = qRound(1000.0 * value);
+	emit propertiesModified();
+}
+
+void LineSymbolSettings::endOffsetChanged(double value)
+{
+	symbol->end_offset = qRound(1000.0 * value);
 	emit propertiesModified();
 }
 
@@ -458,6 +480,12 @@ void LineSymbolSettings::halfOuterDashesChanged(bool checked)
 	emit propertiesModified();
 }
 
+void LineSymbolSettings::midSymbolPlacementChanged(int index)
+{
+	symbol->setMidSymbolPlacement(LineSymbol::MidSymbolPlacement(mid_symbol_placement_combo->itemData(index).toInt()));
+	emit propertiesModified();
+}
+
 void LineSymbolSettings::midSymbolsPerDashChanged(int value)
 {
 	symbol->mid_symbols_per_spot = qMax(1, value);
@@ -497,7 +525,7 @@ void LineSymbolSettings::differentBordersClicked(bool checked)
 	}
 	else
 	{
-		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
+		symbol->getRightBorder() = symbol->getBorder();
 		emit propertiesModified();
 		updateStates();
 	}
@@ -509,7 +537,7 @@ void LineSymbolSettings::borderChanged()
 	if (different_borders_check->isChecked())
 		updateBorder(symbol->getRightBorder(), right_border_widgets);
 	else
-		symbol->getRightBorder().assign(symbol->getBorder(), nullptr);
+		symbol->getRightBorder() = symbol->getBorder();
 	
 	emit propertiesModified();
 }
@@ -637,10 +665,16 @@ void LineSymbolSettings::updateStates()
 	{
 		line_settings_widget->setEnabled(line_active);
 	}
-	if (line_active && symbol->cap_style != LineSymbol::PointedCap)
+	
+	if (symbol->cap_style == LineSymbol::PointedCap)
 	{
-		pointed_cap_length_label->setEnabled(false);
-		pointed_cap_length_edit->setEnabled(false);
+		start_offset_label->setText(tr("Cap length at start:"));
+		end_offset_label->setText(tr("Cap length at end:"));
+	}
+	else
+	{
+		start_offset_label->setText(tr("Offset at start:"));
+		end_offset_label->setText(tr("Offset at end:"));
 	}
 	
 	const bool line_dashed = symbol->dashed && symbol->color;
@@ -712,7 +746,8 @@ void LineSymbolSettings::updateContents()
 	
 	minimum_length_edit->setValue(0.001 * symbol->minimum_length);
 	line_cap_combo->setCurrentIndex(line_cap_combo->findData(symbol->cap_style));
-	pointed_cap_length_edit->setValue(0.001 * symbol->pointed_cap_length);
+	start_offset_edit->setValue(0.001 * symbol->start_offset);
+	end_offset_edit->setValue(0.001 * symbol->end_offset);
 	line_join_combo->setCurrentIndex(line_join_combo->findData(symbol->join_style));
 	dashed_check->setChecked(symbol->dashed);
 	border_check->setChecked(symbol->have_border_lines);
@@ -724,6 +759,7 @@ void LineSymbolSettings::updateContents()
 	in_group_break_length_edit->setValue(0.001 * symbol->in_group_break_length);
 	half_outer_dashes_check->setChecked(symbol->half_outer_dashes);
 	
+	mid_symbol_placement_combo->setCurrentIndex(mid_symbol_placement_combo->findData(symbol->getMidSymbolPlacement()));
 	mid_symbol_per_spot_edit->setValue(symbol->mid_symbols_per_spot);
 	mid_symbol_distance_edit->setValue(0.001 * symbol->mid_symbol_distance);
 	

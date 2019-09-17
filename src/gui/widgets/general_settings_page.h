@@ -89,7 +89,6 @@ private:
 	QSpinBox*  autosave_interval_edit;
 	
 	QComboBox* encoding_box;
-	QCheckBox* ocd_importer_check;
 };
 
 

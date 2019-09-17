@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_POINT_SYMBOL_H
 #define OPENORIENTEERING_POINT_SYMBOL_H
 
+#include <memory>
 #include <vector>
 
 #include <Qt>
@@ -29,7 +30,8 @@
 
 #include "symbol.h"
 
-class QIODevice;
+// IWYU pragma: no_include "core/objects/object.h"
+
 class QPainterPath;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -40,7 +42,6 @@ class Map;
 class MapColor;
 class MapColorMap;
 class MapCoordF;
-class Object;
 class ObjectRenderables;
 class SymbolPropertiesWidget;
 class SymbolSettingDialog;
@@ -67,8 +68,12 @@ public:
 	/** Constructs an empty point symbol. */
 	PointSymbol() noexcept;
 	~PointSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
+protected:
+	explicit PointSymbol(const PointSymbol& proto);
+	PointSymbol* duplicate() const override;
+	
+public:
 	bool validate() const override;
 	
 	void createRenderables(
@@ -77,17 +82,18 @@ public:
 	        ObjectRenderables &output,
 	        RenderableOptions options ) const override;
 	
-	void createRenderablesScaled(MapCoordF coord, float rotation, ObjectRenderables& output, float coord_scale = 1.0f) const;
+	void createRenderablesScaled(const MapCoordF& coord, qreal rotation, ObjectRenderables& output, qreal coord_scale = 1) const;
 	
-	void createRenderablesIfCenterInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
-	void createPrimitivesIfCompletelyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
-	void createRenderablesIfCompletelyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
-	void createPrimitivesIfPartiallyInside(MapCoordF point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
-	void createRenderablesIfPartiallyInside(MapCoordF point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfCenterInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfCompletelyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfCompletelyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createPrimitivesIfPartiallyInside(const MapCoordF& point_coord, const QPainterPath* outline, ObjectRenderables& output) const;
+	void createRenderablesIfPartiallyInside(const MapCoordF& point_coord, qreal rotation, const QPainterPath* outline, ObjectRenderables& output) const;
 	
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	qreal dimensionForIcon() const override;
@@ -137,21 +143,24 @@ public:
 	
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
 	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
-	std::vector<Object*> objects;
-	std::vector<Symbol*> symbols;
 	
-	bool rotatable;
-	int inner_radius;		// in 1/1000 mm
+	/// \todo Expose elements more directly in PointSymbol API.
+	struct Element
+	{
+		std::unique_ptr<Symbol> symbol;
+		std::unique_ptr<Object> object;
+	};
+	std::vector<Element> elements;
+	
 	const MapColor* inner_color;
-	int outer_width;		// in 1/1000 mm
 	const MapColor* outer_color;
+	int inner_radius;		// in 1/1000 mm
+	int outer_width;		// in 1/1000 mm
+	bool rotatable;
 };
 
 

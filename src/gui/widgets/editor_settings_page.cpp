@@ -23,11 +23,13 @@
 #include <QAbstractButton>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QSpacerItem>
 #include <QSpinBox>
 #include <QVariant>
+#include <QWidget>
 
 #include "settings.h"
 #include "gui/modifier_key.h"
@@ -42,6 +44,12 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 {
 	auto layout = new QFormLayout(this);
 	
+	if (Settings::getInstance().touchModeEnabled())
+	{
+		button_size = Util::SpinBox::create(1, 3.0, 26.0, tr("mm", "millimeters"), 0.1);
+		layout->addRow(tr("Action button size:"), button_size);
+	}
+
 	icon_size = Util::SpinBox::create(1, 25, tr("mm", "millimeters"));
 	layout->addRow(tr("Symbol icon size:"), icon_size);
 	
@@ -59,7 +67,9 @@ EditorSettingsPage::EditorSettingsPage(QWidget* parent)
 	snap_distance = Util::SpinBox::create(0, 100, tr("mm", "millimeters"));
 	layout->addRow(tr("Snap distance (%1):").arg(ModifierKey::shift()), snap_distance);
 	
-	fixed_angle_stepping = Util::SpinBox::create(1, 180, trUtf8("°", "Degree sign for angles"));
+	fixed_angle_stepping = Util::SpinBox::create<Util::RotationalDegrees>();
+	fixed_angle_stepping->setDecimals(1);
+	fixed_angle_stepping->setRange(0.1, 180.0);
 	layout->addRow(tr("Stepping of fixed angle mode (%1):").arg(ModifierKey::control()), fixed_angle_stepping);
 
 	select_symbol_of_objects = new QCheckBox(tr("When selecting an object, automatically select its symbol, too"));
@@ -117,6 +127,8 @@ QString EditorSettingsPage::title() const
 
 void EditorSettingsPage::apply()
 {
+	if (button_size != nullptr)
+		setSetting(Settings::ActionGridBar_ButtonSizeMM, button_size->value());
 	setSetting(Settings::SymbolWidget_IconSizeMM, icon_size->value());
 	setSetting(Settings::MapDisplay_Antialiasing, antialiasing->isChecked());
 	setSetting(Settings::MapDisplay_TextAntialiasing, text_antialiasing->isChecked());
@@ -140,6 +152,8 @@ void EditorSettingsPage::reset()
 
 void EditorSettingsPage::updateWidgets()
 {
+	if (button_size != nullptr)
+		button_size->setValue(getSetting(Settings::ActionGridBar_ButtonSizeMM).toDouble());
 	icon_size->setValue(getSetting(Settings::SymbolWidget_IconSizeMM).toInt());
 	antialiasing->setChecked(getSetting(Settings::MapDisplay_Antialiasing).toBool());
 	text_antialiasing->setEnabled(antialiasing->isChecked());

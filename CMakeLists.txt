@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -29,7 +29,9 @@ endif()
 
 # Project declaration
 
-project(Mapper VERSION 0.8.4 LANGUAGES CXX C)
+project(Mapper VERSION 0.9.0 LANGUAGES CXX C)
+
+math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
 if(Mapper_VERSION_DISPLAY)
 	message(STATUS "Custom version display string: \"${Mapper_VERSION_DISPLAY}\"")
@@ -40,16 +42,6 @@ else()
 endif()
 
 set(Mapper_COPYRIGHT "(C) 2012-2018 The OpenOrienteering developers")
-
-set(android_manifest "${PROJECT_SOURCE_DIR}/android/AndroidManifest.xml")
-file(READ "${android_manifest}" current)
-if(NOT current MATCHES " android:versionName=.${Mapper_VERSION_MAJOR}\\.${Mapper_VERSION_MINOR}\\.${Mapper_VERSION_PATCH}. ")
-	set(android_version_name "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}")
-	math(EXPR android_version_int "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH}")
-	string(REGEX REPLACE "( android:versionName=.)[0-9]*\\.[0-9]*\\.[0-9]*(. )" "\\1${android_version_name}\\2" output "${current}")
-	string(REGEX REPLACE "( android:versionCode=.)[0-9]*(. )" "\\1${android_version_int}\\2" output "${output}")
-	file(WRITE "${android_manifest}" "${output}")
-endif()
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
@@ -162,6 +154,8 @@ endif()
 
 # Build definitons
 
+include(CTest)
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
@@ -196,11 +190,23 @@ if(NOT TARGET PROJ4::proj)
 	set(PROJ4_FOUND false)
 	find_package(PROJ4 MODULE REQUIRED)
 endif()
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
+	# New PROJ API missing or incomplete.
+	# (proj_normalize_for_visualization() came in 6.1.)
+	add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+endif()
 
 if(Mapper_USE_GDAL)
 	find_package(GDAL REQUIRED)
 endif()
 
+find_package(Qt5Core 5.3 REQUIRED)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050300)
+if (ANDROID AND "${Qt5Core_VERSION}" VERSION_LESS 5.12.1)
+	message(FATAL_ERROR "At least Qt 5.12.1 is required to build for Android")
+elseif ("${Qt5Core_VERSION}" VERSION_LESS 5.8.0)
+	add_definitions("-D'Q_FALLTHROUGH()=(void)0'")
+endif()
 
 include("TestBigEndian")
 test_big_endian(big_endian)
@@ -208,10 +214,6 @@ if(big_endian)
 	add_definitions(-DMAPPER_BIG_ENDIAN)
 endif()
 
-
-if(ANDROID OR big_endian)
-	add_definitions(-DNO_NATIVE_FILE_FORMAT)
-endif()
 
 if(UNIX AND NOT APPLE)
 #	set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib/${Mapper_PACKAGE_NAME}/lib")
@@ -246,6 +248,7 @@ add_subdirectory("src/libocad")
 if(NOT ANDROID)
 	add_subdirectory("src/printsupport")
 endif()
+add_subdirectory("src/sensors")
 add_subdirectory("src")
 add_subdirectory("packaging")
 add_subdirectory("doc/licensing")
@@ -261,6 +264,27 @@ endif()
 
 add_subdirectory("doc/api")
 add_subdirectory("packaging/src")
+
+# Auxiliary targets
+
+set(ci
+  ci/azure-pipelines.yml
+  ci/build.yml
+  ci/codespell.yml
+  ci/filter-stderr.sed
+  ci/publish.yml
+  ci/publish-coverage.yml
+  ci/setup-common.yml
+  ci/setup-macos.yml
+  ci/setup-msys2.yml
+  ci/setup-ubuntu.yml
+  ci/shell.sh
+  ci/openorienteering-mapper-ci.cmake
+)
+
+add_custom_target(CI SOURCES ${ci})
+
+# Configuration report
 
 feature_summary(WHAT ALL)
 

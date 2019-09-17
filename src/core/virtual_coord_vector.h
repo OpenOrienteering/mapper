@@ -107,7 +107,7 @@ private:
 	// A pointer to the MapCoordVectorF which provides the coordinates in case (b).
 	const MapCoordVectorF* coords;
 	
-	// A pointer to the actual coordinate access implemenation
+	// A pointer to the actual coordinate access implementation
 	MapCoordF (VirtualCoordVector::*coords_access)(size_type index) const;
 	
 public:

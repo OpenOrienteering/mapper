@@ -27,7 +27,6 @@
 #include <QFlags>
 #include <QList>
 #include <QObject>
-#include <QPrinter>
 // IWYU pragma: no_include <QRectF>
 #include <QSize>
 #include <QString>
@@ -43,6 +42,7 @@ class QDialogButtonBox;
 class QDoubleSpinBox;
 class QFormLayout;
 class QLabel;
+class QPageSize;
 class QPushButton;
 class QPrinterInfo;
 class QRectF;
@@ -93,12 +93,9 @@ public:
 	/** Indicates the default widget size. */
 	QSize sizeHint() const override;
 	
-	/** Returns a translated name for the given paper size. */
-	static QString toString(QPrinter::PaperSize size);
-	
 public slots:
 	/** Changes the type of the print or export task. */
-	void setTask(TaskFlags type);
+	void setTask(OpenOrienteering::PrintWidget::TaskFlags type);
 	
 	/** Saves the print or export settings. */
 	void savePrinterConfig() const;
@@ -117,13 +114,13 @@ public slots:
 	void setTarget(const QPrinterInfo* target);
 	
 	/** Sets the format of a single page. */
-	void setPageFormat(const MapPrinterPageFormat& format);
+	void setPageFormat(const OpenOrienteering::MapPrinterPageFormat& format);
 	
 	/** Sets the exported area. */
 	void setPrintArea(const QRectF& area);
 	
 	/** Sets output options: resolution, overprinting. */
-	void setOptions(const MapPrinterOptions& options);
+	void setOptions(const OpenOrienteering::MapPrinterOptions& options);
 	
 	/** Listens to view feature changes. */
 	void onVisibilityChanged();
@@ -242,7 +239,7 @@ protected:
 	
 	/** A list of paper sizes which is used when the target does not specify
 	 *  supported paper sizes. */
-	QList<QPrinter::PaperSize> defaultPaperSizes() const;
+	QList<QPageSize> defaultPageSizes() const;
 	
 	/** Moves the given rectangle to a position where it is centered on the
 	 *  map for the current output options. */
@@ -333,13 +330,13 @@ private:
 };
 
 
-#endif
-
-
 }  // namespace OpenOrienteering
 
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PrintWidget::TaskFlags)
+
+
+#endif
 
 
 #endif

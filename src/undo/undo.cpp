@@ -79,7 +79,7 @@ UndoStep* UndoStep::getUndoStepForType(Type type, Map* map)
 		
 	default:
 		qWarning("Undefined undo step type");
-		// fall through
+		Q_FALLTHROUGH();
 	case SwitchPartUndoStepTypeV0:
 		return new NoOpUndoStep(map, false);
 	}
@@ -127,7 +127,7 @@ UndoStep* UndoStep::load(QXmlStreamReader& xml, Map* map, SymbolDictionary& symb
 	return step;
 }
 
-void UndoStep::save(QXmlStreamWriter& xml)
+void UndoStep::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter element(xml, QLatin1String("step"));
 	element.writeAttribute(QLatin1String("type"), type);
@@ -159,7 +159,7 @@ CombinedUndoStep::CombinedUndoStep(Map* map)
 
 CombinedUndoStep::~CombinedUndoStep()
 {
-	for (const auto step : steps)
+	for (auto* step : steps)
 		delete step;
 }
 
@@ -182,7 +182,7 @@ UndoStep* CombinedUndoStep::undo()
 
 bool CombinedUndoStep::getModifiedParts(PartSet &out) const
 {
-	for (const auto step : steps)
+	for (const auto* step : steps)
 	{
 		step->getModifiedParts(out);
 	}
@@ -191,31 +191,13 @@ bool CombinedUndoStep::getModifiedParts(PartSet &out) const
 
 void CombinedUndoStep::getModifiedObjects(int part_index, ObjectSet &out) const
 {
-	for (const auto step : steps)
+	for (const auto* step : steps)
 	{
 		step->getModifiedObjects(part_index, out);
 	}
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool CombinedUndoStep::load(QIODevice* file, int version)
-{
-	int size;
-	file->read((char*)&size, sizeof(int));
-	steps.resize(size);
-	bool success = true;
-	for (std::size_t i = 0; i < steps.size() && success; ++i)
-	{
-		int type;
-		file->read((char*)&type, sizeof(int));
-		steps.insert(steps.begin(), UndoStep::getUndoStepForType((UndoStep::Type)type, map));
-		success = steps.front()->load(file, version);
-	}
-	return success;
-}
-
-#endif
 
 void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 {
@@ -225,7 +207,7 @@ void CombinedUndoStep::saveImpl(QXmlStreamWriter& xml) const
 	// (A barrier element prevents older versions from loading this element.)
 	XmlElementWriter steps_element(xml, literal::steps);
 	steps_element.writeAttribute(XmlStreamLiteral::count, steps.size());
-	for (const auto step : steps)
+	for (const auto* step : steps)
 		step->save(xml);
 }
 
@@ -292,15 +274,6 @@ UndoStep* NoOpUndoStep::undo()
 	return new NoOpUndoStep(map, true);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-bool NoOpUndoStep::load(QIODevice*, int)
-{
-	qWarning("InvalidUndoStep::load(QIODevice*, int) must not be called");
-	return false;
-}
-
-#endif  // NO_NATIVE_FILE_FORMAT
 
 }  // namespace OpenOrienteering
 

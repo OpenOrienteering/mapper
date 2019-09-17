@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QPointF>
+#include <QString>
 
 class QPainter;
 // IWYU pragma: no_forward_declare QPointF
@@ -57,7 +58,7 @@ public:
 	void paint(QPainter* painter);
 	
 public slots:
-	void newGPSPosition(MapCoordF coord, float accuracy);
+	void newGPSPosition(const OpenOrienteering::MapCoordF& coord, float accuracy);
 	
 private:
 	void updateMapWidget();

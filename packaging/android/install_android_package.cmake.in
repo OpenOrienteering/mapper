@@ -1,0 +1,73 @@
+#
+#    Copyright 2019 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Configure the given input file, and install the result to the output dir.
+# The optional third argument may specify an alternative destination filename.
+function(configure_and_install in_file out_dir)
+	if(ARGN)
+		set(filename "${ARGN}")
+	else()
+		get_filename_component(filename "${in_file}" NAME)
+	endif()
+	set(tmp_file "@MAPPER_PRO_DIR@/tmp/${filename}")
+	# Configure first, so that install can properly detect unchanged files.
+	configure_file("${in_file}" "${tmp_file}" @ONLY)
+	# Regular install, for regular diagnostic output
+	file(INSTALL "${tmp_file}" DESTINATION "${out_dir}")
+endfunction()
+
+
+
+set(MAPPER_APP_ID "@MAPPER_APP_ID@")
+set(ANDROID_PACKAGE_SOURCE_DIR "@ANDROID_PACKAGE_SOURCE_DIR@")
+set(Mapper_VERSION "@Mapper_VERSION@")
+set(Mapper_VERSION_DISPLAY "@Mapper_VERSION_DISPLAY@")
+if(NOT "${Mapper_VERSION_DISPLAY}" STREQUAL "${Mapper_VERSION}")
+	set(Mapper_VERSION_SUFFIX " ${Mapper_VERSION_DISPLAY}")
+endif()
+
+
+
+configure_and_install("@CMAKE_CURRENT_SOURCE_DIR@/AndroidManifest.xml.in" "${ANDROID_PACKAGE_SOURCE_DIR}" "AndroidManifest.xml")
+
+foreach(file @INPUT_FILES@)
+	if("${file}" MATCHES "java/(org/openorienteering/mapper/.*.java)")
+		configure_and_install("@INPUT_SOURCE_DIR@/${file}" "${ANDROID_PACKAGE_SOURCE_DIR}/src/org/openorienteering/mapper" "${CMAKE_MATCH_1}")
+	endif()
+endforeach()
+
+configure_and_install("@CMAKE_CURRENT_SOURCE_DIR@/strings.xml.in" "${ANDROID_PACKAGE_SOURCE_DIR}/res/values" "strings.xml")
+
+set(icons
+  drawable-ldpi   36
+  drawable-mdpi   48
+  drawable-hdpi   72
+  drawable-xhdpi  96
+)
+while(icons)
+	list(GET icons 0 drawable)
+	list(GET icons 1 size)
+	file(INSTALL
+	  DESTINATION "${ANDROID_PACKAGE_SOURCE_DIR}/res/${drawable}"
+	  TYPE FILE
+	  FILES "@PROJECT_SOURCE_DIR@/images/mapper-icon/Mapper-${size}.png"
+	  RENAME "icon.png"
+	)
+	list(REMOVE_AT icons 0 1)
+endwhile()

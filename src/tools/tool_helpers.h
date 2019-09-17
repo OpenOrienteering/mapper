@@ -155,13 +155,13 @@ public:
 	
 signals:
 	/** Emitted when the angle the cursor position is constrained to changes */
-	void activeAngleChanged() const;
+	void activeAngleChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 	/**
 	 * Emitted whenever the display of this tool helper changes.
 	 * This is when the active angle changes or the tool is activated / deactivated.
 	 */
-	void displayChanged() const;
+	void displayChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 	
 private:
@@ -226,7 +226,7 @@ public:
 	 * 
 	 * TODO: widget parameter is only used for getMapView(). Replace by view parameter?
 	 */
-	MapCoord snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr);
+	MapCoord snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info = nullptr, Object* exclude_object = nullptr);
 	
 	/**
 	 * Checks for existing objects in map at position and if one is found,
@@ -234,7 +234,7 @@ public:
 	 * Internally remembers the position so the next call to draw() will
 	 * draw the snap mark there.
 	 */
-	bool snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
+	bool snapToDirection(const MapCoordF& position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position = nullptr);
 	
 	/** Draws the snap mark which was last returned by snapToObject(). */
 	void draw(QPainter* painter, MapWidget* widget);
@@ -251,7 +251,7 @@ public:
 	
 signals:
 	/** Emitted whenever the snap mark changes position. */
-	void displayChanged() const;
+	void displayChanged() const;  // clazy:exclude=const-signal-or-slot
 	
 private:
 	PointHandles point_handles;

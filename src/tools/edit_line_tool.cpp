@@ -86,7 +86,7 @@ EditLineTool::~EditLineTool()
 	delete highlight_object;
 }
 
-bool EditLineTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -98,7 +98,7 @@ bool EditLineTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
-bool EditLineTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -110,7 +110,7 @@ bool EditLineTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
-bool EditLineTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool EditLineTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (waiting_for_mouse_release)
 	{
@@ -139,7 +139,8 @@ void EditLineTool::clickPress()
 		// Toggle segment between straight line and curve
 		createReplaceUndoStep(hover_object);
 		
-		MapCoord& start_coord = hover_object->getCoordinate(hover_line);
+		// hover_object is going to be modified. Non-const getCoordinate is fine.
+		MapCoord& start_coord = hover_object->getCoordinateRef(hover_line);
 		if (start_coord.isCurveStart())
 		{
 			// Convert to straight segment
@@ -151,7 +152,7 @@ void EditLineTool::clickPress()
 			// Convert to curve
 			/// \todo Provide a PathObject::convertToCurve(hover_line) ?
 			start_coord.setCurveStart(true);
-			MapCoord end_coord = hover_object->getCoordinate(hover_line + 1);
+			const MapCoord end_coord = hover_object->getCoordinate(hover_line + 1);
 			double baseline = start_coord.distanceTo(end_coord);
 			
 			bool tangent_ok = false;
@@ -470,7 +471,7 @@ void EditLineTool::drawImpl(QPainter* painter, MapWidget* widget)
 		
 		if (num_selected_objects <= max_objects_for_handle_display)
 		{
-			for (const auto object: map()->selectedObjects())
+			for (const auto* object: map()->selectedObjects())
 			{
 				auto hover_point = std::numeric_limits<MapCoordVector::size_type>::max();
 				pointHandles().draw(painter, widget, object, hover_point, false, PointHandles::DisabledHandleState);
@@ -540,7 +541,7 @@ void EditLineTool::updateStatusText()
 	setStatusBarText(text);
 }
 
-void EditLineTool::updateHoverState(MapCoordF cursor_pos)
+void EditLineTool::updateHoverState(const MapCoordF& cursor_pos)
 {
 	HoverState new_hover_state = OverNothing;
 	const PathObject* new_hover_object = nullptr;

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -46,7 +46,7 @@
 #include "core/symbols/text_symbol.h"
 #include "gui/symbols/symbol_setting_dialog.h"
 #include "gui/widgets/symbol_tooltip.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/overriding_shortcut.h"
 
 
@@ -134,6 +134,9 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	protect_action = context_menu->addAction({}, this, SLOT(setSelectedSymbolProtection(bool)));
 	protect_action->setCheckable(true);
 	context_menu->addSeparator();
+	
+	show_custom_icons = context_menu->addAction(tr("Show custom icons"), this, SLOT(setCustomIconsVisible(bool)));
+	show_custom_icons->setCheckable(true);
 	
 	QMenu* select_menu = new QMenu(tr("Select symbols"), context_menu);
 	select_menu->addAction(tr("Select all"), this, SLOT(selectAll()));
@@ -311,7 +314,7 @@ void SymbolRenderWidget::selectSingleSymbol(int i)
 	emitGuarded_selectedSymbolsChanged();
 }
 
-void SymbolRenderWidget::hover(QPoint pos)
+void SymbolRenderWidget::hover(const QPoint& pos)
 {
 	int i = symbolIndexAt(pos);
 	
@@ -342,7 +345,7 @@ QPoint SymbolRenderWidget::iconPosition(int i) const
 	return QPoint((i % icons_per_row) * icon_size, (i / icons_per_row) * icon_size);
 }
 
-int SymbolRenderWidget::symbolIndexAt(QPoint pos) const
+int SymbolRenderWidget::symbolIndexAt(const QPoint& pos) const
 {
 	int i = -1;
 	
@@ -363,7 +366,7 @@ void SymbolRenderWidget::updateSelectedIcons()
 		updateSingleIcon(symbol_index);
 }
 
-bool SymbolRenderWidget::dropPosition(QPoint pos, int& row, int& pos_in_row)
+bool SymbolRenderWidget::dropPosition(const QPoint& pos, int& row, int& pos_in_row)
 {
 	row = pos.y() / icon_size;
 	if (row >= num_rows)
@@ -822,24 +825,45 @@ void SymbolRenderWidget::scaleSymbol()
 
 void SymbolRenderWidget::deleteSymbols()
 {
-	// save selected symbols
+	// Collect selected symbols
 	std::vector<const Symbol*> saved_selection;
 	saved_selection.reserve(selected_symbols.size());
+	
+	bool need_confirmation = true;
 	for (auto symbol_index : selected_symbols)
 	{
-		saved_selection.push_back(map->getSymbol(symbol_index));
+		auto* symbol = map->getSymbol(symbol_index);
+		if (need_confirmation && map->existsObjectWithSymbol(symbol))
+		{
+			auto answer = QMessageBox::warning(
+			                  this,
+			                  tr("Confirmation"),
+			                  tr("The map contains objects with the symbol \"%1\". "
+			                     "Deleting it will delete those objects and clear the undo history! "
+			                     "Do you really want to do that?")
+			                  .arg(symbol->getName()),
+			                  QMessageBox::Yes | QMessageBox::YesToAll | QMessageBox::No | QMessageBox::Cancel);
+			switch (answer)
+			{
+			case QMessageBox::Cancel:
+				return;
+			case QMessageBox::YesToAll:
+				need_confirmation = false;
+				break;
+			case QMessageBox::Yes:
+				break;
+			case QMessageBox::No:
+				continue;
+			default:
+				Q_UNREACHABLE();
+			}
+		}
+		saved_selection.push_back(symbol);
 	}
 	
-	// delete symbols in order
-	for (const auto symbol : saved_selection)
-	{
-		if (map->existsObjectWithSymbol(symbol))
-		{
-			if (QMessageBox::warning(this, tr("Confirmation"), tr("The map contains objects with the symbol \"%1\". Deleting it will delete those objects and clear the undo history! Do you really want to do that?").arg(symbol->getName()), QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-				continue;
-		}
+	// Delete collected symbols
+	for (auto* symbol : saved_selection)
 		map->deleteSymbol(map->findSymbolIndex(symbol));
-	}
 	
 	if (selected_symbols.empty()) {
 		if (map->getFirstSelectedObject())
@@ -853,7 +877,7 @@ void SymbolRenderWidget::duplicateSymbol()
 {
 	Q_ASSERT(current_symbol_index >= 0);
 	
-	map->addSymbol(map->getSymbol(current_symbol_index)->duplicate(), current_symbol_index + 1);
+	map->addSymbol(duplicate(*map->getSymbol(current_symbol_index)).release(), current_symbol_index + 1);
 	selectSingleSymbol(current_symbol_index + 1);
 }
 
@@ -861,26 +885,23 @@ void SymbolRenderWidget::copySymbols()
 {
 	// Create map containing all colors and the selected symbols.
 	// Copying all colors improves preservation of relative order during paste.
-	Map* copy_map = new Map();
-	copy_map->setScaleDenominator(map->getScaleDenominator());
-
-	copy_map->importMap(map, Map::ColorImport, this);
+	Map copy_map;
+	copy_map.setScaleDenominator(map->getScaleDenominator());
+	copy_map.importMap(*map, Map::ColorImport);
 	
 	std::vector<bool> selection(map->getNumSymbols(), false);
 	for (auto symbol_index : selected_symbols)
 		selection[symbol_index] = true;
 	
-	copy_map->importMap(map, Map::MinimalSymbolImport, this, &selection);
+	copy_map.importMap(*map, Map::MinimalSymbolImport, &selection);
 	
 	// Save map to memory
 	QBuffer buffer;
-	if (!copy_map->exportToIODevice(&buffer))
+	if (!copy_map.exportToIODevice(buffer))
 	{
-		delete copy_map;
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
-	delete copy_map;
 	
 	// Put buffer into clipboard
 	QMimeData* mime_data = new QMimeData();
@@ -899,22 +920,39 @@ void SymbolRenderWidget::pasteSymbols()
 	// Get buffer from clipboard
 	QByteArray byte_array = QApplication::clipboard()->mimeData()->data(MimeType::OpenOrienteeringSymbols());
 	QBuffer buffer(&byte_array);
-	buffer.open(QIODevice::ReadOnly);
 	
 	// Create map from buffer
-	Map* paste_map = new Map();
-	if (!paste_map->importFromIODevice(&buffer))
+	Map paste_map;
+	if (!paste_map.importFromIODevice(buffer))
 	{
 		QMessageBox::warning(nullptr, tr("Error"), tr("An internal error occurred, sorry!"));
 		return;
 	}
 	
+	if (paste_map.getScaleDenominator() != map->getScaleDenominator())
+	{
+		/// \todo Adjust message to this particular action, and remove Map context.
+		///       See also MapEditor::importMap.
+		int answer = QMessageBox::question(
+		                 window(),
+		                 Map::tr("Question"),
+		                 Map::tr("The scale of the imported data is 1:%1 "
+		                         "which is different from this map's scale of 1:%2.\n\n"
+		                         "Rescale the imported data?")
+		                 .arg(QLocale().toString(paste_map.getScaleDenominator()),
+		                      QLocale().toString(map->getScaleDenominator())),
+		                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
+		if (answer == QMessageBox::Cancel)
+			return;
+		
+		paste_map.changeScale(map->getScaleDenominator(), {0, 0}, answer == QMessageBox::Yes, false, false, false);
+	}
+	
 	// Ensure that a change in selection is detected
 	selectSingleSymbol(-1);
-	
+		
 	// Import pasted map
-	map->importMap(paste_map, Map::MinimalSymbolImport, this, nullptr, current_symbol_index, false);
-	delete paste_map;
+	map->importMap(paste_map, Map::MinimalSymbolImport, nullptr, current_symbol_index, false);
 	
 	selectSingleSymbol(current_symbol_index);
 }
@@ -1001,20 +1039,31 @@ void SymbolRenderWidget::invertSelection()
 
 void SymbolRenderWidget::sortByNumber()
 {
-    sort(Symbol::compareByNumber);
+    sort(Symbol::lessByNumber);
 }
 
 void SymbolRenderWidget::sortByColor()
 {
-	sort(Symbol::compareByColor(map));
+	sort(Symbol::lessByColor(map));
 }
 
 void SymbolRenderWidget::sortByColorPriority()
 {
-	sort(Symbol::compareByColorPriority);
+	sort(Symbol::lessByColorPriority);
 }
 
-void SymbolRenderWidget::showContextMenu(QPoint global_pos)
+void SymbolRenderWidget::setCustomIconsVisible(bool checked)
+{
+	for (int i = 0; i < map->getNumSymbols(); ++i)
+	{
+		auto symbol = map->getSymbol(i);
+		if (!symbol->getCustomIcon().isNull())
+			symbol->resetIcon();
+	}
+	Settings::getInstance().setSetting(Settings::SymbolWidget_ShowCustomIcons, checked);
+}
+
+void SymbolRenderWidget::showContextMenu(const QPoint& global_pos)
 {
 	updateContextMenuState();
 	context_menu->popup(global_pos);
@@ -1079,6 +1128,8 @@ void SymbolRenderWidget::updateContextMenuState()
 	select_objects_action->setEnabled(have_selection);
 	select_objects_additionally_action->setEnabled(have_selection);
 	deselect_objects_action->setEnabled(have_selection);
+	
+	show_custom_icons->setChecked(Settings::getInstance().getSetting(Settings::SymbolWidget_ShowCustomIcons).toBool());
 }
 
 bool SymbolRenderWidget::newSymbol(Symbol* prototype)

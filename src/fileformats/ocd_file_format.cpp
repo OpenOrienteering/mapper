@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2016, 2018 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -22,43 +22,140 @@
 
 #include "ocd_file_format.h"
 
+#include <memory>
+
 #include <QtGlobal>
-#include <QCoreApplication>
 #include <QFlags>
 #include <QString>
 
 #include "fileformats/file_import_export.h"
+#include "fileformats/ocad8_file_format_p.h"
 #include "fileformats/ocd_file_export.h"
 #include "fileformats/ocd_file_import.h"
 
 
 namespace OpenOrienteering {
 
+namespace {
+
+QString labelForVersion(quint16 version)
+{
+	switch (version)
+	{
+	case OcdFileFormat::autoDeterminedVersion():
+		return ::OpenOrienteering::ImportExport::tr("OCAD");
+	case OcdFileFormat::legacyVersion():
+		return ::OpenOrienteering::ImportExport::tr("OCAD version 8, old implementation");
+	default:
+		return ::OpenOrienteering::ImportExport::tr("OCAD version %1").arg(version);
+	}
+}
+
+FileFormat::Features featuresForVersion(quint16 version)
+{
+	switch (version)
+	{
+	case OcdFileFormat::legacyVersion():
+		return FileFormat::Feature::FileOpen | FileFormat::Feature::FileImport | FileFormat::Feature::ReadingLossy |
+		       FileFormat::Feature::FileSave | FileFormat::Feature::FileSaveAs | FileFormat::Feature::WritingLossy;
+		
+	case OcdFileFormat::autoDeterminedVersion():
+		// Intentionally no FileFormat::ExportSupported. This prevents this
+		// format from being shown in the Save-as dialog. However, it is legal
+		// to create an exporter for the autoDeterminedVersion(). The actual
+		// export version will be determined from the Map's versionProperty()
+		// if possible, or from OcdFileExport::default_version.
+		return FileFormat::Feature::FileOpen | FileFormat::Feature::FileImport | FileFormat::Feature::ReadingLossy |
+		       FileFormat::Feature::FileSave | FileFormat::Feature::WritingLossy;
+		
+	default:
+		// Intentionally no FileFormat::ImportSupported. Import is handled
+		// by the autoDeterminedVersion().
+		return FileFormat::Feature::FileSave | FileFormat::Feature::FileSaveAs | FileFormat::Feature::WritingLossy;
+	}
+}
+
+}  // namespace
+
+
+
 // ### OcdFileFormat ###
 
-OcdFileFormat::OcdFileFormat()
-: FileFormat { MapFile, "OCD", ::OpenOrienteering::ImportExport::tr("OCAD"), QString::fromLatin1("ocd"),
-               ImportSupported | ExportSupported | ExportLossy }
+// static
+const char* OcdFileFormat::idForVersion(quint16 version)
+{
+	switch (version)
+	{
+	case OcdFileFormat::autoDeterminedVersion():
+		return "OCD";
+	case 8:
+		return "OCD8";
+	case 9:
+		return "OCD9";
+	case 10:
+		return "OCD10";
+	case 11:
+		return "OCD11";
+	case 12:
+		return "OCD12";
+	case OcdFileFormat::legacyVersion():
+		return "OCD-legacy";
+	default:
+		qFatal("Unsupported OCD version");
+	}
+}
+
+
+// static
+std::vector<std::unique_ptr<OcdFileFormat>> OcdFileFormat::makeAll()
+{
+	std::vector<std::unique_ptr<OcdFileFormat>> result;
+	result.reserve(7);
+	result.push_back(std::make_unique<OcdFileFormat>(autoDeterminedVersion()));
+	result.push_back(std::make_unique<OcdFileFormat>(12));
+	result.push_back(std::make_unique<OcdFileFormat>(11));
+	result.push_back(std::make_unique<OcdFileFormat>(10));
+	result.push_back(std::make_unique<OcdFileFormat>(9));
+	result.push_back(std::make_unique<OcdFileFormat>(8));
+	result.push_back(std::make_unique<OcdFileFormat>(legacyVersion()));
+	return result;
+}
+
+
+
+OcdFileFormat::OcdFileFormat(quint16 version)
+: FileFormat { MapFile, idForVersion(version), labelForVersion(version), QStringLiteral("ocd"), featuresForVersion(version) }
+, version { version }
 {
 	// Nothing
 }
 
-bool OcdFileFormat::understands(const unsigned char* buffer, std::size_t sz) const
+
+
+FileFormat::ImportSupportAssumption OcdFileFormat::understands(const char* buffer, int size) const
 {
-	// The first two bytes of the file must be 0x0cad in litte endian ordner.
-	// This test will refuse to understand OCD files on big endian systems:
-	// The importer's current implementation won't work there.
-	return (sz >= 2 && *reinterpret_cast<const quint16*>(buffer) == 0x0cad);
+	// The first two bytes of the file must be AD 0C.
+	if (size < 2)
+		return Unknown;
+	else if (quint8(buffer[0]) == 0xAD && buffer[1] == 0x0C)
+		return FullySupported;
+	else
+		return NotSupported;
 }
 
-Importer* OcdFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+std::unique_ptr<Importer> OcdFileFormat::makeImporter(const QString& path, Map *map, MapView *view) const
 {
-	return new OcdFileImport(stream, map, view);
+	if (version == legacyVersion())
+		return std::make_unique<OCAD8FileImport>(path, map, view);
+	return std::make_unique<OcdFileImport>(path, map, view);
 }
 
-Exporter* OcdFileFormat::createExporter(QIODevice* stream, Map* map, MapView* view) const
+std::unique_ptr<Exporter> OcdFileFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
 {
-	return new OcdFileExport(stream, map, view);
+	if (version == legacyVersion())
+		return std::make_unique<OCAD8FileExport>(path, map, view);
+	return std::make_unique<OcdFileExport>(path, map, view, version);
 }
 
 

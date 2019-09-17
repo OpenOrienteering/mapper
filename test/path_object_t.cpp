@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2015, 2016 Kai Pastor
+ *    Copyright 2015, 2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -30,34 +30,61 @@
 using namespace OpenOrienteering;
 
 
-class DummyPathObject : public PathObject
+namespace QTest
 {
-public:
-	DummyPathObject()
-	: PathObject()
+
+template<>
+char* toString(const PathObject::Intersections& intersections)
+{
+	QByteArray ba;
+	ba.reserve(1000);
+	ba += "Elements: " + QByteArray::number(quint32(intersections.size())) + '\n';
+	for (const auto& intersection : intersections)
 	{
-		// Set a dummy symbol to make the object calculate path coordinates
-		setSymbol(Map::getCoveringRedLine(), true);
+		ba += "  x:" + QByteArray::number(intersection.coord.x());
+		ba +=  " y:" + QByteArray::number(intersection.coord.y());
+		ba +=  " i:" + QByteArray::number(quint32(intersection.part_index));
+		ba +=  " l:" + QByteArray::number(qreal(intersection.length));
+		ba +=  " other_i:" + QByteArray::number(quint32(intersection.other_part_index));
+		ba +=  " other_l:" + QByteArray::number(qreal(intersection.other_length));
+		ba +=  '\n';
 	}
-	
-	DummyPathObject(const DummyPathObject&) = delete;
-	DummyPathObject(DummyPathObject&&) = delete;
-	DummyPathObject& operator=(const DummyPathObject&) = delete;
-	DummyPathObject& operator=(DummyPathObject&&) = delete;
-};
+	return qstrdup(ba.data());
+}
+
+
+}  // namespace QTest
+
+
+
+namespace  {
+
+PathObject::Intersections calculateIntersections(const PathObject& path1, const PathObject& path2)
+{
+	PathObject::Intersections actual_intersections;
+	path1.calcAllIntersectionsWith(&path2, actual_intersections);
+	actual_intersections.normalize();
+	return actual_intersections;
+}
+
+
+}  // namespace
+
+
 
 PathObjectTest::PathObjectTest(QObject* parent): QObject(parent)
 {
 	// nothing
 }
 
+
 void PathObjectTest::initTestCase()
 {
-	Q_INIT_RESOURCE(resources);
-	doStaticInitializations();
 	// Static map initializations
 	Map map;
 }
+
+
 
 void PathObjectTest::mapCoordTest()
 {
@@ -73,6 +100,8 @@ void PathObjectTest::mapCoordTest()
 	QCOMPARE(vector.length(), 2.0);
 	QCOMPARE(vector.angle(), M_PI/2); // Remember, our y axis is mirrored.
 }
+
+
 
 void PathObjectTest::virtualPathTest()
 {
@@ -141,293 +170,447 @@ void PathObjectTest::virtualPathTest()
 	QCOMPARE(scaling, sqrt(2.0));
 }
 
-void PathObjectTest::calcIntersectionsTest()
+
+
+void PathObjectTest::copyFromTest_data()
 {
-	QFETCH(void*, v_path1);
-	QFETCH(void*, v_path2);
-	QFETCH(void*, v_predicted_intersections);
-	PathObject* path1 = static_cast<PathObject*>(v_path1);
-	PathObject* path2 = static_cast<PathObject*>(v_path2);
-	PathObject::Intersections* predicted_intersections = static_cast<PathObject::Intersections*>(v_predicted_intersections);
+	QTest::addColumn<int>("dash_point_index");
 	
-	PathObject::Intersections actual_intersections;
-	path1->calcAllIntersectionsWith(path2, actual_intersections);
-	actual_intersections.normalize();
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::copyFromTest()
+{
+	// Simple path
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({4.0, 2.0});
+	proto.addCoordinate({4.0, -2.0});
 	
-	if (actual_intersections.size() != predicted_intersections->size())
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
 	{
-		for (size_t i = 0; i < predicted_intersections->size(); ++i)
-		{
-			qDebug() << "# Predicted " << i;
-			qDebug() << "  X: " << predicted_intersections->at(i).coord.x();
-			qDebug() << "  Y: " << predicted_intersections->at(i).coord.y();
-			qDebug() << "  len: " << predicted_intersections->at(i).length;
-			qDebug() << "  other_len: " << predicted_intersections->at(i).other_length;
-		}
-		for (size_t i = 0; i < actual_intersections.size(); ++i)
-		{
-			qDebug() << "# Actual " << i;
-			qDebug() << "  X: " << actual_intersections.at(i).coord.x();
-			qDebug() << "  Y: " << actual_intersections.at(i).coord.y();
-			qDebug() << "  len: " << actual_intersections.at(i).length;
-			qDebug() << "  other_len: " << actual_intersections.at(i).other_length;
-		}
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
 	}
-	QCOMPARE(actual_intersections.size(), predicted_intersections->size());
-	for (size_t i = 0; i < qMin(actual_intersections.size(), predicted_intersections->size()); ++i)
+	
+	// Closed path with a hole
+	proto.addCoordinate({0.0, 2.0, MapCoord::ClosePoint});
+	proto.addCoordinate({0.5, 1.5, MapCoord::HolePoint});
+	proto.addCoordinate({3.5, 1.5});
+	proto.addCoordinate({3.5, 0.0});
+	proto.addCoordinate({0.5, 1.5, MapCoord::ClosePoint});
+	
 	{
-		QCOMPARE(actual_intersections[i].coord.x(), predicted_intersections->at(i).coord.x());
-		QCOMPARE(actual_intersections[i].coord.y(), predicted_intersections->at(i).coord.y());
-		QCOMPARE(actual_intersections[i].part_index, predicted_intersections->at(i).part_index);
-		QCOMPARE(actual_intersections[i].length, predicted_intersections->at(i).length);
-		QCOMPARE(actual_intersections[i].other_part_index, predicted_intersections->at(i).other_part_index);
-		QCOMPARE(actual_intersections[i].other_length, predicted_intersections->at(i).other_length);
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		QCOMPARE(path.getCoordinateCount(), proto.getCoordinateCount());
+		
+		for (std::size_t i = 0; i < path.getCoordinateCount(); ++i)
+			QCOMPARE(path.getCoordinate(i), proto.getCoordinate(i));
 	}
 }
 
-void PathObjectTest::calcIntersectionsTest_data()
+
+
+void PathObjectTest::changePathBoundsTest_data()
 {
-	QTest::addColumn<void*>("v_path1");
-	QTest::addColumn<void*>("v_path2");
-	QTest::addColumn<void*>("v_predicted_intersections");
+	QTest::addColumn<int>("dash_point_index");
 	
-	PathObject::Intersection intersection;
-	intersection.part_index = 0;
-	intersection.other_part_index = 0;
-	
-	
-	// Line-Line perpendicular intersection
-	DummyPathObject* perpendicular1 = new DummyPathObject();
-	perpendicular1->addCoordinate(MapCoord(10, 20));
-	perpendicular1->addCoordinate(MapCoord(30, 20));
-	
-	DummyPathObject* perpendicular2 = new DummyPathObject();
-	perpendicular2->addCoordinate(MapCoord(20, 10));
-	perpendicular2->addCoordinate(MapCoord(20, 30));
-	
-	PathObject::Intersections* intersections_perpendicular = new PathObject::Intersections();
-	intersection.coord = MapCoordF(20, 20);
-	intersection.length = 10;
-	intersection.other_length = 10;
-	intersections_perpendicular->push_back(intersection);
-	
-	QTest::newRow("Line-Line perpendicular") << (void*)perpendicular1 << (void*)perpendicular2 << (void*)intersections_perpendicular;
-	
-	
-	// Line-Line perpendicular intersection, test reversed
-	QTest::newRow("Line-Line perpendicular, test reversed") << (void*)perpendicular2 << (void*)perpendicular1 << (void*)intersections_perpendicular;
-	
-	
-	// Line-Line perpendicular intersection, line1 reversed
-	PathObject* perpendicular3 = perpendicular1->duplicate()->asPath();
-	perpendicular3->reverse();
-	QTest::newRow("Line-Line perpendicular, line1 reversed") << (void*)perpendicular2 << (void*)perpendicular3 << (void*)intersections_perpendicular;
-	
-	
-	// Line-Line parallel intersection
-	DummyPathObject* parallel1 = new DummyPathObject();
-	parallel1->addCoordinate(MapCoord(10, 0));
-	parallel1->addCoordinate(MapCoord(30, 0));
-	parallel1->addCoordinate(MapCoord(50, 0));
-	
-	DummyPathObject* parallel2 = new DummyPathObject();
-	parallel2->addCoordinate(MapCoord(20, 0));
-	parallel2->addCoordinate(MapCoord(40, 0));
-	parallel2->addCoordinate(MapCoord(60, 0));
-	
-	PathObject::Intersections* intersections_parallel = new PathObject::Intersections();
-	intersection.coord = MapCoordF(20, 0);
-	intersection.length = 10;
-	intersection.other_length = 0;
-	intersections_parallel->push_back(intersection);
-	intersection.coord = MapCoordF(50, 0);
-	intersection.length = 40;
-	intersection.other_length = 30;
-	intersections_parallel->push_back(intersection);
-	
-	QTest::newRow("Line-Line parallel") << (void*)parallel1 << (void*)parallel2 << (void*)intersections_parallel;
-	
-	
-	// Intersection at parallel start / end
-	DummyPathObject* parallel3 = new DummyPathObject();
-	parallel3->addCoordinate(MapCoord(20, 10));
-	parallel3->addCoordinate(MapCoord(20, 0));
-	parallel3->addCoordinate(MapCoord(30, 0));
-	parallel3->addCoordinate(MapCoord(30, -10));
-	
-	PathObject::Intersections* intersections_parallel_se = new PathObject::Intersections();
-	intersection.coord = MapCoordF(20, 0);
-	intersection.length = 10;
-	intersection.other_length = 10;
-	intersections_parallel_se->push_back(intersection);
-	intersection.coord = MapCoordF(30, 0);
-	intersection.length = 20;
-	intersection.other_length = 20;
-	intersections_parallel_se->push_back(intersection);
-	
-	QTest::newRow("Line-Line parallel with intersection at start / end") << (void*)parallel1 << (void*)parallel3 << (void*)intersections_parallel_se;
-	
-	
-	// Intersection at point
-	DummyPathObject* point1 = new DummyPathObject();
-	point1->addCoordinate(MapCoord(10, 30));
-	point1->addCoordinate(MapCoord(30, 30));
-	point1->addCoordinate(MapCoord(50, 30));
-	
-	DummyPathObject* point2 = new DummyPathObject();
-	point2->addCoordinate(MapCoord(30, 10));
-	point2->addCoordinate(MapCoord(30, 30));
-	point2->addCoordinate(MapCoord(30, 50));
-	
-	PathObject::Intersections* intersections_point = new PathObject::Intersections();
-	intersection.coord = MapCoordF(30, 30);
-	intersection.length = 20;
-	intersection.other_length = 20;
-	intersections_point->push_back(intersection);
-	
-	QTest::newRow("Intersection at point") << (void*)point1 << (void*)point2 << (void*)intersections_point;
-	
-	
-	// Duplicate of object intersection
-	DummyPathObject* duplicate1 = new DummyPathObject();
-	duplicate1->addCoordinate(MapCoord(10, 30));
-	duplicate1->addCoordinate(MapCoord(30, 30));
-	duplicate1->addCoordinate(MapCoord(50, 50));
-	duplicate1->addCoordinate(MapCoord(50, 70));
-	duplicate1->update(); // for duplicate1->parts().front().getLength();
-	
-	PathObject::Intersections* intersections_duplicate = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 30);
-	intersection.length = 0;
-	intersection.other_length = 0;
-	intersections_duplicate->push_back(intersection);
-	intersection.coord = MapCoordF(50, 70);
-	intersection.length = duplicate1->parts().front().length();
-	intersection.other_length = duplicate1->parts().front().length();
-	intersections_duplicate->push_back(intersection);
-	
-	QTest::newRow("Start/end intersections for duplicate") << (void*)duplicate1 << (void*)duplicate1 << (void*)intersections_duplicate;
-	
-	
-	// Reversed duplicate
-	PathObject* duplicate2 = duplicate1->duplicate()->asPath();
-	duplicate2->reverse();
-	
-	PathObject::Intersections* intersections_duplicate_reversed = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 30);
-	intersection.length = 0;
-	intersection.other_length = duplicate1->parts().front().length();
-	intersections_duplicate_reversed->push_back(intersection);
-	intersection.coord = MapCoordF(50, 70);
-	intersection.length = duplicate1->parts().front().length();
-	intersection.other_length = 0;
-	intersections_duplicate_reversed->push_back(intersection);
-	
-	QTest::newRow("Start/end intersections for reversed duplicate") << (void*)duplicate1 << (void*)duplicate2 << (void*)intersections_duplicate_reversed;
-	
-	
-	// Duplicate of closed object intersection
-	PathObject* duplicate1_closed = duplicate1->duplicate()->asPath();
-	duplicate1_closed->parts().front().setClosed(true);
-	
-	PathObject::Intersections* no_intersections = new PathObject::Intersections();
-	
-	QTest::newRow("No intersections for closed duplicate") << (void*)duplicate1_closed << (void*)duplicate1_closed << (void*)no_intersections;
-	
-	
-	// Parallel at start intersection
-	DummyPathObject* ps1 = new DummyPathObject();
-	ps1->addCoordinate(MapCoord(10, 10));
-	ps1->addCoordinate(MapCoord(30, 10));
-	ps1->addCoordinate(MapCoord(30, 30));
-	ps1->addCoordinate(MapCoord(10, 30));
-	ps1->parts().front().setClosed(true);
-	
-	DummyPathObject* ps2 = new DummyPathObject();
-	ps2->addCoordinate(MapCoord(10, 10));
-	ps2->addCoordinate(MapCoord(30, 10));
-	
-	PathObject::Intersections* intersections_ps = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 10);
-	intersection.length = 0;
-	intersection.other_length = 0;
-	intersections_ps->push_back(intersection);
-	intersection.coord = MapCoordF(30, 10);
-	intersection.length = 20;
-	intersection.other_length = 20;
-	intersections_ps->push_back(intersection);
-	intersection.coord = MapCoordF(10, 10);
-	intersection.length = 80;
-	intersection.other_length = 0;
-	intersections_ps->push_back(intersection);
-	
-	QTest::newRow("Parallel at start intersection") << (void*)ps1 << (void*)ps2 << (void*)intersections_ps;
-	
-	
-	// Parallel at end intersection
-	DummyPathObject* pe1 = new DummyPathObject();
-	pe1->addCoordinate(MapCoord(10, 10));
-	pe1->addCoordinate(MapCoord(30, 10));
-	pe1->addCoordinate(MapCoord(30, 30));
-	pe1->addCoordinate(MapCoord(10, 30));
-	pe1->parts().front().setClosed(true);
-	
-	DummyPathObject* pe2 = new DummyPathObject();
-	pe2->addCoordinate(MapCoord(10, 30));
-	pe2->addCoordinate(MapCoord(10, 10));
-	
-	PathObject::Intersections* intersections_pe = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 10);
-	intersection.length = 0;
-	intersection.other_length = 20;
-	intersections_pe->push_back(intersection);
-	intersection.coord = MapCoordF(10, 30);
-	intersection.length = 60;
-	intersection.other_length = 0;
-	intersections_pe->push_back(intersection);
-	intersection.coord = MapCoordF(10, 10);
-	intersection.length = 80;
-	intersection.other_length = 20;
-	intersections_pe->push_back(intersection);
-	
-	QTest::newRow("Parallel at end intersection") << (void*)pe1 << (void*)pe2 << (void*)intersections_pe;
-	
-	
-	// a inside b
-	DummyPathObject* aib1 = new DummyPathObject();
-	aib1->addCoordinate(MapCoord(10, 0));
-	aib1->addCoordinate(MapCoord(30, 0));
-	
-	DummyPathObject* aib2 = new DummyPathObject();
-	aib2->addCoordinate(MapCoord(0, 0));
-	aib2->addCoordinate(MapCoord(40, 0));
-	
-	PathObject::Intersections* intersections_aib = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 0);
-	intersection.length = 0;
-	intersection.other_length = 10;
-	intersections_aib->push_back(intersection);
-	intersection.coord = MapCoordF(30, 0);
-	intersection.length = 20;
-	intersection.other_length = 30;
-	intersections_aib->push_back(intersection);
-	
-	QTest::newRow("a inside b") << (void*)aib1 << (void*)aib2 << (void*)intersections_aib;
-	
-	
-	// b inside a
-	PathObject::Intersections* intersections_bia = new PathObject::Intersections();
-	intersection.coord = MapCoordF(10, 0);
-	intersection.length = 10;
-	intersection.other_length = 0;
-	intersections_bia->push_back(intersection);
-	intersection.coord = MapCoordF(30, 0);
-	intersection.length = 30;
-	intersection.other_length = 20;
-	intersections_bia->push_back(intersection);
-	
-	QTest::newRow("b inside a") << (void*)aib2 << (void*)aib1 << (void*)intersections_bia;
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
 }
+
+void PathObjectTest::changePathBoundsTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	for (std::size_t i = 0; i < proto.getCoordinateCount(); ++i)
+		proto.getCoordinateRef(i).setDashPoint(int(i) == dash_point_index);
+	
+	proto.updatePathCoords();
+	
+	{
+		// full path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// sub-path starting at begin
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 0.0, 4.0);
+		QCOMPARE(path.getCoordinate(0), proto.getCoordinate(0));
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+	
+	{
+		// sub-path ending at original end
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, path.parts().front().length());
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+		QCOMPARE(path.getCoordinate(2), proto.getCoordinate(2));
+	}
+	
+	{
+		// inner sub-path
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(0, 2.0, 4.0);
+		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+}
+
+
+
+void PathObjectTest::splitLineTest_data()
+{
+	QTest::addColumn<int>("dash_point_index");
+	
+	QTest::newRow("no dash point")        << -1;
+	QTest::newRow("dash point at start")  <<  0;
+	QTest::newRow("dash point at center") <<  1;
+	QTest::newRow("dash point at end")    <<  2;
+}
+
+void PathObjectTest::splitLineTest()
+{
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 2.0});
+	proto.addCoordinate({2.0, 0.0});
+	proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
+	
+	QFETCH(int, dash_point_index);
+	if (dash_point_index >= 0)
+		proto.getCoordinateRef(std::size_t(dash_point_index)).setDashPoint(true);
+	
+	auto object_path_coord = ObjectPathCoord { &proto };
+	auto const distance_sq = object_path_coord.findClosestPointTo({1.0, 1.0});
+	QVERIFY(qIsNull(distance_sq));
+	QCOMPARE(object_path_coord.pos, MapCoordF(1.0, 1.0));
+	
+	auto const split_paths = proto.splitLineAt(object_path_coord);
+	QCOMPARE(split_paths.size(), std::size_t(2));
+	
+	auto const *split_0 = split_paths[0];
+	QCOMPARE(split_0->getCoordinateCount(), std::size_t(2));
+	QCOMPARE(split_0->getCoordinate(0), proto.getCoordinate(0));
+	QCOMPARE(split_0->getCoordinate(1), MapCoord(1.0, 1.0, MapCoord::HolePoint));
+	delete split_0;
+	
+	auto const *split_1 = split_paths[1];
+	QCOMPARE(split_1->getCoordinateCount(), std::size_t(3));
+	QCOMPARE(split_1->getCoordinate(0), MapCoord(1.0, 1.0));
+	QCOMPARE(split_1->getCoordinate(1), proto.getCoordinate(1));
+	QCOMPARE(split_1->getCoordinate(2), proto.getCoordinate(2));
+	delete split_1;
+}
+
+
+
+void PathObjectTest::calcIntersectionsTest()
+{
+	{
+		// Line-Line perpendicular intersection
+		PathObject perpendicular1{Map::getCoveringRedLine()};
+		perpendicular1.addCoordinate(MapCoord(10, 20));
+		perpendicular1.addCoordinate(MapCoord(30, 20));
+		
+		PathObject perpendicular2{Map::getCoveringRedLine()};
+		perpendicular2.addCoordinate(MapCoord(20, 10));
+		perpendicular2.addCoordinate(MapCoord(20, 30));
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(20, 20);
+		intersection.length = 10;
+		intersection.other_length = 10;
+		
+		PathObject::Intersections intersections_perpendicular;
+		intersections_perpendicular.reserve(1);
+		intersections_perpendicular.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(perpendicular1, perpendicular2), intersections_perpendicular);
+		QCOMPARE(calculateIntersections(perpendicular2, perpendicular1), intersections_perpendicular);
+		
+		perpendicular1.reverse();
+		QCOMPARE(calculateIntersections(perpendicular1, perpendicular2), intersections_perpendicular);
+	}
+	
+	{
+		// Intersection at explicit common point
+		PathObject common_point_path1{Map::getCoveringRedLine()};
+		common_point_path1.addCoordinate(MapCoord(10, 30));
+		common_point_path1.addCoordinate(MapCoord(30, 30));
+		common_point_path1.addCoordinate(MapCoord(50, 30));
+		
+		PathObject common_point_path2{Map::getCoveringRedLine()};
+		common_point_path2.addCoordinate(MapCoord(30, 10));
+		common_point_path2.addCoordinate(MapCoord(30, 30));
+		common_point_path2.addCoordinate(MapCoord(30, 50));
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(30, 30);
+		intersection.length = 20;
+		intersection.other_length = 20;
+		
+		PathObject::Intersections intersections_point;
+		intersections_point.reserve(1);
+		intersections_point.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(common_point_path1, common_point_path2), intersections_point);
+	}
+	
+	{
+		// Line-Line parallel intersection
+		PathObject parallel1{Map::getCoveringRedLine()};
+		parallel1.addCoordinate(MapCoord(10, 0));
+		parallel1.addCoordinate(MapCoord(30, 0));
+		parallel1.addCoordinate(MapCoord(50, 0));
+		
+		PathObject parallel2{Map::getCoveringRedLine()};
+		parallel2.addCoordinate(MapCoord(20, 0));
+		parallel2.addCoordinate(MapCoord(40, 0));
+		parallel2.addCoordinate(MapCoord(60, 0));
+		
+		PathObject::Intersections intersections_parallel;
+		intersections_parallel.reserve(2);
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(20, 0);
+		intersection.length = 10;
+		intersection.other_length = 0;
+		intersections_parallel.push_back(intersection);
+		
+		intersection.coord = MapCoordF(50, 0);
+		intersection.length = 40;
+		intersection.other_length = 30;
+		intersections_parallel.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(parallel1, parallel2), intersections_parallel);
+		
+		// Intersection at parallel start / end
+		PathObject parallel3{Map::getCoveringRedLine()};
+		parallel3.addCoordinate(MapCoord(20, 10));
+		parallel3.addCoordinate(MapCoord(20, 0));
+		parallel3.addCoordinate(MapCoord(30, 0));
+		parallel3.addCoordinate(MapCoord(30, -10));
+		
+		PathObject::Intersections intersections_parallel_se;
+		intersections_parallel.reserve(2);
+		
+		intersection.coord = MapCoordF(20, 0);
+		intersection.length = 10;
+		intersection.other_length = 10;
+		intersections_parallel_se.push_back(intersection);
+		
+		intersection.coord = MapCoordF(30, 0);
+		intersection.length = 20;
+		intersection.other_length = 20;
+		intersections_parallel_se.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(parallel1, parallel3), intersections_parallel_se);
+	}
+	
+	
+	{
+		// Duplicate of object intersection
+		PathObject duplicate1{Map::getCoveringRedLine()};
+		duplicate1.addCoordinate(MapCoord(10, 30));
+		duplicate1.addCoordinate(MapCoord(30, 30));
+		duplicate1.addCoordinate(MapCoord(50, 50));
+		duplicate1.addCoordinate(MapCoord(50, 70));
+		duplicate1.update(); // for duplicate1.parts().front().getLength();
+		
+		{
+			PathObject::Intersections intersections_duplicate;
+			intersections_duplicate.reserve(2);
+			
+			PathObject::Intersection intersection{};
+			intersection.coord = MapCoordF(10, 30);
+			intersection.length = 0;
+			intersection.other_length = 0;
+			intersections_duplicate.push_back(intersection);
+			
+			intersection.coord = MapCoordF(50, 70);
+			intersection.length = duplicate1.parts().front().length();
+			intersection.other_length = duplicate1.parts().front().length();
+			intersections_duplicate.push_back(intersection);
+			
+			QCOMPARE(calculateIntersections(duplicate1, duplicate1), intersections_duplicate);
+		}
+		
+		{
+			// Reversed duplicate
+			PathObject duplicate2{Map::getCoveringRedLine()};
+			duplicate2.copyFrom(duplicate1);
+			duplicate2.reverse();
+			
+			PathObject::Intersections intersections_duplicate_reversed;
+			intersections_duplicate_reversed.reserve(2);
+			
+			PathObject::Intersection intersection{};
+			intersection.coord = MapCoordF(10, 30);
+			intersection.length = 0;
+			intersection.other_length = duplicate1.parts().front().length();
+			intersections_duplicate_reversed.push_back(intersection);
+			
+			intersection.coord = MapCoordF(50, 70);
+			intersection.length = duplicate1.parts().front().length();
+			intersection.other_length = 0;
+			intersections_duplicate_reversed.push_back(intersection);
+			
+			QCOMPARE(calculateIntersections(duplicate1, duplicate2), intersections_duplicate_reversed);
+		}
+		
+		{
+			// Duplicate of closed object intersection
+			PathObject duplicate1_closed{Map::getCoveringRedLine()};
+			duplicate1_closed.copyFrom(duplicate1);
+			duplicate1_closed.parts().front().setClosed(true);
+			
+			PathObject::Intersections no_intersections;
+			
+			QCOMPARE(calculateIntersections(duplicate1_closed, duplicate1_closed), no_intersections);
+		}
+	}
+	
+	{
+		// Parallel at start intersection
+		PathObject ps1{Map::getCoveringRedLine()};
+		ps1.addCoordinate(MapCoord(10, 10));
+		ps1.addCoordinate(MapCoord(30, 10));
+		ps1.addCoordinate(MapCoord(30, 30));
+		ps1.addCoordinate(MapCoord(10, 30));
+		ps1.parts().front().setClosed(true);
+		
+		PathObject ps2{Map::getCoveringRedLine()};
+		ps2.addCoordinate(MapCoord(10, 10));
+		ps2.addCoordinate(MapCoord(30, 10));
+		
+		PathObject::Intersections intersections_ps;
+		intersections_ps.reserve(3);
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(10, 10);
+		intersection.length = 0;
+		intersection.other_length = 0;
+		intersections_ps.push_back(intersection);
+		
+		intersection.coord = MapCoordF(30, 10);
+		intersection.length = 20;
+		intersection.other_length = 20;
+		intersections_ps.push_back(intersection);
+		
+		intersection.coord = MapCoordF(10, 10);
+		intersection.length = 80;
+		intersection.other_length = 0;
+		intersections_ps.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(ps1, ps2), intersections_ps);
+	}
+	
+	{
+		// Parallel at end intersection
+		PathObject pe1{Map::getCoveringRedLine()};
+		pe1.addCoordinate(MapCoord(10, 10));
+		pe1.addCoordinate(MapCoord(30, 10));
+		pe1.addCoordinate(MapCoord(30, 30));
+		pe1.addCoordinate(MapCoord(10, 30));
+		pe1.parts().front().setClosed(true);
+		
+		PathObject pe2{Map::getCoveringRedLine()};
+		pe2.addCoordinate(MapCoord(10, 30));
+		pe2.addCoordinate(MapCoord(10, 10));
+		
+		PathObject::Intersections intersections_pe;
+		intersections_pe.reserve(3);
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(10, 10);
+		intersection.length = 0;
+		intersection.other_length = 20;
+		intersections_pe.push_back(intersection);
+		
+		intersection.coord = MapCoordF(10, 30);
+		intersection.length = 60;
+		intersection.other_length = 0;
+		intersections_pe.push_back(intersection);
+		
+		intersection.coord = MapCoordF(10, 10);
+		intersection.length = 80;
+		intersection.other_length = 20;
+		intersections_pe.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(pe1, pe2), intersections_pe);
+	}
+	
+	{
+		// a inside b
+		PathObject aib1{Map::getCoveringRedLine()};
+		aib1.addCoordinate(MapCoord(10, 0));
+		aib1.addCoordinate(MapCoord(30, 0));
+		
+		PathObject aib2{Map::getCoveringRedLine()};
+		aib2.addCoordinate(MapCoord(0, 0));
+		aib2.addCoordinate(MapCoord(40, 0));
+		
+		PathObject::Intersections intersections_aib;
+		intersections_aib.reserve(2);
+		
+		PathObject::Intersection intersection{};
+		intersection.coord = MapCoordF(10, 0);
+		intersection.length = 0;
+		intersection.other_length = 10;
+		intersections_aib.push_back(intersection);
+		
+		intersection.coord = MapCoordF(30, 0);
+		intersection.length = 20;
+		intersection.other_length = 30;
+		intersections_aib.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(aib1, aib2), intersections_aib);
+		
+		
+		// b inside a
+		PathObject::Intersections intersections_bia;
+		intersections_bia.reserve(2);
+		
+		intersection.coord = MapCoordF(10, 0);
+		intersection.length = 10;
+		intersection.other_length = 0;
+		intersections_bia.push_back(intersection);
+		
+		intersection.coord = MapCoordF(30, 0);
+		intersection.length = 30;
+		intersection.other_length = 20;
+		intersections_bia.push_back(intersection);
+		
+		QCOMPARE(calculateIntersections(aib2, aib1), intersections_bia);
+	}
+}
+
+
 
 void PathObjectTest::atypicalPathTest()
 {
@@ -441,7 +624,7 @@ void PathObjectTest::atypicalPathTest()
 	
 	PathCoordVector path_coords { coords };
 	path_coords.update(0);
-	QCOMPARE(path_coords.size(), (std::size_t)7u);
+	QCOMPARE(path_coords.size(), std::size_t(7));
 	
 	for (std::size_t i = 0, end = path_coords.size(); i< end; ++i)
 	{
@@ -468,17 +651,20 @@ void PathObjectTest::atypicalPathTest()
 		}
 		
 		auto split = SplitPathCoord::at(path_coords, i);
-		QCOMPARE((std::size_t)split.path_coord_index, i);
+		QCOMPARE(std::size_t(split.path_coord_index), i);
 		auto tangent = split.tangentVector();
-		Q_UNUSED(tangent)
+		QVERIFY(qIsNull(tangent.lengthSquared()));
 	}
 }
-	
+
+
 
 /*
  * We don't need a real GUI window.
  */
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace {
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 
 
 QTEST_MAIN(PathObjectTest)

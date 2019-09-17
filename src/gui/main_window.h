@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_MAIN_WINDOW_H
 #define OPENORIENTEERING_MAIN_WINDOW_H
 
+#include <memory>
+
 #include <Qt>
 #include <QMainWindow>
 #include <QObject>
@@ -44,6 +46,8 @@ class QWidget;
 namespace OpenOrienteering {
 
 class MainWindowController;
+class MapperServiceProxy;
+class Toast;
 
 
 /**
@@ -57,6 +61,22 @@ class MainWindow : public QMainWindow, private Autosave
 {
 Q_OBJECT
 public:
+	struct FileInfo
+	{
+		// To be used with aggregate initialization
+		QString file_path;
+		const FileFormat* file_format;
+		
+		// cf. QFileInfo::filePath
+		QString filePath() const { return file_path; }
+		
+		const FileFormat* fileFormat() const noexcept { return file_format; }
+		
+		operator bool() const noexcept { return !file_path.isEmpty(); }
+		
+	};
+	
+		
 	/**
 	 * Creates a new main window.
 	 */
@@ -85,22 +105,6 @@ public:
 	
 	
 	/**
-	 * Returns whether the window is operating in mobile mode.
-	 * 
-	 * On the desktop, the default (desktop) mode may be overwritten by
-	 * setting the environment variable MAPPER_MOBILE_GUI to 0 or 1.
-	 * 
-	 * For Android, this evaluates to constexpr true so that the compiler
-	 * may optimize away desktop code in conditional blocks.
-	 */
-#ifndef Q_OS_ANDROID
-	static bool mobileMode();
-#else
-	static constexpr bool mobileMode() { return true; }
-#endif
-	
-	
-	/**
 	 * Changes the controller.
 	 *
 	 * The new controller does not edit a file.
@@ -113,7 +117,7 @@ public:
 	 * The new controller edits the file with the given path.
 	 * The path may be empty for a new (unnamed) file.
 	 */
-	void setController(MainWindowController* new_controller, const QString& path);
+	void setController(MainWindowController* new_controller, const QString& path, const FileFormat* format);
 	
 private:
 	void setController(MainWindowController* new_controller, bool has_file);
@@ -123,10 +127,21 @@ public:
 	MainWindowController* getController() const;
 	
 	
-	/** Returns the canonical path of the currently open file or 
-	 *  an empty string if no file is open.
+	/**
+	 * Returns the canonical path of the currently open file.
+	 * 
+	 * It no file is open, returns an empty string.
 	 */
-	const QString& currentPath() const;
+	const QString& currentPath() const { return current_path; }
+	
+	/**
+	 * Returns the file format of the currently open file.
+	 * 
+	 * It no file is open or the format is unknown, returns nullptr.
+	 */
+	const FileFormat* currentFormat() const { return current_format; }
+	
+	
 	
 	/** Registers the given path as most recently used file.
 	 * 
@@ -146,8 +161,24 @@ public:
 	/** Sets the text in the status bar. */ 
 	void setStatusBarText(const QString& text);
 	
-	/** Shows a temporary message in the status bar. */
+	/**
+	 * Shows a temporary message in the status bar.
+	 * 
+	 * Normally, the message won't become visible before control returns
+	 * to the event loop where the GUI update events are processed.
+	 * For messages indicating a potentially long-running operation, use
+	 * showStatusBarMessageImmediately() instead.
+	 */
 	void showStatusBarMessage(const QString& text, int timeout = 0);
+	
+	/**
+	 * Shows a temporary message in the status bar immediately.
+	 * 
+	 * Use this function instead of showStatusBarMessage() when indicating the
+	 * start of potentially long-running operations to ensure that GUI update
+	 * events are processed immediately.
+	 */
+	void showStatusBarMessageImmediately(const QString& text, int timeout = 0);
 	
 	/** Clears temporary messages set in the status bar with showStatusBarMessage(). */
 	void clearStatusBarMessage();
@@ -156,7 +187,7 @@ public:
 	/**
 	 * Blocks shortcuts.
 	 * 
-	 * During text input, it may be neccessary to disable shortcuts.
+	 * During text input, it may be necessary to disable shortcuts.
 	 * 
 	 * @param blocked true for blocking shortcuts, false for normal behaviour.
 	 */
@@ -195,15 +226,22 @@ public:
 	 */
 	void openPathLater(const QString &path);
 	
-	/** Save the content of the main window.
-	 *  @param path the path where to save.
+	/**
+	 * Save the content of the main window.
 	 */ 
-	bool savePath(const QString &path);
+	bool saveTo(const QString &path, const FileFormat& format);
 	
 	/** Shows the open file dialog for the given file type(s) and returns the chosen file
 	 *  or an empty string if the dialog is aborted.
 	 */
-	static QString getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
+	static MainWindow::FileInfo getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types);
+	
+	
+	/**
+	 * Shows a message box for a list of unformatted messages.
+	 */
+	static void showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages);
+	
 	
 	/**
 	 * Sets the MainWindow's effective central widget.
@@ -270,7 +308,7 @@ public slots:
 	 * If saving is successful, the selected path will become
 	 * this window's current path.
 	 * 
-	 * @return true if saving was succesful, false otherwise
+	 * @return true if saving was successful, false otherwise
 	 */
 	bool showSaveAsDialog();
 	
@@ -281,9 +319,11 @@ public slots:
 	 * If loading is successful, the selected path will become
 	 * the [new] window's current path.
 	 * 
-	 * @return true if loading was succesful, false otherwise
+	 * @return true if loading was successful, false otherwise
 	 */
 	bool openPath(const QString &path);
+	
+	bool openPath(const QString &path, const OpenOrienteering::FileFormat* format);
 	
 	/**
 	 * Open the file specified in the sending action's data.
@@ -380,7 +420,7 @@ protected slots:
 	 * If the given path is the current actual_path, no change is made.
 	 * 
 	 * If the currently loaded file was modified, the user is asked whether he
-	 * really wants to switch to another file which means loosing the changes
+	 * really wants to switch to another file which means losing the changes
 	 * he had made.
 	 */
 	void switchActualPath(const QString &path);
@@ -404,7 +444,7 @@ protected:
 	 * If the controller was not set as having an opened file,
 	 * the path must be empty.
 	 */
-	void setCurrentPath(const QString& path);
+	void setCurrentFile(const QString& path, const FileFormat* format);
 	
 	/**
 	 * Notifies the windows of autosave conflicts.
@@ -473,9 +513,14 @@ private:
 	QAction* settings_act;
 	QAction* close_act;
 	QLabel* status_label;
+	Toast* toast = nullptr;
+	
+	std::unique_ptr<MapperServiceProxy> service_proxy;
 	
 	/// Canonical path to the currently open file or an empty string if the file was not saved yet ("untitled")
 	QString current_path;
+	/// The current file's format, as determined during opening the file.
+	const FileFormat* current_format;
 	/// The actual path loaded by the editor. @see switchActualPath()
 	QString actual_path;
 	/// Does the main window display a file? If yes, new controllers will be opened in new main windows instead of replacing the active controller of this one
@@ -509,11 +554,7 @@ MainWindowController* MainWindow::getController() const
 	return controller;
 }
 
-inline
-const QString& MainWindow::currentPath() const
-{
-	return current_path;
-}
+
 
 inline
 bool MainWindow::hasOpenedFile() const

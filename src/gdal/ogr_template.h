@@ -29,7 +29,6 @@
 #include "templates/template_map.h"
 
 class QByteArray;
-class QFile;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -58,7 +57,7 @@ public:
 	
 	const char* getTemplateType() const override;
 	
-	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(QFile& file);
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path);
 	
 	bool preLoadConfiguration(QWidget* dialog_parent) override;
 	
@@ -66,7 +65,7 @@ public:
 	 * Loads the geospatial vector data into the template_map.
 	 * 
 	 * If is_georereferenced is true, the template_map will be configured to use
-	 * the georeferencing of the map given in the constructor, and OgrFileFormat
+	 * the georeferencing of the map given in the constructor, and OgrFileImportFormat
 	 * will let OGR do coordinate transformations as needed.
 	 * 
 	 * If is_georeferenced is false and an explicit_georef is defined, the

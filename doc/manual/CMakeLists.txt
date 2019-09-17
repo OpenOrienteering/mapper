@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -49,12 +49,19 @@ add_custom_target(Mapper-manual ALL)
 #
 # Creating doxygen input for HTML generation
 #
+
+file(GLOB pages "${CMAKE_CURRENT_SOURCE_DIR}/pages/*.md")
 configure_file(preprocess-markdown-html.cmake.in preprocess-markdown-html.cmake @ONLY)
-add_custom_target(Mapper-manual-markdown-html
+add_custom_command(
+  OUTPUT    "preprocess-markdown-html.stamp"
   COMMAND   "${CMAKE_COMMAND}" -P preprocess-markdown-html.cmake
-  BYPRODUCTS preprocess-markdown-html.stamp
-  SOURCES   preprocess-markdown-html.cmake.in
+  DEPENDS   "preprocess-markdown-html.cmake"
+            ${pages}
   COMMENT   "Preprocessing Markdown for HTML output"
+)
+add_custom_target(Mapper-manual-markdown-html
+  DEPENDS   "preprocess-markdown-html.stamp"
+  SOURCES   "preprocess-markdown-html.cmake.in"
 )
 
 
@@ -136,7 +143,7 @@ if(Mapper_MANUAL_QTHELP)
 	# Qt Help generation
 	#
 	
-	find_package(Qt5Core 5.3 REQUIRED)
+	find_package(Qt5Core REQUIRED)
 	if (Qt5Core_VERSION VERSION_LESS 5.12)
 		set(qcollectiongenerator_name qcollectiongenerator)
 	else()

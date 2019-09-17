@@ -24,6 +24,7 @@
 
 #include <QtGlobal>
 #include <QObject>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/tool_base.h"

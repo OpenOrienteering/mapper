@@ -85,7 +85,7 @@ private:
 	 * Checks if a touch at pos is inside a control. If yes, returns true and
 	 * sets out_id to the ID of the touched control.
 	 */
-	bool touchedControl(QPoint pos, ControlID* out_id);
+	bool touchedControl(const QPoint& pos, ControlID* out_id);
 	
 	/** Returns the touch point offset from the cursor in pixels. */
 	float touchPosOffsetPx() const;

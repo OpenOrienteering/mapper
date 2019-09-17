@@ -123,22 +123,22 @@ void MapEditorTool::draw(QPainter* /*painter*/, MapWidget* /*widget*/)
 }
 
 
-bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mousePressEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseMoveEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
 
-bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, MapCoordF /*map_coord*/, MapWidget* /*widget*/)
+bool MapEditorTool::mouseDoubleClickEvent(QMouseEvent* /*event*/, const MapCoordF& /*map_coord*/, MapWidget* /*widget*/)
 {
 	return false;
 }
@@ -266,7 +266,7 @@ void MapEditorTool::drawSelectionBox(QPainter* painter, MapWidget* widget, const
 
 
 
-MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
+MapCoordVector::size_type MapEditorTool::findHoverPoint(const QPointF& cursor, const MapWidget* widget, const Object* object, bool include_curve_handles, MapCoordF* out_handle_pos) const
 {
 	const auto click_tolerance_squared = click_tolerance * click_tolerance;
 	auto best_index = std::numeric_limits<MapCoordVector::size_type>::max();
@@ -297,7 +297,7 @@ MapCoordVector::size_type MapEditorTool::findHoverPoint(QPointF cursor, const Ma
 	}
 	else if (object->getType() == Object::Path)
 	{
-		const PathObject* path = reinterpret_cast<const PathObject*>(object);
+		const auto* path = static_cast<const PathObject*>(object);
 		auto size = path->getCoordinateCount();
 		
 		auto best_dist_sq = click_tolerance_squared;

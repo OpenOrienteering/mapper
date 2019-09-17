@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,13 +20,24 @@
 
 #include "duplicate_equals_t.h"
 
-#include <QtTest>
+#include <memory>
 
-#include "test_config.h"
+#include <QtGlobal>
+#include <QtTest>
+#include <QDir>
+#include <QFileInfo>
+#include <QString>
 
 #include "global.h"
+#include "test_config.h"
 #include "core/map.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
+#include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
+#include "core/symbols/line_symbol.h"
+#include "core/symbols/point_symbol.h"
+#include "core/symbols/symbol.h"
 
 using namespace OpenOrienteering;
 
@@ -35,18 +46,71 @@ namespace
 {
 
 static const auto test_files = {
-  "data:test_map.omap",
+    "data:/examples/complete map.omap",
+    "data:/examples/forest sample.omap",
+    "data:/examples/overprinting.omap",
 };
+
+
+void testDecoupling(const AreaSymbol& a, const AreaSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumFillPatterns(); ++i)
+	{
+		auto& pattern_a = a.getFillPattern(i);
+		auto& pattern_b = b.getFillPattern(i);
+		QVERIFY(&a != &b);
+		switch (pattern_a.type)
+		{
+		case AreaSymbol::FillPattern::LinePattern:
+			break;
+		case AreaSymbol::FillPattern::PointPattern:
+			QVERIFY(pattern_a.point == nullptr || pattern_a.point != pattern_b.point);
+			break;
+		}
+	}
+}
+
+
+void testDecoupling(const CombinedSymbol& a, const CombinedSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumParts(); ++i)
+	{
+		if (a.isPartPrivate(i))
+			QVERIFY(a.getPart(i) == nullptr || a.getPart(i) != b.getPart(i));
+	}
+}
+
+
+void testDecoupling(const LineSymbol& a, const LineSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	QVERIFY(a.getStartSymbol() == nullptr || a.getStartSymbol() != b.getStartSymbol());
+	QVERIFY(a.getMidSymbol() == nullptr || a.getMidSymbol() != b.getMidSymbol());
+	QVERIFY(a.getEndSymbol() == nullptr || a.getEndSymbol() != b.getEndSymbol());
+	QVERIFY(a.getDashSymbol() == nullptr || a.getDashSymbol() != b.getDashSymbol());
+}
+
+
+void testDecoupling(const PointSymbol& a, const PointSymbol& b)
+{
+	Q_ASSERT(&a != &b);
+	for (int i = 0; i < a.getNumElements(); ++i)
+	{
+		QVERIFY(a.getElementSymbol(i) == nullptr || a.getElementSymbol(i) != b.getElementSymbol(i));
+		QVERIFY(a.getElementObject(i) == nullptr || a.getElementObject(i) != b.getElementObject(i));
+	}
+}
+
 
 }  // namespace
 
 
 void DuplicateEqualsTest::initTestCase()
 {
+	QDir::addSearchPath(QStringLiteral("data"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("..")));
 	doStaticInitializations();
-	
-	static const auto prefix = QString::fromLatin1("data");
-	QDir::addSearchPath(prefix, QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(prefix));
 	
 	for (auto raw_path : test_files)
 	{
@@ -68,18 +132,42 @@ void DuplicateEqualsTest::symbols_data()
 void DuplicateEqualsTest::symbols()
 {
 	QFETCH(QString, map_filename);
-	Map* map = new Map();
-	map->loadFrom(map_filename, nullptr, nullptr, false, false);
+	Map map {};
+	map.loadFrom(map_filename);
 	
-	for (int symbol = 0; symbol < map->getNumSymbols(); ++symbol)
+	for (int symbol = 0; symbol < map.getNumSymbols(); ++symbol)
 	{
-		Symbol* original = map->getSymbol(symbol);
-		Symbol* duplicate = original->duplicate();
-		QVERIFY(original->equals(duplicate));
-		delete duplicate;
+		const auto original = map.getSymbol(symbol);
+		auto copy = duplicate(*original);
+		switch(original->getType())
+		{
+		case Symbol::Area:
+			QVERIFY(copy->equals(original));
+			testDecoupling(static_cast<const AreaSymbol&>(*original),
+			               static_cast<const AreaSymbol&>(*copy));
+			break;
+		case Symbol::Combined:
+			QVERIFY(copy->equals(original));
+			testDecoupling(static_cast<const CombinedSymbol&>(*original),
+			               static_cast<const CombinedSymbol&>(*copy));
+			break;
+		case Symbol::Line:
+			QVERIFY(copy->equals(original));
+			testDecoupling(static_cast<const LineSymbol&>(*original),
+			               static_cast<const LineSymbol&>(*copy));
+			break;
+		case Symbol::Point:
+			QVERIFY(copy->equals(original));
+			testDecoupling(static_cast<const PointSymbol&>(*original),
+			               static_cast<const PointSymbol&>(*copy));
+			break;
+		case Symbol::Text:
+			QVERIFY(copy->equals(original));
+			break;
+		default:
+			Q_UNREACHABLE();
+		}
 	}
-	
-	delete map;
 }
 
 
@@ -95,29 +183,26 @@ void DuplicateEqualsTest::objects_data()
 void DuplicateEqualsTest::objects()
 {
 	QFETCH(QString, map_filename);
-	Map* map = new Map();
-	map->loadFrom(map_filename, nullptr, nullptr, false, false);
+	Map map {};
+	map.loadFrom(map_filename);
 	
-	for (int part_number = 0; part_number < map->getNumParts(); ++part_number)
+	for (int part_number = 0; part_number < map.getNumParts(); ++part_number)
 	{
-		MapPart* part = map->getPart(part_number);
+		auto part = map.getPart(part_number);
 		for (int object = 0; object < part->getNumObjects(); ++object)
 		{
-			const Object* original = part->getObject(object);
-			Object* duplicate = original->duplicate();
-			QVERIFY(original->equals(duplicate, true));
+			const auto original = part->getObject(object);
+			auto duplicate = std::unique_ptr<Object>(original->duplicate());
+			QVERIFY(duplicate->equals(original, true));
 			QVERIFY(!duplicate->getMap());
-			delete duplicate;
 			
-			Object* assigned = Object::getObjectForType(original->getType(), original->getSymbol());
-			QVERIFY(assigned);
-			assigned->copyFrom(*original);
-			QVERIFY(original->equals(assigned, true));
-			QVERIFY(!assigned->getMap());
+			duplicate.reset(Object::getObjectForType(original->getType(), original->getSymbol()));
+			QVERIFY(bool(duplicate));
+			duplicate->copyFrom(*original);
+			QVERIFY(duplicate->equals(original, true));
+			QVERIFY(!duplicate->getMap());
 		}
 	}
-	
-	delete map;
 }
 
 
@@ -129,7 +214,7 @@ void DuplicateEqualsTest::objects()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QRectF>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/edit_tool.h"
@@ -55,9 +56,9 @@ public:
 	EditLineTool(MapEditorController* editor, QAction* tool_action);
 	~EditLineTool() override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	void mouseMove() override;
 	void clickPress() override;
@@ -86,7 +87,7 @@ protected:
 	void updateStatusText() override;
 	
 	/** Recalculates hover_line. */
-	void updateHoverState(MapCoordF cursor_pos);
+	void updateHoverState(const MapCoordF& cursor_pos);
 	
 	bool hoveringOverFrame() const;
 	
