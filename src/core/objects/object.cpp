@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1361,7 +1361,7 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 std::vector<PathObject*> PathObject::removeFromLine(PathPartVector::size_type part_index, qreal begin, qreal end_index) const
 {
 	Q_ASSERT(path_parts.size() == 1); // TODO
-	Q_ASSERT(symbol->getContainedTypes() == Symbol::Line);
+	Q_ASSERT((symbol->getContainedTypes() & ~Symbol::Combined) == Symbol::Line);
 	
 	const PathPart& part = path_parts[part_index];
 	Q_ASSERT(part.path_coords.front().clen <= begin);
