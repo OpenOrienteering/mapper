@@ -121,6 +121,7 @@ superbuild_package(
     TEST_COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
+        --exclude-regex symbol_set_t
     COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Coverage
     >
