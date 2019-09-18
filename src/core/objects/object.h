@@ -1180,7 +1180,7 @@ PathPart::PathPart(
 inline
 PathPart& PathPart::operator=(const PathPart& rhs)
 {
-	Q_ASSERT(path = rhs.path);
+	Q_ASSERT(path == rhs.path);
 	VirtualPath::operator=(rhs);
 	return *this;
 }
