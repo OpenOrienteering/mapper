@@ -1029,7 +1029,7 @@ bool PathObject::intersectsBox(const QRectF& box) const
 	if (std::any_of(begin(path_parts), end(path_parts), [&box](const PathPart& part) { return part.intersectsBox(box); }))
 	{
 		return true;
-	};
+	}
 	
 	// If this is an area, additionally check if the area contains the box
 	if (getSymbol()->getContainedTypes() & Symbol::Area)
