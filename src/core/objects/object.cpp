@@ -68,7 +68,6 @@ namespace literal
 	static const QLatin1String symbol("symbol");
 	static const QLatin1String type("type");
 	static const QLatin1String text("text");
-	static const QLatin1String count("count");
 	static const QLatin1String coords("coords");
 	static const QLatin1String h_align("h_align");
 	static const QLatin1String v_align("v_align");
