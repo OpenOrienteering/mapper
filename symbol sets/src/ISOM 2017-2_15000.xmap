@@ -97,33 +97,33 @@
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="13" name="Opaque Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="13" name="Yellow 100% - Narrow Ride" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="25"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="14" name="Opaque White over Green" c="0" m="0" y="0" k="0" opacity="1">
+        <color priority="14" name="Green 60% - Narrow Ride" c="0.456" m="0" y="0.546" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.6" spotcolor="12"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
+        </color>
+        <color priority="15" name="Green 30% - Narrow Ride" c="0.228" m="0" y="0.273" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.3" spotcolor="12"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
+        </color>
+        <color priority="16" name="Opaque White over Green" c="0" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0" spotcolor="12"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
-        </color>
-        <color priority="15" name="Opaque Green 20%" c="0.152" m="0" y="0.182" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="12"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.848" g="1" b="0.818"/>
-        </color>
-        <color priority="16" name="Opaque Green 50%" c="0.38" m="0" y="0.455" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="12"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.62" g="1" b="0.545"/>
         </color>
         <color priority="17" name="Yellow 100%/Green 50%" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
             <spotcolors>
@@ -2387,7 +2387,7 @@ open land).</description>
             </symbol>
             <symbol type="4" id="82" code="405" name="Forest">
                 <description>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.</description>
-                <area_symbol inner_color="14" min_area="500" patterns="0"/>
+                <area_symbol inner_color="16" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="83" code="406" name="Vegetation, slow running">
                 <description>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</description>
@@ -2396,7 +2396,7 @@ open land).</description>
             <symbol type="4" id="84" code="406.1" name="Vegetation runnable in one direction, 1">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="21" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="85" code="407" name="Vegetation, slow running, good visibility">
@@ -2412,7 +2412,7 @@ open land).</description>
             <symbol type="4" id="87" code="408.1" name="Vegetation runnable in one direction, 2">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="20" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="88" code="408.2" name="Vegetation runnable in one direction, 2, 20%">
@@ -2436,7 +2436,7 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
             <symbol type="4" id="91" code="410.1" name="Forest runnable in one direction, 3">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="19" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="14" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="92" code="410.2" name="Forest runnable in one direction, 3, 20%">
@@ -2784,7 +2784,7 @@ Runnability: walk.</description>
                     <part symbol="117"/>
                     <part private="true">
                         <symbol type="2" code="508.3.1" name="Green 50% background">
-                            <line_symbol color="16" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="14" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
@@ -2797,7 +2797,7 @@ Runnability: normal runnability.</description>
                     <part symbol="117"/>
                     <part private="true">
                         <symbol type="2" code="508.4.1" name="White background">
-                            <line_symbol color="14" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="16" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
