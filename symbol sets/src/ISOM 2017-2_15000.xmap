@@ -155,19 +155,19 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="21" name="Green 50%" c="0.38" m="0" y="0.455" k="0" opacity="1">
+        <color priority="21" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="14"/>
+                <component factor="0.6" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.62" g="1" b="0.545"/>
+            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
         </color>
-        <color priority="22" name="Green 20%" c="0.152" m="0" y="0.182" k="0" opacity="1">
+        <color priority="22" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="14"/>
+                <component factor="0.3" spotcolor="14"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.848" g="1" b="0.818"/>
+            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
         </color>
         <color priority="23" name="Green below light greens" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors>
