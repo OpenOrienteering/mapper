@@ -46,6 +46,9 @@ private slots:
 	/** Tests VirtualPath. */
 	void virtualPathTest();
 	
+	/** Tests PathObject constructors. */
+	void constructorTest();
+	
 	/** Tests PathObject::copyFrom(). */
 	void copyFromTest();
 	void copyFromTest_data();

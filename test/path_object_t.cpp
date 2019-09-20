@@ -59,6 +59,11 @@ char* toString(const PathObject::Intersections& intersections)
 
 namespace  {
 
+bool equalXY(MapCoord const& lhs, MapCoord const& rhs) {
+	return lhs.nativeX() == rhs.nativeX()
+	       && lhs.nativeY() == rhs.nativeY();
+};
+
 PathObject::Intersections calculateIntersections(const PathObject& path1, const PathObject& path2)
 {
 	PathObject::Intersections actual_intersections;
@@ -168,6 +173,177 @@ void PathObjectTest::virtualPathTest()
 	QCOMPARE(right.y(), sqrt(2.0)/2);
 	QCOMPARE(right.angle(), 3*M_PI/4);
 	QCOMPARE(scaling, sqrt(2.0));
+}
+
+
+
+void PathObjectTest::constructorTest()
+{
+	// PathObject(const Symbol* symbol = nullptr)
+	
+	PathObject no_symbol{};
+	QCOMPARE(no_symbol.getMap(), nullptr);
+	QCOMPARE(no_symbol.getSymbol(), nullptr);
+	QVERIFY(no_symbol.getRawCoordinateVector().empty());
+	QVERIFY(no_symbol.parts().empty());
+	QCOMPARE(no_symbol.getPatternOrigin(), MapCoord());
+	QCOMPARE(no_symbol.getPatternRotation(), qreal(0));
+	
+	{
+		PathObject no_symbol_2{nullptr};
+		QVERIFY(no_symbol_2.equals(&no_symbol, true));
+	}
+	
+	PathObject empty_red{Map::getCoveringRedLine()};
+	QCOMPARE(empty_red.getMap(), nullptr);
+	QCOMPARE(empty_red.getSymbol(), Map::getCoveringRedLine());
+	QVERIFY(empty_red.getRawCoordinateVector().empty());
+	QVERIFY(empty_red.parts().empty());
+	QCOMPARE(empty_red.getPatternOrigin(), MapCoord());
+	QCOMPARE(empty_red.getPatternRotation(), qreal(0));
+	QVERIFY(empty_red.equals(&no_symbol, false));
+	QVERIFY(!empty_red.equals(&no_symbol, true));
+	
+	// PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr)
+	
+	Map map;
+	auto coords = MapCoordVector{
+	    MapCoord{0.0, 0.0}, MapCoord{0.0, 5.0}, MapCoord{5.0, 0.0}, MapCoord{0.0, 0.0, MapCoord::ClosePoint|MapCoord::HolePoint},
+	    MapCoord{1.0, 1.0}, MapCoord{0.0, 3.0}, MapCoord{3.0, 0.0}, MapCoord{1.0, 1.0, MapCoord::ClosePoint|MapCoord::HolePoint}
+	};
+	PathObject red_area{Map::getCoveringRedLine(), coords, &map};
+	QCOMPARE(red_area.getMap(), &map);
+	QCOMPARE(red_area.getSymbol(), Map::getCoveringRedLine());
+	QCOMPARE(red_area.getRawCoordinateVector(), coords);
+	QCOMPARE(red_area.parts().size(), std::size_t(2));
+	QCOMPARE(red_area.getPatternOrigin(), MapCoord());
+	QCOMPARE(red_area.getPatternRotation(), qreal(0));
+	
+	{
+		PathObject other_area{Map::getCoveringWhiteLine(), coords};
+		QVERIFY(other_area.getMap() != red_area.getMap()); // not tested by `equals`
+		QVERIFY(other_area.equals(&red_area, false));
+		QVERIFY(!other_area.equals(&red_area, true));
+		
+		other_area.setSymbol(red_area.getSymbol(), true);
+		QVERIFY(other_area.equals(&red_area, false));
+		QVERIFY(other_area.equals(&red_area, true));
+		
+		other_area.setPatternOrigin({1.0, 1.0});
+		QVERIFY(!other_area.equals(&red_area, false));
+		QVERIFY(!other_area.equals(&red_area, true));
+		
+		other_area.setPatternOrigin(red_area.getPatternOrigin());
+		other_area.setPatternRotation(1.0);
+		QVERIFY(!other_area.equals(&red_area, false));
+		QVERIFY(!other_area.equals(&red_area, true));
+		
+		other_area.setPatternRotation(red_area.getPatternRotation());
+		QVERIFY(other_area.equals(&red_area, false));
+		QVERIFY(other_area.equals(&red_area, true));
+	}
+	
+	// PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece)
+	
+	auto piece = MapCoordVector::size_type(5);
+	QVERIFY(red_area.getRawCoordinateVector().size() > piece);
+	PathObject inner_piece{Map::getCoveringWhiteLine(), red_area, piece};
+	QCOMPARE(inner_piece.getMap(), nullptr);  // Is this the desired behaviour?
+	QCOMPARE(inner_piece.getSymbol(), Map::getCoveringWhiteLine());
+	QVERIFY(std::equal(
+	            begin(inner_piece.getRawCoordinateVector()),
+	            end(inner_piece.getRawCoordinateVector()),
+	            begin(coords)+int(piece),
+	            equalXY) );
+	QCOMPARE(int(inner_piece.parts().size()), 1);
+	QCOMPARE(inner_piece.getPatternOrigin(), MapCoord());
+	QCOMPARE(inner_piece.getPatternRotation(), qreal(0));
+	
+	piece = 3;
+	QVERIFY(red_area.getCoordinateRef(piece).isClosePoint());
+	PathObject piece_from_end{nullptr, red_area, piece};
+	QCOMPARE(piece_from_end.getCoordinateCount(), MapCoordVector::size_type(2));
+	QVERIFY(std::equal(
+	            begin(piece_from_end.getRawCoordinateVector()),
+	            end(piece_from_end.getRawCoordinateVector()),
+	            begin(coords),
+	            equalXY) );
+	
+	// PathObject(const PathPart& proto_part)
+	
+	PathObject line_from_first_part{red_area.parts().front()};
+	QVERIFY(std::equal(
+	            begin(line_from_first_part.getRawCoordinateVector()),
+	            end(line_from_first_part.getRawCoordinateVector()),
+	            begin(coords),
+	            equalXY) );
+	QCOMPARE(line_from_first_part.parts().size(), std::size_t(1));
+	{
+		PathObject expect_from_first_part(red_area.getSymbol(), red_area.getRawCoordinateVector());
+		expect_from_first_part.deletePart(1);
+		auto actual = line_from_first_part.parts().front();
+		auto expected = expect_from_first_part.parts().front();
+		QCOMPARE(actual.size(), expected.size());
+		QCOMPARE(actual.first_index, expected.first_index);
+		QCOMPARE(actual.last_index, expected.last_index);
+		for (auto i = 0u; i < actual.coords.size(); ++i)
+		{
+			QCOMPARE(actual.coords[i], expected.coords[i]);
+			QCOMPARE(actual.coords.flags[i], expected.coords.flags[i]);
+		}
+		QVERIFY(std::equal(
+		            begin(actual.path_coords),
+		            end(actual.path_coords),
+		            begin(expected.path_coords),
+		            [](auto& lhs, auto& rhs) {
+		                return lhs.pos == rhs.pos && lhs.index == rhs.index && lhs.param == rhs.param && lhs.clen == rhs.clen;
+		            }) );
+	}
+	
+	PathObject line_from_last_part{red_area.parts().back()};
+	QVERIFY(std::equal(
+	            begin(line_from_last_part.getRawCoordinateVector()),
+	            end(line_from_last_part.getRawCoordinateVector()),
+	            begin(coords)+red_area.parts().back().first_index,
+	            equalXY) );
+	QCOMPARE(line_from_last_part.parts().size(), std::size_t(1));
+	{
+		PathObject expect_from_last_part(red_area.getSymbol(), red_area.getRawCoordinateVector());
+		expect_from_last_part.deletePart(0);
+		auto actual = line_from_last_part.parts().front();
+		auto expected = expect_from_last_part.parts().front();
+		QCOMPARE(actual.size(), expected.size());
+		QEXPECT_FAIL("", "first_index is incorrect for all but the first part", Continue);
+		QCOMPARE(actual.first_index, expected.first_index);
+		QEXPECT_FAIL("", "last_index is incorrect for all but the first part", Continue);
+		QCOMPARE(actual.last_index, expected.last_index);
+		for (auto i = 0u; i < actual.coords.size(); ++i)
+		{
+			QCOMPARE(actual.coords[i], expected.coords[i]);
+			QCOMPARE(actual.coords.flags[i], expected.coords.flags[i]);
+		}
+		QVERIFY(std::equal(
+		            begin(actual.path_coords),
+		            end(actual.path_coords),
+		            begin(expected.path_coords),
+		            [](auto& lhs, auto& rhs) {
+		                return lhs.pos == rhs.pos && lhs.index == rhs.index && lhs.param == rhs.param && lhs.clen == rhs.clen;
+		            }) );
+	}
+	
+	// Misc
+	
+	// "piece" at end of open part
+	line_from_last_part.recalculateParts();  // See QEXPECT_FAIL above
+	piece = line_from_last_part.parts().back().last_index;
+	line_from_last_part.getCoordinateRef(piece) = MapCoord{4.0, 0.0, MapCoord::HolePoint};
+	PathObject piece_from_open_end{nullptr, line_from_last_part, piece};
+	QCOMPARE(piece_from_open_end.getCoordinateCount(), MapCoordVector::size_type(2));
+	QVERIFY(std::equal(
+	            begin(piece_from_open_end.getRawCoordinateVector()),
+	            end(piece_from_open_end.getRawCoordinateVector()),
+	            begin(line_from_last_part.getRawCoordinateVector()) + int(piece) - 1,
+	            equalXY) );
 }
 
 

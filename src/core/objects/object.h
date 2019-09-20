@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -122,8 +122,10 @@ public:
 	virtual Object* duplicate() const = 0;
 	
 	/**
-	 * Checks for equality with another object. If compare_symbol is set,
-	 * also the symbols are compared for having the same properties.
+	 * Checks for equality with another object.
+	 * 
+	 * If compare_symbol is set, also the symbols are compared for having the same properties.
+	 * Note that the map property is not compared.
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
 	
@@ -466,7 +468,16 @@ public:
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
 	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
-	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
+	/**
+	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
+	 * 
+	 * "Piece" refers to a single straight or curved arc from the point
+	 * identified by parameter piece to the immediate next point on the path.
+	 * 
+	 * If the path is not closed, and piece refers to the last element in the
+	 * path (part), then the arc ending in the point referred to by piece is
+	 * returned instead.
+	 */
 	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 protected:
@@ -474,7 +485,13 @@ protected:
 	explicit PathObject(const PathObject& proto);
 	
 public:
-	/** Constructs a PathObject, initialized from the given part of another object. */
+	/**
+	 * Constructs a PathObject, initialized from the given part of another object.
+	 * 
+	 * \todo This constructor needs to update the coord indexes if proto_part
+	 *       is not the first part in its object. A similar problem is already
+	 *       solved in PathObject::deletePart().
+	 */
 	explicit PathObject(const PathPart& proto_part);
 	
 	/**
