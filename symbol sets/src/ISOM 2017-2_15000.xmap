@@ -4,7 +4,7 @@
     <georeferencing scale="15000">
         <projected_crs id="Local"/>
     </georeferencing>
-    <colors count="28">
+    <colors count="29">
         <color priority="0" name="Purple" c="0.35" m="0.85" y="0" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>PURPLE</namedcolor>
@@ -197,7 +197,14 @@
             <cmyk method="custom"/>
             <rgb method="cmyk" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="27" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
+        <color priority="27" name="Yellow 100% - Area Feature" c="0" m="0.27" y="0.79" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="26"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
+        </color>
+        <color priority="28" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="26"/>
             </spotcolors>
@@ -1923,7 +1930,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
             </symbol>
             <symbol type="4" id="51" code="213" name="Sandy ground">
                 <description>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
+                <area_symbol inner_color="28" min_area="1000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="80" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
@@ -2326,12 +2333,12 @@ The symbol is orientated to north.</description>
             <symbol type="4" id="76" code="401" name="Open land">
                 <description>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</description>
-                <area_symbol inner_color="26" min_area="500" patterns="0"/>
+                <area_symbol inner_color="27" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="77" code="402" name="Open land with scattered trees">
                 <description>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</description>
-                <area_symbol inner_color="26" min_area="4000" patterns="1">
+                <area_symbol inner_color="27" min_area="4000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="200" inner_color="25" outer_width="0" outer_color="-1" elements="0"/>
@@ -2342,7 +2349,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
             <symbol type="4" id="78" code="402.1" name="Open land with scattered bushes">
                 <description>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</description>
-                <area_symbol inner_color="26" min_area="4000" patterns="1">
+                <area_symbol inner_color="27" min_area="4000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="200" inner_color="24" outer_width="0" outer_color="-1" elements="0"/>
@@ -2354,7 +2361,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
                 <description>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m). Smaller areas must either be left out, exaggerated or shown using symbol 401 (open land).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="0"/>
+                <area_symbol inner_color="28" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="4" id="80" code="404" name="Rough open land with scattered trees">
                 <description>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -2363,7 +2370,7 @@ running, good visibility) or 409 (vegetation, walk, good visibility) to show red
 The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</description>
-                <area_symbol inner_color="27" min_area="6300" patterns="1">
+                <area_symbol inner_color="28" min_area="6300" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="250" inner_color="25" outer_width="0" outer_color="-1" elements="0"/>
@@ -2378,7 +2385,7 @@ running, good visibility) or 409 (vegetation, walk, good visibility) to show red
 The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough
 open land).</description>
-                <area_symbol inner_color="27" min_area="6300" patterns="1">
+                <area_symbol inner_color="28" min_area="6300" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="250" inner_color="24" outer_width="0" outer_color="-1" elements="0"/>
@@ -2475,7 +2482,7 @@ Minimum width: 0.35 mm</description>
                 <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol 709 (out of bounds area) to show cultivated land that shall not be entered.</description>
-                <area_symbol inner_color="26" min_area="9000" patterns="1">
+                <area_symbol inner_color="27" min_area="9000" patterns="1">
                     <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="100" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
@@ -2488,7 +2495,7 @@ The symbol is combined with symbol 709 (out of bounds area) to show cultivated l
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</description>
-                <area_symbol inner_color="26" min_area="4000" patterns="1">
+                <area_symbol inner_color="27" min_area="4000" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="225" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
@@ -2501,7 +2508,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
 The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol 401 (open land) or 403 (rough open land).
 May be combined with symbol 407 (vegetation, slow running, good visibility) or 409 (vegetation, walk, good visibility) to show reduced runnability.</description>
-                <area_symbol inner_color="27" min_area="4000" patterns="1">
+                <area_symbol inner_color="28" min_area="4000" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="225" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
@@ -2511,7 +2518,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
             </symbol>
             <symbol type="4" id="100" code="414" name="Vineyard">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</description>
-                <area_symbol inner_color="26" min_area="4000" patterns="2">
+                <area_symbol inner_color="27" min_area="4000" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2556,7 +2563,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
             </symbol>
             <symbol type="4" id="101" code="414.1" name="Vineyard, rough open">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</description>
-                <area_symbol inner_color="27" min_area="500" patterns="2">
+                <area_symbol inner_color="28" min_area="500" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
