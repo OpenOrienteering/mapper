@@ -487,10 +487,6 @@ protected:
 public:
 	/**
 	 * Constructs a PathObject, initialized from the given part of another object.
-	 * 
-	 * \todo This constructor needs to update the coord indexes if proto_part
-	 *       is not the first part in its object. A similar problem is already
-	 *       solved in PathObject::deletePart().
 	 */
 	explicit PathObject(const PathPart& proto_part);
 	

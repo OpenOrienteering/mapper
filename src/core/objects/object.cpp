@@ -950,6 +950,8 @@ PathObject::PathObject(const PathPart &proto_part)
 	coords.reserve(proto_part.size());
 	coords.assign(begin + proto_part.first_index, begin + (proto_part.last_index+1));
 	path_parts.emplace_back(*this, proto_part);
+	path_parts.front().last_index -= path_parts.front().first_index;
+	path_parts.front().first_index = 0;
 }
    
 PathObject* PathObject::duplicate() const

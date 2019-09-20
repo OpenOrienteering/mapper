@@ -313,9 +313,7 @@ void PathObjectTest::constructorTest()
 		auto actual = line_from_last_part.parts().front();
 		auto expected = expect_from_last_part.parts().front();
 		QCOMPARE(actual.size(), expected.size());
-		QEXPECT_FAIL("", "first_index is incorrect for all but the first part", Continue);
 		QCOMPARE(actual.first_index, expected.first_index);
-		QEXPECT_FAIL("", "last_index is incorrect for all but the first part", Continue);
 		QCOMPARE(actual.last_index, expected.last_index);
 		for (auto i = 0u; i < actual.coords.size(); ++i)
 		{
@@ -334,7 +332,6 @@ void PathObjectTest::constructorTest()
 	// Misc
 	
 	// "piece" at end of open part
-	line_from_last_part.recalculateParts();  // See QEXPECT_FAIL above
 	piece = line_from_last_part.parts().back().last_index;
 	line_from_last_part.getCoordinateRef(piece) = MapCoord{4.0, 0.0, MapCoord::HolePoint};
 	PathObject piece_from_open_end{nullptr, line_from_last_part, piece};
