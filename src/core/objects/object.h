@@ -304,13 +304,13 @@ protected:
 	virtual void createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const;
 	
 	Type type;
-	const Symbol* symbol;
+	const Symbol* symbol = nullptr;
 	MapCoordVector coords;
-	Map* map;
+	Map* map = nullptr;
 	Tags object_tags;
 	
 private:
-	mutable bool output_dirty;        // does the output have to be re-generated because of changes?
+	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
 };
@@ -466,7 +466,7 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
 	/**
 	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
@@ -478,7 +478,7 @@ public:
 	 * path (part), then the arc ending in the point referred to by piece is
 	 * returned instead.
 	 */
-	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
+	explicit PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 protected:
 	/** Constructs a PathObject, initialized from the given prototype. */
@@ -936,13 +936,13 @@ private:
 	 * Rotation angle of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	qreal pattern_rotation;
+	qreal pattern_rotation = 0;
 	
 	/**
 	 * Origin shift of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	MapCoord pattern_origin;
+	MapCoord pattern_origin = {};
 	
 	/** Path parts list */
 	mutable PathPartVector path_parts;
@@ -1049,7 +1049,7 @@ public:
 	
 private:
 	/** The object's rotation (in radians). */
-	qreal rotation;
+	qreal rotation = 0;
 };
 
 

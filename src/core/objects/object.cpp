@@ -83,24 +83,19 @@ namespace OpenOrienteering {
 // ### Object implementation ###
 
 Object::Object(Object::Type type, const Symbol* symbol)
-: type(type),
-  symbol(symbol),
-  map(nullptr),
-  output_dirty(true),
-  extent(),
-  output(*this)
+: type(type)
+, symbol(symbol)
+, output(*this)
 {
 	// nothing
 }
 
 Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
- : type(type),
-   symbol(symbol),
-   coords(coords),
-   map(map),
-   output_dirty(true),
-   extent(),
-   output(*this)
+: type(type)
+, symbol(symbol)
+, coords(coords)
+, map(map)
+, output(*this)
 {
 	// nothing
 }
@@ -109,19 +104,14 @@ Object::Object(const Object& proto)
  : type(proto.type)
  , symbol(proto.symbol)
  , coords(proto.coords)
- , map(nullptr)
  , object_tags(proto.object_tags)
- , output_dirty(true)
  , extent(proto.extent)
  , output(*this)
 {
 	// nothing
 }
 
-Object::~Object()
-{
-	// nothing
-}
+Object::~Object() = default;
 
 void Object::copyFrom(const Object& other)
 {
@@ -683,17 +673,16 @@ bool Object::setSymbol(const Symbol* new_symbol, bool no_checks)
 
 Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 {
-	if (type == Point)
-		return new PointObject(symbol);
-	else if (type == Path)
-		return new PathObject(symbol);
-	else if (type == Text)
-		return new TextObject(symbol);
-	else
+	switch(type)
 	{
-		Q_ASSERT(false);
-		return nullptr;
+	case Point:
+		return new PointObject(symbol);
+	case Path:
+		return new PathObject(symbol);
+	case Text:
+		return new TextObject(symbol);
 	}
+	return nullptr;
 }
 
 void Object::setTags(const Object::Tags& tags)
@@ -886,26 +875,20 @@ bool PathPartVector::compareEndIndex(const PathPart& part, VirtualPath::size_typ
 // ### PathObject ###
 
 PathObject::PathObject(const Symbol* symbol)
- : Object(Object::Path, symbol)
- , pattern_rotation(0.0)
- , pattern_origin(0, 0)
+: Object(Object::Path, symbol)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 
 PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
- : Object(Object::Path, symbol, coords, map)
- , pattern_rotation(0.0)
- , pattern_origin(0, 0)
+: Object(Object::Path, symbol, coords, map)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	recalculateParts();
 }
 
 PathObject::PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece)
- : Object { Object::Path, symbol }
- , pattern_rotation { 0.0f }
- , pattern_origin { 0, 0 }
+: Object { Object::Path, symbol }
 {
 	auto begin = proto.coords.begin() + piece;
 	auto part  = proto.findPartForIndex(piece);
@@ -930,9 +913,9 @@ PathObject::PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVe
 }
 
 PathObject::PathObject(const PathObject& proto)
- : Object(proto)
- , pattern_rotation(proto.pattern_rotation)
- , pattern_origin(proto.pattern_origin)
+: Object(proto)
+, pattern_rotation(proto.pattern_rotation)
+, pattern_origin(proto.pattern_origin)
 {
 	path_parts.reserve(proto.path_parts.size());
 	for (const PathPart& part : proto.path_parts)
@@ -942,9 +925,9 @@ PathObject::PathObject(const PathObject& proto)
 }
 
 PathObject::PathObject(const PathPart &proto_part)
- : Object(*proto_part.path)
- , pattern_rotation(proto_part.path->pattern_rotation)
- , pattern_origin(proto_part.path->pattern_origin)
+: Object(*proto_part.path)
+, pattern_rotation(proto_part.path->pattern_rotation)
+, pattern_origin(proto_part.path->pattern_origin)
 {
 	auto begin = proto_part.path->coords.begin();
 	coords.reserve(proto_part.size());
@@ -3108,18 +3091,13 @@ void PathObject::createRenderables(ObjectRenderables& output, Symbol::Renderable
 
 PointObject::PointObject(const Symbol* symbol)
  : Object(Object::Point, symbol)
- , rotation(0)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
 	coords.push_back(MapCoord(0, 0));
 }
 
-PointObject::PointObject(const PointObject& proto)
- : Object(proto)
- , rotation(proto.rotation)
-{
-	// nothing
-}
+PointObject::PointObject(const PointObject& proto) = default;
+
 
 PointObject* PointObject::duplicate() const
 {
