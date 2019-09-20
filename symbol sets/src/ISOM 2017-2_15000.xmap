@@ -90,88 +90,88 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.91" g="0.497" b="0.105"/>
         </color>
-        <color priority="12" name="Black 25% (Grey)" c="0" m="0" y="0" k="0.25" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.25" spotcolor="1"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
-        </color>
-        <color priority="13" name="Green 50%, Yellow" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
+        <color priority="12" name="Green 50%, Yellow" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
             <spotcolors>
-                <component factor="0.5" spotcolor="14"/>
+                <component factor="0.5" spotcolor="13"/>
                 <component factor="1" spotcolor="26"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.62" g="0.73" b="0.114"/>
         </color>
-        <color priority="14" name="Green" c="0.76" m="0" y="0.91" k="0" opacity="1">
+        <color priority="13" name="Green" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>GREEN</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="15" name="Opaque Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="14" name="Opaque Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="26"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="16" name="Opaque White over Green" c="0" m="0" y="0" k="0" opacity="1">
+        <color priority="15" name="Opaque White over Green" c="0" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0" spotcolor="14"/>
+                <component factor="0" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
-        <color priority="17" name="Opaque Green 20%" c="0.152" m="0" y="0.182" k="0" opacity="1">
+        <color priority="16" name="Opaque Green 20%" c="0.152" m="0" y="0.182" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="14"/>
+                <component factor="0.2" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.848" g="1" b="0.818"/>
         </color>
-        <color priority="18" name="Opaque Green 50%" c="0.38" m="0" y="0.455" k="0" opacity="1">
+        <color priority="17" name="Opaque Green 50%" c="0.38" m="0" y="0.455" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="14"/>
+                <component factor="0.5" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.62" g="1" b="0.545"/>
         </color>
-        <color priority="19" name="Green, Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
+        <color priority="18" name="Green, Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="14"/>
+                <component factor="1" spotcolor="13"/>
                 <component factor="0.5" spotcolor="1"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
         </color>
+        <color priority="19" name="Black 25% (Grey)" c="0" m="0" y="0" k="0.25" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.25" spotcolor="1"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
+        </color>
         <color priority="20" name="Opaque Green" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="14"/>
+                <component factor="1" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
         </color>
         <color priority="21" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.6" spotcolor="14"/>
+                <component factor="0.6" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
         </color>
         <color priority="22" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="14"/>
+                <component factor="0.3" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
         </color>
         <color priority="23" name="Green below light greens" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors>
-                <component factor="1" spotcolor="14"/>
+                <component factor="1" spotcolor="13"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
@@ -1942,7 +1942,7 @@ To avoid confusion with symbol 416 (distinct vegetation boundary), the dots shou
                 <description>A runnable area of rock without earth or vegetation should be shown as bare rock.
 An area of rock covered with grass, moss or other low vegetation, shall not be shown using the bare rock symbol.
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).</description>
-                <area_symbol inner_color="12" min_area="500" patterns="0"/>
+                <area_symbol inner_color="19" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="2" id="53" code="215" name="Trench">
                 <description>Rocky or artificial trench. Minimum depth should be 1 m.
@@ -2395,7 +2395,7 @@ open land).</description>
             </symbol>
             <symbol type="4" id="82" code="405" name="Forest">
                 <description>Typical open forest for the particular type of terrain. If no part of the forest is easily runnable then no white should appear on the map.</description>
-                <area_symbol inner_color="16" min_area="500" patterns="0"/>
+                <area_symbol inner_color="15" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="83" code="406" name="Vegetation, slow running">
                 <description>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</description>
@@ -2404,7 +2404,7 @@ open land).</description>
             <symbol type="4" id="84" code="406.1" name="Vegetation runnable in one direction, 1">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="22" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="15" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="85" code="407" name="Vegetation, slow running, good visibility">
@@ -2420,7 +2420,7 @@ open land).</description>
             <symbol type="4" id="87" code="408.1" name="Vegetation runnable in one direction, 2">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="21" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="15" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="88" code="408.2" name="Vegetation runnable in one direction, 2, 20%">
@@ -2444,7 +2444,7 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
             <symbol type="4" id="91" code="410.1" name="Forest runnable in one direction, 3">
                 <description>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</description>
                 <area_symbol inner_color="20" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="16" line_width="400"/>
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="15" line_width="400"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="92" code="410.2" name="Forest runnable in one direction, 3, 20%">
@@ -2461,11 +2461,11 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
             </symbol>
             <symbol type="4" id="94" code="411" name="Vegetation, impassable">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</description>
-                <area_symbol inner_color="19" min_area="600" patterns="0"/>
+                <area_symbol inner_color="18" min_area="600" patterns="0"/>
             </symbol>
             <symbol type="4" id="95" code="411.1" name="Vegetation, impassable">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</description>
-                <area_symbol inner_color="14" min_area="600" patterns="1">
+                <area_symbol inner_color="13" min_area="600" patterns="1">
                     <pattern type="2" angle="0" line_spacing="200" line_offset="0" offset_along_line="0" point_distance="200">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="80" inner_color="6" outer_width="0" outer_color="-1" elements="0"/>
@@ -2476,7 +2476,7 @@ For fairness reasons, areas that are really difficult to get through (10% and sl
             <symbol type="2" id="96" code="411.2" name="Vegetation, impassable, minimum width">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</description>
-                <line_symbol color="19" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="18" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="4" id="97" code="412" name="Cultivated land">
                 <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol 405 (forest) or 402 (open land with scattered trees) may be used instead of yellow.
@@ -2498,7 +2498,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                 <area_symbol inner_color="27" min_area="4000" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="225" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="225" inner_color="13" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2511,7 +2511,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                 <area_symbol inner_color="28" min_area="4000" patterns="1">
                     <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="225" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="225" inner_color="13" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2524,7 +2524,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="14" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="13" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -2544,7 +2544,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="14" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="13" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -2569,7 +2569,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="14" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="13" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -2589,7 +2589,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="14" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="13" line_width="200" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -2626,24 +2626,24 @@ Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</d
                 <description>For areas with a lot of rock features, it is recommended to use the green dashed line for vegetation boundaries.
 A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbols 410 (vegetation, fight) and 411 (vegetation, impassable). An alternative for these situations is to use symbol 415 (distinct cultivation boundary).
 Minimum length, green line implementation: 4 dashes (1.8 mm – footprint 27 m).</description>
-                <line_symbol color="19" line_width="120" minimum_length="1800" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="18" line_width="120" minimum_length="1800" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="105" code="417" name="Prominent large tree">
                 <description>Footprint: 13.5 m x 13.5 m.</description>
-                <point_symbol inner_radius="270" inner_color="-1" outer_width="180" outer_color="14" elements="0"/>
+                <point_symbol inner_radius="270" inner_color="-1" outer_width="180" outer_color="13" elements="0"/>
             </symbol>
             <symbol type="1" id="106" code="418" name="Prominent bush or tree">
                 <description>Use sparingly, as it is easily mistaken for symbol 109 (small knoll) by the colour vision impaired.
 
 Footprint: 7.5 m x 7.5 m.</description>
-                <point_symbol inner_radius="250" inner_color="14" outer_width="0" outer_color="-1" elements="0"/>
+                <point_symbol inner_radius="250" inner_color="13" outer_width="0" outer_color="-1" elements="0"/>
             </symbol>
             <symbol type="1" id="107" code="419" name="Prominent vegetation feature">
                 <description>Footprint: 13.5 m x 13.5 m.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="14" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="13" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -2657,7 +2657,7 @@ Footprint: 7.5 m x 7.5 m.</description>
                     </element>
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="14" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="13" line_width="180" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="2">
@@ -2759,7 +2759,7 @@ Runnability: easy running.</description>
                     <part symbol="119"/>
                     <part private="true">
                         <symbol type="2" code="508.1.1" name="Yellow background">
-                            <line_symbol color="15" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="14" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
@@ -2772,7 +2772,7 @@ Runnability: slow running.</description>
                     <part symbol="119"/>
                     <part private="true">
                         <symbol type="2" code="508.2.1" name="Green 20% background">
-                            <line_symbol color="17" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="16" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
@@ -2785,7 +2785,7 @@ Runnability: walk.</description>
                     <part symbol="119"/>
                     <part private="true">
                         <symbol type="2" code="508.3.1" name="Green 50% background">
-                            <line_symbol color="18" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="17" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
@@ -2798,7 +2798,7 @@ Runnability: normal runnability.</description>
                     <part symbol="119"/>
                     <part private="true">
                         <symbol type="2" code="508.4.1" name="White background">
-                            <line_symbol color="16" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="15" line_width="450" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                     </part>
                 </combined_symbol>
@@ -3191,7 +3191,7 @@ For impassable features, the line shall be broken at the crossing point. For pas
             <symbol type="4" id="139" code="520" name="Area that shall not be entered">
                 <description>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area.
 The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</description>
-                <area_symbol inner_color="13" min_area="1000" patterns="0"/>
+                <area_symbol inner_color="12" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="2" id="140" code="520.1" name="Out of bounds area, bounding line">
                 <description>A bounding line may be drawn with 520.0 if there is no natural boundary.</description>
@@ -4002,7 +4002,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="12" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="10">
@@ -4024,7 +4024,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="12" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="14">
@@ -7264,7 +7264,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="12" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="572">
