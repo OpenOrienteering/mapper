@@ -3956,7 +3956,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -3970,7 +3970,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                                 </element>
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="4">
@@ -3992,7 +3992,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="0" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -4009,10 +4009,10 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </mid_symbol>
                     <end_symbol>
                         <symbol type="1" code="" name="End symbol">
-                            <point_symbol rotatable="true" inner_radius="2825" inner_color="-1" outer_width="350" outer_color="0" elements="1">
+                            <point_symbol rotatable="true" inner_radius="2825" inner_color="-1" outer_width="350" outer_color="7" elements="1">
                                 <element>
                                     <symbol type="1" code="">
-                                        <point_symbol inner_radius="1825" inner_color="-1" outer_width="350" outer_color="0" elements="0"/>
+                                        <point_symbol inner_radius="1825" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
                                     </symbol>
                                     <object type="0">
                                         <coords count="1">
@@ -4025,7 +4025,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </end_symbol>
                     <dash_symbol>
                         <symbol type="1" code="" name="Dash symbol">
-                            <point_symbol rotatable="true" inner_radius="2325" inner_color="-1" outer_width="350" outer_color="0" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="2325" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
                         </symbol>
                     </dash_symbol>
                 </line_symbol>
