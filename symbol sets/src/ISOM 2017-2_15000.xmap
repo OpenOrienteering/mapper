@@ -6,7 +6,7 @@
     </georeferencing>
     <colors count="34">
         <color priority="0" name="Purple" c="0.35" m="0.85" y="0" k="0" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <namedcolor>PURPLE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
@@ -20,7 +20,7 @@
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
         <color priority="2" name="Black" c="0" m="0" y="0" k="1" opacity="1">
-            <spotcolors knockout="true">
+            <spotcolors>
                 <namedcolor>BLACK</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
@@ -132,7 +132,7 @@
             <rgb method="spotcolor" r="0.5" g="1" b="1"/>
         </color>
         <color priority="18" name="OpenOrienteering Orange" c="0" m="0.474" y="0.895" k="0.09" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="6"/>
                 <component factor="1" spotcolor="31"/>
             </spotcolors>
@@ -168,7 +168,7 @@
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
         <color priority="23" name="Yellow 100%/Green 50%" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="3"/>
                 <component factor="1" spotcolor="31"/>
             </spotcolors>
@@ -204,14 +204,14 @@
             <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
         </color>
         <color priority="28" name="Green below light greens" c="0.76" m="0" y="0.91" k="0" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="1" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
         </color>
         <color priority="29" name="White over Yellow" c="0" m="0" y="0" k="0" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <component factor="0" spotcolor="31"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
@@ -225,7 +225,7 @@
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
         <color priority="31" name="Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
-            <spotcolors>
+            <spotcolors knockout="true">
                 <namedcolor>YELLOW</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
