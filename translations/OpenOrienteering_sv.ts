@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunde inte skriva till filen: %1</translation>
     </message>
 </context>
 <context>
@@ -29,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Kan inte öppna fil:
+        <translation>Kan inte öppna fil:
 %1
 
 %2</translation>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Ogiltig filtyp.</translation>
+        <translation>Ogiltig filtyp.</translation>
     </message>
 </context>
 <context>
@@ -45,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Fråga</translation>
+        <translation>Fråga</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Skalan på den importerade datan är 1:%1 vilket skiljer sig från denna kartas skala på 1:%2.
+        <translation>Skalan på den importerade datan är 1:%1 vilket skiljer sig från denna kartas skala på 1:%2.
 
 Skala om den importerade datan?</translation>
     </message>
@@ -62,54 +62,54 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">OCD-filer med version %1 stöds ej!</translation>
+        <translation>OCD-filer med version %1 stöds ej!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinaterna justerades till att passa i OCAD 8&apos;s ritarea (-2 m ... 2 m).</translation>
+        <translation>Koordinaterna justerades till att passa i OCAD 8&apos;s ritarea (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Några koordinater är fortfarande utanför ritningsytan för OCAD 8. Dessa kanske inte kan läsas av OCAD.</translation>
+        <translation>Några koordinater är fortfarande utanför ritningsytan för OCAD 8. Dessa kanske inte kan läsas av OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferering kan inte sparas i OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan innehåller mer än 24 dekorfärger vilket inte stöds av OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartan innehåller mer än 256 färger vilket inte stöds av OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig dekorfärg.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Kan inte spara korrekt position för saknad mall: &quot;%1&quot;</translation>
+        <translation>Kan inte spara korrekt position för saknad mall: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Kunde inte exportera bakgrund: filtypen &quot;%1&quot; stöds inte än</translation>
+        <translation>Kunde inte exportera mallen: filtypen &quot;%1&quot; stöds inte än</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Trunkerad text vid &apos;|&apos;): % 1</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kodning &apos;%1&apos; är inte tillgänglig. Kontrollera inställningarna.</translation>
+        <translation>Kodning &apos;%1&apos; är inte tillgänglig. Kontrollera inställningarna.</translation>
     </message>
 </context>
 <context>
@@ -477,22 +477,22 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärmfrekvens:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Odefinierad</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Skärmvinkel:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="128"/>
@@ -716,7 +716,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1633,7 +1633,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Storlek på åtgärdsknapp:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="76"/>
@@ -1722,7 +1722,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Kan inte spara fil
+        <translation>Kan inte spara fil
 %1:
 %2</translation>
     </message>
@@ -1772,7 +1772,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1988"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>I den kombinerade symbolen %1: Undersymbolen stöds inte vid index %2.</translation>
     </message>
 </context>
 <context>
