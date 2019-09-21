@@ -40,12 +40,12 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
-        <color priority="5" name="Blue" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="5" name="Blue" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>BLUE</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.13" g="0.82" b="1"/>
+            <rgb method="cmyk" r="0" g="1" b="1"/>
         </color>
         <color priority="6" name="Brown" c="0" m="0.56" y="1" k="0.18" opacity="1">
             <spotcolors>
@@ -110,26 +110,26 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
-        <color priority="15" name="Blue 100% - Area Feature" c="0.87" m="0.18" y="0" k="0" opacity="1">
+        <color priority="15" name="Blue 100% - Area Feature" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.13" g="0.82" b="1"/>
+            <rgb method="spotcolor" r="0" g="1" b="1"/>
         </color>
-        <color priority="16" name="Blue 70% - Area Feature" c="0.609" m="0.126" y="0" k="0" opacity="1">
+        <color priority="16" name="Blue 70% - Area Feature" c="0.7" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.7" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.391" g="0.874" b="1"/>
+            <rgb method="spotcolor" r="0.3" g="1" b="1"/>
         </color>
-        <color priority="17" name="Blue 50% - Area Feature" c="0.435" m="0.09" y="0" k="0" opacity="1">
+        <color priority="17" name="Blue 50% - Area Feature" c="0.5" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="5"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.565" g="0.91" b="1"/>
+            <rgb method="spotcolor" r="0.5" g="1" b="1"/>
         </color>
         <color priority="18" name="OpenOrienteering Orange" c="0" m="0.474" y="0.895" k="0.09" opacity="1">
             <spotcolors>
