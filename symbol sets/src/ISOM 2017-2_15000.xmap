@@ -2085,12 +2085,14 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                     <part symbol="55"/>
                     <part symbol="58"/>
                 </combined_symbol>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAUUlEQVQ4jWNgYGbexMDA8J+qmJl5EyOUw8AQHM5AFbB2JQMDAwMDC9zQ+SuoYzDUcCbqmYYKRg0eNXjU4FGDRw0eHAZDahBodUIVADeLRpUpAOkUM9bNALKgAAAAAElFTkSuQmCC"/>
             </symbol>
             <symbol type="4" id="55" code="301.1" name="Uncrossable body of water (full colour)">
                 <description>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="15" min_area="1000" patterns="0"/>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="16" id="56" code="301.2" name="Uncrossable body of water (dominant), with bank line">
                 <description>The black bank line emphasises that the feature is uncrossable.
@@ -2101,12 +2103,14 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                     <part symbol="57"/>
                     <part symbol="58"/>
                 </combined_symbol>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAVUlEQVQ4jWNgZGbexMDA8J+amJGZeRMjlMOgHRrOQA1wdfVKBgYGBgYWmKEhS1ZQxWCY4UxUMw0NjBo8avCowaMGjxo8OAxmYWBAVCfUAHCzaFWZAgD1WTfZnhO2PAAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="4" id="57" code="301.3" name="Uncrossable body of water (dominant)">
                 <description>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="16" min_area="1000" patterns="0"/>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWOs//mfgTLARKH+USNGjRg1YtSIUSPIAgCxAAKjIU52AgAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="2" id="58" code="301.4" name="Uncrossable body of water, bank line">
                 <description>A black bank line indicates that the feature cannot be crossed.</description>
@@ -2122,6 +2126,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</descriptio
                     <part symbol="61"/>
                     <part symbol="60"/>
                 </combined_symbol>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATklEQVQ4jWMU/PL/3Pf/DOoMVATcDAw3GTk+//+6nZOBi5oGe3xj+MFETQORwajBowaPGjxq8KjBowaTBxiFv/w/9+UfgyY1DeVhZLgGAAAKEb4RXJ9FAAAAAElFTkSuQmCC"/>
             </symbol>
             <symbol type="4" id="60" code="302.1" name="Shallow body of water">
                 <description>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
@@ -2130,6 +2135,7 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="17" min_area="500" patterns="0"/>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWPc/+c/A2WAiUL9o0aMGjFqxKgRo0aQBQAyngLmdBowpwAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="2" id="61" code="302.2" name="Shallow body of water, solid outline">
                 <description>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</description>
@@ -2144,6 +2150,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</descriptio
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
                 <area_symbol inner_color="15" min_area="500" patterns="0"/>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="1" id="64" code="303" name="Waterhole">
                 <description>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
