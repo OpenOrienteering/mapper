@@ -3159,7 +3159,7 @@ Very large carrying masts shall be represented in plan shape using outline of sy
             </symbol>
             <symbol type="2" id="128" code="511.1" name="Major power line">
                 <description>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the power line. The lines may be broken to improve legibility. The bars show the exact location of the pylons. Very large carrying masts shall be represented in plan shape using outline of symbol Building (521) or with symbol High tower (524).</description>
-                <line_symbol color="-1" line_width="1600" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="1340" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <dash_symbol>
                         <symbol type="1" code="" name="Dash symbol">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -3169,8 +3169,8 @@ Very large carrying masts shall be represented in plan shape using outline of sy
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
-                                            <coord x="0" y="-1170"/>
-                                            <coord x="0" y="1170"/>
+                                            <coord x="0" y="-970"/>
+                                            <coord x="0" y="970"/>
                                         </coords>
                                         <pattern rotation="0">
                                             <coord x="0" y="0"/>
