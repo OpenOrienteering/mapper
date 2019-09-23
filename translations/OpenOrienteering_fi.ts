@@ -78,17 +78,17 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferointia ei voi tallentaa OCD 8 versiossa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta sisältää yli 24 spottiväriä, jota ei tueta OCAD 8 versiossa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta sisältää yli 256 väriä, jota ei tueta OCD 8 versiossa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
@@ -109,7 +109,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ylipitkä teksti katkaistu kohdassa &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -1481,7 +1481,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Toimintapainikkeen koko:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
@@ -1640,7 +1640,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1988"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koostettu symboli %1: Koostavaa symbolia kohdassa %2 ei tueta.</translation>
     </message>
 </context>
 <context>
@@ -2553,7 +2553,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD versio 8, vanha toteutus</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
@@ -2669,7 +2669,7 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="536"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ei tuettu vanhentunut tiedostoformaatti. Käytä ohjelman versiota v%1 tai vanhempaa ladataksesi ja päivittääksesi tiedosto.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
@@ -2890,22 +2890,22 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="166"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>Keskimmäisten symboleiden sijoitus:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="168"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>Viivojen keskikohta</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="169"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Viivajoukon keskikohta</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukkojen keskikohta</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="200"/>
@@ -2945,22 +2945,22 @@ löytääksesi taustakarttatiedoston nimen.</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="671"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukon pituus alussa:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="672"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Aukon pituus lopussa:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="676"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkusiirtymä:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Loppusiirtymä:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1724"/>
@@ -3206,7 +3206,7 @@ Tallennetaanko?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="768"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukon tuonti aiheutti varoituksia.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="772"/>
@@ -4201,7 +4201,7 @@ Haluatko silti tuoda datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4004"/>
         <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuo %1 tai GPX tiedosto</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4042"/>
@@ -5640,7 +5640,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="879"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinaattijärjestelmää &apos;%1:%2&apos; ei voitu kääntää.</translation>
     </message>
 </context>
 <context>
@@ -5783,7 +5783,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - päälinja</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1541"/>
@@ -5900,17 +5900,17 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1676"/>
         <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuntematon tiedostolaajennus %1, vain GPX, KML ja SHP tiedostot ovat tuettuja.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1683"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuria tiedostolaajennukselle %1 ei löytynyt</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1695"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Aineiston luonti epäonnistui: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1740"/>
@@ -6507,7 +6507,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="959"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartta sisältää läpinäkyviä elementtejä, jotka vaativat rasteri-tilan käytön.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1122"/>
@@ -6906,7 +6906,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="600"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Symbolijoukon tuonti aiheutti varoituksia.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="606"/>
@@ -7188,7 +7188,7 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Vaihda yksilölliseen objektien skaalaukseen. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7949,7 +7949,7 @@ jokapäiväinen ilmiö
     <message>
         <location filename="../src/templates/template_image.cpp" line="167"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferointia ei löydy</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="181"/>
@@ -8248,7 +8248,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferoinnin tilaa ei voida vaihtaa.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
