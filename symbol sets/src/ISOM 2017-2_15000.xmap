@@ -4,7 +4,7 @@
     <georeferencing scale="15000">
         <projected_crs id="Local"/>
     </georeferencing>
-    <colors count="34">
+    <colors count="35">
         <color priority="0" name="Purple for course overprint" c="0.35" m="0.85" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <namedcolor>PURPLE</namedcolor>
@@ -134,14 +134,14 @@
         <color priority="18" name="OpenOrienteering Orange" c="0" m="0.474" y="0.895" k="0.09" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="6"/>
-                <component factor="1" spotcolor="31"/>
+                <component factor="1" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.91" g="0.497" b="0.105"/>
         </color>
         <color priority="19" name="Yellow 100% for narrow ride" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="31"/>
+                <component factor="1" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
@@ -170,7 +170,7 @@
         <color priority="23" name="Yellow 100%/Green 50%" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.5" spotcolor="3"/>
-                <component factor="1" spotcolor="31"/>
+                <component factor="1" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.62" g="0.73" b="0.114"/>
@@ -182,65 +182,73 @@
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
         </color>
-        <color priority="25" name="Green 100% for area features" c="0.76" m="0" y="0.91" k="0" opacity="1">
+        <color priority="25" name="Green 100%/Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="3"/>
+                <component factor="0.5" spotcolor="2"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
+        </color>
+        <color priority="26" name="Green 100% for area features" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="26" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
+        <color priority="27" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.6" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
         </color>
-        <color priority="27" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
+        <color priority="28" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0.3" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
         </color>
-        <color priority="28" name="Green 100% for undergrowth" c="0.76" m="0" y="0.91" k="0" opacity="1">
+        <color priority="29" name="Green 100% for undergrowth" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="1" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="29" name="White over yellow" c="0" m="0" y="0" k="0" opacity="1">
+        <color priority="30" name="White over yellow" c="0" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0" spotcolor="31"/>
+                <component factor="0" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
-        <color priority="30" name="Black for open land" c="0" m="0" y="0" k="1" opacity="1">
+        <color priority="31" name="Black for open land" c="0" m="0" y="0" k="1" opacity="1">
             <spotcolors>
                 <component factor="1" spotcolor="2"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
-        <color priority="31" name="Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="32" name="Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
                 <namedcolor>YELLOW</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="32" name="Yellow 100% for area features" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="33" name="Yellow 100% for area features" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="31"/>
+                <component factor="1" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="33" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
+        <color priority="34" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="31"/>
+                <component factor="0.5" spotcolor="32"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.865" b="0.605"/>
@@ -2049,10 +2057,10 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
                 <description>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
-                <area_symbol inner_color="33" min_area="1000" patterns="1">
+                <area_symbol inner_color="34" min_area="1000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="450" line_offset="0" offset_along_line="0" point_distance="450">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="80" inner_color="30" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="80" inner_color="31" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2511,7 +2519,7 @@ Footprint: 13.5 m x 13.5 m.</description>
                 <description>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
-                <area_symbol inner_color="32" min_area="500" patterns="0"/>
+                <area_symbol inner_color="33" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="80" code="402" name="Open land with scattered trees">
                 <description>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -2520,10 +2528,10 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</description>
-                <area_symbol inner_color="32" min_area="4000" patterns="1">
+                <area_symbol inner_color="33" min_area="4000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="200" inner_color="29" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="200" inner_color="30" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2535,10 +2543,10 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</description>
-                <area_symbol inner_color="32" min_area="4000" patterns="1">
+                <area_symbol inner_color="33" min_area="4000" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="700" line_offset="0" offset_along_line="0" point_distance="700">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="200" inner_color="26" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="200" inner_color="27" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2548,7 +2556,7 @@ The symbol is orientated to north.</description>
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</description>
-                <area_symbol inner_color="33" min_area="1000" patterns="0"/>
+                <area_symbol inner_color="34" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="4" id="83" code="404" name="Rough open land with scattered trees">
                 <description>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -2557,10 +2565,10 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</description>
-                <area_symbol inner_color="33" min_area="6300" patterns="1">
+                <area_symbol inner_color="34" min_area="6300" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="250" inner_color="29" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="250" inner_color="30" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2572,10 +2580,10 @@ The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</description>
-                <area_symbol inner_color="33" min_area="6300" patterns="1">
+                <area_symbol inner_color="34" min_area="6300" patterns="1">
                     <pattern type="2" angle="0.785398" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="250" inner_color="26" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="250" inner_color="27" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
@@ -2593,14 +2601,14 @@ For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.5
 Where runnability is better in one direction, a regular pattern of white stripes is left in the screen to show the direction of better running.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="0"/>
+                <area_symbol inner_color="28" min_area="1000" patterns="0"/>
             </symbol>
             <symbol type="4" id="87" code="406.1" name="Vegetation: slow running, normal running in one direction">
                 <description>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
 Where runnability is better in one direction, a regular pattern of white stripes is left in the screen to show the direction of better running.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
+                <area_symbol inner_color="28" min_area="1000" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2609,20 +2617,20 @@ Minimum width: 0.4 mm (footprint 6 m).</description>
 The symbol is orientated to north.
 Minimum area: 1.5 mm x 1 mm (footprint 22.5 m x 15 m).</description>
                 <area_symbol inner_color="-1" min_area="1500" patterns="1">
-                    <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="28" line_width="120"/>
+                    <pattern type="1" angle="1.5708" line_spacing="840" line_offset="0" offset_along_line="0" color="29" line_width="120"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="89" code="408" name="Vegetation: walk">
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
-                <area_symbol inner_color="26" min_area="500" patterns="0"/>
+                <area_symbol inner_color="27" min_area="500" patterns="0"/>
             </symbol>
             <symbol type="4" id="90" code="408.1" name="Vegetation: walk, normal running in one direction">
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
-                <area_symbol inner_color="26" min_area="1000" patterns="1">
+                <area_symbol inner_color="27" min_area="1000" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2630,8 +2638,8 @@ Minimum width: 0.3 mm (footprint 4.5 m).</description>
                 <description>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width: 0.3 mm (footprint 4.5 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
+                <area_symbol inner_color="28" min_area="1000" patterns="1">
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="27" line_width="1100"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="92" code="409" name="Vegetation: walk, good visibility">
@@ -2640,7 +2648,7 @@ Areas of good visibility that are very difficult to run or impassable are repres
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
                 <area_symbol inner_color="-1" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="28" line_width="140"/>
+                    <pattern type="1" angle="1.5708" line_spacing="420" line_offset="0" offset_along_line="0" color="29" line_width="140"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="93" code="410" name="Vegetation: fight">
@@ -2648,14 +2656,14 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="25" min_area="300" patterns="0"/>
+                <area_symbol inner_color="26" min_area="300" patterns="0"/>
             </symbol>
             <symbol type="4" id="94" code="410.1" name="Vegetation: fight, normal running in one direction">
                 <description>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to less than about 20% of normal speed.
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="25" min_area="1000" patterns="1">
+                <area_symbol inner_color="26" min_area="1000" patterns="1">
                     <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="0" offset_along_line="0" color="22" line_width="400"/>
                 </area_symbol>
             </symbol>
@@ -2664,8 +2672,8 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="27" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="25" line_width="1100"/>
+                <area_symbol inner_color="28" min_area="1000" patterns="1">
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="96" code="410.3" name="Vegetation: fight, walk in one direction">
@@ -2673,18 +2681,18 @@ Minimum width: 0.25 mm (footprint 3.8 m).</description>
 Where runnability is better in one direction, a regular pattern of white, green 30% or green 60% stripes is left in the screen to show the direction of better running.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).
 Minimum width: 0.25 mm (footprint 3.8 m).</description>
-                <area_symbol inner_color="26" min_area="1000" patterns="1">
-                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="25" line_width="1100"/>
+                <area_symbol inner_color="27" min_area="1000" patterns="1">
+                    <pattern type="1" angle="1.5708" rotatable="true" line_spacing="1500" line_offset="750" offset_along_line="0" color="26" line_width="1100"/>
                 </area_symbol>
             </symbol>
             <symbol type="2" id="97" code="410.4" name="Vegetation: fight, minimum width">
                 <description>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</description>
-                <line_symbol color="25" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="26" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="4" id="98" code="411" name="Vegetation, impassable (from ISOM 2017, first edition)" is_hidden="true">
                 <description>Provided for migration from ISOM 2000. Use either Vegetation: fight (410) or Area that shall not be entered (520) instead.</description>
-                <area_symbol inner_color="25" min_area="300" patterns="1">
+                <area_symbol inner_color="26" min_area="300" patterns="1">
                     <pattern type="2" angle="0" line_spacing="200" line_offset="0" offset_along_line="0" point_distance="200">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="80" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
@@ -2698,28 +2706,15 @@ Since the runnability may vary, such areas should be avoided when setting course
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
-                <area_symbol inner_color="32" min_area="9000" patterns="1">
+                <area_symbol inner_color="33" min_area="9000" patterns="1">
                     <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
                         <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="100" inner_color="30" outer_width="0" outer_color="-1" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="100" inner_color="31" outer_width="0" outer_color="-1" elements="0"/>
                         </symbol>
                     </pattern>
                 </area_symbol>
             </symbol>
             <symbol type="4" id="100" code="413" name="Orchard">
-                <description>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
-Must be combined with either symbol Open land (401) or Rough open land (403).
-May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
-Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="32" min_area="4000" patterns="1">
-                    <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
-                        <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="225" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
-                        </symbol>
-                    </pattern>
-                </area_symbol>
-            </symbol>
-            <symbol type="4" id="101" code="413.1" name="Orchard, rough open land">
                 <description>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
 Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
@@ -2732,10 +2727,23 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </pattern>
                 </area_symbol>
             </symbol>
+            <symbol type="4" id="101" code="413.1" name="Orchard, rough open land">
+                <description>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
+Must be combined with either symbol Open land (401) or Rough open land (403).
+May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
+Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
+                <area_symbol inner_color="34" min_area="4000" patterns="1">
+                    <pattern type="2" angle="0" rotatable="true" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
+                        <symbol type="1" code="" name="Pattern fill 1">
+                            <point_symbol rotatable="true" inner_radius="225" inner_color="3" outer_width="0" outer_color="-1" elements="0"/>
+                        </symbol>
+                    </pattern>
+                </area_symbol>
+            </symbol>
             <symbol type="4" id="102" code="414" name="Vineyard or similar">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="32" min_area="4000" patterns="2">
+                <area_symbol inner_color="33" min_area="4000" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2781,7 +2789,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
             <symbol type="4" id="103" code="414.1" name="Vineyard or similar, rough open land">
                 <description>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
-                <area_symbol inner_color="33" min_area="500" patterns="2">
+                <area_symbol inner_color="34" min_area="500" patterns="2">
                     <pattern type="2" angle="1.5708" rotatable="true" line_spacing="1700" line_offset="0" offset_along_line="0" point_distance="1900">
                         <symbol type="1" code="" name="Pattern fill 1">
                             <point_symbol rotatable="true" inner_radius="0" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
@@ -2849,7 +2857,7 @@ Very distinct forest edges and vegetation boundaries may be represented using th
 A disadvantage with a green line is that it cannot be used to show distinct vegetation boundaries around and within symbol Vegetation: fight (410). An alternative for these situations is to use symbol Distinct cultivation boundary (415).
 Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</description>
-                <line_symbol color="3" line_width="140" minimum_length="1800" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="25" line_width="140" minimum_length="1800" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="300" break_length="200" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="107" code="417" name="Prominent large tree">
                 <description>Footprint: 13.5 m x 13.5 m.</description>
@@ -8354,7 +8362,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         </symbols>
         <parts count="1" current="0">
             <part name="default layer">
-                <objects count="34">
+                <objects count="35">
                     <object type="1" symbol="90">
                         <coords count="5">
                             <coord x="-12148" y="-34717"/>
@@ -8855,6 +8863,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                         <coords count="1">
                             <coord x="-10560" y="-32179"/>
                         </coords>
+                    </object>
+                    <object type="1" symbol="106">
+                        <coords count="11">
+                            <coord x="-3185" y="-31090" flags="32"/>
+                            <coord x="-3185" y="-31090" flags="1"/>
+                            <coord x="-3662" y="-31077"/>
+                            <coord x="-4245" y="-30597"/>
+                            <coord x="-4765" y="-30274" flags="1"/>
+                            <coord x="-5720" y="-29683"/>
+                            <coord x="-6461" y="-30000"/>
+                            <coord x="-7571" y="-30168" flags="1"/>
+                            <coord x="-9872" y="-30517"/>
+                            <coord x="-11164" y="-31069"/>
+                            <coord x="-12843" y="-32551" flags="16"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
                     </object>
                 </objects>
             </part>
