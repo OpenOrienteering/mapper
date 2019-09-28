@@ -53,6 +53,10 @@ private slots:
 	void copyFromTest();
 	void copyFromTest_data();
 	
+	/** Basic test for PathObject::changePathBounds(), focus on flags. */
+	void changePathBoundsBasicTest();
+	void changePathBoundsBasicTest_data();
+	
 	/** Tests PathObject::changePathBounds(). */
 	void changePathBoundsTest();
 	void changePathBoundsTest_data();

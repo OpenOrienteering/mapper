@@ -395,7 +395,7 @@ void PathObjectTest::copyFromTest()
 
 
 
-void PathObjectTest::changePathBoundsTest_data()
+void PathObjectTest::changePathBoundsBasicTest_data()
 {
 	QTest::addColumn<int>("dash_point_index");
 	
@@ -405,7 +405,7 @@ void PathObjectTest::changePathBoundsTest_data()
 	QTest::newRow("dash point at end")    <<  2;
 }
 
-void PathObjectTest::changePathBoundsTest()
+void PathObjectTest::changePathBoundsBasicTest()
 {
 	PathObject proto{Map::getCoveringRedLine()};
 	proto.addCoordinate({0.0, 2.0});
@@ -452,6 +452,201 @@ void PathObjectTest::changePathBoundsTest()
 		path.copyFrom(proto);
 		path.changePathBounds(0, 2.0, 4.0);
 		QCOMPARE(path.getCoordinate(1), proto.getCoordinate(1));
+	}
+}
+
+
+
+void PathObjectTest::changePathBoundsTest_data()
+{
+	QTest::addColumn<int>("part_index");
+	// new bounds by factor
+	QTest::addColumn<float>("start_len");
+	QTest::addColumn<float>("end_len");
+	// expected number of coords
+	QTest::addColumn<int>("expected_size_fwd");
+	QTest::addColumn<int>("expected_size_rev");
+	
+	// The tested path has 6 coordinates and is 4+3+4+4+5 = 20 units long.
+	// Thus 
+	// - 0.2 is the 2nd coordinate,
+	// - 0.6 and 0.7 are between 4rd and 5th coordinate,
+	// - 0.9 is between 5th and 6th coordinate.
+	QTest::newRow("0.0..1.0") << 0 << 0.0f << 1.0f << 6 << 6;
+	QTest::newRow("0.0..0.9") << 0 << 0.0f << 0.9f << 6 << 2;
+	QTest::newRow("0.0..0.7") << 0 << 0.0f << 0.7f << 5 << 3;
+	QTest::newRow("0.0..0.2") << 0 << 0.0f << 0.2f << 2 << 5;
+	QTest::newRow("0.0..0.0") << 0 << 0.0f << 0.0f << 6 << 6; // only for closed paths
+	QTest::newRow("0.2..1.0") << 0 << 0.2f << 1.0f << 5 << 2;
+	QTest::newRow("0.2..0.9") << 0 << 0.2f << 0.9f << 5 << 3;
+	QTest::newRow("0.2..0.7") << 0 << 0.2f << 0.7f << 4 << 4;
+	QTest::newRow("0.2..0.2") << 0 << 0.2f << 0.2f << 6 << 6; // only for closed paths
+	QTest::newRow("0.6..1.0") << 0 << 0.6f << 1.0f << 3 << 5;
+	QTest::newRow("0.6..0.9") << 0 << 0.6f << 0.9f << 3 << 6;
+	QTest::newRow("0.6..0.7") << 0 << 0.6f << 0.7f << 2 << 7;
+	QTest::newRow("0.6..0.6") << 0 << 0.6f << 0.6f << 7 << 7; // only for closed paths
+	QTest::newRow("0.9..1.0") << 0 << 0.9f << 1.0f << 2 << 6;
+	QTest::newRow("0.9..0.9") << 0 << 0.9f << 0.9f << 7 << 7;
+	QTest::newRow("1.0..1.0") << 0 << 1.0f << 1.0f << 6 << 6; // only for closed paths
+}
+
+void PathObjectTest::changePathBoundsTest()
+{
+	QFETCH(int, part_index);
+	QFETCH(float, start_len);
+	QFETCH(float, end_len);
+	QFETCH(int, expected_size_fwd);
+	QFETCH(int, expected_size_rev);
+	
+	// For 0.0 or 1.0, products are not precise enough.
+	auto exact_length = [](float factor, float length) -> float {
+		if (factor == 0.0f)
+			return 0.0f;
+		if (factor == 1.0f)
+			return length;
+		return factor * length;
+	};
+	
+	// This path is 4+3+4+4+5 = 20 units long.
+	PathObject proto{Map::getCoveringRedLine()};
+	proto.addCoordinate({0.0, 4.0});
+	proto.addCoordinate({0.0, 8.0});
+	proto.addCoordinate({3.0, 8.0});
+	proto.addCoordinate({3.0, 4.0});
+	proto.addCoordinate({3.0, 0.0});
+	proto.addCoordinate({0.0, 4.0, MapCoord::HolePoint});
+	proto.updatePathCoords();
+	auto orig_len = proto.parts().front().length();
+	QCOMPARE(orig_len, 20.0f);
+	
+	// open path
+	if (start_len < end_len)
+	{
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(std::size_t(part_index), exact_length(start_len, orig_len), exact_length(end_len, orig_len));
+		path.updatePathCoords();
+		
+		QVERIFY(!path.parts().front().isClosed());
+		QCOMPARE(int(path.getCoordinateCount()), expected_size_fwd);
+		if (end_len == start_len)
+			QCOMPARE(path.parts().front().length(), exact_length(1.0, orig_len));
+		else
+			QCOMPARE(path.parts().front().length(), exact_length(end_len - start_len, orig_len));
+		
+		// First and last new coord may differ, but the sequence in between must match.
+		if (expected_size_fwd > 2)
+		{
+			auto first = begin(path.getRawCoordinateVector()) + 1;
+			auto last = end(path.getRawCoordinateVector()) - 1;
+			auto seq = std::find_end(
+			               begin(proto.getRawCoordinateVector()), end(proto.getRawCoordinateVector()),
+			               first, last );
+			QVERIFY(seq != end(proto.getRawCoordinateVector()));
+		}
+	}
+	
+	// closed path
+	proto.getCoordinateRef(5).setClosePoint(true);
+	QVERIFY(proto.parts().front().isClosed());
+	{
+		// forward
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(std::size_t(part_index), exact_length(start_len, orig_len), exact_length(end_len, orig_len));
+		path.updatePathCoords();
+		
+		QVERIFY(!path.parts().front().isClosed());
+		if (start_len == 1.0f)
+			QEXPECT_FAIL("", "(reverse) Change bounds via closing point", Abort);
+		QCOMPARE(int(path.getCoordinateCount()), expected_size_fwd);
+		if (end_len == start_len)
+		{
+			QCOMPARE(path.parts().front().length(), exact_length(1.0, orig_len));
+			
+			auto last_0 = end(path.getRawCoordinateVector()) - 1;
+			auto cut_0 = std::find(begin(path.getRawCoordinateVector()), last_0, proto.getRawCoordinateVector().front());
+			QVERIFY(cut_0 != last_0);
+			QVERIFY(std::equal(
+			            cut_0, last_0,
+			            begin(proto.getRawCoordinateVector())) );
+			
+			auto last_1 = end(proto.getRawCoordinateVector()) - 1;
+			auto cut_1 = std::find(begin(proto.getRawCoordinateVector()), last_1, path.getRawCoordinateVector()[1]);
+			QVERIFY(cut_1 != last_1);
+			QVERIFY(std::equal(
+			            cut_1, last_1,
+			            begin(path.getRawCoordinateVector()) + 1) );
+		}
+		else
+		{
+			QCOMPARE(path.parts().front().length(), exact_length(end_len - start_len, orig_len));
+			
+			// First and last new coord may differ, but the sequence in between must match.
+			if (expected_size_fwd > 2)
+			{
+				auto first = begin(path.getRawCoordinateVector()) + 1;
+				auto last = end(path.getRawCoordinateVector()) - 1;
+				auto seq = std::find_end(
+				               begin(proto.getRawCoordinateVector()), end(proto.getRawCoordinateVector()),
+				               first, last );
+				QVERIFY(seq != end(proto.getRawCoordinateVector()));
+			}
+		}
+	}
+	{
+		// reverse
+		PathObject path{Map::getCoveringRedLine()};
+		path.copyFrom(proto);
+		path.changePathBounds(std::size_t(part_index), exact_length(end_len, orig_len), exact_length(start_len, orig_len));
+		path.updatePathCoords();
+		
+		QVERIFY(!path.parts().front().isClosed());
+		if (end_len == 1.0f)
+			QEXPECT_FAIL("", "(reverse) Change bounds via closing point", Abort);
+		QCOMPARE(int(path.getCoordinateCount()), expected_size_rev);
+		if (end_len == start_len || (start_len == 0.0f && end_len == 1.0f))
+		{
+			QCOMPARE(path.parts().front().length(), exact_length(1.0, orig_len));
+			
+			auto last_0 = end(path.getRawCoordinateVector()) - 1;
+			auto cut_0 = std::find(begin(path.getRawCoordinateVector()), last_0, proto.getRawCoordinateVector().front());
+			QVERIFY(cut_0 != last_0);
+			QVERIFY(std::equal(
+			            cut_0, last_0,
+			            begin(proto.getRawCoordinateVector())) );
+			
+			auto last_1 = end(proto.getRawCoordinateVector()) - 1;
+			auto cut_1 = std::find(begin(proto.getRawCoordinateVector()), last_1, path.getRawCoordinateVector()[1]);
+			QVERIFY(cut_1 != last_1);
+			QVERIFY(std::equal(
+			            cut_1, last_1,
+			            begin(path.getRawCoordinateVector()) + 1) );
+		}
+		else
+		{
+			QCOMPARE(path.parts().front().length(), exact_length(1.0f + start_len - end_len, orig_len));
+			
+			// First and last new coord may differ, but the sequence in between must match.
+			if (start_len > 0.0f)
+			{
+				auto last_0 = end(path.getRawCoordinateVector()) - 1;
+				auto cut_0 = std::find(begin(path.getRawCoordinateVector()), last_0, proto.getRawCoordinateVector().front());
+				QVERIFY(cut_0 != last_0);
+				QVERIFY(std::equal(
+				            cut_0, last_0,
+				            begin(proto.getRawCoordinateVector())) );
+			}
+			if (end_len <= 0.75f)
+			{
+				auto last_1 = end(proto.getRawCoordinateVector()) - 1;
+				auto cut_1 = std::find(begin(proto.getRawCoordinateVector()), last_1, path.getRawCoordinateVector()[1]);
+				QVERIFY(cut_1 != last_1);
+				QVERIFY(std::equal(
+				            cut_1, last_1,
+				            begin(path.getRawCoordinateVector()) + 1) );
+			}
+		}
 	}
 }
 
