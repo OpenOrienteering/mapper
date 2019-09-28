@@ -620,10 +620,10 @@ int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_
 	// Points
 	if (type == Symbol::Point)
 	{
-		if (!extended_selection)
-			return (coord.distanceSquaredTo(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
-		else
+		if (extended_selection)
 			return extent.contains(coord) ? Symbol::Point : Symbol::NoSymbol;
+		
+		return (coord.distanceSquaredTo(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
 	}
 	
 	// First check using extent
@@ -639,12 +639,10 @@ int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_
 		auto const* text_object = static_cast<TextObject const*>(this);
 		return (text_object->calcTextPositionAt(coord, true) != -1) ? Symbol::Text : Symbol::NoSymbol;
 	}
-	else
-	{
-		// Path objects
-		auto const* path = static_cast<PathObject const*>(this);
-		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
-	}
+	
+	// Path objects
+	auto const* path = static_cast<PathObject const*>(this);
+	return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
 }
 
 void Object::takeRenderables()
@@ -1201,12 +1199,10 @@ MapCoordVector::size_type PathObject::subdivide(MapCoordVector::size_type index,
 		Q_ASSERT(isOutputDirty());
 		return index + 3;
 	}
-	else
-	{
-		addCoordinate(index + 1, MapCoord(MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param));
-		Q_ASSERT(isOutputDirty());
-		return index + 1;
-	}
+	
+	addCoordinate(index + 1, MapCoord(MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param));
+	Q_ASSERT(isOutputDirty());
+	return index + 1;
 }
 
 bool PathObject::canBeConnected(const PathObject* other, double connect_threshold_sq) const
@@ -1221,14 +1217,13 @@ bool PathObject::canBeConnected(const PathObject* other, double connect_threshol
 			if (other_part.isClosed())
 				continue;
 			
-			if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
+			if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq
+			    || coords[part.first_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq
+			    || coords[part.last_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq
+			    || coords[part.last_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
+			{
 				return true;
-			else if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
-				return true;
-			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
-				return true;
-			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
-				return true;
+			}
 		}
 	}
 	
@@ -2401,15 +2396,18 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 				if (dist_along_line < -tolerance)
 					continue;
-				else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
+				
+				if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
 					return Symbol::Line;
 				
 				float line_length = path_coords[i+1].clen - path_coords[i].clen;
 				if (line_length < 1e-7)
 					continue;
+				
 				if (dist_along_line > line_length + tolerance)
 					continue;
-				else if (dist_along_line > line_length && coord.distanceSquaredTo(path_coords[i+1].pos) <= tolerance*tolerance)
+				
+				if (dist_along_line > line_length && coord.distanceSquaredTo(path_coords[i+1].pos) <= tolerance*tolerance)
 					return Symbol::Line;
 				
 				auto right = tangent.perpRight();
