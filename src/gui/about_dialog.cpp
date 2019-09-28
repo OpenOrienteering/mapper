@@ -111,6 +111,7 @@ QString AboutDialog::about()
 	static QStringList developers_list( QStringList()
 	  << QString::fromLatin1("Peter Curtis (2012-2013)")
 	  << QString::fromLatin1("<b>Kai Pastor</b>")
+	  << QString::fromUtf8("<b>Libor Pecháček</b>")
 	  << QString::fromUtf8("Thomas Schöps (2012-2014, %1)")
 	);
 	
@@ -146,6 +147,7 @@ QString AboutDialog::about()
 	  << QString::fromLatin1("Christopher Schive")
 	  << QString::fromLatin1("Arif Suryawan")
 	  << QString::fromLatin1("Jan-Gerard van der Toorn")
+	  << QString::fromLatin1("Scott Turner")
 	  << QString::fromLatin1("Semyon Yakimov")
 	  << QString::fromLatin1("Aivars Zogla")
 	);
