@@ -1358,37 +1358,40 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 	Q_ASSERT(!part.isClosed());
 }
 
-std::vector<PathObject*> PathObject::removeFromLine(PathPartVector::size_type part_index, qreal begin, qreal end_index) const
+std::vector<PathObject*> PathObject::removeFromLine(
+        PathPartVector::size_type part_index,
+        PathCoord::length_type removal_begin,
+        PathCoord::length_type removal_end) const
 {
 	Q_ASSERT(path_parts.size() == 1); // TODO
 	Q_ASSERT((symbol->getContainedTypes() & ~Symbol::Combined) == Symbol::Line);
 	
 	const PathPart& part = path_parts[part_index];
-	Q_ASSERT(part.path_coords.front().clen <= begin);
-	Q_ASSERT(part.path_coords.front().clen <= end_index);
-	Q_ASSERT(part.path_coords.back().clen >= begin);
-	Q_ASSERT(part.path_coords.back().clen >= end_index);
+	Q_ASSERT(part.path_coords.front().clen <= removal_begin);
+	Q_ASSERT(part.path_coords.front().clen <= removal_end);
+	Q_ASSERT(part.path_coords.back().clen >= removal_begin);
+	Q_ASSERT(part.path_coords.back().clen >= removal_end);
 	
 	std::vector<PathObject*> objects;
 	
-	if (end_index < begin || part.isClosed())
+	if (removal_end < removal_begin || part.isClosed())
 	{
 		PathObject* obj = duplicate()->asPath();
-		obj->changePathBounds(part_index, end_index, begin);
+		obj->changePathBounds(part_index, removal_end, removal_begin);
 		objects.push_back(obj);
 	}
 	else
 	{
-		if (begin > part.path_coords.front().clen)
+		if (removal_begin > part.path_coords.front().clen)
 		{
 			PathObject* obj = duplicate()->asPath();
-			obj->changePathBounds(part_index, part.path_coords.front().clen, begin);
+			obj->changePathBounds(part_index, part.path_coords.front().clen, removal_begin);
 			objects.push_back(obj);
 		}
-		if (end_index < part.path_coords.back().clen)
+		if (removal_end < part.path_coords.back().clen)
 		{
 			PathObject* obj = duplicate()->asPath();
-			obj->changePathBounds(part_index, end_index, part.path_coords.back().clen);
+			obj->changePathBounds(part_index, removal_end, part.path_coords.back().clen);
 			objects.push_back(obj);
 		}
 	}

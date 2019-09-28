@@ -696,24 +696,24 @@ void PathObjectTest::splitLineTest()
 void PathObjectTest::removeFromLineTest_data()
 {
 	QTest::addColumn<int>("part_index");
-	QTest::addColumn<qreal>("cut_begin");
-	QTest::addColumn<qreal>("cut_end");
+	QTest::addColumn<float>("cut_begin");
+	QTest::addColumn<float>("cut_end");
 	QTest::addColumn<int>("expected_size");
 	
-	QTest::newRow("0.0..1.0") << 0 << 0.0 << 1.0 << 0;
-	QTest::newRow("0.0..0.4") << 0 << 0.0 << 0.4 << 1;
-	QTest::newRow("0.0..0.0") << 0 << 0.0 << 0.0 << 1;
-	QTest::newRow("0.4..1.0") << 0 << 0.4 << 1.0 << 1;
-	QTest::newRow("0.4..0.6") << 0 << 0.4 << 0.6 << 2;
-	QTest::newRow("0.4..0.4") << 0 << 0.4 << 0.4 << 2;
-	QTest::newRow("1.0..1.0") << 0 << 1.0 << 1.0 << 1;
+	QTest::newRow("0.0..1.0") << 0 << 0.0f << 1.0f << 0;
+	QTest::newRow("0.0..0.4") << 0 << 0.0f << 0.4f << 1;
+	QTest::newRow("0.0..0.0") << 0 << 0.0f << 0.0f << 1;
+	QTest::newRow("0.4..1.0") << 0 << 0.4f << 1.0f << 1;
+	QTest::newRow("0.4..0.6") << 0 << 0.4f << 0.6f << 2;
+	QTest::newRow("0.4..0.4") << 0 << 0.4f << 0.4f << 2;
+	QTest::newRow("1.0..1.0") << 0 << 1.0f << 1.0f << 1;
 }
 
 void PathObjectTest::removeFromLineTest()
 {
 	QFETCH(int, part_index);
-	QFETCH(qreal, cut_begin);
-	QFETCH(qreal, cut_end);
+	QFETCH(float, cut_begin);
+	QFETCH(float, cut_end);
 	QFETCH(int, expected_size);
 	
 	auto compare_head = [](auto& actual, auto& expected) {
@@ -767,10 +767,10 @@ void PathObjectTest::removeFromLineTest()
 	};
 	
 	// For 0.0 or 1.0, products are not precise enough.
-	auto exact_length = [](qreal factor, qreal length) -> qreal {
-		if (factor == 0.0)
-			return 0.0;
-		if (factor == 1.0)
+	auto exact_length = [](float factor, float length) -> float {
+		if (factor == 0.0f)
+			return 0.0f;
+		if (factor == 1.0f)
 			return length;
 		return factor * length;
 	};
@@ -782,15 +782,15 @@ void PathObjectTest::removeFromLineTest()
 		proto.addCoordinate({2.0, 0.0});
 		proto.addCoordinate({4.0, -2.0, MapCoord::HolePoint});
 		proto.updatePathCoords();
-		auto orig_len = qreal(proto.parts().front().length());
+		auto orig_len = proto.parts().front().length();
 		
 		auto remaining = proto.removeFromLine(std::size_t(part_index), exact_length(cut_begin, orig_len), exact_length(cut_end, orig_len));
 		QCOMPARE(int(remaining.size()), expected_size);
 		for (auto* object : remaining)
 			object->updatePathCoords();
-		if (cut_begin > 0.0)
+		if (cut_begin > 0.0f)
 			compare_head(*remaining.front(), proto);
-		if (cut_end < 1.0)
+		if (cut_end < 1.0f)
 			compare_tail(*remaining.back(), proto);
 		qDeleteAll(remaining);
 	}
@@ -803,7 +803,7 @@ void PathObjectTest::removeFromLineTest()
 		proto.addCoordinate({4.0, -2.0});
 		proto.addCoordinate({0.0, 2.0, MapCoord::HolePoint | MapCoord::ClosePoint});
 		proto.updatePathCoords();
-		auto orig_len = qreal(proto.parts().front().length());
+		auto orig_len = proto.parts().front().length();
 		
 		auto remaining = proto.removeFromLine(std::size_t(part_index), exact_length(cut_begin, orig_len), exact_length(cut_end, orig_len));
 		QEXPECT_FAIL("0.0..1.0", "Removing the whole closed path", Abort);

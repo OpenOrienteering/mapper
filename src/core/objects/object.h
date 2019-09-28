@@ -743,14 +743,15 @@ public:
 	 * Returns the result of removing the section between begin and end from the path.
 	 * 
 	 * begin and end must belong to the path part with the given part_index.
-	 * However, any part_index value other than 1 is not supported at the moment.
+	 * However, objects with holes, and part_index values greater than 0, are
+	 * not supported at the moment.
 	 * 
 	 * Returns an empty vector when nothing remains after removal.
 	 */
 	std::vector<PathObject*> removeFromLine(
 	        PathPartVector::size_type part_index,
-	        qreal begin,
-	        qreal end
+	        PathCoord::length_type clen_begin,
+	        PathCoord::length_type clen_end
 	) const;
 									   
 	/**
