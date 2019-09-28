@@ -558,13 +558,11 @@ void Object::rotateAround(const MapCoordF& center, qreal angle)
 	auto sin_angle = std::sin(angle);
 	auto cos_angle = std::cos(angle);
 	
-	int coords_size = coords.size();
-	/// \todo range-for loop
-	for (int c = 0; c < coords_size; ++c)
+	for (auto& coord : coords)
 	{
-		MapCoordF center_to_coord = MapCoordF(coords[c].x() - center.x(), coords[c].y() - center.y());
-		coords[c].setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
-		coords[c].setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
+		auto const center_to_coord = MapCoordF(coord.x() - center.x(), coord.y() - center.y());
+		coord.setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
+		coord.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
 	if (type == Point)
@@ -587,13 +585,11 @@ void Object::rotate(qreal angle)
 	auto sin_angle = std::sin(angle);
 	auto cos_angle = std::cos(angle);
 	
-	int coords_size = coords.size();
-	/// \todo range-for loop
-	for (int c = 0; c < coords_size; ++c)
+	for (auto& coord : coords)
 	{
-		MapCoord coord = coords[c];
-		coords[c].setX(cos_angle * coord.x() + sin_angle * coord.y());
-		coords[c].setY(cos_angle * coord.y() - sin_angle * coord.x());
+		auto const old_coord = MapCoordF(coord);
+		coord.setX(cos_angle * old_coord.x() + sin_angle * old_coord.y());
+		coord.setY(sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
 	if (type == Point)
@@ -727,9 +723,8 @@ void Object::includeControlPointsRect(QRectF& rect) const
 	if (type == Object::Path)
 	{
 		const PathObject* path = asPath();
-		int size = path->getCoordinateCount();
-		for (int i = 0; i < size; ++i)
-			rectInclude(rect, QPointF(path->coords[i]));
+		for (auto const& coord : path->coords)
+			rectInclude(rect, QPointF(coord));
 	}
 	else if (type == Object::Text)
 	{
@@ -841,12 +836,13 @@ void PathPart::reverse()
 	path->setOutputDirty();
 }
 
+// static
 PathPartVector PathPart::calculatePathParts(const VirtualCoordVector& coords)
 {
 	PathPartVector parts;
 	PathCoordVector path_coords(coords);
 	auto last = coords.size();
-	auto part_start = MapCoordVector::size_type { 0 };
+	auto part_start = VirtualCoordVector::size_type { 0 };
 	while (part_start != last)
 	{
 		auto part_end = path_coords.update(part_start);
@@ -1296,8 +1292,8 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 	PathPart& other_part = other->path_parts[other_part_index];
 	Q_ASSERT(!part.isClosed() && !other_part.isClosed());
 	
-	int other_part_size = other_part.size();
-	int appended_part_size = other_part_size - (merge_ends ? 1 : 0);
+	auto const other_part_size = other_part.size();
+	auto const appended_part_size = other_part_size - (merge_ends ? 1 : 0);
 	coords.resize(coords.size() + appended_part_size);
 	
 	if (prepend)
@@ -3044,7 +3040,7 @@ void PathObject::assignCoordinates(const PathObject& proto, MapCoordVector::size
 
 void PathObject::updatePathCoords() const
 {
-	auto part_start = MapCoordVector::size_type { 0 };
+	auto part_start = VirtualPath::size_type { 0 };
 	for (auto& part : path_parts)
 	{
 		part.first_index = part_start;
