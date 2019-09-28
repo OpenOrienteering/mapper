@@ -61,6 +61,10 @@ private slots:
 	void splitLineTest();
 	void splitLineTest_data();
 	
+	/** Tests PathObject::removeFromLine(). */
+	void removeFromLineTest();
+	void removeFromLineTest_data();
+	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();
 	
