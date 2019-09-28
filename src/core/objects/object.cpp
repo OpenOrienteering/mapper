@@ -751,13 +751,13 @@ void Object::includeControlPointsRect(QRectF& rect) const
 static_assert(std::is_same<PathPartVector::size_type, std::size_t>::value,
               "PathCoordVector::size_type is not std::size_t");
 
-PathPart::PathPart(PathObject& path, const VirtualPath& proto)
-: PathPart(path, proto.first_index, proto.last_index)
+PathPart::PathPart(PathObject& path, const VirtualPath& virtual_path)
+: PathPart(path, virtual_path.first_index, virtual_path.last_index)
 {
-	if (!proto.path_coords.empty())
+	if (!virtual_path.path_coords.empty())
 	{
-		path_coords.reserve(proto.path_coords.size());
-		path_coords.insert(end(path_coords), begin(proto.path_coords), end(proto.path_coords));
+		path_coords.reserve(virtual_path.path_coords.size());
+		path_coords.insert(end(path_coords), begin(virtual_path.path_coords), end(virtual_path.path_coords));
 	}
 }
 

@@ -345,8 +345,8 @@ public:
 	);
 	
 	PathPart(
-	        PathObject& object,
-	        const VirtualPath& path
+	        PathObject& path,
+	        const VirtualPath& virtual_path
 	);
 	
 	~PathPart() = default;
