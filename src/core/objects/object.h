@@ -1037,11 +1037,6 @@ public:
 	void setRotation(qreal new_rotation);
 	
 	/**
-	 * Sets the point object's rotation according to the given vector.
-	 */
-	void setRotation(const MapCoordF& vector);
-	
-	/**
 	 * Returns the point object's rotation (in radians). This is only used
 	 * if the object has a symbol which interprets this value.
 	 */

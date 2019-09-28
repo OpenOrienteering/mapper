@@ -3179,10 +3179,6 @@ void PointObject::setRotation(qreal new_rotation)
 	}
 }
 
-void PointObject::setRotation(const MapCoordF& vector)
-{
-	setRotation(atan2(vector.x(), vector.y()));
-}
 
 bool PointObject::intersectsBox(const QRectF& box) const
 {
