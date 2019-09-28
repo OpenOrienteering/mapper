@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 3 June 2018
+edited: 17 October 2018
 redirect_from:
   - /
   - /Home
@@ -11,6 +11,9 @@ redirect_from:
 {% endif %}
 
 ## Contents
+
+[Installation](installation.md){: .subpage}
+Instructions to download and install OpenOrienteering.
 
 [Main window](main_window.md){: .subpage}
 Explanation of the main drawing window.
@@ -68,4 +71,3 @@ Submit feedback, bug reports, feature requests, and contributions.
 
 [Releases](https://github.com/OpenOrienteering/mapper/releases)
 Releases, with links to change information and known issues.
-
