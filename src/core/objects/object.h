@@ -763,9 +763,11 @@ public:
 	std::vector<PathObject*> splitLineAt(const PathCoord& split_pos) const;
 	
 	/**
-	 * Replaces the path with a range of it starting and ending at the given lengths.
+	 * Replaces the path with a non-empty range of it starting and ending at the given lengths.
 	 * 
-	 * \todo Partially duplicated in LineSymbol::calculatePathCoordinates()
+	 * For open paths, the end length must be greater than the start length.
+	 * For closed paths, an end length smaller than or equal to the start length
+	 * will cause the resulting path to span the original start/end point.
 	 */
 	void changePathBounds(
 	        PathPartVector::size_type part_index,

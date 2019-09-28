@@ -1388,7 +1388,7 @@ std::vector<PathObject*> PathObject::removeFromLine(PathPartVector::size_type pa
 		if (end_index < part.path_coords.back().clen)
 		{
 			PathObject* obj = duplicate()->asPath();
-			obj->changePathBounds(part_index, end_index, part.path_coords.front().clen);
+			obj->changePathBounds(part_index, end_index, part.path_coords.back().clen);
 			objects.push_back(obj);
 		}
 	}
@@ -1444,28 +1444,37 @@ void PathObject::changePathBounds(
 	update();
 	
 	PathPart& part = path_parts[part_index];
+	Q_ASSERT(end_len > start_len || part.isClosed());
+	
 	auto part_size = part.size();
-
+	
 	MapCoordVector out_coords;
 	out_coords.reserve(part_size + 2);
 	
-	if (end_len == 0.0)
-		end_len = part.path_coords.back().clen;
-	
 	auto part_begin = SplitPathCoord::begin(part.path_coords);
 	auto part_end   = SplitPathCoord::end(part.path_coords);
+	if (start_len == part_end.clen && end_len == part_begin.clen)
+		start_len = part_begin.clen;
 	auto start      = SplitPathCoord::at(start_len, part_begin);
 	
 	if (end_len <= start_len)
 	{
-		// Make sure part_end has the right curve end points for start.
-		part_end = SplitPathCoord::at(part_end.clen, start);
-		part.copy(start, part_end, out_coords);
-		out_coords.back().setHolePoint(false);
-		out_coords.back().setClosePoint(false);
+		if (start_len < part_end.clen)
+		{
+			// Make sure part_end has the right curve end points for start.
+			part_end = SplitPathCoord::at(part_end.clen, start);
+			part.copy(start, part_end, out_coords);
+			out_coords.back().setHolePoint(false);
+			out_coords.back().setClosePoint(false);
+		}
 		
-		auto end = SplitPathCoord::at(end_len, part_begin);
-		part.copy(part_begin, end, out_coords);
+		if (end_len > part_begin.clen)
+		{
+			auto end = SplitPathCoord::at(end_len, part_begin);
+			part.copy(part_begin, end, out_coords);
+		}
+		
+		Q_ASSERT(!out_coords.empty());
 	}
 	else
 	{
@@ -1476,7 +1485,7 @@ void PathObject::changePathBounds(
 	out_coords.back().setHolePoint(true);
 	out_coords.back().setClosePoint(false);
 	
-	const auto copy_size  = qMin(out_coords.size(), (MapCoordVector::size_type)part_size);
+	const auto copy_size  = std::ptrdiff_t(std::min(out_coords.size(), std::size_t(part_size)));
 	const auto part_start = begin(coords) + part.first_index;
 	std::copy(begin(out_coords), begin(out_coords) + copy_size, part_start);
 	if (copy_size < part_size)

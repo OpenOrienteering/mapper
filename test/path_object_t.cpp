@@ -557,8 +557,6 @@ void PathObjectTest::changePathBoundsTest()
 		path.updatePathCoords();
 		
 		QVERIFY(!path.parts().front().isClosed());
-		if (start_len == 1.0f)
-			QEXPECT_FAIL("", "(reverse) Change bounds via closing point", Abort);
 		QCOMPARE(int(path.getCoordinateCount()), expected_size_fwd);
 		if (end_len == start_len)
 		{
@@ -602,8 +600,6 @@ void PathObjectTest::changePathBoundsTest()
 		path.updatePathCoords();
 		
 		QVERIFY(!path.parts().front().isClosed());
-		if (end_len == 1.0f)
-			QEXPECT_FAIL("", "(reverse) Change bounds via closing point", Abort);
 		QCOMPARE(int(path.getCoordinateCount()), expected_size_rev);
 		if (end_len == start_len || (start_len == 0.0f && end_len == 1.0f))
 		{
@@ -752,15 +748,6 @@ void PathObjectTest::removeFromLineTest()
 		}
 		QVERIFY(join != end(actual.getRawCoordinateVector()));
 		
-		if (forward)
-		{
-			QEXPECT_FAIL("0.4..1.0", "Removing the 'tail' of a closed path", Abort);
-			QEXPECT_FAIL("1.0..1.0", "Removing at the 'end' of a closed path", Abort);
-		}
-		else
-		{
-			QEXPECT_FAIL("1.0..1.0", "Removing at the 'reverse begin' of a closed path", Abort);
-		}
 		QVERIFY(std::equal(
 		            join,
 		            end(actual.getRawCoordinateVector()) - 1,   // cut point may differ
