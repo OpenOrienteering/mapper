@@ -810,7 +810,7 @@ public:
 	 * 
 	 * @return The new index of the end of the range.
 	 */
-	int convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index);
+	PathPart::size_type convertRangeToCurves(const PathPart& part, PathPart::size_type start_index, PathPart::size_type end_index);
 	
 	/**
 	 * Tries to remove points while retaining the path shape as much as possible.

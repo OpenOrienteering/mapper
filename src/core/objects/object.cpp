@@ -2062,7 +2062,7 @@ bool PathObject::convertToCurves(PathObject** undo_duplicate)
 	return converted_a_range;
 }
 
-int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index)
+PathPart::size_type PathObject::convertRangeToCurves(const PathPart& part, PathPart::size_type start_index, PathPart::size_type end_index)
 {
 	Q_ASSERT(end_index > start_index);
 	
