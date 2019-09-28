@@ -162,8 +162,8 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	
 	if (type == Point)
 	{
-		const PointObject* point_this = static_cast<const PointObject*>(this);
-		const PointObject* point_other = static_cast<const PointObject*>(other);
+		auto const* point_this = static_cast<PointObject const*>(this);
+		auto const* point_other = static_cast<PointObject const*>(other);
 		
 		auto rotation_a = point_this->getRotation();
 		auto rotation_b = point_other->getRotation();
@@ -172,8 +172,8 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	}
 	else if (type == Path)
 	{
-		const PathObject* path_this = static_cast<const PathObject*>(this);
-		const PathObject* path_other = static_cast<const PathObject*>(other);
+		auto const* path_this = static_cast<PathObject const*>(this);
+		auto const* path_other = static_cast<PathObject const*>(other);
 		
 		auto rotation_a = path_this->getPatternRotation();
 		auto rotation_b = path_other->getPatternRotation();
@@ -185,8 +185,8 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	}
 	else if (type == Text)
 	{
-		const TextObject* text_this = static_cast<const TextObject*>(this);
-		const TextObject* text_other = static_cast<const TextObject*>(other);
+		auto const* text_this = static_cast<TextObject const*>(this);
+		auto const* text_other = static_cast<TextObject const*>(other);
 		
 		if (text_this->getBoxSize() != text_other->getBoxSize())
 			return false;
@@ -224,7 +224,7 @@ PointObject* Object::asPoint()
 const PointObject* Object::asPoint() const
 {
 	Q_ASSERT(type == Point);
-	return static_cast<const PointObject*>(this);
+	return static_cast<PointObject const*>(this);
 }
 
 PathObject* Object::asPath()
@@ -236,7 +236,7 @@ PathObject* Object::asPath()
 const PathObject* Object::asPath() const
 {
 	Q_ASSERT(type == Path);
-	return static_cast<const PathObject*>(this);
+	return static_cast<PathObject const*>(this);
 }
 
 TextObject* Object::asText()
@@ -248,7 +248,7 @@ TextObject* Object::asText()
 const TextObject* Object::asText() const
 {
 	Q_ASSERT(type == Text);
-	return static_cast<const TextObject*>(this);
+	return static_cast<TextObject const*>(this);
 }
 
 
@@ -265,20 +265,20 @@ void Object::save(QXmlStreamWriter& xml) const
 	
 	if (type == Point)
 	{
-		const PointObject* point = reinterpret_cast<const PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
+		auto const* point = static_cast<PointObject const*>(this);
+		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
 		if (point_symbol->isRotatable())
 			object_element.writeAttribute(literal::rotation, point->getRotation());
 	}
 	else if (type == Text)
 	{
-		const TextObject* text = reinterpret_cast<const TextObject*>(this);
+		auto const* text = static_cast<TextObject const*>(this);
 		object_element.writeAttribute(literal::rotation, text->getRotation());
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 		// For compatibility, we must keep the box size in the second coord ATM.
 		/// \todo Save box size separately
-		auto object = const_cast<Object*>(this);
+		auto* object = const_cast<Object*>(this);
 		if (text->hasSingleAnchor())
 		{
 			object->coords.resize(1);
@@ -304,14 +304,14 @@ void Object::save(QXmlStreamWriter& xml) const
 	
 	if (type == Path)
 	{
-		const PathObject* path = reinterpret_cast<const PathObject*>(this);
+		auto const* path = static_cast<PathObject const*>(this);
 		XmlElementWriter pattern_element(xml, literal::pattern);
 		pattern_element.writeAttribute(literal::rotation, path->getPatternRotation());
 		path->getPatternOrigin().save(xml);
 	}
 	else if (type == Text)
 	{
-		const TextObject* text = reinterpret_cast<const TextObject*>(this);
+		auto const* text = static_cast<TextObject const*>(this);
 		xml.writeTextElement(literal::text, text->getText());
 	}
 }
@@ -364,8 +364,8 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	
 	if (object_type == Point)
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
+		auto* point = static_cast<PointObject*>(object);
+		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
 		if (point_symbol && point_symbol->isRotatable())
 			point->setRotation(object_element.attribute<qreal>(literal::rotation));
 		else if (!point_symbol)
@@ -373,7 +373,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	}
 	else if (object_type == Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
+		auto* text = static_cast<TextObject*>(object);
 		text->setRotation(object_element.attribute<qreal>(literal::rotation));
 		text->setHorizontalAlignment(object_element.attribute<TextObject::HorizontalAlignment>(literal::h_align));
 		text->setVerticalAlignment(object_element.attribute<TextObject::VerticalAlignment>(literal::v_align));
@@ -406,7 +406,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			XmlElementReader element(xml);
 			
-			PathObject* path = reinterpret_cast<PathObject*>(object);
+			auto* path = static_cast<PathObject*>(object);
 			path->setPatternRotation(element.attribute<qreal>(literal::rotation));
 			while (xml.readNextStartElement())
 			{
@@ -431,7 +431,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else if (xml.name() == literal::text && object_type == Text)
 		{
-			TextObject* text = reinterpret_cast<TextObject*>(object);
+			auto* text = static_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
 		}
 		else if (xml.name() == literal::tags)
@@ -444,7 +444,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	
 	if (object_type == Path)
 	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
+		auto* path = static_cast<PathObject*>(object);
 		path->recalculateParts();
 	}
 	object->output_dirty = true;
@@ -569,14 +569,14 @@ void Object::rotateAround(const MapCoordF& center, qreal angle)
 	
 	if (type == Point)
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
+		auto* point = static_cast<PointObject*>(this);
+		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
 		if (point_symbol->isRotatable())
 			point->setRotation(point->getRotation() + angle);
 	}
 	else if (type == Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
+		auto* text = static_cast<TextObject*>(this);
 		text->setRotation(text->getRotation() + angle);
 	}
 	setOutputDirty();
@@ -598,14 +598,14 @@ void Object::rotate(qreal angle)
 	
 	if (type == Point)
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
+		auto* point = static_cast<PointObject*>(this);
+		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
 		if (point_symbol->isRotatable())
 			point->setRotation(point->getRotation() + angle);
 	}
 	else if (type == Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
+		auto* text = static_cast<TextObject*>(this);
 		text->setRotation(text->getRotation() + angle);
 	}
 	setOutputDirty();
@@ -636,13 +636,13 @@ int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_
 	if (type == Symbol::Text)
 	{
 		// Texts
-		const TextObject* text_object = reinterpret_cast<const TextObject*>(this);
+		auto const* text_object = static_cast<TextObject const*>(this);
 		return (text_object->calcTextPositionAt(coord, true) != -1) ? Symbol::Text : Symbol::NoSymbol;
 	}
 	else
 	{
 		// Path objects
-		const PathObject* path = reinterpret_cast<const PathObject*>(this);
+		auto const* path = static_cast<PathObject const*>(this);
 		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
 	}
 }
