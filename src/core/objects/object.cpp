@@ -1374,7 +1374,12 @@ std::vector<PathObject*> PathObject::removeFromLine(
 	
 	std::vector<PathObject*> objects;
 	
-	if (removal_end < removal_begin || part.isClosed())
+	if (part.path_coords.front().clen >= removal_begin
+	    && part.path_coords.back().clen <= removal_end)
+	{
+		// nothing left, or invalid
+	}
+	else if (removal_end < removal_begin || part.isClosed())
 	{
 		PathObject* obj = duplicate()->asPath();
 		obj->changePathBounds(part_index, removal_end, removal_begin);

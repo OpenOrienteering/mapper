@@ -806,7 +806,6 @@ void PathObjectTest::removeFromLineTest()
 		auto orig_len = proto.parts().front().length();
 		
 		auto remaining = proto.removeFromLine(std::size_t(part_index), exact_length(cut_begin, orig_len), exact_length(cut_end, orig_len));
-		QEXPECT_FAIL("0.0..1.0", "Removing the whole closed path", Abort);
 		QCOMPARE(int(remaining.size()), std::min(1, expected_size));
 		if (expected_size > 0)
 			compare_mixed(*remaining.front(), proto, true);
