@@ -322,14 +322,15 @@ class PathPartVector;
 
 /**
  * Helper class with information about parts of paths.
+ * 
  * A part is a path segment which is separated from other parts by
  * a hole point at its end.
  */
 class PathPart : public VirtualPath
 {
 public:
-	/** Pointer to path part containing this part */
-	PathObject* path;
+	/** Pointer to path object containing this part */
+	PathObject* path = nullptr;
 	
 	PathPart(
 	        PathObject& path,
@@ -1177,7 +1178,6 @@ PathPart::PathPart(
         MapCoordVector::size_type start_index,
         MapCoordVector::size_type end_index)
  : VirtualPath(coords, start_index, end_index)
- , path(nullptr)
 {
 	// nothing else
 }

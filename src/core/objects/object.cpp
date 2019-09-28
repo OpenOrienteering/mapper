@@ -752,8 +752,7 @@ static_assert(std::is_same<PathPartVector::size_type, std::size_t>::value,
               "PathCoordVector::size_type is not std::size_t");
 
 PathPart::PathPart(PathObject& path, const VirtualPath& proto)
- : VirtualPath(path.getRawCoordinateVector(), proto.first_index, proto.last_index)
- , path(&path)
+: PathPart(path, proto.first_index, proto.last_index)
 {
 	if (!proto.path_coords.empty())
 	{
