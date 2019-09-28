@@ -2700,19 +2700,16 @@ Minimum width: 0.35 mm</description>
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="4" id="99" code="412" name="Cultivated land">
+            <symbol type="16" id="99" code="412" name="Cultivated land">
                 <description>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. For agroforestry, symbol Forest (405) or Open land with scattered trees (402) may be used instead of yellow.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</description>
-                <area_symbol inner_color="33" min_area="9000" patterns="1">
-                    <pattern type="2" angle="0" line_spacing="800" line_offset="0" offset_along_line="0" point_distance="800">
-                        <symbol type="1" code="" name="Pattern fill 1">
-                            <point_symbol rotatable="true" inner_radius="100" inner_color="31" outer_width="0" outer_color="-1" elements="0"/>
-                        </symbol>
-                    </pattern>
-                </area_symbol>
+                <combined_symbol parts="2">
+                    <part symbol="79"/>
+                    <part symbol="100"/>
+                </combined_symbol>
             </symbol>
             <symbol type="4" id="100" code="412.1" name="Cultivated land (black pattern)">
                 <description>Cultivated land. This symbol must be used together with another symbol:
