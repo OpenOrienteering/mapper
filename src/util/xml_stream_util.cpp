@@ -21,6 +21,7 @@
 #include "xml_stream_util.h"
 
 #include <algorithm>
+#include <array>
 #include <exception>
 #include <limits>
 #include <stdexcept>
@@ -185,13 +186,9 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 	else
 	{
 		// Default: efficient plain text format
-		//   Note that it is more efficient to concatenate the data
-		// than to call writeCharacters() multiple times.
-		QString data;
-		data.reserve(coords.size() * 16);
+		MapCoord::StringBuffer<QChar> buffer;
 		for (auto& coord : coords)
-			data.append(coord.toString());
-		xml.writeCharacters(data);
+			xml.writeCharacters(coord.toString(buffer));
 	}
 }
 

@@ -20,8 +20,6 @@
 
 #include "map_coord.h"
 
-#include <array>
-#include <cstddef>
 #include <cstdlib>
 #include <iterator>
 #include <limits>
@@ -261,16 +259,14 @@ MapCoord MapCoord::load(const QPointF& p, MapCoord::Flags flags)
 
 QString MapCoord::toString() const
 {
-	/* The buffer size must allow for
-	 *  1x ';':   1
-	 *  2x '-':   2
-	 *  2x ' ':   2
-	 *  2x the decimal digits for values up to 0..2^31:
-	 *           20
-	 *  1x the decimal digits for 0..2^8-1:
-	 *            3
-	 *  Total:   28 */
-	constexpr std::size_t buf_size = 1+2+2+20+3;
+	auto buffer = MapCoord::StringBuffer<QChar>();
+	auto string = toString(buffer);
+	string.detach();  // Note: public in C++, but not documented API.
+	return string;
+}
+
+QString MapCoord::toString(MapCoord::StringBuffer<QChar>& buffer) const
+{
 	static const QChar encoded[10] = {
 	    QLatin1Char{'0'}, QLatin1Char{'1'},
 	    QLatin1Char{'2'}, QLatin1Char{'3'},
@@ -278,7 +274,6 @@ QString MapCoord::toString() const
 	    QLatin1Char{'6'}, QLatin1Char{'7'},
 	    QLatin1Char{'8'}, QLatin1Char{'9'}
 	};
-	auto buffer = std::array<QChar, buf_size>();
 	
 	// For efficiency, we construct the string from the back,
 	// using a bidirectional iterator.
@@ -333,7 +328,7 @@ QString MapCoord::toString() const
 		*first-- = QLatin1Char{'-'};
 	}
 	
-	return QString(&*(first+1), int(std::distance(first, last)));
+	return QString::fromRawData(&*(first+1), int(std::distance(first, last)));
 }
 
 MapCoord::MapCoord(QStringRef& text)
