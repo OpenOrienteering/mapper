@@ -413,6 +413,14 @@ public:
 	QString toString(StringBuffer<QChar>& buffer) const;
 	
 	/**
+	 * Returns an UTF-8 string for the raw coordinates and flags, using the given buffer.
+	 * 
+	 * The string is created using QByteArray::fromRawData(), so it is valid for
+	 * the lifetime of the buffer only.
+	 */
+	QByteArray toUtf8(StringBuffer<char>& buffer) const;
+	
+	/**
 	 * Constructs the MapCoord from the beginning of text, and moves the 
 	 * reference to behind the this coordinates data.
 	 * 

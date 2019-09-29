@@ -21,6 +21,7 @@
 #include "file_format_t.h"
 
 #include <algorithm>
+#include <array>
 #include <limits>
 #include <memory>
 
@@ -389,6 +390,9 @@ void FileFormatTest::mapCoordtoString()
 	
 	auto const coord = MapCoord::fromNative(x, y, MapCoord::Flags(flags));
 	QCOMPARE(coord.toString(), QString::fromLatin1(expected));
+	
+	MapCoord::StringBuffer<char> buffer;
+	QCOMPARE(coord.toUtf8(buffer), expected);
 }
 
 

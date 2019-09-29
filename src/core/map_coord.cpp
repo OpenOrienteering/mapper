@@ -331,6 +331,66 @@ QString MapCoord::toString(MapCoord::StringBuffer<QChar>& buffer) const
 	return QString::fromRawData(&*(first+1), int(std::distance(first, last)));
 }
 
+QByteArray MapCoord::toUtf8(MapCoord::StringBuffer<char>& buffer) const
+{
+	static auto* encoded = "0123456789";
+	
+	// For efficiency, we construct the string from the back,
+	// using a bidirectional iterator.
+	auto const last = end(buffer) - 1;
+	auto first = last;
+	*first-- = ';';
+	
+	auto div = std::div_t{static_cast<int>(fp), 0};
+	static_assert(sizeof(div.quot) >= sizeof(fp),
+	              "div.quot must be large enough to hold the flags" );
+	if (div.quot > 0)
+	{
+		do
+		{
+			div = std::div(div.quot, 10);
+			*first-- = encoded[div.rem];
+		}
+		while (div.quot != 0);
+		
+		*first-- = ' ';
+	}
+	
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::yp),
+	              "div.quot must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::yp)>::min()" );
+	div.quot = yp;
+	do
+	{
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
+	}
+	while (div.quot != 0);
+	if (yp < 0)
+	{
+		*first-- = '-';
+	}
+	
+	*first-- = ' ';
+	
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::xp),
+	              "div.quot must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::xp)>::min()" );
+	div.quot = xp;
+	do
+	{
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
+	}
+	while (div.quot != 0);
+	if (xp < 0)
+	{
+		*first-- = '-';
+	}
+	
+	return QByteArray::fromRawData(&*(first+1), int(std::distance(first, last)));
+}
+
 MapCoord::MapCoord(QStringRef& text)
 : MapCoord{}
 {
