@@ -183,6 +183,16 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 		for (auto& coord : coords)
 			coord.save(xml);
 	}
+	else if (auto* device = xml.device())
+	{
+		// Default: efficient plain text format
+		// Direct UTF-8 writing without unnecessary allocations, escaping or
+		// conversions, but also without handling of device errors.
+		xml.writeCharacters({});  // Finish the start element
+		MapCoord::StringBuffer<char> buffer;
+		for (auto& coord : coords)
+			device->write(coord.toUtf8(buffer));
+	}
 	else
 	{
 		// Default: efficient plain text format
