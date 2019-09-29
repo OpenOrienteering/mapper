@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,9 @@
 
 #include "map_coord.h"
 
+#include <array>
 #include <cstddef>
+#include <iterator>
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
@@ -275,26 +277,25 @@ QString MapCoord::toString() const
 	    QLatin1Char{'6'}, QLatin1Char{'7'},
 	    QLatin1Char{'8'}, QLatin1Char{'9'}
 	};
-	QChar buffer[buf_size];
+	auto buffer = std::array<QChar, buf_size>();
 	
-	// For efficiency, we construct the string from the back.
-	std::size_t j = buf_size - 1;
-	buffer[j] = QLatin1Char{';'};
-	--j;
+	// For efficiency, we construct the string from the back,
+	// using a bidirectional iterator.
+	auto const last = end(buffer) - 1;
+	auto first = last;
+	*first-- = QLatin1Char{';'};
 	
 	auto flags = Flags::Int(fp);
 	if (flags > 0)
 	{
 		do
 		{
-			buffer[j] = encoded[flags % 10];
+			*first-- = encoded[flags % 10];
 			flags = flags / 10;
-			--j;
 		}
 		while (flags != 0);
 		
-		buffer[j] = QChar::Space;
-		--j;
+		*first-- = QChar::Space;
 	}
 	
 	qint64 tmp = yp;
@@ -309,20 +310,17 @@ QString MapCoord::toString() const
 	}
 	do
 	{
-		buffer[j] = encoded[tmp % 10];
+		*first-- = encoded[tmp % 10];
 		tmp = tmp / 10;
-		--j;
 	}
 	while (tmp != 0);
 	if (!sign.isNull())
 	{
-		buffer[j] = sign;
-		--j;
+		*first-- = sign;
 		sign = QChar::Null;
 	}
 	
-	buffer[j] = QChar::Space;
-	--j;
+	*first-- = QChar::Space;
 	
 	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::xp)),
 	              "decltype(tmp) must be large enough to hold"
@@ -335,21 +333,16 @@ QString MapCoord::toString() const
 	}
 	do
 	{
-		buffer[j] = encoded[tmp % 10];
+		*first-- = encoded[tmp % 10];
 		tmp = tmp / 10;
-		--j;
 	}
 	while (tmp != 0);
 	if (!sign.isNull())
 	{
-		buffer[j] = sign;
-		--j;
+		*first-- = sign;
 	}
 	
-	++j;
-	Q_ASSERT(j < buf_size);
-	j = qMin(j, buf_size);
-	return QString(buffer+j, buf_size-j);
+	return QString(&*(first+1), int(std::distance(first, last)));
 }
 
 MapCoord::MapCoord(QStringRef& text)
