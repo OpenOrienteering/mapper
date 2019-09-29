@@ -45,6 +45,8 @@ jobs:
 
 - job: macOS
   displayName: macOS (Release)
+  dependsOn: Release_Notes
+  condition: always()
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -84,6 +86,8 @@ jobs:
 
 - job: Linux_clazy
   displayName: Linux (RelWithDebInfo, clazy)
+  dependsOn: Codespell
+  condition: always()
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
@@ -108,6 +112,8 @@ jobs:
 
 - job: Linux_Coverage
   displayName: Linux (Debug, coverage)
+  dependsOn: Linux_clazy
+  condition: always()
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
@@ -132,6 +138,8 @@ jobs:
 
 - job: Android_armv7
   displayName: Android arm-v7 (Release)
+  dependsOn: Release_Notes
+  condition: always()
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -164,6 +172,8 @@ jobs:
 
 - job: Android_arm64
   displayName: Android arm64 (Release)
+  dependsOn: Android_armv7
+  condition: always()
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -196,6 +206,8 @@ jobs:
 
 - job: Android_x86
   displayName: Android x86 (Release)
+  dependsOn: Android_x86_64
+  condition: always()
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -228,6 +240,8 @@ jobs:
 
 - job: Android_x86_64
   displayName: Android x86_64 (Release)
+  dependsOn: Release_Notes
+  condition: always()
   variables:
     IMAGE_NAME: 'macos-10.13'
     SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
@@ -260,6 +274,8 @@ jobs:
 
 - job: MinGW_x64_Linux
   displayName: Windows x64 (Release, MinGW on Linux)
+  dependsOn: macOS
+  condition: always()
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
