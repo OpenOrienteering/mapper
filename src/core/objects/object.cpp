@@ -3106,7 +3106,7 @@ PointObject::PointObject(const Symbol* symbol)
 	coords.push_back(MapCoord(0, 0));
 }
 
-PointObject::PointObject(const PointObject& proto) = default;
+PointObject::PointObject(const PointObject& /*proto*/) = default;
 
 
 PointObject* PointObject::duplicate() const
