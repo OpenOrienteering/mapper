@@ -354,7 +354,7 @@ void CutTool::finishCuttingLine()
 	if (reverse_drag)
 		qSwap(drag_start_len, drag_end_len);
 	
-	auto split_objects = edit_object->removeFromLine(drag_part_index, qreal(drag_start_len), qreal(drag_end_len));
+	auto split_objects = edit_object->removeFromLine(drag_part_index, drag_start_len, drag_end_len);
 	replaceObject(edit_object, split_objects);
 	
 	if (editingInProgress())

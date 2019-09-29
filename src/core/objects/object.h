@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -122,8 +122,10 @@ public:
 	virtual Object* duplicate() const = 0;
 	
 	/**
-	 * Checks for equality with another object. If compare_symbol is set,
-	 * also the symbols are compared for having the same properties.
+	 * Checks for equality with another object.
+	 * 
+	 * If compare_symbol is set, also the symbols are compared for having the same properties.
+	 * Note that the map property is not compared.
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
 	
@@ -302,13 +304,13 @@ protected:
 	virtual void createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const;
 	
 	Type type;
-	const Symbol* symbol;
+	const Symbol* symbol = nullptr;
 	MapCoordVector coords;
-	Map* map;
+	Map* map = nullptr;
 	Tags object_tags;
 	
 private:
-	mutable bool output_dirty;        // does the output have to be re-generated because of changes?
+	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
 };
@@ -320,14 +322,15 @@ class PathPartVector;
 
 /**
  * Helper class with information about parts of paths.
+ * 
  * A part is a path segment which is separated from other parts by
  * a hole point at its end.
  */
 class PathPart : public VirtualPath
 {
 public:
-	/** Pointer to path part containing this part */
-	PathObject* path;
+	/** Pointer to path object containing this part */
+	PathObject* path = nullptr;
 	
 	PathPart(
 	        PathObject& path,
@@ -342,8 +345,8 @@ public:
 	);
 	
 	PathPart(
-	        PathObject& object,
-	        const VirtualPath& path
+	        PathObject& path,
+	        const VirtualPath& virtual_path
 	);
 	
 	~PathPart() = default;
@@ -464,17 +467,28 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
-	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
-	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
+	/**
+	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
+	 * 
+	 * "Piece" refers to a single straight or curved arc from the point
+	 * identified by parameter piece to the immediate next point on the path.
+	 * 
+	 * If the path is not closed, and piece refers to the last element in the
+	 * path (part), then the arc ending in the point referred to by piece is
+	 * returned instead.
+	 */
+	explicit PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 protected:
 	/** Constructs a PathObject, initialized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
 public:
-	/** Constructs a PathObject, initialized from the given part of another object. */
+	/**
+	 * Constructs a PathObject, initialized from the given part of another object.
+	 */
 	explicit PathObject(const PathPart& proto_part);
 	
 	/**
@@ -730,14 +744,15 @@ public:
 	 * Returns the result of removing the section between begin and end from the path.
 	 * 
 	 * begin and end must belong to the path part with the given part_index.
-	 * However, any part_index value other than 1 is not supported at the moment.
+	 * However, objects with holes, and part_index values greater than 0, are
+	 * not supported at the moment.
 	 * 
 	 * Returns an empty vector when nothing remains after removal.
 	 */
 	std::vector<PathObject*> removeFromLine(
 	        PathPartVector::size_type part_index,
-	        qreal begin,
-	        qreal end
+	        PathCoord::length_type clen_begin,
+	        PathCoord::length_type clen_end
 	) const;
 									   
 	/**
@@ -750,9 +765,11 @@ public:
 	std::vector<PathObject*> splitLineAt(const PathCoord& split_pos) const;
 	
 	/**
-	 * Replaces the path with a range of it starting and ending at the given lengths.
+	 * Replaces the path with a non-empty range of it starting and ending at the given lengths.
 	 * 
-	 * \todo Partially duplicated in LineSymbol::calculatePathCoordinates()
+	 * For open paths, the end length must be greater than the start length.
+	 * For closed paths, an end length smaller than or equal to the start length
+	 * will cause the resulting path to span the original start/end point.
 	 */
 	void changePathBounds(
 	        PathPartVector::size_type part_index,
@@ -794,7 +811,7 @@ public:
 	 * 
 	 * @return The new index of the end of the range.
 	 */
-	int convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index);
+	PathPart::size_type convertRangeToCurves(const PathPart& part, PathPart::size_type start_index, PathPart::size_type end_index);
 	
 	/**
 	 * Tries to remove points while retaining the path shape as much as possible.
@@ -923,13 +940,13 @@ private:
 	 * Rotation angle of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	qreal pattern_rotation;
+	qreal pattern_rotation = 0;
 	
 	/**
 	 * Origin shift of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	MapCoord pattern_origin;
+	MapCoord pattern_origin = {};
 	
 	/** Path parts list */
 	mutable PathPartVector path_parts;
@@ -1020,11 +1037,6 @@ public:
 	void setRotation(qreal new_rotation);
 	
 	/**
-	 * Sets the point object's rotation according to the given vector.
-	 */
-	void setRotation(const MapCoordF& vector);
-	
-	/**
 	 * Returns the point object's rotation (in radians). This is only used
 	 * if the object has a symbol which interprets this value.
 	 */
@@ -1036,7 +1048,7 @@ public:
 	
 private:
 	/** The object's rotation (in radians). */
-	qreal rotation;
+	qreal rotation = 0;
 };
 
 
@@ -1161,7 +1173,6 @@ PathPart::PathPart(
         MapCoordVector::size_type start_index,
         MapCoordVector::size_type end_index)
  : VirtualPath(coords, start_index, end_index)
- , path(nullptr)
 {
 	// nothing else
 }
@@ -1180,7 +1191,7 @@ PathPart::PathPart(
 inline
 PathPart& PathPart::operator=(const PathPart& rhs)
 {
-	Q_ASSERT(path = rhs.path);
+	Q_ASSERT(path == rhs.path);
 	VirtualPath::operator=(rhs);
 	return *this;
 }
