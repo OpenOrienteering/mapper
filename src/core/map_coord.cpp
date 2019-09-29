@@ -22,6 +22,7 @@
 
 #include <array>
 #include <cstddef>
+#include <cstdlib>
 #include <iterator>
 #include <limits>
 #include <stdexcept>
@@ -285,61 +286,51 @@ QString MapCoord::toString() const
 	auto first = last;
 	*first-- = QLatin1Char{';'};
 	
-	auto flags = Flags::Int(fp);
-	if (flags > 0)
+	auto div = std::div_t{static_cast<int>(fp), 0};
+	static_assert(sizeof(div.quot) >= sizeof(fp),
+	              "div.quot must be large enough to hold the flags" );
+	if (div.quot > 0)
 	{
 		do
 		{
-			*first-- = encoded[flags % 10];
-			flags = flags / 10;
+			div = std::div(div.quot, 10);
+			*first-- = encoded[div.rem];
 		}
-		while (flags != 0);
+		while (div.quot != 0);
 		
 		*first-- = QChar::Space;
 	}
 	
-	qint64 tmp = yp;
-	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::yp)),
-	              "decltype(tmp) must be large enough to hold"
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::yp),
+	              "div.quot must be large enough to hold"
 	              "-std::numeric_limits<decltype(MapCoord::yp)>::min()" );
-	QChar sign { QChar::Null };
-	if (tmp < 0)
-	{
-		sign = QLatin1Char{'-'};
-		tmp = -tmp;
-	}
+	div.quot = yp;
 	do
 	{
-		*first-- = encoded[tmp % 10];
-		tmp = tmp / 10;
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
 	}
-	while (tmp != 0);
-	if (!sign.isNull())
+	while (div.quot != 0);
+	if (yp < 0)
 	{
-		*first-- = sign;
-		sign = QChar::Null;
+		*first-- = QLatin1Char{'-'};
 	}
 	
 	*first-- = QChar::Space;
 	
-	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::xp)),
-	              "decltype(tmp) must be large enough to hold"
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::xp),
+	              "div.quot must be large enough to hold"
 	              "-std::numeric_limits<decltype(MapCoord::xp)>::min()" );
-	tmp = xp;
-	if (tmp < 0)
-	{
-		sign = QLatin1Char{'-'};
-		tmp = -tmp;
-	}
+	div.quot = xp;
 	do
 	{
-		*first-- = encoded[tmp % 10];
-		tmp = tmp / 10;
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
 	}
-	while (tmp != 0);
-	if (!sign.isNull())
+	while (div.quot != 0);
+	if (xp < 0)
 	{
-		*first-- = sign;
+		*first-- = QLatin1Char{'-'};
 	}
 	
 	return QString(&*(first+1), int(std::distance(first, last)));
