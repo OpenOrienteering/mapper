@@ -62,7 +62,7 @@ namespace  {
 bool equalXY(MapCoord const& lhs, MapCoord const& rhs) {
 	return lhs.nativeX() == rhs.nativeX()
 	       && lhs.nativeY() == rhs.nativeY();
-};
+}
 
 PathObject::Intersections calculateIntersections(const PathObject& path1, const PathObject& path2)
 {
