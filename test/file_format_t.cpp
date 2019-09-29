@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,7 +34,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1String>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -365,16 +364,31 @@ void FileFormatTest::initTestCase()
 
 
 
+void FileFormatTest::mapCoordtoString_data()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	QTest::addColumn<native_int>("x");
+	QTest::addColumn<native_int>("y");
+	QTest::addColumn<int>("flags");
+	QTest::addColumn<QByteArray>("expected");
+	
+	// Verify toString() especially for native coordinates at the numeric limits.
+	using bounds = std::numeric_limits<native_int>;
+	QTest::newRow("max,-1/0") << bounds::max() << -1 << 0 << QByteArray("2147483647 -1;");
+	QTest::newRow("-2,max/1") << -2 << bounds::max() << 1 << QByteArray("-2 2147483647 1;");
+	QTest::newRow("min,min/255") << bounds::min() << bounds::min() << 255 << QByteArray("-2147483648 -2147483648 255;");
+}
+
 void FileFormatTest::mapCoordtoString()
 {
-	QCOMPARE(MapCoord().toString(), QLatin1String("0 0;"));
+	using native_int = decltype(MapCoord().nativeX());
+	QFETCH(native_int, x);
+	QFETCH(native_int, y);
+	QFETCH(int, flags);
+	QFETCH(QByteArray, expected);
 	
-	// Verify toString for native coordinates at the numeric limits.
-	auto native_x = MapCoord().nativeX();
-	using bounds = std::numeric_limits<decltype(native_x)>;
-	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
-	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), MapCoord::Flags{MapCoord::Flags::Int(8)}).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
-	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), MapCoord::Flags{MapCoord::Flags::Int(1)}).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
+	auto const coord = MapCoord::fromNative(x, y, MapCoord::Flags(flags));
+	QCOMPARE(coord.toString(), QString::fromLatin1(expected));
 }
 
 
