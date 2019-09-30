@@ -23,7 +23,11 @@
 </view>
 </barrier>
 <barrier version="6" required="0.6.0">
-<undo><step type="7"><affected_objects part="0"><ref object="0"><t k="author">dg0yt</t></ref></affected_objects></step><step type="0"><affected_objects part="0"><ref object="0"/></affected_objects><contained_objects count="1"><object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><tags><t k="created">2019-09-30</t><t k="author">dg0yt</t></tags><coords count="2">10000 0;16000 10000;</coords><text>object</text></object></contained_objects></step></undo>
-<redo/>
+<undo>
+<step type="7"><affected_objects part="0"><ref object="0"><t k="author">dg0yt</t></ref></affected_objects></step>
+<step type="0"><affected_objects part="0"><ref object="0"/></affected_objects><contained_objects count="1"><object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><tags><t k="created">2019-09-30</t><t k="author">dg0yt</t></tags><coords count="2">10000 0;16000 10000;</coords><text>object</text></object></contained_objects></step>
+</undo>
+<redo>
+</redo>
 </barrier>
 </map>

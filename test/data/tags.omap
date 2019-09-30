@@ -23,7 +23,10 @@
 </view>
 </barrier>
 <barrier version="6" required="0.6.0">
-<undo><step type="7"><affected_objects part="0"><ref object="0"><t k="author">dg0yt</t></ref></affected_objects></step></undo>
-<redo/>
+<undo>
+<step type="7"><affected_objects part="0"><ref object="0"><t k="author">dg0yt</t></ref></affected_objects></step>
+</undo>
+<redo>
+</redo>
 </barrier>
 </map>

@@ -490,7 +490,9 @@ The orientation of the symbol indicates the direction in which the corner points
 <print scale="4000" resolution="600" templates_visible="true" mode="vector"><page_format paper_size="A4" orientation="portrait" h_overlap="5" v_overlap="5"><dimensions width="210" height="297"/><page_rect left="5" top="5" width="200" height="287"/></page_format><print_area left="5" top="5" width="200" height="287" center_area="true" single_page="true"/></print>
 </barrier>
 <barrier version="6" required="0.6.0">
-<undo/>
-<redo/>
+<undo>
+</undo>
+<redo>
+</redo>
 </barrier>
 </map>

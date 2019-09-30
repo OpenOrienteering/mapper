@@ -431,7 +431,9 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </view>
 </barrier>
 <barrier version="6" required="0.6.0">
-<undo/>
-<redo/>
+<undo>
+</undo>
+<redo>
+</redo>
 </barrier>
 </map>
