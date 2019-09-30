@@ -274,12 +274,12 @@ namespace
 		
 		auto test_label = QString::fromLatin1("actual: %1, expected: %2");
 		auto ref_point = actual_georef.getMapRefPoint();
-		auto actual_point = actual_georef.toProjectedCoords(ref_point);;
+		auto actual_point = actual_georef.toProjectedCoords(ref_point);
 		auto expected_point = expected_georef.toProjectedCoords(ref_point);
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
 		ref_point += MapCoord{500, 500};
-		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());;
+		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());
 		expected_point = expected_georef.toProjectedCoords(expected_georef.getMapRefPoint());
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
@@ -333,13 +333,13 @@ namespace
 		return out;
 	}
 	
-	static const auto issue_513_files = {
-	  "data:issue-513-coords-outside-printable.xmap",
-	  "data:issue-513-coords-outside-printable.omap",
-	  "data:issue-513-coords-outside-qint32.omap",
+	auto const issue_513_files = {
+	  "testdata:issue-513-coords-outside-printable.xmap",
+	  "testdata:issue-513-coords-outside-printable.omap",
+	  "testdata:issue-513-coords-outside-qint32.omap",
 	};
 	
-	static const auto example_files = {
+	auto const example_files = {
 	  "data:/examples/complete map.omap",
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
