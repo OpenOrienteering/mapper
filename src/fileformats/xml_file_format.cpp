@@ -1006,6 +1006,8 @@ void XMLFileImporter::importView()
 		{
 			if (view)
 				view->load(xml);
+			else
+				xml.skipCurrentElement();
 		}
 		else
 		{
