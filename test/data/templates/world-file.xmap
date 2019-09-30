@@ -85,8 +85,4 @@
             </map_view>
         </view>
     </barrier>
-    <barrier version="6" required="0.6.0">
-        <undo/>
-        <redo/>
-    </barrier>
 </map>

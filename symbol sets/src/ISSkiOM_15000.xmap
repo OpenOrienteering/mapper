@@ -7558,8 +7558,4 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             </map_view>
         </view>
     </barrier>
-    <barrier version="6" required="0.6.0">
-        <undo/>
-        <redo/>
-    </barrier>
 </map>

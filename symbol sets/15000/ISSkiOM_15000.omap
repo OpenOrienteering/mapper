@@ -281,10 +281,4 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
 </view>
 </barrier>
-<barrier version="6" required="0.6.0">
-<undo>
-</undo>
-<redo>
-</redo>
-</barrier>
 </map>

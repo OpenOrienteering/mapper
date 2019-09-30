@@ -278,7 +278,8 @@ bool XMLFileExporter::exportImplementation()
 		delete barrier;
 		writeLineBreak(xml);
 
-		if (Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool())
+		if (Settings::getInstance().getSetting(Settings::General_SaveUndoRedo).toBool()
+		    && (map->undoManager().canUndo() || map->undoManager().canRedo()) )
 		{
 			{
 				// Prevent Mapper versions < 0.6.0 from crashing

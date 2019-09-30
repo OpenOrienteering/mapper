@@ -7118,8 +7118,4 @@ overprinting preview.</text>
             <print_area left="-80.283" top="-98.762" width="110" height="110" center_area="true"/>
         </print>
     </barrier>
-    <barrier version="6" required="0.6.0">
-        <undo/>
-        <redo/>
-    </barrier>
 </map>

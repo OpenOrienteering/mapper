@@ -747,10 +747,4 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </view>
 <print scale="10000" resolution="600" simulate_overprinting="true" mode="raster"><page_format paper_size="Custom" orientation="portrait" h_overlap="5" v_overlap="5"><dimensions width="110" height="110"/><page_rect left="0" top="0" width="110" height="110"/></page_format><print_area left="59.639" top="18.763" width="74.685" height="65.687" center_area="true"/></print>
 </barrier>
-<barrier version="6" required="0.6.0">
-<undo>
-</undo>
-<redo>
-</redo>
-</barrier>
 </map>
