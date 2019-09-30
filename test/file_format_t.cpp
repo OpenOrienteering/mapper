@@ -498,23 +498,23 @@ void FileFormatTest::formatForDataTest()
 
 void FileFormatTest::issue_513_high_coordinates_data()
 {
-	QTest::addColumn<QString>("filename");
+	QTest::addColumn<QString>("filepath");
 	
-	for (auto raw_path : issue_513_files)
+	for (auto const* raw_path : issue_513_files)
 	{
-		auto path = QString::fromUtf8(raw_path);
-		QVERIFY(QFileInfo::exists(path));
 		QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
 	}
 }
 
 void FileFormatTest::issue_513_high_coordinates()
 {
-	QFETCH(QString, filename);
+	QFETCH(QString, filepath);
+	
+	QVERIFY(QFileInfo::exists(filepath));
 	
 	// Load the test map
 	Map map {};
-	QVERIFY(map.loadFrom(filename));
+	QVERIFY(map.loadFrom(filepath));
 	
 	// The map's two objects must exist. Otherwise one may have been deleted
 	// for being irregular, indicating failure to handle high coordinates.
@@ -524,9 +524,9 @@ void FileFormatTest::issue_513_high_coordinates()
 	// for being irregular, indicating failure to handle high coordinates.
 	QCOMPARE(map.undoManager().undoStepCount(), 2);
 	
-	for (int i = 0; i < map.getNumParts(); ++i)
+	QCOMPARE(map.getNumParts(), 1);
 	{
-		auto part = map.getPart(i);
+		auto const* part = map.getPart(0);
 		auto extent = part->calculateExtent(true);
 		QVERIFY2(extent.top()    <  1000000.0, "extent.top() outside printable range");
 		QVERIFY2(extent.left()   > -1000000.0, "extent.left() outside printable range");
