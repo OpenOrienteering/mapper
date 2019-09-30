@@ -556,7 +556,7 @@ void FileFormatTest::saveAndLoad_data()
 	QTest::addColumn<QByteArray>("id"); // memory management for test data tag
 	QTest::addColumn<QByteArray>("format_id");
 	QTest::addColumn<int>("format_version");
-	QTest::addColumn<QString>("map_filename");
+	QTest::addColumn<QString>("filepath");
 	
 	static const auto format_ids = {
 	    "XML",
@@ -579,7 +579,6 @@ void FileFormatTest::saveAndLoad_data()
 			id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
 			id.append(raw_path).append(" <> ").append(format_id);
 			auto path = QString::fromUtf8(raw_path);
-			QVERIFY(QFileInfo::exists(path));
 			
 			if (qstrcmp(format_id, "OCD") == 0)
 			{
@@ -608,7 +607,9 @@ void FileFormatTest::saveAndLoad()
 {
 	QFETCH(QByteArray, format_id);
 	QFETCH(int, format_version);
-	QFETCH(QString, map_filename);
+	QFETCH(QString, filepath);
+	
+	QVERIFY(QFileInfo::exists(filepath));
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
@@ -616,7 +617,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	QVERIFY(original->loadFrom(map_filename));
+	QVERIFY(original->loadFrom(filepath));
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();
