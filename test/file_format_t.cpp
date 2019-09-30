@@ -56,6 +56,7 @@
 #include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
@@ -515,9 +516,9 @@ void FileFormatTest::issue_513_high_coordinates()
 	Map map {};
 	QVERIFY(map.loadFrom(filename));
 	
-	// The map's single object must exist. Otherwise it may have been deleted
+	// The map's two objects must exist. Otherwise one may have been deleted
 	// for being irregular, indicating failure to handle high coordinates.
-	QCOMPARE(map.getNumObjects(), 1);
+	QCOMPARE(map.getNumObjects(), 2);
 	
 	for (int i = 0; i < map.getNumParts(); ++i)
 	{
@@ -527,6 +528,13 @@ void FileFormatTest::issue_513_high_coordinates()
 		QVERIFY2(extent.left()   > -1000000.0, "extent.left() outside printable range");
 		QVERIFY2(extent.bottom() > -1000000.0, "extent.bottom() outside printable range");
 		QVERIFY2(extent.right()  <  1000000.0, "extent.right() outside printable range");
+		
+		QCOMPARE(part->getNumObjects(), 2);
+		auto const* object = part->getObject(1);
+		QCOMPARE(object->getType(), Object::Text);
+		auto const* text = static_cast<TextObject const*>(object);
+		QVERIFY(!text->hasSingleAnchor());
+		QCOMPARE(text->getBoxSize(), MapCoord::fromNative(16000, 10000));
 	}
 	
 	auto print_area = map.printerConfig().print_area;
