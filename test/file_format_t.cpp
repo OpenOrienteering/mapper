@@ -520,6 +520,11 @@ void FileFormatTest::issue_513_high_coordinates()
 	// for being irregular, indicating failure to handle high coordinates.
 	QCOMPARE(map.getNumObjects(), 2);
 	
+	// The map's two undo steps must exist. Otherwise one may have been deleted
+	// for being irregular, indicating failure to handle high coordinates.
+	QEXPECT_FAIL("", "Undo steps are not loaded here", Continue);
+	QCOMPARE(map.undoManager().undoStepCount(), 2);
+	
 	for (int i = 0; i < map.getNumParts(); ++i)
 	{
 		auto part = map.getPart(i);
