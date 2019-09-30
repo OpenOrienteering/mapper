@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<notes></notes>
+<georeferencing scale="4000"><projected_crs id="Local"/></georeferencing>
+<colors count="1">
+<color priority="0" name="Black" c="0" m="0" y="0" k="1" opacity="1"><cmyk method="custom"/><rgb method="custom" r="0" g="0" b="0"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="1">
+<symbol type="8" id="0" code="2" name="Text"><text_symbol icon_text=""><font family="Arial" size="4233"/><text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/></text_symbol></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="2">
+<object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="2">10000 0;16000 10000;</coords><text>boxed text</text></object>
+<object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="1">-6000 0;</coords><text>single
+anchor</text></object>
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="8" position_x="2000" position_y="0"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+</barrier>
+<barrier version="6" required="0.6.0">
+<undo/>
+<redo/>
+</barrier>
+</map>

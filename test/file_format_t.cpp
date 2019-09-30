@@ -347,6 +347,12 @@ namespace
 	  "testdata:templates/world-file.xmap",
 	};
 	
+	auto const xml_test_files = {
+	  "data:tags.omap",
+	  "data:text-object.omap",
+	  "data:undo.omap",
+	};
+	
 }  // namespace
 
 
@@ -552,12 +558,23 @@ void FileFormatTest::issue_513_high_coordinates()
 
 void FileFormatTest::saveAndLoad_data()
 {
-	// Add all file formats which support import and export
 	QTest::addColumn<QByteArray>("id"); // memory management for test data tag
 	QTest::addColumn<QByteArray>("format_id");
 	QTest::addColumn<int>("format_version");
 	QTest::addColumn<QString>("filepath");
 	
+	// Tests for particular feature of the XML file format.
+	for (auto const* raw_path : xml_test_files)
+	{
+		auto const* format_id = "XML";
+		auto id = QByteArray{};
+		id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
+		id.append(raw_path).append(" <> ").append(format_id);
+		
+		QTest::newRow(id) << id << QByteArray{format_id} << 0 << QString::fromLatin1(raw_path);
+	}
+	
+	// Add all file formats which support import and export
 	static const auto format_ids = {
 	    "XML",
 #ifndef MAPPER_BIG_ENDIAN
