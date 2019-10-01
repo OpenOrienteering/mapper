@@ -24,6 +24,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -605,21 +606,7 @@ void XMLFileImporter::importElements()
 		else if (name == literal::view)
 			importView();
 		else if (name == literal::barrier)
-		{
-			XmlElementReader barrier(xml);
-			if (barrier.attribute<int>(literal::version) > XMLFileFormat::current_version)
-			{
-				QString required_version = barrier.attribute<QString>(literal::required);
-				if (required_version.isEmpty())
-					required_version = tr("unknown");
-				addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
-				xml.skipCurrentElement();
-			}
-			else
-			{
-				importElements();
-			}
-		}
+			handleBarrier([this]() { importElements(); });
 		else if (loadSymbolsOnly())
 			xml.skipCurrentElement();
 		/******************************************************
@@ -650,6 +637,23 @@ void XMLFileImporter::importElements()
 		        .arg(xml.lineNumber())
 		        .arg(xml.columnNumber())
 		        .arg(xml.errorString()) );
+}
+
+void XMLFileImporter::handleBarrier(const std::function<void ()>& reader)
+{
+	XmlElementReader barrier(xml);
+	if (barrier.attribute<int>(literal::version) > XMLFileFormat::current_version)
+	{
+		QString required_version = barrier.attribute<QString>(literal::required);
+		if (required_version.isEmpty())
+			required_version = tr("unknown");
+		addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
+		xml.skipCurrentElement();
+	}
+	else
+	{
+		reader();
+	}
 }
 
 void XMLFileImporter::importMapNotes()

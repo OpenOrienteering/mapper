@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_XML_P_H
 #define OPENORIENTEERING_FILE_FORMAT_XML_P_H
 
+#include <functional>
+
 #include <QCoreApplication>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -70,6 +72,8 @@ protected:
 	bool importImplementation() override;
 	
 	void importElements();
+	
+	void handleBarrier(const std::function<void()>& reader);
 	
 	void addWarningUnsupportedElement();
 	void importMapNotes();
