@@ -148,6 +148,8 @@ namespace literal
 	
 	static const QLatin1String barrier("barrier");
 	static const QLatin1String required("required");
+	static const QLatin1String action("action");
+	static const QLatin1String skip("skip");
 	
 	static const QLatin1String count("count");
 	static const QLatin1String current("current");
@@ -641,19 +643,26 @@ void XMLFileImporter::importElements()
 
 void XMLFileImporter::handleBarrier(const std::function<void ()>& reader)
 {
-	XmlElementReader barrier(xml);
-	if (barrier.attribute<int>(literal::version) > XMLFileFormat::current_version)
 	{
+		XmlElementReader barrier(xml);
+		if (barrier.attribute<int>(literal::version) <= XMLFileFormat::current_version)
+		{
+			reader();
+			return;
+		}
+		
 		QString required_version = barrier.attribute<QString>(literal::required);
 		if (required_version.isEmpty())
 			required_version = tr("unknown");
 		addWarning(tr("Parts of this file cannot be read by this version of Mapper. Minimum required version: %1").arg(required_version));
-		xml.skipCurrentElement();
+		
+		if (barrier.attribute<QStringRef>(literal::action) != literal::skip)
+			return;
 	}
-	else
-	{
-		reader();
-	}
+	
+	// After <barrier ... action="skip"/>, skip the immediate next element.
+	xml.readNextStartElement();
+	xml.skipCurrentElement();
 }
 
 void XMLFileImporter::importMapNotes()

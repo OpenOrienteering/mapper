@@ -21,6 +21,12 @@
 </objects></part>
 </parts>
 </barrier>
+<barrier version="9999999" required="99999.0.0" action="skip"/>
+<parts count="1" current="0">
+<part name="blocked part"><objects count="1">
+<object type="-2" symbol="-2"><coords count="1">10000 0;</coords></object>
+</objects></part>
+</parts>
 <templates count="0" first_front_template="0">
 <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
 </templates>

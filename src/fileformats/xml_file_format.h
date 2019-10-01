@@ -83,13 +83,26 @@ public:
   
 \page file_format OpenOrienteering Mapper XML File Format Documentation
 
-\date 2018-03-10
+\date 2018-10-01
 \author Kai Pastor
 
 \todo Review and update.
 
 
 \section changes Changes
+
+\subsection version-10 (Planned for) Version 10 (Mapper 1.0)
+
+- For writing, drop compatibility with Mapper versions before 0.9.
+- Use the streaming variant when writing `barrier` elements.
+
+
+\subsection version-10-transition Transition to version 10
+
+- 2019-10-01 Add reading of a streaming variant of the `barrier` element.
+             After `<barrier ... action="skip"/>`, skip the element immediately
+             following this barrier.
+
 
 \subsection version-8 Version 8
 
