@@ -73,6 +73,7 @@ namespace literal
 	static const QLatin1String v_align("v_align");
 	static const QLatin1String pattern("pattern");
 	static const QLatin1String rotation("rotation");
+	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
 }
 
@@ -277,7 +278,7 @@ void Object::save(QXmlStreamWriter& xml) const
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 		// For compatibility, we must keep the box size in the second coord ATM.
-		/// \todo Save box size separately
+		/// \todo From Mapper 1.0, save just the single anchor coordinate.
 		auto* object = const_cast<Object*>(this);
 		if (text->hasSingleAnchor())
 		{
@@ -312,6 +313,13 @@ void Object::save(QXmlStreamWriter& xml) const
 	else if (type == Text)
 	{
 		auto const* text = static_cast<TextObject const*>(this);
+		if (!text->hasSingleAnchor())
+		{
+			XmlElementWriter size_element(xml, literal::size);
+			auto size = text->getBoxSize();
+			size_element.writeAttribute(XmlStreamLiteral::width, size.nativeX());
+			size_element.writeAttribute(XmlStreamLiteral::height, size.nativeY());
+		}
 		xml.writeTextElement(literal::text, text->getText());
 	}
 }
@@ -433,6 +441,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			auto* text = static_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
+		}
+		else if (xml.name() == literal::size && object_type == Text)
+		{
+			auto* text = static_cast<TextObject*>(object);
+			XmlElementReader size_element(xml);
+			auto const w = size_element.attribute<decltype(MapCoord().nativeX())>(XmlStreamLiteral::width);
+			auto const h = size_element.attribute<decltype(MapCoord().nativeY())>(XmlStreamLiteral::height);
+			text->setBoxSize(MapCoord::fromNative(w, h));
 		}
 		else if (xml.name() == literal::tags)
 		{

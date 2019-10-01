@@ -10,8 +10,11 @@
 <symbol type="8" id="0" code="2" name="Text"><text_symbol icon_text=""><font family="Arial" size="4233"/><text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/></text_symbol></symbol>
 </symbols>
 <parts count="1" current="0">
-<part name="default part"><objects count="2">
+<part name="default part"><objects count="4">
 <object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="2">10000 0;16000 10000;</coords><text>boxed text</text></object>
+<object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="1">26000 0;</coords><size width="16000" height="10000"/><text>boxed text</text></object>
+<!-- Transitional mix of old form (size in coords) and new form (size element): trailing size element wins. -->
+<object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="2">42000 0;37 48;</coords><size width="16000" height="10000"/><text>boxed text</text></object>
 <object type="4" symbol="0" rotation="0" h_align="1" v_align="2"><coords count="1">-6000 0;</coords><text>single
 anchor</text></object>
 </objects></part>

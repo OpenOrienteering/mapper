@@ -95,6 +95,7 @@ public:
 
 - For writing, drop compatibility with Mapper versions before 0.9.
 - Use the streaming variant when writing `barrier` elements.
+- Stop writing text object box sizes to the coordinates stream.
 
 
 \subsection version-10-transition Transition to version 10
@@ -102,6 +103,8 @@ public:
 - 2019-10-01 Add reading of a streaming variant of the `barrier` element.
              After `<barrier ... action="skip"/>`, skip the element immediately
              following this barrier.
+- 2019-10-01 Add reading and writing of an explicit `size` element for text
+             object box size, in native (0.001 mm) coordinates.
 
 
 \subsection version-8 Version 8

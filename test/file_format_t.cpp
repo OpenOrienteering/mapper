@@ -673,6 +673,19 @@ void FileFormatTest::saveAndLoad()
 	
 	compareMaps(*new_map, *original);
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
+	
+	if (filepath.endsWith(QStringLiteral("text-object.omap")))
+	{
+		QCOMPARE(new_map->getNumParts(), 1);
+		auto const* part = new_map->getPart(0);
+		QCOMPARE(part->getNumObjects(), 4);
+		for (int i = 0; i < 3; ++i)
+		{
+			auto const* object = part->getObject(i);
+			QCOMPARE(object->getType(), Object::Text);
+			QCOMPARE(static_cast<TextObject const*>(object)->getBoxSize(), MapCoord::fromNative(16000, 10000));
+		}
+	}
 }
 
 
