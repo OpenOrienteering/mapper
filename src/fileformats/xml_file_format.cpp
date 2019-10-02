@@ -112,9 +112,9 @@ FileFormat::ImportSupportAssumption XMLFileFormat::understands(const char* buffe
 		{
 			if (xml.name() != QLatin1String("map"))
 				return NotSupported;
-			else if (xml.namespaceUri() == mapperNamespace())
+			if (xml.namespaceUri() == mapperNamespace())
 				return FullySupported;
-			else if (xml.namespaceUri() == QLatin1String("http://oorienteering.sourceforge.net/mapper/xml/v2"))
+			if (xml.namespaceUri() == QLatin1String("http://oorienteering.sourceforge.net/mapper/xml/v2"))
 			    return FullySupported;
 		}
 	}
@@ -221,6 +221,10 @@ XMLFileExporter::XMLFileExporter(const QString& path, const Map* map, const MapV
 	bool auto_formatting = path.endsWith(QLatin1String(".xmap"));
 	setOption(QString::fromLatin1("autoFormatting"), auto_formatting);
 }
+
+XMLFileExporter::~XMLFileExporter() = default;
+
+
 
 bool XMLFileExporter::exportImplementation()
 {
@@ -334,7 +338,7 @@ void XMLFileExporter::exportColors()
 			XmlElementWriter spotcolors_element(xml, literal::spotcolors);
 			spotcolors_element.writeAttribute(literal::knockout, color->getKnockout());
 			SpotColorComponent component;
-			switch(color->getSpotColorMethod())
+			switch (color->getSpotColorMethod())
 			{
 				case MapColor::SpotColor:
 					{
@@ -362,7 +366,7 @@ void XMLFileExporter::exportColors()
 		
 		{
 			XmlElementWriter cmyk_element(xml, literal::cmyk);
-			switch(color->getCmykColorMethod())
+			switch (color->getCmykColorMethod())
 			{
 				case MapColor::SpotColor:
 					cmyk_element.writeAttribute(literal::method, literal::spotcolor);
@@ -377,7 +381,7 @@ void XMLFileExporter::exportColors()
 		
 		{
 			XmlElementWriter rgb_element(xml, literal::rgb);
-			switch(color->getRgbColorMethod())
+			switch (color->getRgbColorMethod())
 			{
 				case MapColor::SpotColor:
 					rgb_element.writeAttribute(literal::method, literal::spotcolor);
@@ -420,7 +424,7 @@ void XMLFileExporter::exportMapParts()
 	auto num_parts = std::size_t(map->getNumParts());
 	parts_element.writeAttribute(literal::count, num_parts);
 	parts_element.writeAttribute(literal::current, map->current_part_index);
-	for (auto i = 0u; i < num_parts; ++i)
+	for (auto i = 0lu; i < num_parts; ++i)
 	{
 		writeLineBreak(xml);
 		map->getPart(i)->save(xml);
@@ -513,9 +517,11 @@ void XMLFileExporter::exportRedo()
 
 XMLFileImporter::XMLFileImporter(const QString& path, Map *map, MapView *view)
 : Importer(path, map, view)
-{
-	//NOP
-}
+{}
+
+XMLFileImporter::~XMLFileImporter() = default;
+
+
 
 void XMLFileImporter::addWarningUnsupportedElement()
 {
@@ -535,7 +541,7 @@ bool XMLFileImporter::importImplementation()
 		{
 			char data[4] = {};
 			device()->read(data, 4);
-			if (qstrncmp(reinterpret_cast<const char*>(data), "OMAP", 4) == 0)
+			if (qstrncmp(data, "OMAP", 4) == 0)
 			{
 				throw FileFormatException(::OpenOrienteering::Importer::tr(
 				  "Unsupported obsolete file format version. "
@@ -702,21 +708,23 @@ void XMLFileImporter::importGeoreferencing()
 		georef_offset_adjusted = true;
 }
 
+
+namespace {
+
 /** Helper for delayed actions */
 struct XMLFileImporterColorBacklogItem
 {
-	MapColor* color; // color which needs updating
-	SpotColorComponents components; // components of the color
+	MapColor* color;                 ///< Color which needs updating
+	SpotColorComponents components;  ///< Components of the color
 	bool knockout;
-	bool cmyk_from_spot; // determine CMYK from spot
-	bool rgb_from_spot; // determine RGB from spot
-	
-	XMLFileImporterColorBacklogItem(MapColor* color)
-	: color(color), knockout(false), cmyk_from_spot(false), rgb_from_spot(false)
-	{}
+	bool cmyk_from_spot;             ///< Determine CMYK from spot
+	bool rgb_from_spot;              ///< Determine RGB from spot
 };
-typedef std::vector<XMLFileImporterColorBacklogItem> XMLFileImporterColorBacklog;
-	
+
+using XMLFileImporterColorBacklog = std::vector<XMLFileImporterColorBacklogItem>;
+
+}  // namespace
+
 
 void XMLFileImporter::importColors()
 {
@@ -732,7 +740,7 @@ void XMLFileImporter::importColors()
 		if (xml.name() == literal::color)
 		{
 			XmlElementReader color_element(xml);
-			MapColor* color = new MapColor(
+			auto color = std::make_unique<MapColor>(
 			  color_element.attribute<QString>(literal::name),
 			  color_element.attribute<int>(literal::priority) );
 			if (color_element.hasAttribute(literal::opacity))
@@ -818,19 +826,16 @@ void XMLFileImporter::importColors()
 			
 			if (!components.empty())
 			{
-				backlog.push_back(XMLFileImporterColorBacklogItem(color));
-				XMLFileImporterColorBacklogItem& item = backlog.back();
-				item.components = components;
-				item.knockout = knockout;
-				item.cmyk_from_spot = (cmyk_method == literal::spotcolor);
-				item.rgb_from_spot = (rgb_method == literal::spotcolor);
+				auto const cmyk_from_spot = (cmyk_method == literal::spotcolor);
+				auto const rgb_from_spot = (rgb_method == literal::spotcolor);
+				backlog.push_back({color.get(), components, knockout, cmyk_from_spot, rgb_from_spot});
 			}
 			else if (knockout && !color->getKnockout())
 			{
 				addWarning(tr("Could not set knockout property of color '%1'.").arg(color->getName()));
 			}
 			
-			colors.push_back(color);
+			colors.push_back(color.release());
 		}
 		else
 		{
