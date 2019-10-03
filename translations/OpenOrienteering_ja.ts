@@ -29,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">ファイルを開くことができません:
+        <translation>ファイルを開くことができません:
 %1
 
 %2</translation>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="624"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">無効なファイル形式です。</translation>
+        <translation>無効なファイル形式です。</translation>
     </message>
 </context>
 <context>
@@ -45,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">質問</translation>
+        <translation>質問</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">インポートされた地図の縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
+        <translation>インポートされた地図の縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
 
 インポートされた地図の縮尺を変更しますか?</translation>
     </message>
@@ -62,18 +62,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">バージョン %1 の OCD ファイルはサポートされていません!</translation>
+        <translation>バージョン %1 の OCD ファイルはサポートされていません!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">座標は、OCAD 8 描画領域に収まるように調整されます (-2 m ... 2 m)。</translation>
+        <translation>座標は、OCAD 8 描画領域に収まるように調整されます (-2 m ... 2 m)。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">一部の座標が OCAD 8 描画領域外に残っています。 OCAD で到達できない可能性があります。</translation>
+        <translation>一部の座標が OCAD 8 描画領域外に残っています。 OCAD で到達できない可能性があります。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -99,12 +99,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">見つからないテンプレートの正しい位置を保存できません: &quot;%1&quot;</translation>
+        <translation>見つからないテンプレートの正しい位置を保存できません: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">&quot;%1&quot; 形式のテンプレートのエクスポートは、まだサポートされていません</translation>
+        <translation>テンプレートをエクスポートできません: ファイル形式 &quot;%1&quot; はまだサポートされていません</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
@@ -127,7 +127,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">エンコード &apos;%1&apos; は使用できません。設定を確認してください。</translation>
+        <translation>エンコード &apos;%1&apos; は使用できません。設定を確認してください。</translation>
     </message>
 </context>
 <context>
@@ -449,7 +449,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -715,7 +715,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -968,12 +968,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="427"/>
         <source>Start and end of the split line are at different parts of the object!</source>
-        <translation>分割ラインの始点と終点がオブジェクトの異なる部分にあります。</translation>
+        <translation>分割ラインの始点と終点がオブジェクトの異なる部分にあります!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="433"/>
         <source>Start and end of the split line are at the same position!</source>
-        <translation>分割ラインの始点と終点が同じ場所にあります。</translation>
+        <translation>分割ラインの始点と終点が同じ場所にあります!</translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
@@ -987,7 +987,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
         <source>Splitting holes of area objects is not supported yet!</source>
-        <translation>エリアへの穴あけは、まだサポートされていません。</translation>
+        <translation>エリアオブジェクトの穴の分割はまだサポートされていません!</translation>
     </message>
 </context>
 <context>
@@ -1620,7 +1620,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="51"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>アクションボタンのサイズ:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="69"/>
@@ -1729,7 +1729,7 @@ Rescale the imported data?</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">ファイルを保存できません
+        <translation>ファイルを保存できません
 %1:
 %2</translation>
     </message>
@@ -1823,17 +1823,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">テンプレート</translation>
+        <translation>テンプレート</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">面のハッチ表示</translation>
+        <translation>ハッチ領域</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
         <source>Baseline view</source>
-        <translation type="unfinished">ベースライン表示</translation>
+        <translation>ベースライン表示</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
@@ -1957,7 +1957,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="211"/>
         <source>The program must be restarted for the language change to take effect!</source>
-        <translation>言語の変更を有効にするには、OpenOrienteering Mapper を再起動する必要があります。</translation>
+        <translation>言語の変更を有効にするには、プログラムを再起動する必要があります!</translation>
     </message>
     <message>
         <source>Use translation file...</source>
@@ -2595,7 +2595,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="527"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>ヘルプ</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="548"/>
@@ -2621,12 +2621,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">すべてのファイル (*.*)</translation>
+        <translation>すべてのファイル (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2636,7 +2636,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished">px</translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
@@ -2662,7 +2662,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">幅:</translation>
+        <translation>幅:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2688,7 +2688,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2708,7 +2708,7 @@ Rescale the imported data?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">ファイルを開くことができません:
+        <translation>ファイルを開くことができません:
 %1
 
 %2</translation>
@@ -3412,7 +3412,7 @@ Do you want to save your changes?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">ファイルを開くことができません:
+        <translation>ファイルを開くことができません:
 %1
 
 %2</translation>
@@ -3441,7 +3441,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="851"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">無効なファイル形式です。</translation>
+        <translation>無効なファイル形式です。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="860"/>
@@ -3591,14 +3591,14 @@ Noを押して形式を変更します。</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="51"/>
         <location filename="../src/gui/main_window_controller.cpp" line="59"/>
         <source>Error</source>
-        <translation type="unfinished">エラー</translation>
+        <translation>エラー</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="52"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">次の地図が作成できません。
+        <translation>次の地図がエクスポートできません
 &quot;%1&quot;
 不明なフォーマットです。</translation>
     </message>
@@ -3607,9 +3607,9 @@ because the format is unknown.</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">次の地図が作成できません。
+        <translation>次の地図がエクスポートできません。
 &quot;%1&quot;
-%2 (%3)はサポートされていません。</translation>
+%2 (.%3) の保存はサポートされていません。</translation>
     </message>
 </context>
 <context>
@@ -4460,7 +4460,7 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1778"/>
         <location filename="../src/gui/map/map_editor.cpp" line="1811"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>内部エラーが発生しました。</translation>
+        <translation>内部エラーが発生しました!</translation>
     </message>
     <message>
         <source>Copied %1 object(s)</source>
@@ -4469,7 +4469,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1798"/>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>貼り付けのできるオブジェクトがクリップボードにありません。</translation>
+        <translation>貼り付けのできるオブジェクトがクリップボードにありません!</translation>
     </message>
     <message>
         <source>Pasted %1 object(s)</source>
@@ -4759,16 +4759,16 @@ selected</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">次の地図が作成できません。
+        <translation>次の地図がエクスポートできません。
 &quot;%1&quot;
-%2 (%3)はサポートされていません。</translation>
+%2 (.%3) の保存はサポートされていません。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="590"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">ファイルを保存できません
+        <translation>ファイルを保存できません
 %1:
 %2</translation>
     </message>
@@ -4777,18 +4777,18 @@ because saving as %2 (.%3) is not supported.</source>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="600"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">地図のエクスポート時に警告が発生しました。</translation>
+        <translation>地図のエクスポート時に警告が発生しました。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="642"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4074"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">地図のインポート時に警告が発生しました。</translation>
+        <translation>地図のインポート時に警告が発生しました。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="848"/>
@@ -4943,19 +4943,19 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4127"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">インポートするものがありません。</translation>
+        <translation>インポートするものがありません。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4139"/>
         <source>Question</source>
-        <translation type="unfinished">質問</translation>
+        <translation>質問</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">インポートされた地図の縮尺 1:%1 と、編集中の地図の縮尺 1:%2 が異なります。
+        <translation>インポートされた地図の縮尺 1:%1 と、この地図の縮尺 1:%2 が異なります。
 
 インポートされた地図の縮尺を変更しますか?</translation>
     </message>
@@ -5211,7 +5211,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1661"/>
         <source>Export</source>
-        <translation type="unfinished">エクスポート</translation>
+        <translation>エクスポート</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1736"/>
@@ -5794,7 +5794,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="139"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation>OCAD %1 のファイルはサポートされていません。</translation>
+        <translation>バージョン %1 の OCAD ファイルはサポートされていません!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="165"/>
@@ -5981,12 +5981,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1298"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1333"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
+        <translation>エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1323"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
+        <translation>エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
     </message>
 </context>
 <context>
@@ -5994,7 +5994,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="879"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>座標参照系 &apos;%1:%2&apos; を変換できませんでした。</translation>
     </message>
 </context>
 <context>
@@ -6132,22 +6132,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="522"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>色 &quot;%1&quot; は特別色 &quot;登録ブラック&quot; としてインポートされます。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - 主線</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1541"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - 二重線</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1548"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - フレーミング</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1586"/>
@@ -6183,7 +6183,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2397"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>OCD バージョン %1 ファイルのサポートは実験的です。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2403"/>
@@ -6201,7 +6201,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2068"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
+        <translation>線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
     </message>
 </context>
 <context>
@@ -6209,22 +6209,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1434"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
+        <translation>線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1455"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">線の記号「%1」で、ダッシュ グループを無視します。</translation>
+        <translation>線の記号「%1」で、破線グループを無視します。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1466"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
+        <translation>線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1560"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
+        <translation>線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
     </message>
 </context>
 <context>
@@ -6232,17 +6232,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>テキスト記号 %1: カスタム文字間隔が設定され、その実装はまだ OCAD の動作と一致しません</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">テキスト記号 %1 で: 下線を無視しています</translation>
+        <translation>テキスト記号 %1 で: 下線を無視しています</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1767"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">テキスト記号 %1 で: カーニングを無視しています</translation>
+        <translation>テキスト記号 %1 で: カーニングを無視しています</translation>
     </message>
 </context>
 <context>
@@ -6250,37 +6250,37 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1676"/>
         <source>Unknown file extension %1, only GPX, KML, and SHP files are supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>不明なファイル拡張子 %1。GPX、KML、および SHP ファイルのみがサポートされています。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1683"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル拡張子 %1 のドライバーが見つかりませんでした</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1695"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>データセットの作成に失敗しました: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1740"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>レイヤーの作成に失敗しました: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1878"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>マップはジオリファレンスされません。ローカルジオリファレンスのみ。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1891"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンス情報を正しくエクスポートできませんでした。ローカルジオリファレンスのみ。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1901"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ドライバーには、有効なジオリフェンシング情報が必要です。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1973"/>
@@ -6288,17 +6288,17 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2062"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2108"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>レイヤーにフィーチャーを作成できませんでした: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2122"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>レイヤー %1 の作成に失敗しました: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2129"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>名前フィールドの作成に失敗しました: %1</translation>
     </message>
 </context>
 <context>
@@ -6912,7 +6912,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="959"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>マップに、ラスターモードを必要とする透明な要素が含まれています。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1122"/>
@@ -7340,7 +7340,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="587"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="594"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>記号セットを読み込みできません。中止します。</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -7355,7 +7355,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="600"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished">記号セットのインポートで警告が生成されました。</translation>
+        <translation>記号セットのインポートで警告が生成されました。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="606"/>
@@ -7427,29 +7427,29 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">地図座標系の原点</translation>
+        <translation>地図座標系の原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">ジオリファレンスの参照点</translation>
+        <translation>ジオリファレンスの参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">その他の座標、</translation>
+        <translation>その他の座標、</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -7578,35 +7578,35 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいスケール:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">地図座標系の原点</translation>
+        <translation>地図座標系の原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">ジオリファレンスの参照点</translation>
+        <translation>ジオリファレンスの参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">その他の座標、</translation>
+        <translation>その他の座標、</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7657,7 +7657,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;&gt;%1&lt;/b&gt;: 個々のオブジェクトスケーリングに切り替えます。 </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7737,7 +7737,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; にアクセスするには、追加のアクセス許可が必要です。</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -7796,7 +7796,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>アイコン</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7918,12 +7918,12 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="902"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="928"/>
         <source>An internal error occurred, sorry!</source>
-        <translation>内部エラーが発生しました。</translation>
+        <translation>内部エラーが発生しました!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>貼り付けのできる記号がクリップボードにありません。</translation>
+        <translation>貼り付けのできる記号がクリップボードにありません!</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1114"/>
@@ -7986,7 +7986,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>カスタムアイコンを表示する</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="143"/>
@@ -8173,7 +8173,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/gui/widgets/symbol_tooltip.cpp" line="201"/>
         <source>No description!</source>
-        <translation>説明なし</translation>
+        <translation>説明はありません!</translation>
     </message>
 </context>
 <context>
@@ -8340,7 +8340,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="147"/>
         <source>Failed to calculate adjustment!</source>
-        <translation>調節の計算に失敗しました。</translation>
+        <translation>調節の計算に失敗しました!</translation>
     </message>
 </context>
 <context>
@@ -8485,7 +8485,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_image.cpp" line="167"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンスが見つかりません</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="181"/>
@@ -8786,7 +8786,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="276"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">ジオリファレンス</translation>
+        <translation>ジオリファレンス</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="436"/>
@@ -8812,17 +8812,17 @@ Failed to load template. Does the file exist and is it valid?</source>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">地図ファイルをロードできません、中断します。</translation>
+        <translation>地図ファイルを読み込みできません、中断します。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">地図のインポート時に警告が発生しました。</translation>
+        <translation>地図のインポート時に警告が発生しました。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1027"/>
@@ -8848,7 +8848,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>ジオリファレンス状態を変更できません。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
@@ -8873,7 +8873,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">地図ファイルをロードできません、中断します。</translation>
+        <translation>地図ファイルを読み込みできません、中断します。</translation>
     </message>
 </context>
 <context>
@@ -9402,7 +9402,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>

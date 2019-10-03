@@ -6417,7 +6417,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>Nie udało się zapisać obrazu. Być może brakuje rozszerzenia pliku.</translation>
+        <translation>Nie udało się zapisać obrazu. Być może brakuje rozszerzenia pliku?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="246"/>

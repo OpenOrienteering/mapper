@@ -8066,7 +8066,7 @@ před chvílí, víme, vypadla z kabiny svého létadla.
     <message>
         <location filename="../src/templates/template_image.cpp" line="167"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferenční údaje nebyly nalezeny</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="181"/>
