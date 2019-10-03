@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
     <notes></notes>
     <georeferencing scale="15000">
         <projected_crs id="Local"/>
@@ -197,7 +197,7 @@
             </symbol>
             <symbol type="8" id="4" code="105" name="Contour value">
                 <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
-                <text_symbol icon_text="225">
+                <text_symbol icon_text="225" rotatable="true">
                     <font family="Arial" size="2076"/>
                     <text color="7" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
@@ -2379,7 +2379,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
             </symbol>
             <symbol type="8" id="139" code="603.1" name="Spot height, text">
                 <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</description>
-                <text_symbol icon_text="321">
+                <text_symbol icon_text="321" rotatable="true">
                     <font family="Arial" size="2087"/>
                     <text color="1" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
