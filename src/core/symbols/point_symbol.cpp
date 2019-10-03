@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -597,7 +597,7 @@ void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*point_symbol*/);
 }
 
-bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	if (xml.name() != QLatin1String("point_symbol"))
 		return false;
@@ -622,7 +622,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 			{
 				if (xml.name() == QLatin1String("symbol") && !symbol)
 				{
-					symbol = Symbol::load(xml, map, symbol_dict);
+					symbol = Symbol::load(xml, map, symbol_dict, version);
 				}
 				else if (xml.name() == QLatin1String("object") && symbol)
 				{

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2012-2015  Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -102,6 +102,7 @@ protected:
 private:
 	QXmlStreamReader xml;
 	SymbolDictionary symbol_dict;
+	int version = -1;
 	bool georef_offset_adjusted;
 };
 

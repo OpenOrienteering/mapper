@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -218,7 +218,7 @@ public:
 	 * @param map Reference to the map which will eventually contain the symbol.
 	 * @param symbol_dict Dictionary mapping symbol IDs to symbols.
 	 */
-	static std::unique_ptr<Symbol> load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+	static std::unique_ptr<Symbol> load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version);
 	
 	/**
 	 * Called when loading the map is finished.
@@ -554,7 +554,7 @@ protected:
 	 * Returns false if the current xml tag does not belong to the symbol and
 	 * should be skipped, true if the element has been read completely.
 	 */
-	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) = 0;
+	virtual bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) = 0;
 	
 	/**
 	 * Must be overridden to compare specific attributes.

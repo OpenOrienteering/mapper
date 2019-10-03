@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -285,7 +285,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	}
 }
 
-std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	Q_ASSERT(xml.name() == QLatin1String("symbol"));
 	XmlElementReader symbol_element(xml);
@@ -363,7 +363,7 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 		}
 		else
 		{
-			if (!symbol->loadImpl(xml, map, symbol_dict))
+			if (!symbol->loadImpl(xml, map, symbol_dict, version))
 				xml.skipCurrentElement();
 		}
 	}

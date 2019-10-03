@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -553,7 +553,7 @@ bool XMLFileImporter::importImplementation()
 	}
 	
 	XmlElementReader map_element(xml);
-	const int version = map_element.attribute<int>(literal::version);
+	version = map_element.attribute<int>(literal::version);
 	if (version < 1)
 		xml.raiseError(::OpenOrienteering::Importer::tr("Invalid file format version."));
 	else if (version < XMLFileFormat::minimum_version)
@@ -907,7 +907,7 @@ void XMLFileImporter::importSymbols()
 	{
 		if (xml.name() == literal::symbol)
 		{
-			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict).release());
+			map->symbols.push_back(Symbol::load(xml, *map, symbol_dict, version).release());
 		}
 		else
 		{

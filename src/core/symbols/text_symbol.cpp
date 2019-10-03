@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -391,10 +391,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*text_symbol*/);
 }
 
-bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& /*symbol_dict*/, int /*version*/)
 {
-	Q_UNUSED(symbol_dict);
-	
 	if (xml.name() != QLatin1String("text_symbol"))
 		return false;
 	
