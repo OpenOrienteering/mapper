@@ -253,7 +253,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 <object type="1" symbol="39"><coords count="13">-5518 -32833 1;-5753 -32481;-5658 -32005;-5306 -31771 1;-4954 -31536;-4478 -31631;-4244 -31983 1;-4009 -32335;-4104 -32811;-4456 -33045 1;-4808 -33280;-5284 -33185;-5518 -32833 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="0" symbol="86"><coords count="1">-11051 -29936;</coords></object>
 <object type="0" symbol="82"><coords count="1">-3723 -27231;</coords></object>
-<object type="0" symbol="62" rotation="0"><coords count="1">-7735 -27065;</coords></object>
+<object type="0" symbol="62"><coords count="1">-7735 -27065;</coords></object>
 <object type="0" symbol="62" rotation="3.11777"><coords count="1">-7707 -26000;</coords></object>
 </objects></part>
 </parts>

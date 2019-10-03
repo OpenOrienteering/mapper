@@ -20217,7 +20217,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="156" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="156" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="96839" y="27067"/>
                         </coords>

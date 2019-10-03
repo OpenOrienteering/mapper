@@ -478,7 +478,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 <object type="1" symbol="111"><coords count="7">-23641 -49534 32;-23612 -51499 32;-22603 -51484 32;-22613 -50815 32;-22221 -50809 32;-22240 -49513 32;-23641 -49534 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="111"><coords count="25">-29262 -51167 32;-26202 -51196 32;-26206 -51587 32;-24569 -51603 32;-24595 -54334 32;-26114 -54319 32;-26110 -53945 32;-29320 -53914 32;-29324 -54296 32;-30933 -54281 32;-30937 -54746 32;-32411 -54732 32;-32397 -53278 32;-32937 -53263 32;-32918 -51318 32;-33495 -51312 32;-33483 -50013 32;-32829 -50019 32;-32841 -51264 32;-32292 -51269 32;-32299 -51997 32;-30826 -52011 32;-30822 -51586 32;-29266 -51601 32;-29262 -51167 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="111"><coords count="5">-29686 -49599 32;-28874 -49599 32;-28874 -49276 32;-29686 -49276 32;-29686 -49599 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="0" symbol="114" rotation="0"><coords count="1">-26374 -48998;</coords></object>
+<object type="0" symbol="114"><coords count="1">-26374 -48998;</coords></object>
 <object type="1" symbol="111"><coords count="5">-27300 -45487 32;-26809 -46006 32;-27211 -46387 32;-27702 -45868 32;-27300 -45487 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="111"><coords count="7">-34488 -50010 32;-34488 -51721 32;-34781 -51721 32;-34781 -51320 32;-35211 -51320 32;-35211 -50010 32;-34488 -50010 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="111"><coords count="23">-43316 -54752 32;-43267 -51965 32;-41881 -51989 32;-41887 -52345 32;-40132 -52376 32;-40125 -51984 32;-38567 -52011 32;-38560 -51613 32;-37012 -51640 32;-37006 -51300 32;-35642 -51324 32;-35654 -51996 32;-35427 -52000 32;-35475 -54737 32;-37001 -54710 32;-36995 -54361 32;-38682 -54331 32;-38689 -54743 32;-40276 -54715 32;-40283 -55124 32;-41853 -55096 32;-41847 -54778 32;-43316 -54752 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
@@ -4157,7 +4157,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 <object type="1" symbol="119"><coords count="10">-16739 13703;-24033 13593;-23893 2165;-20125 2235;-20173 13114;-17348 13104;-17246 2009;-16426 2012;-16459 12674;-16739 13703 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="87"><coords count="3">-11834 13678;-15436 13652;-15423 11802;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="87"><coords count="2">-15419 8897;-15410 6105;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="0" symbol="114" rotation="0"><coords count="1">-14797 2808;</coords></object>
+<object type="0" symbol="114"><coords count="1">-14797 2808;</coords></object>
 <object type="1" symbol="109"><coords count="4">-15411 6114;-15406 2558 32;-15406 2183 32;-11555 2188;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="109"><coords count="2">-15428 11818;-15419 8897;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="105"><coords count="2">-11834 13678;-8633 13701;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
@@ -4773,15 +4773,15 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 <object type="1" symbol="1"><coords count="20">-90081 87295 1;-88904 87663;-88866 87631;-87777 87896 1;-86608 88180;-85808 87191;-85477 86452;-74252 52606 1;-74077 52075;-73143 51784;-72928 51898 1;-72514 52117;-72271 52360;-72088 52657 1;-69677 56571;-68581 58935;-65929 62690 1;-65359 63497;-65039 63950;-64469 64757 16;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="1"><coords count="57">-58129 64311 1;-58237 63013;-58757 62349;-59461 61252 1;-61129 58653;-62367 57397;-63977 54762 1;-65401 52432;-66406 51244;-67653 48815 1;-68965 46259;-69382 44645;-69627 41783 1;-70167 35481;-69198 33882;-68259 30659;-63792 15201;-63391 13475 1;-63213 12954;-62713 12716;-62177 12846 1;-60743 13194;-59861 13450;-58374 13423 1;-57251 13403;-56529 13169;-55670 12446 1;-55374 12197;-55327 11948;-55112 11626 1;-54774 11119;-54387 10945;-54187 10369 1;-53834 9353;-53814 8732;-53577 7683 1;-53363 6737;-53908 5958;-54763 5502 1;-55535 5090;-56383 5488;-56892 6200 1;-57257 6711;-57329 7272;-56996 7805 1;-56763 8177;-56738 8505;-56874 8922 1;-57021 9373;-57429 9567;-57904 9567 1;-58992 9567;-59431 8764;-60468 8433 1;-61332 8157;-61963 7532;-61777 6671 16;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="1"><coords count="13">23449 -54909 1;24004 -55081;24327 -55630;24170 -56134 1;24013 -56638;23436 -56907;22881 -56735 1;22326 -56562;22003 -56013;22160 -55509 1;22316 -55005;22893 -54736;23449 -54909 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="171" rotation="0" h_align="1" v_align="2"><coords count="1">73320 -54693;</coords><text>N</text></object>
+<object type="4" symbol="171" h_align="1" v_align="2"><coords count="1">73320 -54693;</coords><text>N</text></object>
 <object type="1" symbol="44"><coords count="4">69062 -61008;77555 -61008;73312 -68970;69062 -61008 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="171" rotation="0" h_align="1" v_align="2"><coords count="1">85399 110654;</coords><text>N</text></object>
+<object type="4" symbol="171" h_align="1" v_align="2"><coords count="1">85399 110654;</coords><text>N</text></object>
 <object type="1" symbol="44"><coords count="4">81141 104339;89634 104339;85391 96377;81141 104339 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="171" rotation="0" h_align="1" v_align="2"><coords count="1">-85692 22052;</coords><text>N</text></object>
+<object type="4" symbol="171" h_align="1" v_align="2"><coords count="1">-85692 22052;</coords><text>N</text></object>
 <object type="1" symbol="44"><coords count="4">-89950 15737;-81457 15737;-85700 7775;-89950 15737 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 </objects></part>
 <part name="Map key"><objects count="54">
-<object type="4" symbol="169" rotation="0" h_align="0" v_align="1"><coords count="1">-90770 -101448;</coords><text>Construction area, forbidden access!
+<object type="4" symbol="169" h_align="0" v_align="1"><coords count="1">-90770 -101448;</coords><text>Construction area, forbidden access!
 Street / asphalt, with / without traffic
 Big signs, playground items, etc.</text></object>
 <object type="1" symbol="73"><coords count="5">-94509 -62288 32;-91828 -62288 32;-91828 -59664 32;-94509 -59664 32;-94509 -62288 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
@@ -4793,7 +4793,7 @@ Big signs, playground items, etc.</text></object>
 <object type="1" symbol="115"><coords count="5">-94217 -80160 32;-92083 -80160 32;-92083 -78042 32;-94217 -78042 32;-94217 -80160 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="0" symbol="143"><coords count="1">-95807 -93036;</coords></object>
 <object type="0" symbol="142"><coords count="1">-93145 -93018;</coords></object>
-<object type="4" symbol="169" rotation="0" h_align="0" v_align="1"><coords count="1">-90746 -80314;</coords><text>Building; Canopy
+<object type="4" symbol="169" h_align="0" v_align="1"><coords count="1">-90746 -80314;</coords><text>Building; Canopy
 Street / asphalt, with / without traffic
 Private/flowerbed, forbidden access!
 Meadow; Meadow with trees; Forest
@@ -4857,24 +4857,24 @@ Well; Small erosion gully
 <object type="1" symbol="162"><coords count="5">-97183 -101608 32;-94502 -101608 32;-94502 -98984 32;-97183 -98984 32;-97183 -101608 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="162"><coords count="5">-94505 -101608 32;-91824 -101608 32;-91824 -98984 32;-94505 -98984 32;-94505 -101608 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="120"><coords count="5">-94505 -97983 32;-91824 -97983 32;-91824 -95359 32;-94505 -95359 32;-94505 -97983 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">-99428 -85496;</coords><text>Legend</text></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">-99743 -107017;</coords><text>Special Signatures</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">-99428 -85496;</coords><text>Legend</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">-99743 -107017;</coords><text>Special Signatures</text></object>
 </objects></part>
 <part name="Design"><objects count="29">
 <object type="1" symbol="179"><coords count="5">-108808 -113533 32;-108808 -149753 32;102997 -149753 32;102997 -113533 32;-108808 -113533 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="46"><coords count="14">-108808 -113533 32;-108808 -149753 32;102997 -149753 32;102997 -113533 33;102997 -107318;103133 -103770;103115 -102260 1;101634 -102168;99386 -102232;97055 -102227 1;78346 -102190;36945 -113533;13658 -113533;-108808 -113533 50;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="175" rotation="0" h_align="0" v_align="2"><coords count="1">59183 -130917;</coords><text>May 2013</text></object>
-<object type="4" symbol="175" rotation="0" h_align="0" v_align="2"><coords count="1">59183 -123479;</coords><text>Thomas Schöps</text></object>
-<object type="4" symbol="173" rotation="0" h_align="0" v_align="2"><coords count="1">-98032 -141948;</coords><text>Orienteering map</text></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">24405 -130921;</coords><text>Standing:</text></object>
-<object type="4" symbol="171" rotation="0" h_align="0" v_align="2"><coords count="1">-100736 -132215;</coords><text>Garching</text></object>
-<object type="4" symbol="172" rotation="0" h_align="0" v_align="2"><coords count="1">-100438 -131472;</coords><text>Garching</text></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">24405 -123483;</coords><text>Cartography:</text></object>
-<object type="4" symbol="175" rotation="0" h_align="0" v_align="2"><coords count="1">59183 -136073;</coords><text>2.5 m</text></object>
-<object type="4" symbol="175" rotation="0" h_align="0" v_align="2"><coords count="1">59183 -141376;</coords><text>1 : 4,000</text></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">24405 -141380;</coords><text>Scale:</text></object>
-<object type="4" symbol="174" rotation="0" h_align="0" v_align="2"><coords count="1">24405 -136077;</coords><text>Contours:</text></object>
-<object type="4" symbol="169" rotation="0" h_align="1" v_align="2"><coords count="1">76149 131570;</coords><text>Organizer, host, mapper, 
+<object type="4" symbol="175" h_align="0" v_align="2"><coords count="1">59183 -130917;</coords><text>May 2013</text></object>
+<object type="4" symbol="175" h_align="0" v_align="2"><coords count="1">59183 -123479;</coords><text>Thomas Schöps</text></object>
+<object type="4" symbol="173" h_align="0" v_align="2"><coords count="1">-98032 -141948;</coords><text>Orienteering map</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">24405 -130921;</coords><text>Standing:</text></object>
+<object type="4" symbol="171" h_align="0" v_align="2"><coords count="1">-100736 -132215;</coords><text>Garching</text></object>
+<object type="4" symbol="172" h_align="0" v_align="2"><coords count="1">-100438 -131472;</coords><text>Garching</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">24405 -123483;</coords><text>Cartography:</text></object>
+<object type="4" symbol="175" h_align="0" v_align="2"><coords count="1">59183 -136073;</coords><text>2.5 m</text></object>
+<object type="4" symbol="175" h_align="0" v_align="2"><coords count="1">59183 -141376;</coords><text>1 : 4,000</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">24405 -141380;</coords><text>Scale:</text></object>
+<object type="4" symbol="174" h_align="0" v_align="2"><coords count="1">24405 -136077;</coords><text>Contours:</text></object>
+<object type="4" symbol="169" h_align="1" v_align="2"><coords count="1">76149 131570;</coords><text>Organizer, host, mapper, 
 land owners and administration
 do not assume any liability!</text></object>
 <object type="0" symbol="181"><coords count="1">-75609 131433;</coords></object>
@@ -4886,12 +4886,12 @@ do not assume any liability!</text></object>
 <object type="1" symbol="66"><coords count="4">-23551 129615;-26814 129502;-29539 132352;-23551 129615 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="180"><coords count="17">-30664 135205;-28383 132918 1;-28305 132840;-28179 132840;-28101 132918 1;-28023 132995;-28023 133121;-28101 133199 1;-28992 134090;-29492 134590;-30383 135481 1;-30459 135557;-30582 135557;-30658 135481 1;-30732 135407;-30732 135286;-30664 135205 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="1" symbol="23"><coords count="31">-35052 130658;-31782 130658;-33709 132585 1;-34002 132878;-34002 133352;-33709 133645 1;-33460 133894;-33056 133894;-32807 133645 1;-31544 132382;-30836 131674;-29573 130411 1;-29228 130066;-29577 129262;-30065 129262 1;-32132 129262;-33292 129262;-35359 129262 1;-35604 129262;-35761 129338;-35934 129511 1;-37787 131364;-38825 132402;-40678 134255 1;-40989 134566;-40989 135072;-40678 135383 1;-40415 135646;-39989 135646;-39726 135383;-35052 130658 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="177" rotation="0" h_align="1" v_align="2"><coords count="1">-35070 136617;</coords><text>Munich SprintCup</text></object>
-<object type="4" symbol="176" rotation="0" h_align="0" v_align="2"><coords count="1">-53727 113748;</coords><text>www.ol-gruenwald.de</text></object>
-<object type="4" symbol="176" rotation="0" h_align="0" v_align="2"><coords count="1">-53661 117691;</coords><text>www.ol-landshut.de</text></object>
-<object type="4" symbol="178" rotation="0" h_align="2" v_align="2"><coords count="1">-54952 117697;</coords><text>Landshut and Freising:</text></object>
-<object type="4" symbol="178" rotation="0" h_align="0" v_align="2"><coords count="1">-96409 113730;</coords><text>Munich:</text></object>
-<object type="4" symbol="178" rotation="0" h_align="0" v_align="2"><coords count="1">-96266 109471;</coords><text>Orienteering in ...</text></object>
+<object type="4" symbol="177" h_align="1" v_align="2"><coords count="1">-35070 136617;</coords><text>Munich SprintCup</text></object>
+<object type="4" symbol="176" h_align="0" v_align="2"><coords count="1">-53727 113748;</coords><text>www.ol-gruenwald.de</text></object>
+<object type="4" symbol="176" h_align="0" v_align="2"><coords count="1">-53661 117691;</coords><text>www.ol-landshut.de</text></object>
+<object type="4" symbol="178" h_align="2" v_align="2"><coords count="1">-54952 117697;</coords><text>Landshut and Freising:</text></object>
+<object type="4" symbol="178" h_align="0" v_align="2"><coords count="1">-96409 113730;</coords><text>Munich:</text></object>
+<object type="4" symbol="178" h_align="0" v_align="2"><coords count="1">-96266 109471;</coords><text>Orienteering in ...</text></object>
 </objects></part>
 </parts>
 <templates count="0" first_front_template="0">

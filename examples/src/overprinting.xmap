@@ -7089,7 +7089,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="-14902" y="-45736"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="139" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="139" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-44934" y="-51808"/>
                         </coords>

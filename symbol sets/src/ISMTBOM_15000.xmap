@@ -7291,7 +7291,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
                             <coord x="-3723" y="-27231"/>
                         </coords>
                     </object>
-                    <object type="0" symbol="62" rotation="0">
+                    <object type="0" symbol="62">
                         <coords count="1">
                             <coord x="-7735" y="-27065"/>
                         </coords>

@@ -247,7 +247,7 @@ void Object::save(QXmlStreamWriter& xml) const
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
 		object_element.writeAttribute(literal::symbol, symbol_index);
-	if (symbol->isRotatable())
+	if (symbol->isRotatable() && !qIsNull(rotation))
 		object_element.writeAttribute(literal::rotation, rotation);
 	
 	if (type == Text)

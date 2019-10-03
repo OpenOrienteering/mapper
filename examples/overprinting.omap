@@ -221,7 +221,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 <object type="1" symbol="113"><coords count="13">-13281 -51435 1;-13605 -51008;-13521 -50401;-13093 -50078 1;-12667 -49755;-12059 -49839;-11737 -50265 1;-11414 -50692;-11498 -51299;-11925 -51623 1;-12351 -51945;-12959 -51861;-13281 -51435 18;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
 <object type="0" symbol="156"><coords count="1">-25283 -38824;</coords></object>
 <object type="0" symbol="141"><coords count="1">-14902 -45736;</coords></object>
-<object type="4" symbol="139" rotation="0" h_align="0" v_align="2"><coords count="1">-44934 -51808;</coords><text>Click menu  View &gt; Overprinting simulation
+<object type="4" symbol="139" h_align="0" v_align="2"><coords count="1">-44934 -51808;</coords><text>Click menu  View &gt; Overprinting simulation
 or press F4 to toggle
 overprinting preview.</text></object>
 </objects></part>

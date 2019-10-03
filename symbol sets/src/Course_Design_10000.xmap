@@ -10124,7 +10124,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="39000" y="-6000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="25" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="15000" y="0"/>
                         </coords>
@@ -10140,25 +10140,25 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="30000" y="-6000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="9000" y="12000"/>
                         </coords>
                         <text>3</text>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="9000" y="18000"/>
                         </coords>
                         <text>4</text>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="30000" y="-18000"/>
                         </coords>
                         <text>M45, M50, W21</text>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="15000" y="-12000"/>
                         </coords>
@@ -10179,7 +10179,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="27000" y="0"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="33000" y="-12000"/>
                         </coords>
@@ -10215,7 +10215,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="33000" y="12000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="25" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="15000" y="18000"/>
                         </coords>
@@ -10236,25 +10236,25 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="27000" y="6000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="48000" y="-12000"/>
                         </coords>
                         <text>15 m</text>
                     </object>
-                    <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="25" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="15000" y="6000"/>
                         </coords>
                         <text>212</text>
                     </object>
-                    <object type="4" symbol="25" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="25" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="15000" y="12000"/>
                         </coords>
                         <text>135</text>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="30000" y="-24000"/>
                         </coords>
@@ -10265,7 +10265,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="39000" y="18000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="9000" y="0"/>
                         </coords>
@@ -10276,7 +10276,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="30000" y="0"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="208" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="208" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="30000" y="24000"/>
                         </coords>
@@ -10287,7 +10287,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="30000" y="18000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="24" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="24" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="9000" y="6000"/>
                         </coords>
@@ -10311,7 +10311,7 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="3" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-51250" y="4156"/>
                         </coords>
@@ -10322,19 +10322,19 @@ The orientation of the symbol indicates the direction in which the corner points
                             <coord x="33000" y="18000"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="3" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-39000" y="17029"/>
                         </coords>
                         <text>2</text>
                     </object>
-                    <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="3" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-30327" y="-4633"/>
                         </coords>
                         <text>3</text>
                     </object>
-                    <object type="4" symbol="3" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="3" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-29960" y="13062"/>
                         </coords>
