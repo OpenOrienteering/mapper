@@ -267,8 +267,7 @@ void Object::save(QXmlStreamWriter& xml) const
 	if (type == Point)
 	{
 		auto const* point = static_cast<PointObject const*>(this);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol->isRotatable())
+		if (getSymbol()->isRotatable())
 			object_element.writeAttribute(literal::rotation, point->getRotation());
 	}
 	else if (type == Text)
@@ -373,10 +372,9 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	if (object_type == Point)
 	{
 		auto* point = static_cast<PointObject*>(object);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol && point_symbol->isRotatable())
+		if (object->symbol->isRotatable())
 			point->setRotation(object_element.attribute<qreal>(literal::rotation));
-		else if (!point_symbol)
+		else if (!object->symbol)  /// \todo Unreachable
 			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
 	}
 	else if (object_type == Text)
@@ -3137,8 +3135,7 @@ void PointObject::copyFrom(const Object& other)
 	
 	Object::copyFrom(other);
 	const PointObject* point_other = other.asPoint();
-	const PointSymbol* point_symbol = getSymbol()->asPoint();
-	if (point_symbol && point_symbol->isRotatable())
+	if (getSymbol() && getSymbol()->isRotatable())
 		setRotation(point_other->getRotation());
 }
 
@@ -3187,8 +3184,8 @@ void PointObject::transform(const QTransform& t)
 
 void PointObject::setRotation(qreal new_rotation)
 {
-	Q_ASSERT(symbol->asPoint()->isRotatable() || qIsNull(new_rotation));
-	if (!qIsNaN(new_rotation) && symbol->asPoint()->isRotatable())
+	Q_ASSERT(symbol->isRotatable() || qIsNull(new_rotation));
+	if (!qIsNaN(new_rotation) && symbol->isRotatable())
 	{
 		rotation = new_rotation;
 		setOutputDirty();

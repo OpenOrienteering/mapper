@@ -128,8 +128,7 @@ public:
 	bool isSymmetrical() const;
 	
 	// Getters / Setters
-	inline bool isRotatable() const {return rotatable;}
-	inline void setRotatable(bool enable) {rotatable = enable;}
+	using Symbol::setRotatable; /* public visibility */
 	inline int getInnerRadius() const {return inner_radius;}
 	inline void setInnerRadius(int value) {inner_radius = value;}
 	inline const MapColor* getInnerColor() const {return inner_color;}
@@ -160,7 +159,6 @@ protected:
 	const MapColor* outer_color;
 	int inner_radius;		// in 1/1000 mm
 	int outer_width;		// in 1/1000 mm
-	bool rotatable;
 };
 
 

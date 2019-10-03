@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,7 +41,6 @@
 #include "gui/map/map_widget.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
-#include "core/symbols/point_symbol.h"
 #include "gui/modifier_key.h"
 #include "tools/tool.h"
 #include "tools/tool_helpers.h"
@@ -183,7 +182,7 @@ void RotatePatternTool::dragMove()
 		/// \todo Refactor, provide a unified interface for rotation in Object
 		if (object->getType() == Object::Point)
 		{
-			if (object->getSymbol()->asPoint()->isRotatable())
+			if (object->getSymbol()->isRotatable())
 				object->asPoint()->setRotation(rotation);
 		}
 		else if (object->getType() == Object::Path)

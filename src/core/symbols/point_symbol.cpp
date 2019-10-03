@@ -60,7 +60,6 @@ PointSymbol::PointSymbol() noexcept
 , outer_color { nullptr }
 , inner_radius { 1000 }
 , outer_width { 0 }
-, rotatable { false }
 {
 	// nothing else
 }
@@ -72,7 +71,6 @@ PointSymbol::PointSymbol(const PointSymbol& proto)
 , outer_color { proto.outer_color }
 , inner_radius { proto.inner_radius }
 , outer_width { proto.outer_width }
-, rotatable { proto.rotatable }
 {
 	elements.reserve(proto.elements.size());
 	std::transform(begin(proto.elements), end(proto.elements), std::back_inserter(elements), [this](const auto& element) {
@@ -579,7 +577,7 @@ qreal PointSymbol::dimensionForIcon() const
 void PointSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QString::fromLatin1("point_symbol"));
-	if (rotatable)
+	if (isRotatable())
 		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
 	xml.writeAttribute(QString::fromLatin1("inner_radius"), QString::number(inner_radius));
 	xml.writeAttribute(QString::fromLatin1("inner_color"), QString::number(map.findColorIndex(inner_color)));
@@ -603,7 +601,7 @@ bool PointSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictiona
 		return false;
 	
 	QXmlStreamAttributes attributes(xml.attributes());
-	rotatable = (attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
+	setRotatable(attributes.value(QLatin1String("rotatable")) == QLatin1String("true"));
 	inner_radius = attributes.value(QLatin1String("inner_radius")).toInt();
 	int temp = attributes.value(QLatin1String("inner_color")).toInt();
 	inner_color = map.getColor(temp);
@@ -645,8 +643,6 @@ bool PointSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensi
 {
 	const PointSymbol* point = static_cast<const PointSymbol*>(other);
 	
-	if (rotatable != point->rotatable)
-		return false;
 	if (!MapColor::equal(inner_color, point->inner_color))
 		return false;
 	if (inner_color && inner_radius != point->inner_radius)

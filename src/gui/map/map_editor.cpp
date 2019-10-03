@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -105,7 +105,6 @@
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "core/symbols/point_symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/symbol_icon_decorator.h"
@@ -169,6 +168,9 @@
 
 
 namespace OpenOrienteering {
+
+class PointSymbol;
+
 
 namespace {
 	
@@ -2394,7 +2396,7 @@ void MapEditorController::updateObjectDependentActions()
 			
 			if (symbol->getType() == Symbol::Point)
 			{
-				have_rotatable_point |= symbol->asPoint()->isRotatable();
+				have_rotatable_point |= symbol->isRotatable();
 			}
 			else if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 			{

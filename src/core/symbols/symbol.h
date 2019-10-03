@@ -464,6 +464,23 @@ public:
 	
 	
 	/**
+	 * Returns if objects with this symbol can be rotated in arbitrary directions.
+	 */
+	bool isRotatable() const { return is_rotatable; }
+	
+protected:
+	/**
+	 * Sets the rotatability state of the symbol.
+	 * 
+	 * Symbol implementations which are to support user-defined object
+	 * rotatability shall import this function into public visibility.
+	 * They also need to handle saving and loading.
+	 */
+	void setRotatable(bool value);
+	
+	
+public:
+	/**
 	 * Creates a properties widget for the symbol.
 	 */
 	virtual SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) = 0;
@@ -572,6 +589,7 @@ private:
 	bool is_helper_symbol;    /// \see isHelperSymbol()
 	bool is_hidden;           /// \see isHidden()
 	bool is_protected;        /// \see isProtected()
+	bool is_rotatable = false;
 };
 
 

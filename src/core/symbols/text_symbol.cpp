@@ -81,6 +81,7 @@ TextSymbol::TextSymbol()
 , framing { false }
 , line_below { false }
 {
+	setRotatable(true);
 	updateQFont();
 }
 

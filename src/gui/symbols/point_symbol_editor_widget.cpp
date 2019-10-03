@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -103,7 +103,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	}
 	
 	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
-	oriented_to_north->setChecked(!symbol->rotatable);
+	oriented_to_north->setChecked(!symbol->isRotatable());
 	
 	QLabel* elements_label = Util::Headline::create(tr("Elements"));
 	element_list = new QListWidget();
@@ -427,7 +427,7 @@ void PointSymbolEditorWidget::initElementList()
 
 void PointSymbolEditorWidget::orientedToNorthClicked(bool checked)
 {
-	symbol->rotatable = !checked;
+	symbol->setRotatable(!checked);
 	emit symbolEdited();
 }
 

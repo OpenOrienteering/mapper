@@ -87,6 +87,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_helper_symbol { proto.is_helper_symbol }
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
+, is_rotatable { proto.is_rotatable }
 {
 	// nothing else
 }
@@ -108,6 +109,7 @@ bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity) c
 	return type == other->type
 	       && numberEquals(other)
 	       && is_helper_symbol == other->is_helper_symbol
+	       && is_rotatable == other->is_rotatable
 	       && name.compare(other->name, case_sensitivity) == 0
 	       && description.compare(other->description, case_sensitivity) == 0
 	       && equalsImpl(other, case_sensitivity);
@@ -841,6 +843,13 @@ QString Symbol::getNumberAsString() const
 	}
 	string.chop(1);
 	return string;
+}
+
+
+
+void Symbol::setRotatable(bool value)
+{
+	is_rotatable = value;
 }
 
 
