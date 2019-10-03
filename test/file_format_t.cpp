@@ -349,6 +349,7 @@ namespace
 	
 	auto const xml_test_files = {
 	  "data:barrier.omap",
+	  "data:rotated.omap",
 	  "data:tags.omap",
 	  "data:text-object.omap",
 	  "data:undo.omap",
