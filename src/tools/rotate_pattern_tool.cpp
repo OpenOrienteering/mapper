@@ -179,11 +179,9 @@ void RotatePatternTool::dragMove()
 	
 	for (auto object : editedObjects())
 	{
-		/// \todo Refactor, provide a unified interface for rotation in Object
-		if (object->getType() == Object::Point)
+		if (object->getSymbol()->isRotatable())
 		{
-			if (object->getSymbol()->isRotatable())
-				object->asPoint()->setRotation(rotation);
+			object->setRotation(rotation);
 		}
 		else if (object->getType() == Object::Path)
 		{
