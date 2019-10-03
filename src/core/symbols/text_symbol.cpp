@@ -338,6 +338,8 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
 	xml.writeStartElement(QStringLiteral("text_symbol"));
 	xml.writeAttribute(QStringLiteral("icon_text"), icon_text);
+	if (isRotatable())
+		xml.writeAttribute(QString::fromLatin1("rotatable"), QString::fromLatin1("true"));
 	
 	xml.writeStartElement(QStringLiteral("font"));
 	xml.writeAttribute(QStringLiteral("family"), font_family);
@@ -392,12 +394,16 @@ void TextSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*text_symbol*/);
 }
 
-bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& /*symbol_dict*/, int /*version*/)
+bool TextSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& /*symbol_dict*/, int version)
 {
 	if (xml.name() != QLatin1String("text_symbol"))
 		return false;
 	
 	icon_text = xml.attributes().value(QLatin1String("icon_text")).toString();
+	if (xml.attributes().hasAttribute(QLatin1String("rotatable")))
+		setRotatable(xml.attributes().value(QLatin1String("rotatable")) == QLatin1String("true"));
+	else
+		setRotatable(version < 9); // always rotatable before version 9
 	framing = false;
 	line_below = false;
 	custom_tabs.clear();

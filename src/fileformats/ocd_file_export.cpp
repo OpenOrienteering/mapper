@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1705,6 +1705,8 @@ QByteArray OcdFileExport::exportTextSymbol(const TextSymbol* text_symbol, quint3
 	OcdTextSymbol ocd_symbol = {};
 	setupBaseSymbol<typename OcdTextSymbol::BaseSymbol>(text_symbol, symbol_number, ocd_symbol.base);
 	ocd_symbol.base.type = Ocd::SymbolTypeText;
+	if (text_symbol->isRotatable())
+		ocd_symbol.base.flags |= Ocd::SymbolRotatable;
 	
 	ocd_symbol.font_name = toOcdString(text_symbol->getFontFamily());
 	setupTextSymbolExtra(text_symbol, ocd_symbol);

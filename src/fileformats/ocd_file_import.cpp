@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -1671,6 +1671,7 @@ TextSymbol* OcdFileImport::importTextSymbol(const S& ocd_symbol)
 	setBasicAttributes(symbol, convertOcdString(ocd_symbol.font_name), ocd_symbol.basic);
 	setSpecialAttributes(symbol, ocd_symbol.special);
 	setFraming(symbol, ocd_symbol.framing);
+	symbol->setRotatable(ocd_symbol.base.flags & Ocd::SymbolRotatable);
 	return symbol;
 }
 
