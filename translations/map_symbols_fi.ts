@@ -201,7 +201,7 @@
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rinneviivoilla voidaan tarvittaessa osoittaa rinteen viettosuunta. Rinneviivat pyritään sijoittamaan uurteisiin.</translation>
     </message>
     <message>
         <source>Earth bank</source>
