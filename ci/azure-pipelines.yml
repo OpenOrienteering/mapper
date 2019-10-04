@@ -269,8 +269,9 @@ jobs:
 
 - job: MinGW_x64_Linux
   displayName: Windows x64 (Release, MinGW on Linux)
-  dependsOn: macOS
-  condition: succeededOrFailed()
+  #dependsOn: macOS
+  #condition: succeededOrFailed()
+  condition: False
   variables:
     IMAGE_NAME: 'ubuntu-16.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
