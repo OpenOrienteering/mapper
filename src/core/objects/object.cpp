@@ -73,6 +73,7 @@ namespace literal
 	static const QLatin1String v_align("v_align");
 	static const QLatin1String pattern("pattern");
 	static const QLatin1String rotation("rotation");
+	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
 }
 
@@ -105,6 +106,7 @@ Object::Object(const Object& proto)
  , symbol(proto.symbol)
  , coords(proto.coords)
  , object_tags(proto.object_tags)
+ , rotation(proto.rotation)
  , extent(proto.extent)
  , output(*this)
 {
@@ -123,6 +125,7 @@ void Object::copyFrom(const Object& other)
 	
 	symbol = other.symbol;
 	coords = other.coords;
+	rotation = other.rotation;
 	// map unchanged!
 	object_tags = other.object_tags;
 	output_dirty = true;
@@ -160,26 +163,13 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	if (object_tags != other->object_tags)
 		return false;
 	
-	if (type == Point)
-	{
-		auto const* point_this = static_cast<PointObject const*>(this);
-		auto const* point_other = static_cast<PointObject const*>(other);
-		
-		auto rotation_a = point_this->getRotation();
-		auto rotation_b = point_other->getRotation();
-		if (qAbs(rotation_a - rotation_b) >= 0.000001)  // six decimal places in XML
-			return false;
-	}
-	else if (type == Path)
+	if (qAbs(getRotation() - other->getRotation()) >= 0.000001)  // six decimal places in XML
+		return false;
+	
+	if (type == Path)
 	{
 		auto const* path_this = static_cast<PathObject const*>(this);
 		auto const* path_other = static_cast<PathObject const*>(other);
-		
-		auto rotation_a = path_this->getPatternRotation();
-		auto rotation_b = path_other->getPatternRotation();
-		if (qAbs(rotation_a - rotation_b) >= 0.000001)  // six decimal places in XML
-			return false;
-		
 		if (path_this->getPatternOrigin() != path_other->getPatternOrigin())
 			return false;
 	}
@@ -195,11 +185,6 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		if (text_this->getHorizontalAlignment() != text_other->getHorizontalAlignment())
 			return false;
 		if (text_this->getVerticalAlignment() != text_other->getVerticalAlignment())
-			return false;
-		
-		auto rotation_a = text_this->getRotation();
-		auto rotation_b = text_other->getRotation();
-		if (qAbs(rotation_a - rotation_b) >= 0.000001)  // six decimal places in XML
 			return false;
 	}
 	
@@ -262,22 +247,16 @@ void Object::save(QXmlStreamWriter& xml) const
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
 		object_element.writeAttribute(literal::symbol, symbol_index);
+	if (symbol->isRotatable() && !qIsNull(rotation))
+		object_element.writeAttribute(literal::rotation, rotation);
 	
-	if (type == Point)
-	{
-		auto const* point = static_cast<PointObject const*>(this);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			object_element.writeAttribute(literal::rotation, point->getRotation());
-	}
-	else if (type == Text)
+	if (type == Text)
 	{
 		auto const* text = static_cast<TextObject const*>(this);
-		object_element.writeAttribute(literal::rotation, text->getRotation());
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 		// For compatibility, we must keep the box size in the second coord ATM.
-		/// \todo Save box size separately
+		/// \todo From Mapper 1.0, save just the single anchor coordinate.
 		auto* object = const_cast<Object*>(this);
 		if (text->hasSingleAnchor())
 		{
@@ -312,6 +291,13 @@ void Object::save(QXmlStreamWriter& xml) const
 	else if (type == Text)
 	{
 		auto const* text = static_cast<TextObject const*>(this);
+		if (!text->hasSingleAnchor())
+		{
+			XmlElementWriter size_element(xml, literal::size);
+			auto size = text->getBoxSize();
+			size_element.writeAttribute(XmlStreamLiteral::width, size.nativeX());
+			size_element.writeAttribute(XmlStreamLiteral::height, size.nativeY());
+		}
 		xml.writeTextElement(literal::text, text->getText());
 	}
 }
@@ -362,19 +348,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 	}
 	
-	if (object_type == Point)
+	if (object->symbol->isRotatable())
 	{
-		auto* point = static_cast<PointObject*>(object);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol && point_symbol->isRotatable())
-			point->setRotation(object_element.attribute<qreal>(literal::rotation));
-		else if (!point_symbol)
-			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+		object->rotation = object_element.attribute<qreal>(literal::rotation);
 	}
-	else if (object_type == Text)
+	
+	if (object_type == Text)
 	{
 		auto* text = static_cast<TextObject*>(object);
-		text->setRotation(object_element.attribute<qreal>(literal::rotation));
 		text->setHorizontalAlignment(object_element.attribute<TextObject::HorizontalAlignment>(literal::h_align));
 		text->setVerticalAlignment(object_element.attribute<TextObject::VerticalAlignment>(literal::v_align));
 	}
@@ -434,6 +415,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 			auto* text = static_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
 		}
+		else if (xml.name() == literal::size && object_type == Text)
+		{
+			auto* text = static_cast<TextObject*>(object);
+			XmlElementReader size_element(xml);
+			auto const w = size_element.attribute<decltype(MapCoord().nativeX())>(XmlStreamLiteral::width);
+			auto const h = size_element.attribute<decltype(MapCoord().nativeY())>(XmlStreamLiteral::height);
+			text->setBoxSize(MapCoord::fromNative(w, h));
+		}
 		else if (xml.name() == literal::tags)
 		{
 			XmlElementReader(xml).read(object->object_tags);
@@ -459,6 +448,17 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	
 	return object;
 }
+
+
+void Object::setRotation(qreal new_rotation)
+{
+	if (!qIsNaN(new_rotation))
+	{
+		rotation = new_rotation;
+		setOutputDirty();
+	}
+}
+
 
 void Object::forceUpdate() const
 {
@@ -565,17 +565,9 @@ void Object::rotateAround(const MapCoordF& center, qreal angle)
 		coord.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
-	if (type == Point)
+	if (symbol->isRotatable())
 	{
-		auto* point = static_cast<PointObject*>(this);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			point->setRotation(point->getRotation() + angle);
-	}
-	else if (type == Text)
-	{
-		auto* text = static_cast<TextObject*>(this);
-		text->setRotation(text->getRotation() + angle);
+		rotation += angle;
 	}
 	setOutputDirty();
 }
@@ -592,17 +584,9 @@ void Object::rotate(qreal angle)
 		coord.setY(sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
-	if (type == Point)
+	if (symbol->isRotatable())
 	{
-		auto* point = static_cast<PointObject*>(this);
-		auto const* point_symbol = static_cast<PointSymbol const*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			point->setRotation(point->getRotation() + angle);
-	}
-	else if (type == Text)
-	{
-		auto* text = static_cast<TextObject*>(this);
-		text->setRotation(text->getRotation() + angle);
+		rotation += angle;
 	}
 	setOutputDirty();
 }
@@ -907,7 +891,6 @@ PathObject::PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVe
 
 PathObject::PathObject(const PathObject& proto)
 : Object(proto)
-, pattern_rotation(proto.pattern_rotation)
 , pattern_origin(proto.pattern_origin)
 {
 	path_parts.reserve(proto.path_parts.size());
@@ -919,7 +902,6 @@ PathObject::PathObject(const PathObject& proto)
 
 PathObject::PathObject(const PathPart &proto_part)
 : Object(*proto_part.path)
-, pattern_rotation(proto_part.path->pattern_rotation)
 , pattern_origin(proto_part.path->pattern_origin)
 {
 	auto begin = proto_part.path->coords.begin();
@@ -943,7 +925,6 @@ void PathObject::copyFrom(const Object& other)
 	Object::copyFrom(other);
 	
 	const PathObject& other_path = *other.asPath();
-	pattern_rotation = other_path.getPatternRotation();
 	pattern_origin = other_path.getPatternOrigin();
 	
 	path_parts.clear();
@@ -1106,8 +1087,7 @@ void PathObject::transform(const QTransform& t)
 
 void PathObject::setPatternRotation(qreal rotation)
 {
-	pattern_rotation = rotation;
-	setOutputDirty();
+	setRotation(rotation);
 }
 
 void PathObject::setPatternOrigin(const MapCoord& origin)
@@ -3121,8 +3101,7 @@ void PointObject::copyFrom(const Object& other)
 	
 	Object::copyFrom(other);
 	const PointObject* point_other = other.asPoint();
-	const PointSymbol* point_symbol = getSymbol()->asPoint();
-	if (point_symbol && point_symbol->isRotatable())
+	if (getSymbol() && getSymbol()->isRotatable())
 		setRotation(point_other->getRotation());
 }
 
@@ -3166,17 +3145,6 @@ void PointObject::transform(const QTransform& t)
 	coord.setX(p.x());
 	coord.setY(p.y());
 	setOutputDirty();
-}
-
-
-void PointObject::setRotation(qreal new_rotation)
-{
-	Q_ASSERT(symbol->asPoint()->isRotatable() || qIsNull(new_rotation));
-	if (!qIsNaN(new_rotation) && symbol->asPoint()->isRotatable())
-	{
-		rotation = new_rotation;
-		setOutputDirty();
-	}
 }
 
 

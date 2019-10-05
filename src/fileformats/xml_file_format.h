@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Pete Curtis
- *    Copyright 2012-2014, 2016, 2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -83,13 +83,32 @@ public:
   
 \page file_format OpenOrienteering Mapper XML File Format Documentation
 
-\date 2018-03-10
+\date 2018-10-01
 \author Kai Pastor
 
 \todo Review and update.
 
 
 \section changes Changes
+
+\subsection version-10 (Planned for) Version 10 (Mapper 1.0)
+
+- For writing, drop compatibility with Mapper versions before 0.9.
+- Use the streaming variant when writing `barrier` elements.
+- Stop writing text object box sizes to the coordinates stream.
+
+
+\subsection version-9  Version 9
+
+- 2019-10-01 Added reading of a streaming variant of the `barrier` element.
+             After `<barrier ... action="skip"/>`, skip the element immediately
+             following this barrier.
+- 2019-10-01 Added reading and writing of an explicit `size` element for text
+             object box size, in native (0.001 mm) coordinates.
+- 2019-10-02 Added a text symbol `rotatable` property. This must be exported as
+             `true` now when the text symbol is rotatable, but default to `true`
+             when reading previous versions of the format.
+
 
 \subsection version-8 Version 8
 

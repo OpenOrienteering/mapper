@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,7 +20,8 @@
 
 #include "map_coord.h"
 
-#include <cstddef>
+#include <cstdlib>
+#include <iterator>
 #include <limits>
 #include <stdexcept>
 #include <type_traits>
@@ -258,16 +259,14 @@ MapCoord MapCoord::load(const QPointF& p, MapCoord::Flags flags)
 
 QString MapCoord::toString() const
 {
-	/* The buffer size must allow for
-	 *  1x ';':   1
-	 *  2x '-':   2
-	 *  2x ' ':   2
-	 *  2x the decimal digits for values up to 0..2^31:
-	 *           20
-	 *  1x the decimal digits for 0..2^8-1:
-	 *            3
-	 *  Total:   28 */
-	constexpr std::size_t buf_size = 1+2+2+20+3;
+	auto buffer = MapCoord::StringBuffer<QChar>();
+	auto string = toString(buffer);
+	string.detach();  // Note: public in C++, but not documented API.
+	return string;
+}
+
+QString MapCoord::toString(MapCoord::StringBuffer<QChar>& buffer) const
+{
 	static const QChar encoded[10] = {
 	    QLatin1Char{'0'}, QLatin1Char{'1'},
 	    QLatin1Char{'2'}, QLatin1Char{'3'},
@@ -275,81 +274,121 @@ QString MapCoord::toString() const
 	    QLatin1Char{'6'}, QLatin1Char{'7'},
 	    QLatin1Char{'8'}, QLatin1Char{'9'}
 	};
-	QChar buffer[buf_size];
 	
-	// For efficiency, we construct the string from the back.
-	std::size_t j = buf_size - 1;
-	buffer[j] = QLatin1Char{';'};
-	--j;
+	// For efficiency, we construct the string from the back,
+	// using a bidirectional iterator.
+	auto const last = end(buffer) - 1;
+	auto first = last;
+	*first-- = QLatin1Char{';'};
 	
-	auto flags = Flags::Int(fp);
-	if (flags > 0)
+	auto div = std::div_t{static_cast<int>(fp), 0};
+	static_assert(sizeof(div.quot) >= sizeof(fp),
+	              "div.quot must be large enough to hold the flags" );
+	if (div.quot > 0)
 	{
 		do
 		{
-			buffer[j] = encoded[flags % 10];
-			flags = flags / 10;
-			--j;
+			div = std::div(div.quot, 10);
+			*first-- = encoded[div.rem];
 		}
-		while (flags != 0);
+		while (div.quot != 0);
 		
-		buffer[j] = QChar::Space;
-		--j;
+		*first-- = QChar::Space;
 	}
 	
-	qint64 tmp = yp;
-	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::yp)),
-	              "decltype(tmp) must be large enough to hold"
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::yp),
+	              "div.quot must be large enough to hold"
 	              "-std::numeric_limits<decltype(MapCoord::yp)>::min()" );
-	QChar sign { QChar::Null };
-	if (tmp < 0)
-	{
-		sign = QLatin1Char{'-'};
-		tmp = -tmp;
-	}
+	div.quot = yp;
 	do
 	{
-		buffer[j] = encoded[tmp % 10];
-		tmp = tmp / 10;
-		--j;
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
 	}
-	while (tmp != 0);
-	if (!sign.isNull())
+	while (div.quot != 0);
+	if (yp < 0)
 	{
-		buffer[j] = sign;
-		--j;
-		sign = QChar::Null;
+		*first-- = QLatin1Char{'-'};
 	}
 	
-	buffer[j] = QChar::Space;
-	--j;
+	*first-- = QChar::Space;
 	
-	static_assert(sizeof(decltype(tmp)) > sizeof(decltype(MapCoord::xp)),
-	              "decltype(tmp) must be large enough to hold"
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::xp),
+	              "div.quot must be large enough to hold"
 	              "-std::numeric_limits<decltype(MapCoord::xp)>::min()" );
-	tmp = xp;
-	if (tmp < 0)
-	{
-		sign = QLatin1Char{'-'};
-		tmp = -tmp;
-	}
+	div.quot = xp;
 	do
 	{
-		buffer[j] = encoded[tmp % 10];
-		tmp = tmp / 10;
-		--j;
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
 	}
-	while (tmp != 0);
-	if (!sign.isNull())
+	while (div.quot != 0);
+	if (xp < 0)
 	{
-		buffer[j] = sign;
-		--j;
+		*first-- = QLatin1Char{'-'};
 	}
 	
-	++j;
-	Q_ASSERT(j < buf_size);
-	j = qMin(j, buf_size);
-	return QString(buffer+j, buf_size-j);
+	return QString::fromRawData(&*(first+1), int(std::distance(first, last)));
+}
+
+QByteArray MapCoord::toUtf8(MapCoord::StringBuffer<char>& buffer) const
+{
+	static auto* encoded = "0123456789";
+	
+	// For efficiency, we construct the string from the back,
+	// using a bidirectional iterator.
+	auto const last = end(buffer) - 1;
+	auto first = last;
+	*first-- = ';';
+	
+	auto div = std::div_t{static_cast<int>(fp), 0};
+	static_assert(sizeof(div.quot) >= sizeof(fp),
+	              "div.quot must be large enough to hold the flags" );
+	if (div.quot > 0)
+	{
+		do
+		{
+			div = std::div(div.quot, 10);
+			*first-- = encoded[div.rem];
+		}
+		while (div.quot != 0);
+		
+		*first-- = ' ';
+	}
+	
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::yp),
+	              "div.quot must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::yp)>::min()" );
+	div.quot = yp;
+	do
+	{
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
+	}
+	while (div.quot != 0);
+	if (yp < 0)
+	{
+		*first-- = '-';
+	}
+	
+	*first-- = ' ';
+	
+	static_assert(sizeof(div.quot) >= sizeof(MapCoord::xp),
+	              "div.quot must be large enough to hold"
+	              "-std::numeric_limits<decltype(MapCoord::xp)>::min()" );
+	div.quot = xp;
+	do
+	{
+		div = std::div(div.quot, 10);
+		*first-- = encoded[std::abs(div.rem)];
+	}
+	while (div.quot != 0);
+	if (xp < 0)
+	{
+		*first-- = '-';
+	}
+	
+	return QByteArray::fromRawData(&*(first+1), int(std::distance(first, last)));
 }
 
 MapCoord::MapCoord(QStringRef& text)

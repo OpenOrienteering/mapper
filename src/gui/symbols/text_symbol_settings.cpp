@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -95,6 +95,12 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	
 	auto layout = new QFormLayout();
 	text_tab->setLayout(layout);
+	
+	oriented_to_north = new QCheckBox(QCoreApplication::translate("OpenOrienteering::PointSymbolEditorWidget", "Always oriented to north (not rotatable)"));
+	oriented_to_north->setChecked(!symbol->isRotatable());
+	layout->addRow(oriented_to_north);
+	
+	layout->addItem(Util::SpacerItem::create(this));
 	
 	font_edit = new QFontComboBox();
 	layout->addRow(tr("Font family:"), font_edit);
@@ -231,6 +237,7 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 	updateFramingContents();
 	updateCompatibilityContents();
 	
+	connect(oriented_to_north, &QAbstractButton::clicked, this, &TextSymbolSettings::orientedToNorthClicked);
 	connect(font_edit, &QFontComboBox::currentFontChanged, this, &TextSymbolSettings::fontChanged);
 	connect(font_size_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &TextSymbolSettings::fontSizeChanged);
 	connect(letter_edit, &QLineEdit::textEdited, this, &TextSymbolSettings::letterSizeChanged);
@@ -266,6 +273,12 @@ TextSymbolSettings::TextSymbolSettings(TextSymbol* symbol, SymbolSettingDialog* 
 TextSymbolSettings::~TextSymbolSettings() = default;
 
 
+
+void TextSymbolSettings::orientedToNorthClicked(bool checked)
+{
+	symbol->setRotatable(!checked);
+	emit propertiesModified();
+}
 
 void TextSymbolSettings::fontChanged(const QFont& font)
 {
@@ -515,6 +528,7 @@ void TextSymbolSettings::removeCustomTabClicked()
 void TextSymbolSettings::updateGeneralContents()
 {
 	react_to_changes = false;
+	oriented_to_north->setChecked(!symbol->isRotatable());
 	font_edit->setCurrentFont(QFont(symbol->font_family));
 	updateFontSizeEdit();
 	updateLetterSizeEdit();

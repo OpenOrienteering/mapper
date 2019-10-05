@@ -163,6 +163,23 @@ public:
 	
 	
 	/**
+	 * Returns the rotation for this object (in radians).
+	 * 
+	 * The interpretation of this value depends the object's symbol.
+	 */
+	qreal getRotation() const { return rotation; }
+	
+	/**
+	 * Sets the object's rotation (in radians).
+	 * 
+	 * The interpretation of this value depends the object's symbol.
+	 * It may have no effect at all.
+	 * The value must not be NaN.
+	 */
+	void setRotation(qreal new_rotation);
+	
+	
+	/**
 	 * If the output_dirty flag is set, regenerates output and extent, and updates the object's map (if set).
 	 * 
 	 * Returns true if output was dirty.
@@ -310,6 +327,7 @@ protected:
 	Tags object_tags;
 	
 private:
+	qreal rotation = 0;               ///< The object's rotation (in radians).
 	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
@@ -937,12 +955,6 @@ protected:
 	
 private:
 	/**
-	 * Rotation angle of the object pattern. Only used if the object
-	 * has a symbol which interprets this value.
-	 */
-	qreal pattern_rotation = 0;
-	
-	/**
 	 * Origin shift of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
@@ -1027,28 +1039,7 @@ public:
 	void transform(const QTransform& t) override;
 	
 	
-	/**
-	 * Sets the point object's rotation (in radians).
-	 * 
-	 * This does nothing if the object's symbol isn't rotable. However, it is an
-	 * error to call setRotation on such an object with an argument other than
-	 * binary 0.
-	 */
-	void setRotation(qreal new_rotation);
-	
-	/**
-	 * Returns the point object's rotation (in radians). This is only used
-	 * if the object has a symbol which interprets this value.
-	 */
-	qreal getRotation() const;
-	
-	
 	bool intersectsBox(const QRectF& box) const override;
-	
-	
-private:
-	/** The object's rotation (in radians). */
-	qreal rotation = 0;
 };
 
 
@@ -1216,23 +1207,13 @@ PathPartVector& PathObject::parts()
 inline
 qreal PathObject::getPatternRotation() const
 {
-	return pattern_rotation;
+	return getRotation();
 }
 
 inline
 MapCoord PathObject::getPatternOrigin() const
 {
 	return pattern_origin;
-}
-
-
-
-//### PointObject inline code ###
-
-inline
-qreal PointObject::getRotation() const
-{
-	return rotation;
 }
 
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "file_format_t.h"
 
 #include <algorithm>
+#include <array>
 #include <limits>
 #include <memory>
 
@@ -34,7 +35,6 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
-#include <QLatin1String>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -56,6 +56,7 @@
 #include "core/map_part.h"
 #include "core/map_printer.h"
 #include "core/objects/object.h"
+#include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
@@ -274,12 +275,12 @@ namespace
 		
 		auto test_label = QString::fromLatin1("actual: %1, expected: %2");
 		auto ref_point = actual_georef.getMapRefPoint();
-		auto actual_point = actual_georef.toProjectedCoords(ref_point);;
+		auto actual_point = actual_georef.toProjectedCoords(ref_point);
 		auto expected_point = expected_georef.toProjectedCoords(ref_point);
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
 		ref_point += MapCoord{500, 500};
-		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());;
+		actual_point = actual_georef.toProjectedCoords(expected_georef.getMapRefPoint());
 		expected_point = expected_georef.toProjectedCoords(expected_georef.getMapRefPoint());
 		QVERIFY2(qAbs(actual_point.x() - expected_point.x()) < 1.0, qPrintable(test_label.arg(actual_point.x()).arg(expected_point.x())));
 		QVERIFY2(qAbs(actual_point.y() - expected_point.y()) < 1.0, qPrintable(test_label.arg(actual_point.y()).arg(expected_point.y())));
@@ -333,17 +334,25 @@ namespace
 		return out;
 	}
 	
-	static const auto issue_513_files = {
-	  "data:issue-513-coords-outside-printable.xmap",
-	  "data:issue-513-coords-outside-printable.omap",
-	  "data:issue-513-coords-outside-qint32.omap",
+	auto const issue_513_files = {
+	  "testdata:issue-513-coords-outside-printable.xmap",
+	  "testdata:issue-513-coords-outside-printable.omap",
+	  "testdata:issue-513-coords-outside-qint32.omap",
 	};
 	
-	static const auto example_files = {
+	auto const example_files = {
 	  "data:/examples/complete map.omap",
 	  "data:/examples/forest sample.omap",
 	  "data:/examples/overprinting.omap",
 	  "testdata:templates/world-file.xmap",
+	};
+	
+	auto const xml_test_files = {
+	  "data:barrier.omap",
+	  "data:rotated.omap",
+	  "data:tags.omap",
+	  "data:text-object.omap",
+	  "data:undo.omap",
 	};
 	
 }  // namespace
@@ -365,16 +374,34 @@ void FileFormatTest::initTestCase()
 
 
 
+void FileFormatTest::mapCoordtoString_data()
+{
+	using native_int = decltype(MapCoord().nativeX());
+	QTest::addColumn<native_int>("x");
+	QTest::addColumn<native_int>("y");
+	QTest::addColumn<int>("flags");
+	QTest::addColumn<QByteArray>("expected");
+	
+	// Verify toString() especially for native coordinates at the numeric limits.
+	using bounds = std::numeric_limits<native_int>;
+	QTest::newRow("max,-1/0") << bounds::max() << -1 << 0 << QByteArray("2147483647 -1;");
+	QTest::newRow("-2,max/1") << -2 << bounds::max() << 1 << QByteArray("-2 2147483647 1;");
+	QTest::newRow("min,min/255") << bounds::min() << bounds::min() << 255 << QByteArray("-2147483648 -2147483648 255;");
+}
+
 void FileFormatTest::mapCoordtoString()
 {
-	QCOMPARE(MapCoord().toString(), QLatin1String("0 0;"));
+	using native_int = decltype(MapCoord().nativeX());
+	QFETCH(native_int, x);
+	QFETCH(native_int, y);
+	QFETCH(int, flags);
+	QFETCH(QByteArray, expected);
 	
-	// Verify toString for native coordinates at the numeric limits.
-	auto native_x = MapCoord().nativeX();
-	using bounds = std::numeric_limits<decltype(native_x)>;
-	static_assert(sizeof(decltype(native_x)) == sizeof(qint32), "This test assumes qint32 native coordinates");
-	QCOMPARE(MapCoord::fromNative(bounds::max(), bounds::max(), MapCoord::Flags{MapCoord::Flags::Int(8)}).toString(), QString::fromLatin1("2147483647 2147483647 8;"));
-	QCOMPARE(MapCoord::fromNative(bounds::min(), bounds::min(), MapCoord::Flags{MapCoord::Flags::Int(1)}).toString(), QString::fromLatin1("-2147483648 -2147483648 1;"));
+	auto const coord = MapCoord::fromNative(x, y, MapCoord::Flags(flags));
+	QCOMPARE(coord.toString(), QString::fromLatin1(expected));
+	
+	MapCoord::StringBuffer<char> buffer;
+	QCOMPARE(coord.toUtf8(buffer), expected);
 }
 
 
@@ -479,36 +506,47 @@ void FileFormatTest::formatForDataTest()
 
 void FileFormatTest::issue_513_high_coordinates_data()
 {
-	QTest::addColumn<QString>("filename");
+	QTest::addColumn<QString>("filepath");
 	
-	for (auto raw_path : issue_513_files)
+	for (auto const* raw_path : issue_513_files)
 	{
-		auto path = QString::fromUtf8(raw_path);
-		QVERIFY(QFileInfo::exists(path));
 		QTest::newRow(raw_path) << QString::fromUtf8(raw_path);
 	}
 }
 
 void FileFormatTest::issue_513_high_coordinates()
 {
-	QFETCH(QString, filename);
+	QFETCH(QString, filepath);
+	
+	QVERIFY(QFileInfo::exists(filepath));
 	
 	// Load the test map
 	Map map {};
-	QVERIFY(map.loadFrom(filename));
+	QVERIFY(map.loadFrom(filepath));
 	
-	// The map's single object must exist. Otherwise it may have been deleted
+	// The map's two objects must exist. Otherwise one may have been deleted
 	// for being irregular, indicating failure to handle high coordinates.
-	QCOMPARE(map.getNumObjects(), 1);
+	QCOMPARE(map.getNumObjects(), 2);
 	
-	for (int i = 0; i < map.getNumParts(); ++i)
+	// The map's two undo steps must exist. Otherwise one may have been deleted
+	// for being irregular, indicating failure to handle high coordinates.
+	QCOMPARE(map.undoManager().undoStepCount(), 2);
+	
+	QCOMPARE(map.getNumParts(), 1);
 	{
-		auto part = map.getPart(i);
+		auto const* part = map.getPart(0);
 		auto extent = part->calculateExtent(true);
 		QVERIFY2(extent.top()    <  1000000.0, "extent.top() outside printable range");
 		QVERIFY2(extent.left()   > -1000000.0, "extent.left() outside printable range");
 		QVERIFY2(extent.bottom() > -1000000.0, "extent.bottom() outside printable range");
 		QVERIFY2(extent.right()  <  1000000.0, "extent.right() outside printable range");
+		
+		QCOMPARE(part->getNumObjects(), 2);
+		auto const* object = part->getObject(1);
+		QCOMPARE(object->getType(), Object::Text);
+		auto const* text = static_cast<TextObject const*>(object);
+		QVERIFY(!text->hasSingleAnchor());
+		QCOMPARE(text->getBoxSize(), MapCoord::fromNative(16000, 10000));
 	}
 	
 	auto print_area = map.printerConfig().print_area;
@@ -522,12 +560,23 @@ void FileFormatTest::issue_513_high_coordinates()
 
 void FileFormatTest::saveAndLoad_data()
 {
-	// Add all file formats which support import and export
 	QTest::addColumn<QByteArray>("id"); // memory management for test data tag
 	QTest::addColumn<QByteArray>("format_id");
 	QTest::addColumn<int>("format_version");
-	QTest::addColumn<QString>("map_filename");
+	QTest::addColumn<QString>("filepath");
 	
+	// Tests for particular feature of the XML file format.
+	for (auto const* raw_path : xml_test_files)
+	{
+		auto const* format_id = "XML";
+		auto id = QByteArray{};
+		id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
+		id.append(raw_path).append(" <> ").append(format_id);
+		
+		QTest::newRow(id) << id << QByteArray{format_id} << 0 << QString::fromLatin1(raw_path);
+	}
+	
+	// Add all file formats which support import and export
 	static const auto format_ids = {
 	    "XML",
 #ifndef MAPPER_BIG_ENDIAN
@@ -549,7 +598,6 @@ void FileFormatTest::saveAndLoad_data()
 			id.reserve(int(qstrlen(raw_path) + qstrlen(format_id) + 5u));
 			id.append(raw_path).append(" <> ").append(format_id);
 			auto path = QString::fromUtf8(raw_path);
-			QVERIFY(QFileInfo::exists(path));
 			
 			if (qstrcmp(format_id, "OCD") == 0)
 			{
@@ -578,7 +626,9 @@ void FileFormatTest::saveAndLoad()
 {
 	QFETCH(QByteArray, format_id);
 	QFETCH(int, format_version);
-	QFETCH(QString, map_filename);
+	QFETCH(QString, filepath);
+	
+	QVERIFY(QFileInfo::exists(filepath));
 	
 	// Find the file format and verify that it exists
 	const FileFormat* format = FileFormats.findFormat(format_id);
@@ -586,7 +636,7 @@ void FileFormatTest::saveAndLoad()
 	
 	// Load the test map
 	auto original = std::make_unique<Map>();
-	QVERIFY(original->loadFrom(map_filename));
+	QVERIFY(original->loadFrom(filepath));
 	
 	// Fix precision of grid rotation
 	MapGrid grid = original->getGrid();
@@ -624,6 +674,19 @@ void FileFormatTest::saveAndLoad()
 	
 	compareMaps(*new_map, *original);
 	comparePrinterConfig(new_map->printerConfig(), original->printerConfig());
+	
+	if (filepath.endsWith(QStringLiteral("text-object.omap")))
+	{
+		QCOMPARE(new_map->getNumParts(), 1);
+		auto const* part = new_map->getPart(0);
+		QCOMPARE(part->getNumObjects(), 4);
+		for (int i = 0; i < 3; ++i)
+		{
+			auto const* object = part->getObject(i);
+			QCOMPARE(object->getType(), Object::Text);
+			QCOMPARE(static_cast<TextObject const*>(object)->getBoxSize(), MapCoord::fromNative(16000, 10000));
+		}
+	}
 }
 
 

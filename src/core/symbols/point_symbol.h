@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -128,8 +128,7 @@ public:
 	bool isSymmetrical() const;
 	
 	// Getters / Setters
-	inline bool isRotatable() const {return rotatable;}
-	inline void setRotatable(bool enable) {rotatable = enable;}
+	using Symbol::setRotatable; /* public visibility */
 	inline int getInnerRadius() const {return inner_radius;}
 	inline void setInnerRadius(int value) {inner_radius = value;}
 	inline const MapColor* getInnerColor() const {return inner_color;}
@@ -144,7 +143,7 @@ public:
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
-	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) override;
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
 	
@@ -160,7 +159,6 @@ protected:
 	const MapColor* outer_color;
 	int inner_radius;		// in 1/1000 mm
 	int outer_width;		// in 1/1000 mm
-	bool rotatable;
 };
 
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014, 2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -124,7 +124,6 @@ int TextObjectLineInfo::getIndex(double pos_x) const
 
 TextObject::TextObject(const Symbol* symbol)
  : Object(Object::Text, symbol)
- , rotation(0)
  , h_align(AlignHCenter)
  , v_align(AlignVCenter)
 {
@@ -136,7 +135,6 @@ TextObject::TextObject(const Symbol* symbol)
 TextObject::TextObject(const TextObject& proto)
  : Object(proto)
  , text(proto.text)
- , rotation(proto.rotation)
  , h_align(proto.h_align)
  , v_align(proto.v_align)
  , has_single_anchor(proto.has_single_anchor)
@@ -161,7 +159,6 @@ void TextObject::copyFrom(const Object& other)
 	text = other_text.text;
 	h_align = other_text.h_align;
 	v_align = other_text.v_align;
-	rotation = other_text.rotation;
 	has_single_anchor = other_text.has_single_anchor;
 	size = other_text.size;
 	line_infos = other_text.line_infos;
@@ -282,8 +279,8 @@ QTransform TextObject::calcTextToMapTransform() const
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.translate(coords[0].x(), coords[0].y());
-	if (rotation != 0)
-		transform.rotate(-rotation * 180 / M_PI);
+	if (getRotation() != 0)
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 	transform.scale(scaling, scaling);
 	
 	return transform;
@@ -296,8 +293,8 @@ QTransform TextObject::calcMapToTextTransform() const
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.scale(1.0f / scaling, 1.0f / scaling);
-	if (rotation != 0)
-		transform.rotate(rotation * 180 / M_PI);
+	if (getRotation() != 0)
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
@@ -319,12 +316,6 @@ void TextObject::setHorizontalAlignment(TextObject::HorizontalAlignment h_align)
 void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
 {
 	this->v_align = v_align;
-	setOutputDirty();
-}
-
-void TextObject::setRotation(qreal new_rotation)
-{
-	rotation = new_rotation;
 	setOutputDirty();
 }
 

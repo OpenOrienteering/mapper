@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -268,7 +268,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*combined_symbol*/);
 }
 
-bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	if (xml.name() != QLatin1String("combined_symbol"))
 		return false;
@@ -288,7 +288,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			if (is_private)
 			{
 				xml.readNextStartElement();
-				parts.push_back(Symbol::load(xml, map, symbol_dict).release());
+				parts.push_back(Symbol::load(xml, map, symbol_dict, version).release());
 				temp_part_indices.push_back(-1);
 			}
 			else

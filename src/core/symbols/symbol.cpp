@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -87,6 +87,7 @@ Symbol::Symbol(const Symbol& proto)
 , is_helper_symbol { proto.is_helper_symbol }
 , is_hidden { proto.is_hidden }
 , is_protected { proto.is_protected }
+, is_rotatable { proto.is_rotatable }
 {
 	// nothing else
 }
@@ -108,6 +109,7 @@ bool Symbol::equals(const Symbol* other, Qt::CaseSensitivity case_sensitivity) c
 	return type == other->type
 	       && numberEquals(other)
 	       && is_helper_symbol == other->is_helper_symbol
+	       && is_rotatable == other->is_rotatable
 	       && name.compare(other->name, case_sensitivity) == 0
 	       && description.compare(other->description, case_sensitivity) == 0
 	       && equalsImpl(other, case_sensitivity);
@@ -285,7 +287,7 @@ void Symbol::save(QXmlStreamWriter& xml, const Map& map) const
 	}
 }
 
-std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	Q_ASSERT(xml.name() == QLatin1String("symbol"));
 	XmlElementReader symbol_element(xml);
@@ -363,7 +365,7 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 		}
 		else
 		{
-			if (!symbol->loadImpl(xml, map, symbol_dict))
+			if (!symbol->loadImpl(xml, map, symbol_dict, version))
 				xml.skipCurrentElement();
 		}
 	}
@@ -841,6 +843,13 @@ QString Symbol::getNumberAsString() const
 	}
 	string.chop(1);
 	return string;
+}
+
+
+
+void Symbol::setRotatable(bool value)
+{
+	is_rotatable = value;
 }
 
 

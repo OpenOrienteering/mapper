@@ -400,7 +400,11 @@ void UndoManager::saveUndo(QXmlStreamWriter& xml) const
 	}
 	
 	XmlElementWriter undo_element(xml, QLatin1String("undo"));
-	std::for_each(first_valid, last, [&xml](auto& step) { step->save(xml); });
+	writeLineBreak(xml);
+	std::for_each(first_valid, last, [&xml](auto& step) {
+		step->save(xml);
+		writeLineBreak(xml);
+	});
 }
 
 void UndoManager::saveRedo(QXmlStreamWriter& xml) const
@@ -421,7 +425,11 @@ void UndoManager::saveRedo(QXmlStreamWriter& xml) const
 	}
 	
 	XmlElementWriter redo_element(xml, QLatin1String("redo"));
-	std::for_each(first_valid, last, [&xml](auto& step) { step->save(xml); });
+	writeLineBreak(xml);
+	std::for_each(first_valid, last, [&xml](auto& step) {
+		step->save(xml);
+		writeLineBreak(xml);
+	});
 }
 
 

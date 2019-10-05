@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -105,7 +105,6 @@
 #include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/object_operations.h"
-#include "core/symbols/point_symbol.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/symbol_icon_decorator.h"
@@ -169,6 +168,9 @@
 
 
 namespace OpenOrienteering {
+
+class PointSymbol;
+
 
 namespace {
 	
@@ -2362,7 +2364,7 @@ void MapEditorController::updateObjectDependentActions()
 	bool have_area               = false;
 	bool have_area_with_holes    = false;
 	bool have_rotatable_pattern  = false;
-	bool have_rotatable_point    = false;
+	bool have_rotatable_object   = false;
 	int  num_selected_paths      = 0;
 	bool first_selected_is_path  = have_selection && map->getFirstSelectedObject()->getType() == Object::Path;
 	bool uniform_symbol_selected = true;
@@ -2392,11 +2394,9 @@ void MapEditorController::updateObjectDependentActions()
 				}
 			}
 			
-			if (symbol->getType() == Symbol::Point)
-			{
-				have_rotatable_point |= symbol->asPoint()->isRotatable();
-			}
-			else if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
+			have_rotatable_object |= symbol->isRotatable();
+			
+			if (Symbol::areTypesCompatible(symbol->getType(), Symbol::Area))
 			{
 				++num_selected_paths;
 				
@@ -2452,7 +2452,7 @@ void MapEditorController::updateObjectDependentActions()
 	mappart_move_menu->setEnabled(have_selection && have_multiple_parts);
 	
 	// have_rotatable_pattern || have_rotatable_point
-	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_point);
+	rotate_pattern_act->setEnabled(have_rotatable_pattern || have_rotatable_object);
 	rotate_pattern_act->setStatusTip(tr("Set the direction of area fill patterns or point objects.") + (rotate_pattern_act->isEnabled() ? QString{} : QString(QLatin1Char(' ') + tr("Select an area object with rotatable fill pattern or a rotatable point object to activate this tool."))));
 	
 	// have_line
