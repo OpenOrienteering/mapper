@@ -423,7 +423,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 		if (distance_sq < closest_distance_sq)
 		{
-			closest_distance_sq = distance_sq;
+			// unused: closest_distance_sq = distance_sq;
 			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = nullptr;

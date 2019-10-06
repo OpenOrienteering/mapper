@@ -437,7 +437,6 @@ bool TextObjectEditorHelper::inputMethodEvent(QInputMethodEvent* event)
 			}
 			pristine_text.remove(position, length);
 		}
-		length = 0;
 	}
 	
 	// Insert the commit string for the given replacement length

@@ -592,7 +592,7 @@ void DrawPathTool::draw(QPainter* painter, MapWidget* widget)
 			auto start_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 2)};
 			auto end_pos = MapCoordF{preview_path->getCoordinate(preview_path->getCoordinateCount() - 1)};
 			azimuth_helper->draw(painter, widget, map(), start_pos, end_pos);
-			azimuth_info_pending = false;
+			// unused: azimuth_info_pending = false;
 		}
 		
 		if (!shift_pressed)
