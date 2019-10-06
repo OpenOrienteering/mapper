@@ -25,6 +25,7 @@
 #include <iterator>
 
 #include <QtGlobal>
+#include <QtMath>
 #include <QByteArray>
 #include <QDebug>
 #include <QDir> // IWYU pragma: keep
