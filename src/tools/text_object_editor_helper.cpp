@@ -378,7 +378,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return { selectionText() };
 	case Qt::ImMaximumTextLength:
 		return { }; // No limit.
-#if QT_VERSION >= 0x050300
 	case Qt::ImAbsolutePosition:
 		{
 			const auto point = argument.toPointF();
@@ -393,7 +392,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return pristine_text.mid(blockStart(), cursor_position - blockStart());
 	case Qt::ImTextAfterCursor:
 		return pristine_text.mid(cursor_position, blockEnd() - cursor_position);
-#endif
 	default:
 		return { };
 	}
