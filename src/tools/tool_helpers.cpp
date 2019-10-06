@@ -110,8 +110,12 @@ void ConstrainAngleToolHelper::addAngle(qreal angle)
 
 void ConstrainAngleToolHelper::addAngles(qreal base, qreal stepping)
 {
-	for (double angle = base; angle < base + 2*M_PI; angle += stepping)
-		addAngle(angle);
+	auto const count = qFloor(2*M_PI / stepping);
+	for (auto i = 0; i < count; ++i)
+	{
+		addAngle(base);
+		base += stepping;
+	}
 }
 
 void ConstrainAngleToolHelper::addAnglesDeg(qreal base, qreal stepping)
