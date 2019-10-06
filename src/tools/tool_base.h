@@ -280,7 +280,7 @@ protected slots:
 	 * needed with regard to modifier keys, stopping the simulation, etc.
 	 * It is to be started from an event handler via a single-shot timer:
 	 * 
-	 *     QTimer::singleShot(200, this, SLOT(generateNextSimulatedEvent()));
+	 *     QTimer::singleShot(200, this, &MapEditorToolBase::generateNextSimulatedEvent);
 	 */
 	void generateNextSimulatedEvent();
 	

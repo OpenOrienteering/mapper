@@ -480,7 +480,7 @@ void MapEditorToolBase::updatePreviewObjectsAsynchronously()
 	
 	if (!preview_update_triggered)
 	{
-		QTimer::singleShot(10, this, SLOT(updatePreviewObjectsSlot()));  // clazy:exclude=old-style-connect
+		QTimer::singleShot(10, this, &MapEditorToolBase::updatePreviewObjectsSlot);
 		preview_update_triggered = true;
 	}
 }
@@ -688,7 +688,7 @@ void MapEditorToolBase::generateNextSimulatedEvent()
 	}
 	// Continue until Ctrl key is released and the current sequence was completed.
 	if (simulation_state != 0 || active_modifiers.testFlag(Qt::ControlModifier))
-		QTimer::singleShot(100, this, SLOT(generateNextSimulatedEvent()));
+		QTimer::singleShot(100, this, &MapEditorToolBase::generateNextSimulatedEvent);
 	++simulation_state;
 }
 

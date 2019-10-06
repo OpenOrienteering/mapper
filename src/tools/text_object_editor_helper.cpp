@@ -142,7 +142,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 #else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
-	QTimer::singleShot(20, this, SLOT(claimFocus()));  // clazy:exclude=old-style-connect
+	QTimer::singleShot(20, this, &TextObjectEditorHelper::claimFocus);
 #endif
 }
 

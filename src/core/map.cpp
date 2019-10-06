@@ -1661,7 +1661,7 @@ void Map::setSymbolsDirty()
 	if (symbol_icon_scale > 0)
 	{
 		symbol_icon_scale = 0;
-		QTimer::singleShot(0, this, SLOT(updateSymbolIconZoom()));
+		QTimer::singleShot(0, this, &Map::updateSymbolIconZoom);
 	}
 	symbols_dirty = true;
 	setHasUnsavedChanges(true);

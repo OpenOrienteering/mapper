@@ -647,7 +647,7 @@ void LineSymbolSettings::updateBorderContents(LineSymbolBorder& border, LineSymb
 void LineSymbolSettings::ensureWidgetVisible(QWidget* widget)
 {
 	widget_to_ensure_visible = widget;
-	QTimer::singleShot(0, this, SLOT(ensureWidgetVisible()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
+	QTimer::singleShot(0, this, QOverload<>::of(&LineSymbolSettings::ensureWidgetVisible));
 }
 
 void LineSymbolSettings::ensureWidgetVisible()

@@ -763,7 +763,7 @@ bool GeoreferencingTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& 
 		dialog->setMapRefPoint(MapCoord(map_coord));
 		Q_FALLTHROUGH();
 	case Qt::RightButton:
-		QTimer::singleShot(0, dialog, SIGNAL(exec()));  // clazy:exclude=old-style-connect
+		QTimer::singleShot(0, dialog, &QDialog::exec);
 		handled = true;
 		break;
 	default:
