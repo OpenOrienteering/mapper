@@ -541,8 +541,10 @@ private:
 	/// The central widget which never changes during a MainWindow's lifecycle
 	QStackedWidget* central_widget;
 	
-	/// A list of paths to be opened later
+	/// A list of paths to be opened later.
 	QStringList path_backlog;
+	/// A flag indicating that backlog procession is currently active.
+	bool path_backlog_busy = false;
 };
 
 

@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QScopedValueRollback>
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStatusBar>
@@ -976,9 +977,12 @@ void MainWindow::openPathLater(const QString& path)
 
 void MainWindow::openPathBacklog()
 {
-	for (const auto& path : qAsConst(path_backlog))
-		openPath(path);
-	path_backlog.clear();
+	if (path_backlog.empty() || path_backlog_busy)
+		return;
+	
+	QScopedValueRollback<bool> rollback{path_backlog_busy, true};
+	openPath(path_backlog.takeFirst());
+	QTimer::singleShot(10, this, &MainWindow::openPathBacklog);
 }
 
 void MainWindow::openRecentFile()
