@@ -17,6 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <initializer_list>
 #include <memory>
 
 #include <Qt>

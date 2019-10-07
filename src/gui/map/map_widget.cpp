@@ -37,6 +37,7 @@
 #include <QList>
 #include <QLocale>
 #include <QMouseEvent>
+#include <QObjectList>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPinchGesture>

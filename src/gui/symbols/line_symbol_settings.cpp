@@ -21,6 +21,7 @@
 
 #include "line_symbol_settings.h"
 
+#include <initializer_list>
 #include <iterator>
 
 #include <QtGlobal>

@@ -27,6 +27,7 @@
 #include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
 #include <QLatin1String>
+#include <QList>
 #include <QLocale>
 #include <QObject>
 #include <QPalette>

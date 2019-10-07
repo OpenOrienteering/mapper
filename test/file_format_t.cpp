@@ -20,10 +20,11 @@
 
 #include "file_format_t.h"
 
-#include <algorithm>
 #include <array>
+#include <initializer_list>
 #include <limits>
 #include <memory>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

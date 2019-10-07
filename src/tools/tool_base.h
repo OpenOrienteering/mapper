@@ -22,9 +22,9 @@
 #ifndef OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 #define OPENORIENTEERING_MAP_EDITOR_TOOL_BASE_H
 
-#include <algorithm>
 #include <memory>
 #include <set>
+#include <utility>
 #include <vector>
 
 #include <Qt>

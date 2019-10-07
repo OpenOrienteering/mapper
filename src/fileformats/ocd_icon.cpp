@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <initializer_list>
 
 #include <Qt>
 #include <QtGlobal>

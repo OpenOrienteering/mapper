@@ -20,8 +20,10 @@
 #include "ogr_template.h"
 
 #include <algorithm>
+#include <iosfwd>
 #include <iterator>
 #include <memory>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

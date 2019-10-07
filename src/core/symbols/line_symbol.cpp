@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <initializer_list>
 #include <iterator>
 #include <memory>
 #include <utility>

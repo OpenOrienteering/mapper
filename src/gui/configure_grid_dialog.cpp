@@ -21,6 +21,8 @@
 
 #include "configure_grid_dialog.h"
 
+#include <initializer_list>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>

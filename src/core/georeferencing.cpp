@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <cmath> // IWYU pragma: keep
 #include <iterator>
+#include <utility>
 
 #include <QtGlobal>
 #include <QtMath>

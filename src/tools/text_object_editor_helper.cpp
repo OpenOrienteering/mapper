@@ -33,6 +33,7 @@
 #include <QKeyEvent>
 #include <QKeySequence>
 #include <QLatin1Char>
+#include <QList>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>

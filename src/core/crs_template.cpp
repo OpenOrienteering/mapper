@@ -21,8 +21,8 @@
 
 #include "crs_template.h"
 
-#include <algorithm>
 #include <iterator>
+#include <utility>
 
 #include <QtGlobal>
 #include <QLatin1Char>

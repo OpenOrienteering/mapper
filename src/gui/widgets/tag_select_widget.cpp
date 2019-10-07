@@ -21,7 +21,8 @@
 
 #include "tag_select_widget.h"
 
-#include <algorithm>
+#include <initializer_list>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

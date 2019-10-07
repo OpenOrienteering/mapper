@@ -21,16 +21,13 @@
 
 #include "tool_base.h"
 
-#ifdef MAPPER_DEVELOPMENT_BUILD
-#  include <cstdlib>
-#endif
+#include <algorithm>
+#include <cstdlib>  // IWYU pragma: keep
 #include <iterator>
 #include <type_traits>
 
 #include <QtGlobal>
-#ifdef MAPPER_DEVELOPMENT_BUILD
-#  include <QCoreApplication>
-#endif
+#include <QCoreApplication>  // IWYU pragma: keep
 #include <QMouseEvent>
 #include <QTimer>
 #include <QEvent>
