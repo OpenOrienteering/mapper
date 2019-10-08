@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QScopedValueRollback>
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStatusBar>
@@ -64,6 +65,11 @@
 #include "util/util.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/mapper_service_proxy.h"
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -971,14 +977,17 @@ void MainWindow::switchActualPath(const QString& path)
 void MainWindow::openPathLater(const QString& path)
 {
 	path_backlog.push_back(path);
-	QTimer::singleShot(10, this, SLOT(openPathBacklog()));  // clazy:exclude=old-style-connect
+	QTimer::singleShot(10, this, &MainWindow::openPathBacklog);
 }
 
 void MainWindow::openPathBacklog()
 {
-	for (const auto& path : qAsConst(path_backlog))
-		openPath(path);
-	path_backlog.clear();
+	if (path_backlog.empty() || path_backlog_busy)
+		return;
+	
+	QScopedValueRollback<bool> rollback{path_backlog_busy, true};
+	openPath(path_backlog.takeFirst());
+	QTimer::singleShot(10, this, &MainWindow::openPathBacklog);
 }
 
 void MainWindow::openRecentFile()

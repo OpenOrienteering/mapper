@@ -26,6 +26,7 @@
 #include <iterator>
 #include <memory>
 #include <vector>
+#include <utility>
 
 #include <cpl_conv.h>
 #include <gdal.h>
@@ -62,6 +63,7 @@
 #include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/path_coord.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"

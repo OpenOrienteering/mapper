@@ -21,6 +21,7 @@
 
 #include "text_symbol_settings.h"
 
+#include <algorithm>
 #include <vector>
 
 #include <QAbstractButton>

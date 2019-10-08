@@ -21,6 +21,7 @@
 
 #include "line_symbol_settings.h"
 
+#include <initializer_list>
 #include <iterator>
 
 #include <QtGlobal>
@@ -48,6 +49,11 @@
 #include "gui/widgets/color_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -647,7 +653,7 @@ void LineSymbolSettings::updateBorderContents(LineSymbolBorder& border, LineSymb
 void LineSymbolSettings::ensureWidgetVisible(QWidget* widget)
 {
 	widget_to_ensure_visible = widget;
-	QTimer::singleShot(0, this, SLOT(ensureWidgetVisible()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
+	QTimer::singleShot(0, this, QOverload<>::of(&LineSymbolSettings::ensureWidgetVisible));
 }
 
 void LineSymbolSettings::ensureWidgetVisible()

@@ -21,6 +21,7 @@
 
 #include "object.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <iterator>

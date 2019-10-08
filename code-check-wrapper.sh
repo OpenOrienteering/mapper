@@ -57,6 +57,7 @@ PATTERN=" \
   /file_format.cpp \
   file_format_t.cpp \
   file_import_export.cpp \
+  georeferencing.cpp \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
   gdal_manager.cpp \
@@ -65,6 +66,7 @@ PATTERN=" \
   line_symbol.cpp \
   main.cpp \
   /map.cpp \
+  map_coord.cpp \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \

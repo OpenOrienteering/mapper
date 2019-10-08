@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QByteArray>
 #include <QCoreApplication>
 #include <QFlags>
 #include <QPoint>

@@ -277,7 +277,7 @@ std::shared_ptr<const std::vector<StorageLocation>> StorageLocation::knownLocati
 	return Android::locations_cache;
 #else
 	auto locations = std::vector<StorageLocation>();
-	auto paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+	auto const paths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
 	locations.reserve(std::size_t(paths.size()));
 	for (const auto& path : paths)
 	{

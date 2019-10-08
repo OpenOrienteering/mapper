@@ -167,6 +167,11 @@
 #include "util/backports.h" // IWYU pragma: keep
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 class PointSymbol;
@@ -785,7 +790,7 @@ void MapEditorController::attach(MainWindow* window)
 			createTagEditor();
 			
 			if (map->getNumColors() == 0)
-				QTimer::singleShot(0, color_dock_widget, SLOT(show()));  // clazy:exclude=old-style-connect
+				QTimer::singleShot(0, color_dock_widget, &QWidget::show);
 		}
 		
 		// Auto-select the edit tool
@@ -4211,7 +4216,7 @@ bool EditorDockWidget::event(QEvent* event)
 		break;
 		
 	case QEvent::Show:
-		QTimer::singleShot(0, this, SLOT(raise()));  // clazy:exclude=old-style-connect
+		QTimer::singleShot(0, this, &QWidget::raise);
 		break;
 		
 	default:

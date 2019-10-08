@@ -37,6 +37,8 @@
 #include <QLabel>
 #include <QLatin1String>
 #include <QLayout>
+#include <QList>
+#include <QObjectList>
 #include <QRect>
 #include <QScrollArea>
 #include <QScrollBar>

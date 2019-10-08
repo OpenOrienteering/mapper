@@ -34,6 +34,11 @@
 #endif
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 /**
  * A generic utility for requesting app permissions from the user.
  * 
@@ -155,5 +160,11 @@ namespace AppPermissions
 #endif
 	
 }  // namespace AppPermissions
+
+
+#ifdef __clang_analyzer__
+#undef singleShot(A, B, C)
+#endif
+
 
 #endif  // OPENORIENTEERING_APP_PERMISSIONS_H

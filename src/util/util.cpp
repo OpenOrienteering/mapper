@@ -207,10 +207,12 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 	if (qAbs(rotation - M_PI/2) < 0.0001)
 	{
 		// Special case: vertical lines
-		double first = offset + ceil((extent.left() - offset) / (spacing)) * spacing;
-		for (double cur = first; cur < extent.right(); cur += spacing)
+		double cur = offset + ceil((extent.left() - offset) / (spacing)) * spacing;
+		auto const count = qCeil(extent.width() / spacing);
+		for (auto i = 0; i < count; ++i)
 		{
 			process_line(QPointF(cur, extent.top()), QPointF(cur, extent.bottom()));
+			cur += spacing;
 		}
 	}
 	else if (rotation < 0.0001 || rotation > M_PI - 0.0001)
@@ -218,10 +220,12 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 		// Special case: horizontal lines
 		if (rotation > M_PI/2)
 			offset = -offset;
-		double first = offset + ceil((extent.top() - offset) / (spacing)) * spacing;
-		for (double cur = first; cur < extent.bottom(); cur += spacing)
+		auto cur = offset + ceil((extent.top() - offset) / (spacing)) * spacing;
+		auto const count = qCeil(extent.height() / spacing);
+		for (auto i = 0; i < count; ++i)
 		{
 			process_line(QPointF(extent.left(), cur), QPointF(extent.right(), cur));
+			cur += spacing;
 		}
 	}
 	else
@@ -245,7 +249,7 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 			double end_x = extent.left();
 			double end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
 			
-			do
+			for (auto i = 0; i < 100000; ++i)
 			{
 				// Correct coordinates
 				if (start_x > extent.right())
@@ -268,7 +272,7 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 				// Move to next position
 				start_x += dist_x;
 				end_y += dist_y;
-			} while (true);
+			}
 		}
 		else
 		{
@@ -280,7 +284,7 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 			double end_x = extent.x();
 			double end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
 			
-			do
+			for (auto i = 0; i < 100000; ++i)
 			{
 				// Correct coordinates
 				if (start_x > extent.right())
@@ -303,7 +307,7 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 				// Move to next position
 				start_x += dist_x;
 				end_y += dist_y;
-			} while (true);
+			}
 		}
 	}
 }

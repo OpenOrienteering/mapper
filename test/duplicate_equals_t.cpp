@@ -20,6 +20,7 @@
 
 #include "duplicate_equals_t.h"
 
+#include <initializer_list>
 #include <memory>
 
 #include <QtGlobal>

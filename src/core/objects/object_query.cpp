@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <iterator>
 #include <new>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

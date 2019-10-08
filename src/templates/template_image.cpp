@@ -21,6 +21,7 @@
 
 #include "template_image.h"
 
+#include <iosfwd>
 #include <iterator>
 
 #include <Qt>

@@ -25,6 +25,7 @@
 #include <iterator>
 #include <limits>
 #include <set>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

@@ -24,6 +24,7 @@
 #include <QString>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 
 using namespace OpenOrienteering;
 

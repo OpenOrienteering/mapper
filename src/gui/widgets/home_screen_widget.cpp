@@ -580,7 +580,7 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 		
 		constexpr auto filters = QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot;
 		constexpr auto flags = QDir::DirsLast | QDir::Name | QDir::IgnoreCase | QDir::LocaleAware;
-		auto info_list = QDir(location.path()).entryInfoList(filters, flags);
+		auto const info_list = QDir(location.path()).entryInfoList(filters, flags);
 		for (const auto& file_info : info_list)
 		{
 			addItemToFileList(file_info, location.hint(), icon);

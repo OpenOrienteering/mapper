@@ -37,6 +37,7 @@
 #include <QList>
 #include <QLocale>
 #include <QMouseEvent>
+#include <QObjectList>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPinchGesture>
@@ -68,6 +69,11 @@
 
 class QGesture;
 // IWYU pragma: no_forward_declare QPinchGesture
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -526,7 +532,7 @@ void MapWidget::updateDrawingLater(const QRectF& map_rect, int pixel_border)
 		if (!cached_update_rect.isValid())
 		{
 			// Start the update timer
-			QTimer::singleShot(15, this, SLOT(updateDrawingLaterSlot()));  // clazy:exclude=old-style-connect
+			QTimer::singleShot(15, this, &MapWidget::updateDrawingLaterSlot);
 		}
 		
 		// NOTE: this may require a mutex for concurrent access with updateDrawingLaterSlot()?

@@ -22,9 +22,9 @@
 #ifndef OPENORIENTEERING_OBJECT_H
 #define OPENORIENTEERING_OBJECT_H
 
-#include <algorithm>
 #include <limits>
 #include <vector>
+#include <utility>
 
 #include <QtGlobal>
 #include <QHash>
