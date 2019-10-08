@@ -71,6 +71,11 @@ class QGesture;
 // IWYU pragma: no_forward_declare QPinchGesture
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 MapWidget::MapWidget(bool show_help, bool force_antialiasing, QWidget* parent)

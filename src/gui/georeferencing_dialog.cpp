@@ -75,6 +75,11 @@
 #include "util/scoped_signals_blocker.h"
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 Q_STATIC_ASSERT(Georeferencing::declinationPrecision() == Util::InputProperties<Util::RotationalDegrees>::decimals());

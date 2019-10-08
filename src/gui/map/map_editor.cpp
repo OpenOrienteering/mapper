@@ -167,6 +167,11 @@
 #include "util/backports.h" // IWYU pragma: keep
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 class PointSymbol;

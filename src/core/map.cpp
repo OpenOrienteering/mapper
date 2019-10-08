@@ -70,6 +70,11 @@
 // IWYU pragma: no_forward_declare QRectF
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 QPointer<QTranslator> map_symbol_translator{};

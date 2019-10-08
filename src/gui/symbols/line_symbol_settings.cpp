@@ -51,6 +51,11 @@
 #include "util/util.h"
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 // ### LineSymbol ###

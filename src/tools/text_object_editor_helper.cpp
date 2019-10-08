@@ -62,6 +62,11 @@
 //#  define INPUT_METHOD_BUGS_RESOLVED
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 // ### TextObjectEditorHelper::BatchEdit ###

@@ -67,6 +67,11 @@
 #include "util/mapper_service_proxy.h"
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 constexpr int MainWindow::max_recent_files;

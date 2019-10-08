@@ -54,6 +54,11 @@
 #include "templates/template_track.h"
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT
+#endif
+
+
 namespace OpenOrienteering {
 
 namespace {
@@ -438,7 +443,6 @@ void OgrTemplate::reloadLater()
 {
 	if (reload_pending)
 		return;
-		
 	if (template_state == Loaded)
 		templateMap()->clear(); // no expensive operations before reloading
 	QTimer::singleShot(0, this, &OgrTemplate::reload);
