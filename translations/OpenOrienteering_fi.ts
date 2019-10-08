@@ -2314,7 +2314,7 @@ Skaalataanko tuotu tieto?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Kosketustila</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -7257,38 +7257,38 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="51"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sijainti:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="54"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lähde:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="60"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarjaportti (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Anturit</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="111"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="148"/>
         <source>Default</source>
-        <translation type="unfinished">Oletusarvo</translation>
+        <translation>Oletus</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sarjaportti (NMEA)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikkunat</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
