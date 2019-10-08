@@ -577,6 +577,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	temp->setTemplatePosition(MapCoord{top_left + MapCoordF{size_mm/2, size_mm/2}});
 	temp->setTemplateScaleX(1.0/pixel_per_mm);
 	temp->setTemplateScaleY(1.0/pixel_per_mm);
+	temp->setTemplateShear(0);
 	temp->setTemplateRotation(0);
 	temp->loadTemplateFile(false);
 	

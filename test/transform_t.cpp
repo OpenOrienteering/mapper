@@ -54,14 +54,16 @@ void TransformTest::testTransformBasics()
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, 0.0);
+	QCOMPARE(t.template_shear, 0.0);
 	
 	// List initialization
-	auto t2 = TemplateTransform { 12, -3, 0.1, 2.0, 3.0 };
+	auto t2 = TemplateTransform { 12, -3, 0.1, 2.0, 3.0, 0.78 };
 	QCOMPARE(t2.template_x, 12);
 	QCOMPARE(t2.template_y, -3);
 	QCOMPARE(t2.template_scale_x, 2.0);
 	QCOMPARE(t2.template_scale_y, 3.0);
 	QCOMPARE(t2.template_rotation, 0.1);
+	QCOMPARE(t2.template_shear, 0.78);
 	
 	// Assignment
 	t = t2;
@@ -70,6 +72,7 @@ void TransformTest::testTransformBasics()
 	QCOMPARE(t.template_scale_x, 2.0);
 	QCOMPARE(t.template_scale_y, 3.0);
 	QCOMPARE(t.template_rotation, 0.1);
+	QCOMPARE(t.template_shear, 0.78);
 	
 	// Comparison
 	QCOMPARE(t, t2);
@@ -87,12 +90,13 @@ void TransformTest::testTransformIdentity()
 	TemplateTransform t;
 	
 	// TemplateTransform list initialization, and assignment
-	t = { 12, -3, 0.1, 2.0, 3.0 };
+	t = { 12, -3, 0.1, 2.0, 3.0, 0.78 };
 	QCOMPARE(t.template_x, 12);
 	QCOMPARE(t.template_y, -3);
 	QCOMPARE(t.template_scale_x, 2.0);
 	QCOMPARE(t.template_scale_y, 3.0);
 	QCOMPARE(t.template_rotation, 0.1);
+	QCOMPARE(t.template_shear, 0.78);
 	
 	// Now transfer the identity QTransform to the TemplateTransform
 	t = TemplateTransform::fromQTransform(qt);
@@ -101,6 +105,7 @@ void TransformTest::testTransformIdentity()
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, 0.0);
+	QCOMPARE(t.template_shear, 0);
 	
 	// Put something different in the QTransform
 	qt.translate(4, 8);
@@ -127,6 +132,7 @@ void TransformTest::testTransformTranslate()
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, 0.0);
+	QCOMPARE(t.template_shear, 0.0);
 }
 
 void TransformTest::testTransformProject()
@@ -145,6 +151,7 @@ void TransformTest::testTransformProject()
 	QCOMPARE(t.template_scale_x, scale_x);
 	QCOMPARE(t.template_scale_y, scale_y);
 	QCOMPARE(t.template_rotation, 0.0);
+	QCOMPARE(t.template_shear, 0.0);
 }
 
 void TransformTest::testTransformRotate_data()
@@ -177,6 +184,7 @@ void TransformTest::testTransformRotate()
 		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation)));
 	else
 		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation - 360.0)));
+	QVERIFY(qAbs(t.template_shear) < 0.000001);
 }
 
 void TransformTest::testTransformCombined_data()
@@ -218,6 +226,7 @@ void TransformTest::testTransformCombined()
 		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation)));
 	else
 		QCOMPARE(t.template_rotation, -qDegreesToRadians(qreal(rotation - 360.0)));
+	QVERIFY(qAbs(t.template_shear) < 0.000001);
 }
 
 void TransformTest::testTransformRoundTrip_data()
@@ -284,6 +293,7 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_scale_x, 0.25);
 	QCOMPARE(t.template_scale_y, 0.25);
 	QVERIFY(qAbs(t.template_rotation) < 0.000001);
+	QVERIFY(qAbs(t.template_shear) < 0.000001);
 	
 	// Rotation
 	passpoints[0].src_coords  = MapCoordF { 0.0, 0.0 };
@@ -307,6 +317,53 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, qAcos(passpoints[1].dest_coords.x() / passpoints[1].src_coords.x()));
+	QVERIFY(qAbs(t.template_shear) < 0.000001);
+	
+	// Deformation
+	passpoints[0].src_coords  = MapCoordF { 0.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 0.0, 0.0 };
+	passpoints[1].src_coords  = MapCoordF { 1.0, -1.0 };
+	passpoints[1].dest_coords = MapCoordF { 2.0, -2.0 };
+	passpoints[2].src_coords  = MapCoordF { 1.0, 1.0 };
+	passpoints[2].dest_coords = MapCoordF { 0.5, 0.5 };
+	
+	QVERIFY(passpoints.estimateNonIsometricSimilarityTransform(&qt));
+	QCOMPARE(int(qt.type()), int(QTransform::TxShear));
+	
+	QCOMPARE(qt.map(passpoints[0].src_coords), QPointF{passpoints[0].dest_coords});
+	QCOMPARE(qt.map(passpoints[1].src_coords), QPointF{passpoints[1].dest_coords});
+	QCOMPARE(qt.map(passpoints[2].src_coords), QPointF{passpoints[2].dest_coords});
+	
+	t = TemplateTransform::fromQTransform(qt);
+	QCOMPARE(t.template_x, 0);
+	QCOMPARE(t.template_y, 0);
+	QCOMPARE(t.template_scale_x, 1.25);
+	QCOMPARE(t.template_scale_y, 1.25);
+	QCOMPARE(t.template_rotation, 0);
+	QCOMPARE(t.template_shear, -0.75);
+	
+	// Deformation
+	passpoints[0].src_coords  = MapCoordF { 0.0, 0.0 };
+	passpoints[0].dest_coords = MapCoordF { 0.0, 0.0 };
+	passpoints[1].src_coords  = MapCoordF { 4, 3 };
+	passpoints[1].dest_coords = MapCoordF { 100, 75 };
+	passpoints[2].src_coords  = MapCoordF { -3, 4 };
+	passpoints[2].dest_coords = MapCoordF { -3, 4 };
+	
+	QVERIFY(passpoints.estimateNonIsometricSimilarityTransform(&qt));
+	QCOMPARE(int(qt.type()), int(QTransform::TxShear));
+	
+	QCOMPARE(qt.map(passpoints[0].src_coords), QPointF{passpoints[0].dest_coords});
+	QCOMPARE(qt.map(passpoints[1].src_coords), QPointF{passpoints[1].dest_coords});
+	QCOMPARE(qt.map(passpoints[2].src_coords), QPointF{passpoints[2].dest_coords});
+	
+	t = TemplateTransform::fromQTransform(qt);
+	QCOMPARE(t.template_x, 0);
+	QCOMPARE(t.template_y, 0);
+	QCOMPARE(t.template_scale_x, 16.36);
+	QCOMPARE(t.template_scale_y, 9.64);
+	QCOMPARE(t.template_rotation, 0);
+	QCOMPARE(t.template_shear, 11.52);
 }
 
 void TransformTest::testEstimateSimilarityTransformation()
@@ -341,6 +398,7 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QCOMPARE(t1.template_scale_x, 1.0);
 		QCOMPARE(t1.template_scale_y, 1.0);
 		QVERIFY(t1.template_rotation < 0.000001);
+		QVERIFY(qAbs(t1.template_shear) < 0.000001);
 		
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
 		QVERIFY(passpoints[0].error < min_distance);
@@ -374,6 +432,7 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QCOMPARE(t2.template_rotation, qDegreesToRadians(90.0));
 		QCOMPARE(t2.template_scale_x, 1.0);
 		QCOMPARE(t2.template_scale_y, 1.0);
+		QVERIFY(qAbs(t2.template_shear) < 0.000001);
 		
 #ifndef QTBUG_69368_QUIRK
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
@@ -417,6 +476,7 @@ void TransformTest::testEstimateSimilarityTransformation()
 		QCOMPARE(t3.template_scale_x, 0.25);
 		QCOMPARE(t3.template_scale_y, 0.25);
 		QVERIFY(t3.template_rotation < 0.000001);
+		QVERIFY(qAbs(t3.template_shear) < 0.000001);
 		
 		QCOMPARE(QPointF(passpoints[0].calculated_coords), QPointF(passpoints[0].dest_coords));
 		QVERIFY(passpoints[0].error < min_distance);
