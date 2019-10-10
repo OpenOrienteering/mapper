@@ -5798,7 +5798,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1548"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> - kehystys</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1586"/>
@@ -5834,7 +5834,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2397"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuki OCD version %1 tiedostoille on kokeiluasteella.</translation>
     </message>
     <message>
         <source>Untested file importer for format: OCD %1</source>
@@ -5887,7 +5887,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
@@ -5925,17 +5925,17 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1878"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Karttaa ei ole georeferoitu. Paikallinen georeferointi vain.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1891"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferoinnin tietojen vienti epäonnistui. Vain paikallinen georeferointi.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1901"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuri %1 vaatii pätevän georeferointi tiedon.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1973"/>
@@ -5953,7 +5953,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2129"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimikentän luonti epäonnistui: %1</translation>
     </message>
 </context>
 <context>
@@ -7288,17 +7288,17 @@ Haluatko tallentaa muutokset?</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>Windows</source>
-        <translation>Ikkunat</translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>GeoClue</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Core Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Core Location</translation>
     </message>
 </context>
 <context>
