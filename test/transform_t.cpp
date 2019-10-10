@@ -105,7 +105,7 @@ void TransformTest::testTransformIdentity()
 	QCOMPARE(t.template_scale_x, 1.0);
 	QCOMPARE(t.template_scale_y, 1.0);
 	QCOMPARE(t.template_rotation, 0.0);
-	QCOMPARE(t.template_shear, 0);
+	QCOMPARE(t.template_shear, 0.0);
 	
 	// Put something different in the QTransform
 	qt.translate(4, 8);
@@ -339,7 +339,7 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 1.25);
 	QCOMPARE(t.template_scale_y, 1.25);
-	QCOMPARE(t.template_rotation, 0);
+	QCOMPARE(t.template_rotation, 0.0);
 	QCOMPARE(t.template_shear, -0.75);
 	
 	// Deformation
@@ -362,7 +362,7 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 16.36);
 	QCOMPARE(t.template_scale_y, 9.64);
-	QCOMPARE(t.template_rotation, 0);
+	QCOMPARE(t.template_rotation, 0.0);
 	QCOMPARE(t.template_shear, 11.52);
 }
 
