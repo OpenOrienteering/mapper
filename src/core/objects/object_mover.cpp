@@ -34,7 +34,7 @@
 namespace OpenOrienteering {
 
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
- : start_position(start_pos), corner_tolerance(0), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
+ : start_position(start_pos)
 {
 	Q_UNUSED(map);
 }

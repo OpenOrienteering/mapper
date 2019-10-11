@@ -101,9 +101,9 @@ private:
 	
 	// Basic information
 	MapCoordF start_position;
-	qreal corner_tolerance;
-	qint32 prev_drag_x;
-	qint32 prev_drag_y;
+	qreal corner_tolerance {};
+	qint32 prev_drag_x {};
+	qint32 prev_drag_y {};
 	ObjectSet objects;
 	std::unordered_map<PathObject*, CoordIndexSet> points;
 	std::unordered_map<TextObject*, MapCoordVector::size_type> text_handles;
@@ -127,7 +127,7 @@ private:
 		MapCoord opposite_handle_original_position;
 	};
 	std::vector<OppositeHandleConstraint> handle_constraints;
-	bool constraints_calculated;
+	bool constraints_calculated {true};
 };
 
 
