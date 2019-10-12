@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile salvare file: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished">Impossibile aprire file</translation>
+        <translation>Impossibile aprire file
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Impossibile aprire file:
+        <translation>Impossibile aprire file:
 %1
 
 %2</translation>
@@ -35,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Tipo di file non valido.</translation>
+        <translation>Tipo di file non valido.</translation>
     </message>
 </context>
 <context>
@@ -43,16 +45,16 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Domanda</translation>
+        <translation>Domanda</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">La scala dei dati importati è 1:%1 che differisce dalla scala della mappa che è 1:%2.
+        <translation>La scala dei dati importati è 1:%1 che differisce dalla scala della mappa che è 1:%2.
 
-Riscalare i dati importati?</translation>
+Adattare i dati importati?</translation>
     </message>
 </context>
 <context>
@@ -66,7 +68,7 @@ Riscalare i dati importati?</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Le coordinate sono state sistemate per stare nell&apos;area di disegno di OCAD 8 (-2 m ... 2 m).</translation>
+        <translation>Le coordinate sono state adattate per inserirsi nell&apos;area di disegno di OCAD 8 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
@@ -81,7 +83,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Questa mappa contiene più di di 24 tinte piatte e non è quindi supportata da OCD versione 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
@@ -92,7 +94,7 @@ Riscalare i dati importati?</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tinta piatta non valida.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
@@ -107,7 +109,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Testo troncato a &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -428,7 +430,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>Linee per pollice (LPI)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -666,7 +668,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi(Linee per pollice))</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2223,7 +2225,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modalità touch</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2339,7 +2341,7 @@ Riscalare i dati importati?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza anteprima:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
