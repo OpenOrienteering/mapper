@@ -28,12 +28,13 @@
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "util/util.h"
 
 
 namespace OpenOrienteering {
 
 ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
- : start_position(start_pos), prev_drag_x(0), prev_drag_y(0), constraints_calculated(true)
+ : start_position(start_pos)
 {
 	Q_UNUSED(map);
 }
@@ -43,6 +44,12 @@ ObjectMover::ObjectMover(Map* map, const MapCoordF& start_pos)
 void ObjectMover::setStartPos(const MapCoordF& start_pos)
 {
 	this->start_position = start_pos;
+}
+
+
+void ObjectMover::setCornerTolerance(const qreal corner_tolerance)
+{
+	this->corner_tolerance = corner_tolerance;
 }
 
 
@@ -86,7 +93,7 @@ void ObjectMover::addTextHandle(TextObject* text, MapCoordVector::size_type hand
 }
 
 
-void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx, qint32* out_dy)
+void ObjectMover::move(const MapCoordF& cursor_pos, HandleOpMode move_opposite_handles, qint32* out_dx, qint32* out_dy)
 {
 	auto delta_x = qRound(1000 * (cursor_pos.x() - start_position.x())) - prev_drag_x;
 	auto delta_y = qRound(1000 * (cursor_pos.y() - start_position.y())) - prev_drag_y;
@@ -102,7 +109,7 @@ void ObjectMover::move(const MapCoordF& cursor_pos, bool move_opposite_handles, 
 }
 
 
-void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
+void ObjectMover::move(qint32 dx, qint32 dy, HandleOpMode move_opposite_handles)
 {
 	calculateConstraints();
 	
@@ -124,18 +131,31 @@ void ObjectMover::move(qint32 dx, qint32 dy, bool move_opposite_handles)
 	}
 	
 	// Apply handle constraints
-	if (move_opposite_handles)
+	for (auto& constraint : handle_constraints)
 	{
-		for (auto& constraint : handle_constraints)
+		MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
+		MapCoord moved_handle = constraint.object->getCoordinate(constraint.moved_handle_index);
+		MapCoord opposite_handle = constraint.object->getCoordinate(constraint.opposite_handle_index);
+		MapCoordF to_hover_point = MapCoordF(moved_handle - anchor_point);
+
+		// Check conditions for "corner point click-in" operation
+		switch (move_opposite_handles)
 		{
-			MapCoord anchor_point = constraint.object->getCoordinate(constraint.curve_anchor_index);
-			MapCoordF to_hover_point = MapCoordF(constraint.object->getCoordinate(constraint.moved_handle_index) - anchor_point);
+		case HandleOpMode::Click:
+			if (constraint.anchor_is_corner
+				&& Util::pointsFormCorner(moved_handle, anchor_point, opposite_handle, corner_tolerance))
+				break; // still is a corner point -> refrain from moving opposite handle
+
+			// Perform the opposite handle move
 			to_hover_point.normalize();
-			
-			MapCoord control = constraint.object->getCoordinate(constraint.opposite_handle_index);
-			control.setX(anchor_point.x() - constraint.opposite_handle_dist * to_hover_point.x());
-			control.setY(anchor_point.y() - constraint.opposite_handle_dist * to_hover_point.y());
-			constraint.object->setCoordinate(constraint.opposite_handle_index, control);
+			opposite_handle.setX(anchor_point.x() - constraint.opposite_handle_dist * to_hover_point.x());
+			opposite_handle.setY(anchor_point.y() - constraint.opposite_handle_dist * to_hover_point.y());
+			constraint.object->setCoordinate(constraint.opposite_handle_index, opposite_handle);
+			Q_FALLTHROUGH();
+
+		case HandleOpMode::Never:
+			constraint.anchor_is_corner = Util::pointsFormCorner(moved_handle, anchor_point, opposite_handle, corner_tolerance);
+			break;
 		}
 	}
 	
@@ -248,6 +268,25 @@ void ObjectMover::calculateConstraints()
 		// Determine opposite handle constraints.
 		for (auto index : handles)
 		{
+			auto create_constraint = [this](const PathObject* path,
+			                         const MapCoordVector::size_type moved_index,
+			                         const MapCoordVector::size_type anchor_index,
+			                         const MapCoordVector::size_type opposite_index)
+			{
+				OppositeHandleConstraint constraint;
+				constraint.object = const_cast<PathObject*>(path);  // = item.first
+				constraint.moved_handle_index = moved_index;
+				constraint.curve_anchor_index = anchor_index;
+				constraint.opposite_handle_index = opposite_index;
+				const auto handle1 = path->getCoordinate(constraint.moved_handle_index);
+				const auto handle2 = path->getCoordinate(constraint.opposite_handle_index);
+				const auto anchor_point = path->getCoordinate(constraint.curve_anchor_index);
+				constraint.anchor_is_corner = Util::pointsFormCorner(handle1, anchor_point, handle2, corner_tolerance);
+				constraint.opposite_handle_original_position = handle2;
+				constraint.opposite_handle_dist = handle2.distanceTo(anchor_point);		
+				return constraint;
+			};
+			
 			Q_ASSERT(path->isCurveHandle(index));
 			auto& part = *path->findPartForIndex(index);
 			auto end_index = part.last_index;
@@ -264,13 +303,8 @@ void ObjectMover::calculateConstraints()
 				if (curve_anchor_index != part.first_index &&
 				    path->getCoordinate(part.prevCoordIndex(curve_anchor_index)).isCurveStart())
 				{
-					OppositeHandleConstraint constraint;
-					constraint.object = const_cast<PathObject*>(path);  // = item.first
-					constraint.moved_handle_index = index;
-					constraint.curve_anchor_index = index - 1;
-					constraint.opposite_handle_index = curve_anchor_index - 1;
-					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
+					auto constraint = create_constraint(path, index, index - 1,
+					                                    curve_anchor_index - 1);
 					handle_constraints.push_back(constraint);
 				}
 			}
@@ -284,13 +318,9 @@ void ObjectMover::calculateConstraints()
 				if (curve_anchor_index != end_index &&
 				    path->getCoordinate(curve_anchor_index).isCurveStart())
 				{
-					OppositeHandleConstraint constraint;
-					constraint.object = const_cast<PathObject*>(path);  // = item.first
-					constraint.moved_handle_index = index;
-					constraint.curve_anchor_index = curve_anchor_index;
-					constraint.opposite_handle_index = curve_anchor_index + 1;
-					constraint.opposite_handle_original_position = path->getCoordinate(constraint.opposite_handle_index);
-					constraint.opposite_handle_dist = constraint.opposite_handle_original_position.distanceTo(path->getCoordinate(constraint.curve_anchor_index));
+					auto constraint = create_constraint(path, index,
+					                                    curve_anchor_index,
+					                                    curve_anchor_index + 1);
 					handle_constraints.push_back(constraint);
 				}
 			}

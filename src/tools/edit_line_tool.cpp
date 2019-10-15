@@ -288,7 +288,7 @@ void EditLineTool::dragMove()
 		}
 		
 		qint32 dx, dy;
-		object_mover->move(constrained_pos_map, false, &dx, &dy);
+		object_mover->move(constrained_pos_map, ObjectMover::HandleOpMode::Never, &dx, &dy);
 		if (highlight_object)
 		{
 			highlight_renderables->removeRenderablesOfObject(highlight_object, false);

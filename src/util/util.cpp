@@ -313,4 +313,26 @@ void Util::hatchingOperation(const QRectF& extent, double spacing, double offset
 }
 
 
+bool Util::pointsFormCorner(const MapCoord& point1, const MapCoord& anchor_point,
+                            const MapCoord& point2, const qreal quantum_size)
+{
+	const MapCoordF segment1 { point2 - anchor_point };
+	const MapCoordF segment2 { point1 - anchor_point };
+	
+	if (MapCoordF::dotProduct(segment1, segment2) > 0)
+	{
+		// both handles are poiniting into the same half-space
+		// therefore anchor point is surely a corner
+		return true;
+	}
+	
+	// dot product based point-to-line distance calculation
+	auto perp_to_seg1 = segment1.normalVector();
+	perp_to_seg1.normalize();
+	const auto distance = MapCoordF::dotProduct(perp_to_seg1, segment2);
+	
+	return qAbs(distance) > quantum_size;
+}
+
+
 }  // namespace OpenOrienteering
