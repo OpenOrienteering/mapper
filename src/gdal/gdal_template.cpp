@@ -78,7 +78,7 @@ QByteArray GdalTemplate::RasterGeoreferencing::toProjSpec(const QByteArray& gdal
 GdalTemplate::RasterGeoreferencing GdalTemplate::tryReadProjection(const QString& filepath)
 {
 #if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
-	if (auto dataset = GDALOpen(filepath.toLocal8Bit(), GA_ReadOnly))
+	if (auto dataset = GDALOpen(filepath.toUtf8(), GA_ReadOnly))
 	{
 		auto raster_georef = RasterGeoreferencing::fromGDALDataset(dataset);
 		GDALClose(dataset);
