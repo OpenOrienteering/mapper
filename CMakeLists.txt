@@ -101,17 +101,6 @@ option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"          
 mark_as_advanced(Mapper_PACKAGE_PROJ Mapper_PACKAGE_GDAL Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT)
 
 
-# Migration of legacy configurations (before 0.7, affects developers)
-
-if(Mapper_BUILD_DOXYGEN)
-	unset(DOXYGEN_EXECUTABLE CACHE)
-endif()
-unset(Mapper_BUILD_DOXYGEN CACHE)
-unset(Mapper_BUILD_GDAL CACHE)
-unset(Mapper_BUILD_PROJ CACHE)
-unset(Mapper_BUILD_QT CACHE)
-
-
 # Installation configuration
 
 set(Mapper_PACKAGE_NAME "openorienteering-mapper" CACHE STRING
