@@ -19,15 +19,11 @@
 
 #include "gdal_manager.h"
 
+#include <cstddef>
 #include <cpl_conv.h>
 
 #include <gdal.h>
 // IWYU pragma: no_include <gdal_version.h>
-#if GDAL_VERSION_NUM < GDAL_COMPUTE_VERSION(2,0,0)
-#  include <ogr_api.h>
-# else
-#  include <cstddef>
-#endif
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -63,15 +59,11 @@ public:
 	GdalManagerPrivate()
 	: dirty{ true }
 	{
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 		GDALAllRegister();
 
 		// Prefer LIBMKL driver to the KML driver if available
 		if (GDALGetDriverByName("LIBKML") != nullptr)
 			GDALDeregisterDriver(GDALGetDriverByName("KML"));
-#else
-		OGRRegisterAll();
-#endif
 	}
 	
 	GdalManagerPrivate(const GdalManagerPrivate&) = delete;
@@ -213,7 +205,6 @@ private:
 	{
 		QSettings settings;
 		
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 		settings.beginGroup(gdal_manager_group);
 		auto count = GDALGetDriverCount();
 		enabled_vector_import_extensions.clear();
@@ -261,30 +252,6 @@ private:
 			}
 		}
 		settings.endGroup();
-#else
-		// GDAL < 2.0 does not provide the supported extensions
-		static const std::vector<QByteArray> default_extensions = {
-		    "shp", "dbf",
-		    "dxf",
-		    /* "gpx", */
-		    "osm", "pbf",
-		};
-		enabled_vector_import_extensions.reserve(default_extensions.size() + 3);
-		enabled_vector_import_extensions = default_extensions;
-
-		settings.beginGroup(gdal_manager_group);
-		if (settings.value(gdal_gpx_key, false).toBool())
-			enabled_vector_import_extensions.push_back("gpx");
-		settings.endGroup();
-
-		static const std::vector<QByteArray> default_export_extensions = {
-		    "shp",
-		    "gpx",
-		    "kml",
-		};
-		enabled_vector_export_extensions.reserve(default_export_extensions.size());
-		enabled_vector_export_extensions = default_export_extensions;
-#endif
 		
 		// Using osmconf.ini to detect a directory with data from gdal. The
 		// data:/gdal directory will always exist, due to mapper-osmconf.ini.

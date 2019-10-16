@@ -197,7 +197,7 @@ if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
 endif()
 
 if(Mapper_USE_GDAL)
-	find_package(GDAL REQUIRED)
+	find_package(GDAL 2 REQUIRED)
 endif()
 
 find_package(Qt5Core 5.5 REQUIRED)
