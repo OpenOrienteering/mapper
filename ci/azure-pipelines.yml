@@ -30,7 +30,7 @@
 jobs:
 - job: Codespell
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
   steps:
     - template: codespell.yml
 
@@ -38,7 +38,7 @@ jobs:
 - job: Release_Notes
   displayName: Release Notes
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
   steps:
     - template: release-notes.yml
 
@@ -88,7 +88,7 @@ jobs:
   dependsOn: Codespell
   condition: succeededOrFailed()
   variables:
-    IMAGE_NAME: 'ubuntu-16.04'
+    IMAGE_NAME: 'ubuntu-18.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
     CLAZY_VERSION: 1.5
     CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
@@ -114,7 +114,7 @@ jobs:
   dependsOn: Linux_clazy
   condition: succeededOrFailed()
   variables:
-    IMAGE_NAME: 'ubuntu-16.04'
+    IMAGE_NAME: 'ubuntu-18.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
     CC: gcc
     CFLAGS: -fprofile-arcs -ftest-coverage
@@ -273,7 +273,7 @@ jobs:
   #condition: succeededOrFailed()
   condition: False
   variables:
-    IMAGE_NAME: 'ubuntu-16.04'
+    IMAGE_NAME: 'ubuntu-18.04'
     SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
     TARGET: x86_64-w64-mingw32
     TARGET_SUFFIX: -$(TARGET)
