@@ -220,6 +220,30 @@ else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()
 
+
+# Build-time code checks
+
+if(NOT CMAKE_CXX_CLANG_TIDY)
+	set(min_version 8)
+	find_package(ClangTidy ${min_version})
+	if(ClangTidy_FOUND)
+		set(CMAKE_CXX_CLANG_TIDY "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${ClangTidy_EXECUTABLE}")
+	else()
+		message(AUTHOR_WARNING "Install clang-tidy >= ${min_version} for code checks during build")
+	endif()
+endif()
+
+if(NOT CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
+	set(min_version 0.12)
+	find_package(IWYU ${min_version})
+	if(IWYU_FOUND)
+		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${IWYU_EXECUTABLE}")
+	else()
+		message(AUTHOR_WARNING "Install include-what-you-use >= ${min_version} for code checks during build")
+	endif()
+endif()
+
+
 # Subdirectories
 
 add_subdirectory("doc/manual")
@@ -275,7 +299,7 @@ add_custom_target(CI SOURCES ${ci})
 
 # Configuration report
 
-feature_summary(WHAT ALL)
+feature_summary(INCLUDE_QUIET_PACKAGES WHAT ALL)
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" type)
 foreach(lang CXX C)
