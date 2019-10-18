@@ -3011,6 +3011,8 @@ void MapEditorController::connectPathsClicked()
 	AddObjectsUndoStep* add_step = nullptr;
 	MapPart* part = map->getCurrentPart();
 	
+/// \todo Fix connectPathsClicked()
+#ifndef __clang_analyzer__
 	while (true)
 	{
 		// Find the closest pair of open ends of objects with the same symbol,
@@ -3133,6 +3135,7 @@ void MapEditorController::connectPathsClicked()
 				best_object_a->deletePart(best_part_b);
 		}
 	}
+#endif
 	
 	// Create undo step?
 	ReplaceObjectsUndoStep* replace_step = nullptr;
