@@ -90,6 +90,9 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 }
 
 
+/// \todo Review unused function
+#ifdef SYMBOL_SET_T_UNUSED
+
 void addTranslation(TranslationEntries& entries, const QString& context, const QString& comment, const QString& language, const QString& translation)
 {
 	// Match source by comment.
@@ -122,6 +125,8 @@ QString findSuggestion(TranslationEntries& translation_entries, const QString& s
 	}
 	return {};
 }
+
+#endif  // SYMBOL_SET_T_UNUSED
 
 
 TranslationEntries readTsFile(QIODevice& device, const QString& language)
