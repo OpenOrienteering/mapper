@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -449,7 +449,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 		holes->deletePart(0);
 	}
 	
-	bool ok; Q_UNUSED(ok) // "ok" is only used in Q_ASSERT.
+	bool ok = true;
 	std::vector<PathObject*> out_paths = { new PathObject { edit_object->parts().front() }, nullptr };
 	const PathPart& drag_part = edit_object->parts()[drag_part_index];
 	if (drag_part.isClosed())
@@ -457,11 +457,11 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 		out_paths[1] = out_paths[0]->duplicate();
 		
 		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
-		ok = out_paths[0]->connectIfClose(split_path, split_threshold);
+		ok &= out_paths[0]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 
 		out_paths[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
-		ok = out_paths[1]->connectIfClose(split_path, split_threshold);
+		ok &= out_paths[1]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 	}
 	else
@@ -471,7 +471,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 		auto path_len = drag_part.path_coords.back().clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
-			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
+			ok &= out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			out_paths[1] = split_path->duplicate();
@@ -483,11 +483,11 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 			out_paths[1] = out_paths[0]->duplicate();
 			
 			out_paths[0]->changePathBounds(drag_part_index, 0, cut_pos);
-			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
+			ok &= out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			out_paths[1]->changePathBounds(drag_part_index, cut_pos, path_len);
-			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
+			ok &= out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 		}
 		else
@@ -496,20 +496,21 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 			PathObject* temp_path = out_paths[0]->duplicate();
 			
 			out_paths[0]->changePathBounds(drag_part_index, min_cut_pos, max_cut_pos);
-			ok = out_paths[0]->connectIfClose(split_path, split_threshold);
+			ok &= out_paths[0]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			out_paths[1]->changePathBounds(drag_part_index, 0, min_cut_pos);
-			ok = out_paths[1]->connectIfClose(split_path, split_threshold);
+			ok &= out_paths[1]->connectIfClose(split_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			temp_path->changePathBounds(drag_part_index, max_cut_pos, path_len);
-			ok = out_paths[1]->connectIfClose(temp_path, split_threshold);
+			ok &= out_paths[1]->connectIfClose(temp_path, split_threshold);
 			Q_ASSERT(ok);
 			
 			delete temp_path;
 		}
 	}
+	Q_UNUSED(ok) // "ok" is only used in Q_ASSERT.
 	
 	for (auto& object : out_paths)
 	{
