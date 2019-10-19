@@ -632,6 +632,11 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		map = new Map();
 		main_view = new MapView(this, map);
 	}
+#ifdef __clang_analyzer__
+	// clang-analyzer-core.CallAndMessage seems to be unable to realize
+	// that map != null from the previous block.
+	if (!map) { return false; }
+#endif
 	
 	auto importer = format.makeImporter(path, map, main_view);
 	if (!importer)
