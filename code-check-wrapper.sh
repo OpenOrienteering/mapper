@@ -121,7 +121,7 @@ if echo "$@" | grep -q "${PATTERN}"; then
 			|| exit 1
 		fi
 		;;
-	*iwyu*)
+	*iwyu*|*include-what-you-use*)
 		if ${ENABLE_IWYU}; then
 			"${PROGRAM}" \
 			  -Xiwyu --mapping_file=${0%/*}/iwyu-mapper.imp \
