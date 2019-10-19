@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -189,6 +189,7 @@ void CutoutTool::apply(Map* map, PathObject* cutout_object, bool cut_away)
 {
 	CutoutOperation operation(map, cutout_object, cut_away);
 	map->getCurrentPart()->applyOnAllObjects(std::ref(operation));
+	operation.commit();
 }
 
 
