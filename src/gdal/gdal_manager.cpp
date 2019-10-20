@@ -20,8 +20,9 @@
 #include "gdal_manager.h"
 
 #include <cstddef>
-#include <cpl_conv.h>
+// IWYU pragma: no_include <type_traits>
 
+#include <cpl_conv.h>
 #include <gdal.h>
 // IWYU pragma: no_include <gdal_version.h>
 

@@ -29,7 +29,7 @@
 #include <limits>
 #include <set>
 #include <vector>
-// IWYU pragma: no_include <ext/alloc_traits.h>
+// IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>

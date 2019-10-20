@@ -21,6 +21,7 @@
 
 #include <clocale>
 #include <memory>
+// IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
