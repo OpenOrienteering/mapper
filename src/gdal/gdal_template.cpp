@@ -19,12 +19,10 @@
 
 #include "gdal_template.h"
 
-#include <gdal.h>
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 #include <cpl_conv.h>
+#include <gdal.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
-#endif
 
 #include <QString>
 
@@ -38,7 +36,6 @@ namespace OpenOrienteering {
 GdalTemplate::RasterGeoreferencing GdalTemplate::RasterGeoreferencing::fromGDALDataset(GDALDatasetH dataset)
 {
 	RasterGeoreferencing raster_georef;
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 	if (dataset != nullptr)
 	{
 		auto driver = GDALGetDatasetDriver(dataset);
@@ -47,9 +44,6 @@ GdalTemplate::RasterGeoreferencing GdalTemplate::RasterGeoreferencing::fromGDALD
 		auto const result = GDALGetGeoTransform(dataset, raster_georef.geo_transform.data());
 		raster_georef.valid = result == CE_None;
 	}
-#else
-	Q_UNUSED(dataset)
-#endif
 	return raster_georef;
 }
 
@@ -77,16 +71,12 @@ QByteArray GdalTemplate::RasterGeoreferencing::toProjSpec(const QByteArray& gdal
 // static
 GdalTemplate::RasterGeoreferencing GdalTemplate::tryReadProjection(const QString& filepath)
 {
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 	if (auto dataset = GDALOpen(filepath.toUtf8(), GA_ReadOnly))
 	{
 		auto raster_georef = RasterGeoreferencing::fromGDALDataset(dataset);
 		GDALClose(dataset);
 		return raster_georef;
 	}
-#else
-	Q_UNUSED(filepath)
-#endif
 	return {};
 }
 

@@ -41,6 +41,7 @@ steps:
     fi
     
     if [ -n "${CLAZY_VERSION}" ] ; then
+      sudo apt-get install clang-tidy-8 # for extra checks
       CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
@@ -48,6 +49,9 @@ steps:
       chmod +x ${CLAZY_IMAGE}
       # Extract the app-image, or paths change on every invocation
       ./${CLAZY_IMAGE} --appimage-extract
+      if [ ! -x "${PWD}/squashfs-root/AppRun" ] ; then
+        chmod +x "${PWD}/squashfs-root/AppRun"
+      fi
       echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
     fi
     

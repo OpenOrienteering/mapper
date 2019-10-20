@@ -26,15 +26,14 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtNumeric>
+#include <QChar>
 #include <QDateTime>
 #include <QFile>
 #include <QFileDevice>
 #include <QGeoCoordinate>
 #include <QIODevice>
-#include <QLatin1Char>
-#include <QLatin1String>
 #include <QStandardPaths>
-#include <QStringList>
+#include <QStringList>  // IWYU pragma: keep
 
 
 inline void initPowershellPositionResources()
@@ -105,7 +104,6 @@ public:
 }  // namespace
 
 
-
 PowershellPositionSource::PowershellPositionSource(QObject* parent)
 : PowershellPositionSource(defaultScript(), parent)
 {
@@ -122,7 +120,7 @@ PowershellPositionSource::PowershellPositionSource(QByteArray&& script, QObject*
 		return;
 	}
 	
-	auto const powershell_path = QStandardPaths::findExecutable(QLatin1String("powershell.exe"));
+	auto const powershell_path = QStandardPaths::findExecutable(QStringLiteral("powershell.exe"));
 	if (powershell_path.isEmpty())
 	{
 		setError(QGeoPositionInfoSource::UnknownSourceError);
@@ -130,7 +128,7 @@ PowershellPositionSource::PowershellPositionSource(QByteArray&& script, QObject*
 	}
 	
 	powershell.setProgram(powershell_path);
-	powershell.setArguments(QStringLiteral("-NoLogo -NoProfile -NonInteractive -Command -").split(QLatin1Char(' ')));
+	powershell.setArguments(QStringLiteral("-NoLogo -NoProfile -NonInteractive -Command -").split(QChar::Space));
 	powershell.setReadChannel(QProcess::StandardOutput);
 	connect(&powershell, &QProcess::stateChanged, this, &PowershellPositionSource::powershellStateChanged);
 	connect(&powershell, &QProcess::readyReadStandardOutput, this, &PowershellPositionSource::readStandardOutput);
@@ -444,6 +442,5 @@ void PowershellPositionSource::singleUpdateTimeout()
 {
 	emit updateTimeout();
 }
-
 
 }  // namespace OpenOrienteering

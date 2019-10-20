@@ -20,6 +20,8 @@
 
 #include "gdal_settings_page.h"
 
+// IWYU pragma: no_include <type_traits>
+
 #include <QtGlobal>
 #include <QAbstractItemModel>
 #include <QCheckBox>

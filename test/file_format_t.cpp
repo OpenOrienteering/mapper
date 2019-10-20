@@ -24,6 +24,7 @@
 #include <initializer_list>
 #include <limits>
 #include <memory>
+// IWYU pragma: no_include <type_traits>
 #include <utility>
 
 #include <Qt>

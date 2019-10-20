@@ -38,7 +38,7 @@
 #include "core/latlon.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/crs_param_widgets.h"
-#include "util/backports.h"  // IWYU pragma: keep (QOverload)
+#include "util/backports.h"  // IWYU pragma: keep
 
 
 namespace OpenOrienteering {

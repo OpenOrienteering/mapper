@@ -26,7 +26,7 @@
 #include <QByteArray>
 #include <QColor>
 #include <QDir>
-#include <QFile>
+#include <QFile>  // IWYU pragma: keep
 #include <QFileInfo>
 #include <QImage>
 #include <QLatin1String>

@@ -26,6 +26,7 @@
 #include <functional>
 #include <type_traits>
 
+#include <QtGlobal>
 #include <QtMath>
 #include <QPointF>
 #include <QRectF>

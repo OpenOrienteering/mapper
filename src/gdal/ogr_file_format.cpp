@@ -35,10 +35,6 @@
 // IWYU pragma: no_include <cpl_error.h>
 // IWYU pragma: no_include <gdal_version.h>
 
-#if GDAL_VERSION_NUM < GDAL_COMPUTE_VERSION(2,0,0)
-#  include <Qt>
-#endif
-
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
@@ -1628,7 +1624,6 @@ bool OgrFileExport::exportImplementation()
 	QString file_extn = info.completeSuffix();
 	GDALDriverH po_driver = nullptr;
 
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 	auto count = GDALGetDriverCount();
 	for (auto i = 0; i < count; ++i)
 	{
@@ -1656,30 +1651,6 @@ bool OgrFileExport::exportImplementation()
 			}
 		}
 	}
-#else
-	const char *psz_driver_name;
-	if (file_extn.compare(QString::fromLatin1("gpx"), Qt::CaseInsensitive) == 0)
-	{
-		psz_driver_name = "GPX";
-	}
-	else if (file_extn.compare(QString::fromLatin1("kml"), Qt::CaseInsensitive) == 0)
-	{
-		if (OGRGetDriverByName("LIBKML") != nullptr)
-			psz_driver_name = "LIBKML";
-		else
-			psz_driver_name = "KML";
-	}
-	else if (file_extn.compare(QString::fromLatin1("shp"), Qt::CaseInsensitive) == 0)
-	{
-		psz_driver_name = "ESRI Shapefile";
-	}
-	else
-	{
-		throw FileFormatException(tr("Unknown file extension %1, only GPX, KML, and SHP files are supported.").arg(file_extn));
-	}
-
-	po_driver = OGRGetDriverByName(psz_driver_name);
-#endif
 
 	if (!po_driver)
 		throw FileFormatException(tr("Couldn't find a driver for file extension %1").arg(file_extn));
@@ -2115,11 +2086,7 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 
 OGRLayerH OgrFileExport::createLayer(const char* layer_name, OGRwkbGeometryType type)
 {
-#if GDAL_VERSION_NUM >= GDAL_COMPUTE_VERSION(2,0,0)
 	auto po_layer = GDALDatasetCreateLayer(po_ds.get(), layer_name, map_srs.get(), type, nullptr);
-#else
-	auto po_layer = OGR_DS_CreateLayer(po_ds.get(), layer_name, map_srs.get(), type, nullptr);
-#endif
 	if (!po_layer) {
 		addWarning(tr("Failed to create layer %1: %2").arg(QString::fromUtf8(layer_name), QString::fromLatin1(CPLGetLastErrorMsg())));
 		return nullptr;

@@ -4,23 +4,23 @@ This document is about building OpenOrienteering Mapper from source code.
 
 The general build process prerequisites are:
  - A supported platform: 
-   - Linux. Ubuntu 16.04 is known to work.
-     Linux is also used to cross-compile for Windows and Android.
-   - OS X Yosemite (10.10). OS X Mountain Lion (10.8) or newer may work.
-     (Qt supports Mac OS X Lion (10.7) for deployment only until Qt 5.6.)
+   - Linux. Ubuntu 18.04 is known to work.
+     Linux is also used to cross-compile for Android.
+   - macOS: 10.13 is known to work.
+   - Windows: MSYS2 (MinGW subsystem).
  - CMake >= 3.1.
    CMake is available from https://cmake.org/.
  - A supported C++ compiler toolchain. C++14 is mandatory.
 
 Mapper has a number of direct and indirect dependencies on third-party
 components. Direct dependencies are:
- - Qt >=5.3
+ - Qt >=5.5
    https://www.qt.io/download-open-source/
- - Clipper library (aka libpolyclipping) >= 6.1.3.a
+ - Clipper library (aka libpolyclipping) >= 6.1.3a
    http://www.angusj.com/delphi/clipper.php
- - PROJ Cartographic Projections Library >= 4.8
+ - PROJ Cartographic Projections Library >= 4.9
    https://proj4.org/
- - GDAL Geospatial Data Abstraction Library
+ - GDAL Geospatial Data Abstraction Library >= 2
    https://www.gdal.org/
  - ZLib Compression Library
    https://zlib.net/
@@ -52,7 +52,7 @@ git clone https://github.com/OpenOrienteering/mapper.git
 
 ## Compiling for Linux (without OpenOrienteering superbuild)
 
-The standard g++ (>= 4.9) compiler from a recent distribution should work. Make
+The standard g++ (>= 5.0) compiler from a recent distribution should work. Make
 sure that the required development and tool packages are installed. For a Ubuntu
 or Debian system, install:
 ```
@@ -125,8 +125,7 @@ In addition to the general build process prerequisites, you need:
 The OpenOrienteering superbuild project will download and install this software
 when it creates an android toolchain.
 
-Qt 5.6 requires at least API Level 9 to work. Apps built for the armeabi-v7a
-ABI require at least an emulator image of API level 14.
+Qt 5.12 requires at least API Level 16 to work.
 
 The build of OpenOrienteering Mapper for Android is done by CMake, too.
 However, the cmake-generated build creates a qmake project in
