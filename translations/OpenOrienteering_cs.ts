@@ -2334,7 +2334,7 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Dotykový mód</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -7362,48 +7362,48 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="51"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Poloha:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="54"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdroj:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="60"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Sériový port (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Senzory</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="111"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="148"/>
         <source>Default</source>
-        <translation type="unfinished">Výchozí</translation>
+        <translation>Výchozí</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sériový port (NMEA)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>GeoClue</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Core Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Core Location</translation>
     </message>
 </context>
 <context>
