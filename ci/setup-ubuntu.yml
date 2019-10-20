@@ -49,6 +49,9 @@ steps:
       chmod +x ${CLAZY_IMAGE}
       # Extract the app-image, or paths change on every invocation
       ./${CLAZY_IMAGE} --appimage-extract
+      if [ ! -x "${PWD}/squashfs-root/AppRun" ] ; then
+        chmod +x "${PWD}/squashfs-root/AppRun"
+      fi
       echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
     fi
     
