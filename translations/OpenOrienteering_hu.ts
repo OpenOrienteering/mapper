@@ -17,7 +17,7 @@
 %1:
 %2</source>
         <translation>A fájlt nem lehet megnyitni
- %1
+ %1:
 %2</translation>
     </message>
 </context>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Érvénytelen fájl formátum.</translation>
+        <translation>Érvénytelen fájltípus.</translation>
     </message>
 </context>
 <context>
@@ -45,14 +45,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Az importált adatok méretaránya 1:%1, ami különbözik a térkép méretarányától, ami 1:%2.
+        <translation>Az importált adatok méretaránya 1:%1, ami különbözik a térkép méretarányától, ami 1:%2.
 
 Átméretezi az importált adatokat?</translation>
     </message>
@@ -62,18 +62,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">A %1 verziójú OCD fájlok nem támogatottak!</translation>
+        <translation>A (z)% 1 verziójú OCD fájlok nem támogatottak!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">A koordináták adaptálva lettek, hogy illeszkedjenek OCAD-8-rajz területbe (-2 m … 2 m).</translation>
+        <translation>A koordináták úgy lettek alkalmazva, hogy illeszkedjenek OCAD-8-rajz területbe (-2 m … 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Néhány koordináta kívül esik az OCAD 8 rajzterületen. Lehet, hogy elérhetetlenek lesznek OCAD-ben.</translation>
+        <translation>Néhány koordináta kívül esik az OCAD 8 rajzterületen. Lehet, hogy elérhetetlenek lesznek OCAD-ban.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -99,17 +99,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Képtelenség helyes pozícióba menteni az elveszett &quot;%1&quot; hátteret</translation>
+        <translation>Képtelenség helyes pozícióba menteni az elveszett &quot;%1&quot; hátteret</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Nem exportálható háttér: %1 típusú fájl jelenleg nem támogatott</translation>
+        <translation>Nem exportálható háttér: %1 típusú fájl jelenleg nem támogatott</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation>A szöveg levágva  itt &apos;|&apos;: %1</translation>
+        <translation>A szöveg levágva  itt  &apos;|&apos;: %1</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">A &apos;%1&apos; kódolás nem elérhető. Ellenőrizd a beállításokat.</translation>
+        <translation>A &apos;%1&apos; kódolás nem elérhető. Ellenőrizze a beállításokat.</translation>
     </message>
 </context>
 <context>
@@ -681,7 +681,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1600,7 +1600,7 @@ Rescale the imported data?</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nem tudtam elmenteni a fájlt
+        <translation>Nem lehet elmenteni a fájlt
 %1:
 %2</translation>
     </message>
@@ -1650,7 +1650,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1988"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">A %1 kombinált szimbólum: nem támogatott a %2 részszimbólum.</translation>
+        <translation>A (z) %1 egyesített szimbólumban: nem támogatott részszimbólum a (z) %2 indexnél.</translation>
     </message>
 </context>
 <context>
@@ -1694,17 +1694,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="58"/>
         <source>Templates</source>
-        <translation type="unfinished">Hátterek</translation>
+        <translation>Hátterek</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Sraffozott területek</translation>
+        <translation>Sraffozott területek</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="63"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Alapvonal nézet</translation>
+        <translation>Alapvonal nézet</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="68"/>
@@ -1714,7 +1714,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Create a layer for each symbol</source>
-        <translation>Egy réteg létrehozása minden szimbólumhoz</translation>
+        <translation>Minden szimbólumhoz egy réteg létrehozása</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
@@ -2335,7 +2335,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Súgó</translation>
+        <translation>Súgó</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2365,12 +2365,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Minden fájl (*.*)</translation>
+        <translation>Minden fájl (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2406,7 +2406,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Szélesség:</translation>
+        <translation>Szélesség:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2432,7 +2432,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2864,12 +2864,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="169"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Kötőjel csoportok központja</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="170"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>Hézagok középpontja</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="200"/>
@@ -2909,22 +2909,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="671"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished">Kezdő hossz:</translation>
+        <translation>Indító rész hossza:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="672"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished">Vég hossz:</translation>
+        <translation>Végződés hossz:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="676"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltolás az elején:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltolás a végén:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1724"/>
@@ -3184,7 +3184,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="843"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Érvénytelen fájl formátum.</translation>
+        <translation>Érvénytelen fájltípus.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="852"/>
@@ -3302,14 +3302,14 @@ Más formátumot választok - nyomja meg a Nem gombot.</translation>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">Hiba</translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Nem lehet exportálni a térképet mint
+        <translation>Nem lehet exportálni a térképet mint
 &quot;%1&quot;
 mert a formátum ismeretlen.</translation>
     </message>
@@ -3318,9 +3318,9 @@ mert a formátum ismeretlen.</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Nem lehet exportálni a térképet mint
-&quot;%1&quot;
-mert a mentés mint %2 (.%3) nem támogatott.</translation>
+        <translation>Nem lehet exportálni a térképet mint
+&quot;% 1&quot;
+mert a% 2 (.% 3) mentés nem támogatott.</translation>
     </message>
 </context>
 <context>
@@ -3971,16 +3971,16 @@ Az adatokat mégis importálja?</translation>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Nem lehet exportálni a térképet mint
-&quot;%1&quot;
-mert a mentés mint %2 (.%3) nem támogatott.</translation>
+        <translation>Nem lehet exportálni a térképet mint
+&quot;% 1&quot;
+mert a % 2 (.% 3) mentés nem támogatott.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="600"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nem tudtam elmenteni a fájlt
+        <translation>Nem lehet elmenteni a fájlt
 %1:
 %2</translation>
     </message>
@@ -3989,18 +3989,18 @@ mert a mentés mint %2 (.%3) nem támogatott.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="652"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4084"/>
         <source>Warning</source>
-        <translation type="unfinished">Figyelmeztetés</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="610"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">A térkép exportálása figyelmeztetéseket generált.</translation>
+        <translation>A térkép exportálása figyelmeztetéseket jelzett.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="652"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4084"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">A térkép importálása figyelmeztetéseket generált.</translation>
+        <translation>A térkép importálása figyelmeztetéseket jelzett.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="858"/>
@@ -4180,7 +4180,7 @@ mert a mentés mint %2 (.%3) nem támogatott.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1150"/>
         <source>Toolbars</source>
-        <translation>Eszköztár</translation>
+        <translation>Eszköztárak</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1246"/>
@@ -4238,19 +4238,19 @@ mert a mentés mint %2 (.%3) nem támogatott.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4137"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Nincs mit importálni.</translation>
+        <translation>Nincs mit importálni.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4149"/>
         <source>Question</source>
-        <translation type="unfinished">Kérdés</translation>
+        <translation>Kérdés</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4150"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Az importált adatok méretaránya 1:%1, ami különbözik a térkép méretarányától, ami 1:%2.
+        <translation>Az importált adatok méretaránya 1:%1, ami különbözik a térkép méretarányától, ami 1:%2.
 
 Átméretezi az importált adatokat?</translation>
     </message>
@@ -5569,12 +5569,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1298"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1333"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; terület szimbólumban a kitöltési minta kihagyva.</translation>
+        <translation>A(z) &quot;%1&quot; terület szimbólumban a kitöltési minta kihagyva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1323"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; terület szimbólumban váltakozó pontsoros minta alkalmazva. Ez lehet hogy megfelelő, de az is hogy nem.</translation>
+        <translation>A(z) &quot;%1&quot; terület szimbólumban váltakozó pontsoros minta alkalmazva. Ez lehet hogy megfelelő, de az is hogy nem.</translation>
     </message>
 </context>
 <context>
@@ -5720,7 +5720,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="522"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>A (z) „% 1” szín különleges színű, „Registration black” színként lett importálva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
@@ -5793,7 +5793,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2068"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; vonalas szimbólumban ebben a kombinációban nem ábrázolható.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban nem ábrázolható a vég/csatlakozás kombinációja.</translation>
     </message>
 </context>
 <context>
@@ -5801,22 +5801,22 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1434"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; vonalas szimbólumban ebben a kombinációban nem ábrázolható.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban nem ábrázolható a vég/csatlakozás kombinációja.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1455"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; vonalas szimbólumban a szaggatott vonalak csoportosítása kihagyva.</translation>
+        <translation>A(z) &quot;%1&quot; vonalas szimbólumban a szaggatott vonalak csoportosítása kihagyva.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1466"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; vonalas szimbólumban, a szaggatott vonalak csoporton belüli száma kettőre csökkentve.</translation>
+        <translation>A(z) &quot;%1&quot; vonal szimbólumban, a szaggatott vonalak csoporton belüli száma kettőre csökkent.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1560"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; vonalas szimbólumban a szegélyek nem exportálhatók megfelelően.</translation>
+        <translation>A(z) &quot;%1&quot; vonal szimbólumban a szegélyek nem exportálhatók megfelelően.</translation>
     </message>
 </context>
 <context>
@@ -5824,17 +5824,17 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD működéséhez</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; szöveges objektumban: aláhúzás figyelmen kívül hagyva</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: aláhúzás figyelmen kívül hagyva</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1767"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">A(z) &quot;%1&quot; szöveges szimbólumban: alsó index figyelmen kívül hagyva</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: alsó index (alávágás) figyelmen kívül hagyva</translation>
     </message>
 </context>
 <context>
@@ -5852,12 +5852,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1695"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült létrehozni az adathalmazt:% 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1740"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült létrehozni a réteget: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1878"/>
@@ -5867,12 +5867,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1891"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült megfelelően exportálni a georeferencia információt. Csak helyi georeferálás.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1901"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>A (z) %1 illesztőprogram érvényes georefencia információt igényel.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1973"/>
@@ -5880,17 +5880,17 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2062"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2108"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült létrehozni egy objektumot a rétegben:% 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2122"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült létrehozni a(z)% 1 réteget:% 2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2129"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>A név mező létrehozása nem sikerült:% 1</translation>
     </message>
 </context>
 <context>
@@ -6430,7 +6430,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="536"/>
         <source>Save to PDF</source>
-        <translation>Menés PDF-ben</translation>
+        <translation>Mentés PDF-ben</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="243"/>
@@ -6442,7 +6442,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="958"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>A térkép átlátszó elemeket tartalmaz, amelyek raszteres módot igényelnek.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1121"/>
@@ -6571,7 +6571,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1219"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>A kép mentése sikertelen. Létezik az útvonal? Van elegendő jogosultsága?</translation>
+        <translation>A kép mentése sikertelen. Nem létezik az útvonal vagy nincs elegendő jogosultsága.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1223"/>
@@ -6818,7 +6818,7 @@ Elmented  a változtatásaidat?</translation>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="587"/>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="594"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólumkészlet nem tölthető be, elvetve.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -6833,7 +6833,7 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="600"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólumkészlet importálás által generált figyelmeztetések.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="606"/>
@@ -6909,29 +6909,29 @@ Elmented  a változtatásaidat?</translation>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Térkép koordináta-rendszer eredete</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencia illesztő pont</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Másik pont,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -7051,35 +7051,35 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Új skála:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Térkép koordináta-rendszer eredete</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Georeferencia illesztő pont</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Másik pont,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -7122,7 +7122,7 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;% 1 &lt;/b&gt;: Váltás az egyes objektumok méretezésére. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7188,48 +7188,48 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="51"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>Földrajzi helyzetmeghatározás:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="54"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forrás:</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="60"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Soros port (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="79"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Érzékelők</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="111"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="148"/>
         <source>Default</source>
-        <translation type="unfinished">Alapértelmezett</translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="114"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Soros port (NMEA)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>Windows</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>GeoClue</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="123"/>
         <source>Core Location</source>
-        <translation type="unfinished"></translation>
+        <translation>A mag helye</translation>
     </message>
 </context>
 <context>
@@ -7259,7 +7259,7 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>A&apos;&apos;% 1-hez való hozzáféréshez további engedélyekre van szükség.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -7318,7 +7318,7 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikon</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
@@ -7505,7 +7505,7 @@ Elmented  a változtatásaidat?</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Az egyéni ikonok megjelenítése</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -7895,7 +7895,7 @@ vagy, ezt tudod. Űzd el haragod, s jer velem!
     <message>
         <location filename="../src/templates/template_image.cpp" line="171"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Georeferálás nem található</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="185"/>
@@ -8082,7 +8082,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="276"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Georeferált</translation>
+        <translation>Georeferált</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="278"/>
@@ -8144,17 +8144,17 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1050"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Nem lehet betölteni a térkép fájlt, elvetés.</translation>
+        <translation>Nem lehet betölteni a térkép fájlt, elvetés.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>Warning</source>
-        <translation type="unfinished">Figyelmeztetés</translation>
+        <translation>Figyelmeztetés</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1014"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">A térkép importálása figyelmeztetéseket generált.</translation>
+        <translation>A térkép importálása figyelmeztetéseket  jelzett.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1025"/>
@@ -8190,7 +8190,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1101"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem változtatható a georeferálás állapota.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1220"/>
@@ -8203,7 +8203,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Nem lehet betölteni a térkép fájlt, elvetés.</translation>
+        <translation>Nem lehet betölteni a térkép fájlt, elvetés.</translation>
     </message>
 </context>
 <context>
@@ -8843,7 +8843,7 @@ A legnagyobb támogatott verzió a %2.</translation>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="622"/>
