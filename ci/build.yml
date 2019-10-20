@@ -101,7 +101,9 @@ steps:
     cp build/${TARGET:-default}/openorienteering-mapper-ci/${{ parameters.outputFilter }} output/
     #
     if [ ! -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
+      set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
       echo "##vso[task.setVariable variable=TEST_RESULTS]"
+      set -x
     fi
   condition: always()
   displayName: 'Process output and test results'

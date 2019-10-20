@@ -49,10 +49,9 @@ steps:
       chmod +x ${CLAZY_IMAGE}
       # Extract the app-image, or paths change on every invocation
       ./${CLAZY_IMAGE} --appimage-extract
-      if [ ! -x "${PWD}/squashfs-root/AppRun" ] ; then
-        chmod +x "${PWD}/squashfs-root/AppRun"
-      fi
+      set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
       echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
+      set -x
     fi
     
     case "${CXXFLAGS}" in
