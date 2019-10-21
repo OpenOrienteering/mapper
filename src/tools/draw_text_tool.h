@@ -27,6 +27,7 @@
 #include <Qt>
 #include <QObject>
 #include <QVariant>
+#include <QString>
 
 #include "core/renderables/renderable.h"
 #include "tools/tool_base.h"
@@ -51,8 +52,10 @@ class TextObjectEditorHelper;
 
 /**
  * Tool to draw text objects.
+ * 
+ * This class is marked as final because its destructor calls virtual functions.
  */
-class DrawTextTool : public MapEditorToolBase
+class DrawTextTool final : public MapEditorToolBase
 {
 Q_OBJECT
 public:
@@ -70,9 +73,9 @@ protected:
 	void abortEditing();
 	void finishEditing() override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	bool inputMethodEvent(QInputMethodEvent* event) override;
 	QVariant inputMethodQuery(Qt::InputMethodQuery property, const QVariant& argument) const override;

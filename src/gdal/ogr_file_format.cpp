@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,30 +18,32 @@
  */
 
 #include "ogr_file_format.h"
-#include "ogr_file_format_p.h"
+#include "ogr_file_format_p.h"  // IWYU pragma: associated
 
 #include <algorithm>
+#include <cstddef>
+#include <functional>
 #include <iterator>
 #include <memory>
 #include <vector>
-#include <type_traits>
+#include <utility>
 
-#include <cpl_error.h>
 #include <cpl_conv.h>
+#include <gdal.h>
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
+// IWYU pragma: no_include <cpl_error.h>
+// IWYU pragma: no_include <gdal_version.h>
 
 #include <QtGlobal>
 #include <QtMath>
 #include <QByteArray>
 #include <QColor>
-#include <QCoreApplication>
-#include <QFile>
+#include <QFileInfo>
+#include <QFlags>
 #include <QHash>
-#include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QObject>
 #include <QPointF>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
@@ -56,9 +58,12 @@
 #include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
+#include "core/path_coord.h"
+#include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/combined_symbol.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
@@ -68,52 +73,7 @@
 
 // IWYU pragma: no_forward_declare QFile
 
-
 namespace OpenOrienteering {
-
-namespace ogr {
-	
-	class OGRDataSourceHDeleter
-	{
-	public:
-		void operator()(OGRDataSourceH data_source) const
-		{
-			OGRReleaseDataSource(data_source);
-		}
-	};
-	
-	/** A convenience class for OGR C API datasource handles, similar to std::unique_ptr. */
-	using unique_datasource = std::unique_ptr<typename std::remove_pointer<OGRDataSourceH>::type, OGRDataSourceHDeleter>;
-	
-	
-	class OGRFeatureHDeleter
-	{
-	public:
-		void operator()(OGRFeatureH feature) const
-		{
-			OGR_F_Destroy(feature);
-		}
-	};
-	
-	/** A convenience class for OGR C API feature handles, similar to std::unique_ptr. */
-	using unique_feature = std::unique_ptr<typename std::remove_pointer<OGRFeatureH>::type, OGRFeatureHDeleter>;
-	
-	
-	class OGRGeometryHDeleter
-	{
-	public:
-		void operator()(OGRGeometryH geometry) const
-		{
-			OGR_G_DestroyGeometry(geometry);
-		}
-	};
-	
-	/** A convenience class for OGR C API geometry handles, similar to std::unique_ptr. */
-	using unique_geometry = std::unique_ptr<typename std::remove_pointer<OGRGeometryH>::type, OGRGeometryHDeleter>;
-	
-}  // namespace ogr
-
-
 
 namespace {
 	
@@ -196,7 +156,7 @@ namespace {
 			}
 			else
 			{
-				qDebug("OgrFileFormat: Failed to parse dash pattern '%s'", raw_pattern);
+				qDebug("OgrFileImportFormat: Failed to parse dash pattern '%s'", raw_pattern);
 			}
 		}
 	}
@@ -226,13 +186,13 @@ namespace {
 				}
 				else
 				{
-					qDebug("OgrFileFormat: Unsupported font size unit '%s'", unit.constData());
+					qDebug("OgrFileImportFormat: Unsupported font size unit '%s'", unit.constData());
 				}
 			}
 		}
 		else
 		{
-			qDebug("OgrFileFormat: Failed to parse font size '%s'", font_size_string);
+			qDebug("OgrFileImportFormat: Failed to parse font size '%s'", font_size_string);
 			font_size = 0;
 		}
 		return font_size;
@@ -284,6 +244,174 @@ namespace {
 		CPLFree(srs_wkt_raw);
 		return srs_wkt;
 	}
+	
+	
+	
+	QByteArray toRgbString(const MapColor* color)
+	{
+		auto rgb = QColor(color->getRgb()).name(QColor::HexArgb).toLatin1();
+		std::rotate(rgb.begin()+1, rgb.begin()+3, rgb.end()); // Move alpha to end
+		return rgb;
+	}
+	
+	QByteArray makeStyleString(const PointSymbol* point_symbol)
+	{
+		QByteArray style;
+		if (auto main_color = point_symbol->guessDominantColor())
+		{
+			style.reserve(40);
+			style += "SYMBOL(id:\"ogr-sym-0\"";
+			style += ",c:" + toRgbString(main_color);
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ")";
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const LineSymbol* line_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		auto main_color = line_symbol->getColor();
+		if (main_color && line_symbol->getLineWidth())
+		{
+			style += "PEN(c:" + toRgbString(main_color);
+			style += ",w:" + QByteArray::number(line_symbol->getLineWidth()/1000.0) + "mm";
+			if (line_symbol->isDashed())
+				style += ",p:\"2mm 1mm\""; // TODO
+			style += ",l:" + QByteArray::number(-main_color->getPriority());
+			style += ");";
+		}
+		if (line_symbol->hasBorder())
+		{
+			const auto& left_border = line_symbol->getBorder();
+			if (left_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(left_border.color);
+				style += ",w:" + QByteArray::number(left_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(-left_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-left_border.color->getPriority());
+				if (left_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+			const auto& right_border = line_symbol->getBorder();
+			if (right_border.isVisible())
+			{
+				// left border
+				style += "PEN(c:" + toRgbString(right_border.color);
+				style += ",w:" + QByteArray::number(right_border.width/1000.0) + "mm";
+				style += ",dp:" + QByteArray::number(right_border.shift/1000.0) + "mm";
+				style += ",l:" + QByteArray::number(-right_border.color->getPriority());
+				if (right_border.dashed)
+					style += ",p:\"2mm 1mm\""; // TODO
+				style += ");";
+			}
+		}
+		if (style.isEmpty())
+		{
+			if (auto main_color = line_symbol->guessDominantColor())
+			{
+				style += "PEN(c:" + toRgbString(main_color);
+				style += ",w:1pt";
+				style += ",l:" + QByteArray::number(-main_color->getPriority());
+				style += ')';
+			}
+		}
+		if (style.endsWith(';'))
+		{
+			style.chop(1);
+		}
+		return style;
+	}
+	
+	QByteArray makeStyleString(const AreaSymbol* area_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		if (auto color = area_symbol->getColor())
+		{
+			style += "BRUSH(fc:" + toRgbString(color);
+			style += ",l:" + QByteArray::number(-color->getPriority());
+			style += ");";
+		}
+		
+		auto num_fill_patterns = area_symbol->getNumFillPatterns();
+		for (int i = 0; i < num_fill_patterns; ++i)
+		{
+			auto part = area_symbol->getFillPattern(i);
+			switch (part.type)
+			{
+			case AreaSymbol::FillPattern::LinePattern:
+				if (!part.line_color)
+					continue;
+				style += "BRUSH(fc:" + toRgbString(part.line_color);
+				style += ",id:\"ogr-brush-2\"";  // parallel horizontal lines
+				style += ",a:" + QByteArray::number(qRadiansToDegrees(part.angle));
+				style += ",l:" + QByteArray::number(-part.line_color->getPriority());
+				style += ");";
+				break;
+			case AreaSymbol::FillPattern::PointPattern:
+				// TODO
+				qWarning("Cannot handle point pattern in area symbol %s",
+				         qPrintable(area_symbol->getName()));
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
+	QByteArray makeStyleString(const TextSymbol* text_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		style += "LABEL(c:" + toRgbString(text_symbol->getColor());
+		style += ",f:\"" + text_symbol->getFontFamily().toUtf8() + "\"";
+		style += ",s:"+QByteArray::number(text_symbol->getFontSize())+ "mm";
+		style += ",t:\"{Name}\"";
+		style += ')';
+		return style;
+	}
+	
+	
+	QByteArray makeStyleString(const CombinedSymbol* combined_symbol)
+	{
+		QByteArray style;
+		style.reserve(200);
+		for (auto i = combined_symbol->getNumParts() - 1; i >= 0; i--)
+		{
+			const auto* subsymbol = combined_symbol->getPart(i);
+			if (subsymbol)
+			{
+				switch (subsymbol->getType())
+				{
+				case Symbol::Line:
+					style += makeStyleString(subsymbol->asLine()) + ';';
+					break;
+				case Symbol::Area:
+					style += makeStyleString(subsymbol->asArea()) + ';';
+					break;
+				case Symbol::Combined:
+					style += makeStyleString(subsymbol->asCombined()) + ';';
+					break;
+				case Symbol::Point:
+				case Symbol::Text:
+					qWarning("Cannot handle point or text symbol in combined symbol %s",
+					         qPrintable(combined_symbol->getName()));
+					break;
+				case Symbol::NoSymbol:
+				case Symbol::AllSymbols:
+					Q_UNREACHABLE();
+				}
+			}
+		}
+		if (style.endsWith(';'))
+			style.chop(1);
+		return style;
+	}
+	
 	
 	class AverageLatLon
 	{
@@ -365,35 +493,54 @@ namespace {
 		}
 		
 	};
+	
+	
 }  // namespace
 
 
 
-// ### OgrFileFormat ###
+// ### OgrFileImportFormat ###
 
-OgrFileFormat::OgrFileFormat()
- : FileFormat(OgrFile, "OGR", ::OpenOrienteering::ImportExport::tr("Geospatial vector data"), QString{}, ImportSupported)
+OgrFileImportFormat::OgrFileImportFormat()
+ : FileFormat(OgrFile, "OGR",
+              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+              QString{},
+              Feature::FileOpen | Feature::FileImport | Feature::ReadingLossy )
 {
-	for (const auto& extension : GdalManager().supportedVectorExtensions())
+	for (const auto& extension : GdalManager().supportedVectorImportExtensions())
 		addExtension(QString::fromLatin1(extension));
 }
 
-bool OgrFileFormat::understands(const unsigned char* /*buffer*/, std::size_t /*size*/) const
+
+std::unique_ptr<Importer> OgrFileImportFormat::makeImporter(const QString& path, Map* map, MapView* view) const
 {
-	return true;
+	return std::make_unique<OgrFileImport>(path, map, view);
 }
 
-Importer* OgrFileFormat::createImporter(QIODevice* stream, Map *map, MapView *view) const
+
+// ### OgrFileExportFormat ###
+
+OgrFileExportFormat::OgrFileExportFormat()
+ : FileFormat(OgrFile, "OGR-export",
+              ::OpenOrienteering::ImportExport::tr("Geospatial vector data"),
+              QString{},
+              Feature::FileExport | Feature::WritingLossy )
 {
-	return new OgrFileImport(stream, map, view);
+	for (const auto& extension : GdalManager().supportedVectorExportExtensions())
+		addExtension(QString::fromLatin1(extension));
+}
+
+std::unique_ptr<Exporter> OgrFileExportFormat::makeExporter(const QString& path, const Map* map, const MapView* view) const
+{
+	return std::make_unique<OgrFileExport>(path, map, view);
 }
 
 
 
 // ### OgrFileImport ###
 
-OgrFileImport::OgrFileImport(QIODevice* stream, Map* map, MapView* view, UnitType unit_type)
- : Importer(stream, map, view)
+OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
+ : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
  , georeferencing_import_enabled{ true }
@@ -453,6 +600,13 @@ OgrFileImport::~OgrFileImport() = default;  // not inlined
 
 
 
+bool OgrFileImport::supportsQIODevice() const noexcept
+{
+	return false;
+}
+
+
+
 void OgrFileImport::setGeoreferencingImportEnabled(bool enabled)
 {
 	georeferencing_import_enabled = enabled;
@@ -469,6 +623,10 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 		OSRSetProjCS(srs.get(), "Projected map SRS");
 		OSRSetWellKnownGeogCS(srs.get(), "WGS84");
 		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+		// Cf. https://github.com/OSGeo/PROJ/pull/1573
+		spec.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
 		auto error = OSRImportFromProj4(srs.get(), spec);
 		if (!error)
 			return srs;
@@ -484,21 +642,14 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 
 
 
-void OgrFileImport::import(bool load_symbols_only)
+bool OgrFileImport::importImplementation()
 {
-	auto file = qobject_cast<QFile*>(stream);
-	if (!file)
-	{
-		throw FileFormatException("Internal error"); /// \todo Review design and/or message
-	}
-	
-	auto filename = file->fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		addWarning(Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		return false;
 	}
 	
 	if (auto driver = OGR_DS_GetDriver(data_source.get()))
@@ -522,7 +673,7 @@ void OgrFileImport::import(bool load_symbols_only)
 	
 	importStyles(data_source.get());
 
-	if (!load_symbols_only)
+	if (!loadSymbolsOnly())
 	{
 		QScopedValueRollback<MapCoord::BoundsOffset> rollback { MapCoord::boundsOffset() };
 		MapCoord::boundsOffset().reset(true);
@@ -604,6 +755,8 @@ void OgrFileImport::import(bool load_symbols_only)
 		addWarning(tr("Unable to load %n objects, reason: %1", nullptr, too_few_coordinates)
 		           .arg(tr("Not enough coordinates.")));
 	}
+	
+	return true;
 }
 
 
@@ -983,7 +1136,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 		
 	case Symbol::Combined:
 		/// \todo
-		//  fall through
+		Q_FALLTHROUGH();
 	case Symbol::Line:
 		symbol = line_symbols.value(style_string);
 		if (!symbol)
@@ -1223,7 +1376,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 	if (is_null)
 		return nullptr;
 	
-	auto point_symbol = static_cast<PointSymbol*>(default_point_symbol->duplicate());
+	auto point_symbol = duplicate<PointSymbol>(*default_point_symbol);
 	auto color = makeColor(tool, color_string);
 	if (color)
 		point_symbol->setInnerColor(color);
@@ -1232,16 +1385,17 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 	
 	auto key = style_string;
 	key.detach();
-	point_symbols.insert(key, point_symbol);
+	point_symbols.insert(key, point_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		point_symbols.insert(tool_key, point_symbol);
+		point_symbols.insert(tool_key, point_symbol.get());
 	}
 	
-	map->addSymbol(point_symbol, map->getNumSymbols());
-	return point_symbol;
+	auto ret = point_symbol.get();
+	map->addSymbol(point_symbol.release(), map->getNumSymbols());
+	return ret;
 }
 
 TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArray& /*style_string*/)
@@ -1264,7 +1418,8 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 	auto text_symbol = static_cast<TextSymbol*>(text_symbols.value(key));
 	if (!text_symbol)
 	{
-		text_symbol = static_cast<TextSymbol*>(default_text_symbol->duplicate());
+		auto copy = duplicate<TextSymbol>(*default_text_symbol);
+		text_symbol = copy.get();
 		
 		auto color = makeColor(tool, color_string);
 		if (color)
@@ -1279,7 +1434,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 		key.detach();
 		text_symbols.insert(key, text_symbol);
 		
-		map->addSymbol(text_symbol, map->getNumSymbols());
+		map->addSymbol(copy.release(), map->getNumSymbols());
 	}
 	
 	auto anchor = qBound(1, OGR_ST_GetParamNum(tool, OGRSTLabelAnchor, &is_null), 12);
@@ -1311,25 +1466,26 @@ LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray&
 	if (symbol && symbol->getType() == Symbol::Line)
 		return static_cast<LineSymbol*>(symbol);
 	
-	auto line_symbol = static_cast<LineSymbol*>(default_line_symbol->duplicate());
-	applyPenColor(tool, line_symbol);
-	applyPenWidth(tool, line_symbol);
-	applyPenCap(tool, line_symbol);
-	applyPenJoin(tool, line_symbol);
-	applyPenPattern(tool, line_symbol);
+	auto line_symbol = duplicate<LineSymbol>(*default_line_symbol);
+	applyPenColor(tool, line_symbol.get());
+	applyPenWidth(tool, line_symbol.get());
+	applyPenCap(tool, line_symbol.get());
+	applyPenJoin(tool, line_symbol.get());
+	applyPenPattern(tool, line_symbol.get());
 	
 	auto key = style_string;
 	key.detach();
-	line_symbols.insert(key, line_symbol);
+	line_symbols.insert(key, line_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		line_symbols.insert(tool_key, line_symbol);
+		line_symbols.insert(tool_key, line_symbol.get());
 	}
 	
-	map->addSymbol(line_symbol, map->getNumSymbols());
-	return line_symbol;
+	auto ret = line_symbol.get();
+	map->addSymbol(line_symbol.release(), map->getNumSymbols());
+	return ret;
 }
 
 AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArray& style_string)
@@ -1342,21 +1498,22 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 	if (symbol && symbol->getType() == Symbol::Area)
 		return static_cast<AreaSymbol*>(symbol);
 	
-	auto area_symbol = static_cast<AreaSymbol*>(default_area_symbol->duplicate());
-	applyBrushColor(tool, area_symbol);
+	auto area_symbol = duplicate<AreaSymbol>(*default_area_symbol);
+	applyBrushColor(tool, area_symbol.get());
 	
 	auto key = style_string;
 	key.detach();
-	area_symbols.insert(key, area_symbol);
+	area_symbols.insert(key, area_symbol.get());
 	
 	if (key != tool_key)
 	{
 		tool_key.detach();
-		area_symbols.insert(tool_key, area_symbol);
+		area_symbols.insert(tool_key, area_symbol.get());
 	}
 	
-	map->addSymbol(area_symbol, map->getNumSymbols());
-	return area_symbol;
+	auto s = area_symbol.get();
+	map->addSymbol(area_symbol.release(), map->getNumSymbols());
+	return s;
 }
 
 
@@ -1372,20 +1529,18 @@ MapCoord OgrFileImport::fromProjected(double x, double y) const
 
 
 // static
-bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& georef)
+bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencing& georef)
 {
 	if (georef.isLocal() || !georef.isValid())
 		return false;
 	
 	GdalManager();
 	
-	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		throw FileFormatException(QString::fromLatin1(CPLGetLastErrorMsg()));
 	}
 	
 	return checkGeoreferencing(data_source.get(), georef);
@@ -1396,6 +1551,10 @@ bool OgrFileImport::checkGeoreferencing(QFile& file, const Georeferencing& geore
 bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef)
 {
 	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	spec.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
 	auto map_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 	OSRSetProjCS(map_srs.get(), "Projected map SRS");
 	OSRSetWellKnownGeogCS(map_srs.get(), "WGS84");
@@ -1428,17 +1587,15 @@ bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georef
 
 
 // static
-LatLon OgrFileImport::calcAverageLatLon(QFile& file)
+LatLon OgrFileImport::calcAverageLatLon(const QString& path)
 {
 	GdalManager();
 	
-	auto filename = file.fileName();
 	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
-	auto data_source = ogr::unique_datasource(OGROpen(filename.toUtf8().constData(), 0, nullptr));
+	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		throw FileFormatException(::OpenOrienteering::Importer::tr("Could not read '%1': %2")
-		                          .arg(filename, QString::fromLatin1(CPLGetLastErrorMsg())));
+		throw FileFormatException(QString::fromLatin1(CPLGetLastErrorMsg()));
 	}
 	
 	return calcAverageLatLon(data_source.get());
@@ -1451,5 +1608,544 @@ LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 	return AverageLatLon(data_source);
 }
 
+// ### OgrFileExport ###
+
+OgrFileExport::OgrFileExport(const QString& path, const Map* map, const MapView* view)
+: Exporter(path, map, view)
+{
+	GdalManager manager;
+	bool one_layer_per_symbol = manager.isExportOptionEnabled(GdalManager::OneLayerPerSymbol);
+	setOption(QString::fromLatin1("Per Symbol Layers"), one_layer_per_symbol);
+}
+
+OgrFileExport::~OgrFileExport() = default;
+
+bool OgrFileExport::supportsQIODevice() const noexcept
+{
+	return false;
+}
+
+bool OgrFileExport::exportImplementation()
+{
+	// Choose driver and setup format-specific features
+	QFileInfo info(path);
+	QString file_extn = info.completeSuffix();
+	GDALDriverH po_driver = nullptr;
+
+	auto count = GDALGetDriverCount();
+	for (auto i = 0; i < count; ++i)
+	{
+		auto driver_data = GDALGetDriver(i);
+
+		auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+		if (qstrcmp(type, "YES") != 0)
+			continue;
+
+		auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
+		if (qstrcmp(cap_create, "YES") != 0)
+			continue;
+
+		auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+		auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+		for (auto pos = 0; pos >= 0; )
+		{
+			auto start = pos ? pos + 1 : 0;
+			pos = extensions.indexOf(' ', start);
+			auto extension = extensions.mid(start, pos - start);
+			if (file_extn == QString::fromLatin1(extension))
+			{
+				po_driver = driver_data;
+				break;
+			}
+		}
+	}
+
+	if (!po_driver)
+		throw FileFormatException(tr("Couldn't find a driver for file extension %1").arg(file_extn));
+
+	setupQuirks(po_driver);
+
+	setupGeoreferencing(po_driver);
+
+	// Create output dataset
+	po_ds = ogr::unique_datasource(OGR_Dr_CreateDataSource(
+	                                   po_driver,
+	                                   path.toLatin1(),
+	                                   nullptr));
+	if (!po_ds)
+		throw FileFormatException(tr("Failed to create dataset: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+
+	// Name field definition
+	if (quirks.testFlag(UseLayerField))
+	{
+		symbol_field = "Layer";
+		o_name_field = nullptr;
+	}
+	else
+	{
+		symbol_field = "Name";
+		o_name_field = ogr::unique_fielddefn(OGR_Fld_Create(symbol_field, OFTString));
+		OGR_Fld_SetWidth(o_name_field.get(), 32);
+	}
+
+	auto symbols = symbolsForExport();
+	
+	// Setup style table
+	populateStyleTable(symbols);
+
+	auto is_point_object = [](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		return symbol && symbol->getContainedTypes() & Symbol::Point;
+	};
+
+	auto is_text_object = [](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		return symbol && symbol->getContainedTypes() & Symbol::Text;
+	};
+
+	auto is_line_object = [](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		return symbol && (symbol->getType() == Symbol::Line
+		                  || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)));
+	};
+
+	auto is_area_object = [](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		return symbol && symbol->getContainedTypes() & Symbol::Area;
+	};
+
+	if (quirks & SingleLayer)
+	{
+		auto layer = createLayer("Layer", wkbUnknown);
+		if (layer == nullptr)
+			throw FileFormatException(tr("Failed to create layer: %2").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+		
+		for (auto symbol : symbols)
+		{
+			auto match_symbol = [symbol](auto object) { return object->getSymbol() == symbol; };
+			switch (symbol->getType())
+			{
+			case Symbol::Point:
+				addPointsToLayer(layer, match_symbol);
+				break;
+			case Symbol::Text:
+				addTextToLayer(layer, match_symbol);
+				break;
+			case Symbol::Line:
+				addLinesToLayer(layer, match_symbol);
+				break;
+			case Symbol::Combined:
+				if (!(symbol->getContainedTypes() & Symbol::Area))
+				{
+					addLinesToLayer(layer, match_symbol);
+					break;
+				}
+				Q_FALLTHROUGH();
+			case Symbol::Area:
+				addAreasToLayer(layer, match_symbol);
+				break;
+			case Symbol::NoSymbol:
+			case Symbol::AllSymbols:
+				Q_UNREACHABLE();
+			}
+		}
+	}
+	else if (option(QString::fromLatin1("Per Symbol Layers")).toBool())
+	{
+		// Add points, lines, areas in this order for driver compatibility (esp GPX)
+		for (auto symbol : symbols)
+		{
+			if (symbol->getType() == Symbol::Point)
+			{
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+				if (layer != nullptr)
+					addPointsToLayer(layer, [&symbol](const Object* object) {
+						const auto* sym = object->getSymbol();
+						return sym == symbol;
+					});
+			}
+			else if (symbol->getType() == Symbol::Text)
+			{
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPoint);
+				if (layer != nullptr)
+					addTextToLayer(layer, [&symbol](const Object* object) {
+						const auto* sym = object->getSymbol();
+						return sym == symbol;
+					});
+			}
+		}
+
+		// Line symbols
+		for (auto symbol : symbols)
+		{
+			if (symbol->getType() == Symbol::Line
+			    || (symbol->getType() == Symbol::Combined && !(symbol->getContainedTypes() & Symbol::Area)))
+			{
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbLineString);
+				if (layer != nullptr)
+					addLinesToLayer(layer, [&symbol](const Object* object) {
+						const auto* sym = object->getSymbol();
+						return sym == symbol;
+					});
+			}
+		}
+
+		// Area symbols
+		for (auto symbol : symbols)
+		{
+			if (symbol->getContainedTypes() & Symbol::Area)
+			{
+				auto layer = createLayer(QString::fromUtf8("%1_%2").arg(info.baseName(), symbol->getPlainTextName()).toUtf8(), wkbPolygon);
+				if (layer != nullptr)
+					addAreasToLayer(layer, [&symbol](const Object* object) {
+						const auto* sym = object->getSymbol();
+						return sym == symbol;
+					});
+			}
+		}
+	}
+	else
+	{
+		// Add points, lines, areas in this order for driver compatibility (esp GPX)
+		auto point_layer = createLayer(QString::fromLatin1("%1_points").arg(info.baseName()).toLatin1(), wkbPoint);
+		if (point_layer != nullptr)
+		{
+			addPointsToLayer(point_layer, is_point_object);
+			addTextToLayer(point_layer, is_text_object);
+		}
+
+		auto line_layer = createLayer(QString::fromLatin1("%1_lines").arg(info.baseName()).toLatin1(), wkbLineString);
+		if (line_layer != nullptr)
+			addLinesToLayer(line_layer, is_line_object);
+
+		auto area_layer = createLayer(QString::fromLatin1("%1_areas").arg(info.baseName()).toLatin1(), wkbPolygon);
+		if (area_layer != nullptr)
+			addAreasToLayer(area_layer, is_area_object);
+	}
+
+	return true;
+}
+
+
+std::vector<const Symbol*> OgrFileExport::symbolsForExport() const
+{
+	std::vector<bool> symbols_in_use;
+	map->determineSymbolsInUse(symbols_in_use);
+	
+	const auto num_symbols = map->getNumSymbols();
+	std::vector<const Symbol*> symbols;
+	symbols.reserve(std::size_t(num_symbols));
+	for (auto i = 0; i < num_symbols; ++i)
+	{
+		auto symbol = map->getSymbol(i);
+		if (symbols_in_use[std::size_t(i)]
+		    && !symbol->isHidden()
+		    && !symbol->isHelperSymbol())
+			symbols.push_back(symbol);
+	}
+	std::sort(begin(symbols), end(symbols), Symbol::lessByColorPriority);
+	return symbols;
+}
+
+
+void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
+{
+	// Check if map is georeferenced
+	const auto& georef = map->getGeoreferencing();
+	bool local_only = false;
+	if (georef.getState() == Georeferencing::Local)
+	{
+		local_only = true;
+		addWarning(tr("The map is not georeferenced. Local georeferencing only."));
+	}
+
+	// Make sure GDAL can work with the georeferencing info
+	map_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	if (!local_only)
+	{
+		OSRSetProjCS(map_srs.get(), "Projected map SRS");
+		OSRSetWellKnownGeogCS(map_srs.get(), "WGS84");
+		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+		if (OSRImportFromProj4(map_srs.get(), spec) != OGRERR_NONE)
+		{
+			local_only = true;
+			addWarning(tr("Failed to properly export the georeferencing info. Local georeferencing only."));
+		}
+	}
+
+	/**
+	 * Only certain drivers work without georeferencing info.
+	 * GeorefOptional based on http://www.gdal.org/ogr_formats.html as of March 5, 2018
+	 */
+	if (local_only && !quirks.testFlag(GeorefOptional))
+	{
+		throw FileFormatException(tr("The %1 driver requires valid georefencing info.")
+		                          .arg(QString::fromLatin1(GDALGetDriverShortName(po_driver))));
+	}
+
+	if (quirks & NeedsWgs84)
+	{
+		// Formats with NeedsWgs84 quirk need coords in EPSG:4326/WGS 1984
+		auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+		OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+		transformation = ogr::unique_transformation { OCTNewCoordinateTransformation(map_srs.get(), geo_srs.get()) };
+	}
+}
+
+void OgrFileExport::setupQuirks(GDALDriverH po_driver)
+{
+	static struct {
+		const char* name;
+		OgrQuirks quirks;
+	} driver_quirks[] = {
+	    { "ARCGEN",        GeorefOptional },
+	    { "BNA",           GeorefOptional },
+	    { "CSV",           GeorefOptional },
+	    { "DGN",           GeorefOptional },
+	    { "DGNv8",         GeorefOptional },
+	    { "DWG",           GeorefOptional },
+	    { "DXF",           OgrQuirks() | GeorefOptional | SingleLayer | UseLayerField },
+	    { "Geomedia",      GeorefOptional },
+	    { "GPX",           NeedsWgs84 },
+	    { "INGRES",        GeorefOptional },
+	    { "LIBKML",        NeedsWgs84 },
+	    { "ODS",           GeorefOptional },
+	    { "OpenJUMP .jml", GeorefOptional },
+	    { "REC",           GeorefOptional },
+	    { "SEGY",          GeorefOptional },
+	    { "XLS",           GeorefOptional },
+	    { "XLSX",          GeorefOptional },
+	};
+	using std::begin;
+	using std::end;
+	auto driver_name = GDALGetDriverShortName(po_driver);
+	auto driver_info = std::find_if(begin(driver_quirks), end(driver_quirks), [driver_name](auto entry) {
+		return qstrcmp(driver_name, entry.name) == 0;
+	});
+	if (driver_info != end(driver_quirks))
+		quirks |= driver_info->quirks;
+}
+
+void OgrFileExport::addPointsToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition)
+{
+	const auto& georef = map->getGeoreferencing();
+
+	auto add_feature = [&](const Object* object) {
+		auto symbol = object->getSymbol();
+		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
+
+		QString sym_name = symbol->getPlainTextName();
+		sym_name.truncate(32);
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
+		QPointF proj_cord = georef.toProjectedCoords(object->asPoint()->getCoordF());
+
+		OGR_G_SetPoint_2D(pt.get(), 0, proj_cord.x(), proj_cord.y());
+
+		if (quirks & NeedsWgs84)
+			OGR_G_Transform(pt.get(), transformation.get());
+
+		OGR_F_SetGeometry(po_feature.get(), pt.get());
+
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
+
+		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
+			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+	};
+
+	map->applyOnMatchingObjects(add_feature, condition);
+}
+
+void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition)
+{
+	const auto& georef = map->getGeoreferencing();
+
+	auto add_feature = [&](const Object* object) {
+		auto symbol = object->getSymbol();
+		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
+
+		QString sym_name = symbol->getPlainTextName();
+		sym_name.truncate(32);
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+		auto text = object->asText()->getText();
+		if (o_name_field)
+		{
+			// Use the name field for the text (useful e.g. for KML).
+			// This may overwrite the symbol name, and
+			// it may be too short for the full text.
+			auto index = OGR_F_GetFieldIndex(po_feature.get(), OGR_Fld_GetNameRef(o_name_field.get()));
+			OGR_F_SetFieldString(po_feature.get(), index, text.leftRef(32).toUtf8().constData());
+		}
+
+		auto pt = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPoint));
+		QPointF proj_cord = georef.toProjectedCoords(object->asText()->getAnchorCoordF());
+
+		OGR_G_SetPoint_2D(pt.get(), 0, proj_cord.x(), proj_cord.y());
+
+		if (quirks & NeedsWgs84)
+			OGR_G_Transform(pt.get(), transformation.get());
+
+		OGR_F_SetGeometry(po_feature.get(), pt.get());
+
+		QByteArray style = OGR_STBL_Find(table.get(), symbolId(symbol));
+		if (!o_name_field || text.length() > 32)
+		{
+			// There is no label field, or the text is too long.
+			// Put the text directly in the label.
+			text.replace(QRegularExpression(QLatin1String("([\"\\\\])"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
+			style.replace("{Name}", text.toUtf8());
+		}
+		OGR_F_SetStyleString(po_feature.get(), style);
+
+		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
+			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+	};
+
+	map->applyOnMatchingObjects(add_feature, condition);
+}
+
+void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition)
+{
+	const auto& georef = map->getGeoreferencing();
+
+	auto add_feature = [&](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		const auto* path = object->asPath();
+		if (path->parts().size() < 1)
+			return;
+
+		QString sym_name = symbol->getPlainTextName();
+		sym_name.truncate(32);
+
+		auto line_string = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLineString));
+		const auto& parts = path->parts();
+		for (const auto& part : parts)
+		{
+			auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
+			OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+			for (const auto& coord : part.path_coords)
+			{
+				QPointF proj_cord = georef.toProjectedCoords(coord.pos);
+				OGR_G_AddPoint_2D(line_string.get(), proj_cord.x(), proj_cord.y());
+			}
+
+			if (quirks & NeedsWgs84)
+				OGR_G_Transform(line_string.get(), transformation.get());
+
+			OGR_F_SetGeometry(po_feature.get(), line_string.get());
+
+			OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
+
+			if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
+				throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+		}
+	};
+
+	map->applyOnMatchingObjects(add_feature, condition);
+}
+
+void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (const Object*)>& condition)
+{
+	const auto& georef = map->getGeoreferencing();
+
+	auto add_feature = [&](const Object* object) {
+		const auto* symbol = object->getSymbol();
+		const auto* path = object->asPath();
+		if (path->parts().size() < 1)
+			return;
+
+		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));
+
+		QString sym_name = symbol->getPlainTextName();
+		sym_name.truncate(32);
+		OGR_F_SetFieldString(po_feature.get(), OGR_F_GetFieldIndex(po_feature.get(), symbol_field), sym_name.toLatin1().constData());
+
+		auto polygon = ogr::unique_geometry(OGR_G_CreateGeometry(wkbPolygon));
+		auto cur_ring = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
+
+		const auto& parts = path->parts();
+		for (const auto& part : parts)
+		{
+			for (const auto& coord : part.path_coords)
+			{
+				QPointF proj_cord = georef.toProjectedCoords(coord.pos);
+				OGR_G_AddPoint_2D(cur_ring.get(), proj_cord.x(), proj_cord.y());
+			}
+			OGR_G_CloseRings(cur_ring.get());
+			if (quirks & NeedsWgs84)
+				OGR_G_Transform(cur_ring.get(), transformation.get());
+			OGR_G_AddGeometry(polygon.get(), cur_ring.get());
+			cur_ring.reset(OGR_G_CreateGeometry(wkbLinearRing));
+		}
+
+		OGR_F_SetGeometry(po_feature.get(), polygon.get());
+
+		OGR_F_SetStyleString(po_feature.get(), OGR_STBL_Find(table.get(), symbolId(symbol)));
+
+		if (OGR_L_CreateFeature(layer, po_feature.get()) != OGRERR_NONE)
+			throw FileFormatException(tr("Failed to create feature in layer: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+	};
+
+	map->applyOnMatchingObjects(add_feature, condition);
+}
+
+OGRLayerH OgrFileExport::createLayer(const char* layer_name, OGRwkbGeometryType type)
+{
+	auto po_layer = GDALDatasetCreateLayer(po_ds.get(), layer_name, map_srs.get(), type, nullptr);
+	if (!po_layer) {
+		addWarning(tr("Failed to create layer %1: %2").arg(QString::fromUtf8(layer_name), QString::fromLatin1(CPLGetLastErrorMsg())));
+		return nullptr;
+	}
+
+	if (!quirks.testFlag(UseLayerField)
+	    && OGR_L_CreateField(po_layer, o_name_field.get(), 1) != OGRERR_NONE)
+	{
+		addWarning(tr("Failed to create name field: %1").arg(QString::fromLatin1(CPLGetLastErrorMsg())));
+	}
+
+	return po_layer;
+}
+
+void OgrFileExport::populateStyleTable(const std::vector<const Symbol*>& symbols)
+{
+	table = ogr::unique_styletable(OGR_STBL_Create());
+	auto manager = ogr::unique_stylemanager(OGR_SM_Create(table.get()));
+
+	// Go through all used symbols and create a style table
+	for (auto symbol : symbols)
+	{
+		QByteArray style_string;
+		switch (symbol->getType())
+		{
+		case Symbol::Text:
+			style_string = makeStyleString(symbol->asText());
+			break;
+		case Symbol::Point:
+			style_string = makeStyleString(symbol->asPoint());
+			break;
+		case Symbol::Line:
+			style_string = makeStyleString(symbol->asLine());
+			break;
+		case Symbol::Area:
+			style_string = makeStyleString(symbol->asArea());
+			break;
+		case Symbol::Combined:
+			style_string = makeStyleString(symbol->asCombined());
+			break;
+		case Symbol::NoSymbol:
+		case Symbol::AllSymbols:
+			Q_UNREACHABLE();
+		}
+		
+#ifdef MAPPER_DEVELOPMENT_BUILD
+		if (qEnvironmentVariableIsSet("MAPPER_DEBUG_OGR"))
+			qDebug("%s:\t \"%s\"", qPrintable(symbol->getPlainTextName()), style_string.constData());
+#endif
+		OGR_SM_AddStyle(manager.get(), symbolId(symbol), style_string);
+	}
+}
 
 }  // namespace OpenOrienteering

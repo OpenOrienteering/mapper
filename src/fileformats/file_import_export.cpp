@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2013-2015 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,11 +21,22 @@
 
 #include "file_import_export.h"
 
+#include <exception>
+#include <memory>
+
+#include <QtGlobal>
+#include <QFile>
+#include <QFileInfo>  // IWYU pragma: keep
+#include <QFlags>
+#include <QIODevice>
 #include <QLatin1Char>
+#include <QSaveFile>
+#include <QScopedValueRollback>
 
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
+#include "core/storage_location.h"  // IWYU pragma: keep
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -41,6 +52,17 @@ namespace OpenOrienteering {
 ImportExport::~ImportExport() = default;
 
 
+bool ImportExport::supportsQIODevice() const noexcept
+{
+	return true;
+}
+
+void ImportExport::setDevice(QIODevice* device)
+{
+	device_ = device;
+}
+
+
 QVariant ImportExport::option(const QString& name) const
 {
 	if (!options.contains(name))
@@ -49,19 +71,78 @@ QVariant ImportExport::option(const QString& name) const
 }
 
 
+void ImportExport::setOption(const QString& name, const QVariant& value)
+{
+	options[name] = value;
+}
+
 
 // ### Importer ###
 
 Importer::~Importer() = default;
 
 
-void Importer::doImport(bool load_symbols_only, const QString& map_path)
+void Importer::setLoadSymbolsOnly(bool value)
+{
+	load_symbols_only = value;
+}
+
+
+bool Importer::doImport()
+{
+	std::unique_ptr<QFile> managed_file;
+	QScopedValueRollback<QIODevice*> original_device{device_};
+	if (supportsQIODevice())
+	{
+		if (!device_)
+		{
+			managed_file = std::make_unique<QFile>(path);
+			device_ = managed_file.get();
+		}
+		if (!device_->isOpen() && !device_->open(QIODevice::ReadOnly))
+		{
+			addWarning(tr("Cannot open file\n%1:\n%2").arg(path, device_->errorString()));
+			return false;
+		}
+	}
+	
+	try
+	{
+		prepare();
+		if (!importImplementation())
+		{
+			Q_ASSERT(!warnings().empty());
+			importFailed();
+			return false;
+		}
+		validate();
+	}
+	catch (std::exception &e)
+	{
+		importFailed();
+		addWarning(tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
+		return false;
+	}
+	
+	return true;
+}
+
+
+void Importer::prepare()
 {
 	if (view)
 		view->setTemplateLoadingBlocked(true);
-	
-	import(load_symbols_only);
-	
+}
+
+// Don't add warnings in this function. They may hide the error message.
+void Importer::importFailed()
+{
+	if (view)
+		view->setTemplateLoadingBlocked(false);
+}
+
+void Importer::validate()
+{
 	// Object post processing:
 	// - make sure that there is no object without symbol
 	// - make sure that all area-only path objects are closed
@@ -91,7 +172,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 			if (object->getType() == Object::Path)
 			{
 				PathObject* path = object->asPath();
-				Symbol::Type contained_types = path->getSymbol()->getContainedTypes();
+				auto contained_types = path->getSymbol()->getContainedTypes();
 				if (contained_types & Symbol::Area && !(contained_types & Symbol::Line))
 					path->closeAllParts();
 				
@@ -108,7 +189,7 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	// Symbol post processing
 	for (int i = 0; i < map->getNumSymbols(); ++i)
 	{
-		if (!map->getSymbol(i)->loadFinished(map))
+		if (!map->getSymbol(i)->loadingFinishedEvent(map))
 			throw FileFormatException(::OpenOrienteering::Importer::tr("Error during symbol post-processing."));
 	}
 	
@@ -119,36 +200,39 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
 		Template* temp = map->getTemplate(i);
-		bool found_in_map_dir = false;
-		if (!temp->tryToFindTemplateFile(map_path, &found_in_map_dir))
+		auto const lookup_result = temp->tryToFindTemplateFile(path);
+		if (lookup_result == Template::NotFound)
 		{
 			have_lost_template = true;
+			continue;
 		}
-		else if (!view || view->getTemplateVisibility(temp).visible)
+		
+		if (view && !view->getTemplateVisibility(temp).visible)
 		{
-			if (!temp->loadTemplateFile(false))
-			{
-				addWarning(tr("Failed to load template '%1', reason: %2")
-				           .arg(temp->getTemplateFilename(), temp->errorString()));
-			}
-			else
-			{
-				auto error_string = temp->errorString();
-				if (found_in_map_dir)
-				{
-					error_string.prepend(
-					            ::OpenOrienteering::Importer::tr(
-					               "Template \"%1\" has been loaded from the map's directory instead of"
-					               " the relative location to the map file where it was previously."
-					               ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
-				}
-				
-				if (!error_string.isEmpty())
-				{
-					addWarning(tr("Warnings when loading template '%1':\n%2")
-					           .arg(temp->getTemplateFilename(), temp->errorString()));
-				}
-			}
+			continue;
+		}
+		
+		if (!temp->loadTemplateFile(false))
+		{
+			addWarning(tr("Failed to load template '%1', reason: %2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
+			continue;
+		}
+		
+		auto error_string = temp->errorString();
+		if (lookup_result == Template::FoundInMapDir)
+		{
+			error_string.prepend(
+			            ::OpenOrienteering::Importer::tr(
+			                "Template \"%1\" has been loaded from the map's directory instead of"
+			                " the relative location to the map file where it was previously."
+			                ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+		}
+		
+		if (!error_string.isEmpty())
+		{
+			addWarning(tr("Warnings when loading template '%1':\n%2")
+			           .arg(temp->getTemplateFilename(), temp->errorString()));
 		}
 	}
 	
@@ -161,11 +245,14 @@ void Importer::doImport(bool load_symbols_only, const QString& map_path)
 		           tr("Click the red template name(s) in the Templates -> Template setup window to locate the template file name(s)."));
 #endif
 	}
-}
+	
+	if (view)
+	{
+		view->setPanOffset({0,0});
+	}
 
-void Importer::finishImport()
-{
-	// Nothing, not inlined
+	// Update all objects without trying to remove their renderables first, this gives a significant speedup when loading large files
+	map->updateAllObjects(); // TODO: is the comment above still applicable?
 }
 
 
@@ -173,6 +260,55 @@ void Importer::finishImport()
 // ### Exporter ###
 
 Exporter::~Exporter() = default;
+
+
+bool Exporter::doExport()
+{
+	std::unique_ptr<QSaveFile> managed_file;
+	QScopedValueRollback<QIODevice*> original_device{device_};
+	if (supportsQIODevice())
+	{
+		if (!device_)
+		{
+			managed_file = std::make_unique<QSaveFile>(path);
+			device_ = managed_file.get();
+		}
+		if (!device_->isOpen() && !device_->open(QIODevice::WriteOnly))
+		{
+			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, device_->errorString()));
+			return false;
+		}
+	}
+	
+	try
+	{
+		if (!exportImplementation())
+		{
+			Q_ASSERT(!warnings().empty());
+			return false;
+		}
+		if (managed_file && !managed_file->commit())
+		{
+			addWarning(tr("Cannot save file\n%1:\n%2").arg(path, managed_file->errorString()));
+			return false;
+		}
+#ifdef Q_OS_ANDROID
+		// Make the MediaScanner aware of the *updated* file.
+		if (auto* file_device = qobject_cast<QFileDevice*>(device_))
+		{
+			const auto file_info = QFileInfo(file_device->fileName());
+			Android::mediaScannerScanFile(file_info.absolutePath());
+		}
+#endif
+	}
+	catch (std::exception &e)
+	{
+		addWarning(tr("Cannot save file\n%1:\n%2").arg(path, QString::fromLocal8Bit(e.what())));
+		return false;
+	}
+	
+	return true;
+}
 
 
 }  // namespace OpenOrienteering

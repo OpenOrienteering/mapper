@@ -27,6 +27,7 @@
 #include <QImage>
 #include <QObject>
 // IWYU pragma: no_include <QRectF>
+#include <QString>
 #include <QTransform>
 
 #include "tool_base.h"
@@ -55,7 +56,7 @@ public:
 	~FillTool() override;
 	
 protected slots:
-	void setDrawingSymbol(const Symbol* symbol);
+	void setDrawingSymbol(const OpenOrienteering::Symbol* symbol);
 	
 protected:
 	void updateStatusText() override;
@@ -66,7 +67,7 @@ protected:
 	/**
 	 * Tries to apply the fill tool at the current click position,
 	 * rasterizing the given extent of the map.
-	 * Returns -1 for abort, 0 for unsuccesful, 1 for succesful.
+	 * Returns -1 for abort, 0 for unsuccessful, 1 for successful.
 	 */
 	int fill(const QRectF& extent);
 	
@@ -96,7 +97,7 @@ protected:
 	 *  0 if the tracing fails because the start is not included in the shape,
 	 *  1 if the tracing succeeds.
 	 */
-	int traceBoundary(const QImage& image, QPoint free_pixel, QPoint boundary_pixel, std::vector<QPoint>& out_boundary);
+	int traceBoundary(const QImage& image, const QPoint& free_pixel, const QPoint& boundary_pixel, std::vector<QPoint>& out_boundary);
 	
 	/**
 	 * Creates a fill object for the given image, boundary vector (of pixel positions) and transform.

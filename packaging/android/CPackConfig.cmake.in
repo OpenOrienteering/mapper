@@ -1,0 +1,132 @@
+#
+#    Copyright 2017 Kai Pastor
+#    
+#    This file is part of OpenOrienteering.
+# 
+#    OpenOrienteering is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+# 
+#    OpenOrienteering is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+# 
+#    You should have received a copy of the GNU General Public License
+#    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
+
+
+execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Creating APK package")
+
+# For Android, we don't use a CPack generator,
+# but run androiddeployqt from this file.
+set(CPACK_GENERATOR "")
+
+
+if(@RELEASE_APK@)
+	set(config "CONFIG+=release")
+	set(apk "release/android-build-release" )
+else()
+	set(config "CONFIG+=debug")
+	set(apk "debug/android-build-debug" )
+endif()
+
+set(SIGN_APK "@SIGN_APK@")
+if(SIGN_APK AND "@CMAKE_HOST_UNIX@")
+	execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Checking if we are running in a terminal")
+	execute_process(COMMAND tty RESULT_VARIABLE result)
+	if(result)
+		# APK signing enabled at configuration time, but not possible at build time.
+		message(WARNING "Not running in a terminal, signing disabled.")
+		set(SIGN_APK 0)
+	endif()
+endif()
+
+if(SIGN_APK)
+	set(sign --sign "@KEYSTORE_URL@" "@KEYSTORE_ALIAS@")
+	set(apk "${apk}-signed.apk" )
+else()
+	set(sign )
+	if(@RELEASE_APK@)
+		set(apk "${apk}-unsigned.apk")
+	else()
+		set(apk "${apk}.apk")
+	endif()
+	message(STATUS "The build creates an unsigned APK. To sign the APK, run:
+  apksigner sign --ks <keystore> --ks-key-alias <alias> ${apk}"
+	)
+endif()
+
+
+
+set(staging_dir "@ANDROID_PACKAGE_SOURCE_DIR@")
+
+# Don't always clear the staging dir: It slows down the packaging, and it is
+# rarely needed. We can rely Mapper.pro, and even add extra variables there.
+if(EXISTS "${staging_dir}" AND "@MAPPER_PRO_DIR@/Mapper.pro" IS_NEWER_THAN "${staging_dir}")
+	FILE(REMOVE_RECURSE "${staging_dir}")
+endif()
+execute_process(
+  COMMAND "${CMAKE_COMMAND}"
+    "-DCMAKE_INSTALL_PREFIX=${staging_dir}"
+	"-DCMAKE_INSTALL_DO_STRIP=1"
+	-P cmake_install.cmake
+  WORKING_DIRECTORY "@PROJECT_BINARY_DIR@"
+  RESULT_VARIABLE result
+)
+if(result)
+	message(FATAL_ERROR "Installation failed: ${result}")
+endif()
+
+# Create an androiddeployqt configuration file via qmake project.
+execute_process(
+  COMMAND "$<TARGET_FILE:Qt5::qmake>" "${config}"
+  WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
+  RESULT_VARIABLE result
+)
+if(result)
+	message(FATAL_ERROR "Creating APK configuration failed: ${result}")
+endif()
+
+# Copy the Mapper runtime from the CMake project to the qmake project.
+# androiddeployqt uses this location.
+file(INSTALL
+  DESTINATION "@MAPPER_PRO_DIR@"
+  FILES "$<TARGET_FILE:Mapper>"
+)
+
+
+set(destdir "@MAPPER_PRO_DIR@/android-build")
+# Copy the Mapper runtime from the CMake project to the packaging dir.
+# androiddeployqt checks this location.
+file(INSTALL
+  DESTINATION "${destdir}/libs/@ANDROID_ABI@"
+  FILES "$<TARGET_FILE:Mapper>"
+)
+execute_process(
+  COMMAND androiddeployqt
+    --output "${destdir}"
+    --deployment "bundled"
+    --gradle
+    --verbose
+$<@RELEASE_APK@:
+    --release
+>
+$<@SIGN_APK@:
+    ${sign}
+>
+  WORKING_DIRECTORY "@CMAKE_CURRENT_BINARY_DIR@/Mapper"
+  RESULT_VARIABLE result
+)
+if(result)
+	message(FATAL_ERROR "Running androiddeployqt failed: ${result}")
+endif()
+
+configure_file(
+  "${destdir}/build/outputs/apk/${apk}"
+  "@PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk"
+  COPYONLY
+)
+execute_process(COMMAND "${CMAKE_COMMAND}" -E echo "Created @PROJECT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.apk")
+

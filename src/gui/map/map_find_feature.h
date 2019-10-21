@@ -23,6 +23,7 @@
 #include <QtGlobal>
 #include <QObject>
 #include <QPointer>
+#include <QString>
 
 class QAction;
 class QDialog;

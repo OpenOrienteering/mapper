@@ -22,6 +22,7 @@
 #define OPENORIENTEERING_GPS_TRACK_RECORDER_H
 
 #include <QObject>
+#include <QString>
 #include <QTimer>
 
 namespace OpenOrienteering {
@@ -42,7 +43,7 @@ public:
 public slots:
 	void newPosition(double latitude, double longitude, double altitude, float accuracy);
 	void positionUpdatesInterrupted();
-	void templateDeleted(int pos, const Template* old_temp);
+	void templateDeleted(int pos, const OpenOrienteering::Template* old_temp);
 	void drawUpdate();
 	
 private:

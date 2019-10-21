@@ -53,6 +53,7 @@ set(Mapper_translations_template
   OpenOrienteering_et.ts
   OpenOrienteering_eu.ts
   OpenOrienteering_he.ts
+  OpenOrienteering_hr.ts
   OpenOrienteering_pt_PT.ts
   OpenOrienteering_template.ts
 )
@@ -67,6 +68,7 @@ set(map_symbols_translations
   map_symbols_fi.ts
   map_symbols_fr.ts
   map_symbols_hu.ts
+  map_symbols_it.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
   map_symbols_uk.ts
@@ -76,18 +78,21 @@ set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(map_symbols_translations_template
-  map_symbols_it.ts
+  map_symbols_hr.ts
+  map_symbols_nb.ts
   map_symbols_nl.ts
   map_symbols_pl.ts
+  map_symbols_tr.ts
   map_symbols_template.ts
 )
+# Make translation list available for SymbolSetTool
+set(map_symbols_translations_template ${map_symbols_translations_template} PARENT_SCOPE)
 
 # Translation files which are maintained by hand.
 set(qt_translations
   qt_eo.ts
   qt_et.ts
   qt_id.ts
-  qt_lv.ts
   qt_nb.ts
   qt_nl.ts
 )
@@ -223,25 +228,26 @@ else()
 		
 		set(pre_lupdate )
 		set(post_lupdate
-		  COMMAND sed -i -e "/<context>/N\\;/<name>Q[A-Z]/,/<.context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+		  COMMAND sed -e "/<context>/N\\;/<name>Q[A-Z]/,/<.context>/d" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		)
 		if("${ts_filename}" STREQUAL "OpenOrienteering_hu")
 			# No plural support for Hungarian in Qt
 			# Save first numerusform in translatorcomment
 			list(APPEND pre_lupdate
-			  COMMAND sed -i -f "${save_first_numerusform}" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+			  COMMAND sed -f "${save_first_numerusform}" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 			)
 			# Restore first numerusform for translatorcomment
 			list(APPEND post_lupdate
-			  COMMAND sed -i -f "${restore_first_numerusform}" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+			  COMMAND sed -f "${restore_first_numerusform}" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 			)
 		endif()
 		
 		add_custom_target(Mapper_${ts_filename}_update
 		  ${pre_lupdate}
 		  COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${lupdate_options} "@${listfile}" -ts "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
-		  COMMAND sed -i -e "/<context>/N;/<name>Q[A-Z]/,/<.context>/d" "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
+		  COMMAND sed -e "/<context>/N;/<name>Q[A-Z]/,/<.context>/d" -i -- "${CMAKE_CURRENT_SOURCE_DIR}/${translation}"
 		  ${post_lupdate}
+		  COMMAND rm -f "${CMAKE_CURRENT_SOURCE_DIR}/${translation}--"
 		  VERBATIM
 		)
 		add_dependencies(Mapper_translations_update Mapper_${ts_filename}_update)
@@ -267,7 +273,7 @@ endmacro()
 
 
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT ANDROID)
 	set(update_source )
 	if(Mapper_DEVELOPMENT_BUILD)
 		# Only development builds are allowed to update the source directories.

@@ -26,7 +26,6 @@
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
-#include <QFlags>
 #include <QFormLayout>
 #include <QLabel>
 #include <QSpacerItem>
@@ -57,7 +56,7 @@ bool DistributePointsTool::showSettingsDialog(
 }
 
 void DistributePointsTool::execute(
-        PathObject* path,
+        const PathObject* path,
         PointSymbol* point,
         const DistributePointsTool::Settings& settings,
         std::vector<PointObject*>& out_objects )
@@ -65,7 +64,7 @@ void DistributePointsTool::execute(
 	path->update();
 	
 	// This places the points only on the first part.
-	PathPart& part = path->parts().front();
+	const auto& part = path->parts().front();
 	
 	// Check how to distribute the points over the part length
 	int total, start, end;
@@ -147,7 +146,9 @@ DistributePointsSettingsDialog::DistributePointsSettingsDialog(
 	rotate_symbols_check->setChecked(settings.rotate_symbols);
 	layout->addRow(rotate_symbols_check);
 	
-	additional_rotation_edit = Util::SpinBox::create(1, 0, 360, trUtf8("°", "degrees"), 5);
+	additional_rotation_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	additional_rotation_edit->setDecimals(1);
+	additional_rotation_edit->setSingleStep(5.0);
 	additional_rotation_edit->setValue(qRadiansToDegrees(settings.additional_rotation));
 	layout->addRow(tr("Additional rotation angle (counter-clockwise):"), additional_rotation_edit);
 	

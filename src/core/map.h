@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,7 +54,6 @@ class QWidget;
 namespace OpenOrienteering {
 
 class CombinedSymbol;
-class FileFormat;
 class Georeferencing;
 class LineSymbol;
 class MapColor;
@@ -91,8 +90,6 @@ Q_OBJECT
 friend class MapTest;
 friend class MapRenderables;
 friend class OCAD8FileImport;
-friend class NativeFileImport;
-friend class NativeFileExport;
 friend class XMLFileImporter;
 friend class XMLFileExporter;
 public:
@@ -157,97 +154,82 @@ public:
 	
 	
 	/**
-	 * Saves the map to the given file.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 */
-	bool saveTo(const QString& path,
-	            MapView *view);
-	
-	/**
-	 * Exports the map to the given file and format.
-	 * 
-	 * If a MapView is given, is state will be saved.
-	 * If a FileFormat is given, it will be used, otherwise the file format
-	 * is determined from the filename.
-	 * 
-	 * If the map was modified, it will still be considered modified after
-	 * successful export.
-	 */
-	bool exportTo(const QString& path,
-	              MapView* view = nullptr,
-	              const FileFormat* format = nullptr);
-	
-	/**
 	 * Attempts to load the map from the specified path. Returns true on success.
 	 * 
-	 * @param path The file path to load the map from.
-	 * @param dialog_parent The parent widget for all dialogs.
-	 *     This should never be nullptr in a QWidgets application.
-	 * @param view If not nullptr, restores this map view.
-	 * @param load_symbols_only Loads only symbols from the chosen file.
-	 *     Useful to load symbol sets.
-	 * @param show_error_messages Whether to show import errors and warnings.
-	 */
-	bool loadFrom(const QString& path,
-	              QWidget* dialog_parent,
-	              MapView* view = nullptr,
-	              bool load_symbols_only = false, bool show_error_messages = true);
-	
-	/**
-	 * Imports the other map into this map with the following strategy:
-	 *  - if the other map contains objects, import all objects with the minimum
-	 *    amount of colors and symbols needed to display them
-	 *  - if the other map does not contain objects, import all symbols with
-	 *    the minimum amount of colors needed to display them
-	 *  - if the other map does neither contain objects nor symbols, import all colors
+	 * This is a convenience function used by tests. Normally, a importer should be
+	 * used explicitly.
 	 * 
-	 * WARNING: this method potentially changes the 'other' map if the
-	 *          scales differ (by rescaling to fit this map's scale)!
+	 * @param path The file path to load the map from.
+	 * @param view If not nullptr, restores this map view.
 	 */
-	void importMap(
-	        const Map* other,
-	        ImportMode mode,
-	        QWidget* dialog_parent = nullptr,
-	        std::vector<bool>* filter = nullptr,
-	        int symbol_insert_pos = -1,
-	        bool merge_duplicate_symbols = true,
-	        QHash<const Symbol*, Symbol*>* out_symbol_map = nullptr
-	);
+	bool loadFrom(const QString& path, MapView* view = nullptr);
+	
 	
 	/**
-	 * Imports another map into this map with the following strategy:
-	 *  - If the other map contains objects, import all objects with the
-	 *    minimum amount of colors and symbols needed to display them.
-	 *  - If the other map does not contain objects, import all symbols
-	 *    with the minimum amount of colors needed to display them.
-	 *  - If the other map does neither contain objects nor symbols,
-	 *    import all colors.
-	 * The transform is applied to all imported objects.
+	 * Imports another map into this map.
+	 * 
+	 * If the Map::GeorefImport mode flag is set, this overload will attempt to
+	 * calculate a transformation based on the maps' georeferencing.
+	 * All further processing is delegated to the other overload.
+	 * 
 	 */
 	QHash<const Symbol*, Symbol*> importMap(
 	        const Map& imported_map,
 	        ImportMode mode,
 	        std::vector<bool>* filter = nullptr,
 	        int symbol_insert_pos = -1,
-	        bool merge_duplicate_symbols = true,
-	        const QTransform& transform = {}
+	        bool merge_duplicate_symbols = true
+	);
+	
+	/**
+	 * Imports another map into this map.
+	 * 
+	 * The amount of imported elements is controlled by the mode argument which
+	 * is a combination of an enumeration of basic modes (ColorImport,
+	 * SymbolImport, ObjectImport) and the flags (MinimalImport).
+	 * - ObjectImport: Import objects, symbols and colors.
+	 *   If the MinimalImport flag is set, symbols and colors not used
+	 *   by the imported objects are ignored.
+	 *   The filter argument is not used.
+	 * - SymbolImport: Import symbols and colors.
+	 *   If the MinimalImport flag is set, the filter argument may be used to
+	 *   select a subset of the symbols, and colors not used by the imported
+	 *   symbols are ignored.
+	 * - ColorImport: Import colors.
+	 *   If the MinimalImport flag is set, the filter argument may be used to
+	 *   select a subset of the colors.
+	 * 
+	 * This overload ignores the Map::GeorefImport mode flag. It only uses the
+	 * given transformation. It is applied to all imported objects.
+	 * No other adjustment of object positions and no scaling of symbol sizes
+	 * (with respect to possible different map scales) is performed.
+	 */
+	QHash<const Symbol*, Symbol*> importMap(
+	        const Map& imported_map,
+	        ImportMode mode,
+	        const QTransform& transform,
+	        std::vector<bool>* filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true
 	);
 	
 	
 	/**
-	 * Serializes the map directly into the given IO device in a known format.
+	 * Serializes the map directly to the given IO device, in a fixed format.
+	 * 
 	 * This can be imported again using importFromIODevice().
 	 * Returns true if successful.
 	 */
-	bool exportToIODevice(QIODevice* stream);
+	bool exportToIODevice(QIODevice& device) const;
 	
 	/**
-	 * Loads the map directly from the given IO device,
-	 * where the data must have been written by exportToIODevice().
+	 * Loads the map directly from the given IO device.
+	 * 
+	 * The data must have been written by exportToIODevice() (or at least use
+	 * the same format.)
 	 * Returns true if successful.
 	 */
-	bool importFromIODevice(QIODevice* stream);
+	bool importFromIODevice(QIODevice& device);
 	
 	
 	/**
@@ -293,7 +275,7 @@ public:
 	
 	/**
 	 * Draws the templates with indices first_template until last_template which
-	 * are visible in the given bouding box.
+	 * are visible in the given bounding box.
 	 * 
 	 * view determines template visibility and can be nullptr to show all templates.
 	 * The initial transform of the given QPainter must be the map-to-paintdevice transformation.
@@ -888,7 +870,7 @@ public:
 	 *     important for combined symbols, which can be found from a line or
 	 *     an area.
 	 */
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
@@ -897,7 +879,7 @@ public:
 	 * 
 	 * @see Map::findObjectsAt
 	 */
-	void findAllObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findAllObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
@@ -910,7 +892,7 @@ public:
 	 * @param include_protected_objects Set to true if you want to find protected objects.
 	 * @param out Output parameter. Will be filled with an object list.
 	 */
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
+	void findObjectsAtBox(const MapCoordF& corner1, const MapCoordF& corner2,
 		bool include_hidden_objects, bool include_protected_objects,
 		std::vector<Object*>& out) const;
 	
@@ -939,6 +921,11 @@ public:
 	void applyOnMatchingObjects(const std::function<void (Object*)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
+	 * Applies a function on all objects which match a particular condition.
+	 */
+	void applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const;
+	
+	/**
 	 * Applies an operation on all objects which match a particular condition.
 	 */
 	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);
@@ -947,6 +934,11 @@ public:
 	 * Applies an operation on all objects.
 	 */
 	void applyOnAllObjects(const std::function<void (Object*)>& operation);
+	
+	/**
+	 * Applies an operation on all objects.
+	 */
+	void applyOnAllObjects(const std::function<void (const Object*)>& operation) const;
 	
 	/**
 	 * Applies an operation on all objects.
@@ -1229,7 +1221,7 @@ public:
 	
 	
 	/** Returns true if the map has a print configuration. */
-	bool hasPrinterConfig();
+	bool hasPrinterConfig() const noexcept;
 	
 	/** Returns a const reference to the current print configuration.
 	 * 
@@ -1255,7 +1247,7 @@ public:
 	void resetPrinterConfig();
 	
 	
-	/** Returns the default parameters for loading of image tempaltes. */
+	/** Returns the default parameters for loading of image templates. */
 	void getImageTemplateDefaults(bool& use_meters_per_pixel, double& meters_per_pixel,
 		double& dpi, double& scale);
 	
@@ -1297,11 +1289,11 @@ public:
 	bool isOtherDirty() const;
 	
 	/**
-	 * Marks somthing unspecific in the map as "dirty", i.e. as having unsaved changes.
+	 * Marks something unspecific in the map as "dirty", i.e. as having unsaved changes.
 	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 * 
 	 * Use setColorsDirty(), setSymbolsDirty(), setTemplatesDirty() or
-	 * setObjectsDirty() if you know more specificly what has changed.
+	 * setObjectsDirty() if you know more specifically what has changed.
 	 */
 	void setOtherDirty();
 	
@@ -1347,42 +1339,42 @@ signals:
 	
 	
 	/** Emitted when a color is added to the map, gives the color's index and pointer. */
-	void colorAdded(int pos, const MapColor* color);
+	void colorAdded(int pos, const OpenOrienteering::MapColor* color);
 	
 	/** Emitted when a map color is changed, gives the color's index and pointer. */
-	void colorChanged(int pos, const MapColor* color);
+	void colorChanged(int pos, const OpenOrienteering::MapColor* color);
 	
 	/** Emitted when a map color is deleted, gives the color's index and pointer. */
-	void colorDeleted(int pos, const MapColor* old_color);
+	void colorDeleted(int pos, const OpenOrienteering::MapColor* old_color);
 	
 	/** Emitted when the presence of spot colors in the map changes. */
-	void spotColorPresenceChanged(bool has_spot_colors) const;
+	void spotColorPresenceChanged(bool has_spot_colors) const;  // clazy:exclude=const-signal-or-slot
 	
 	
 	/** Emitted when a symbol is added to the map, gives the symbol's index and pointer. */
-	void symbolAdded(int pos, const Symbol* symbol);
+	void symbolAdded(int pos, const OpenOrienteering::Symbol* symbol);
 	
 	/** Emitted when a symbol in the map is changed. */
-	void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	void symbolChanged(int pos, const OpenOrienteering::Symbol* new_symbol, const OpenOrienteering::Symbol* old_symbol);
 	
 	/** Emitted when the icon of the symbol with the given index changes. */
 	void symbolIconChanged(int pos);
 	
 	/** Emitted when a symbol in the map is deleted. */
-	void symbolDeleted(int pos, const Symbol* old_symbol);
+	void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 	/** Emitted when the symbol icon zoom changes. */
 	void symbolIconZoomChanged();
 	
 	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
-	void templateAdded(int pos, Template* temp);
+	void templateAdded(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
-	void templateChanged(int pos, Template* temp);
+	void templateChanged(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
-	void templateDeleted(int pos, const Template* old_temp);
+	void templateDeleted(int pos, const OpenOrienteering::Template* old_temp);
 	
 	/** Emitted when the number of closed templates changes between zero and one. */
 	void closedTemplateAvailabilityChanged();
@@ -1406,7 +1398,7 @@ signals:
 	 * 
 	 * @see currentMapPartIndexChanged()
 	 */
-	void currentMapPartChanged(const MapPart* part);
+	void currentMapPartChanged(const OpenOrienteering::MapPart* part);
 	
 	/**
 	 * Emitted when the index of map part currently used for drawing changes.
@@ -1420,17 +1412,17 @@ signals:
 	/**
 	 * Emitted when a part is added to the map.
 	 */
-	void mapPartAdded(std::size_t index, const MapPart* part);
+	void mapPartAdded(std::size_t index, const OpenOrienteering::MapPart* part);
 	
 	/**
 	 * Emitted when a part's properties are changed.
 	 */
-	void mapPartChanged(std::size_t index, const MapPart* part);
+	void mapPartChanged(std::size_t index, const OpenOrienteering::MapPart* part);
 	
 	/**
 	 * Emitted when a part is removed from the map.
 	 */
-	void mapPartDeleted(std::size_t index, const MapPart* part);
+	void mapPartDeleted(std::size_t index, const OpenOrienteering::MapPart* part);
 	
 protected slots:
 	void checkSpotColorPresence();
@@ -1782,7 +1774,7 @@ int Map::renderableOptions() const
 }
 
 inline
-bool Map::hasPrinterConfig()
+bool Map::hasPrinterConfig() const noexcept
 {
 	return !printer_config.isNull();
 }

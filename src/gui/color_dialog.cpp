@@ -56,7 +56,7 @@
 #include "core/map_color.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 #include "util/translation_util.h"
 
@@ -110,6 +110,19 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	++row;
 	sc_name_edit = new QLineEdit();
 	prof_color_layout->addWidget(sc_name_edit, row, col, 1, 2);
+	
+	++row;
+	prof_color_layout->addWidget(new QLabel(tr("Screen frequency:")), row, col, 1, 1);
+	sc_frequency_edit = Util::SpinBox::create(1, 0.0, 4800.0, tr("lpi"), 10.0);
+	sc_frequency_edit->setSpecialValueText(tr("Undefined"));
+	prof_color_layout->addWidget(sc_frequency_edit, row, col+1, 1, 1);
+	
+	++row;
+	prof_color_layout->addWidget(new QLabel(tr("Screen angle:")), row, col, 1, 1);
+	sc_angle_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	sc_angle_edit->setDecimals(1);
+	sc_angle_edit->setRange(0, 359.9);
+	prof_color_layout->addWidget(sc_angle_edit, row, col+1, 1, 1);
 	
 	++row;
 	composition_option = new QRadioButton(tr("Mixture of spot colors (screens and overprint):"));
@@ -294,6 +307,8 @@ ColorDialog::ColorDialog(const Map& map, const MapColor& source_color, QWidget* 
 	
 	connect(spot_color_options, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &ColorDialog::spotColorTypeChanged);
 	connect(sc_name_edit, &QLineEdit::textChanged, this, &ColorDialog::spotColorNameChanged);
+	connect(sc_frequency_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::spotColorScreenChanged);
+	connect(sc_angle_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &ColorDialog::spotColorScreenChanged);
 	for (std::size_t i = 0; i < component_colors.size(); i++)
 	{
 		connect(component_colors[i], QOverload<int>::of(&ColorDropDown::currentIndexChanged), this, &ColorDialog::spotColorCompositionChanged);
@@ -355,6 +370,10 @@ void ColorDialog::updateWidgets()
 	{
 		full_tone_option->setChecked(true);
 		sc_name_edit->setEnabled(true);
+		sc_frequency_edit->setEnabled(true);
+		sc_frequency_edit->setValue(color.getScreenFrequency());
+		sc_angle_edit->setEnabled(sc_frequency_edit->value() > 0);
+		sc_angle_edit->setValue(color.getScreenAngle());
 		knockout_option->setEnabled(true);
 		cmyk_spot_color_option->setEnabled(false);
 		if (cmyk_spot_color_option->isChecked())
@@ -367,6 +386,8 @@ void ColorDialog::updateWidgets()
 	{
 		composition_option->setChecked(true);
 		sc_name_edit->setEnabled(false);
+		sc_frequency_edit->setEnabled(false);
+		sc_angle_edit->setEnabled(false);
 		knockout_option->setEnabled(true);
 		cmyk_spot_color_option->setEnabled(true);
 		rgb_spot_color_option->setEnabled(true);
@@ -375,6 +396,8 @@ void ColorDialog::updateWidgets()
 	{
 		composition_option->setChecked(true);
 		sc_name_edit->setEnabled(false);
+		sc_frequency_edit->setEnabled(false);
+		sc_angle_edit->setEnabled(false);
 		cmyk_spot_color_option->setEnabled(false);
 		if (cmyk_spot_color_option->isChecked())
 		{
@@ -674,6 +697,29 @@ void ColorDialog::spotColorNameChanged()
 	color.setSpotColorName(sc_name_edit->text());
 	
 	setColorModified();
+}
+
+void ColorDialog::spotColorScreenChanged()
+{
+	if (!react_to_changes)
+		return;
+	
+	auto modified = false;
+	auto frequency = sc_frequency_edit->value();
+	if (std::abs(frequency - color.getScreenFrequency()) >= 0.05)
+	{
+		color.setScreenFrequency(frequency);
+		sc_angle_edit->setEnabled(frequency > 0);
+		modified = true;
+	}
+	auto angle = sc_angle_edit->value();
+	if (std::abs(angle - color.getScreenAngle()) >= 0.05)
+	{
+		color.setScreenAngle(angle);
+		modified = true;
+	}
+	
+	setColorModified(modified);
 }
 
 void ColorDialog::spotColorCompositionChanged()

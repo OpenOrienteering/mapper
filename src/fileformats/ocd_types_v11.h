@@ -30,7 +30,7 @@ namespace Ocd
 	
 	struct BaseSymbolV11
 	{
-		using IndexEntryType = quint32;
+		using IndexEntryType = SymbolIndexEntry;
 		static const int symbol_number_factor = 1000;
 		
 		quint32 size;
@@ -49,7 +49,7 @@ namespace Ocd
 		quint16 num_colors;
 		quint16 colors[14];
 		Utf16PascalString<64> description;
-		quint8  icon_bits[484];
+		IconV9  icon;
 		quint16 group[64];
 	};
 	
@@ -143,6 +143,7 @@ namespace Ocd
 	/** OCD file format version 11 trait. */
 	struct FormatV11
 	{
+		constexpr static quint16 version = 11;
 		using FileHeader      = FormatV10::FileHeader;
 		using BaseSymbol      = BaseSymbolV11;
 		using PointSymbol     = PointSymbolV11;
@@ -155,5 +156,9 @@ namespace Ocd
 		using Encoding        = Utf8Encoding;
 	};
 }
+
+
+OCD_EXPLICIT_INSTANTIATION(extern template, Ocd::FormatV11)
+
 
 #endif // OPENORIENTEERING_OCD_TYPES_V11_H

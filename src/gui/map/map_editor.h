@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_MAP_EDITOR_H
 
 #include <memory>
+#include <vector>
 
 #include <QClipboard>
 #include <QHash>
@@ -32,6 +33,7 @@
 #include <QString>
 #include <QTimer>
 
+#include "core/map.h"
 #include "gui/main_window_controller.h"
 
 class QAction;
@@ -59,7 +61,6 @@ class GPSTemporaryMarkers;
 class GPSTrackRecorder;
 class GeoreferencingDialog;
 class MainWindow;
-class Map;
 class MapEditorActivity;
 class MapEditorTool;
 class MapFindFeature;
@@ -109,6 +110,11 @@ public:
 	
 	/** Destroys the MapEditorController. */
 	~MapEditorController() override;
+	
+	/**
+	 * In SymbolEditor mode, this controller doesn't want a menu bar.
+	 */
+	bool menuBarVisible() override;
 	
 	/** Returns if the editor is in mobile mode. */
 	bool isInMobileMode() const;
@@ -229,11 +235,11 @@ public:
 	QAction* getAction(const char* id);
 	
 	/** Override from MainWindowController */
-	bool save(const QString& path) override;
+	bool saveTo(const QString& path, const FileFormat& format) override;
 	/** Override from MainWindowController */
-	bool exportTo(const QString& path, const FileFormat* format = nullptr) override;
+	bool exportTo(const QString& path, const FileFormat& format) override;
 	/** Override from MainWindowController */
-	bool load(const QString& path, QWidget* dialog_parent = nullptr) override;
+	bool loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent = nullptr) override;
 	
 	/** Override from MainWindowController */
 	void attach(MainWindow* window) override;
@@ -254,6 +260,11 @@ public:
 	
 public slots:
 	/**
+	 * Lets the user export the map as geospatial vector data.
+	 */
+	void exportVector();
+	
+	/**
 	 * Makes the print/export dock widget visible, and configures it for 
 	 * the given task (which is of type PrintWidget::TaskFlags).
 	 */
@@ -265,7 +276,7 @@ public slots:
 	void redo();
 	/** Cuts the selected object(s). */
 	void cut();
-	/** Copies the selecte object(s). */
+	/** Copies the selected object(s). */
 	void copy();
 	/** Pastes the object(s) from the clipboard. */
 	void paste();
@@ -503,17 +514,38 @@ public slots:
 	void mergeAllMapParts();
 	
 	/** Updates action enabled states after a template has been added */
-	void templateAdded(int pos, const Template* temp);
+	void templateAdded(int pos, const OpenOrienteering::Template* temp);
 	/** Updates action enabled states after a template has been deleted */
-	void templateDeleted(int pos, const Template* temp);
+	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
 	
-	/** Imports a track file (GPX, DXF, OSM, ...) into the map */
-	bool importGeoFile(const QString& filename);
-	/** Imports a map file into the loaded map */
-	bool importMapFile(const QString& filename, bool show_errors);
 	/** Shows the import file selector and imports the selected file, if any. */
 	void importClicked();
 	
+public:
+	/**
+	 * Imports another map into this map.
+	 * 
+	 * This method changes the given 'other' map if the	maps' scales differ.
+	 * This is an optimization for the use cases where temporary maps are
+	 * created just for this kind of import.
+	 * 
+	 * \see Map::importMap
+	 */
+	QHash<const Symbol*, Symbol*> importMap(
+	        Map& other,
+	        Map::ImportMode mode,
+	        QWidget* dialog_parent,
+	        std::vector<bool>* filter = nullptr,
+	        int symbol_insert_pos = -1,
+	        bool merge_duplicate_symbols = true
+	);
+	
+	/** Imports a track file (GPX) into the map */
+	bool importGpxFile(const QString& filename);
+	/** Imports a map file into the loaded map */
+	bool importMapFile(const QString& filename, bool show_errors);
+	
+public slots:
 	/** Sets the enabled state of actions which change how the map is rendered,
 	 *  such as with grid, with templates, with overprinting simulation. */
 	void setViewOptionsEnabled(bool enabled = true);
@@ -529,9 +561,9 @@ signals:
 	 * @brief Indicates a change of the active symbol.
 	 * @param symbol The new active symbol, or nullptr.
 	 */
-	void activeSymbolChanged(const Symbol* symbol);
+	void activeSymbolChanged(const OpenOrienteering::Symbol* symbol);
 	
-	void templatePositionDockWidgetClosed(Template* temp);
+	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
 
 protected:
 	/**
@@ -628,6 +660,7 @@ private:
 	QAction* print_act;
 	QAction* export_image_act;
 	QAction* export_pdf_act;
+	QAction* export_vector_act;
 	
 	QAction* undo_act;
 	QAction* redo_act;
@@ -760,7 +793,7 @@ private:
 	QToolBar* toolbar_drawing;
 	QToolBar* toolbar_editing;
 	QToolBar* toolbar_advanced_editing;
-	QToolBar* toolbar_mapparts;
+	QToolBar* toolbar_mapparts = nullptr;
 	
 	// For mobile UI
 	ActionGridBar* bottom_action_bar;
@@ -769,7 +802,7 @@ private:
 	QAction* mobile_symbol_selector_action;
 	QMenu* mobile_symbol_button_menu;
 	
-	QComboBox* mappart_selector_box;
+	QPointer<QComboBox> mappart_selector_box;
 	
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2016  Kai Pastor
+ *    Copyright 2014-2018  Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -29,7 +29,6 @@
 #include <QRectF>
 
 #include <Qt>
-#include <QIODevice>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -105,63 +104,7 @@ MapView::~MapView()
 	// nothing, not inlined
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-void MapView::load(QIODevice* file, int version)
-{
-	qint64 center_x, center_y;
-	int unused;
-	double unused_double;
-	file->read((char*)&zoom, sizeof(double));
-	file->read((char*)&unused_double /*rotation*/, sizeof(double));
-	file->read((char*)&center_x, sizeof(qint64));
-	file->read((char*)&center_y, sizeof(qint64));
-	file->read((char*)&unused /*view_x*/, sizeof(int));
-	file->read((char*)&unused /*view_y*/, sizeof(int));
-	file->read((char*)&pan_offset, sizeof(QPoint));
-	
-	try
-	{
-		center_pos = MapCoord::fromNative64withOffset(center_x, center_y);
-	}
-	catch (std::range_error&)
-	{
-		// leave center_pos unchanged
-	}
-	
-	updateTransform();
-	
-	if (version >= 26)
-	{
-		file->read((char*)&map_visibility.visible, sizeof(bool));
-		file->read((char*)&map_visibility.opacity, sizeof(float));
-	}
-	
-	int num_template_visibilities;
-	file->read((char*)&num_template_visibilities, sizeof(int));
-	
-	for (int i = 0; i < num_template_visibilities; ++i)
-	{
-		int pos;
-		file->read((char*)&pos, sizeof(int));
-		
-		TemplateVisibility vis;
-		file->read((char*)&vis.visible, sizeof(bool));
-		file->read((char*)&vis.opacity, sizeof(float));
-		setTemplateVisibilityHelper(map->getTemplate(pos), vis);
-	}
-	
-	if (version >= 29)
-		file->read((char*)&all_templates_hidden, sizeof(bool));
-	
-	if (version >= 24)
-		file->read((char*)&grid_visible, sizeof(bool));
-	
-	emit viewChanged(CenterChange | ZoomChange | RotationChange);
-	emit visibilityChanged(MultipleFeatures, true);
-}
-
-#endif
 
 void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, bool template_details) const
 {
@@ -269,28 +212,14 @@ void MapView::updateAllMapWidgets()
 	emit visibilityChanged(MultipleFeatures, true);
 }
 
-MapCoord MapView::viewToMap(double x, double y) const
+QPointF MapView::mapToView(const MapCoord& coords) const
 {
-	return MapCoord(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
+	return map_to_view.map(MapCoordF(coords));
 }
 
-MapCoordF MapView::viewToMapF(double x, double y) const
+QPointF MapView::mapToView(const QPointF& coords) const
 {
-	return MapCoordF(view_to_map.m11() * x + view_to_map.m12() * y + view_to_map.m13(),
-	                 view_to_map.m21() * x + view_to_map.m22() * y + view_to_map.m23());
-}
-
-QPointF MapView::mapToView(MapCoord coords) const
-{
-	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
-	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
-}
-
-QPointF MapView::mapToView(MapCoordF coords) const
-{
-	return QPointF(map_to_view.m11() * coords.x() + map_to_view.m12() * coords.y() + map_to_view.m13(),
-	               map_to_view.m21() * coords.x() + map_to_view.m22() * coords.y() + map_to_view.m23());
+	return map_to_view.map(coords);
 }
 
 qreal MapView::lengthToPixel(qreal length) const
@@ -331,7 +260,7 @@ QRectF MapView::calculateViewBoundingBox(QRectF rect) const
 	return rect;
 }
 
-void MapView::setPanOffset(QPoint offset)
+void MapView::setPanOffset(const QPoint& offset)
 {
 	if (offset != pan_offset)
 	{
@@ -340,7 +269,7 @@ void MapView::setPanOffset(QPoint offset)
 	}
 }
 
-void MapView::finishPanning(QPoint offset)
+void MapView::finishPanning(const QPoint& offset)
 {
 	setPanOffset({0,0});
 	try
@@ -358,7 +287,7 @@ void MapView::finishPanning(QPoint offset)
 	}
 }
 
-void MapView::zoomSteps(double num_steps, QPointF cursor_pos_view)
+void MapView::zoomSteps(double num_steps, const QPointF& cursor_pos_view)
 {
 	auto zoom_to = getZoom() * pow(sqrt(2.0), num_steps);
 	setZoom(zoom_to, cursor_pos_view);
@@ -370,7 +299,7 @@ void MapView::zoomSteps(double num_steps)
 	setZoom(zoom_to);
 }
 
-void MapView::setZoom(double value, QPointF center)
+void MapView::setZoom(double value, const QPointF& center)
 {
 	auto pos = this->center();
 	auto zoom_pos = viewToMap(center);
@@ -399,7 +328,7 @@ void MapView::setRotation(double value)
 	emit viewChanged(RotationChange);
 }
 
-void MapView::setCenter(MapCoord pos)
+void MapView::setCenter(const MapCoord& pos)
 {
 	center_pos = pos;
 	updateTransform();
@@ -415,11 +344,11 @@ void MapView::updateTransform()
 	auto center_y = center_pos.y();
 	
 	// Create map_to_view
-	map_to_view.setMatrix(final_zoom_cosr, -final_zoom_sinr, -final_zoom_cosr * center_x + final_zoom_sinr * center_y,
-	                      final_zoom_sinr,  final_zoom_cosr, -final_zoom_sinr * center_x - final_zoom_cosr * center_y,
-	                      0, 0, 1);
-	view_to_map     = map_to_view.inverted();
-	world_transform = map_to_view.transposed();
+	map_to_view = { final_zoom_cosr,  final_zoom_sinr,
+	                -final_zoom_sinr, final_zoom_cosr,
+	                -final_zoom_cosr * center_x + final_zoom_sinr * center_y,
+	                -final_zoom_sinr * center_x - final_zoom_cosr * center_y };
+	view_to_map = map_to_view.inverted();
 }
 
 

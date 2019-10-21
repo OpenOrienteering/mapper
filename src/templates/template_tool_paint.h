@@ -73,14 +73,14 @@ public:
 	void init() override;
 	const QCursor& getCursor() const override;
 	
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
 public slots:
-	void templateDeleted(int pos, const Template* temp);
+	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
 	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();

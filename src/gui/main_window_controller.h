@@ -45,27 +45,53 @@ public:
 	
 	~MainWindowController() override;
 	
+	
+	/**
+	 * Returns true when the controller wants a menu bar to be shown.
+	 * 
+	 * The default implementation returns false for mobile mode,
+	 * true otherwise.
+	 */
+	virtual bool menuBarVisible();
+	
+	/**
+	 * Returns true when the controller wants a status bar to be shown.
+	 * 
+	 * The default implementation returns false for mobile mode,
+	 * true otherwise.
+	 */
+	virtual bool statusBarVisible();
+	
+	
 	/** Save to a file.
 	 *  @param path the path to save to
-	 *  @return true if saving was sucessful, false on errors
+	 *  @param format the file format
+	 *  @return true if saving was successful, false on errors
 	 */
-	virtual bool save(const QString& path);
+	virtual bool saveTo(const QString& path, const FileFormat& format);
+	
+	/** Export to a file, but don't change modified state
+	 *  with regard to the original file.
+	 *  @param path the path to export to
+	 *  @return true if saving was successful, false on errors
+	 */
+	bool exportTo(const QString& path);
 
 	/** Export to a file, but don't change modified state
 	 *  with regard to the original file.
 	 *  @param path the path to export to
-	 *  @param format the file format (automatically determined if nullptr)
-	 *  @return true if saving was sucessful, false on errors
+	 *  @param format the file format
+	 *  @return true if saving was successful, false on errors
 	 */
-	virtual bool exportTo(const QString& path, const FileFormat* format = nullptr);
+	virtual bool exportTo(const QString& path, const FileFormat& format);
 
 	/** Load from a file.
 	 *  @param path the path to load from
 	 *  @param dialog_parent Alternative parent widget for all dialogs.
 	 *      If nullptr, implementations should use MainWindowController::window.
-	 *  @return true if loading was sucessful, false on errors
+	 *  @return true if loading was successful, false on errors
 	 */
-	virtual bool load(const QString& path, QWidget* dialog_parent = nullptr);
+	virtual bool loadFrom(const QString& path, const FileFormat& format, QWidget* dialog_parent = nullptr);
 	
 	/** Attach the controller to a main window. 
 	 *  The controller should create its user interface here.

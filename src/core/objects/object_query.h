@@ -217,7 +217,7 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 
 
 /**
- * Utility to contruct object queries from text.
+ * Utility to construct object queries from text.
  * 
  * The text shall be in the formal language generate by ObjectQuery::toString().
  */

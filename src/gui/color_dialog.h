@@ -81,6 +81,8 @@ protected slots:
 	
 	void spotColorNameChanged();
 	
+	void spotColorScreenChanged();
+	
 	void spotColorCompositionChanged();
 	
 	void knockoutChanged();
@@ -121,6 +123,8 @@ protected:
 	QRadioButton* full_tone_option;
 	QRadioButton* composition_option;
 	QLineEdit* sc_name_edit;
+	QDoubleSpinBox* sc_frequency_edit;
+	QDoubleSpinBox* sc_angle_edit;
 	QCheckBox* knockout_option;
 	
 	QRadioButton* cmyk_spot_color_option;

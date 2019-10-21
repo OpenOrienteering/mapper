@@ -34,6 +34,7 @@ class QPaintEvent;
 class QShortcut;
 class QShowEvent;
 // IWYU pragma: no_forward_declare QWidget
+// IWYU pragma: no_include <QString>
 
 namespace OpenOrienteering {
 
@@ -105,7 +106,7 @@ public slots:
 protected:
 	/**
 	 * Hides the tooltip when the mouse enters it.
-	 * This is neccessary to let the user select another symbol.
+	 * This is necessary to let the user select another symbol.
 	 */
 	void enterEvent(QEvent* event) override;
 	

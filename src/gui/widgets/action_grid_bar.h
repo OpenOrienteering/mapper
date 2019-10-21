@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +26,7 @@
 
 #include <QObject>
 #include <QSize>
+#include <QString>
 #include <QWidget>
 
 class QAction;
@@ -37,6 +39,9 @@ namespace OpenOrienteering {
 
 /**
  * A toolbar with a grid layout, whose button size depends on the ppi.
+ * 
+ * \todo Update button size on setting changes (not yet needed for mobile UI).
+ * \todo Use parameter order col,row / colspan,rowspan to match the common x,y / width,height pattern.
  */
 class ActionGridBar : public QWidget
 {
@@ -46,6 +51,15 @@ public:
 	{
 		Horizontal = 0,
 		Vertical
+	};
+	
+	/**
+	 * Defines possible actual positions of a button.
+	 */
+	enum ButtonDisplay
+	{
+		DisplayNormal,    ///< Regular button display
+		DisplayOverflow,  ///< Button display in overflow action
 	};
 	
 	/**
@@ -62,10 +76,10 @@ public:
 	ActionGridBar(Direction direction, int height_items, QWidget* parent = nullptr);
 	
 	/** Returns the number of grid rows. */
-	int getRows() const;
+	int rowCount() const;
 	
 	/** Returns the number of grid columns. */
-	int getCols() const;
+	int columnCount() const;
 	
 	/** Adds an action to the grid. */
 	void addAction(QAction* action, int row, int col, int row_span = 1, int col_span = 1, bool at_end = false);
@@ -84,10 +98,18 @@ public:
 	/** Configures this bar to put its overflow actions into another bar. */
 	void setToUseOverflowActionFrom(ActionGridBar* other_bar);
 	
-	/** Finds and returns the button corresponding to the given action or nullptr
-	 *  if either the action has not been inserted into the action bar,
-	 *  or the button is hidden because of a collision. */
-	QToolButton* getButtonForAction(QAction* action);
+	/**
+	 * Returns the button corresponding to the given action.
+	 * 
+	 * If the action has not been added to the action bar, this function
+	 * returns nullptr.
+	 */
+	QToolButton* getButtonForAction(const QAction* action) const;
+	
+	/**
+	 * Returns where the given button is displayed.
+	 */
+	ButtonDisplay buttonDisplay(const QToolButton* button) const;
 	
 	QSize sizeHint() const override;
 	
@@ -95,32 +117,33 @@ protected slots:
 	void overflowActionClicked();
 	
 protected:
+	void resizeEvent(QResizeEvent* event) override;
+	
 	struct GridItem
 	{
+		QAction* action;
+		QToolButton* button;
 		int id; // sequential id for sorting in overflow item chooser
 		int row;
 		int col;
 		int row_span;
 		int col_span;
 		bool at_end;
-		QAction* action;
-		QToolButton* button;
-		bool button_hidden;
+		bool button_hidden = false;
 	};
 	
-	static bool compareItemPtrId(GridItem* a, GridItem* b);
-	void resizeEvent(QResizeEvent* event) override;
-	
-	Direction direction;
-	int rows;
-	int cols;
-	std::vector< GridItem > items;
-	int next_id;
+	std::vector<GridItem> items;
+	std::vector<GridItem*> hidden_items;
+	std::vector<ActionGridBar*> include_overflow_from_list;
 	QAction* overflow_action;
-	QToolButton* overflow_button;
+	QToolButton* overflow_button = nullptr;
 	QMenu* overflow_menu;
-	std::vector< GridItem* > hidden_items;
-	std::vector< ActionGridBar* > include_overflow_from_list;
+	Direction direction;
+	int next_id = 0;
+	int row_count;
+	int column_count = 1;
+	int button_size_px;
+	int margin_size_px;
 };
 
 

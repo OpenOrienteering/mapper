@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -69,31 +69,53 @@ private slots:
 	
 	void worldFileUnitTest()
 	{
-		WorldFile world_file;
-		QVERIFY(!world_file.loaded);
-		QCOMPARE(world_file.pixel_to_world, QTransform{});
+		auto world_file = WorldFile { 1, 2, 3, 4, 5, 6 };
+		QCOMPARE(world_file.parameters[0], 1.0);
+		QCOMPARE(world_file.parameters[1], 2.0);
+		QCOMPARE(world_file.parameters[2], 3.0);
+		QCOMPARE(world_file.parameters[3], 4.0);
+		QCOMPARE(world_file.parameters[4], 5.0);
+		QCOMPARE(world_file.parameters[5], 6.0);
+		
+		auto const transform = QTransform(world_file);
+		QCOMPARE(transform.m11(), 1.0);
+		QCOMPARE(transform.m12(), 2.0);
+		QCOMPARE(transform.m21(), 3.0);
+		QCOMPARE(transform.m22(), 4.0);
+		QCOMPARE(transform.map(QPointF(0.5, 0.5)), QPointF(5, 6));
+		
+		WorldFile world_file_2;
+		QCOMPARE(QTransform(world_file_2), QTransform{});
+		
+		world_file = world_file_2;
+		QCOMPARE(QTransform(world_file), QTransform{});
+		
+		auto const verify_parameters = [](auto const & parameters) {
+			QCOMPARE(parameters[0], 0.15);
+			QCOMPARE(parameters[1], 0.0);
+			QCOMPARE(parameters[2], 0.0);
+			QCOMPARE(parameters[3], -0.15);
+			QCOMPARE(parameters[4], 649078.0);
+			QCOMPARE(parameters[5], 394159.0);
+		};
 		
 		QString world_file_path = QStringLiteral("testdata:templates/world-file.pgw");
 		QVERIFY(world_file.load(world_file_path));
-		QVERIFY(world_file.loaded);
-		QCOMPARE(world_file.pixel_to_world.m11(), 0.15);
-		QCOMPARE(world_file.pixel_to_world.m12(), 0.0);
-		QCOMPARE(world_file.pixel_to_world.m21(), 0.0);
-		QCOMPARE(world_file.pixel_to_world.m22(), -0.15);
-		QCOMPARE(world_file.pixel_to_world.dx(), 649078.0);
-		QCOMPARE(world_file.pixel_to_world.dy(), 394159.0);
+		verify_parameters(world_file.parameters);
 		
 		QString image_path = QStringLiteral("testdata:templates/world-file.png");
-		WorldFile world_file_from_image;
-		QVERIFY(world_file_from_image.tryToLoadForImage(image_path));
-		QCOMPARE(world_file_from_image.pixel_to_world, world_file.pixel_to_world);
+		QVERIFY(world_file_2.tryToLoadForImage(image_path));
+		verify_parameters(world_file_2.parameters);
+		
+		// Try reading garbage
+		QVERIFY(!world_file.load(image_path));
 	}
 	
 	void worldFileTemplateTest()
 	{
 		Map map;
 		MapView view{ &map };
-		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), nullptr, &view, false, false));
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), &view));
 		
 		const auto& georef = map.getGeoreferencing();
 		QVERIFY(georef.isValid());
@@ -125,8 +147,9 @@ private slots:
 		// This results in a warning.
 		QBuffer buffer{ &original_data };
 		buffer.open(QIODevice::ReadOnly);
-		XMLFileImporter importer{ &buffer, &map, &view };
-		importer.doImport(false);
+		XMLFileImporter importer{ {}, &map, &view };
+		importer.setDevice(&buffer);
+		QVERIFY(importer.doImport());
 		QCOMPARE(importer.warnings().size(), std::size_t(1));
 		
 		// The image is in Invalid state, but path attributes are intact.
@@ -140,14 +163,37 @@ private slots:
 		
 		QBuffer out_buffer;
 		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
-		XMLFileExporter exporter{ &out_buffer, &map, &view };
+		XMLFileExporter exporter{ {}, &map, &view };
 		exporter.setOption(QStringLiteral("autoFormatting"), true);
+		exporter.setDevice(&out_buffer);
 		exporter.doExport();
 		out_buffer.close();
 		QCOMPARE(exporter.warnings().size(), std::size_t(0));
 		
 		// The exported data matches the original data.
 		QCOMPARE(out_buffer.buffer(), original_data);
+	}
+	
+	void geoTiffTemplateTest()
+	{
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/geotiff.xmap"), &view));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QString::fromUtf8("\u0433\u0435\u043E.tiff"));
+#ifdef MAPPER_USE_GDAL
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(temp->isTemplateGeoreferenced());
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QCOMPARE(rotation_template, rotation_map);
+#endif
 	}
 	
 };
@@ -162,7 +208,7 @@ private slots:
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

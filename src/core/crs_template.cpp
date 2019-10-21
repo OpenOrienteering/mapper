@@ -21,8 +21,8 @@
 
 #include "crs_template.h"
 
-#include <algorithm>
 #include <iterator>
+#include <utility>
 
 #include <QtGlobal>
 #include <QLatin1Char>
@@ -46,9 +46,9 @@ CRSParameterWidgetObserver::~CRSParameterWidgetObserver() = default;
 
 // ### CRSTemplateParameter ###
 
-CRSTemplateParameter::CRSTemplateParameter(const QString& key, const QString& description)
- : param_id(key)
- , param_name(description)
+CRSTemplateParameter::CRSTemplateParameter(const QString& id, const QString& name)
+ : param_id(id)
+ , param_name(name)
 {
 	// nothing
 }

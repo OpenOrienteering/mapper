@@ -67,14 +67,14 @@ public:
 	const QCursor& getCursor() const override;
 	
 	/** Starts a dragging interaction. */
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/** Updates the state of a running dragging interaction. When not dragging,
 	 *  it will update the cursor to indicate a possible interaction. */
-	bool mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/** Finishes dragging interactions. */
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/** Draws a visualization of the print area the map widget. */
 	void draw(QPainter* painter, MapWidget* widget) override;
@@ -86,11 +86,11 @@ public slots:
 protected:
 	/** Modifies the print area while dragging.
 	 *  This must not be called when the region is Outside. */
-	void updateDragging(MapCoordF mouse_pos_map);
+	void updateDragging(const MapCoordF& mouse_pos_map);
 	
 	/** Updates the current interaction region.
 	 *  This must not be called during dragging. */
-	void mouseMoved(MapCoordF mouse_pos_map, MapWidget* widget);
+	void mouseMoved(const MapCoordF& mouse_pos_map, MapWidget* widget);
 	
 	/** Regions of interaction with the print area. */
 	enum InteractionRegion {

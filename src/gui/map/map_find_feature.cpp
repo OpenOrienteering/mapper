@@ -26,12 +26,10 @@
 #include <QAbstractButton>
 #include <QDialog>
 #include <QDialogButtonBox>
-#include <QFlags>
 #include <QGridLayout>
 #include <QKeySequence>  // IWYU pragma: keep
 #include <QPushButton>
 #include <QStackedLayout>
-#include <QString>
 #include <QTextEdit>
 #include <QWidget>
 
@@ -226,7 +224,7 @@ void MapFindFeature::findAll()
 		return;
 	}
 	
-	map->getCurrentPart()->applyOnMatchingObjects([map](auto object) {
+	map->getCurrentPart()->applyOnMatchingObjects([map](Object* object) {
 		map->addObjectToSelection(object, false);
 	}, std::cref(query));
 	map->emitSelectionChanged();

@@ -66,7 +66,7 @@ public:
 	 * @param controller The controller of the preview map
 	 * @param symbol The point symbol to be edited
 	 * @param offset_y The vertical offset of the point symbol preview/editor from the origin
-	 * @param permanent_preview A flag indicating wheter the preview shall be visible even if the editor is not visible
+	 * @param permanent_preview A flag indicating whether the preview shall be visible even if the editor is not visible
 	 */
 	PointSymbolEditorWidget(MapEditorController* controller, PointSymbol* symbol, qreal offset_y = 0, bool permanent_preview = false, QWidget* parent = 0);
 	
@@ -75,12 +75,12 @@ public:
 	/** Add a coordinate to the current element.
 	 *  @return true if successful
 	 */
-	bool addCoordinate(MapCoordF new_coord);
+	bool addCoordinate(const MapCoordF& new_coord);
 	
 	/** Change the current coordinate of the current element.
 	 *  @return true if successful
 	 */
-	bool changeCurrentCoordinate(MapCoordF new_coord);
+	bool changeCurrentCoordinate(const MapCoordF& new_coord);
 	
 	/** Activate the editor in the map preview. */
 	void setEditorActive(bool active);
@@ -190,7 +190,7 @@ public:
 	~PointSymbolEditorTool() override;
 	
 	void init() override;
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* map_widget) override;
 	const QCursor& getCursor() const override;
 	
 private:
@@ -202,7 +202,7 @@ private:
 /**
  * PointSymbolEditorActivity draws a small cross in the origin of the map coordinate system.
  * 
- * \todo Fix that thes cross may cover the symbol at small scales.
+ * \todo Fix that this cross may cover the symbol at small scales.
  */
 class PointSymbolEditorActivity : public MapEditorActivity
 {

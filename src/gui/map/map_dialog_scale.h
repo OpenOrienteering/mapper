@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,7 +25,7 @@
 #include <QDialog>
 #include <QObject>
 
-class QLineEdit;
+class QSpinBox;
 class QCheckBox;
 class QPushButton;
 class QRadioButton;
@@ -51,7 +52,7 @@ private slots:
 	void okClicked();
 	
 private:
-	QLineEdit* scale_edit;
+	QSpinBox* scale_edit;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;

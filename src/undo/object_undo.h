@@ -33,13 +33,14 @@
 #include "core/symbols/symbol.h"
 #include "undo/undo.h"
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
 namespace OpenOrienteering {
 
 class Map;
+class XmlElementReader;
+class XmlElementWriter;
 
 
 /** 
@@ -105,14 +106,6 @@ public:
 	void getModifiedObjects(int part_index, ObjectSet& out) const override;
 	
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Loads the undo step from the file in the old "native" format.
-	 * @deprecated Old file format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
-	
 protected:
 	/**
 	 * Saves undo properties to the the xml stream.
@@ -123,6 +116,13 @@ protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
 	
 	/**
+	 * Saves object details to the the xml stream.
+	 * 
+	 * The default implemenentation does nothing.
+	 */
+	virtual void saveObject(XmlElementWriter& xml, int index) const;
+	
+	/**
 	 * Loads undo properties from the the xml stream.
 	 * 
 	 * Implementations in derived classes shall first check the element's name
@@ -130,6 +130,13 @@ protected:
 	 * implementation.
 	 */
 	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
+	
+	/**
+	 * Loads object details from the the xml stream.
+	 * 
+	 * The default implemenentation does nothing.
+	 */
+	virtual void loadObject(XmlElementReader& xml, int index);
 	
 	
 private:
@@ -207,24 +214,16 @@ public:
 	void getModifiedObjects(int, ObjectSet&) const override;
 	
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * @copybrief UndoStep::load()
-	 * @deprecated Old file format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
-	
 public slots:
 	/**
 	 * Adapts the symbol pointers of objects referencing the changed symbol.
 	 */
-	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	virtual void symbolChanged(int pos, const OpenOrienteering::Symbol* new_symbol, const OpenOrienteering::Symbol* old_symbol);
 	
 	/**
 	 * Invalidates the undo step if a contained object references the deleted symbol.
 	 */
-	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
+	virtual void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 protected:
 	/**
@@ -339,9 +338,6 @@ public:
 	
 	UndoStep* undo() override;
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
@@ -373,14 +369,11 @@ public:
 	
 	UndoStep* undo() override;
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 public slots:
-	virtual void symbolChanged(int pos, const Symbol* new_symbol, const Symbol* old_symbol);
+	virtual void symbolChanged(int pos, const OpenOrienteering::Symbol* new_symbol, const OpenOrienteering::Symbol* old_symbol);
 	
-	virtual void symbolDeleted(int pos, const Symbol* old_symbol);
+	virtual void symbolDeleted(int pos, const OpenOrienteering::Symbol* old_symbol);
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml) const override;
@@ -413,9 +406,6 @@ public:
 
 /**
  * Undo step which modifies object tags.
- * 
- * Note: For reduced file size, this implementation copies, not calls,
- * ObjectModifyingUndoStep::saveImpl()/ObjectModifyingUndoStep::loadImpl().
  */
 class ObjectTagsUndoStep : public ObjectModifyingUndoStep
 {
@@ -429,9 +419,9 @@ public:
 	UndoStep* undo() override;
 	
 protected:
-	void saveImpl(QXmlStreamWriter& xml) const override;
+	void saveObject(XmlElementWriter& xml, int index) const override;
 	
-	void loadImpl(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) override;
+	void loadObject(XmlElementReader& xml, int index) override;
 	
 	typedef std::map<int, Object::Tags> ObjectTagsMap;
 	

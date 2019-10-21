@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2013, 2014, 2017 Kai Pastor
+ *    Copyright 2013, 2014, 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QRectF>
 
 #include "core/map.h"
@@ -52,12 +53,7 @@ CutoutOperation::CutoutOperation(Map* map, PathObject* cutout_object, bool cut_a
 
 CutoutOperation::~CutoutOperation()
 {
-	if (auto undo_step = finish())
-	{
-		map->setObjectsDirty();
-		map->push(undo_step);
-		map->emitSelectionEdited();
-	}
+	Q_ASSERT(!add_step);  // cleared by commit()
 }
 
 
@@ -111,6 +107,18 @@ void CutoutOperation::operator()(Object* object)
 	}
 	
 	return;
+}
+
+
+void CutoutOperation::commit()
+{
+	if (auto undo_step = finish())
+	{
+		map->setObjectsDirty();
+		map->push(undo_step);
+		map->emitSelectionEdited();
+	}
+	add_step = nullptr;
 }
 
 

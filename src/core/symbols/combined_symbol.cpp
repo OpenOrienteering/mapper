@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,10 +24,11 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <memory>
 #include <numeric>
 
 #include <QtGlobal>
-#include <QIODevice>
+#include <QFlags>
 #include <QLatin1String>
 #include <QString>
 #include <QStringRef>
@@ -44,39 +45,39 @@
 namespace OpenOrienteering {
 
 CombinedSymbol::CombinedSymbol()
-: Symbol{Symbol::Combined}
-, private_parts{ false, false }
-, parts{ private_parts.size(), nullptr }
+: Symbol { Symbol::Combined }
+, private_parts { false, false }
+, parts { private_parts.size(), nullptr }
 {
 	Q_ASSERT(private_parts.size() == parts.size());
 	// nothing else
 }
 
-CombinedSymbol::~CombinedSymbol()
+
+CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
+: Symbol { proto }
+, private_parts { proto.private_parts }
+, parts { proto.parts }
 {
-	auto is_private = begin(private_parts);
-	for (auto subsymbol : parts)
-	{
-		if (*is_private)
-			delete subsymbol;
-		++is_private;
-	};
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [this](auto part, auto is_private) {
+		return (part && is_private) ? Symbol::duplicate(*part).release() : part;
+	});
 }
 
-Symbol* CombinedSymbol::duplicate(const MapColorMap* color_map) const
+
+CombinedSymbol::~CombinedSymbol()
 {
-	auto new_symbol = new CombinedSymbol();
-	new_symbol->duplicateImplCommon(this);
-	new_symbol->parts = parts;
-	new_symbol->private_parts = private_parts;
-	auto is_private = begin(new_symbol->private_parts);
-	for (auto& subsymbol : new_symbol->parts)
-	{
-		if (*is_private)
-			subsymbol = subsymbol->duplicate(color_map);
-		++is_private;
-	}
-	return new_symbol;
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
+		if (part && is_private)
+			delete part;
+		return nullptr;
+	});
+}
+
+
+CombinedSymbol* CombinedSymbol::duplicate() const
+{
+	return new CombinedSymbol(*this);
 }
 
 
@@ -112,7 +113,7 @@ void CombinedSymbol::createRenderables(
 	}
 }
 
-void CombinedSymbol::colorDeleted(const MapColor* color)
+void CombinedSymbol::colorDeletedEvent(const MapColor* color)
 {
 	if (containsColor(color))
 		resetIcon();
@@ -121,7 +122,7 @@ void CombinedSymbol::colorDeleted(const MapColor* color)
 	for (auto subsymbol : parts)
 	{
 		if (*is_private)
-			const_cast<Symbol*>(subsymbol)->colorDeleted(color);
+			const_cast<Symbol*>(subsymbol)->colorDeletedEvent(color);
 		++is_private;
 	};
 }
@@ -163,7 +164,19 @@ const MapColor* CombinedSymbol::guessDominantColor() const
 	return dominant_color;
 }
 
-bool CombinedSymbol::symbolChanged(const Symbol* old_symbol, const Symbol* new_symbol)
+
+void CombinedSymbol::replaceColors(const MapColorMap& color_map)
+{
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [&color_map](auto part, auto is_private) {
+		if (part && is_private)
+			const_cast<Symbol*>(part)->replaceColors(color_map);
+		return part;
+	});
+}
+
+
+
+bool CombinedSymbol::symbolChangedEvent(const Symbol* old_symbol, const Symbol* new_symbol)
 {
 	bool have_symbol = false;
 	for (auto& subsymbol : parts)
@@ -214,53 +227,20 @@ void CombinedSymbol::scale(double factor)
 	resetIcon();
 }
 
-Symbol::Type CombinedSymbol::getContainedTypes() const
+Symbol::TypeCombination CombinedSymbol::getContainedTypes() const
 {
-	auto type = int(getType());
+	auto combination = TypeCombination(getType());
 	
 	for (auto subsymbol : parts)
 	{
 		if (subsymbol)
-			type |= subsymbol->getContainedTypes();
+			combination |= subsymbol->getContainedTypes();
 	}
 	
-	return Type(type);
+	return combination;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool CombinedSymbol::loadImpl(QIODevice* file, int version, Map* map)
-{
-	int size;
-	file->read((char*)&size, sizeof(int));
-	temp_part_indices.resize(size);
-	parts.resize(size);
-	
-	for (int i = 0; i < size; ++i)
-	{
-		bool is_private = false;
-		if (version >= 22)
-			file->read((char*)&is_private, sizeof(bool));
-		private_parts[i] = is_private;
-		
-		if (is_private)
-		{
-			// Note on const_cast: private part is owned by this symbol.
-			if (!Symbol::loadSymbol(const_cast<Symbol*&>(parts[i]), file, version, map))
-				return false;
-			temp_part_indices[i] = -1;
-		}
-		else
-		{
-			int temp;
-			file->read((char*)&temp, sizeof(int));
-			temp_part_indices[i] = temp;
-		}
-	}
-	return true;
-}
-
-#endif
 
 void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 {
@@ -269,7 +249,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeAttribute(QString::fromLatin1("parts"), QString::number(num_parts));
 	
 	auto is_private = begin(private_parts);
-	for (const auto subsymbol : parts)
+	for (const auto* subsymbol : parts)
 	{
 		xml.writeStartElement(QString::fromLatin1("part"));
 		if (*is_private)
@@ -288,7 +268,7 @@ void CombinedSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*combined_symbol*/);
 }
 
-bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	if (xml.name() != QLatin1String("combined_symbol"))
 		return false;
@@ -308,7 +288,7 @@ bool CombinedSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDicti
 			if (is_private)
 			{
 				xml.readNextStartElement();
-				parts.push_back(Symbol::load(xml, map, symbol_dict));
+				parts.push_back(Symbol::load(xml, map, symbol_dict, version).release());
 				temp_part_indices.push_back(-1);
 			}
 			else
@@ -339,7 +319,7 @@ bool CombinedSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_se
 	});
 }
 
-bool CombinedSymbol::loadFinished(Map* map)
+bool CombinedSymbol::loadingFinishedEvent(Map* map)
 {
 	const auto num_symbols = map->getNumSymbols();
 	const auto last = std::find_if(begin(temp_part_indices), end(temp_part_indices),

@@ -55,8 +55,8 @@ SymbolSettingDialog::SymbolSettingDialog(const Symbol* source_symbol, Map* sourc
 : QDialog(parent, Qt::CustomizeWindowHint | Qt::WindowTitleHint | Qt::WindowMaximizeButtonHint)
 , source_map(source_map)
 , source_symbol(source_symbol)
-, source_symbol_copy(source_symbol->duplicate())	// don't rely on external entity
-, symbol(source_symbol->duplicate())
+, source_symbol_copy(duplicate(*source_symbol))	// don't rely on external entity
+, symbol(duplicate(*source_symbol))
 , symbol_modified(false)
 {
 	setWindowTitle(tr("Symbol settings"));
@@ -179,7 +179,7 @@ SymbolSettingDialog::~SymbolSettingDialog() = default; // not inlined
 
 std::unique_ptr<Symbol> SymbolSettingDialog::getNewSymbol() const
 {
-	auto clone = std::unique_ptr<Symbol>(symbol->duplicate());
+	auto clone = duplicate(*symbol);
 	clone->setHidden(source_symbol_copy->isHidden());
 	return clone;
 }
@@ -469,8 +469,8 @@ void SymbolSettingDialog::showHelp()
 
 void SymbolSettingDialog::reset()
 {
-	auto duplicate = std::unique_ptr<Symbol>(source_symbol_copy->duplicate());
-	swap(symbol, duplicate);
+	auto copy = duplicate(*source_symbol_copy);
+	swap(symbol, copy);
 	symbol->setHidden(false);
 	createPreviewMap();
 	properties_widget->reset(&*symbol);

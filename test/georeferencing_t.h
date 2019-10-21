@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2015, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,8 +21,10 @@
 #define OPENORIENTEERING_GEOREFERENCING_TEST_H
 
 #include <QObject>
+#include <QString>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 
 using namespace OpenOrienteering;
 
@@ -69,6 +71,16 @@ private slots:
 	void testProjection();
 	
 	void testProjection_data();
+	
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	/**
+	 * Tests whether the `proj_context_set_file_finder()` function is working.
+	 * 
+	 * Mapper relies on this function to extract data files on Android.
+	 * This test covers this function in native builds.
+	 */
+	void testProjContextSetFileFinder();
+#endif
 	
 private:
 	Georeferencing georef;

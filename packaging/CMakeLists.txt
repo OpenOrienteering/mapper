@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2018 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -20,47 +20,60 @@ message(STATUS "Configuring ${PROJECT_NAME} packaging")
 
 option(Mapper_PACKAGE_QT_ALL_TRANSLATIONS "Add all Qt translations to the packages" OFF)
 
-macro(deploy_qt_translations basename)
-	find_package(Qt5LinguistTools REQUIRED QUIET)
-	get_target_property(LCONVERT_EXECUTABLE Qt5::lconvert IMPORTED_LOCATION)
-	if(NOT QT_TRANSLATIONS_DIR)
+function(deploy_qt_translations basename)
+	find_package(Qt5LinguistTools REQUIRED QUIET) # for Qt5::lconvert
+	
+	if(NOT Qt5Translations_DIR)
 		find_package(Qt5Core REQUIRED QUIET)
 		get_target_property(QMAKE_EXECUTABLE Qt5::qmake IMPORTED_LOCATION)
 		execute_process(
 		  COMMAND "${QMAKE_EXECUTABLE}" -query QT_INSTALL_TRANSLATIONS
-		  OUTPUT_VARIABLE QT_TRANSLATIONS_DIR
+		  OUTPUT_VARIABLE Qt5Translations_DIR
 		)
-		string(STRIP "${QT_TRANSLATIONS_DIR}" QT_TRANSLATIONS_DIR)
+		string(STRIP "${Qt5Translations_DIR}" Qt5Translations_DIR)
+		if(NOT EXISTS ${Qt5Translations_DIR})
+			set(Qt5Translations_DIR "Qt5Translations_DIR-NOTFOUND")
+		endif()
+		set(Qt5Translations_DIR "${Qt5Translations_DIR}" CACHE PATH
+		  "The Qt5 translations directory"
+		)
 	endif()
-	set(install_translations_code )
+	
 	if(Mapper_PACKAGE_QT_ALL_TRANSLATIONS)
-		file(GLOB basename_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename}_??.qm")
+		file(GLOB basename_files RELATIVE "${Qt5Translations_DIR}" "${Qt5Translations_DIR}/${basename}_??.qm")
 	else()
 		unset(basename_files)
 		foreach(_mapper_trans ${Mapper_translations})
 			get_filename_component(basename_file ${_mapper_trans} NAME_WE)
 			string(REPLACE OpenOrienteering ${basename} basename_file ${basename_file})
 			string(REGEX REPLACE "(_..)_..$" "\\1" basename_file ${basename_file})
-			file(GLOB translation_files RELATIVE "${QT_TRANSLATIONS_DIR}" "${QT_TRANSLATIONS_DIR}/${basename_file}*.qm")
+			file(GLOB translation_files RELATIVE "${Qt5Translations_DIR}" "${Qt5Translations_DIR}/${basename_file}*.qm")
 			list(APPEND basename_files ${translation_files})
 		endforeach()
 	endif()
+	
+	install(CODE 
+	  "execute_process(COMMAND \"${CMAKE_COMMAND}\" --build \"${CMAKE_CURRENT_BINARY_DIR}\" --target \"${basename}-translations\")"
+	)
+	
+	set(generated_translations )
 	foreach(basename_file ${basename_files})
-		set(input_files "\"${QT_TRANSLATIONS_DIR}/${basename_file}\"")
+		set(input_files "${Qt5Translations_DIR}/${basename_file}")
 		foreach(arg ${ARGN})
 			string(REPLACE ${basename} ${arg} extra_file ${basename_file})
-			if(EXISTS "${QT_TRANSLATIONS_DIR}/${extra_file}")
-				set(input_files "\"${QT_TRANSLATIONS_DIR}/${extra_file}\" ${input_files}")
+			if(EXISTS "${Qt5Translations_DIR}/${extra_file}")
+				list(INSERT input_files 0 "${Qt5Translations_DIR}/${extra_file}")
 			endif()
 		endforeach()
-		list(APPEND install_translations_code
-		  "execute_process(COMMAND \"${LCONVERT_EXECUTABLE}\" -o \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\" ${input_files})"
-		  "file(INSTALL DESTINATION \"\${CMAKE_INSTALL_PREFIX}/${MAPPER_DATA_DESTINATION}/translations\" TYPE FILE FILES \"${CMAKE_CURRENT_BINARY_DIR}/${basename_file}\")"
+		add_custom_command(OUTPUT "${basename_file}"
+		  COMMAND Qt5::lconvert -o "${basename_file}" ${input_files}
+		  DEPENDS Qt5::lconvert ${input_files}
 		)
+		list(APPEND generated_translations "${basename_file}")
+		install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${basename_file}" DESTINATION "${MAPPER_DATA_DESTINATION}/translations")
 	endforeach()
-	string(REPLACE ";" "\n  " install_translations_code "${install_translations_code}")
-	install(CODE "${install_translations_code}")
-endmacro(deploy_qt_translations)
+	add_custom_target(${basename}-translations SOURCES ${generated_translations})
+endfunction(deploy_qt_translations)
 
 
 
@@ -106,13 +119,14 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 else()
 	set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
 endif()
+string(REGEX REPLACE "[\\/:*?| ]" "_" mapper_version_filesystem "${Mapper_VERSION_DISPLAY}")
 set(CPACK_PACKAGE_FILE_NAME 
-    "OpenOrienteering-Mapper-${Mapper_VERSION}-${_system_name}")
+    "OpenOrienteering-Mapper-${mapper_version_filesystem}-${_system_name}")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
 set(CPACK_STRIP_FILES "TRUE")
 
 set(CPACK_SOURCE_PACKAGE_FILE_NAME
-    "openorienteering-mapper_${Mapper_VERSION}-src")
+    "openorienteering-mapper_${mapper_version_filesystem}-src")
 set(CPACK_SOURCE_IGNORE_FILES 
   "${PROJECT_BINARY_DIR}"
   "/[.]git/"
@@ -124,12 +138,13 @@ set(CPACK_SOURCE_IGNORE_FILES
 
 set(MAPPER_MACOS_SUBDIR "")
 
+set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
+
 if(WIN32)
 	# Packaging as ZIP archive
 	set(CPACK_GENERATOR_DEFAULT "ZIP")
 	#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${mapper_version_filesystem}")
 	
 	find_program(MAKENSIS_EXECUTABLE "makensis")
 	if(MAKENSIS_EXECUTABLE)
@@ -137,7 +152,7 @@ if(WIN32)
 		# The title displayed at the top of the installer
 		set(CPACK_NSIS_PACKAGE_NAME "${CPACK_PACKAGE_NAME}")
 		# The display name string that appears in the Windows Add/Remove Program control panel
-		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${Mapper_VERSION}")
+		set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_DISPLAY}")
 		# NSIS start menu links will point to executables in this directory
 		set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 		# A path to the executable that contains the uninstaller icon.
@@ -160,13 +175,12 @@ if(WIN32)
 elseif(APPLE)
 	set(MAPPER_MACOS_SUBDIR "/Mapper.app/Contents/MacOS")
 	set(CPACK_GENERATOR_DEFAULT "DragNDrop")
-	set(CPACK_PACKAGE_EXECUTABLES "Mapper" "OpenOrienteering Mapper ${Mapper_VERSION}")
 	set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}/images/mapper-icon/Mapper.icns")
 	set_target_properties(Mapper PROPERTIES
 	  MACOSX_BUNDLE_INFO_STRING          "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}"
 	  MACOSX_BUNDLE_ICON_FILE            "Mapper.icns"
 	  MACOSX_BUNDLE_GUI_IDENTIFIER       "org.openorienteering.${CMAKE_PROJECT_NAME}"
-	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for OS X"
+	  MACOSX_BUNDLE_LONG_VERSION_STRING  "${CMAKE_PROJECT_NAME} ${Mapper_VERSION_DISPLAY} for macOS"
 	  MACOSX_BUNDLE_BUNDLE_NAME          "${CMAKE_PROJECT_NAME}" # less than 16 characters long
 	  MACOSX_BUNDLE_SHORT_VERSION_STRING "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
 	  MACOSX_BUNDLE_BUNDLE_VERSION       "${Mapper_VERSION_MAJOR}.${Mapper_VERSION_MINOR}.${Mapper_VERSION_PATCH}"
@@ -177,50 +191,8 @@ elseif(APPLE)
 	)
 	
 elseif(ANDROID)
-	# We don't use a CPack generator,
-	# but run androiddeployqt from CPackConfig.cmake
 	set(CPACK_GENERATOR_DEFAULT "")
-	
-	set(KEYSTORE_URL "KEYSTORE_URL-NOTFOUND" CACHE STRING
-	  "URL of the keystore to be used when signing APK packages."
-	)
-	set(KEYSTORE_ALIAS "KEYSTORE_ALIAS-NOTFOUND" CACHE STRING
-	  "Alias in the keystore to be used when signing APK packages."
-	)
-	if(KEYSTORE_URL AND KEYSTORE_ALIAS)
-		set(SIGN_APK "$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>>")
-	else()
-		set(SIGN_APK 0)
-	endif()
-	configure_file(
-	  "${PROJECT_SOURCE_DIR}/android/CPackConfig.cmake.in"
-	  "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
-	  @ONLY
-	)
-	file(GENERATE
-	  OUTPUT "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-	  INPUT "${PROJECT_BINARY_DIR}/CPackConfig.tmp.cmake"
-	)
-	if(NOT EXISTS "${PROJECT_BINARY_DIR}/CPackConfig.cmake")
-		file(WRITE "${PROJECT_BINARY_DIR}/CPackConfig.cmake"
-		  [[# Placeholder to enforce 'package' target creation]]
-		)
-	endif()
-	
-	# For Android, we create a dummy qmake project which provides
-	# - configuration for running androiddeployqt from CPackConfig.cmake, and
-	# - a project for debugging the Android app in Qt Creator
-	# The directory name must match the Mapper binary.
-	file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mapper")
-	configure_file(
-	  "${PROJECT_SOURCE_DIR}/android/Mapper.pro.in"
-	  "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
-	  @ONLY
-	)
-	file(GENERATE
-	  OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.pro"
-	  INPUT "${CMAKE_CURRENT_BINARY_DIR}/Mapper/Mapper.tmp.pro"
-	)
+	# Nothing else here: We always add the 'android' subdirectory.
 	
 elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	# Packaging on Debian or similar
@@ -240,7 +212,6 @@ elseif(UNIX AND EXISTS /usr/bin/dpkg AND EXISTS /usr/bin/lsb_release)
 	set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Kai Pastor <dg0yt@darc.de>")
 	set(CPACK_DEBIAN_SECTION            "graphics")
 	set(CPACK_DEBIAN_PACKAGE_HOMEPAGE   "https://www.openorienteering.org/apps/mapper/")
-	set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS  "ON")
 	
 endif()
 
@@ -267,7 +238,7 @@ if(Mapper_PACKAGE_PROJ)
 	if(PROJ4_DIR AND NOT PROJ4_ROOT)
 		# Cf. find_package documentation
 		string(REGEX REPLACE "/CMake$|/cmake$" "" PROJ4_ROOT "${PROJ4_DIR}")            # U
-		string(REGEX REPLACE "/PROJ4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}")              # U, W
+		string(REGEX REPLACE "/PROJ4[^/]*$|/proj4[^/]*$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
 		string(REGEX REPLACE "/cmake$" "" PROJ4_ROOT "${PROJ4_ROOT}")                   # U
 		string(REGEX REPLACE "/lib/[^/]*$|/lib$|/share$" "" PROJ4_ROOT "${PROJ4_ROOT}") # U, W
 	elseif(NOT PROJ4_ROOT)
@@ -332,19 +303,38 @@ if(Mapper_PACKAGE_QT)
 	  printsupport/cocoaprintersupport
 	  printsupport/cupsprintersupport
 	  printsupport/windowsprintersupport
+	  styles/qmacstyle
 	)
+	set(MAPPER_QT_MODULES
+	  Gui
+	  Positioning
+	  PrintSupport
+	  Sensors
+	  Sql
+	  Widgets
+	)
+
 	if(ANDROID)
 		set(MAPPER_QT_PLUGINS ) # Ignore for now, handled by androiddeployqt
+		list(REMOVE_ITEM MAPPER_QT_MODULES Sql) # Not deploying Qt Assistant
 	endif()
+	
+	find_package(Qt5Positioning QUIET)
+	if(TARGET Qt5::Positioning)
+		list(APPEND MAPPER_QT_MODULES SerialPort) # Always with serialport NMEA
+	endif()
+	
 	set(QT_PLUGIN_TARGETS )
-	foreach(module Gui Positioning PrintSupport Sensors Sql)
+	foreach(module ${MAPPER_QT_MODULES})
 		find_package(Qt5${module} QUIET)
 		if(module STREQUAL "Positioning" AND Qt5Positioning_DIR)
 			# Workaround for QTBUG-58812 CMake: Plugin config not loaded
 			# unless plugin class name ends in Plugin
 			file(GLOB pluginTargets "${Qt5Positioning_DIR}/Qt5Positioning_*.cmake")
 			foreach(file ${pluginTargets})
-				if(NOT file MATCHES "Plugin.cmake")
+				string(REGEX REPLACE "^.*/Qt5Positioning_([^/]*)\\.cmake" "Qt5::\\1" lib "${file}")
+				if(NOT file MATCHES "Plugin.cmake"
+				   AND NOT "${Qt5Positioning_PLUGINS}" MATCHES "${lib}")
 					include(${file})
 				endif()
 			endforeach()
@@ -387,7 +377,7 @@ if(Mapper_PACKAGE_ASSISTANT)
 	deploy_qt_translations(assistant qt_help)
 endif(Mapper_PACKAGE_ASSISTANT)
 
-if(CMAKE_CROSSCOMPILING AND MINGW)
+if(MINGW)
 	set(_env_lang $ENV{LC_ALL})
 	set(ENV{LC_ALL} C)
 	execute_process(
@@ -410,13 +400,13 @@ foreach(_qt_plugin ${MAPPER_QT_PLUGINS})
 	string(REPLACE "/" "/lib" alternative_pattern "${_qt_plugin}")
 	foreach(plugin_target ${QT_PLUGIN_TARGETS} NOT_FOUND)
 		if(plugin_target STREQUAL "NOT_FOUND")
-			message("   ${_qt_plugin} plugin library - not found")
+			message(STATUS "   ${_qt_plugin} plugin library - not found")
 			break()
 		endif()
 		get_target_property(_qt_plugin_location ${plugin_target} IMPORTED_LOCATION_RELEASE)
 		if(_qt_plugin_location MATCHES "${_qt_plugin}"
 		   OR _qt_plugin_location MATCHES "${alternative_pattern}")
-			message("   ${_qt_plugin} plugin library - found")
+			message(STATUS "   ${_qt_plugin} plugin library - found")
 			list(APPEND MAPPER_QT_PLUGINS_FOUND "${_qt_plugin}")
 			get_filename_component(_qt_plugin_dir "${_qt_plugin}" PATH)
 			if(APPLE)
@@ -468,3 +458,6 @@ endif()
 configure_file("custom_install.cmake.in" "custom_install.cmake" @ONLY)
 install(CODE "include(\"${CMAKE_CURRENT_BINARY_DIR}/custom_install.cmake\")")
 
+
+# Always include the android directory, for convenient development.
+add_subdirectory("android")

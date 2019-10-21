@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2015-2017 Kai Pastor
+ *    Copyright 2015-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,11 +22,9 @@
 #include "world_file.h"
 
 #include <QChar>
-#include <QCharRef>
 #include <QFile>
 #include <QFileDevice>
 #include <QFileInfo>
-#include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
@@ -35,16 +33,36 @@
 
 namespace OpenOrienteering {
 
-WorldFile::WorldFile()
-{
-	loaded = false;
-}
-
-WorldFile::WorldFile(const QTransform& wld)
-    : loaded{true}
-    , pixel_to_world{wld}
+WorldFile::WorldFile() noexcept
+: parameters { 1, 0, 0, 1, 0.5, 0.5 }
 {
 	// nothing else
+}
+
+WorldFile::WorldFile(double xw, double xh, double yw, double yh, double dx, double dy) noexcept
+: parameters { xw, xh, yw, yh, dx, dy }
+{
+	// nothing else
+}
+
+WorldFile::WorldFile(const QTransform& wld) noexcept
+: parameters { wld.m11(), wld.m12(), wld.m21(), wld.m22(), wld.m31() + wld.m11()/2, wld.m32() + wld.m22()/2 }
+{
+	// nothing else
+}
+
+
+WorldFile::operator QTransform() const
+{
+	// The world file parameters refer to the center of the top-left pixel,
+	// but for QTransform, we want the top-left corner of this pixel.
+	auto offset_x = (parameters[0] + parameters[2]) / 2;
+	auto offset_y = (parameters[1] + parameters[3]) / 2;
+	return QTransform {
+	  parameters[0], parameters[1], 0,
+	  parameters[2], parameters[3], 0,
+	  parameters[4] - offset_x, parameters[5] - offset_y, 1
+	};
 }
 
 
@@ -52,52 +70,28 @@ bool WorldFile::load(const QString& path)
 {
 	QFile file(path);
 	if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-	{
-		loaded = false;
 		return false;
-	}
-	QTextStream text_stream(&file);
 	
+	QTextStream text_stream(&file);
 	bool ok = false;
-	double parameters[6];
 	for (auto& parameter : parameters)
 	{
-		auto value = text_stream.readLine().toDouble(&ok);
+		parameter = text_stream.readLine().toDouble(&ok);
 		if (!ok)
-		{
-			file.close();
-			loaded = false;
 			return false;
-		}
-		parameter = value;
 	}
-	
-	file.close();
-	
-	pixel_to_world.setMatrix(
-		parameters[0], parameters[2], parameters[4],
-		parameters[1], parameters[3], parameters[5],
-		0, 0, 1);
-	pixel_to_world = pixel_to_world.transposed();
-	loaded = true;
 	return true;
 }
 
-bool WorldFile::save(const QString &path)
+bool WorldFile::save(const QString &path) const
 {
-	if (!loaded) { return false;}
-
 	QFile file(path);
 	if (file.open(QIODevice::WriteOnly | QIODevice::Text))
 	{
 		QTextStream stream(&file);
 		stream.setRealNumberPrecision(10);
-		stream << pixel_to_world.m11() << endl;
-		stream << pixel_to_world.m12() << endl;
-		stream << pixel_to_world.m21() << endl;
-		stream << pixel_to_world.m22() << endl;
-		stream << pixel_to_world.m31() << endl;
-		stream << pixel_to_world.m32() << endl;
+		for (auto value : parameters)
+			stream << value << endl;
 		file.close();
 	}
 	return file.error() == QFileDevice::NoError;

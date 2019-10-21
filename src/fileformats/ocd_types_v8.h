@@ -20,12 +20,38 @@
 #ifndef OPENORIENTEERING_OCD_TYPES_V8_H
 #define OPENORIENTEERING_OCD_TYPES_V8_H
 
+#include <array>
+
 #include "ocd_types.h"
 
 namespace Ocd
 {
 	
 #pragma pack(push, 1)
+	
+	// Not found in OCD >= V9.
+	// Common default values, not preserved on import.
+	struct CmykScreenV8
+	{
+		quint16 cyan_freq     = 1500;
+		quint16 cyan_angle    =  150;
+		quint16 magenta_freq  = 1500;
+		quint16 magenta_angle =  750;
+		quint16 yellow_freq   = 1500;
+		quint16 yellow_angle  =    0;
+		quint16 black_freq    = 1500;
+		quint16 black_angle   =  450;
+	};
+	
+	inline bool operator==(const CmykScreenV8& lhs, const CmykScreenV8& rhs)
+	{
+		return 0 == memcmp(&lhs, &rhs, sizeof(CmykScreenV8));
+	}
+	
+	inline bool operator!=(const CmykScreenV8& lhs, const CmykScreenV8& rhs)
+	{
+		return !(lhs == rhs);
+	}
 	
 	struct CmykV8
 	{
@@ -56,14 +82,7 @@ namespace Ocd
 	{
 		quint16 num_colors;
 		quint16 num_separations;
-		quint16 cyan_freq;
-		quint16 cyan_angle;
-		quint16 magenta_freq;
-		quint16 magenta_angle;
-		quint16 yellow_freq;
-		quint16 yellow_angle;
-		quint16 black_freq;
-		quint16 black_angle;
+		CmykScreenV8 cmyk_screen;
 		quint16 RESERVED_MEMBER[2];
 		ColorInfoV8 color_info[256];
 		SeparationInfoV8 separation_info[32];
@@ -82,9 +101,49 @@ namespace Ocd
 		SymbolHeaderV8 symbol_header;
 	};
 	
+	
+	struct IconV9;
+	
+	struct IconV8
+	{
+		quint8  bits[264];
+		static constexpr unsigned length() { return 264; }
+		
+		static constexpr int height() { return 22; }
+		static constexpr int width() { return 22; }
+		
+		template<typename RGB>
+		static std::array<RGB, 16> palette() {
+			return {
+				RGB{   0,   0,   0 },
+				RGB{ 128,   0,   0 },
+				RGB{ 0,   128,   0 },
+				RGB{ 128, 128,   0 },
+				RGB{   0,   0, 128 },
+				RGB{ 128,   0, 128 },
+				RGB{   0, 128, 128 },
+				RGB{ 128, 128, 128 },
+				RGB{ 192, 192, 192 },
+				RGB{ 255,   0,   0 },
+				RGB{   0, 255,   0 },
+				RGB{ 255, 255,   0 },
+				RGB{   0,   0, 255 },
+				RGB{ 255,   0, 255 },
+				RGB{   0, 255, 255 },
+				RGB{ 255, 255, 255 }
+			};
+		}
+		
+		IconV9 uncompress() const;  // may throw
+	};
+	
+	bool operator==(const IconV8& lhs, const IconV8& rhs);
+	
+	inline bool operator!=(const IconV8& lhs, const IconV8& rhs) { return !(lhs == rhs); }
+	
 	struct BaseSymbolV8
 	{
-		using IndexEntryType = quint32;
+		using IndexEntryType = SymbolIndexEntry;
 		static const int symbol_number_factor = 10;
 		
 		quint16 size;
@@ -99,7 +158,7 @@ namespace Ocd
 		qint32  file_pos;
 		quint8  colors[32];
 		PascalString<31> description;
-		quint8  icon_bits[264];
+		IconV8  icon;
 	};
 	
 	struct PointSymbolElementV8
@@ -191,10 +250,19 @@ namespace Ocd
 			MiterJoin_PointedCap = 6
 		};
 		
-		enum DoubleLineFlag
+		enum DoubleLineFlags
 		{
-			DoubleFillColorOn       = 1,
-			DoubleBackgroundColorOn = 2
+			DoubleFlagFillColorOn       = 1,
+			DoubleFlagBackgroundColorOn = 2,
+		};
+		
+		enum DoubleLineMode
+		{
+			DoubleLineOff              = 0,
+			DoubleLineContinuous       = 1,
+			DoubleLineLeftBorderDashed = 2,
+			DoubleLineBordersDashed    = 3,
+			DoubleLineAllDashed        = 4,
 		};
 	};
 
@@ -235,7 +303,7 @@ namespace Ocd
 		
 		BaseSymbol base;
 		
-		quint16 area_flags;
+		quint16 RESERVED_MEMBER;    // formerly known as area_flags
 		quint16 fill_on;
 		AreaSymbolCommonV8 common;
 		quint16 RESERVED_MEMBER;
@@ -338,7 +406,7 @@ namespace Ocd
 		OcdPoint32 bottom_left_bound;
 		OcdPoint32 top_right_bound;
 		quint32 pos;
-		quint16 size_MISC; /// Different interpretation for version < 8
+		quint16 size;      /// Different interpretation for version < 8
 		qint16  symbol;
 	};
 	
@@ -346,7 +414,7 @@ namespace Ocd
 	{
 		using IndexEntryType = ObjectIndexEntryV8;
 		
-		quint16 symbol;
+		qint16  symbol;
 		quint8  type;
 		quint8  unicode;
 		quint16 num_items;
@@ -438,6 +506,7 @@ namespace Ocd
 	/** OCD file format version 8 trait. */
 	struct FormatV8
 	{
+		constexpr static quint16 version = 8;
 		using FileHeader      = FileHeaderV8;
 		using BaseSymbol      = BaseSymbolV8;
 		using PointSymbol     = PointSymbolV8;
@@ -450,5 +519,9 @@ namespace Ocd
 		using Encoding        = Custom8BitEncoding;
 	};
 }
+
+
+OCD_EXPLICIT_INSTANTIATION(extern template, Ocd::FormatV8)
+
 
 #endif // OPENORIENTEERING_OCD_TYPES_V8_H

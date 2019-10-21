@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
+ *    Copyright 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,8 +21,8 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_H
 #define OPENORIENTEERING_FILE_FORMAT_H
 
-#include <cstddef>
 #include <exception>
+#include <memory>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -29,8 +30,6 @@
 #include <QList>
 #include <QString>
 #include <QStringList>
-
-class QIODevice;
 
 namespace OpenOrienteering {
 
@@ -124,29 +123,52 @@ public:
 	 */
 	Q_DECLARE_FLAGS(FileTypes, FileType)
 	
+	
 	/** File format features.
 	 * 
 	 *  Each feature shall use a distinct bit so that they may be OR-combined.
 	 */
-	enum FormatFeatureFlag
+	enum struct Feature
 	{
-		ImportSupported = 0x01,
-		ExportSupported = 0x02,
-		ExportLossy     = 0x04,
+		FileOpen        = 0x01,  ///< This format supports reading and is to be used for File > Open...
+		FileSave        = 0x02,  ///< This format supports writing and is to be used for File > Save
+		FileSaveAs      = 0x04,  ///< This format supports writing and is to be used for File > Save as...
+		FileImport      = 0x08,  ///< This format supports reading and is to be used for File > Import...
+		FileExport      = 0x10,  ///< This format supports writing and is to be used for File > Export...
 		
-		EndOfFormatFeatures
+		ReadingLossy   = 0x100,  ///< The importer cannot handle all file format features.
+		WritingLossy   = 0x200,  ///< The exporter cannot handle all Mapper features.
+		
 	};
 	
 	/** A type which handles OR-combinations of format implementation features.
 	 */
-	Q_DECLARE_FLAGS(FormatFeatures, FormatFeatureFlag)
+	Q_DECLARE_FLAGS(Features, Feature)
+	
+	
+	/**
+	 * A type which indicates the level of support for importing a file.
+	 * 
+	 * If a file format fully supports a file format, errors during import must
+	 * be regard as fatal. If the level of support is Unknown, an import can be
+	 * attempted, but an import failure allows no conclusion about whether the
+	 * file format is actually unsupported or the file contains invalid data for
+	 * a supported format.
+	 */
+	enum ImportSupportAssumption
+	{
+		NotSupported   = 0,  ///< The FileFormat does not support the file.
+		Unknown        = 1,  ///< The FileFormat support cannot be determine in advance.
+		FullySupported = 2   ///< The FileFormat supports the file.
+	};
+	
 	
 	/** Creates a new file format with the given parameters.
 	 * 
 	 *  Don't use a leading dot on the file extension.
 	 *  
 	 */
-	FileFormat(FileType file_type, const char* id, const QString& description, const QString& file_extension, FormatFeatures features);
+	FileFormat(FileType file_type, const char* id, const QString& description, const QString& file_extension, Features features);
 	
 	FileFormat(const FileFormat&) = delete;
 	FileFormat(FileFormat&&) = delete;
@@ -189,43 +211,79 @@ public:
 	 */
 	const QString& filter() const;
 	
-	/** Returns true if this file format supports importing a map from its associated file type.
-	 */
-	bool supportsImport() const;
 	
-	/** Returns true if this file format supports exporting a map to its associated file type.
+	/** Returns true if this format supports reading a Map from a file.
 	 */
-	bool supportsExport() const;
+	bool supportsReading() const;
 	
-	/** Returns true if an exporter for this file format is potentially lossy, i.e., if the exported
-	 *  file cannot fully represent all aspects of the internal OO map objects. This flag is used by
-	 *  the application to warn the user before saving to a lossy file type.
+	/** Returns true if this format supports writing a Map to a file.
 	 */
-	bool isExportLossy() const;
+	bool supportsWriting() const;
 	
-	/** Returns true if this file format believes it is capable of understanding a file that
-	 *  starts with the given byte sequence. "Magic" numbers and version information is commonly
-	 *  placed at the beginning of a file, and this method is used by the application to pre-screen
-	 *  for a suitable Importer. If there is any doubt about whether the file format can successfully
-	 *  process a file, this method should return false.
-	 */
-	virtual bool understands(const unsigned char *buffer, std::size_t sz) const;
 	
-	/** Creates an Importer that will read a map file from the given stream into the given map and view.
-	 *  The caller can then call doImport() in the returned object to start the import process. The caller
-	 *  is responsible for deleting the Importer when it's finished.
-	 *
-	 *  If the Importer could not be created, then this method should throw a FormatException.
+	/** Returns true if this format is available for File > Open...
 	 */
-	virtual Importer* createImporter(QIODevice* stream, Map *map, MapView *view) const;
+	bool supportsFileOpen() const { return format_features.testFlag(Feature::FileOpen); }
 	
-	/** Creates an Exporter that will save the given map and view into the given stream.
-	 *  The caller can then call doExport() in the returned object to start the export process. The caller
-	 *  is responsible for deleting the Exporter when it's finished.
-	 *
-	 *  If the Exporter could not be created, then this method should throw a FormatException.
+	/** Returns true if this format is available for File > Save
 	 */
-	virtual Exporter *createExporter(QIODevice* stream, Map *map, MapView *view) const;
+	bool supportsFileSave() const { return format_features.testFlag(Feature::FileSave); }
+	
+	/** Returns true if this format is available for File > Save as...
+	 */
+	bool supportsFileSaveAs() const { return format_features.testFlag(Feature::FileSaveAs); }
+	
+	/** Returns true if this format is available for File > Import...
+	 */
+	bool supportsFileImport() const { return format_features.testFlag(Feature::FileImport); }
+	
+	/** Returns true if this format is available for File > Export...
+	 */
+	bool supportsFileExport() const { return format_features.testFlag(Feature::FileExport); }
+	
+	
+	/** Returns true if an importer for this file format is potentially lossy.
+	 * 
+	 *  When the importer is lossy, the created Map may not fully represent all
+	 *  features of the file.
+	 */
+	bool isReadingLossy() const { return format_features.testFlag(Feature::ReadingLossy); }
+	
+	/** Returns true if an exporter for this file format is potentially lossy.
+	 * 
+	 *  When the exporter is lossy, the created file may not fully represent all
+	 *  features of the Map in the program.
+	 */
+	bool isWritingLossy() const { return format_features.testFlag(Feature::WritingLossy); }
+	
+	
+	/** 
+	 * Determines whether this FileFormat is capable of understanding a file
+	 * which starts with the given byte sequence.
+	 * 
+	 * Magic numbers and version information are commonly placed at the
+	 * beginning of a file. This method is used by the application to pre-screen
+	 * for a suitable Importer.
+	 * 
+	 * The default implementation returns Unknown for file formats which support
+	 * import, and NotSupported otherwise.
+	 */
+	virtual ImportSupportAssumption understands(const char* buffer, int size) const;
+	
+	
+	/**
+	 * Creates an Importer that will read a map file from the given stream.
+	 * 
+	 * The default implementation returns an unset unique_ptr.
+	 */
+	virtual std::unique_ptr<Importer> makeImporter(const QString& path, Map *map, MapView *view) const;
+	
+	/** 
+	 * Creates an Exporter that will save a map to the given path.
+	 * 
+	 * The default implementation returns an unset unique_ptr.
+	 */
+	virtual std::unique_ptr<Exporter> makeExporter(const QString& path, const Map* map, const MapView* view) const;
 	
 private:
 	FileType file_type;
@@ -233,7 +291,7 @@ private:
 	QString format_description;
 	QStringList file_extensions;
 	QString format_filter;
-	FormatFeatures format_features;
+	Features format_features;
 };
 
 
@@ -309,31 +367,13 @@ const QString& FileFormat::filter() const
 	return format_filter;
 }
 
-inline
-bool FileFormat::supportsImport() const
-{
-	return format_features.testFlag(FileFormat::ImportSupported);
-}
-
-inline
-bool FileFormat::supportsExport() const
-{
-	return format_features.testFlag(FileFormat::ExportSupported);
-}
-
-inline
-bool FileFormat::isExportLossy() const
-{
-	return format_features.testFlag(FileFormat::ExportLossy);
-}
-
 
 }  // namespace OpenOrienteering
 
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FileTypes)
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::FormatFeatures)
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::FileFormat::Features)
 
 
 #endif // OPENORIENTEERING_FILE_FORMAT_H

@@ -23,10 +23,10 @@ find_package(ZLIB REQUIRED)
 set(CMAKE_CXX_CLANG_TIDY "")
 set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "")
 
-if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.3.0)
-	set(FORK_VERSION qt-5.2.1)
-else()
+if (${Qt5PrintSupport_VERSION} VERSION_LESS 5.12.0)
 	set(FORK_VERSION qt-5.5.1)
+else()
+	set(FORK_VERSION qt-5.12.4)
 endif()
 
 set(PRINTSUPPORT_SRCS
@@ -51,14 +51,16 @@ target_compile_definitions(printsupport PRIVATE
   QT_USE_QSTRINGBUILDER
 )
 target_include_directories(printsupport
-  BEFORE PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
+  SYSTEM
+  BEFORE
+  PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${FORK_VERSION}"
   INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
 target_link_libraries(printsupport
   Qt5::PrintSupport
   Qt5::Gui
-  ${ZLIB_LIBRARY}
+  ZLIB::ZLIB
 )
 
 
@@ -75,5 +77,5 @@ foreach(module Core Gui PrintSupport)
 			endif()
 		endforeach()
 	endif()
-	target_include_directories(printsupport PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+	target_include_directories(printsupport SYSTEM PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()

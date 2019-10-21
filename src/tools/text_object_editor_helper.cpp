@@ -33,6 +33,7 @@
 #include <QKeyEvent>
 #include <QKeySequence>
 #include <QLatin1Char>
+#include <QList>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
@@ -45,7 +46,6 @@
 #include <QVariant>
 #include <QWidget>
 
-#include "core/map_coord.h"
 #include "core/objects/text_object.h"
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
@@ -60,6 +60,11 @@
 #  endif
 #endif
 //#  define INPUT_METHOD_BUGS_RESOLVED
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -143,7 +148,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 #else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
-	QTimer::singleShot(20, this, SLOT(claimFocus()));  // clazy:exclude=old-style-connect
+	QTimer::singleShot(20, this, &TextObjectEditorHelper::claimFocus);
 #endif
 }
 
@@ -234,7 +239,7 @@ void TextObjectEditorHelper::commitStateChange()
 			break;
 		case UpdateInputProperties:
 			im_query = Qt::ImQueryInput;
-			// fall through
+			Q_FALLTHROUGH();
 		case UpdateAllProperties:
 #ifdef DEBUG_INPUT_METHOD_SUPPORT
 			qDebug("\n>>> inputMethod()->update(%d)", im_query);	
@@ -379,7 +384,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return { selectionText() };
 	case Qt::ImMaximumTextLength:
 		return { }; // No limit.
-#if QT_VERSION >= 0x050300
 	case Qt::ImAbsolutePosition:
 		{
 			const auto point = argument.toPointF();
@@ -394,7 +398,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return pristine_text.mid(blockStart(), cursor_position - blockStart());
 	case Qt::ImTextAfterCursor:
 		return pristine_text.mid(cursor_position, blockEnd() - cursor_position);
-#endif
 	default:
 		return { };
 	}
@@ -440,7 +443,6 @@ bool TextObjectEditorHelper::inputMethodEvent(QInputMethodEvent* event)
 			}
 			pristine_text.remove(position, length);
 		}
-		length = 0;
 	}
 	
 	// Insert the commit string for the given replacement length
@@ -518,7 +520,7 @@ bool TextObjectEditorHelper::sendMouseEventToInputContext(QEvent* event, const M
 }
 
 
-bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
@@ -558,7 +560,7 @@ bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 }
 
 
-bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	updateCursor(widget, text_object->calcTextPositionAt(map_coord, true));
 	
@@ -577,7 +579,7 @@ bool TextObjectEditorHelper::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 }
 
 
-bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TextObjectEditorHelper::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
 	
@@ -754,8 +756,8 @@ bool TextObjectEditorHelper::keyPressEvent(QKeyEvent* event)
 	}
 	else if (event->matches(QKeySequence::Paste))
 	{
-		const auto clipboard = QGuiApplication::clipboard();
-		const auto mime_data = clipboard->mimeData();
+		const auto* clipboard = QGuiApplication::clipboard();
+		const auto* mime_data = clipboard->mimeData();
 		
 		if (mime_data->hasText())
 			replaceSelectionText(clipboard->text());
@@ -860,7 +862,7 @@ void TextObjectEditorHelper::updateCursor(QWidget* widget, int position)
 
 
 
-void TextObjectEditorHelper::updateDragging(MapCoordF map_coord)
+void TextObjectEditorHelper::updateDragging(const MapCoordF& map_coord)
 {
 	Q_ASSERT(batch_editing);
 	const auto drag_position = text_object->calcTextPositionAt(map_coord, false);
@@ -886,7 +888,7 @@ void TextObjectEditorHelper::foreachLineRect(int begin, int end, const std::func
 	Q_ASSERT(begin <= end);
 	for (int line = 0, num_lines = text_object->getNumLines(); line != num_lines; ++line)
 	{
-		const auto line_info = text_object->getLineInfo(line);
+		const auto* line_info = text_object->getLineInfo(line);
 		if (line_info->end_index + 1 < begin)
 			continue;
 		if (end < line_info->start_index)

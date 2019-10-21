@@ -110,6 +110,8 @@ MapColor* MapColor::duplicate() const
 	copy->rgb_color_method  = rgb_color_method;
 	copy->flags = flags;
 	copy->spot_color_name = spot_color_name;
+	copy->screen_angle = screen_angle;
+	copy->screen_frequency = screen_frequency;
 	copy->components = components;
 	return copy;
 }
@@ -156,7 +158,11 @@ bool MapColor::equals(const MapColor& other, bool compare_priority) const
 	       (cmyk_color_method != CustomColor || cmyk == other.cmyk) &&
 	       (rgb_color_method != CustomColor || rgb == other.rgb) &&
 	       (  spot_color_method == UndefinedMethod || 
-	         (spot_color_method == SpotColor && spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0) ||
+	         (spot_color_method == SpotColor
+	          && spot_color_name.compare(other.spot_color_name, Qt::CaseInsensitive) == 0
+	          && (screen_frequency <= 0 || other.screen_frequency <= 0
+	              || (std::abs(screen_angle - other.screen_angle) < 0.05
+	                  && std::abs(screen_frequency - other.screen_frequency) < 0.05))) ||
 	         (spot_color_method == CustomColor && componentsEqual(other, compare_priority)) ) &&
 	       (qAbs(opacity - other.opacity) < 1e-03);
 }
@@ -168,6 +174,18 @@ void MapColor::setSpotColorName(const QString& spot_color_name)
 	this->spot_color_name = spot_color_name;
 	components.clear();
 	updateCalculatedColors();
+}
+
+void MapColor::setScreenFrequency(double value)
+{
+	if (spot_color_method == SpotColor)
+		screen_frequency = value;
+}
+
+void MapColor::setScreenAngle(double value)
+{
+	if (spot_color_method == SpotColor)
+		screen_angle = value;
 }
 
 void MapColor::setSpotColorComposition(const SpotColorComponents& components)

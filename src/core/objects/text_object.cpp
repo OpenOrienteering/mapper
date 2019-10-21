@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014, 2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -126,7 +126,6 @@ TextObject::TextObject(const Symbol* symbol)
  : Object(Object::Text, symbol)
  , h_align(AlignHCenter)
  , v_align(AlignVCenter)
- , rotation(0.0f)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Text));
 	coords.reserve(2); // Extra element used during saving
@@ -138,7 +137,6 @@ TextObject::TextObject(const TextObject& proto)
  , text(proto.text)
  , h_align(proto.h_align)
  , v_align(proto.v_align)
- , rotation(proto.rotation)
  , has_single_anchor(proto.has_single_anchor)
  , size(proto.size)
  , line_infos(proto.line_infos)
@@ -161,7 +159,6 @@ void TextObject::copyFrom(const Object& other)
 	text = other_text.text;
 	h_align = other_text.h_align;
 	v_align = other_text.v_align;
-	rotation = other_text.rotation;
 	has_single_anchor = other_text.has_single_anchor;
 	size = other_text.size;
 	line_infos = other_text.line_infos;
@@ -175,14 +172,14 @@ void TextObject::setAnchorPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoord coord)
+void TextObject::setAnchorPosition(const MapCoord& coord)
 {
 	has_single_anchor = true;
 	coords[0] = coord;
 	setOutputDirty();
 }
 
-void TextObject::setAnchorPosition(MapCoordF coord)
+void TextObject::setAnchorPosition(const MapCoordF& coord)
 {
 	has_single_anchor = true;
 	coords[0].setX(coord.x());
@@ -238,7 +235,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 	else
 	{
 		QTransform transform;
-		transform.rotate(-qRadiansToDegrees(qreal(getRotation())));
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 		
 		handles[0] += transform.map(QPointF(+getBoxWidth() / 2, -getBoxHeight() / 2));
 		handles[1] += transform.map(QPointF(+getBoxWidth() / 2, +getBoxHeight() / 2));
@@ -251,7 +248,7 @@ std::vector<QPointF> TextObject::controlPoints() const
 
 
 
-void TextObject::scale(MapCoordF center, double factor)
+void TextObject::scale(const MapCoordF& center, double factor)
 {
 	coords.front() = MapCoord{center + (MapCoordF{coords.front()} - center) * factor};
 	if (!has_single_anchor)
@@ -282,8 +279,8 @@ QTransform TextObject::calcTextToMapTransform() const
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.translate(coords[0].x(), coords[0].y());
-	if (rotation != 0)
-		transform.rotate(-rotation * 180 / M_PI);
+	if (getRotation() != 0)
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 	transform.scale(scaling, scaling);
 	
 	return transform;
@@ -296,8 +293,8 @@ QTransform TextObject::calcMapToTextTransform() const
 	QTransform transform;
 	double scaling = 1.0f / text_symbol->calculateInternalScaling();
 	transform.scale(1.0f / scaling, 1.0f / scaling);
-	if (rotation != 0)
-		transform.rotate(rotation * 180 / M_PI);
+	if (getRotation() != 0)
+		transform.rotate(-qRadiansToDegrees(getRotation()));
 	transform.translate(-coords[0].x(), -coords[0].y());
 	
 	return transform;
@@ -322,24 +319,18 @@ void TextObject::setVerticalAlignment(TextObject::VerticalAlignment v_align)
 	setOutputDirty();
 }
 
-void TextObject::setRotation(float new_rotation)
-{
-	rotation = new_rotation;
-	setOutputDirty();
-}
-
 bool TextObject::intersectsBox(const QRectF& box) const
 {
 	return getExtent().intersects(box);
 }
 
-int TextObject::calcTextPositionAt(MapCoordF coord, bool find_line_only) const
+int TextObject::calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const
 {
 	return calcTextPositionAt(calcMapToTextTransform().map(coord), find_line_only);
 }
 
 // FIXME actually this is two functions, selected by parameter find_line_only; make two functions or return TextObjectLineInfo reference
-int TextObject::calcTextPositionAt(QPointF point, bool find_line_only) const
+int TextObject::calcTextPositionAt(const QPointF& point, bool find_line_only) const
 {
 	auto click_tolerance = Settings::getInstance().getMapEditorClickTolerancePx();
 	

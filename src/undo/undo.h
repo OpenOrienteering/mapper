@@ -27,7 +27,6 @@
 #include <set>
 #include <vector>
 
-class QIODevice;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -72,7 +71,7 @@ public:
 	};
 	
 	/**
-	 * A set of integers refering to parts.
+	 * A set of integers referring to parts.
 	 */
 	typedef std::set<int> PartSet;
 	
@@ -157,15 +156,6 @@ public:
 	virtual void getModifiedObjects(int part_index, ObjectSet& out) const;
 	
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Loads the undo step from the file in the old "native" format.
-	 * @deprecated Old file format.
-	 */
-	virtual bool load(QIODevice* file, int version) = 0;
-#endif
-	
-	
 	/**
 	 * Loads the undo step from the stream in xml format.
 	 */
@@ -178,7 +168,7 @@ public:
 	 * 
 	 * @see saveImpl()
 	 */
-	void save(QXmlStreamWriter& xml);
+	void save(QXmlStreamWriter& xml) const;
 	
 protected:	
 	/**
@@ -269,13 +259,6 @@ public:
 	 */
 	UndoStep* getSubStep(int i);
 	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * @copybrief UndoStep::load()
-	 * @deprecated Old file format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 protected:
 	/**
@@ -332,17 +315,6 @@ public:
 	 */
 	UndoStep* undo() override;
 	
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Prints a warning and returns false.
-	 * 
-	 * @deprecated Old file format.
-	 * This must not be called because the step is neither used nor usable
-	 * for the old format.
-	 */
-	bool load(QIODevice* file, int version) override;
-#endif
 	
 private:
 	bool const valid;

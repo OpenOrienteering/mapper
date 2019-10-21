@@ -60,12 +60,6 @@ void MapTest::initTestCase()
 	
 	// Static map initializations
 	Map map;
-	
-	// Accept any message boxes
-	connect(qApp, &QApplication::focusChanged, qApp, [](QWidget*, QWidget* w) {
-		if (w && qobject_cast<QMessageBox*>(w->window()))
-			QTimer::singleShot(0, w->window(), SLOT(accept()));  // clazy:exclude=old-style-connect (needs Qt 5.4)
-	});
 }
 
 
@@ -75,13 +69,13 @@ void MapTest::iconTest()
 	// Newly constructed map
 	QVERIFY(!qIsNull(map.symbolIconZoom()));
 	
-	// Explict update on newly constructed map
+	// Explicit update on newly constructed map
 	map.updateSymbolIconZoom();
 	const auto default_zoom = map.symbolIconZoom();
 	QVERIFY(default_zoom > 0);
 	
 	// Single symbol, 1 mm
-	auto symbol = static_cast<PointSymbol*>(map.getUndefinedPoint()->duplicate());
+	auto symbol = duplicate(*map.getUndefinedPoint()).release();
 	symbol->setInnerRadius(500);
 	QCOMPARE(symbol->dimensionForIcon(), qreal(1));
 	map.addSymbol(symbol, 0);
@@ -102,11 +96,11 @@ void MapTest::iconTest()
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	
-	map.addSymbol(symbol->duplicate(), 1);
+	map.addSymbol(duplicate(*symbol).release(), 1);
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	
-	map.addSymbol(symbol->duplicate(), 2);
+	map.addSymbol(duplicate(*symbol).release(), 2);
 	map.updateSymbolIconZoom();
 	QCOMPARE(map.symbolIconZoom() * symbol->dimensionForIcon(), qreal(1));
 	
@@ -196,7 +190,8 @@ void MapTest::importTest()
 	QString first_path = examples_dir.absoluteFilePath(first_file);
 	Map map;
 	MapView view{ &map };
-	QVERIFY(map.loadFrom(first_path, nullptr, &view, false, false));
+	QVERIFY(map.loadFrom(first_path, &view));
+	QVERIFY(map.getNumSymbols() > 0);
 	
 	auto original_size = map.getNumObjects();
 	auto original_num_colors = map.getNumColors();
@@ -215,7 +210,7 @@ void MapTest::importTest()
 	
 	QString imported_path = examples_dir.absoluteFilePath(imported_file);
 	Map imported_map;
-	QVERIFY(imported_map.loadFrom(imported_path, nullptr, nullptr, false, false));
+	QVERIFY(imported_map.loadFrom(imported_path));
 	QVERIFY(imported_map.getNumSymbols() > 0);
 	
 	original_size = map.getNumObjects();
@@ -230,7 +225,7 @@ void MapTest::hasAlpha()
 {
 	Map map;
 	MapView view{ &map };
-	QVERIFY(map.loadFrom(examples_dir.absoluteFilePath(QStringLiteral("complete map.omap")), nullptr, &view, false, false));
+	QVERIFY(map.loadFrom(examples_dir.absoluteFilePath(QStringLiteral("complete map.omap")), &view));
 	QVERIFY(!map.hasAlpha());
 	
 	QVERIFY(map.getNumParts() > 0);
@@ -301,7 +296,7 @@ void MapTest::crtFileTest()
 {
 	auto original =  symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"));
 	Map original_map;
-	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.loadFrom(original));
 	QVERIFY(original_map.getNumSymbols() > 100);
 	
 	auto crt_data = QByteArray{
@@ -376,7 +371,7 @@ void MapTest::matchQuerySymbolNumberTest()
 	QFETCH(int, matching);
 	
 	Map original_map;
-	original_map.loadFrom(original, nullptr, nullptr, false, false);
+	QVERIFY(original_map.loadFrom(original));
 	QVERIFY(original_map.getNumSymbols() > 0);
 	
 	auto r = SymbolRuleSet::forOriginalSymbols(original_map);
@@ -388,7 +383,7 @@ void MapTest::matchQuerySymbolNumberTest()
 	QCOMPARE(r.squeezed().size(), std::size_t(original_map.getNumSymbols()));
 	
 	Map replacement_map;
-	replacement_map.loadFrom(replacement, nullptr, nullptr, false, false);
+	QVERIFY(replacement_map.loadFrom(replacement));
 	QVERIFY(replacement_map.getNumSymbols() > 100);
 	
 	r = SymbolRuleSet::forOriginalSymbols(original_map);
@@ -406,7 +401,7 @@ void MapTest::matchQuerySymbolNumberTest()
  */
 #ifndef Q_OS_MACOS
 namespace  {
-	auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
 }
 #endif
 

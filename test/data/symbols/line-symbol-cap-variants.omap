@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<notes>Line symbol border variants test file</notes>
+<georeferencing scale="10000"><projected_crs id="Local"/></georeferencing>
+<colors count="3">
+<color priority="0" name="Black" c="1" m="1" y="1" k="1" opacity="1"><cmyk method="rgb"/><rgb method="custom" r="0" g="0" b="0"/></color>
+<color priority="1" name="Blue" c="1" m="1" y="0" k="0" opacity="1"><cmyk method="rgb"/><rgb method="custom" r="0" g="0" b="1"/></color>
+<color priority="2" name="Red" c="0" m="1" y="1" k="0" opacity="1"><cmyk method="rgb"/><rgb method="custom" r="1" g="0" b="0"/></color>
+</colors>
+<barrier version="6" required="0.6.0">
+<symbols count="10">
+<symbol type="2" id="0" code="1.0" name="Flat cap"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="1" code="1.1" name="Flat cap, dashed"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="2" code="2.0" name="Round cap"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="3" code="2.1" name="Round cap, dashed"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="1" start_offset="0" end_offset="0" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="4" code="3.0" name="Square cap"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="2" start_offset="0" end_offset="0" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="5" code="3.1" name="Square cap, dashed"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="2" start_offset="0" end_offset="0" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="6" code="4.0" name="Pointed cap"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="3" pointed_cap_length="1500" start_offset="1500" end_offset="1500" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="6000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="7" code="4.1" name="Pointed cap, dashed"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="3" pointed_cap_length="1500" start_offset="1500" end_offset="1500" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="2" id="8" code="4.1.2" name="Pointed cap, longer dashes"><line_symbol color="1" line_width="1000" minimum_length="0" join_style="1" cap_style="3" pointed_cap_length="1000" start_offset="1000" end_offset="1000" dashed="true" segment_length="6000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2500" break_length="1500" dashes_in_group="1" in_group_break_length="750" mid_symbols_per_spot="1" mid_symbol_distance="0"/></symbol>
+<symbol type="8" id="9" code="100" name="Text" is_helper_symbol="true"><text_symbol icon_text=""><font family="Arial" size="2469"/><text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/></text_symbol></symbol>
+</symbols>
+<parts count="1" current="0">
+<part name="default part"><objects count="20">
+<object type="4" symbol="9" rotation="0" h_align="1" v_align="2"><coords count="2">-45000 -67500;20000 5000;</coords><text>continuous</text></object>
+<object type="4" symbol="9" rotation="0" h_align="1" v_align="2"><coords count="2">-30000 -67500;20000 5000;</coords><text>dashed</text></object>
+<object type="4" symbol="9" rotation="0" h_align="1" v_align="2"><coords count="2">-20000 -67500;20000 5000;</coords><text>short</text></object>
+<object type="4" symbol="9" rotation="0" h_align="2" v_align="3"><coords count="2">-65000 -62500;20000 5000;</coords><text>flat cap</text></object>
+<object type="4" symbol="9" rotation="0" h_align="2" v_align="3"><coords count="2">-65000 -57500;20000 5000;</coords><text>round cap</text></object>
+<object type="4" symbol="9" rotation="0" h_align="2" v_align="3"><coords count="2">-65000 -52500;20000 5000;</coords><text>square cap</text></object>
+<object type="4" symbol="9" rotation="0" h_align="2" v_align="3"><coords count="2">-65000 -47500;20000 5000;</coords><text>pointed cap</text></object>
+<object type="1" symbol="0"><coords count="2">-50000 -60000;-40000 -60000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="1"><coords count="2">-35000 -60000;-25000 -60000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="0"><coords count="2">-20000 -60000;-18000 -60000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="2"><coords count="2">-50000 -55000;-40000 -55000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="3"><coords count="2">-35000 -55000;-25000 -55000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="2"><coords count="2">-20000 -55000;-18000 -55000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="4"><coords count="2">-50000 -50000;-40000 -50000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="5"><coords count="2">-35000 -50000;-25000 -50000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="4"><coords count="2">-20000 -50000;-18000 -50000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="6"><coords count="2">-50000 -45000;-40000 -45000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="7"><coords count="2">-35000 -45000;-25000 -45000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="6"><coords count="2">-20000 -45000;-18000 -45000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+<object type="1" symbol="8"><coords count="2">-35000 -40000;-25000 -40000;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
+</objects></part>
+</parts>
+<templates count="0" first_front_template="0">
+<defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+</templates>
+<view>
+<grid color="#80646464" display="0" alignment="0" additional_rotation="0" unit="0" h_spacing="5" v_spacing="5" h_offset="0" v_offset="0" snapping_enabled="true"/>
+<map_view zoom="3.76691" rotation="0" position_x="-41736" position_y="-56000" grid="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
+</view>
+</barrier>
+<barrier version="6" required="0.6.0">
+<undo/>
+<redo/>
+</barrier>
+</map>

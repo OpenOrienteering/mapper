@@ -46,6 +46,9 @@ public:
 	/** Destroys the HomeScreenController and its children. */
 	~HomeScreenController() override;
 	
+	/** The home screen widgets do not use a status bar. */
+	bool statusBarVisible() override;
+	
 	/** Activates the HomeScreenController for the given main window. */
 	void attach(MainWindow* window) override;
 	
@@ -62,7 +65,7 @@ public slots:
 	/** Sets whether to open the most recently used file on startup. */
 	void setOpenMRUFile(bool state);
 	
-	/** Sets the visiblity of the tip-of-the-day to state. */
+	/** Sets the visibility of the tip-of-the-day to state. */
 	void setTipsVisible(bool state);
 	
 	/** Moves to the tip following the current tip-of-the-day. */

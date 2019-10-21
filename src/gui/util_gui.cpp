@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,7 +28,6 @@
 #include <QByteArray>
 #include <QCheckBox>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QDoubleSpinBox>
 #include <QFileInfo>
@@ -38,6 +37,9 @@
 #include <QLabel>
 #include <QLocale>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPen>
+#include <QPointF>
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QSpacerItem>
@@ -79,26 +81,15 @@ QValidator::State DoubleValidator::validate(QString& input, int& pos) const
 
 namespace Util {
 	
+#if 0
 	// Implementation moved to settings.cpp
 	qreal mmToPixelPhysical(qreal millimeters);
-	
-	// Implementation moved to settings.cpp
 	qreal pixelToMMPhysical(qreal pixels);
-
-	
-	// Implementation moved to settings.cpp
 	qreal mmToPixelLogical(qreal millimeters);
-	
-	// Implementation moved to settings.cpp
 	qreal pixelToMMLogical(qreal pixels);
-	
-	
-	// Implementation moved to settings.cpp
 	bool isAntialiasingRequired(qreal ppi);
-	
-	// Implementation moved to settings.cpp
 	bool isAntialiasingRequired();
-	
+#endif
 	
 	
 	void showHelp(QWidget* dialog_parent, const char* filename_latin1, const char* anchor_latin1)
@@ -216,6 +207,11 @@ namespace Util {
 		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "m", "meters");
 	}
 	
+	QString InputProperties<RotationalDegrees>::unit()
+	{
+		return QCoreApplication::translate("OpenOrienteering::UnitOfMeasurement", "\u00b0", "degrees");
+	}
+	
 	
 	
 	QLabel* Headline::create(const QString& text)
@@ -230,6 +226,31 @@ namespace Util {
 	
 	
 	
+	namespace Marker
+	{
+		void drawCenterMarker(QPainter* painter, const QPointF& center)
+		{
+			const auto saved_hints = painter->renderHints();
+			painter->setRenderHint(QPainter::Antialiasing, Settings::getInstance().getSettingCached(Settings::MapDisplay_Antialiasing).toBool());
+			
+			const auto larger_radius = mmToPixelPhysical(1.1);
+			const auto smaller_radius = larger_radius*3/4;
+			
+			auto pen = QPen(Qt::white);
+			pen.setWidthF(larger_radius - smaller_radius);
+			painter->setPen(pen);
+			painter->setBrush(Qt::NoBrush);
+			painter->drawEllipse(center, smaller_radius, smaller_radius);
+			pen.setColor(Qt::black);
+			painter->setPen(pen);
+			painter->drawEllipse(center, larger_radius, larger_radius);
+			
+			painter->setRenderHints(saved_hints);
+		}
+	}  // namespace Marker
+
+
+
 	QSpacerItem* SpacerItem::create(const QWidget* widget)
 	{
 		const int spacing = widget->style()->pixelMetric(QStyle::PM_LayoutTopMargin);
@@ -241,15 +262,28 @@ namespace Util {
 	{
 		
 #ifndef NDEBUG
+		namespace {
+		
 		/**
-		 * Returns the maximum number of digits in a spinbox which is regarded
-		 * as normal. Exceedings this number in Util::SpinBox::create() will
-		 * print a runtime warning in development builds.
+		 * Counts the number of digits for the given number and locale.
+		 */
+		template <class T>
+		int countDigits(T value, const QLocale& locale)
+		{
+			return locale.toString(value).remove(locale.groupSeparator()).length();
+		}
+		
+		/**
+		 * Returns the maximum number of spinbox digits which is regarded as
+		 * acceptable. Exceeding this number in Util::SpinBox::create() will
+		 * print a warning at runtime.
 		 */
 		constexpr int max_digits()
 		{
 			return 13;
 		}
+		
+		}  // namespace
 #endif
 		
 		QSpinBox* create(int min, int max, const QString &unit, int step)
@@ -264,14 +298,14 @@ namespace Util {
 			if (step > 0)
 				box->setSingleStep(step);
 #ifndef NDEBUG
-			if (box->locale().toString(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min);
-			if (box->locale().toString(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max);
+			if (countDigits(min, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of min=%s",
+				         QByteArray::number(min).constData());
+			if (countDigits(max, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of max=%s",
+				         QByteArray::number(max).constData());
 #endif
 			return box;
 		}
@@ -298,14 +332,14 @@ namespace Util {
 				}
 			}
 	#ifndef NDEBUG
-			if (box->textFromValue(min).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of min="
-			      << box->locale().toString(min, 'f', decimals);
-			if (box->textFromValue(max).remove(box->locale().groupSeparator()).length() > max_digits())
-				qDebug().nospace()
-				  << "WARNING: Util::SpinBox::create() will create a very large widget because of max="
-			      << box->locale().toString(max, 'f', decimals);
+			if (countDigits(min, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of min=%s",
+				         QByteArray::number(min, 'f', decimals).constData());
+			if (countDigits(max, box->locale()) > max_digits())
+				qWarning("Util::SpinBox::create() will create "
+				         "a very large widget because of max=%s",
+				         QByteArray::number(max, 'f', decimals).constData());
 	#endif
 			return box;
 		}

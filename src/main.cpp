@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,26 +21,30 @@
 
 #include <clocale>
 #include <memory>
+// IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
+#include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
 #include <QLatin1String>
+#include <QList>
 #include <QLocale>
 #include <QObject>
+#include <QPalette>
 #include <QPointer>
-#include <QSettings>  // IWYU pragma: keep
+#include <QSettings>
 #include <QString>
 #include <QStringList>
-#include <QStyle>
-#include <QStyleFactory>
 #include <QTranslator>
+#include <QWidget>
 
 #include <mapper_config.h>
 
 #if defined(QT_NETWORK_LIB)
 #  define MAPPER_USE_QTSINGLEAPPLICATION 1
-#  include <QtSingleApplication>  // IWYU pragma: keep
+#  include <QtSingleApplication>
+#  include <QFileInfo>
 #else
 #  define MAPPER_USE_QTSINGLEAPPLICATION 0
 #endif
@@ -50,13 +54,18 @@
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
 
 // IWYU pragma: no_forward_declare QTranslator
 
 using namespace OpenOrienteering;
+
+
+#if defined(Q_OS_WIN32) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
+Q_IMPORT_PLUGIN(PowershellPositionPlugin)
+#endif
 
 
 // From map.h
@@ -78,16 +87,16 @@ void resetActivationWindow()
 	
 	if (!app->closingDown())
 	{
-		const auto old_window = app->activationWindow();
+		const auto* old_window = app->activationWindow();
 		const auto top_level_widgets = app->topLevelWidgets();
-		for (const auto widget : top_level_widgets)
+		for (auto* widget : top_level_widgets)
 		{	
 			auto new_window = qobject_cast<MainWindow*>(widget);
 			if (new_window && new_window != old_window)
 			{
 				app->setActivationWindow(new_window);
 				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
-				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPath);
+				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, QOverload<const QString&>::of(&MainWindow::openPath));
 				break;
 			}
 		}
@@ -105,11 +114,21 @@ int main(int argc, char** argv)
 	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
 	if (qapp.isRunning()) {
 		// Send a message to activate the running app, and optionally open a file
-		qapp.sendMessage(QString::fromUtf8((argc > 1) ? argv[1] : ""));
+		QString filepath = {};
+		if (argc > 1)
+			filepath = QFileInfo(QString::fromLocal8Bit(argv[1])).absoluteFilePath();
+		qapp.sendMessage(filepath);
 		return 0;
 	}
 #else
 	QApplication qapp(argc, argv);
+#endif
+	
+#ifdef Q_OS_ANDROID
+	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "1");
+	// Workaround for Mapper issue GH-1373, QTBUG-72408
+	/// \todo Remove QTBUG-72408 workaround once solved in Qt.
+	qputenv("QT_QPA_NO_TEXT_HANDLES", "1");
 #endif
 	
 	// Load resources
@@ -134,7 +153,7 @@ int main(int argc, char** argv)
 	QLocale::setDefault(QLocale(translation.code()));
 #if defined(Q_OS_MACOS)
 	// Normally this is done in Settings::apply() because it is too late here.
-	// But Mapper 0.6.2/0.6.3 accidently wrote a string instead of a list. This
+	// But Mapper 0.6.2/0.6.3 accidentally wrote a string instead of a list. This
 	// error caused crashes when opening native dialogs (i.e. the open-file dialog!).
 	settings.setValue(QString::fromLatin1("AppleLanguages"), QStringList{ translation.code() });
 #endif
@@ -157,19 +176,9 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
-	QStyle* base_style = nullptr;
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MACOS)
-	if (QApplication::platformName() == QLatin1String("xcb"))
-	{
-		// Use the modern 'fusion' style instead of the 
-		// default "windows" style on X11.
-		base_style = QStyleFactory::create(QString::fromLatin1("fusion"));
-	}
-#endif
-	QApplication::setStyle(new MapperProxyStyle(base_style));
-#if !defined(Q_OS_MACOS)
-	QApplication::setPalette(QApplication::style()->standardPalette());
-#endif
+	auto const palette = QApplication::palette();
+	QApplication::setStyle(new MapperProxyStyle());
+	QApplication::setPalette(palette);
 	
 	// Create first main window
 	auto first_window = new MainWindow();

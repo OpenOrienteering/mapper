@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2017 Kai Pastor
+ *    Copyright 2014, 2017, 2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,10 +28,10 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QWidget;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -171,19 +171,14 @@ public:
 	
 	
 	/**
-	 * Loads the undo steps from the file in the old "native" format.
+	 * Saves the undo steps to the file in xml format.
 	 */
-	bool load(QIODevice* file, int version);
+	void saveUndo(QXmlStreamWriter& xml) const;
 	
 	/**
 	 * Saves the undo steps to the file in xml format.
 	 */
-	void saveUndo(QXmlStreamWriter& xml);
-	
-	/**
-	 * Saves the undo steps to the file in xml format.
-	 */
-	void saveRedo(QXmlStreamWriter& xml);
+	void saveRedo(QXmlStreamWriter& xml) const;
 	
 	/**
 	 * Loads the undo steps from the file in xml format.
@@ -248,7 +243,7 @@ protected:
 	 * method does not remove elements from undo_steps.
 	 * Instead, it replaces steps which are no longer reachable via valid steps,
 	 * or which exceed the max_undo_steps limit, with invalid NoOpUndoStep objects,
-	 * thus releasing the memory which was orginally occupied by now obsolete
+	 * thus releasing the memory which was originally occupied by now obsolete
 	 * undo steps.
 	 */
 	void validateUndoSteps();
@@ -258,7 +253,7 @@ protected:
 	 * 
 	 * This method removes elements from undo_steps which are no longer reachable
 	 * via valid steps, or which exceed the max_undo_steps limit, with invalid
-	 * NoOpUndoStep objects, thus releasing the memory which was orginally
+	 * NoOpUndoStep objects, thus releasing the memory which was originally
 	 * occupied by now obsolete undo steps.
 	 */
 	void validateRedoSteps();
@@ -297,8 +292,6 @@ protected:
 	void updateMapState(const UndoStep* step) const;
 	
 private:
-	bool loadSteps(StepList& steps, QIODevice* file, int version);
-	
 	StepList loadSteps(QXmlStreamReader& xml, SymbolDictionary& symbol_dict) const;
 	
 	/**

@@ -3,7 +3,7 @@
  *    Copyright 2012-2017 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
- *
+ *	
  *    OpenOrienteering is free software: you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
  *    the Free Software Foundation, either version 3 of the License, or
@@ -174,10 +174,10 @@ LineRenderable::LineRenderable(const LineSymbol* symbol, const VirtualPath& virt
 	
 	bool has_curve = false;
 	bool hole = false;
-	bool gap = false;
 	QPainterPath first_subpath;
 	
 	auto i = virtual_path.first_index;
+	bool gap = flags[i].isGapPoint();  // Line may start with a gap
 	path.moveTo(coords[i]);
 	extent = QRectF(coords[i].x(), coords[i].y(), 0.0001, 0.0001);
 	extentIncludeCap(i, half_line_width, false, symbol, virtual_path);
@@ -725,7 +725,7 @@ TextRenderable::TextRenderable(const TextSymbol* symbol, const TextObject* text_
 	QTransform t { 1.0, 0.0, 0.0, 1.0, anchor_x, anchor_y };
 	t.scale(scale_factor, scale_factor);
 	
-	auto rotation_rad = qreal(text_object->getRotation());
+	auto rotation_rad = text_object->getRotation();
 	if (!qIsNull(rotation_rad))
 	{
 		rotation = -qRadiansToDegrees(rotation_rad);

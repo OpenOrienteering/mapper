@@ -125,7 +125,7 @@ public:
 	/**
 	 * @brief Draws a single handle.
 	 */
-	void draw(QPainter* painter, QPointF position, PointHandleType type, PointHandleState state) const;
+	void draw(QPainter* painter, const QPointF& position, PointHandleType type, PointHandleState state) const;
 	
 	/**
 	 * @brief Draws all point handles for the given object.

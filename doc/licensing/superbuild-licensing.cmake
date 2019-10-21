@@ -1,5 +1,5 @@
 #
-#    Copyright 2017 Kai Pastor
+#    Copyright 2017-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -45,6 +45,12 @@ list(APPEND third_party_components
   libpng
   libtiff
 )
+find_package(Qt5Core REQUIRED QUIET)
+if(NOT ${Qt5Core_VERSION} VERSION_LESS 5.9)
+	list(APPEND third_party_components
+	  libpcre2
+	)
+endif()
 if(NOT APPLE)
 	list(APPEND third_party_components
 	  libcurl
@@ -52,14 +58,26 @@ if(NOT APPLE)
 	  libsqlite
 	)
 endif()
-if(NOT ANDROID AND NOT APPLE)
+if(WIN32)
 	list(APPEND third_party_components
 	  zlib
 	)
 endif()
-if(ANDROID OR MINGW)
+if(CMAKE_ANDROID_STL_TYPE MATCHES "gnustl")
 	list(APPEND third_party_components
 	  gnustl
+	)
+elseif(CMAKE_ANDROID_STL_TYPE MATCHES "c\\+\\+")
+	list(APPEND third_party_components
+	  libc++
+	)
+endif()
+if(MINGW)
+	list(APPEND third_party_components
+	  gcc-libs
+	  libiconv
+	  mingw-w64
+	  winpthreads
 	)
 endif()
 
@@ -76,10 +94,11 @@ list(APPEND common_license_names
 )
 
 
-# Map component names to package names
+# Map component names to source package names
 set(package_names
   libcurl:curl
   libexpat:expat
+  libpcre2:pcre2
   libpcre3:pcre3
   libsqlite:sqlite3
   libtiff:tiff

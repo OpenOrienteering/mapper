@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,7 +36,8 @@
 
 class QByteArray;
 class QColor;
-class QIODevice;
+class QDir;
+class QFileInfo;
 class QPainter;
 class QRectF;
 class QTransform;
@@ -51,17 +52,21 @@ class MapView;
 
 
 /**
- * Transformation parameters for non-georeferenced templates.
+ * Transformation parameters for non-georeferenced templates,
+ * transforming template coordinates to map coordinates.
  * 
- * The parameters are to applied in the order
+ * The parameters are applied to painter in the order
  * 1. translate
  * 2. rotate
  * 3. scale.
  * 
  * So this order is also chosen for the member variables, and
- * thus used in list initalization.
+ * thus used in list initialization.
  * 
  * \see Template::applyTemplateTransform()
+ * 
+ * Coordinate transformations use the opposite order for the
+ * same effect.
  */
 struct TemplateTransform
 {
@@ -70,13 +75,15 @@ struct TemplateTransform
 	/// x position in 1/1000 mm
 	qint32 template_y = 0;
 	
-	/// Rotation in radians
+	/// Rotation in radians, a positive rotation is counter-clockwise.
 	double template_rotation = 0.0;
 	
-	/// Scaling in x direction (relative to 1 mm on map)
+	/// Scaling in x direction, smaller than 1 shrinks.
 	double template_scale_x = 1.0;
-	/// Scaling in y direction (relative to 1 mm on map)
+	/// Scaling in y direction, smaller than 1 shrinks.
 	double template_scale_y = 1.0;
+	/// Adjustment to scaling if anisotropy is askew.
+	double template_shear = 0.0;
 	
 	/**
 	 * Explicit implementation of aggregate initialization.
@@ -84,8 +91,8 @@ struct TemplateTransform
 	 * In C++11, there is no aggregate initialization when default initalizers are present.
 	 * \todo Remove when we can use C++14 everywhere.
 	 */
-	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y) noexcept
-	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}
+	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y, double shear = 0.0) noexcept
+	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}, template_shear{shear}
 	{}
 	
 	/**
@@ -97,8 +104,6 @@ struct TemplateTransform
 	TemplateTransform() noexcept = default;
 	
 	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
-	
-	void load(QIODevice* file);
 	
 	void save(QXmlStreamWriter& xml, const QString& role) const;
  	void load(QXmlStreamReader& xml);
@@ -121,13 +126,25 @@ public:
 	 */
 	enum State
 	{
-		/// The template is loaded and ready to be displayed
+		/// The template data is loaded and ready to be displayed.
 		Loaded = 0,
-		/// The template has been unloaded, but can be reloaded if needed
+		/// The template data is not yet loaded or has been unloaded.
+		/// It is assumed to be available, so it can be (re-)loaded if needed.
 		Unloaded,
 		/// A required resource cannot be found (e.g. missing image or font),
-		/// so the template is invalid
+		/// so the template data cannot be loaded.
 		Invalid
+	};
+	
+	/**
+	 * The result of template file lookup attempts.
+	 */
+	enum LookupResult
+	{
+		NotFound       = 0,  ///< File not found at all.
+		FoundInMapDir  = 1,  ///< File name found in the map's directory.
+		FoundByRelPath = 2,  ///< File found by relative path from the map's directory.
+		FoundByAbsPath = 3,  ///< File found by absolute path.
 	};
 	
 	/**
@@ -140,7 +157,7 @@ public:
 	
 protected:	
 	/**
-	 * Initializes the template as "invalid".
+	 * Initializes the template as "Unloaded".
 	 */
 	Template(const QString& path, not_null<Map*> map);
 
@@ -177,18 +194,14 @@ public:
 	/**
 	 * Saves template parameters.
 	 * 
-	 * This method saves as common properties such as filename, transformation,
+	 * This method saves common properties such as filename, transformation,
 	 * adjustment, etc., and it calls saveTypeSpecificTemplateConfiguration for
 	 * saving type-specific parameters (e.g. filtering mode for images).
-	 */
-	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open);
-	
-	/**
-	 * Loads template parameters.
 	 * 
-	 * Returns true if successful
+	 * If a target directory is given via `map_dir`, the relative template
+	 * path is determined for this directory.
 	 */
-	bool loadTemplateConfiguration(not_null<QIODevice*> stream, int version);
+	void saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const QDir* map_dir = nullptr) const;
 	
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
@@ -238,17 +251,32 @@ public:
 	/**
 	 * Tries to find the template file non-interactively.
 	 * 
+	 * Thus function updates the path and name variables, and the template state.
+	 * If successful, changes the state from Invalid to Unloaded if necessary,
+	 * and returns true. Otherwise, changes the state from Unloaded to Invalid
+	 * if necessary, and returns false. (If the state is Loaded, it is left
+	 * unchanged.) It returns an indication of its success.
+	 * 
 	 * This function searches for the template in the following locations:
-	 *  - saved relative position to map file, if available and map_directory is not empty
-	 *  - absolute position of template file
-	 *  - template filename in map_directory, if map_directory not empty
 	 * 
-	 * Returns true if successful.
+	 *  1. The relative path with regard to the map directory, if both are valid.
+	 *     This alternative has precedence because it should always work,
+	 *     especially after coyping or moving a whole working directory on the
+	 *     same computer or to another one.
 	 * 
-	 * If out_found_from_map_dir is given, it is set to true if the template file
-	 * is found using the template filename in the map's directory (3rd alternative).
+	 *  2. The absolute path of the template.
+	 *     This is the most explicit alternative. It works on the same computer
+	 *     when the map file is copied or moved to another location.
+	 * 
+	 *  3. The map directory, if valid, for the filename of the template.
+	 *     This is a fallback for use cases where a map and selected templates
+	 *     are moved to the same flat folder, e.g. when receiving them via
+	 *     individual e-mail attachements.
+	 * 
+	 * \param map_path  Either the full filepath of the map, or an arbitrary
+	 *                  directory which shall be regarded as the map directory.
 	 */
-	bool tryToFindTemplateFile(QString map_directory, bool* out_found_from_map_dir = nullptr);
+	LookupResult tryToFindTemplateFile(const QString& map_path);
 	
 	/**
 	 * Tries to find and load the template file non-interactively.
@@ -260,7 +288,7 @@ public:
 	 * 
 	 * \see tryToFindTemplateFile
 	 */
-	bool tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir = nullptr);
+	bool tryToFindAndReloadTemplateFile(const QString& map_path);
 	
 	
 	/** 
@@ -313,7 +341,6 @@ public:
 	 * Must not be called if the template file is already unloaded, or invalid.
 	 */
 	void unloadTemplateFile();
-	
 	
 	/** 
 	 * Draws the template using the given painter with the given opacity.
@@ -417,12 +444,12 @@ public:
 	
 	// Coordinate transformations between template coordinates and map coordinates
 	
-	inline MapCoordF mapToTemplate(MapCoordF coords) const
+	inline MapCoordF mapToTemplate(const MapCoordF& coords) const
 	{
 		return MapCoordF(map_to_template.get(0, 0) * coords.x() + map_to_template.get(0, 1) * coords.y() + map_to_template.get(0, 2),
 		                 map_to_template.get(1, 0) * coords.x() + map_to_template.get(1, 1) * coords.y() + map_to_template.get(1, 2));
 	}
-	inline MapCoordF mapToTemplateOther(MapCoordF coords) const	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF mapToTemplateOther(const MapCoordF& coords) const	// normally not needed - this uses the other transformation parameters
 	{
 		Q_ASSERT(!is_georeferenced);
 		// SLOW - cache this matrix if needed often
@@ -431,12 +458,12 @@ public:
 		return MapCoordF(map_to_template_other.get(0, 0) * coords.x() + map_to_template_other.get(0, 1) * coords.y() + map_to_template_other.get(0, 2),
 		                 map_to_template_other.get(1, 0) * coords.x() + map_to_template_other.get(1, 1) * coords.y() + map_to_template_other.get(1, 2));
 	}
-	inline MapCoordF templateToMap(QPointF coords) const
+	inline MapCoordF templateToMap(const QPointF& coords) const
 	{
 		return MapCoordF(template_to_map.get(0, 0) * coords.x() + template_to_map.get(0, 1) * coords.y() + template_to_map.get(0, 2),
 		                 template_to_map.get(1, 0) * coords.x() + template_to_map.get(1, 1) * coords.y() + template_to_map.get(1, 2));
 	}
-	inline MapCoordF templateToMapOther(QPointF coords) const	// normally not needed - this uses the other transformation parameters
+	inline MapCoordF templateToMapOther(const QPointF& coords) const	// normally not needed - this uses the other transformation parameters
 	{
 		Q_ASSERT(!is_georeferenced);
 		return MapCoordF(template_to_map_other.get(0, 0) * coords.x() + template_to_map_other.get(0, 1) * coords.y() + template_to_map_other.get(0, 2),
@@ -469,6 +496,9 @@ public:
 	
 	inline const QString& getTemplateFilename() const {return template_file;}
 	
+	/// Changes the path and filename only. Does not do any reloading etc.
+	void setTemplateFileInfo(const QFileInfo& file_info);
+	
 	inline const QString& getTemplatePath() const {return template_path;}
 	/// Changes the path and filename only. Does not do any reloading etc.
 	void setTemplatePath(const QString& value);
@@ -486,15 +516,35 @@ public:
 	void setHasUnsavedChanges(bool value);
 	
 	inline bool isTemplateGeoreferenced() const {return is_georeferenced;}
-	inline void setTemplateGeoreferenced(bool value) {is_georeferenced = value;}
+	
+	/**
+	 * Returns if the template allows the georefencing state to be changed at all.
+	 * 
+	 * The default implementation returns false.
+	 */
+	virtual bool canChangeTemplateGeoreferenced();
+	
+	/**
+	 * Tries to change the usage of georeferencing data.
+	 * 
+	 * If supported by the actual template, this function tries to switch the
+	 * state between non-georeferenced and georeferenced. It returns the final
+	 * state which may be the same as before if the change is not implemented
+	 * or fails for other reasons.
+	 * 
+	 * The default implementation changes nothing, and it just returns the
+	 * current state.
+	 */
+	virtual bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent);
+	
 	
 	// Transformation of non-georeferenced templates
 	
 	MapCoord templatePosition() const;
-	void setTemplatePosition(MapCoord coord);
+	void setTemplatePosition(const MapCoord& coord);
 	
 	MapCoord templatePositionOffset() const;
-	void setTemplatePositionOffset(MapCoord offset);
+	void setTemplatePositionOffset(const MapCoord& offset);
 	void applyTemplatePositionOffset();
 	void resetTemplatePositionOffset();
 	
@@ -508,6 +558,8 @@ public:
 	inline void setTemplateScaleX(double scale_x) {transform.template_scale_x = scale_x; updateTransformationMatrices();}
 	inline double getTemplateScaleY() const {return transform.template_scale_y;}
 	inline void setTemplateScaleY(double scale_y) {transform.template_scale_y = scale_y; updateTransformationMatrices();}
+	inline double getTemplateShear() const {return transform.template_shear;}
+	inline void setTemplateShear(double shear) {transform.template_shear = shear; updateTransformationMatrices();}
 	
 	inline double getTemplateRotation() const {return transform.template_rotation;}
 	inline void setTemplateRotation(double rotation) {transform.template_rotation = rotation; updateTransformationMatrices();}
@@ -541,12 +593,15 @@ public:
 	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
 	
 	/**
-	 * The function which is used to save paths of template files.
+	 * A flag which disables the writing of absolute paths for template files.
 	 * 
 	 * By default, class Template saves absolute paths. This behavior can be
-	 * changed by setting this variable to &Template::getTemplateRelativePath.
+	 * changed by setting this flag to true. This allows to hide local (or
+	 * private) directory names.
+	 * 
+	 * This flag defaults to false.
 	 */
-	static const QString& (Template::* pathForSaving)() const;
+	static bool suppressAbsolutePaths;
 	
 	
 signals:
@@ -572,18 +627,6 @@ protected:
 	 * \todo Rewrite together with duplicate().
 	 */
 	virtual Template* duplicateImpl() const = 0;
-	
-	
-#ifndef NO_NATIVE_FILE_FORMAT
-	/**
-	 * Hook for loading parameters needed by the actual template type.
-	 * 
-	 * The default implementation does nothing.
-	 * 
-	 * Returns true on success.
-	 */
-	virtual bool loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version);
-#endif
 	
 	
 	/** 

@@ -48,8 +48,8 @@ public:
 	void closeEvent(QCloseEvent* event) override;
 	
 public slots:
-	void templateChanged(int index, const Template* temp);
-	void templateDeleted(int index, const Template* temp);
+	void templateChanged(int index, const OpenOrienteering::Template* temp);
+	void templateDeleted(int index, const OpenOrienteering::Template* temp);
 	void valueChanged();
 	
 private:
@@ -58,6 +58,7 @@ private:
 	QLineEdit* scale_x_edit;
 	QLineEdit* scale_y_edit;
 	QLineEdit* rotation_edit;
+	QLineEdit* shear_edit;
 	
 	bool react_to_changes;
 	Template* temp;

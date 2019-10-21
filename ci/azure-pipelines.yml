@@ -1,0 +1,346 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+jobs:
+- job: Codespell
+  pool:
+    vmImage: 'ubuntu-18.04'
+  steps:
+    - template: codespell.yml
+
+
+- job: Release_Notes
+  displayName: Release Notes
+  pool:
+    vmImage: 'ubuntu-18.04'
+  steps:
+    - template: release-notes.yml
+
+
+- job: macOS
+  displayName: macOS (Release)
+  dependsOn: Release_Notes
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - bash: |
+        echo "##vso[task.setVariable variable=ORIG_TEST_RESULTS]${TEST_RESULTS}"
+        echo "##vso[task.setVariable variable=TEST_RESULTS]"
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          -DCMAKE_FIND_FRAMEWORK=LAST
+          -DCMAKE_FIND_APPBUNDLE=LAST
+          -DMapper_CI_ENABLE_GDAL=0
+          -DMapper_CI_ENABLE_POSITIONING=0
+        buildArgs: -j5
+    - bash: |
+        rm -Rf superbuild
+        rm -Rf build/default/openorienteering-mapper-ci/Testing
+        echo "##vso[task.setVariable variable=TEST_RESULTS]${ORIG_TEST_RESULTS}"
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          -DCMAKE_FIND_FRAMEWORK=LAST
+          -DCMAKE_FIND_APPBUNDLE=LAST
+          -DMapper_CI_ENABLE_GDAL=1
+          -DMapper_CI_ENABLE_POSITIONING=1
+        buildArgs: -j5
+    - template: publish.yml
+
+
+- job: Linux_clazy
+  displayName: Linux (RelWithDebInfo, clazy)
+  dependsOn: Codespell
+  condition: succeededOrFailed()
+  variables:
+    IMAGE_NAME: 'ubuntu-18.04'
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    CLAZY_VERSION: 1.5
+    CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
+    CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
+    CLAZY_NO_WERROR: 1
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-ubuntu.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - template: publish.yml
+    - bash: |
+        cd ${BUILD_SOURCESDIRECTORY}/build/source/openorienteering-mapper-ci
+        git diff --name-only | sed -e '/CMakeLists.txt/d;s/\(.*\)/##vso[task.logissue type=error;sourcepath=\1;]Source file was modified during build/' 1>&2
+      failOnStderr: true
+
+
+- job: Linux_Coverage
+  displayName: Linux (Debug, coverage)
+  dependsOn: Linux_clazy
+  condition: succeededOrFailed()
+  variables:
+    IMAGE_NAME: 'ubuntu-18.04'
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    CC: gcc
+    CFLAGS: -fprofile-arcs -ftest-coverage
+    CXX: g++
+    CXXFLAGS: -fprofile-arcs -ftest-coverage
+    LDFLAGS: -fuse-ld=gold
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-ubuntu.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -G Ninja
+          -DCMAKE_BUILD_TYPE=Debug
+          -DMapper_CI_ENABLE_COVERAGE=1
+        buildArgs:
+    - template: publish-coverage.yml
+
+
+- job: Android_armv7
+  displayName: Android arm-v7 (Release)
+  dependsOn: Release_Notes
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: armv7a-linux-androideabi
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-armeabi-v7a-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_arm64
+  displayName: Android arm64 (Release)
+  dependsOn: Android_armv7
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: aarch64-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-arm64-v8a-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_x86
+  displayName: Android x86 (Release)
+  dependsOn: Android_x86_64
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: i686-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-x86-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: Android_x86_64
+  displayName: Android x86_64 (Release)
+  dependsOn: Release_Notes
+  variables:
+    IMAGE_NAME: 'macos-10.13'
+    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    TARGET: x86_64-linux-android
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-macos.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_BUILD_LIBCXX=1
+        buildArgs: -j5
+        toolchainTargets:
+          - $(TARGET)-toolchain-$(openorienteering.superbuild.ndkVersion)
+          - toolchain-info-$(TARGET)
+          - android-libcxx-x86_64-$(openorienteering.superbuild.ndkVersion)
+    - template: publish.yml
+
+
+- job: MinGW_x64_Linux
+  displayName: Windows x64 (Release, MinGW on Linux)
+  #dependsOn: macOS
+  #condition: succeededOrFailed()
+  condition: False
+  variables:
+    IMAGE_NAME: 'ubuntu-18.04'
+    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    TARGET: x86_64-w64-mingw32
+    TARGET_SUFFIX: -$(TARGET)
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-ubuntu.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -DCMAKE_BUILD_TYPE=Release
+          -DENABLE_$(TARGET)=1
+          -D$(TARGET)_INSTALL_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)
+          -D$(TARGET)_INSTALL_PREFIX=/usr
+          -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
+          -DMapper_CI_LICENSING_PROVIDER=OFF
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
+          -Dmingw-w64_FIX_HEADERS=1
+        toolchainTargets:
+          - $(TARGET)-toolchain-1
+          - toolchain-info-$(TARGET)
+
+
+- job: Windows_mingw32_Release
+  displayName: Windows x32 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw32
+    OUTPUT_SUFFIX: '-$(MINGW)'
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-msys2.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -G "MSYS Makefiles"
+          -DCMAKE_BUILD_TYPE=Release
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
+
+
+- job: Windows_mingw64_Release
+  displayName: Windows x64 (Release, MinGW)
+  variables:
+    IMAGE_NAME: 'windows-2019'
+    SUPERBUILD_INSTALL_DIR: 'C:/msys2'
+    MINGW: mingw64
+    OUTPUT_SUFFIX: '-$(MINGW)'
+  pool:
+    vmImage: '$(IMAGE_NAME)'
+  steps:
+    - template: setup-msys2.yml
+    - template: build.yml
+      parameters:
+        cmakeArgs: >
+          -G "MSYS Makefiles"
+          -DCMAKE_BUILD_TYPE=Release
+          -Ddefault_INSTALL_DIR=
+          -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/toolchain
+          -Ddefault_PREFIX_PATH=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild
+          -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(MINGW)/superbuild/share/gdal
+    - template: publish.yml
+

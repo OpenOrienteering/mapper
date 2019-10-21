@@ -25,6 +25,7 @@
 #include <memory>
 
 #include <QObject>
+#include <QString>
 
 #include "tool_base.h"
 

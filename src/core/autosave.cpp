@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014 Kai Pastor
+ *    Copyright 2014, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,12 +18,10 @@
  */
 
 #include "autosave.h"
-#include "autosave_p.h"
 
 #include <QtGlobal>
 #include <QLatin1String>
 #include <QString>
-#include <QTimer>
 #include <QVariant>
 
 #include "settings.h"
@@ -31,20 +29,21 @@
 
 namespace OpenOrienteering {
 
-AutosavePrivate::AutosavePrivate(Autosave& document)
-: document(document)
-, autosave_needed(false)
+AutosavePrivate::AutosavePrivate(Autosave& autosave)
+: document(autosave)
 {
+#ifdef QT_TESTLIB_LIB
+	// The AutosaveTest uses a very short interval. By using a precise timer,
+	// we try to avoid occasional AutosaveTest failures on macOS.
+	autosave_timer.setTimerType(Qt::PreciseTimer);
+#endif
 	autosave_timer.setSingleShot(true);
 	connect(&autosave_timer, &QTimer::timeout, this, &AutosavePrivate::autosave);
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &AutosavePrivate::settingsChanged);
 	settingsChanged();
 }
 
-AutosavePrivate::~AutosavePrivate()
-{
-	// nothing, not inlined
-}
+AutosavePrivate::~AutosavePrivate() = default;
 
 void AutosavePrivate::settingsChanged()
 {
@@ -65,7 +64,7 @@ void AutosavePrivate::settingsChanged()
 	}
 }
 
-bool AutosavePrivate::autosaveNeeded()
+bool AutosavePrivate::autosaveNeeded() const
 {
 	return autosave_needed;
 }
@@ -114,15 +113,12 @@ void AutosavePrivate::autosave()
 // ### Autosave ###
 
 Autosave::Autosave()
-: autosave_controller(new AutosavePrivate(*this))
+: autosave_controller(*this)
 {
-	// Nothing, not inlined
+	// nothing else
 }
 
-Autosave::~Autosave()
-{
-	// Nothing, not inlined
-}
+Autosave::~Autosave() = default;
 
 QString Autosave::autosavePath(const QString &path) const
 {
@@ -131,13 +127,15 @@ QString Autosave::autosavePath(const QString &path) const
 
 void Autosave::setAutosaveNeeded(bool needed)
 {
-	autosave_controller->setAutosaveNeeded(needed);
+	autosave_controller.setAutosaveNeeded(needed);
 }
 
 bool Autosave::autosaveNeeded() const
 {
-	return autosave_controller->autosaveNeeded();
+	return autosave_controller.autosaveNeeded();
 }
 
 
 }  // namespace OpenOrienteering
+
+#include "moc_autosave.cpp"

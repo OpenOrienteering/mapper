@@ -73,7 +73,7 @@ public:
 	length_type clen;
 	
 	
-	/** Default contructor. */
+	/** Default constructor. */
 	constexpr PathCoord() noexcept;
 	
 	/** Copy constructor. */
@@ -83,7 +83,7 @@ public:
 	PathCoord(PathCoord&&) noexcept = default;
 	
 	/** Explicit construction with all member values. */
-	constexpr PathCoord(MapCoordF pos, size_type index, param_type param, length_type clen) noexcept;
+	constexpr PathCoord(const MapCoordF& pos, size_type index, param_type param, length_type clen) noexcept;
 	
 	
 	/** Assignment operator. */
@@ -98,7 +98,7 @@ public:
 	 * 
 	 * @todo Make bezier error configurable
 	 */
-	static length_type bezierError();
+	static double bezierError();
 	
 	
 	/**
@@ -263,7 +263,7 @@ constexpr PathCoord::PathCoord() noexcept
 	// Nothing else
 }
 
-constexpr PathCoord::PathCoord(MapCoordF pos, size_type index, param_type param, PathCoord::length_type clen) noexcept
+constexpr PathCoord::PathCoord(const MapCoordF& pos, size_type index, param_type param, PathCoord::length_type clen) noexcept
  : pos { pos }
  , index { index }
  , param { param }

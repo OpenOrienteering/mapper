@@ -25,6 +25,7 @@
 #include <vector>
 
 #include <QObject>
+#include <QString>
 
 #include "gui/symbols/symbol_properties_widget.h"
 

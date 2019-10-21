@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014, 2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -148,7 +148,7 @@ public:
 	explicit TextObject(const Symbol* symbol = nullptr);
 	
 protected:
-	/** Constructs a TextObject, initalized from the given prototype. */
+	/** Constructs a TextObject, initialized from the given prototype. */
 	explicit TextObject(const TextObject& proto);
 	
 public:
@@ -174,12 +174,12 @@ public:
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
 	 */
-	void setAnchorPosition(MapCoord coord);
+	void setAnchorPosition(const MapCoord& coord);
 	
 	/** Sets the position of the anchor point to coord. 
 	 *  This will drop an existing word wrap box.
 	 */
-	void setAnchorPosition(MapCoordF coord);
+	void setAnchorPosition(const MapCoordF& coord);
 	
 	/** Returns the coordinates of the anchor point or midpoint */
 	MapCoordF getAnchorCoordF() const;
@@ -189,8 +189,8 @@ public:
 	
 	
 	/** Set position and size. 
-	 *  The midpoint is set to (mid_x, mid_y), the size is specifed by the parameters
-	 *  width and heigt.
+	 *  The midpoint is set to (mid_x, mid_y), the size is specified by the parameters
+	 *  width and height.
 	 */
 	void setBox(qint32 mid_x, qint32 mid_y, qreal width, qreal height);
 	
@@ -225,7 +225,7 @@ public:
 	/**
 	 * Scales position and box, with the given scaling center.
 	 */
-	void scale(MapCoordF center, double factor) override;
+	void scale(const MapCoordF& center, double factor) override;
 	
 	/**
 	 * Scales position and box, with the center (0, 0).
@@ -256,16 +256,6 @@ public:
 	/** Returns the vertical alignment of the text.
 	 */ 
 	VerticalAlignment getVerticalAlignment() const;
-		
-	/** Sets the rotation of the text.
-	 *  The rotation is measured in radians. The center of rotation is the anchor point.
-	 */ 
-	void setRotation(float new_rotation);
-	
-	/** Returns the rotation of the text.
-	 *  The rotation is measured in radians. The center of rotation is the anchor point.
-	 */ 
-	float getRotation() const;
 	
 	
 	bool intersectsBox(const QRectF& box) const override;
@@ -298,13 +288,13 @@ public:
 	 *  Returns -1 if the coordinate is not at a text position. 
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(MapCoordF coord, bool find_line_only) const;
+	int calcTextPositionAt(const MapCoordF& coord, bool find_line_only) const;
 	
 	/** Return the index of the character or the line number corresponding to a particular text coordinate.
 	 *  Returns -1 if the coordinate is not at a text position.
 	 *  If find_line_only is true, the line number is returned, otherwise the index of the character.
 	 */
-	int calcTextPositionAt(QPointF coord, bool find_line_only) const;
+	int calcTextPositionAt(const QPointF& coord, bool find_line_only) const;
 
 	/** Returns the line number for a particular index in the text.
 	 */
@@ -322,7 +312,6 @@ private:
 	QString text;
 	HorizontalAlignment h_align;
 	VerticalAlignment v_align;
-	float rotation;	// 0 to 2*M_PI
 	
 	bool has_single_anchor = true;
 	MapCoord size;
@@ -382,12 +371,6 @@ inline
 TextObject::VerticalAlignment TextObject::getVerticalAlignment() const
 {
 	return v_align;
-}
-
-inline
-float TextObject::getRotation() const
-{
-	return rotation;
 }
 
 inline

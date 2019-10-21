@@ -73,13 +73,13 @@ private:
 	};
 	
 public:
-	OCAD8FileImport(QIODevice* stream, Map *map, MapView *view);
+	OCAD8FileImport(const QString& path, Map *map, MapView *view);
 	~OCAD8FileImport() override;
 
 	void setStringEncodings(const char *narrow, const char *wide = "UTF-16LE");
 
 protected:
-	void import(bool load_symbols_only) override;
+	bool importImplementation() override;
 	
 	// Symbol import
 	Symbol *importPointSymbol(const OCADPointSymbol *ocad_symbol);
@@ -153,13 +153,12 @@ class OCAD8FileExport : public Exporter
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OCAD8FileExport)
 	
 public:
-	OCAD8FileExport(QIODevice* stream, Map *map, MapView *view);
+	OCAD8FileExport(const QString& path, const Map* map, const MapView* view);
 	~OCAD8FileExport() override;
 	
-	void doExport() override;
-	
-	
 protected:
+	bool exportImplementation() override;
+	
 	// Determines an offset for moving objects to the OCD drawing area.
 	MapCoord calculateAreaOffset();
 	

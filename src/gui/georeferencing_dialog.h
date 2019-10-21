@@ -25,6 +25,7 @@
 #include <QDialog>
 #include <QObject>
 #include <QScopedPointer>
+#include <QString>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"
@@ -135,7 +136,7 @@ public:
 	/**
 	 * Sets the map coordinates of the reference point
 	 */
-	void setMapRefPoint(MapCoord coords);
+	void setMapRefPoint(const MapCoord& coords);
 	
 	/**
 	 * Activates the "keep projected reference point coordinates on CRS changes" radio button.
@@ -244,7 +245,6 @@ private:
 	bool tool_active;
 	bool declination_query_in_progress;
 	bool grivation_locked;
-	double original_declination;
 	
 	/* GUI elements */
 	CRSSelector* crs_selector;
@@ -310,13 +310,13 @@ public:
 	/** 
 	 * Consumes left and right clicks. They are handled in mouseReleaseEvent.
 	 */
-	bool mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/** 
 	 * Reacts to the user activity by sending the reference point coordinates
 	 * to the dialog (on left click) and reactivating the dialog.
 	 */
-	bool mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget) override;
+	bool mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget) override;
 	
 	/**
 	 * Returns the mouse cursor that will be shown when the tool is active.

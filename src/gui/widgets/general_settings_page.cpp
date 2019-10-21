@@ -37,12 +37,10 @@
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
 #include <QEvent>
-#include <QFlags>
 #include <QFormLayout>
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QLabel>
-#include <QLatin1Char>
 #include <QLatin1String>
 #include <QLineEdit>
 #include <QList>
@@ -62,7 +60,6 @@
 
 #include "settings.h"
 #include "gui/file_dialog.h"
-#include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/home_screen_widget.h"
 #include "gui/widgets/settings_page.h"
@@ -88,7 +85,7 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	language_layout->addWidget(language_box);
 	
 	auto language_file_button = new QToolButton();
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		language_file_button->setVisible(false);
 	}
@@ -170,9 +167,6 @@ GeneralSettingsPage::GeneralSettingsPage(QWidget* parent)
 	encoding_box->setCompleter(completer);
 	layout->addRow(tr("8-bit encoding:"), encoding_box);
 	
-	ocd_importer_check = new QCheckBox(tr("Use the new OCD importer also for version 8 files").replace(QLatin1Char('8'), QString::fromLatin1("6-8")));
-	layout->addRow(ocd_importer_check);
-	
 	updateWidgets();
 	
 	connect(language_file_button, &QAbstractButton::clicked, this, &GeneralSettingsPage::openTranslationFileDialog);
@@ -231,7 +225,6 @@ void GeneralSettingsPage::apply()
 	
 	setSetting(Settings::General_OpenMRUFile, open_mru_check->isChecked());
 	setSetting(Settings::HomeScreen_TipsVisible, tips_visible_check->isChecked());
-	setSetting(Settings::General_NewOcd8Implementation, ocd_importer_check->isChecked());
 	setSetting(Settings::General_RetainCompatiblity, compatibility_check->isChecked());
 	setSetting(Settings::General_SaveUndoRedo, undo_check->isChecked());
 	setSetting(Settings::General_PixelsPerInch, ppi_edit->value());
@@ -305,8 +298,6 @@ void GeneralSettingsPage::updateWidgets()
 	{
 		encoding_box->setCurrentText(QString::fromLatin1(encoding));
 	}
-	
-	ocd_importer_check->setChecked(getSetting(Settings::General_NewOcd8Implementation).toBool());
 }
 
 // slot
@@ -382,7 +373,7 @@ void GeneralSettingsPage::openPPICalculationDialog()
 	double old_screen_diagonal_inches = screen_diagonal_pixels / old_ppi;
 	
 	auto dialog = new QDialog(window(), Qt::WindowSystemMenuHint | Qt::WindowTitleHint);
-	if (MainWindow::mobileMode())
+	if (Settings::mobileModeEnforced())
 	{
 		dialog->setGeometry(window()->geometry());
 	}

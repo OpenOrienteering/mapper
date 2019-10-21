@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016 Kai Pastor
+ *    Copyright 2013, 2016, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,7 +26,9 @@
 #include <QProxyStyle>
 #include <QStyle>
 
+class QIcon;
 class QPainter;
+class QPixmap;
 class QStyleHintReturn;
 class QStyleOption;
 class QWidget;
@@ -75,9 +77,38 @@ public:
 	 * 
 	 * On Android:
 	 * - QStyle::PM_ButtonIconSize is enlarged to QStyle::PM_IndicatorWidth (checkbox size),
-	 * - QStyle::PM_ToolBarIconSize is adjusted (enlarged) towards QStyle::PM_SmallIconSize.
+	 * - QStyle::PM_SmallIconSize is enlarged to the (overwritten) PM_ButtonIconSize
+	 *   for dockwidget related widgets.
+	 * - QStyle::PM_DockWidgetSeparatorExtent and
+	 *   QStyle::PM_SplitterWidth are adjusted (enlarged) towards QStyle::PM_IndicatorWidth.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
+	
+	/**
+	 * Returns adjusted widget sizes.
+	 * 
+	 * On Android:
+	 * - QStyle::CT_SizeGrip is enlarged to the (overwritten) PM_ButtonIconSize.
+	 */
+	QSize sizeFromContents(ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w = nullptr) const override;
+	
+	/**
+	 * Returns adjusted standard icons.
+	 * 
+	 * On Android:
+	 * - For dockwidget buttons, the QCommonStyle implementation is used instead
+	 *   of the QFusionStyle one.
+	 */
+	QIcon standardIcon(StandardPixmap standard_icon, const QStyleOption* option, const QWidget* widget) const override;
+	
+	/**
+	 * Returns adjusted standard pixmaps.
+	 * 
+	 * On Android:
+	 * - For dockwidget buttons, the QCommonStyle implementation is used instead
+	 *   of the QFusionStyle one.
+	 */
+	QPixmap standardPixmap(StandardPixmap standard_icon, const QStyleOption* option, const QWidget* widget) const override;
 	
 	/**
 	 * Returns adjusted style hints.

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,23 +34,6 @@
 
 namespace OpenOrienteering {
 
-namespace {
-
-struct ProcessLine
-{
-	QPainter* painter;
-	void processLine(QPointF a, QPointF b);
-};
-
-void ProcessLine::processLine(QPointF a, QPointF b)
-{
-	painter->drawLine(a, b);
-}
-
-
-}  // namespace
-
-
 // ### MapGrid ###
 
 MapGrid::MapGrid()
@@ -69,30 +52,7 @@ MapGrid::MapGrid()
 	vert_offset = 0;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-const MapGrid& MapGrid::load(QIODevice* file, int version)
-{
-	Q_UNUSED(version);
-	file->read((char*)&snapping_enabled, sizeof(bool));
-	file->read((char*)&color, sizeof(QRgb));
-	int temp;
-	file->read((char*)&temp, sizeof(int));
-	display = (DisplayMode)temp;
-	file->read((char*)&temp, sizeof(int));
-	alignment = (Alignment)temp;
-	file->read((char*)&additional_rotation, sizeof(double));
-	file->read((char*)&temp, sizeof(int));
-	unit = (Unit)temp;
-	file->read((char*)&horz_spacing, sizeof(double));
-	file->read((char*)&vert_spacing, sizeof(double));
-	file->read((char*)&horz_offset, sizeof(double));
-	file->read((char*)&vert_offset, sizeof(double));
-	
-	return *this;
-}
-
-#endif
 
 void MapGrid::save(QXmlStreamWriter& xml) const
 {
@@ -101,12 +61,12 @@ void MapGrid::save(QXmlStreamWriter& xml) const
 	element.writeAttribute(QLatin1String("color"), QColor::fromRgba(color).name(name_format));
 	element.writeAttribute(QLatin1String("display"), display);
 	element.writeAttribute(QLatin1String("alignment"), alignment);
-	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation);
+	element.writeAttribute(QLatin1String("additional_rotation"), additional_rotation, 2);
 	element.writeAttribute(QLatin1String("unit"), unit);
-	element.writeAttribute(QLatin1String("h_spacing"), horz_spacing);
-	element.writeAttribute(QLatin1String("v_spacing"), vert_spacing);
-	element.writeAttribute(QLatin1String("h_offset"), horz_offset);
-	element.writeAttribute(QLatin1String("v_offset"), vert_offset);
+	element.writeAttribute(QLatin1String("h_spacing"), horz_spacing, 1);
+	element.writeAttribute(QLatin1String("v_spacing"), vert_spacing, 1);
+	element.writeAttribute(QLatin1String("h_offset"), horz_offset, 1);
+	element.writeAttribute(QLatin1String("v_offset"), vert_offset, 1);
 	element.writeAttribute(QLatin1String("snapping_enabled"), snapping_enabled);
 }
 
@@ -153,15 +113,16 @@ void MapGrid::draw(QPainter* painter, const QRectF& bounding_box, Map* map, qrea
 	painter->setBrush(Qt::NoBrush);
 	painter->setOpacity(qAlpha(color) / 255.0);
 	
-	ProcessLine process_line;
-	process_line.painter = painter;
+	auto draw_line = std::function<void (const QPointF&, const QPointF&)>{ [painter](const QPointF& p1, const QPointF& p2) {
+		painter->drawLine(p1, p2);
+	} };
 	
 	if (display == AllLines)
-		Util::gridOperation<ProcessLine>(bounding_box, final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, process_line);
+		Util::gridOperation(bounding_box, final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, draw_line);
 	else if (display == HorizontalLines)
-		Util::hatchingOperation<ProcessLine>(bounding_box, final_vert_spacing, final_vert_offset, final_rotation + M_PI / 2, process_line);
-	else // if (display == VeritcalLines)
-		Util::hatchingOperation<ProcessLine>(bounding_box, final_horz_spacing, final_horz_offset, final_rotation, process_line);
+		Util::hatchingOperation(bounding_box, final_vert_spacing, final_vert_offset, final_rotation - M_PI / 2, draw_line);
+	else // if (display == VerticalLines)
+		Util::hatchingOperation(bounding_box, final_horz_spacing, final_horz_offset, final_rotation, draw_line);
 }
 
 void MapGrid::calculateFinalParameters(double& final_horz_spacing, double& final_vert_spacing, double& final_horz_offset, double& final_vert_offset, double& final_rotation, Map* map) const
@@ -199,8 +160,10 @@ MapCoordF MapGrid::getClosestPointOnGrid(MapCoordF position, Map* map) const
 	calculateFinalParameters(final_horz_spacing, final_vert_spacing, final_horz_offset, final_vert_offset, final_rotation, map);
 	
 	position.rotate(final_rotation - M_PI / 2);
-	return MapCoordF(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset,
-					 qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset).rotated(-1 * (final_rotation - M_PI / 2));
+	position.setX(qRound((position.x() - final_horz_offset) / final_horz_spacing) * final_horz_spacing + final_horz_offset);
+	position.setY(qRound((position.y() - final_vert_offset) / final_vert_spacing) * final_vert_spacing + final_vert_offset);
+	position.rotate(M_PI / 2 - final_rotation);
+	return position;
 }
 
 

@@ -93,14 +93,14 @@ void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void TemplateAdjustActivity::drawCross(QPainter* painter, QPoint midpoint, QColor color)
+void TemplateAdjustActivity::drawCross(QPainter* painter, const QPoint& midpoint, QColor color)
 {
 	painter->setPen(color);
 	painter->drawLine(midpoint + QPoint(0, -TemplateAdjustActivity::cross_radius), midpoint + QPoint(0, TemplateAdjustActivity::cross_radius));
 	painter->drawLine(midpoint + QPoint(-TemplateAdjustActivity::cross_radius, 0), midpoint + QPoint(TemplateAdjustActivity::cross_radius, 0));
 }
 
-int TemplateAdjustActivity::findHoverPoint(Template* temp, QPoint mouse_pos, MapWidget* widget, bool& point_src)
+int TemplateAdjustActivity::findHoverPoint(Template* temp, const QPoint& mouse_pos, MapWidget* widget, bool& point_src)
 {
 	bool adjusted = temp->isAdjustmentApplied();
 	const float hover_distance_sq = 10*10;
@@ -268,7 +268,7 @@ TemplateAdjustWidget::~TemplateAdjustWidget() = default;
 
 
 
-void TemplateAdjustWidget::addPassPoint(MapCoordF src, MapCoordF dest)
+void TemplateAdjustWidget::addPassPoint(const MapCoordF& src, const MapCoordF& dest)
 {
 	bool adjusted = temp->isAdjustmentApplied();
 	PassPoint new_point;
@@ -548,7 +548,7 @@ void TemplateAdjustEditTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void TemplateAdjustEditTool::findHoverPoint(QPoint mouse_pos, MapWidget* map_widget)
+void TemplateAdjustEditTool::findHoverPoint(const QPoint& mouse_pos, MapWidget* map_widget)
 {
 	bool adjusted = this->widget->getTemplate()->isAdjustmentApplied();
 	bool new_active_point_is_src;
@@ -601,7 +601,7 @@ const QCursor& TemplateAdjustAddTool::getCursor() const
 	return cursor;
 }
 
-bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget);
 	
@@ -630,7 +630,7 @@ bool TemplateAdjustAddTool::mousePressEvent(QMouseEvent* event, MapCoordF map_co
 	
 	return true;
 }
-bool TemplateAdjustAddTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustAddTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(event);
 	Q_UNUSED(widget);
@@ -675,7 +675,7 @@ void TemplateAdjustAddTool::draw(QPainter* painter, MapWidget* widget)
 	}
 }
 
-void TemplateAdjustAddTool::setDirtyRect(MapCoordF mouse_pos)
+void TemplateAdjustAddTool::setDirtyRect(const MapCoordF& mouse_pos)
 {
 	QRectF rect = QRectF(first_point.x(), first_point.y(), 0, 0);
 	rectInclude(rect, mouse_pos);
@@ -712,7 +712,7 @@ const QCursor& TemplateAdjustMoveTool::getCursor() const
 	return *cursor;
 }
 
-bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (event->button() != Qt::LeftButton)
 		return false;
@@ -743,7 +743,7 @@ bool TemplateAdjustMoveTool::mousePressEvent(QMouseEvent* event, MapCoordF map_c
 	return false;
 }
 
-bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	if (!dragging)
 		findHoverPoint(event->pos(), widget);
@@ -753,7 +753,7 @@ bool TemplateAdjustMoveTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_co
 	return true;
 }
 
-bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(event);
 	
@@ -781,7 +781,7 @@ bool TemplateAdjustMoveTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map
 	return false;
 }
 
-void TemplateAdjustMoveTool::setActivePointPosition(MapCoordF map_coord)
+void TemplateAdjustMoveTool::setActivePointPosition(const MapCoordF& map_coord)
 {
 	bool adjusted = this->widget->getTemplate()->isAdjustmentApplied();
 	
@@ -842,10 +842,8 @@ const QCursor& TemplateAdjustDeleteTool::getCursor() const
 	return cursor;
 }
 
-bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* widget)
 {
-	Q_UNUSED(map_coord);
-	
 	if (event->button() != Qt::LeftButton)
 		return false;
 	
@@ -865,10 +863,8 @@ bool TemplateAdjustDeleteTool::mousePressEvent(QMouseEvent* event, MapCoordF map
 	return true;
 }
 
-bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool TemplateAdjustDeleteTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& /*map_coord*/, MapWidget* widget)
 {
-	Q_UNUSED(map_coord);
-	
 	findHoverPoint(event->pos(), widget);
 	return true;
 }

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "xml_stream_util.h"
 
 #include <algorithm>
+#include <array>
 #include <exception>
 #include <limits>
 #include <stdexcept>
@@ -29,9 +30,8 @@
 #include <QBuffer>
 #include <QByteArray>
 #include <QChar>
-#include <QCoreApplication>
 #include <QIODevice>
-#include <QObject>
+#include <QLatin1Char>
 #include <QScopedValueRollback>
 #include <QTextCodec>
 // IWYU pragma: no_include <qxmlstream.h>
@@ -51,6 +51,23 @@ void writeLineBreak(QXmlStreamWriter& xml)
 		static const QString linebreak = QLatin1String{"\n"};
 		xml.writeCharacters(linebreak);
 	}
+}
+
+
+QString numberToString(double value, int precision)
+{
+	auto number = QString::number(value, 'f', precision);
+	auto i = number.length() - 1;
+	if (number.contains(QLatin1Char('.')))
+	{
+		// Cut off trailing zeros
+		while (i > 0 && number.at(i) == QLatin1Char('0'))
+			--i;
+		if (number.at(i) == QLatin1Char('.'))
+			--i;
+	}
+	number.resize(++i);
+	return number;
 }
 
 
@@ -126,7 +143,7 @@ bool XmlRecoveryHelper::operator() ()
 		}
 		
 		// Restore the XML stream state with the modified data.
-		// We must use a QIODevice again, for later recovery attemts.
+		// We must use a QIODevice again, for later recovery attempts.
 		auto buffer = new QBuffer(stream); // buffer will live as long as the original stream
 		buffer->setData(codec->fromUnicode(data));
 		buffer->open(QIODevice::ReadOnly);
@@ -166,16 +183,22 @@ void XmlElementWriter::write(const MapCoordVector& coords)
 		for (auto& coord : coords)
 			coord.save(xml);
 	}
+	else if (auto* device = xml.device())
+	{
+		// Default: efficient plain text format
+		// Direct UTF-8 writing without unnecessary allocations, escaping or
+		// conversions, but also without handling of device errors.
+		xml.writeCharacters({});  // Finish the start element
+		MapCoord::StringBuffer<char> buffer;
+		for (auto& coord : coords)
+			device->write(coord.toUtf8(buffer));
+	}
 	else
 	{
 		// Default: efficient plain text format
-		//   Note that it is more efficient to concatenate the data
-		// than to call writeCharacters() multiple times.
-		QString data;
-		data.reserve(coords.size() * 16);
+		MapCoord::StringBuffer<QChar> buffer;
 		for (auto& coord : coords)
-			data.append(coord.toString());
-		xml.writeCharacters(data);
+			xml.writeCharacters(coord.toString(buffer));
 	}
 }
 

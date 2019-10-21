@@ -21,6 +21,8 @@
 
 #include "configure_grid_dialog.h"
 
+#include <initializer_list>
+
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
@@ -41,11 +43,9 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QSpacerItem>
-#include <QString>
 #include <QStyle>
 #include <QVariant>
 
-#include "core/georeferencing.h"
 #include "core/map.h"
 #include "gui/util_gui.h"
 #include "util/backports.h"  // IWYU pragma: keep
@@ -80,8 +80,8 @@ ConfigureGridDialog::ConfigureGridDialog(QWidget* parent, const Map& map, bool g
 	true_north_radio = new QRadioButton(tr("Align with true north"));
 	
 	auto rotate_label = new QLabel(tr("Additional rotation (counter-clockwise):"));
-	additional_rotation_edit = Util::SpinBox::create(Georeferencing::declinationPrecision(), -360, +360, trUtf8("°"));
-	additional_rotation_edit->setWrapping(true);
+	additional_rotation_edit = Util::SpinBox::create<Util::RotationalDegrees>();
+	additional_rotation_edit->setRange(-360, +360);
 	
 	
 	unit_combo = new QComboBox();

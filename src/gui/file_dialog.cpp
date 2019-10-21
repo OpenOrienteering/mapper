@@ -43,7 +43,6 @@
 #  include <QByteArray>
 #  include <QLatin1Char>
 #  include <QMetaObject>
-#  include <QObject>
 #  include <QStringList>
 #endif
 
@@ -82,11 +81,7 @@ void FileDialog::adjustParameters(QString& filter, QFileDialog::Options& options
 	using std::end;
 	
 	static const auto separator = QString::fromLatin1(";;");
-#if QT_VERSION >= 0x50400
 	const auto filters = filter.splitRef(separator);
-#else
-	const auto filters = filter.split(separator);
-#endif
 	
 	bool has_long_filters = std::any_of(begin(filters), end(filters), [](auto&& item) {
 		return item.length() > max_filter_length;
@@ -106,11 +101,7 @@ void FileDialog::adjustParameters(QString& filter, QFileDialog::Options& options
 			auto split_1 = item.lastIndexOf(QLatin1Char(')'));
 			new_item.append(item.left(split_1));
 			new_item.append(QLatin1Char(' '));
-#if QT_VERSION >= 0x50400
 			new_item.append(item.mid(split_0+1).toString().toUpper());
-#else
-			new_item.append(item.mid(split_0+1).toUpper());
-#endif
 			new_filters.append(new_item);
 			if (new_item.length() > max_filter_length)
 				has_long_filters = true;

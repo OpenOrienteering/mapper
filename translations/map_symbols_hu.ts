@@ -614,9 +614,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
             <comment>Description of symbol 204.5</comment>
-            <translation type="unfinished">Olyan szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205). 
+            <translation>Olyan szikla, amely nagyobb, mint a szomszédos sziklák (204), vagy egy nagy szikla, amely kisebb, mint a szomszédos nagy sziklák (205). 
 
-Annak érdekében, hogy megkülönböztethető legyenek a szomszédos (30 méternél közelebbi) sziklák (204), amelyek jelentős méretkülönbséggel bírnak, a szimbólum (0,5 mm) a 204 szimbólum nagyításaként használható egyes sziklák esetében. 
+Annak érdekében, hogy megkülönböztethetők legyenek a szomszédos (30 méternél közelebbi) sziklák (204), amelyek jelentős méretkülönbséggel bírnak, a szimbólum (0,5 mm) a 204 szimbólum nagyításaként használható egyes sziklák esetében. 
 
 Annak érdekében, hogy a szomszédos (30 méternél közelebbi) nagyméretű sziklák (205) között megkülönböztethető legyen, jelentős méretkülönbséggel rendelkező 205 szimbólumot (0,5 mm) használhatunk a 205  kicsinyítését szimbólumú sziklát.</translation>
     </message>
@@ -661,8 +661,8 @@ A szomszédos (30 m-nél közelebbi) sziklacsoportok különböző méretének s
         <message>
             <source>To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
             <comment>Description of symbol 207.1</comment>
-            <translation type="unfinished"></translation>
-        </message>
+            <translation>A szomszédos (legfeljebb 30 méteres távolság), a sziklakövek szignifikáns különbséggel való megkülönböztetésének megadásához megengedett, hogy ezt a szimbólumot 20% -kal (élszélesség 0,96 mm) megnöveljük néhány sziklacsoport esetében.</translation>
+    </message>
         <message>
             <source>Boulder field</source>
             <comment>Name of symbol 208</comment>
@@ -5113,11 +5113,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
             <comment>Description of symbol 506.1.1</comment>
-            <translation type="unfinished">Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+            <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
 
-Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességet, a térkép nem városi részeiben,  0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
+Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélesség növelésével, a térkép nem városi részeiben,  0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
-Szín: fekete, barna 0% (fehér), 10%, 20 százalék vagy 30 százalék (városi) / 20%, 30%, 40%, 50% (min. 60 vonal/cm) (nem városi); a szín és a jelsorozat szélesség ugyanaz mint a kikövezett terület jel (529) és a járda vagy a kikövezett területek éle (529.1).</translation>
+Szín: fekete, barna 0% (fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30%, 40%, 50% (min. 60 vonal/cm) (nem városi); a szín és a jelsorozat szélesség ugyanaz mint a kikövezett terület jel (529) és a járda vagy a kikövezett területek éle (529.1).</translation>
     </message>
         <message>
             <source>Unpaved footpath or track, urban, 0.55mm width</source>
@@ -5131,11 +5131,11 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
             <comment>Description of symbol 506.1.2</comment>
-            <translation type="unfinished">Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+            <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
 
-Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességet, a térkép nem városi részeiben,  0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
+Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélesség növelésével, a térkép nem városi részeiben,  0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
-Szín: fekete, barna 0% (fehér), 10%, 20 százalék vagy 30 százalék (városi) / 20%, 30%, 40%, 50% (min. 60 vonal/cm) (nem városi); a szín és a jelsorozat szélesség ugyanaz mint a kikövezett terület jel (529) és a járda vagy a kikövezett területek éle (529.1).</translation>
+Szín: fekete, barna 0% (fehér), 10%, 20 % vagy 30 % (városi) / 20%, 30%, 40%, 50% (min. 60 vonal/cm) (nem városi); a szín és a jelsorozat szélesség ugyanaz mint a kikövezett terület jel (529) és a járda vagy a kikövezett területek éle (529.1).</translation>
     </message>
         <message>
             <source>Unpaved footpath or track, non-urban, minimum width</source>
@@ -5149,7 +5149,7 @@ To improve the legibility of this symbol in non-urban parts of the map, the line
 
 Colour: black, brown 0%(white), 10%, 20% or 30% (urban) / 20%, 30%, 40%, 50% (min.60lines/cm) (non-urban); the colour and the line width shall be the same as for the symbols paved area (529) and step or edge of paved areas (529.1).</source>
             <comment>Description of symbol 506.1.3</comment>
-            <translation type="unfinished">Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
+            <translation>Egy burkolatlan gyalogút vagy a durva járműnyom főleg gyalogosok közlekedésére mindenféle szilárd burkolat nélkül. A barna kitöltés színe ugyanaz lesz a mint, amit a burkolt terület jelhez (529) használnak.
 
 Ennek a jelnek az olvashatóságát javítani lehet, a szaggatott vonal szélességet, a térkép nem városi részeiben,  0.07 mm-ről 0.14 mm-re növelve, és a barna kitöltés színét a városi részekhez viszonyítva 20%-kal sötétítve a térkép nem városi részeiben.
 
@@ -5323,7 +5323,7 @@ A távvezetékek vonalát csak akkor ábrázoljuk, ha azok a versenyző számár
             <translation>Áthatolhatatlan fal &lt;span style=&quot;color:magenta&quot;&gt;(Tilos keresztezni!)&lt;/span&gt;</translation>
     </message>
         <message>
-            <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+            <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -5338,7 +5338,7 @@ A szabályt megszegő versenyzőket ki kell zárni!&lt;/span&gt;</translation>
             <translation>Áthatolhatalan fal , alaprajzzal&lt;span style=&quot;color:magenta&quot;&gt;(Tilos keresztezni&lt;/span&gt;</translation>
     </message>
         <message>
-            <source>An impassable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
+            <source>An impassable wall or retaining wall is a wall, which fulfill the function of an enclosure or solid barrier. It shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor due to its height. Very wide impassable walls shall be drawn in plan shape and represented with the symbol building (526.1).
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable wall!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
@@ -9112,7 +9112,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possiblity of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+            <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
             <comment>Description of symbol 813</comment>
             <translation type="unfinished"></translation>
         </message>

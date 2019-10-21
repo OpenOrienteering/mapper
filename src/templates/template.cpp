@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,7 @@
 
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDir>
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPainter>
@@ -93,35 +94,21 @@ Q_STATIC_ASSERT(std::is_nothrow_move_assignable<TemplateTransform>::value);
 // static
 TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexcept
 {
-	const auto scale_x  = std::hypot(qt.m11(), qt.m12());
-	const auto scale_y  = std::hypot(qt.m21(), qt.m22());
-	const auto rotation = std::atan2(qt.m21() / scale_y, qt.m11() / scale_x);
+	const auto rotation = std::atan2(qt.m21()-qt.m12(), qt.m11()+qt.m22());
+
+	// Determine the non-rotating, pure scaling aspect.
+	// Note TemplateTransform rotation is opposite to QTransform.
+	// This rotation makes the shear components equal.
+	QTransform scaling = qt * (qFuzzyIsNull(rotation) ? QTransform() : QTransform().rotateRadians(rotation));
 	return { qRound(1000 * qt.m31()),
 	         qRound(1000 * qt.m32()),
 	         rotation,
-	         scale_x,
-	         scale_y };
+	         scaling.m11(),
+	         scaling.m22(),
+	         (scaling.m12()+scaling.m21())/2 };
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-
-void TemplateTransform::load(QIODevice* file)
-{
-	qint64 tmp;
-	file->read((char*)&tmp, sizeof(qint64));
-	template_x = tmp;
-	file->read((char*)&tmp, sizeof(qint64));
-	template_y = tmp;
-	
-	static_assert(sizeof(qint64) == sizeof(double),
-	              "Legacy file format relies on sizeof(qint64) == sizeof(double)");
-	file->read((char*)&template_scale_x, sizeof(qint64));
-	file->read((char*)&template_scale_y, sizeof(qint64));
-	file->read((char*)&template_rotation, sizeof(qint64));
-}
-
-#endif
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 {
@@ -131,6 +118,8 @@ void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
 	xml.writeAttribute(QString::fromLatin1("y"), QString::number(template_y));
 	xml.writeAttribute(QString::fromLatin1("scale_x"), QString::number(template_scale_x));
 	xml.writeAttribute(QString::fromLatin1("scale_y"), QString::number(template_scale_y));
+	if (!qFuzzyIsNull(template_shear))
+		xml.writeAttribute(QString::fromLatin1("shear"), QString::number(template_shear));
 	xml.writeAttribute(QString::fromLatin1("rotation"), QString::number(template_rotation));
 	xml.writeEndElement(/*transformation*/);
 }
@@ -147,16 +136,20 @@ void TemplateTransform::load(QXmlStreamReader& xml)
 	template_y = coord.nativeY();
 	template_scale_x = element.attribute<double>(QLatin1String("scale_x"));
 	template_scale_y = element.attribute<double>(QLatin1String("scale_y"));
+	template_shear = element.attribute<double>(QLatin1String("shear")); // 0 if absent
 	template_rotation = element.attribute<double>(QLatin1String("rotation"));
 }
 
 bool operator==(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
 {
 	return lhs.template_x == rhs.template_x
+	        && lhs.template_y == rhs.template_y
 	        && (qFuzzyCompare(lhs.template_rotation, rhs.template_rotation)
 	            || (qIsNull(lhs.template_rotation) && qIsNull(rhs.template_rotation)))
 	        && qFuzzyCompare(lhs.template_scale_x, rhs.template_scale_x)
-	        && qFuzzyCompare(lhs.template_scale_y, rhs.template_scale_y);
+	        && qFuzzyCompare(lhs.template_scale_y, rhs.template_scale_y)
+	        && (qFuzzyCompare(lhs.template_shear, rhs.template_shear)
+	            || (qFuzzyIsNull(lhs.template_shear) && qFuzzyIsNull(rhs.template_shear)));
 }
 
 bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noexcept
@@ -168,7 +161,8 @@ bool operator!=(const TemplateTransform& lhs, const TemplateTransform& rhs) noex
 
 // ### Template ###
 
-decltype(Template::pathForSaving) Template::pathForSaving = &Template::getTemplatePath;
+bool Template::suppressAbsolutePaths = false;
+
 
 Template::Template(const QString& path, not_null<Map*> map)
  : map(map)
@@ -235,66 +229,27 @@ void Template::setErrorString(const QString &text)
 	error_string = text;
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-bool Template::loadTemplateConfiguration(not_null<QIODevice*> stream, int version)
-{
-	loadString(stream, template_file);
-	
-	if (version >= 27)
-		stream->read((char*)&is_georeferenced, sizeof(bool));
-	else
-		is_georeferenced = false;
-	
-	if (!is_georeferenced)
-	{
-		transform.load(stream);
-		other_transform.load(stream);
-		
-		stream->read((char*)&adjusted, sizeof(bool));
-		stream->read((char*)&adjustment_dirty, sizeof(bool));
-		
-		int num_passpoints;
-		stream->read((char*)&num_passpoints, sizeof(int));
-		passpoints.resize(num_passpoints);
-		for (int i = 0; i < num_passpoints; ++i)
-			passpoints[i].load(stream, version);
-		
-		map_to_template.load(stream);
-		template_to_map.load(stream);
-		template_to_map_other.load(stream);
-		
-		stream->read((char*)&template_group, sizeof(int));
-	}
-	
-	if (version >= 27)
-	{
-		if (!loadTypeSpecificTemplateConfiguration(stream, version))
-			return false;
-	}
-	else
-	{
-		// Adjust old file format version's templates
-		is_georeferenced = qstrcmp(getTemplateType(), "TemplateTrack") == 0;
-		if (qstrcmp(getTemplateType(), "TemplateImage") == 0)
-		{
-			transform.template_scale_x *= 1000.0 / map->getScaleDenominator();
-			transform.template_scale_y *= 1000.0 / map->getScaleDenominator();
-			updateTransformationMatrices();
-		}
-	}
-	return true;
-}
 
-#endif
-
-void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
+void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const QDir* map_dir) const
 {
 	xml.writeStartElement(QString::fromLatin1("template"));
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
-	xml.writeAttribute(QString::fromLatin1("path"), (this->*pathForSaving)());
-	xml.writeAttribute(QString::fromLatin1("relpath"), getTemplateRelativePath());
+	auto primary_path = getTemplatePath();
+	auto relative_path = getTemplateRelativePath();
+	if (getTemplateState() != Invalid)
+	{
+		if (map_dir)
+			relative_path = map_dir->relativeFilePath(primary_path);
+		else if (relative_path.isEmpty())
+			relative_path = getTemplateFilename();
+	}
+	if (suppressAbsolutePaths && QFileInfo(primary_path).isAbsolute())
+		primary_path = relative_path;
+	xml.writeAttribute(QString::fromLatin1("path"), primary_path);
+	xml.writeAttribute(QString::fromLatin1("relpath"), relative_path);
+	
 	if (template_group)
 	{
 		xml.writeAttribute(QString::fromLatin1("group"), QString::number(template_group));
@@ -306,7 +261,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	}
 	else
 	{
-		ScopedOffsetReversal no_offset{*this};
+		ScopedOffsetReversal no_offset{*const_cast<Template*>(this)};
 		
 		xml.writeStartElement(QString::fromLatin1("transformations"));
 		if (adjusted)
@@ -335,7 +290,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open)
 	{
 		// Save the template itself (e.g. image, gpx file, etc.)
 		saveTemplateFile();
-		setHasUnsavedChanges(false); // TODO: Error handling?
+		const_cast<Template*>(this)->setHasUnsavedChanges(false); // TODO: Error handling?
 	}
 	xml.writeEndElement(/*template*/);
 }
@@ -533,56 +488,70 @@ bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
 
 
 
-bool Template::tryToFindTemplateFile(QString map_directory, bool* out_found_in_map_dir)
+Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 {
-	if (!map_directory.isEmpty() && !map_directory.endsWith(QLatin1Char('/')))
-		map_directory.append(QLatin1Char('/'));
+	// This function normally sets the state either to Invalid or Unloaded.
+	// However, the Loaded state must not be changed here because this would
+	// cause inconsistencies with other data held by templates in this state.
+	auto const set_state = [this](auto proposed_state) {
+		if (template_state != Loaded)
+			template_state = proposed_state;
+	};
 	
-	if (out_found_in_map_dir)
-		*out_found_in_map_dir = false;
+	// Determining the directory from a file or directory
+	auto const dir = [](const QString& path) -> QDir {
+		auto const path_info = QFileInfo(path);
+		if (path_info.isFile())
+			return path_info.dir();
+		if (path_info.isDir())
+			return { path };
+		return {};
+	};
 	
-	const QString old_absolute_path = getTemplatePath();
-	
-	// First try relative path (if this information is available)
-	if (!getTemplateRelativePath().isEmpty() && !map_directory.isEmpty())
+	// 1. The relative path with regard to the map directory, if both are valid
+	auto const rel_path = getTemplateRelativePath();
+	if (!rel_path.isEmpty() && !map_path.isEmpty())
 	{
-		auto path = QString{ map_directory + getTemplateRelativePath() };
-		if (QFileInfo::exists(path))
+		auto const abs_path_info = QFileInfo(dir(map_path).absoluteFilePath(rel_path));
+		if (abs_path_info.isFile())
 		{
-			setTemplatePath(path);
-			return true;
+			setTemplateFileInfo(abs_path_info);
+			set_state(Unloaded);
+			return FoundByRelPath;
 		}
 	}
 	
-	// Second try absolute path
-	if (QFileInfo::exists(template_path))
+	// 2. The absolute path of the template
+	auto const template_path_info = QFileInfo(getTemplatePath());
+	if (template_path_info.isFile())
 	{
-		return true;
+		/* setTemplateFileInfo(template_path_info); */
+		set_state(Unloaded);
+		return FoundByAbsPath;
 	}
 	
-	// Third try the template filename in the map's directory
-	if (!map_directory.isEmpty())
+	// 3. The map directory, if valid, for the filename of the template
+	auto const filename = getTemplateFilename();
+	if (!filename.isEmpty() && !map_path.isEmpty())
 	{
-		auto path = QString{ map_directory + getTemplateFilename() };
-		if (QFileInfo::exists(path))
+		auto const abs_path_info = QFileInfo(dir(map_path).absoluteFilePath(filename));
+		if (abs_path_info.isFile())
 		{
-			setTemplatePath(path);
-			if (out_found_in_map_dir)
-				*out_found_in_map_dir = true;
-			return true;
+			setTemplateFileInfo(abs_path_info);
+			set_state(Unloaded);
+			return FoundInMapDir;
 		}
 	}
 	
-	setTemplatePath(old_absolute_path);
-	template_state = Invalid;
+	set_state(Invalid);
 	setErrorString(tr("No such file."));
-	return false;
+	return NotFound;
 }
 
 
-bool Template::tryToFindAndReloadTemplateFile(QString map_directory, bool* out_loaded_from_map_dir)
+bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
-	return tryToFindTemplateFile(map_directory, out_loaded_from_map_dir)
+	return tryToFindTemplateFile(map_path) != NotFound
 	       && loadTemplateFile(false);
 }
 
@@ -659,11 +628,38 @@ void Template::unloadTemplateFile()
 	emit templateStateChanged();
 }
 
+
+// virtual
+bool Template::canChangeTemplateGeoreferenced()
+{
+	return false;
+}
+
+// virtual
+bool Template::trySetTemplateGeoreferenced(bool /*value*/, QWidget* /*dialog_parent*/)
+{
+	return is_georeferenced;
+}
+
+
 void Template::applyTemplateTransform(QPainter* painter) const
 {
 	painter->translate(transform.template_x / 1000.0, transform.template_y / 1000.0);
+	// Rotate counter-clockwise.
 	painter->rotate(-transform.template_rotation * (180 / M_PI));
-	painter->scale(transform.template_scale_x, transform.template_scale_y);
+
+	// Scale
+	if (qFuzzyIsNull(transform.template_shear))
+	{
+		painter->scale(transform.template_scale_x, transform.template_scale_y);
+	}
+	else
+	{
+		QTransform scaling(transform.template_scale_x, transform.template_shear,
+		                   transform.template_shear, transform.template_scale_y,
+		                   0, 0);
+		painter->setTransform(scaling, true);
+	}
 }
 
 QRectF Template::getTemplateExtent() const
@@ -806,12 +802,17 @@ void Template::setOtherTransform(const TemplateTransform& transform)
 	other_transform = transform;
 }
 
+void Template::setTemplateFileInfo(const QFileInfo& file_info)
+{
+	template_path = file_info.canonicalFilePath();
+	if (template_path.isEmpty())
+		template_path = file_info.path();
+	template_file = file_info.fileName();
+}
+
 void Template::setTemplatePath(const QString& value)
 {
-	template_path = value;
-	if (! QFileInfo(value).canonicalFilePath().isEmpty())
-		template_path = QFileInfo(value).canonicalFilePath();
-	template_file = QFileInfo(value).fileName();
+	setTemplateFileInfo(QFileInfo(value));
 }
 
 void Template::setHasUnsavedChanges(bool value)
@@ -891,15 +892,6 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 }
 
 
-#ifndef NO_NATIVE_FILE_FORMAT
-bool Template::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	Q_UNUSED(stream);
-	Q_UNUSED(version);
-	return true;
-}
-#endif
-
 
 void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
@@ -928,7 +920,7 @@ MapCoord Template::templatePosition() const
 }
 
 
-void Template::setTemplatePosition(MapCoord coord)
+void Template::setTemplatePosition(const MapCoord& coord)
 {
 	transform.template_x = coord.nativeX();
 	transform.template_y = coord.nativeY();
@@ -940,7 +932,7 @@ MapCoord Template::templatePositionOffset() const
 	return accounted_offset;
 }
 
-void Template::setTemplatePositionOffset(MapCoord offset)
+void Template::setTemplatePositionOffset(const MapCoord& offset)
 {
 	const auto move = accounted_offset - offset;
 	if (move != MapCoord{})
@@ -955,8 +947,11 @@ void Template::applyTemplatePositionOffset()
 {
 	QTransform t;
 	t.rotate(-qRadiansToDegrees(getTemplateRotation()));
-	t.scale(getTemplateScaleX(), getTemplateScaleY());
-	setTemplatePosition(templatePosition() - MapCoord{t.map(QPointF{accounted_offset})});
+	const double shear = getTemplateShear();
+	QTransform scaling(getTemplateScaleX(), shear,
+	                   shear, getTemplateScaleY(),
+	                   0, 0);
+	setTemplatePosition(templatePosition() - MapCoord{(scaling*t).map(QPointF{accounted_offset})});
 }
 
 void Template::resetTemplatePositionOffset()
@@ -967,16 +962,17 @@ void Template::resetTemplatePositionOffset()
 
 void Template::updateTransformationMatrices()
 {
+	double shear = getTemplateShear();
 	double cosr = cos(-transform.template_rotation);
 	double sinr = sin(-transform.template_rotation);
 	double scale_x = getTemplateScaleX();
 	double scale_y = getTemplateScaleY();
 	
 	template_to_map.setSize(3, 3);
-	template_to_map.set(0, 0, scale_x * cosr);
-	template_to_map.set(0, 1, scale_y * (-sinr));
-	template_to_map.set(1, 0, scale_x * sinr);
-	template_to_map.set(1, 1, scale_y * cosr);
+	template_to_map.set(0, 0, scale_x * cosr -   shear * sinr);
+	template_to_map.set(0, 1,   shear * cosr - scale_y * sinr);
+	template_to_map.set(1, 0, scale_x * sinr +   shear * cosr);
+	template_to_map.set(1, 1,   shear * sinr + scale_y * cosr);
 	template_to_map.set(0, 2, transform.template_x / 1000.0);
 	template_to_map.set(1, 2, transform.template_y / 1000.0);
 	template_to_map.set(2, 0, 0);

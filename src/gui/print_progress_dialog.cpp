@@ -70,7 +70,7 @@ void PrintProgressDialog::setProgress(int value, const QString& status)
 		show();
 	}
 	
-	QApplication::processEvents(); // Drawing and Cancel events
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */); // Drawing and Cancel events
 }
 
 

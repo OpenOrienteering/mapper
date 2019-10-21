@@ -48,7 +48,7 @@ public:
 	 * All initializations apart from setting variables like the activity object
 	 * should be done here instead of in the constructor, as at the time init()
 	 * is called, the old activity was properly destroyed
-	 * (including reseting the activity drawing).
+	 * (including resetting the activity drawing).
 	 */
 	virtual void init();
 	

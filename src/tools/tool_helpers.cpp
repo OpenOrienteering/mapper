@@ -110,8 +110,12 @@ void ConstrainAngleToolHelper::addAngle(qreal angle)
 
 void ConstrainAngleToolHelper::addAngles(qreal base, qreal stepping)
 {
-	for (double angle = base; angle < base + 2*M_PI; angle += stepping)
-		addAngle(angle);
+	auto const count = qFloor(2*M_PI / stepping);
+	for (auto i = 0; i < count; ++i)
+	{
+		addAngle(base);
+		base += stepping;
+	}
 }
 
 void ConstrainAngleToolHelper::addAnglesDeg(qreal base, qreal stepping)
@@ -323,7 +327,7 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 	return filter;
 }
 
-MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
+MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
 	auto snap_distance = widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx() / 1000);
 	auto closest_distance_sq = float(snap_distance * snap_distance); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
@@ -366,7 +370,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 			}
 			else if (object->getType() == Object::Path)
 			{
-				PathObject* path = object->asPath();
+				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
 					PathCoord path_coord;
@@ -419,7 +423,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 		if (distance_sq < closest_distance_sq)
 		{
-			closest_distance_sq = distance_sq;
+			// unused: closest_distance_sq = distance_sq;
 			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = nullptr;
@@ -440,7 +444,7 @@ MapCoord SnappingToolHelper::snapToObject(MapCoordF position, MapWidget* widget,
 	return result_position;
 }
 
-bool SnappingToolHelper::snapToDirection(MapCoordF position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position)
+bool SnappingToolHelper::snapToDirection(const MapCoordF& position, MapWidget* widget, ConstrainAngleToolHelper* angle_tool, MapCoord* out_snap_position)
 {
 	// As getting a direction from the map grid is not supported, remove grid from filter
 	int filter_grid = filter & GridCorners;
@@ -509,7 +513,7 @@ void SnappingToolHelper::draw(QPainter* painter, MapWidget* widget)
 		
 	case ObjectPaths:
 		handle_type = PointHandles::NormalHandle;
-		// fall through
+		Q_FALLTHROUGH();
 	default:
 		point_handles.draw(painter, widget->mapToViewport(snap_mark), handle_type, PointHandles::NormalHandleState);
 	}

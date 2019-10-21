@@ -20,7 +20,13 @@
 
 #include "gps_track_recorder.h"
 
+#include <QDateTime>
+#include <QtGlobal>
+
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_view.h"
+#include "core/track.h"
 #include "gui/map/map_widget.h"
 #include "sensors/gps_display.h"
 #include "templates/template_track.h"
@@ -54,13 +60,12 @@ GPSTrackRecorder::GPSTrackRecorder(GPSDisplay* gps_display, TemplateTrack* targe
 
 void GPSTrackRecorder::newPosition(double latitude, double longitude, double altitude, float accuracy)
 {
-	TrackPoint new_point(
+	const auto new_point = TrackPoint {
 		LatLon(latitude, longitude),
 		QDateTime::currentDateTimeUtc(),
-		altitude,
-		-1,
+		static_cast<float>(altitude),
 		accuracy
-	);
+	};
 	target_template->getTrack().appendTrackPoint(new_point);
 	target_template->setHasUnsavedChanges(true);
 	track_changed_since_last_update = true;

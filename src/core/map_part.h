@@ -86,11 +86,6 @@ public:
 	
 	
 	/**
-	 * Loads the map part in the old "native" format from the given file.
-	 */
-	bool load(QIODevice* file, int version, Map* map);
-	
-	/**
 	 * Saves the map part in xml format to the given stream.
 	 */
 	void save(QXmlStreamWriter& xml) const;
@@ -189,14 +184,14 @@ public:
 	/**
 	 * @see Map::findObjectsAt().
 	 */
-	void findObjectsAt(MapCoordF coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
 	/**
 	 * @see Map::findObjectsAtBox().
 	 */
-	void findObjectsAtBox(MapCoordF corner1, MapCoordF corner2,
+	void findObjectsAtBox(const MapCoordF& corner1, const MapCoordF& corner2,
 		bool include_hidden_objects, bool include_protected_objects,
 		std::vector<Object*>& out) const;
 	
@@ -228,6 +223,12 @@ public:
 	 * @copybrief   Map::applyOnMatchingObjects()
 	 * @copydetails Map::applyOnMatchingObjects()
 	 */
+	void applyOnMatchingObjects(const std::function<void (const Object*)>& operation, const std::function<bool (const Object*)>& condition) const;
+	
+	/**
+	 * @copybrief   Map::applyOnMatchingObjects()
+	 * @copydetails Map::applyOnMatchingObjects()
+	 */
 	void applyOnMatchingObjects(const std::function<void (Object*, MapPart*, int)>& operation, const std::function<bool (const Object*)>& condition);
 	
 	/**
@@ -235,6 +236,12 @@ public:
 	 * @copydetails Map::applyOnAllObjects()
 	 */
 	void applyOnAllObjects(const std::function<void (Object*)>& operation);
+	
+	/**
+	 * @copybrief   Map::applyOnAllObjects()
+	 * @copydetails Map::applyOnAllObjects()
+	 */
+	void applyOnAllObjects(const std::function<void (const Object*)>& operation) const;
 	
 	/**
 	 * @copybrief   Map::applyOnAllObjects()

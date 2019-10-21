@@ -5,8 +5,8 @@ PRETTY_DATE=$(date +%Y-%m-%d)
 
 for I in $SUBDIR/*.h $SUBDIR/*.cpp
 do
-	sed -f patches/headers.sed -i "$I"
-	sed -e "s/%DATE%/$PRETTY_DATE/" -i "$I"
+	sed -f patches/headers.sed -i -- "$I" && rm -f "$I--"
+	sed -e "s/%DATE%/$PRETTY_DATE/" -i -- "$I" && rm -f "$I--"
 done
 
 cd $SUBDIR

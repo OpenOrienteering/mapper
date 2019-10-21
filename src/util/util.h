@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014, 2015 Kai Pastor
+ *    Copyright 2012, 2014, 2015, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_UTIL_H
 
 #include <cmath>
+#include <functional>
 #include <type_traits>
 
 #include <QtGlobal>
@@ -30,10 +31,8 @@
 #include <QPointF>
 #include <QRectF>
 
-class QIODevice;
 class QObject;
 class QRect;
-class QString;
 // IWYU pragma: no_forward_declare QPointF
 // IWYU pragma: no_forward_declare QRectF
 
@@ -64,6 +63,7 @@ namespace std
 
 namespace OpenOrienteering {
 
+class MapCoord;
 class MapCoordF;
 
 
@@ -105,14 +105,14 @@ inline double fmod_pos(double x, double y)
  * 
  * \see QRectF::isValid()
  */
-void rectInclude(QRectF& rect, QPointF point);
+void rectInclude(QRectF& rect, const QPointF& point);
 
 /**
  * Enlarges the rect to include the given point.
  * 
  * If the given rect isn't valid, width and height are set to a small positive value.
  */
-void rectIncludeSafe(QRectF& rect, QPointF point);
+void rectIncludeSafe(QRectF& rect, const QPointF& point);
 
 /**
  * Enlarges the rect to include the given other_rect.
@@ -161,150 +161,68 @@ double parameterOfPointOnLine(double x0, double y0, double dx, double dy, double
 bool isPointOnSegment(const MapCoordF& seg_start, const MapCoordF& seg_end, const MapCoordF& point);
 
 
-/** Helper functions to save a string to a file and load it again. */
-void loadString(QIODevice* file, QString& str);
-
-
 // TODO: Refactor: put remaining stuff into this namespace, too
 namespace Util
 {
-	/** See Util::gridOperation(). This function handles only parallel lines. */
-	template<typename T>
-	void hatchingOperation(const QRectF& extent, double spacing, double offset, double rotation, T& processor)
-	{
-		// Make rotation unique
-		rotation = fmod(1.0 * rotation, M_PI);
-		if (rotation < 0)
-			rotation = M_PI + rotation;
-		Q_ASSERT(rotation >= 0 && rotation <= M_PI);
-		
-		if (qAbs(rotation - M_PI/2) < 0.0001)
-		{
-			// Special case: vertical lines
-			double first = offset + ceil((extent.left() - offset) / (spacing)) * spacing;
-			for (double cur = first; cur < extent.right(); cur += spacing)
-			{
-				processor.processLine(QPointF(cur, extent.top()), QPointF(cur, extent.bottom()));
-			}
-		}
-		else if (qAbs(rotation - 0) < 0.0001)
-		{
-			// Special case: horizontal lines
-			double first = offset + ceil((extent.top() - offset) / (spacing)) * spacing;
-			for (double cur = first; cur < extent.bottom(); cur += spacing)
-			{
-				processor.processLine(QPointF(extent.left(), cur), QPointF(extent.right(), cur));
-			}
-		}
-		else
-		{
-			// General case
-			double xfactor = 1.0 / sin(rotation);
-			double yfactor = 1.0 / cos(rotation);
-			
-			double dist_x = xfactor * spacing;
-			double dist_y = yfactor * spacing;
-			double offset_x = xfactor * offset;
-			double offset_y = yfactor * offset;
-			
-			if (rotation < M_PI/2)
-			{
-				// Start with the upper left corner
-				offset_x += (-extent.top()) / tan(rotation);
-				offset_y -= extent.left() * tan(rotation);
-				double start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-				double start_y = extent.top();
-				double end_x = extent.left();
-				double end_y = offset_y + ceil((extent.y() - offset_y) / dist_y) * dist_y;
-				
-				do
-				{
-					// Correct coordinates
-					if (start_x > extent.right())
-					{
-						start_y += ((start_x - extent.right()) / dist_x) * dist_y;
-						start_x = extent.right();
-					}
-					if (end_y > extent.bottom())
-					{
-						end_x += ((end_y - extent.bottom()) / dist_y) * dist_x;
-						end_y = extent.bottom();
-					}
-					
-					if (start_y > extent.bottom())
-						break;
-					
-					// Process the line
-					processor.processLine(QPointF(start_x, start_y), QPointF(end_x, end_y));
-					
-					// Move to next position
-					start_x += dist_x;
-					end_y += dist_y;
-				} while (true);
-			}
-			else
-			{
-				// Start with left lower corner
-				offset_x += (-extent.bottom()) / tan(rotation);
-				offset_y -= extent.x() * tan(rotation);
-				double start_x = offset_x + ceil((extent.x() - offset_x) / dist_x) * dist_x;
-				double start_y = extent.bottom();
-				double end_x = extent.x();
-				double end_y = offset_y + ceil((extent.bottom() - offset_y) / dist_y) * dist_y;
-				
-				do
-				{
-					// Correct coordinates
-					if (start_x > extent.right())
-					{
-						start_y += ((start_x - extent.right()) / dist_x) * dist_y;
-						start_x = extent.right();
-					}
-					if (end_y < extent.y())
-					{
-						end_x += ((end_y - extent.y()) / dist_y) * dist_x;
-						end_y = extent.y();
-					}
-					
-					if (start_y < extent.y())
-						break;
-					
-					// Process the line
-					processor.processLine(QPointF(start_x, start_y), QPointF(end_x, end_y));
-					
-					// Move to next position
-					start_x += dist_x;
-					end_y += dist_y;
-				} while (true);
-			}
-		}
-	}
-	
-	/**
-	 * Used to implement arbitrarily rotated grids which are constrained
-	 * to an axis-aligned bounding box.
-	 * 
-	 * This functions calls processor.processLine(QPointF a, QPointF b) for
-	 * every line which is calculated to be in the given box.
-	 * 
-	 * @param extent Extent of the box.
-	 * @param horz_spacing Horizontal spacing of the lines.
-	 * @param vert_spacing Vertical spacing of the lines.
-	 * @param horz_offset Horizontal offset of the first line from the origin.
-	 * @param vert_offset Vertical offset of the first line from the origin.
-	 * @param rotation Angle used to rotate the lines.
-	 * @param processor Callback object on which
-	 *     processor.processLine(QPointF a, QPointF b) will be called for each line.
-	 */
-	template<typename T>
-	void gridOperation(const QRectF& extent, double horz_spacing, double vert_spacing,
-	                   double horz_offset, double vert_offset, double rotation, T& processor)
-	{
-		hatchingOperation(extent, horz_spacing, horz_offset, rotation, processor);
-		hatchingOperation(extent, vert_spacing, vert_offset, rotation + M_PI / 2, processor);
-	}
-	
+
+/**
+ * Generates a pattern of parallel lines inside the box given by extent.
+ * 
+ * @see gridOperation()
+ * 
+ * @param extent       Extent of the box.
+ * @param spacing      Spacing of the lines.
+ * @param offset       Offset of the first line from the origin.
+ * @param rotation     Angle used to rotate the lines.
+ * @param process_line Function object which will be called with start and
+ *                     end point for each line.
+ */
+void hatchingOperation(const QRectF& extent, double spacing, double offset, double rotation,
+                       std::function<void (const QPointF&, const QPointF&)>& process_line);
+
+/**
+ * Generates a grid of lines inside the given box.
+ * 
+ * @see hatchingOperation()
+ * 
+ * @param extent       Extent of the box.
+ * @param horz_spacing Horizontal spacing of the lines.
+ * @param vert_spacing Vertical spacing of the lines.
+ * @param horz_offset  Horizontal offset of the first line from the origin.
+ * @param vert_offset  Vertical offset of the first line from the origin.
+ * @param rotation     Angle used to rotate the lines.
+ * @param process_line Function object which will be called with start and
+ *                     end point for each line.
+ */
+inline
+void gridOperation(const QRectF& extent, double horz_spacing, double vert_spacing,
+                   double horz_offset, double vert_offset, double rotation,
+                   std::function<void (const QPointF&, const QPointF&)>& process_line)
+{
+	hatchingOperation(extent, horz_spacing, horz_offset, rotation, process_line);
+	hatchingOperation(extent, vert_spacing, vert_offset, rotation - M_PI / 2, process_line);
 }
+
+/**
+ * Tests whether three points form what we would call a corner. The function
+ * returns true when point2 lies at least quantum_size from continuation of
+ * line from point1 to anchor_point. quantum_size parameter is essential for
+ * use of this function in GUI code as for various zoom levels point1 position
+ * get quantized with varying step size.
+ *
+ * @param point1 First point on a line.
+ * @param anchor_point Point that is being tested as corner candidate.
+ * @param point2 Final point on potentially bent line.
+ * @param quantum_size How far can point2 lie from the line defined by
+ *        point1--anchor to be considered unaligned with the two other points.
+ * @return True if point2 is further than quantum_size from the line defined 
+ *         by point1--anchor_point or point2 is on the same side of 
+ *         anchor_point as point1.
+ */
+bool pointsFormCorner(const MapCoord& point1, const MapCoord& anchor_point,
+                      const MapCoord& point2, qreal quantum_size);
+
+}  // namespace Util
 
 
 }  // namespace OpenOrienteering

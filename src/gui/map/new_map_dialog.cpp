@@ -242,7 +242,7 @@ void NewMapDialog::showFileDialog()
 	QString filters, extensions;
 	for (auto format : FileFormats.formats())
 	{
-		if (format->supportsImport())
+		if (format->supportsFileOpen())
 		{
 			if (filters.isEmpty())
 			{
@@ -302,7 +302,7 @@ void NewMapDialog::loadSymbolSetDir(const QDir& symbol_set_dir)
 		QStringList symbol_set_filters;
 		for (auto format : FileFormats.formats())
 		{
-			if (format->supportsImport())
+			if (format->supportsFileOpen())
 				symbol_set_filters << QStringList(format->fileExtensions()).replaceInStrings(QRegExp(QString(QLatin1Char{'^'})), QString::fromLatin1("*."));
 		}
 		subdir.setNameFilters(symbol_set_filters);

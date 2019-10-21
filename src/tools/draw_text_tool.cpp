@@ -203,7 +203,7 @@ void DrawTextTool::finishEditing()
 	}
 }
 
-bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawTextTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -220,7 +220,7 @@ bool DrawTextTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapW
 	return MapEditorToolBase::mousePressEvent(event, map_coord, widget);
 }
 
-bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	
@@ -233,7 +233,7 @@ bool DrawTextTool::mouseMoveEvent(QMouseEvent* event, MapCoordF map_coord, MapWi
 	return MapEditorToolBase::mouseMoveEvent(event, map_coord, widget);
 }
 
-bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* widget)
+bool DrawTextTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	mousePositionEvent(event, map_coord, widget);
 	

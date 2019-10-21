@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,11 +21,24 @@
 
 #include "object.h"
 
+#include <algorithm>
 #include <cmath>
+#include <cstddef>
+#include <iterator>
+#include <memory>
+#include <stdexcept>
+#include <type_traits>
 
+#include <Qt>
 #include <QtMath>
 #include <QtNumeric>
-#include <QIODevice>
+#include <QFlags>
+#include <QLatin1String>
+#include <QPoint>
+#include <QPointF>
+#include <QScopedPointer>
+#include <QStringRef>
+#include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -39,10 +52,13 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
+#include "core/virtual_coord_vector.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_import_export.h"
 #include "util/util.h"
 #include "util/xml_stream_util.h"
+
+class QRectF;
 
 
 // ### A namespace which collects various string constants of type QLatin1String. ###
@@ -53,12 +69,12 @@ namespace literal
 	static const QLatin1String symbol("symbol");
 	static const QLatin1String type("type");
 	static const QLatin1String text("text");
-	static const QLatin1String count("count");
 	static const QLatin1String coords("coords");
 	static const QLatin1String h_align("h_align");
 	static const QLatin1String v_align("v_align");
 	static const QLatin1String pattern("pattern");
 	static const QLatin1String rotation("rotation");
+	static const QLatin1String size("size");
 	static const QLatin1String tags("tags");
 }
 
@@ -69,24 +85,19 @@ namespace OpenOrienteering {
 // ### Object implementation ###
 
 Object::Object(Object::Type type, const Symbol* symbol)
-: type(type),
-  symbol(symbol),
-  map(nullptr),
-  output_dirty(true),
-  extent(),
-  output(*this)
+: type(type)
+, symbol(symbol)
+, output(*this)
 {
 	// nothing
 }
 
 Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
- : type(type),
-   symbol(symbol),
-   coords(coords),
-   map(map),
-   output_dirty(true),
-   extent(),
-   output(*this)
+: type(type)
+, symbol(symbol)
+, coords(coords)
+, map(map)
+, output(*this)
 {
 	// nothing
 }
@@ -95,19 +106,15 @@ Object::Object(const Object& proto)
  : type(proto.type)
  , symbol(proto.symbol)
  , coords(proto.coords)
- , map(nullptr)
  , object_tags(proto.object_tags)
- , output_dirty(true)
+ , rotation(proto.rotation)
  , extent(proto.extent)
  , output(*this)
 {
 	// nothing
 }
 
-Object::~Object()
-{
-	// nothing
-}
+Object::~Object() = default;
 
 void Object::copyFrom(const Object& other)
 {
@@ -119,6 +126,7 @@ void Object::copyFrom(const Object& other)
 	
 	symbol = other.symbol;
 	coords = other.coords;
+	rotation = other.rotation;
 	// map unchanged!
 	object_tags = other.object_tags;
 	output_dirty = true;
@@ -156,45 +164,20 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 	if (object_tags != other->object_tags)
 		return false;
 	
-	if (type == Point)
+	if (qAbs(getRotation() - other->getRotation()) >= 0.000001)  // six decimal places in XML
+		return false;
+	
+	if (type == Path)
 	{
-		const PointObject* point_this = static_cast<const PointObject*>(this);
-		const PointObject* point_other = static_cast<const PointObject*>(other);
-		
-		// Make sure that compared values are greater than 1, see qFuzzyCompare
-		float rotation_a = point_this->getRotation();
-		float rotation_b = point_other->getRotation();
-		while (rotation_a < 1)
-		{
-			rotation_a += 100;
-			rotation_b += 100;
-		}
-		if (!qFuzzyCompare(rotation_a, rotation_b))
-			return false;
-	}
-	else if (type == Path)
-	{
-		const PathObject* path_this = static_cast<const PathObject*>(this);
-		const PathObject* path_other = static_cast<const PathObject*>(other);
-		
-		// Make sure that compared values are greater than 1, see qFuzzyCompare
-		float rotation_a = path_this->getPatternRotation();
-		float rotation_b = path_other->getPatternRotation();
-		while (rotation_a < 1)
-		{
-			rotation_a += 100;
-			rotation_b += 100;
-		}
-		if (!qFuzzyCompare(rotation_a, rotation_b))
-			return false;
-		
+		auto const* path_this = static_cast<PathObject const*>(this);
+		auto const* path_other = static_cast<PathObject const*>(other);
 		if (path_this->getPatternOrigin() != path_other->getPatternOrigin())
 			return false;
 	}
 	else if (type == Text)
 	{
-		const TextObject* text_this = static_cast<const TextObject*>(this);
-		const TextObject* text_other = static_cast<const TextObject*>(other);
+		auto const* text_this = static_cast<TextObject const*>(this);
+		auto const* text_other = static_cast<TextObject const*>(other);
 		
 		if (text_this->getBoxSize() != text_other->getBoxSize())
 			return false;
@@ -203,17 +186,6 @@ bool Object::equals(const Object* other, bool compare_symbol) const
 		if (text_this->getHorizontalAlignment() != text_other->getHorizontalAlignment())
 			return false;
 		if (text_this->getVerticalAlignment() != text_other->getVerticalAlignment())
-			return false;
-		
-		// Make sure that compared values are greater than 1, see qFuzzyCompare
-		float rotation_a = text_this->getRotation();
-		float rotation_b = text_other->getRotation();
-		while (rotation_a < 1)
-		{
-			rotation_a += 100;
-			rotation_b += 100;
-		}
-		if (!qFuzzyCompare(rotation_a, rotation_b))
 			return false;
 	}
 	
@@ -238,7 +210,7 @@ PointObject* Object::asPoint()
 const PointObject* Object::asPoint() const
 {
 	Q_ASSERT(type == Point);
-	return static_cast<const PointObject*>(this);
+	return static_cast<PointObject const*>(this);
 }
 
 PathObject* Object::asPath()
@@ -250,7 +222,7 @@ PathObject* Object::asPath()
 const PathObject* Object::asPath() const
 {
 	Q_ASSERT(type == Path);
-	return static_cast<const PathObject*>(this);
+	return static_cast<PathObject const*>(this);
 }
 
 TextObject* Object::asText()
@@ -262,107 +234,10 @@ TextObject* Object::asText()
 const TextObject* Object::asText() const
 {
 	Q_ASSERT(type == Text);
-	return static_cast<const TextObject*>(this);
+	return static_cast<TextObject const*>(this);
 }
 
-#ifndef NO_NATIVE_FILE_FORMAT
 
-void Object::load(QIODevice* file, int version, Map* map)
-{
-	this->map = map;
-	
-	int symbol_index;
-	file->read((char*)&symbol_index, sizeof(int));
-	if (map)
-	{
-		Symbol* read_symbol = map->getSymbol(symbol_index);
-		if (read_symbol)
-			symbol = read_symbol;
-	}
-	
-	int num_coords;
-	file->read((char*)&num_coords, sizeof(int));
-	coords.clear();
-	coords.reserve(num_coords);
-	
-	LegacyMapCoord coord;
-	for (int i = 0; i < num_coords; ++i)
-	{
-		file->read((char*)&coord, sizeof(LegacyMapCoord));
-		coords.emplace_back(coord);
-	}
-	
-	if (version <= 8)
-	{
-		bool path_closed;
-		file->read((char*)&path_closed, sizeof(bool));
-		if (path_closed)
-			coords[coords.size() - 1].setClosePoint(true);
-	}
-	
-	if (version >= 8)
-	{
-		if (type == Point)
-		{
-			PointObject* point = reinterpret_cast<PointObject*>(this);
-			const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-			if (point_symbol->isRotatable())
-			{
-				float rotation;
-				file->read((char*)&rotation, sizeof(float));
-				point->setRotation(rotation);
-			}
-		}
-		else if (type == Path)
-		{
-			PathObject* path = reinterpret_cast<PathObject*>(this);
-			if (version >= 21)
-			{
-				float rotation;
-				file->read((char*)&rotation, sizeof(float));
-				path->setPatternRotation(rotation);
-				LegacyMapCoord origin;
-				file->read((char*)&origin, sizeof(LegacyMapCoord));
-				path->setPatternOrigin(origin);
-			}
-		}
-		else if (type == Text)
-		{
-			TextObject* text = reinterpret_cast<TextObject*>(this);
-			float rotation;
-			file->read((char*)&rotation, sizeof(float));
-			text->setRotation(rotation);
-			
-			int temp;
-			file->read((char*)&temp, sizeof(int));
-			text->setHorizontalAlignment((TextObject::HorizontalAlignment)temp);
-			file->read((char*)&temp, sizeof(int));
-			text->setVerticalAlignment((TextObject::VerticalAlignment)temp);
-			
-			QString str;
-			loadString(file, str);
-			text->setText(str);
-			
-			if (coords.size() > 1)
-			{
-				auto raw_size = coords[1];
-				auto w = MapCoord::boundsOffset().x + raw_size.nativeX();
-				auto h = MapCoord::boundsOffset().y + raw_size.nativeY();
-				text->setBoxSize(MapCoord::fromNative64(w, h));
-			}
-		}
-	}
-	
-	if (type == Path)
-	{
-		PathObject* path = reinterpret_cast<PathObject*>(this);
-		path->recalculateParts();
-	}
-	
-	output_dirty = true;
-}
-
-#endif
 
 void Object::save(QXmlStreamWriter& xml) const
 {
@@ -373,23 +248,17 @@ void Object::save(QXmlStreamWriter& xml) const
 		symbol_index = map->findSymbolIndex(symbol);
 	if (symbol_index != -1)
 		object_element.writeAttribute(literal::symbol, symbol_index);
+	if (symbol->isRotatable() && !qIsNull(rotation))
+		object_element.writeAttribute(literal::rotation, rotation);
 	
-	if (type == Point)
+	if (type == Text)
 	{
-		const PointObject* point = reinterpret_cast<const PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			object_element.writeAttribute(literal::rotation, point->getRotation());
-	}
-	else if (type == Text)
-	{
-		const TextObject* text = reinterpret_cast<const TextObject*>(this);
-		object_element.writeAttribute(literal::rotation, text->getRotation());
+		auto const* text = static_cast<TextObject const*>(this);
 		object_element.writeAttribute(literal::h_align, text->getHorizontalAlignment());
 		object_element.writeAttribute(literal::v_align, text->getVerticalAlignment());
 		// For compatibility, we must keep the box size in the second coord ATM.
-		/// \todo Save box size separately
-		auto object = const_cast<Object*>(this);
+		/// \todo From Mapper 1.0, save just the single anchor coordinate.
+		auto* object = const_cast<Object*>(this);
 		if (text->hasSingleAnchor())
 		{
 			object->coords.resize(1);
@@ -415,14 +284,21 @@ void Object::save(QXmlStreamWriter& xml) const
 	
 	if (type == Path)
 	{
-		const PathObject* path = reinterpret_cast<const PathObject*>(this);
+		auto const* path = static_cast<PathObject const*>(this);
 		XmlElementWriter pattern_element(xml, literal::pattern);
 		pattern_element.writeAttribute(literal::rotation, path->getPatternRotation());
 		path->getPatternOrigin().save(xml);
 	}
 	else if (type == Text)
 	{
-		const TextObject* text = reinterpret_cast<const TextObject*>(this);
+		auto const* text = static_cast<TextObject const*>(this);
+		if (!text->hasSingleAnchor())
+		{
+			XmlElementWriter size_element(xml, literal::size);
+			auto size = text->getBoxSize();
+			size_element.writeAttribute(XmlStreamLiteral::width, size.nativeX());
+			size_element.writeAttribute(XmlStreamLiteral::height, size.nativeY());
+		}
 		xml.writeTextElement(literal::text, text->getText());
 	}
 }
@@ -473,19 +349,14 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 	}
 	
-	if (object_type == Point)
+	if (object->symbol->isRotatable())
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(object);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-		if (point_symbol && point_symbol->isRotatable())
-			point->setRotation(object_element.attribute<float>(literal::rotation));
-		else if (!point_symbol)
-			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Point object with undefined or wrong symbol at %1:%2.").arg(xml.lineNumber()).arg(xml.columnNumber()));
+		object->rotation = object_element.attribute<qreal>(literal::rotation);
 	}
-	else if (object_type == Text)
+	
+	if (object_type == Text)
 	{
-		TextObject* text = reinterpret_cast<TextObject*>(object);
-		text->setRotation(object_element.attribute<float>(literal::rotation));
+		auto* text = static_cast<TextObject*>(object);
 		text->setHorizontalAlignment(object_element.attribute<TextObject::HorizontalAlignment>(literal::h_align));
 		text->setVerticalAlignment(object_element.attribute<TextObject::VerticalAlignment>(literal::v_align));
 	}
@@ -517,8 +388,8 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		{
 			XmlElementReader element(xml);
 			
-			PathObject* path = reinterpret_cast<PathObject*>(object);
-			path->setPatternRotation(element.attribute<float>(literal::rotation));
+			auto* path = static_cast<PathObject*>(object);
+			path->setPatternRotation(element.attribute<qreal>(literal::rotation));
 			while (xml.readNextStartElement())
 			{
 				if (xml.name() == XmlStreamLiteral::coord)
@@ -542,8 +413,16 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 		}
 		else if (xml.name() == literal::text && object_type == Text)
 		{
-			TextObject* text = reinterpret_cast<TextObject*>(object);
+			auto* text = static_cast<TextObject*>(object);
 			text->setText(xml.readElementText());
+		}
+		else if (xml.name() == literal::size && object_type == Text)
+		{
+			auto* text = static_cast<TextObject*>(object);
+			XmlElementReader size_element(xml);
+			auto const w = size_element.attribute<decltype(MapCoord().nativeX())>(XmlStreamLiteral::width);
+			auto const h = size_element.attribute<decltype(MapCoord().nativeY())>(XmlStreamLiteral::height);
+			text->setBoxSize(MapCoord::fromNative(w, h));
 		}
 		else if (xml.name() == literal::tags)
 		{
@@ -555,7 +434,7 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	
 	if (object_type == Path)
 	{
-		PathObject* path = reinterpret_cast<PathObject*>(object);
+		auto* path = static_cast<PathObject*>(object);
 		path->recalculateParts();
 	}
 	object->output_dirty = true;
@@ -570,6 +449,17 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	
 	return object;
 }
+
+
+void Object::setRotation(qreal new_rotation)
+{
+	if (!qIsNaN(new_rotation))
+	{
+		rotation = new_rotation;
+		setOutputDirty();
+	}
+}
+
 
 void Object::forceUpdate() const
 {
@@ -632,7 +522,7 @@ void Object::move(qint32 dx, qint32 dy)
 	setOutputDirty();
 }
 
-void Object::move(MapCoord offset)
+void Object::move(const MapCoord& offset)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -642,7 +532,7 @@ void Object::move(MapCoord offset)
 	setOutputDirty();
 }
 
-void Object::scale(MapCoordF center, double factor)
+void Object::scale(const MapCoordF& center, double factor)
 {
 	for (MapCoord& coord : coords)
 	{
@@ -664,77 +554,57 @@ void Object::scale(double factor_x, double factor_y)
 	setOutputDirty();
 }
 
-void Object::rotateAround(MapCoordF center, double angle)
+void Object::rotateAround(const MapCoordF& center, qreal angle)
 {
-	double sin_angle = sin(angle);
-	double cos_angle = cos(angle);
+	auto sin_angle = std::sin(angle);
+	auto cos_angle = std::cos(angle);
 	
-	int coords_size = coords.size();
-	/// \todo range-for loop
-	for (int c = 0; c < coords_size; ++c)
+	for (auto& coord : coords)
 	{
-		MapCoordF center_to_coord = MapCoordF(coords[c].x() - center.x(), coords[c].y() - center.y());
-		coords[c].setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
-		coords[c].setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
+		auto const center_to_coord = MapCoordF(coord.x() - center.x(), coord.y() - center.y());
+		coord.setX(center.x() + cos_angle * center_to_coord.x() + sin_angle * center_to_coord.y());
+		coord.setY(center.y() - sin_angle * center_to_coord.x() + cos_angle * center_to_coord.y());
 	}
 	
-	if (type == Point)
+	if (symbol->isRotatable())
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			point->setRotation(point->getRotation() + angle);
-	}
-	else if (type == Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
-		text->setRotation(text->getRotation() + angle);
+		rotation += angle;
 	}
 	setOutputDirty();
 }
 
-void Object::rotate(double angle)
+void Object::rotate(qreal angle)
 {
-	double sin_angle = sin(angle);
-	double cos_angle = cos(angle);
+	auto sin_angle = std::sin(angle);
+	auto cos_angle = std::cos(angle);
 	
-	int coords_size = coords.size();
-	/// \todo range-for loop
-	for (int c = 0; c < coords_size; ++c)
+	for (auto& coord : coords)
 	{
-		MapCoord coord = coords[c];
-		coords[c].setX(cos_angle * coord.x() + sin_angle * coord.y());
-		coords[c].setY(cos_angle * coord.y() - sin_angle * coord.x());
+		auto const old_coord = MapCoordF(coord);
+		coord.setX(cos_angle * old_coord.x() + sin_angle * old_coord.y());
+		coord.setY(sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
-	if (type == Point)
+	if (symbol->isRotatable())
 	{
-		PointObject* point = reinterpret_cast<PointObject*>(this);
-		const PointSymbol* point_symbol = reinterpret_cast<const PointSymbol*>(point->getSymbol());
-		if (point_symbol->isRotatable())
-			point->setRotation(point->getRotation() + angle);
-	}
-	else if (type == Text)
-	{
-		TextObject* text = reinterpret_cast<TextObject*>(this);
-		text->setRotation(text->getRotation() + angle);
+		rotation += angle;
 	}
 	setOutputDirty();
 }
 
 
-int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	
 	// Points
 	if (type == Symbol::Point)
 	{
-		if (!extended_selection)
-			return (coord.distanceSquaredTo(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
-		else
+		if (extended_selection)
 			return extent.contains(coord) ? Symbol::Point : Symbol::NoSymbol;
+		
+		return (coord.distanceSquaredTo(MapCoordF(coords[0])) <= tolerance) ? Symbol::Point : Symbol::NoSymbol;
 	}
 	
 	// First check using extent
@@ -747,15 +617,13 @@ int Object::isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_a
 	if (type == Symbol::Text)
 	{
 		// Texts
-		const TextObject* text_object = reinterpret_cast<const TextObject*>(this);
+		auto const* text_object = static_cast<TextObject const*>(this);
 		return (text_object->calcTextPositionAt(coord, true) != -1) ? Symbol::Text : Symbol::NoSymbol;
 	}
-	else
-	{
-		// Path objects
-		const PathObject* path = reinterpret_cast<const PathObject*>(this);
-		return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
-	}
+	
+	// Path objects
+	auto const* path = static_cast<PathObject const*>(this);
+	return path->isPointOnPath(coord, tolerance, treat_areas_as_paths, true);
 }
 
 void Object::takeRenderables()
@@ -784,17 +652,16 @@ bool Object::setSymbol(const Symbol* new_symbol, bool no_checks)
 
 Object* Object::getObjectForType(Object::Type type, const Symbol* symbol)
 {
-	if (type == Point)
-		return new PointObject(symbol);
-	else if (type == Path)
-		return new PathObject(symbol);
-	else if (type == Text)
-		return new TextObject(symbol);
-	else
+	switch(type)
 	{
-		Q_ASSERT(false);
-		return nullptr;
+	case Point:
+		return new PointObject(symbol);
+	case Path:
+		return new PathObject(symbol);
+	case Text:
+		return new TextObject(symbol);
 	}
+	return nullptr;
 }
 
 void Object::setTags(const Object::Tags& tags)
@@ -841,9 +708,8 @@ void Object::includeControlPointsRect(QRectF& rect) const
 	if (type == Object::Path)
 	{
 		const PathObject* path = asPath();
-		int size = path->getCoordinateCount();
-		for (int i = 0; i < size; ++i)
-			rectInclude(rect, QPointF(path->coords[i]));
+		for (auto const& coord : path->coords)
+			rectInclude(rect, QPointF(coord));
 	}
 	else if (type == Object::Text)
 	{
@@ -865,14 +731,13 @@ void Object::includeControlPointsRect(QRectF& rect) const
 static_assert(std::is_same<PathPartVector::size_type, std::size_t>::value,
               "PathCoordVector::size_type is not std::size_t");
 
-PathPart::PathPart(PathObject& path, const VirtualPath& proto)
- : VirtualPath(path.getRawCoordinateVector(), proto.first_index, proto.last_index)
- , path(&path)
+PathPart::PathPart(PathObject& path, const VirtualPath& virtual_path)
+: PathPart(path, virtual_path.first_index, virtual_path.last_index)
 {
-	if (!proto.path_coords.empty())
+	if (!virtual_path.path_coords.empty())
 	{
-		path_coords.reserve(proto.path_coords.size());
-		path_coords.insert(end(path_coords), begin(proto.path_coords), end(proto.path_coords));
+		path_coords.reserve(virtual_path.path_coords.size());
+		path_coords.insert(end(path_coords), begin(virtual_path.path_coords), end(virtual_path.path_coords));
 	}
 }
 
@@ -956,12 +821,13 @@ void PathPart::reverse()
 	path->setOutputDirty();
 }
 
+// static
 PathPartVector PathPart::calculatePathParts(const VirtualCoordVector& coords)
 {
 	PathPartVector parts;
 	PathCoordVector path_coords(coords);
 	auto last = coords.size();
-	auto part_start = MapCoordVector::size_type { 0 };
+	auto part_start = VirtualCoordVector::size_type { 0 };
 	while (part_start != last)
 	{
 		auto part_end = path_coords.update(part_start);
@@ -987,26 +853,20 @@ bool PathPartVector::compareEndIndex(const PathPart& part, VirtualPath::size_typ
 // ### PathObject ###
 
 PathObject::PathObject(const Symbol* symbol)
- : Object(Object::Path, symbol)
- , pattern_rotation(0.0)
- , pattern_origin(0, 0)
+: Object(Object::Path, symbol)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 
 PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
- : Object(Object::Path, symbol, coords, map)
- , pattern_rotation(0.0)
- , pattern_origin(0, 0)
+: Object(Object::Path, symbol, coords, map)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	recalculateParts();
 }
 
 PathObject::PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece)
- : Object { Object::Path, symbol }
- , pattern_rotation { 0.0f }
- , pattern_origin { 0, 0 }
+: Object { Object::Path, symbol }
 {
 	auto begin = proto.coords.begin() + piece;
 	auto part  = proto.findPartForIndex(piece);
@@ -1031,9 +891,8 @@ PathObject::PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVe
 }
 
 PathObject::PathObject(const PathObject& proto)
- : Object(proto)
- , pattern_rotation(proto.pattern_rotation)
- , pattern_origin(proto.pattern_origin)
+: Object(proto)
+, pattern_origin(proto.pattern_origin)
 {
 	path_parts.reserve(proto.path_parts.size());
 	for (const PathPart& part : proto.path_parts)
@@ -1043,14 +902,15 @@ PathObject::PathObject(const PathObject& proto)
 }
 
 PathObject::PathObject(const PathPart &proto_part)
- : Object(*proto_part.path)
- , pattern_rotation(proto_part.path->pattern_rotation)
- , pattern_origin(proto_part.path->pattern_origin)
+: Object(*proto_part.path)
+, pattern_origin(proto_part.path->pattern_origin)
 {
 	auto begin = proto_part.path->coords.begin();
 	coords.reserve(proto_part.size());
 	coords.assign(begin + proto_part.first_index, begin + (proto_part.last_index+1));
 	path_parts.emplace_back(*this, proto_part);
+	path_parts.front().last_index -= path_parts.front().first_index;
+	path_parts.front().first_index = 0;
 }
    
 PathObject* PathObject::duplicate() const
@@ -1066,7 +926,6 @@ void PathObject::copyFrom(const Object& other)
 	Object::copyFrom(other);
 	
 	const PathObject& other_path = *other.asPath();
-	pattern_rotation = other_path.getPatternRotation();
 	pattern_origin = other_path.getPatternOrigin();
 	
 	path_parts.clear();
@@ -1129,7 +988,7 @@ bool PathObject::intersectsBox(const QRectF& box) const
 	if (std::any_of(begin(path_parts), end(path_parts), [&box](const PathPart& part) { return part.intersectsBox(box); }))
 	{
 		return true;
-	};
+	}
 	
 	// If this is an area, additionally check if the area contains the box
 	if (getSymbol()->getContainedTypes() & Symbol::Area)
@@ -1227,10 +1086,9 @@ void PathObject::transform(const QTransform& t)
 
 
 
-void PathObject::setPatternRotation(float rotation)
+void PathObject::setPatternRotation(qreal rotation)
 {
-	pattern_rotation = rotation;
-	setOutputDirty();
+	setRotation(rotation);
 }
 
 void PathObject::setPatternOrigin(const MapCoord& origin)
@@ -1317,12 +1175,10 @@ MapCoordVector::size_type PathObject::subdivide(MapCoordVector::size_type index,
 		Q_ASSERT(isOutputDirty());
 		return index + 3;
 	}
-	else
-	{
-		addCoordinate(index + 1, MapCoord(MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param));
-		Q_ASSERT(isOutputDirty());
-		return index + 1;
-	}
+	
+	addCoordinate(index + 1, MapCoord(MapCoordF(coords[index]) + (MapCoordF(coords[index+1]) - MapCoordF(coords[index])) * param));
+	Q_ASSERT(isOutputDirty());
+	return index + 1;
 }
 
 bool PathObject::canBeConnected(const PathObject* other, double connect_threshold_sq) const
@@ -1337,14 +1193,13 @@ bool PathObject::canBeConnected(const PathObject* other, double connect_threshol
 			if (other_part.isClosed())
 				continue;
 			
-			if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
+			if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq
+			    || coords[part.first_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq
+			    || coords[part.last_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq
+			    || coords[part.last_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
+			{
 				return true;
-			else if (coords[part.first_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
-				return true;
-			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.first_index]) <= connect_threshold_sq)
-				return true;
-			else if (coords[part.last_index].distanceSquaredTo(other->coords[other_part.last_index]) <= connect_threshold_sq)
-				return true;
+			}
 		}
 	}
 	
@@ -1398,7 +1253,7 @@ bool PathObject::connectIfClose(PathObject* other, double connect_threshold_sq)
 	if (did_connect_path)
 	{
 		// Copy over all remaining parts of the other object
-		getCoordinate(getCoordinateCount() - 1).setHolePoint(true);
+		getCoordinateRef(getCoordinateCount() - 1).setHolePoint(true);
 		for (std::size_t i = 0; i < num_other_parts; ++i)
 		{
 			if (other_parts[i])
@@ -1418,8 +1273,8 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 	PathPart& other_part = other->path_parts[other_part_index];
 	Q_ASSERT(!part.isClosed() && !other_part.isClosed());
 	
-	int other_part_size = other_part.size();
-	int appended_part_size = other_part_size - (merge_ends ? 1 : 0);
+	auto const other_part_size = other_part.size();
+	auto const appended_part_size = other_part_size - (merge_ends ? 1 : 0);
 	coords.resize(coords.size() + appended_part_size);
 	
 	if (prepend)
@@ -1474,37 +1329,45 @@ void PathObject::connectPathParts(PathPartVector::size_type part_index, const Pa
 	Q_ASSERT(!part.isClosed());
 }
 
-std::vector<PathObject*> PathObject::removeFromLine(PathPartVector::size_type part_index, qreal begin, qreal end_index) const
+std::vector<PathObject*> PathObject::removeFromLine(
+        PathPartVector::size_type part_index,
+        PathCoord::length_type removal_begin,
+        PathCoord::length_type removal_end) const
 {
 	Q_ASSERT(path_parts.size() == 1); // TODO
-	Q_ASSERT(symbol->getContainedTypes() == Symbol::Line);
+	Q_ASSERT((symbol->getContainedTypes() & ~Symbol::Combined) == Symbol::Line);
 	
 	const PathPart& part = path_parts[part_index];
-	Q_ASSERT(part.path_coords.front().clen <= begin);
-	Q_ASSERT(part.path_coords.front().clen <= end_index);
-	Q_ASSERT(part.path_coords.back().clen >= begin);
-	Q_ASSERT(part.path_coords.back().clen >= end_index);
+	Q_ASSERT(part.path_coords.front().clen <= removal_begin);
+	Q_ASSERT(part.path_coords.front().clen <= removal_end);
+	Q_ASSERT(part.path_coords.back().clen >= removal_begin);
+	Q_ASSERT(part.path_coords.back().clen >= removal_end);
 	
 	std::vector<PathObject*> objects;
 	
-	if (end_index < begin || part.isClosed())
+	if (part.path_coords.front().clen >= removal_begin
+	    && part.path_coords.back().clen <= removal_end)
+	{
+		// nothing left, or invalid
+	}
+	else if (removal_end < removal_begin || part.isClosed())
 	{
 		PathObject* obj = duplicate()->asPath();
-		obj->changePathBounds(part_index, end_index, begin);
+		obj->changePathBounds(part_index, removal_end, removal_begin);
 		objects.push_back(obj);
 	}
 	else
 	{
-		if (begin > part.path_coords.front().clen)
+		if (removal_begin > part.path_coords.front().clen)
 		{
 			PathObject* obj = duplicate()->asPath();
-			obj->changePathBounds(part_index, part.path_coords.front().clen, begin);
+			obj->changePathBounds(part_index, part.path_coords.front().clen, removal_begin);
 			objects.push_back(obj);
 		}
-		if (end_index < part.path_coords.back().clen)
+		if (removal_end < part.path_coords.back().clen)
 		{
 			PathObject* obj = duplicate()->asPath();
-			obj->changePathBounds(part_index, end_index, part.path_coords.front().clen);
+			obj->changePathBounds(part_index, removal_end, part.path_coords.back().clen);
 			objects.push_back(obj);
 		}
 	}
@@ -1560,28 +1423,37 @@ void PathObject::changePathBounds(
 	update();
 	
 	PathPart& part = path_parts[part_index];
+	Q_ASSERT(end_len > start_len || part.isClosed());
+	
 	auto part_size = part.size();
-
+	
 	MapCoordVector out_coords;
 	out_coords.reserve(part_size + 2);
 	
-	if (end_len == 0.0)
-		end_len = part.path_coords.back().clen;
-	
 	auto part_begin = SplitPathCoord::begin(part.path_coords);
 	auto part_end   = SplitPathCoord::end(part.path_coords);
+	if (start_len == part_end.clen && end_len == part_begin.clen)
+		start_len = part_begin.clen;
 	auto start      = SplitPathCoord::at(start_len, part_begin);
 	
 	if (end_len <= start_len)
 	{
-		// Make sure part_end has the right curve end points for start.
-		part_end = SplitPathCoord::at(part_end.clen, start);
-		part.copy(start, part_end, out_coords);
-		out_coords.back().setHolePoint(false);
-		out_coords.back().setClosePoint(false);
+		if (start_len < part_end.clen)
+		{
+			// Make sure part_end has the right curve end points for start.
+			part_end = SplitPathCoord::at(part_end.clen, start);
+			part.copy(start, part_end, out_coords);
+			out_coords.back().setHolePoint(false);
+			out_coords.back().setClosePoint(false);
+		}
 		
-		auto end = SplitPathCoord::at(end_len, part_begin);
-		part.copy(part_begin, end, out_coords);
+		if (end_len > part_begin.clen)
+		{
+			auto end = SplitPathCoord::at(end_len, part_begin);
+			part.copy(part_begin, end, out_coords);
+		}
+		
+		Q_ASSERT(!out_coords.empty());
 	}
 	else
 	{
@@ -1592,7 +1464,7 @@ void PathObject::changePathBounds(
 	out_coords.back().setHolePoint(true);
 	out_coords.back().setClosePoint(false);
 	
-	const auto copy_size  = qMin(out_coords.size(), (MapCoordVector::size_type)part_size);
+	const auto copy_size  = std::ptrdiff_t(std::min(out_coords.size(), std::size_t(part_size)));
 	const auto part_start = begin(coords) + part.first_index;
 	std::copy(begin(out_coords), begin(out_coords) + copy_size, part_start);
 	if (copy_size < part_size)
@@ -2161,7 +2033,7 @@ bool PathObject::convertToCurves(PathObject** undo_duplicate)
 	return converted_a_range;
 }
 
-int PathObject::convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index)
+PathPart::size_type PathObject::convertRangeToCurves(const PathPart& part, PathPart::size_type start_index, PathPart::size_type end_index)
 {
 	Q_ASSERT(end_index > start_index);
 	
@@ -2478,7 +2350,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
 	}
 	
-	Symbol::Type contained_types = symbol->getContainedTypes();
+	auto contained_types = symbol->getContainedTypes();
 	if ((contained_types & Symbol::Line || treat_areas_as_paths) && tolerance > 0)
 	{
 		update();
@@ -2500,15 +2372,18 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 				if (dist_along_line < -tolerance)
 					continue;
-				else if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
+				
+				if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
 					return Symbol::Line;
 				
 				float line_length = path_coords[i+1].clen - path_coords[i].clen;
 				if (line_length < 1e-7)
 					continue;
+				
 				if (dist_along_line > line_length + tolerance)
 					continue;
-				else if (dist_along_line > line_length && coord.distanceSquaredTo(path_coords[i+1].pos) <= tolerance*tolerance)
+				
+				if (dist_along_line > line_length && coord.distanceSquaredTo(path_coords[i+1].pos) <= tolerance*tolerance)
 					return Symbol::Line;
 				
 				auto right = tangent.perpRight();
@@ -2530,7 +2405,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 	return Symbol::NoSymbol;
 }
 
-bool PathObject::isPointInsideArea(MapCoordF coord) const
+bool PathObject::isPointInsideArea(const MapCoordF& coord) const
 {
 	update();
 	bool inside = false;
@@ -2891,7 +2766,7 @@ void PathObject::calcAllIntersectionsWith(const PathObject* other, PathObject::I
 	}
 }
 
-void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::setCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos < getCoordinateCount());
 	
@@ -2905,7 +2780,7 @@ void PathObject::setCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
+void PathObject::addCoordinate(MapCoordVector::size_type pos, const MapCoord& c)
 {
 	Q_ASSERT(pos <= coords.size());
 	
@@ -2937,7 +2812,7 @@ void PathObject::addCoordinate(MapCoordVector::size_type pos, MapCoord c)
 	setOutputDirty();
 }
 
-void PathObject::addCoordinate(MapCoord c, bool start_new_part)
+void PathObject::addCoordinate(const MapCoord& c, bool start_new_part)
 {
 	if (coords.empty())
 	{
@@ -3146,7 +3021,7 @@ void PathObject::assignCoordinates(const PathObject& proto, MapCoordVector::size
 
 void PathObject::updatePathCoords() const
 {
-	auto part_start = MapCoordVector::size_type { 0 };
+	auto part_start = VirtualPath::size_type { 0 };
 	for (auto& part : path_parts)
 	{
 		part.first_index = part_start;
@@ -3183,12 +3058,13 @@ void PathObject::recalculateParts()
 	}
 }
 
-void PathObject::setClosingPoint(MapCoordVector::size_type index, MapCoord coord)
+void PathObject::setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord)
 {
-	coord.setCurveStart(false);
-	coord.setHolePoint(true);
-	coord.setClosePoint(true);
-	coords[index] = coord;
+	auto& out_coord = coords[index];
+	out_coord = coord;
+	out_coord.setCurveStart(false);
+	out_coord.setHolePoint(true);
+	out_coord.setClosePoint(true);
 }
 
 void PathObject::updateEvent() const
@@ -3206,19 +3082,13 @@ void PathObject::createRenderables(ObjectRenderables& output, Symbol::Renderable
 
 PointObject::PointObject(const Symbol* symbol)
  : Object(Object::Point, symbol)
- , rotation(0.0)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
-	rotation = 0;
 	coords.push_back(MapCoord(0, 0));
 }
 
-PointObject::PointObject(const PointObject& proto)
- : Object(proto)
- , rotation(proto.rotation)
-{
-	// nothing
-}
+PointObject::PointObject(const PointObject& /*proto*/) = default;
+
 
 PointObject* PointObject::duplicate() const
 {
@@ -3232,8 +3102,7 @@ void PointObject::copyFrom(const Object& other)
 	
 	Object::copyFrom(other);
 	const PointObject* point_other = other.asPoint();
-	const PointSymbol* point_symbol = getSymbol()->asPoint();
-	if (point_symbol && point_symbol->isRotatable())
+	if (getSymbol() && getSymbol()->isRotatable())
 		setRotation(point_other->getRotation());
 }
 
@@ -3245,12 +3114,12 @@ void PointObject::setPosition(qint32 x, qint32 y)
 	setOutputDirty();
 }
 
-void PointObject::setPosition(MapCoord coord)
+void PointObject::setPosition(const MapCoord& coord)
 {
 	coords[0] = coord;
 }
 
-void PointObject::setPosition(MapCoordF coord)
+void PointObject::setPosition(const MapCoordF& coord)
 {
 	coords[0].setX(coord.x());
 	coords[0].setY(coord.y());
@@ -3267,7 +3136,6 @@ MapCoord PointObject::getCoord() const
 	return coords.front();
 }
 
-
 void PointObject::transform(const QTransform& t)
 {
 	if (t.isIdentity())
@@ -3280,21 +3148,6 @@ void PointObject::transform(const QTransform& t)
 	setOutputDirty();
 }
 
-
-void PointObject::setRotation(float new_rotation)
-{
-	Q_ASSERT(symbol->asPoint()->isRotatable() || qIsNull(new_rotation));
-	if (!qIsNaN(new_rotation) && symbol->asPoint()->isRotatable())
-	{
-		rotation = new_rotation;
-		setOutputDirty();
-	}
-}
-
-void PointObject::setRotation(MapCoordF vector)
-{
-	setRotation(atan2(vector.x(), vector.y()));
-}
 
 bool PointObject::intersectsBox(const QRectF& box) const
 {

@@ -1,5 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
+ *    Copyright 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -20,12 +21,21 @@
 
 #include "action_grid_bar.h"
 
-#include <QtMath>
+#include <algorithm>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QAction>
 #include <QGridLayout>
+#include <QIcon>
+#include <QLayout>
 #include <QMenu>
+#include <QPixmap>
+#include <QPoint>
 #include <QResizeEvent>
+#include <QSizePolicy>
 #include <QToolButton>
+#include <QVariant>
 
 #include "settings.h"
 #include "gui/util_gui.h"
@@ -35,14 +45,11 @@ namespace OpenOrienteering {
 
 ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 : QWidget(parent)
+, direction(direction)
+, row_count(rows)
+, button_size_px(qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal())))
+, margin_size_px(button_size_px / 4)
 {
-	this->direction = direction;
-	this->rows = rows;
-	next_id = 0;
-	
-	// Will be calculated in resizeEvent()
-	cols = 1;
-	
 	if (direction == Horizontal)
 		setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	else
@@ -51,19 +58,18 @@ ActionGridBar::ActionGridBar(Direction direction, int rows, QWidget* parent)
 	// Create overflow action
 	overflow_action = new QAction(QIcon(QString::fromLatin1(":/images/three-dots.png")), tr("Show remaining items"), this);
  	connect(overflow_action, &QAction::triggered, this, &ActionGridBar::overflowActionClicked);
-	overflow_button = nullptr;
 	overflow_menu = new QMenu(this);
 	include_overflow_from_list.push_back(this);
 }
 
-int ActionGridBar::getRows() const
+int ActionGridBar::rowCount() const
 {
-	return rows;
+	return row_count;
 }
 
-int ActionGridBar::getCols() const
+int ActionGridBar::columnCount() const
 {
-	return cols;
+	return column_count;
 }
 
 void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span, bool at_end)
@@ -84,26 +90,18 @@ void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, i
 		action->setIcon(icon);
 	}
 
+	auto* button = new QToolButton();
+	button->setDefaultAction(action);
+	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	button->setAutoRaise(true);
+	button->setIconSize(icon_size);
+	
 	// Add the item
-	GridItem newItem;
-	newItem.id = next_id ++;
-	newItem.action = action;
-	newItem.button = new QToolButton();
-	newItem.button->setDefaultAction(action);
-	newItem.button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-	newItem.button->setAutoRaise(true);
-	newItem.button->setIconSize(icon_size);
-	newItem.button_hidden = false;
-	newItem.row = row;
-	newItem.col = col;
-	newItem.row_span = row_span;
-	newItem.col_span = col_span;
-	newItem.at_end = at_end;
-	items.push_back(newItem);
+	items.push_back({action, button, next_id++, row, col, row_span, col_span, at_end});
 	
 	// If this is the overflow action, remember the button.
 	if (action == overflow_action)
-		overflow_button = newItem.button;
+		overflow_button = button;
 }
 
 void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_span, int col_span)
@@ -113,14 +111,10 @@ void ActionGridBar::addActionAtEnd(QAction* action, int row, int col, int row_sp
 
 QSize ActionGridBar::getIconSize(int row_span, int col_span) const
 {
-	int icon_size_pixel_row = qRound(row_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
-	int icon_size_pixel_col = qRound(col_span * Util::mmToPixelLogical(Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
-	const int button_icon_size_row = icon_size_pixel_row - 12;
-	const int button_icon_size_col = icon_size_pixel_col - 12;
-	if (direction == Horizontal)
-		return QSize(button_icon_size_row, button_icon_size_col);
-	else
-		return QSize(button_icon_size_col, button_icon_size_row);
+	auto size = QSize{col_span * button_size_px - margin_size_px, row_span * button_size_px - margin_size_px};
+	if (direction == Vertical)
+		size.transpose();
+	return size;
 }
 
 QAction* ActionGridBar::getOverflowAction() const
@@ -133,36 +127,39 @@ void ActionGridBar::setToUseOverflowActionFrom(ActionGridBar* other_bar)
 	other_bar->include_overflow_from_list.push_back(this);
 }
 
-QToolButton* ActionGridBar::getButtonForAction(QAction* action)
+QToolButton* ActionGridBar::getButtonForAction(const QAction* action) const
 {
 	for (auto& item : items)
 	{
 		if (item.action == action)
-			return item.button_hidden ? nullptr : item.button;
+			return item.button;
 	}
 	return nullptr;
 }
 
-QSize ActionGridBar::sizeHint() const
+ActionGridBar::ButtonDisplay ActionGridBar::buttonDisplay(const QToolButton* button) const
 {
-	int height_px = Util::mmToPixelLogical(rows * Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat());
-	if (direction == Horizontal)
-		return QSize(100, height_px);
-	else
-		return QSize(height_px, 100);
+	for (auto& item : items)
+	{
+		if (item.button == button)
+			return item.button_hidden ? DisplayOverflow : DisplayNormal;
+	}
+	Q_UNREACHABLE();
+	return DisplayNormal;
 }
 
-bool ActionGridBar::compareItemPtrId(ActionGridBar::GridItem* a, ActionGridBar::GridItem* b)
+QSize ActionGridBar::sizeHint() const
 {
-	return a->id < b->id;
+	auto extent = row_count * button_size_px;
+	return {extent, extent};
 }
 
 void ActionGridBar::overflowActionClicked()
 {
 	overflow_menu->clear();
-	for (const auto source_bar : include_overflow_from_list)
+	for (const auto* source_bar : include_overflow_from_list)
 	{
-		for (const auto hidden_item : source_bar->hidden_items)
+		for (const auto* hidden_item : source_bar->hidden_items)
 			overflow_menu->addAction(hidden_item->action);
 	}
 	if (overflow_button)
@@ -176,34 +173,31 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 	hidden_items.clear();
 	
 	int length_px = (direction == Horizontal) ? width() : height();
-	float length_millimeters = Util::pixelToMMLogical(length_px);
-	cols = qMax(1, qFloor(length_millimeters / Settings::getInstance().getSettingCached(Settings::ActionGridBar_ButtonSizeMM).toFloat()));
+	column_count = qMax(1, length_px / button_size_px);
 	
 	delete layout();
-	QGridLayout* new_layout = new QGridLayout(this);
+	auto* new_layout = new QGridLayout(this);
 	new_layout->setContentsMargins(0, 0, 0, 0);
 	new_layout->setSpacing(0);
-	for (size_t i = 0, end = items.size(); i < end; ++ i)
+	for (auto& item : items)
 	{
-		GridItem& item = items[i];
-		int resulting_col = item.at_end ? (cols - 1 - item.col) : item.col;
-		bool hidden = item.row >= rows || item.col >= cols;
+		int resulting_col = item.at_end ? (column_count - 1 - item.col) : item.col;
+		bool hidden = item.row >= row_count || item.col >= column_count;
 		if (! hidden)
 		{
 			// Check for collisions with other items
-			for (size_t k = 0; k < items.size(); ++ k)
+			for (auto& other : items)
 			{
-				if (i == k)
+				if (&item == &other)
 					continue;
-				GridItem& other = items[k];
-				int resulting_col_other = other.at_end ? (cols - 1 - other.col) : other.col;
+				int resulting_col_other = other.at_end ? (column_count - 1 - other.col) : other.col;
 				if (item.row == other.row && resulting_col == resulting_col_other)
 				{
 					// Check which item "wins" this spot and which will be hidden
 					if (item.at_end == other.at_end)
 						qDebug("Warning: two items set to same position in ActionGridBar, this case is not handled!");
-					if ((item.at_end && resulting_col <= cols / 2)
-						|| (! item.at_end && resulting_col > cols / 2))
+					if ((item.at_end && resulting_col <= column_count / 2)
+					    || (! item.at_end && resulting_col > column_count / 2))
 					{
 						hidden = true;
 						break;
@@ -225,8 +219,8 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 				item.button,
 				item.row,
 				resulting_col,
-				qMin(item.row_span, rows - item.row),
-				qMin(item.col_span, cols - resulting_col)
+				qMin(item.row_span, row_count - item.row),
+				qMin(item.col_span, column_count - resulting_col)
 			);
 		}
 		else
@@ -235,8 +229,8 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 				item.button,
 				resulting_col,
 				item.row,
-				qMin(item.col_span, cols - resulting_col),
-				qMin(item.row_span, rows - item.row)
+				qMin(item.col_span, column_count - resulting_col),
+				qMin(item.row_span, row_count - item.row)
 			);
 		}
 		if (item.button_hidden)
@@ -247,25 +241,27 @@ void ActionGridBar::resizeEvent(QResizeEvent* event)
 		item.button->updateGeometry();
 	}
 	
-	// Set row/col strech. The first and last row/col acts as margin in case
+	// Set row/col stretch. The first and last row/col acts as margin in case
 	// the available area is not a multiple of the button size.
 	if (direction == Horizontal)
 	{
-		for (int i = 0; i < cols; ++ i)
+		for (int i = 0; i < column_count; ++ i)
 			new_layout->setColumnStretch(i, 1);
-		for (int i = 0; i < rows; ++ i)
+		for (int i = 0; i < row_count; ++ i)
 			new_layout->setRowStretch(i, 1);
 	}
 	else
 	{
-		for (int i = 0; i < cols; ++ i)
+		for (int i = 0; i < column_count; ++ i)
 			new_layout->setRowStretch(i, 1);
-		for (int i = 0; i < rows; ++ i)
+		for (int i = 0; i < row_count; ++ i)
 			new_layout->setColumnStretch(i, 1);
 	}
 	
 	overflow_action->setEnabled(! hidden_items.empty());
-	std::sort(hidden_items.begin(), hidden_items.end(), compareItemPtrId);
+	std::sort(hidden_items.begin(), hidden_items.end(), [](GridItem* a, GridItem* b) {
+		return a->id < b->id;
+	});
 	
 	event->accept();
 }

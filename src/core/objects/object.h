@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,9 +22,9 @@
 #ifndef OPENORIENTEERING_OBJECT_H
 #define OPENORIENTEERING_OBJECT_H
 
-#include <algorithm>
 #include <limits>
 #include <vector>
+#include <utility>
 
 #include <QtGlobal>
 #include <QHash>
@@ -38,7 +38,6 @@
 #include "core/renderables/renderable.h"
 #include "core/symbols/symbol.h"
 
-class QIODevice;
 class QTransform;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -123,8 +122,10 @@ public:
 	virtual Object* duplicate() const = 0;
 	
 	/**
-	 * Checks for equality with another object. If compare_symbol is set,
-	 * also the symbols are compared for having the same properties.
+	 * Checks for equality with another object.
+	 * 
+	 * If compare_symbol is set, also the symbols are compared for having the same properties.
+	 * Note that the map property is not compared.
 	 */
 	bool equals(const Object* other, bool compare_symbol) const;
 	
@@ -146,9 +147,6 @@ public:
 	/** Convenience cast to TextObject with type checking */
 	const TextObject* asText() const;
 	
-	/** Loads the object in the old "native" file format from the given file. */
-	void load(QIODevice* file, int version, Map* map);
-	
 	/** Saves the object in xml format to the given stream. */
 	void save(QXmlStreamWriter& xml) const;
 	/**
@@ -162,6 +160,23 @@ public:
 	 *               than reading the symbol from the stream.
 	 */
 	static Object* load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& symbol_dict, const Symbol* symbol = nullptr);
+	
+	
+	/**
+	 * Returns the rotation for this object (in radians).
+	 * 
+	 * The interpretation of this value depends the object's symbol.
+	 */
+	qreal getRotation() const { return rotation; }
+	
+	/**
+	 * Sets the object's rotation (in radians).
+	 * 
+	 * The interpretation of this value depends the object's symbol.
+	 * It may have no effect at all.
+	 * The value must not be NaN.
+	 */
+	void setRotation(qreal new_rotation);
 	
 	
 	/**
@@ -184,10 +199,10 @@ public:
 	void move(qint32 dx, qint32 dy);
 	
 	/** Moves the whole object by the given offset. */
-	void move(MapCoord offset);
+	void move(const MapCoord& offset);
 	
 	/** Scales all coordinates, with the given scaling center */
-	virtual void scale(MapCoordF center, double factor);
+	virtual void scale(const MapCoordF& center, double factor);
 	
 	/** Scales all coordinates, with the center (0, 0).
 	 * @param factor_x horizontal scaling factor
@@ -197,11 +212,11 @@ public:
 	
 	/** Rotates the whole object around the center point.
 	 *  The angle must be given in radians. */
-	void rotateAround(MapCoordF center, double angle);
+	void rotateAround(const MapCoordF& center, qreal angle);
 	
 	/** Rotates the whole object around the center (0, 0).
 	 *  The angle must be given in radians. */
-	void rotate(double angle);
+	void rotate(qreal angle);
 	
 	/**
 	 * Apply a transformation to all coordinates.
@@ -214,12 +229,12 @@ public:
 	 * Checks if the given coord, with the given tolerance, is on this object.
 	 * 
 	 * With extended_selection, the coord is on point objects always
-	 * if it is whithin their extent, otherwise it has to be close to
+	 * if it is within their extent, otherwise it has to be close to
 	 * their midpoint. Returns a Symbol::Type which specifies on which
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
 	 */
-	int isPointOnObject(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
+	int isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
@@ -306,13 +321,14 @@ protected:
 	virtual void createRenderables(ObjectRenderables& output, Symbol::RenderableOptions options) const;
 	
 	Type type;
-	const Symbol* symbol;
+	const Symbol* symbol = nullptr;
 	MapCoordVector coords;
-	Map* map;
+	Map* map = nullptr;
 	Tags object_tags;
 	
 private:
-	mutable bool output_dirty;        // does the output have to be re-generated because of changes?
+	qreal rotation = 0;               ///< The object's rotation (in radians).
+	mutable bool output_dirty = true; // does the output have to be re-generated because of changes?
 	mutable QRectF extent;            // only valid after calling update()
 	mutable ObjectRenderables output; // only valid after calling update()
 };
@@ -324,14 +340,15 @@ class PathPartVector;
 
 /**
  * Helper class with information about parts of paths.
+ * 
  * A part is a path segment which is separated from other parts by
  * a hole point at its end.
  */
 class PathPart : public VirtualPath
 {
 public:
-	/** Pointer to path part containing this part */
-	PathObject* path;
+	/** Pointer to path object containing this part */
+	PathObject* path = nullptr;
 	
 	PathPart(
 	        PathObject& path,
@@ -346,8 +363,8 @@ public:
 	);
 	
 	PathPart(
-	        PathObject& object,
-	        const VirtualPath& path
+	        PathObject& path,
+	        const VirtualPath& virtual_path
 	);
 	
 	~PathPart() = default;
@@ -468,17 +485,28 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
 	
-	/** Constructs a PathObject, assigning initial coords from a single piece of a line. */
-	PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
+	/**
+	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
+	 * 
+	 * "Piece" refers to a single straight or curved arc from the point
+	 * identified by parameter piece to the immediate next point on the path.
+	 * 
+	 * If the path is not closed, and piece refers to the last element in the
+	 * path (part), then the arc ending in the point referred to by piece is
+	 * returned instead.
+	 */
+	explicit PathObject(const Symbol* symbol, const PathObject& proto, MapCoordVector::size_type piece);
 	
 protected:
-	/** Constructs a PathObject, initalized from the given prototype. */
+	/** Constructs a PathObject, initialized from the given prototype. */
 	explicit PathObject(const PathObject& proto);
 	
 public:
-	/** Constructs a PathObject, initalized from the given part of another object. */
+	/**
+	 * Constructs a PathObject, initialized from the given part of another object.
+	 */
 	explicit PathObject(const PathPart& proto_part);
 	
 	/**
@@ -497,7 +525,7 @@ public:
 	bool validate() const override;
 	
 	
-	/** Checks the path for valid flags, and makes corrections as neccessary. */
+	/** Checks the path for valid flags, and makes corrections as necessary. */
 	void normalize();
 	
 	
@@ -507,22 +535,38 @@ public:
 	// Coordinate access methods
 	
 	/** Returns the number of coordinates, including curve handles and close points. */
-	MapCoordVector::size_type getCoordinateCount() const;
+	MapCoordVector::size_type getCoordinateCount() const { return coords.size(); }
+	
 	/** Returns the i-th coordinate. */
-	const MapCoord& getCoordinate(MapCoordVector::size_type pos) const;
-	/** Returns the i-th coordinate. */
-	MapCoord& getCoordinate(MapCoordVector::size_type pos);
+	MapCoord getCoordinate(MapCoordVector::size_type pos) const
+	{
+		Q_ASSERT(pos < coords.size());
+		return coords[pos];
+	}
+	
+	/** Returns a non-const reference to the i-th coordinate.
+	 * 
+	 * Normally you should modify coordinates via PathObject::setCoordinate.
+	 * Unlike that function, modifying a coordinate directly via the reference
+	 * will not keep the first and last point of a closed path in sync.
+	 */
+	MapCoord& getCoordinateRef(MapCoordVector::size_type pos)
+	{
+		Q_ASSERT(pos < coords.size());
+		setOutputDirty();
+		return coords[pos];
+	}
 	
 	/** Replaces the i-th coordinate with c. */
-	void setCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void setCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the given index. */
-	void addCoordinate(MapCoordVector::size_type pos, MapCoord c);
+	void addCoordinate(MapCoordVector::size_type pos, const MapCoord& c);
 	
 	/** Adds the coordinate at the end, optionally starting a new part.
 	 *  If starting a new part, make sure that the last coord of the old part
 	 *  has the hole point flag! */
-	void addCoordinate(MapCoord c, bool start_new_part = false);
+	void addCoordinate(const MapCoord& c, bool start_new_part = false);
 	
 	/**
 	 * Deletes a coordinate from the path.
@@ -611,13 +655,13 @@ public:
 	 * Returns the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	float getPatternRotation() const;
+	qreal getPatternRotation() const;
 	
 	/**
 	 * Sets the rotation of the object pattern. Only has an effect in
 	 * combination with a symbol interpreting this value.
 	 */
-	void setPatternRotation(float rotation);
+	void setPatternRotation(qreal rotation);
 	
 	/**
 	 * Returns the origin of the object pattern. Only has an effect in
@@ -656,7 +700,7 @@ public:
 	) const;
 	
 	/**
-	 * Calculates the closest control point coordinate to the given coordiante,
+	 * Calculates the closest control point coordinate to the given coordinate,
 	 * returns the squared distance of these points and the index of the control point.
 	 * 
 	 * \todo Convert out_distance_sq to double (so avoiding conversions).
@@ -718,14 +762,15 @@ public:
 	 * Returns the result of removing the section between begin and end from the path.
 	 * 
 	 * begin and end must belong to the path part with the given part_index.
-	 * However, any part_index value other than 1 is not supported at the moment.
+	 * However, objects with holes, and part_index values greater than 0, are
+	 * not supported at the moment.
 	 * 
 	 * Returns an empty vector when nothing remains after removal.
 	 */
 	std::vector<PathObject*> removeFromLine(
 	        PathPartVector::size_type part_index,
-	        qreal begin,
-	        qreal end
+	        PathCoord::length_type clen_begin,
+	        PathCoord::length_type clen_end
 	) const;
 									   
 	/**
@@ -738,9 +783,11 @@ public:
 	std::vector<PathObject*> splitLineAt(const PathCoord& split_pos) const;
 	
 	/**
-	 * Replaces the path with a range of it starting and ending at the given lengths.
+	 * Replaces the path with a non-empty range of it starting and ending at the given lengths.
 	 * 
-	 * \todo Partially duplicated in LineSymbol::calculatePathCoordinates()
+	 * For open paths, the end length must be greater than the start length.
+	 * For closed paths, an end length smaller than or equal to the start length
+	 * will cause the resulting path to span the original start/end point.
 	 */
 	void changePathBounds(
 	        PathPartVector::size_type part_index,
@@ -782,7 +829,7 @@ public:
 	 * 
 	 * @return The new index of the end of the range.
 	 */
-	int convertRangeToCurves(const PathPart& part, MapCoordVector::size_type start_index, MapCoordVector::size_type end_index);
+	PathPart::size_type convertRangeToCurves(const PathPart& part, PathPart::size_type start_index, PathPart::size_type end_index);
 	
 	/**
 	 * Tries to remove points while retaining the path shape as much as possible.
@@ -803,7 +850,7 @@ public:
 	 * Returns true if the given coordinate is inside the area
 	 * defined by this object, which must be closed.
 	 */
-	bool isPointInsideArea(MapCoordF coord) const;
+	bool isPointInsideArea(const MapCoordF& coord) const;
 	
 	/**
 	 * Calculates the maximum distance of the given coord ranges of two objects.
@@ -900,7 +947,7 @@ protected:
 	 * on it and replaces the coord at the given index by it.
 	 * TODO: make separate methods? Setting coords exists already.
 	 */
-	void setClosingPoint(MapCoordVector::size_type index, MapCoord coord);
+	void setClosingPoint(MapCoordVector::size_type index, const MapCoord& coord);
 	
 	void updateEvent() const override;
 	
@@ -908,16 +955,10 @@ protected:
 	
 private:
 	/**
-	 * Rotation angle of the object pattern. Only used if the object
-	 * has a symbol which interprets this value.
-	 */
-	float pattern_rotation;
-	
-	/**
 	 * Origin shift of the object pattern. Only used if the object
 	 * has a symbol which interprets this value.
 	 */
-	MapCoord pattern_origin;
+	MapCoord pattern_origin = {};
 	
 	/** Path parts list */
 	mutable PathPartVector path_parts;
@@ -959,7 +1000,7 @@ public:
 	explicit PointObject(const Symbol* symbol = nullptr);
 	
 protected:
-	/** Constructs a PointObject, initalized from the given prototype. */
+	/** Constructs a PointObject, initialized from the given prototype. */
 	explicit PointObject(const PointObject& proto);
 	
 public:
@@ -972,7 +1013,7 @@ public:
 	
 	PointObject& operator=(const PointObject& other) = delete;
 	
-	/** Replaces the content of this object by that of anothe. */
+	/** Replaces the content of this object by that of another. */
 	void copyFrom(const Object& other) override;
 	
 	
@@ -980,10 +1021,10 @@ public:
 	void setPosition(qint32 x, qint32 y);
 	
 	/** Changes the point's position. */
-	void setPosition(MapCoord coord);
+	void setPosition(const MapCoord& coord);
 	
 	/** Changes the point's position. */
-	void setPosition(MapCoordF coord);
+	void setPosition(const MapCoordF& coord);
 	
 	/** Returns the point's position as MapCoordF. */
 	MapCoordF getCoordF() const;
@@ -998,33 +1039,7 @@ public:
 	void transform(const QTransform& t) override;
 	
 	
-	/**
-	 * Sets the point object's rotation (in radians).
-	 * 
-	 * This does nothing if the object's symbol isn't rotable. However, it is an
-	 * error to call setRotation on such an object with an argument other than
-	 * binary 0.
-	 */
-	void setRotation(float new_rotation);
-	
-	/**
-	 * Sets the point object's rotation according to the given vector.
-	 */
-	void setRotation(MapCoordF vector);
-	
-	/**
-	 * Returns the point object's rotation (in radians). This is only used
-	 * if the object has a symbol which interprets this value.
-	 */
-	float getRotation() const;
-	
-	
 	bool intersectsBox(const QRectF& box) const override;
-	
-	
-private:
-	/** The object's rotation (in radians). */
-	float rotation;
 };
 
 
@@ -1065,7 +1080,7 @@ struct ObjectPathCoord : public PathCoord
 	 * 
 	 * \see PathObject::calcClosestPointOnPath
 	 */
-	float findClosestPointTo(MapCoordF map_coord);
+	float findClosestPointTo(const MapCoordF& map_coord);
 };
 
 
@@ -1149,7 +1164,6 @@ PathPart::PathPart(
         MapCoordVector::size_type start_index,
         MapCoordVector::size_type end_index)
  : VirtualPath(coords, start_index, end_index)
- , path(nullptr)
 {
 	// nothing else
 }
@@ -1168,7 +1182,7 @@ PathPart::PathPart(
 inline
 PathPart& PathPart::operator=(const PathPart& rhs)
 {
-	Q_ASSERT(path = rhs.path);
+	Q_ASSERT(path == rhs.path);
 	VirtualPath::operator=(rhs);
 	return *this;
 }
@@ -1176,27 +1190,6 @@ PathPart& PathPart::operator=(const PathPart& rhs)
 
 
 //### PathObject inline code ###
-
-inline
-MapCoordVector::size_type PathObject::getCoordinateCount() const
-{
-	return coords.size();
-}
-
-inline
-const MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos) const
-{
-	Q_ASSERT(pos < coords.size());
-	return coords[pos];
-}
-
-inline
-MapCoord& PathObject::getCoordinate(MapCoordVector::size_type pos)
-{
-	Q_ASSERT(pos < coords.size());
-	setOutputDirty();
-	return coords[pos];
-}
 
 inline
 const PathPartVector& PathObject::parts() const
@@ -1212,25 +1205,15 @@ PathPartVector& PathObject::parts()
 }
 
 inline
-float PathObject::getPatternRotation() const
+qreal PathObject::getPatternRotation() const
 {
-	return pattern_rotation;
+	return getRotation();
 }
 
 inline
 MapCoord PathObject::getPatternOrigin() const
 {
 	return pattern_origin;
-}
-
-
-
-//### PointObject inline code ###
-
-inline
-float PointObject::getRotation() const
-{
-	return rotation;
 }
 
 
@@ -1281,7 +1264,7 @@ ObjectPathCoord::ObjectPathCoord(PathObject* object, MapCoordVector::size_type i
 
 
 inline
-float ObjectPathCoord::findClosestPointTo(MapCoordF map_coord)
+float ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
 {
 	float distance_sq;
 	object->calcClosestPointOnPath(map_coord, distance_sq, *this);

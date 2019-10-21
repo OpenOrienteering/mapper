@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -64,6 +64,7 @@ public:
 	void updateCompatibilityContents();
 	
 protected slots:
+	void orientedToNorthClicked(bool checked);
 	void fontChanged(const QFont& font);
 	void fontSizeChanged(double value);
 	void letterSizeChanged();
@@ -93,6 +94,7 @@ private:
 	TextSymbol* symbol;
 	SymbolSettingDialog* dialog;
 	
+	QCheckBox* oriented_to_north;
 	ColorDropDown*  color_edit;
 	QFontComboBox*  font_edit;
 	QDoubleSpinBox* font_size_edit;

@@ -33,9 +33,7 @@
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
 #include "gui/georeferencing_dialog.h"
-#include "gui/select_crs_dialog.h"
 #include "gui/task_dialog.h"
-#include "templates/template_positioning_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
 
@@ -44,7 +42,7 @@ namespace OpenOrienteering {
 
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
-	static std::vector<QByteArray> extensions = { "dxf", "gpx", "osm" };
+	static std::vector<QByteArray> extensions = { "gpx" };
 	return extensions;
 }
 
@@ -67,17 +65,6 @@ TemplateTrack::~TemplateTrack()
 		unloadTemplateFile();
 }
 
-
-#ifndef NO_NATIVE_FILE_FORMAT
-bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QIODevice* stream, int version)
-{
-	if (version >= 30)
-		loadString(stream, track_crs_spec);
-	else
-		track_crs_spec = Georeferencing::geographic_crs_spec;
-	return true;
-}
-#endif
 
 
 void TemplateTrack::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
@@ -142,19 +129,18 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
+	if (!track_crs_spec.isEmpty() && track_crs_spec != Georeferencing::geographic_crs_spec)
+	{
+		setErrorString(tr("This template must be loaded with GDAL/OGR."));
+		return false;
+	}
+	
 	if (!track.loadFrom(template_path, false))
 		return false;
 	
 	if (!configuring)
 	{
-		Georeferencing* track_crs = new Georeferencing();
-		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS(QString{}, track_crs_spec);
-		track_crs->setTransformationDirectly(QTransform());
-		track.setTrackCRS(track_crs);
-		
-		bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong"));
-		if (!is_georeferenced && crs_is_geographic)
+		if (!is_georeferenced)
 		{
 			if (projected_crs_spec.isEmpty())
 				projected_crs_spec = calculateLocalGeoreferencing();
@@ -170,40 +156,12 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
 	is_georeferenced = true;
 	
-	// If no track CRS is given by the template file, ask the user
-	if (!track.hasTrackCRS())
-	{
-		if (map->getGeoreferencing().isLocal())
-		{
-			track_crs_spec.clear();
-		}
-		else
-		{
-			SelectCRSDialog dialog(
-			            map->getGeoreferencing(),
-			            dialog_parent,
-			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Local | SelectCRSDialog::Geographic,
-			            tr("Select the coordinate reference system of the track coordinates") );
-			if (dialog.exec() == QDialog::Rejected)
-				return false;
-			track_crs_spec = dialog.currentCRSSpec();
-		}
-		
-		Georeferencing* track_crs = new Georeferencing();
-		if (!track_crs_spec.isEmpty())
-			track_crs->setProjectedCRS(QString{}, track_crs_spec);
-		track_crs->setTransformationDirectly(QTransform());
-		track.setTrackCRS(track_crs);
-	}
-	
 	// If the CRS is geographic, ask if track should be loaded using map georeferencing or ad-hoc georeferencing
-	track_crs_spec = track.getTrackCRS()->getProjectedCRSSpec();
-	bool crs_is_geographic = track_crs_spec.contains(QLatin1String("+proj=latlong")); // TODO: should that be case insensitive?
-	if (crs_is_geographic)
+	/** \todo Remove historical scope */
 	{
 		TaskDialog georef_dialog(dialog_parent, tr("Opening track ..."),
 			tr("Load the track in georeferenced or non-georeferenced mode?"),
@@ -221,25 +179,6 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 			is_georeferenced = false;
 		else // abort
 			return false;
-	}
-	
-	// If the CRS is local, show positioning dialog
-	if (track_crs_spec.isEmpty())
-	{
-		is_georeferenced = false;
-		
-		TemplatePositioningDialog dialog(dialog_parent);
-		if (dialog.exec() == QDialog::Rejected)
-			return false;
-		
-		transform.template_scale_x = dialog.getUnitScale();
-		if (!dialog.useRealCoords())
-		{
-			transform.template_scale_x /= (map->getScaleDenominator() / 1000.0);
-		}
-		transform.template_scale_y = transform.template_scale_x;
-		updateTransformationMatrices();
-		out_center_in_view = dialog.centerOnView();
 	}
 	
 	// If the track is loaded as georeferenced and the transformation parameters
@@ -260,7 +199,7 @@ bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 	
 	// If the track is loaded as not georeferenced,
 	// the map coords for the track coordinates have to be calculated
-	if (!is_georeferenced && crs_is_geographic)
+	if (!is_georeferenced)
 	{
 		if (projected_crs_spec.isEmpty())
 			projected_crs_spec = calculateLocalGeoreferencing();
@@ -317,17 +256,7 @@ void TemplateTrack::drawTracks(QPainter* painter, bool on_screen) const
 			const TrackPoint& point = track.getSegmentPoint(i, k);
 			
 			if (k > 0)
-			{
-				if (track.getSegmentPoint(i, k - 1).is_curve_start && k < track.getSegmentPointCount(i) - 2)
-				{
-					path.cubicTo(point.map_coord,
-					             track.getSegmentPoint(i, k + 1).map_coord,
-					             track.getSegmentPoint(i, k + 2).map_coord);
-					k += 2;
-				}
-				else
-					path.lineTo(point.map_coord.x(), point.map_coord.y());
-			}
+				path.lineTo(point.map_coord.x(), point.map_coord.y());
 			else
 				path.moveTo(point.map_coord.x(), point.map_coord.y());
 		}
@@ -458,7 +387,6 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		return false;
 	}
 	
-	const Track::ElementTags& tags = track.tags();
 	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
@@ -496,25 +424,13 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		}
 		
 		PathObject* path = importPathStart();
-		QString name = track.getSegmentName(i);
-		if (!tags[name].isEmpty())
-		{
-			path->setTags(tags[name]);
-		}
-		else
-		{
-			path->setTag(QStringLiteral("name"), name);
-		}
-		
 		for (int j = 0; j < segment_size; j++)
 		{
 			const TrackPoint& track_point = track.getSegmentPoint(i, j);
 			auto coord = MapCoord { templateToMap(track_point.map_coord) };
-			if (track_point.is_curve_start && j < segment_size - 3)
-				coord.setCurveStart(true);
 			path->addCoordinate(coord);
 		}
-		if (track.getSegmentPoint(i, 0).gps_coord == track.getSegmentPoint(i, segment_size-1).gps_coord)
+		if (track.getSegmentPoint(i, 0).latlon == track.getSegmentPoint(i, segment_size-1).latlon)
 		{
 			path->closeAllParts();
 		}
@@ -547,10 +463,6 @@ void TemplateTrack::configureForGPSTrack()
 	is_georeferenced = true;
 	
 	track_crs_spec = Georeferencing::geographic_crs_spec;
-	Georeferencing* track_crs = new Georeferencing();
-	track_crs->setProjectedCRS(QString{}, track_crs_spec);
-	track_crs->setTransformationDirectly(QTransform());
-	track.setTrackCRS(track_crs);
 	
 	projected_crs_spec.clear();
 	track.changeMapGeoreferencing(map->getGeoreferencing());

@@ -39,7 +39,7 @@ struct _IntPath {
 }
 IntPath;
 
-/** Reverses a section of a u8 array. The caller is reponsible for sending a valid range.
+/** Reverses a section of a u8 array. The caller is responsible for sending a valid range.
  */
 static void reverse_u8(u8 *arr, u32 start, u32 count) {
 	u32 i = start, j = start + count - 1;
@@ -52,7 +52,7 @@ static void reverse_u8(u8 *arr, u32 start, u32 count) {
 }
 
 
-/** Reverses a section of an s32 array. The caller is reponsible for sending a valid range.
+/** Reverses a section of an s32 array. The caller is responsible for sending a valid range.
  */
 static void reverse_s32(s32 *arr, u32 start, u32 count) {
 	u32 i = start, j = start + count - 1;
@@ -104,7 +104,7 @@ static void ocad_internal_path_reverse(IntPath *path, u32 start, u32 count) {
  *
  */
 static int ocad_path_to_internal(IntPath *path, u32 npts, const OCADPoint *pts) {
-#define F_PATH_HOLE 0x80 // not publically accessible, temporary and will be removed before the method returns
+#define F_PATH_HOLE 0x80 // not publicly accessible, temporary and will be removed before the method returns
 	u32 i;
 	u32 hole_idx;
 	u32 j;

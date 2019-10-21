@@ -430,7 +430,7 @@ void ColorListWidget::updateRow(int row)
 {
 	react_to_changes = false;
 	
-	const auto color = map->getColor(row);
+	const auto* color = map->getColor(row);
 	auto color_with_opacity = colorWithOpacity(*color);
 	
 	// Color preview
@@ -447,6 +447,14 @@ void ColorListWidget::updateRow(int row)
 	switch (color->getSpotColorMethod())
 	{
 		case MapColor::SpotColor:
+			if (color->getScreenFrequency() > 0)
+			{
+				QLocale locale;
+				item->setText(tr("%1 (%2°, %3 lpi)")
+				              .arg(color->getSpotColorName(),
+				                   locale.toString(color->getScreenAngle(), 'f', 1),
+				                   locale.toString(color->getScreenFrequency(), 'f', 1)));
+			}
 			item->setData(Qt::DecorationRole, color_with_opacity);
 			break;
 		default:

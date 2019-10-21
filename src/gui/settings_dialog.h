@@ -23,11 +23,14 @@
 
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
 class QAbstractButton;
 class QCloseEvent;
 class QDialogButtonBox;
 class QKeyEvent;
+class QResizeEvent;
+class QScrollArea;
 class QStackedWidget;
 class QTabWidget;
 class QWidget;
@@ -39,8 +42,10 @@ class SettingsPage;
 
 /** 
  * A dialog for editing Mapper's settings.
+ * 
+ * This class is marked as final because its constructor calls virtual functions.
  */
-class SettingsDialog : public QDialog
+class SettingsDialog final : public QDialog
 {
 Q_OBJECT
 public:
@@ -78,6 +83,10 @@ protected:
 	
 	void keyPressEvent(QKeyEvent* event) override;
 	
+	void resizeEvent(QResizeEvent* event) override;
+	
+	void resizeToFit(QScrollArea& widget);
+	
 private slots:
 	/**
 	 * Reacts to dialog buttons (OK, Cancel, Rest).
@@ -99,6 +108,8 @@ private:
 	 * The box of standard dialog buttons.
 	 */
 	QDialogButtonBox* button_box;
+	
+	int scrollbar_extent;
 };
 
 

@@ -1,5 +1,6 @@
 /*
- *    Copyright 2014 Thomas Schöps, Kai Pastor
+ *    Copyright 2014 Thomas Schöps
+ *    Copyright 2014, 2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,29 +20,39 @@
 
 #include "compass.h"
 
-#include <cmath>
-
-#include <QtMath>  // IWYU pragma: keep
 #include <QtGlobal>  // IWYU pragma: keep
 #include <QMetaMethod>
 #include <QMetaObject>
-#include <QMutex>  // IWYU pragma: keep
-#include <QTime>
 
 #ifdef QT_SENSORS_LIB
 
+#include <cmath>
+#include <cstring>
+
+#include <Qt>
+#include <QtMath>
+#include <QAccelerometer>
+#include <QAccelerometerReading>
+#include <QGyroscope>
+#include <QGyroscopeFilter>
+#include <QGyroscopeReading>
+#include <QList>
+#include <QMagnetometer>
+#include <QMagnetometerReading>
+#include <QMutex>
+#include <QSensor>
 #include <QThread>
-#include <QDebug>
 #include <QWaitCondition>
-#include <QtSensors/QAccelerometer>
-#include <QtSensors/QMagnetometer>
-#include <QtSensors/QGyroscope>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroidExtras/QAndroidJniObject>
 #endif
 
-#endif  // # QT_SENSORS_LIB
+#else  // no Qt Sensors lib
+
+#include <QTime>
+
+#endif  // QT_SENSORS_LIB
 
 
 // clazy:excludeall=missing-qobject-macro
@@ -242,7 +253,8 @@ public:
 	 , latest_azimuth(-1)
 	{
 		// Try to filter out non-gravity sources of acceleration
-		accelerometer.setAccelerationMode(QAccelerometer::Gravity);
+		if (accelerometer.isFeatureSupported(QSensor::AccelerationMode))
+			accelerometer.setAccelerationMode(QAccelerometer::Gravity);
 
 		// Try to filter out local magnetic interference
 		magnetometer.setReturnGeoValues(true);
@@ -513,25 +525,17 @@ private:
 	bool enabled;
 	float latest_azimuth;
 };
-#endif
-
-
-Compass::Compass(): QObject()
-{
-	reference_counter = 0;
-#ifdef QT_SENSORS_LIB
-	p = new CompassPrivate(this);
 #else
-	p = nullptr;
-#endif
-}
-
-Compass::~Compass()
+class CompassPrivate
 {
-#ifdef QT_SENSORS_LIB
-	delete p;
-#endif
-}
+	friend class Compass;  // grant access to default members
+};
+#endif  // QT_SENSORS_LIB
+
+
+
+// Emit vtable once, in this translation unit
+Compass::~Compass() = default;
 
 Compass& Compass::getInstance()
 {
@@ -544,7 +548,10 @@ void Compass::startUsage()
 	++ reference_counter;
 #ifdef QT_SENSORS_LIB
 	if (reference_counter == 1)
+	{
+		p.reset(new CompassPrivate(this));
 		p->enable(true);
+	}
 #endif
 }
 
@@ -553,14 +560,17 @@ void Compass::stopUsage()
 	-- reference_counter;
 #ifdef QT_SENSORS_LIB
 	if (reference_counter == 0)
+	{
 		p->enable(false);
+		p.reset();
+	}
 #endif
 }
 
 float Compass::getCurrentAzimuth()
 {
 #ifdef QT_SENSORS_LIB
-	return p->getLatestAzimuth();
+	return p ? p->getLatestAzimuth() : 0.0f;
 #elif MAPPER_DEVELOPMENT_BUILD
 	// DEBUG: rotate around ...
 	QTime now = QTime::currentTime();

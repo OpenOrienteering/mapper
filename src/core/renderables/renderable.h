@@ -194,7 +194,7 @@ public:
 	 * 
 	 * @param painter      The painter to be configured.
 	 * @param current_clip A pointer which will be set to the address of the current clip,
-	 *                     in order to avoid switching the clip area unneccessarily.
+	 *                     in order to avoid switching the clip area unnecessarily.
 	 * @param config       The rendering configurations.
 	 * @param color        The QColor to be used for the pen or brush.
 	 * @param initial_clip The clip which was set initially for this painter.

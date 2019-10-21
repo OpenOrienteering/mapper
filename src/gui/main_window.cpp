@@ -29,6 +29,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QMenuBar>
+#include <QScopedValueRollback>
 #include <QSettings>
 #include <QStackedWidget>
 #include <QStatusBar>
@@ -37,7 +38,6 @@
 
 #if defined(Q_OS_ANDROID)
 #  include <QtAndroid>
-#  include <QAndroidJniObject>
 #  include <QDesktopWidget>
 #  include <QTimer>
 #  include <QUrl>
@@ -51,6 +51,7 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
+#include "fileformats/file_import_export.h"
 #include "gui/about_dialog.h"
 #include "gui/autosave_dialog.h"
 #include "gui/file_dialog.h"
@@ -59,9 +60,16 @@
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/new_map_dialog.h"
+#include "gui/widgets/toast.h"
 #include "undo/undo_manager.h"
 #include "util/util.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
+#include "util/mapper_service_proxy.h"
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -80,7 +88,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 : QMainWindow           { parent, flags }
 , controller            { nullptr }
 , create_menu           { as_main_window }
-, show_menu             { create_menu && !mobileMode() }
+, show_menu             { create_menu && !Settings::mobileModeEnforced() }
 , shortcuts_blocked     { false }
 , general_toolbar       { nullptr }
 , file_menu             { nullptr }
@@ -96,8 +104,10 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-	if (mobileMode())
-		statusBar()->hide();
+	if (Settings::mobileModeEnforced())
+	{
+		toast = new Toast(this);
+	}
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -182,15 +192,6 @@ QString MainWindow::appName() const
 	return APP_NAME;
 }
 
-#ifndef Q_OS_ANDROID
-bool MainWindow::mobileMode()
-{
-	static bool mobile_mode = qEnvironmentVariableIsSet("MAPPER_MOBILE_GUI")
-	                          ? (qgetenv("MAPPER_MOBILE_GUI") != "0")
-	                          : 0;
-	return mobile_mode;
-}
-#endif
 
 void MainWindow::setCentralWidget(QWidget* widget)
 {
@@ -219,13 +220,13 @@ void MainWindow::setHomeScreenDisabled(bool disabled)
 void MainWindow::setController(MainWindowController* new_controller)
 {
 	setController(new_controller, false);
-	setCurrentPath({});
+	setCurrentFile({}, nullptr);
 }
 
-void MainWindow::setController(MainWindowController* new_controller, const QString& path)
+void MainWindow::setController(MainWindowController* new_controller, const QString& path, const FileFormat* format)
 {
 	setController(new_controller, true);
-	setCurrentPath(path);
+	setCurrentFile(path, format);
 }
 
 void MainWindow::setController(MainWindowController* new_controller, bool has_file)
@@ -249,6 +250,8 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 		createFileMenu();
 	
 	controller = new_controller;
+	menuBar()->setVisible(new_controller->menuBarVisible());
+	statusBar()->setVisible(new_controller->statusBarVisible());
 	controller->attach(this);
 	
 	if (create_menu)
@@ -279,12 +282,12 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 			QCoreApplication::translate("QCocoaMenuItem", "Select All")
 		};
 		const auto menubar_actions = menuBar()->actions();
-		for (auto menubar_action : menubar_actions)
+		for (const auto* menubar_action : menubar_actions)
 		{
-			if (const auto menu = menubar_action->menu())
+			if (const auto* menu = menubar_action->menu())
 			{
 				const auto menu_actions = menu->actions();
-				for (auto action : menu_actions)
+				for (const auto* action : menu_actions)
 				{
 					if (action->menuRole() != QAction::TextHeuristicRole
 						|| action->isSeparator())
@@ -294,7 +297,7 @@ void MainWindow::setController(MainWindowController* new_controller, bool has_fi
 									return keyword.compare(text, Qt::CaseInsensitive) == 0;
 						}))
 					{
-						// Such warnings may indiciate missing setting of QAction::NoRole
+						// Such warnings may indicate missing setting of QAction::NoRole
 						// on a (new) item, or incomplete translations for Mapper or Qt.
 						qDebug("Unexpected TextHeuristicRole for \"%s > %s\"",
 						       qUtf8Printable(menubar_action->text()),
@@ -440,7 +443,7 @@ void MainWindow::createHelpMenu()
 	}
 }
 
-void MainWindow::setCurrentPath(const QString& path)
+void MainWindow::setCurrentFile(const QString& path, const FileFormat* format)
 {
 	Q_ASSERT(has_opened_file || path.isEmpty());
 	
@@ -448,13 +451,19 @@ void MainWindow::setCurrentPath(const QString& path)
 	{
 		QString window_file_path;
 		current_path.clear();
+		current_format = nullptr;
 		if (has_opened_file)
 		{
 			window_file_path = QFileInfo(path).canonicalFilePath();
 			if (window_file_path.isEmpty())
+			{
 				window_file_path = tr("Unsaved file");
+			}
 			else
+			{
 				current_path = window_file_path;
+				current_format = format;
+			}
 		}
 		setWindowFilePath(window_file_path);
 	}
@@ -486,12 +495,15 @@ void MainWindow::setMostRecentlyUsedFile(const QString& path)
 
 void MainWindow::setHasUnsavedChanges(bool value)
 {
-	if (hasOpenedFile())
-	{
-		has_unsaved_changes = value;
-		setAutosaveNeeded(has_unsaved_changes && !has_autosave_conflict);
-	}
+	has_unsaved_changes = value;
+	setAutosaveNeeded(has_unsaved_changes && hasOpenedFile() && !has_autosave_conflict);
 	setWindowModified(has_unsaved_changes);
+	
+#ifdef Q_OS_ANDROID
+	if (!service_proxy)
+		service_proxy = std::make_unique<MapperServiceProxy>();
+	service_proxy->setActiveWindow(has_unsaved_changes ? this : nullptr);
+#endif
 }
 
 void MainWindow::setStatusBarText(const QString& text)
@@ -502,28 +514,24 @@ void MainWindow::setStatusBarText(const QString& text)
 
 void MainWindow::showStatusBarMessage(const QString& text, int timeout)
 {
-#if defined(Q_OS_ANDROID)
-	QAndroidJniObject java_string = QAndroidJniObject::fromString(text);
-	QAndroidJniObject::callStaticMethod<void>(
-		"org/openorienteering/mapper/MapperActivity",
-		"showToast",
-		"(Ljava/lang/String;I)V",
-		java_string.object<jstring>(), timeout);
-#else
-	statusBar()->showMessage(text, timeout);
-#endif
+	if (toast)
+		toast->showText(text, timeout);
+	else
+		statusBar()->showMessage(text, timeout);
+}
+
+void MainWindow::showStatusBarMessageImmediately(const QString& text, int timeout)
+{
+	showStatusBarMessage(text, timeout);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 }
 
 void MainWindow::clearStatusBarMessage()
 {
-#if defined(Q_OS_ANDROID)
-	QAndroidJniObject::callStaticMethod<void>(
-		"org/openorienteering/mapper/MapperActivity",
-		"hideToast",
-		"()V");
-#else
-	statusBar()->clearMessage();
-#endif
+	if (toast)
+		toast->hide();
+	else
+		statusBar()->clearMessage();
 }
 
 void MainWindow::setShortcutsBlocked(bool blocked)
@@ -551,8 +559,21 @@ bool MainWindow::closeFile()
 
 bool MainWindow::event(QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && shortcutsBlocked())
-		event->accept();
+	switch (event->type())
+	{
+	case QEvent::ShortcutOverride:
+		if (shortcutsBlocked())
+			event->accept();
+		break;
+		
+	case QEvent::Resize:
+		if (toast)
+			toast->adjustPosition(frameGeometry());
+		break;
+		
+	default:
+		; // nothing
+	}
 	
 	return QMainWindow::event(event);
 }
@@ -641,7 +662,7 @@ bool MainWindow::showSaveOnCloseDialog()
 		case QMessageBox::Save:
 			if (!save())
 				return false;
-			// fall through 
+			Q_FALLTHROUGH(); 
 			
 		 case QMessageBox::Yes:
 			setHasAutosaveConflict(false);
@@ -730,9 +751,20 @@ void MainWindow::showNewMapWizard()
 	{
 		new_map->setScaleDenominator(newMapDialog.getSelectedScale());
 	}
-	else
+	else if (auto importer = FileFormats.makeImporter(symbol_set_path, *new_map, nullptr))
 	{
-		new_map->loadFrom(symbol_set_path, this, &tmp_view, true);
+		importer->setLoadSymbolsOnly(true);
+		if (!importer->doImport())
+		{
+			QMessageBox::warning(this, tr("Error"),
+			                     tr("Cannot open file:\n%1\n\n%2").
+			                     arg(symbol_set_path, importer->warnings().back()));
+			delete new_map;
+			return;
+		}
+		if (!importer->warnings().empty())
+			showMessageBox(this, tr("Warning"), tr("The symbol set import generated warnings."), importer->warnings());
+		
 		if (new_map->getScaleDenominator() != newMapDialog.getSelectedScale())
 		{
 			if (QMessageBox::question(this, tr("Warning"), tr("The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.\n\nDo you want to scale the symbols to the selected scale?").arg(newMapDialog.getSelectedScale()).arg(new_map->getScaleDenominator()),  QMessageBox::Yes | QMessageBox::No) == QMessageBox::Yes)
@@ -755,6 +787,10 @@ void MainWindow::showNewMapWizard()
 			}
 		}
 	}
+	else
+	{
+		;  /// \todo error message, cleanup
+	}
 	
 	auto map_view = new MapView { new_map };
 	map_view->setGridVisible(tmp_view.isGridVisible());
@@ -764,7 +800,7 @@ void MainWindow::showNewMapWizard()
 	
 	MainWindow* new_window = hasOpenedFile() ? new MainWindow() : this;
 	new_window->setWindowFilePath(tr("Unsaved file"));
-	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString());
+	new_window->setController(new MapEditorController(MapEditorController::MapEditor, new_map, map_view), QString(), nullptr);
 	
 	new_window->show();
 	new_window->raise();
@@ -774,19 +810,28 @@ void MainWindow::showNewMapWizard()
 
 void MainWindow::showOpenDialog()
 {
-	QString path = getOpenFileName(this, tr("Open file"), FileFormat::AllFiles);
-	if (!path.isEmpty())
-		openPath(path);
+	if (auto selected = getOpenFileName(this, tr("Open file"), FileFormat::AllFiles))
+	{
+		openPath(selected.filePath(), selected.fileFormat());
+	}
 }
 
 bool MainWindow::openPath(const QString &path)
+{
+	auto format = FileFormats.findFormatForFilename(path, &FileFormat::supportsFileOpen);
+	if (!format)
+		format = FileFormats.findFormatForData(path, FileFormat::AllFiles);
+	return openPath(path, format);
+}
+
+bool MainWindow::openPath(const QString& path, const FileFormat* format)
 {
 	// Empty path does nothing. This also helps with the single instance application code.
 	if (path.isEmpty())
 		return true;
 	
 #ifdef Q_OS_ANDROID
-	showStatusBarMessage(tr("Opening %1").arg(QFileInfo(path).fileName()));
+	showStatusBarMessageImmediately(tr("Opening %1").arg(QFileInfo(path).fileName()));
 #else
 	MainWindow* const existing = findMainWindow(path);
 	if (existing)
@@ -797,6 +842,11 @@ bool MainWindow::openPath(const QString &path)
 		return true;
 	}
 #endif
+	
+	if (!format || !format->supportsReading())
+		QMessageBox::warning(this, tr("Error"),
+		                     tr("Cannot open file:\n%1\n\n%2").
+		                     arg(path, tr("Invalid file type.")));
 	
 	// Check a blocker that prevents immediate re-opening of crashing files.
 	// Needed for stopping auto-loading a crashing file on startup.
@@ -828,6 +878,7 @@ bool MainWindow::openPath(const QString &path)
 	}
 	
 	QString new_actual_path = path;
+	const FileFormat* new_actual_format = format;
 	QString autosave_path = Autosave::autosavePath(path);
 	bool new_autosave_conflict = QFileInfo::exists(autosave_path);
 	if (new_autosave_conflict)
@@ -837,14 +888,16 @@ bool MainWindow::openPath(const QString &path)
 		AutosaveDialog* autosave_dialog = new AutosaveDialog(path, autosave_path, autosave_path, this);
 		int result = autosave_dialog->exec();
 		new_actual_path = (result == QDialog::Accepted) ? autosave_dialog->selectedPath() : QString();
+		new_actual_format = (new_actual_path == path) ? format : FileFormats.findFormat(FileFormats.defaultFormat());
 		delete autosave_dialog;
 #else
 		// Assuming large screen, dialog will be shown while the autosaved file is open
 		new_actual_path = autosave_path;
+		new_actual_format = FileFormats.findFormat(FileFormats.defaultFormat());
 #endif
 	}
 	
-	if (new_actual_path.isEmpty() || !new_controller->load(new_actual_path, this))
+	if (new_actual_path.isEmpty() || !new_controller->loadFrom(new_actual_path, *new_actual_format, this))
 	{
 		delete new_controller;
 		settings.remove(reopen_blocker);
@@ -857,7 +910,7 @@ bool MainWindow::openPath(const QString &path)
 		open_window = new MainWindow();
 #endif
 	
-	open_window->setController(new_controller, path);
+	open_window->setController(new_controller, path, format);
 	open_window->actual_path = new_actual_path;
 	open_window->setHasAutosaveConflict(new_autosave_conflict);
 	open_window->setHasUnsavedChanges(false);
@@ -908,9 +961,10 @@ void MainWindow::switchActualPath(const QString& path)
 	{
 		const QString& current_path = currentPath();
 		MainWindowController* const new_controller = MainWindowController::controllerForFile(current_path);
-		if (new_controller && new_controller->load(path, this))
+		auto format = (path == current_path) ? current_format : FileFormats.findFormat(FileFormats.defaultFormat());
+		if (new_controller && new_controller->loadFrom(path, *format, this))
 		{
-			setController(new_controller, current_path);
+			setController(new_controller, current_path, format);
 			actual_path = path;
 			setHasUnsavedChanges(false);
 		}
@@ -923,14 +977,17 @@ void MainWindow::switchActualPath(const QString& path)
 void MainWindow::openPathLater(const QString& path)
 {
 	path_backlog.push_back(path);
-	QTimer::singleShot(10, this, SLOT(openPathBacklog()));  // clazy:exclude=old-style-connect
+	QTimer::singleShot(10, this, &MainWindow::openPathBacklog);
 }
 
 void MainWindow::openPathBacklog()
 {
-	for (const auto& path : qAsConst(path_backlog))
-		openPath(path);
-	path_backlog.clear();
+	if (path_backlog.empty() || path_backlog_busy)
+		return;
+	
+	QScopedValueRollback<bool> rollback{path_backlog_busy, true};
+	openPath(path_backlog.takeFirst());
+	QTimer::singleShot(10, this, &MainWindow::openPathBacklog);
 }
 
 void MainWindow::openRecentFile()
@@ -987,7 +1044,8 @@ bool MainWindow::removeAutosaveFile() const
 Autosave::AutosaveResult MainWindow::autosave()
 {
 	QString path = currentPath();
-	if (path.isEmpty() || !controller)
+	auto autosave_format = FileFormats.findFormat(FileFormats.defaultFormat());
+	if (path.isEmpty() || !controller || !autosave_format)
 	{
 		return Autosave::PermanentFailure;
 	}
@@ -997,8 +1055,8 @@ Autosave::AutosaveResult MainWindow::autosave()
 	}
 	else
 	{
-		showStatusBarMessage(tr("Autosaving..."), 0);
-		if (controller->exportTo(autosavePath(currentPath())))
+		showStatusBarMessageImmediately(tr("Autosaving..."), 0);
+		if (controller->exportTo(autosavePath(currentPath()), *autosave_format))
 		{
 			// Success
 			clearStatusBarMessage();
@@ -1015,27 +1073,40 @@ Autosave::AutosaveResult MainWindow::autosave()
 
 bool MainWindow::save()
 {
-	return savePath(currentPath());
+	auto path = currentPath();
+	auto format = currentFormat();
+	if (path.isEmpty()
+	    || !format
+	    || !format->supportsFileSave())
+	{
+		return showSaveAsDialog();
+	}
+	
+	return saveTo(path, *currentFormat());
 }
 
-bool MainWindow::savePath(const QString &path)
+bool MainWindow::saveTo(const QString &path, const FileFormat& format)
 {
-	if (!controller)
-		return false;
-	
-	if (path.isEmpty())
-		return showSaveAsDialog();
-	
-	const FileFormat *format = FileFormats.findFormatForFilename(path);
-	if (format->isExportLossy())
+	if (!controller || path.isEmpty())
 	{
-		QString message = tr("This map is being saved as a \"%1\" file. Information may be lost.\n\nPress Yes to save in this format.\nPress No to choose a different format.").arg(format->description());
+		qWarning("Unexpected call to MainWindow::saveTo(PATH, FORMAT)");
+		return false;
+	}
+
+	if (format.isWritingLossy())
+	{
+		auto message = 
+		        tr("This map is being saved as a \"%1\" file. "
+		           "Information may be lost.\n\n"
+		           "Press Yes to save in this format.\n"
+		           "Press No to choose a different format.")
+		        .arg(format.description());
 		int result = QMessageBox::warning(this, tr("Warning"), message, QMessageBox::Yes, QMessageBox::No);
 		if (result != QMessageBox::Yes)
 			return showSaveAsDialog();
 	}
 	
-	if (!controller->save(path))
+	if (!controller->saveTo(path, format))
 		return false;
 	
 	setMostRecentlyUsedFile(path);
@@ -1045,7 +1116,7 @@ bool MainWindow::savePath(const QString &path)
 	
 	if (path != currentPath())
 	{
-		setCurrentPath(path);
+		setCurrentFile(path, &format);
 		removeAutosaveFile();
 	}
 	
@@ -1054,7 +1125,8 @@ bool MainWindow::savePath(const QString &path)
 	return true;
 }
 
-QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types)
+// static
+MainWindow::FileInfo MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileFormat::FileTypes types)
 {
 	// Get the saved directory to start in, defaulting to the user's home directory.
 	QSettings settings;
@@ -1063,11 +1135,11 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	// Build the list of supported file filters based on the file format registry
 	QString filters, extensions;
 	
-	if (types.testFlag(FileFormat::MapFile))
+	if (types.testFlag(FileFormat::MapFile) || types.testFlag(FileFormat::OgrFile))
 	{
 		for (auto format : FileFormats.formats())
 		{
-			if (format->supportsImport())
+			if (format->supportsFileOpen())
 			{
 				if (filters.isEmpty())
 				{
@@ -1088,10 +1160,42 @@ QString MainWindow::getOpenFileName(QWidget* parent, const QString& title, FileF
 	
 	filters += tr("All files") + QLatin1String(" (*.*)");
 	
-	QString path = FileDialog::getOpenFileName(parent, title, open_directory, filters);
-	QFileInfo info(path);
-	return info.canonicalFilePath();
+	QString filter; // will be set to the selected filter by QFileDialog
+	QString path = FileDialog::getOpenFileName(parent, title, open_directory, filters, &filter);
+	
+	const FileFormat* format = nullptr;
+	if (!path.isEmpty())
+	{
+		path = QFileInfo(path).canonicalFilePath();
+		format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsFileOpen);
+		if (!format)
+			format = FileFormats.findFormatForFilename(path, &FileFormat::supportsFileOpen);
+		if (!format)
+			format = FileFormats.findFormatForData(path, types);
+	}
+	return { path, format };
 }
+
+
+
+// static
+void MainWindow::showMessageBox(QWidget* parent, const QString& title, const QString& headline, const std::vector<QString>& messages)
+{
+	QString document;
+	if (!headline.isEmpty())
+		document += QLatin1String("<p><b>") + headline + QLatin1String("</b></p>");
+	for (const auto& message : messages)
+		document += Qt::convertFromPlainText(message, Qt::WhiteSpaceNormal);
+	
+	TextBrowserDialog dialog(document, parent);
+	dialog.setWindowTitle(title);
+	dialog.setWindowModality(Qt::WindowModal);
+	dialog.exec();
+	// Let Android update the screen.
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
+}
+
+
 
 bool MainWindow::showSaveAsDialog()
 {
@@ -1112,7 +1216,7 @@ bool MainWindow::showSaveAsDialog()
 	QString filters;
 	for (auto format : FileFormats.formats())
 	{
-		if (format->supportsExport())
+		if (format->supportsFileSaveAs())
 		{
 			if (filters.isEmpty()) 
 				filters = format->filter();
@@ -1139,7 +1243,7 @@ bool MainWindow::showSaveAsDialog()
 	if (path.isEmpty())
 		return false;
 	
-	const FileFormat *format = FileFormats.findFormatByFilter(filter);
+	const FileFormat *format = FileFormats.findFormatByFilter(filter, &FileFormat::supportsFileSaveAs);
 	if (!format)
 	{
 		QMessageBox::information(this, tr("Error"), 
@@ -1163,9 +1267,9 @@ bool MainWindow::showSaveAsDialog()
 	// Ensure that the file name matches the format.
 	Q_ASSERT(format->fileExtensions().contains(QFileInfo(path).suffix()));
 	// Fails when using different formats for import and export:
-	//	Q_ASSERT(FileFormats.findFormatForFilename(path) == format);
+	//	Q_ASSERT(FileFormats.findFormatForFilename(path, ***) == format);
 	
-	return savePath(path);
+	return saveTo(path, *format);
 }
 
 void MainWindow::toggleFullscreenMode()
@@ -1218,7 +1322,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 {
 	Q_UNUSED(object)
 	
-	switch(event->type())
+	switch (event->type())
 	{
 	case QEvent::WhatsThisClicked:
 		{

@@ -41,6 +41,7 @@
 #include "core/symbols/symbol.h"
 #include "undo/object_undo.h"
 #include "undo/undo.h"
+#include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
 
 
@@ -538,10 +539,10 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 		{
 			// Same original part
 			auto cur_coord_index = cur_info.second->index;
-			MapCoord& cur_coord = cur_info.first->path->getCoordinate(cur_coord_index);
+			const auto cur_coord = cur_info.first->path->getCoordinate(cur_coord_index);
 			
 			auto new_coord_index = new_info.second->index;
-			MapCoord& new_coord = new_info.first->path->getCoordinate(new_coord_index);
+			const auto new_coord = new_info.first->path->getCoordinate(new_coord_index);
 			
 			auto cur_coord_index_adjusted = cur_coord_index;
 			if (cur_coord_index_adjusted == new_info.first->first_index)
@@ -653,7 +654,7 @@ void BooleanTool::rebuildSegment(
 {
 	auto num_points = polygon.size();
 	
-	object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(true);
+	object->getCoordinateRef(object->getCoordinateCount() - 1).setCurveStart(true);
 	
 	if ((start_index + 1) % num_points == end_index)
 	{
@@ -972,7 +973,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 	
 	PathCoordInfo start_info = polymap.value(polygon.at(start_index));
 	PathCoordInfo end_info = polymap.value(polygon.at(end_index));
-	PathObject* original = end_info.first->path;
+	const PathObject* original = end_info.first->path;
 	
 	bool coords_increasing;
 	bool is_curve;
@@ -983,7 +984,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 		bool found = checkSegmentMatch(original, coord_index, polygon, start_index, end_index, coords_increasing, is_curve);
 		if (!found)
 		{
-			object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(false);
+			object->getCoordinateRef(object->getCoordinateCount() - 1).setCurveStart(false);
 			rebuildCoordinate(end_index, polygon, polymap, object);
 			return;
 		}
@@ -999,7 +1000,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 			found = checkSegmentMatch(original, coord_index, polygon, start_index, end_index, coords_increasing, is_curve);
 			if (!found)
 			{
-				object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(false);
+				object->getCoordinateRef(object->getCoordinateCount() - 1).setCurveStart(false);
 				rebuildCoordinate(end_index, polygon, polymap, object);
 				return;
 			}
@@ -1007,7 +1008,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 	}
 	
 	if (!is_curve)
-		object->getCoordinate(object->getCoordinateCount() - 1).setCurveStart(false);
+		object->getCoordinateRef(object->getCoordinateCount() - 1).setCurveStart(false);
 	
 	if (coords_increasing)
 	{
@@ -1040,7 +1041,7 @@ void BooleanTool::rebuildCoordinate(
 	if (polymap.contains(polygon.at(index)))
 	{
 		PathCoordInfo info = polymap.value(polygon.at(index));
-		MapCoord& original = info.first->path->getCoordinate(info.second->index);
+		const auto original = info.first->path->getCoordinate(info.second->index);
 		
 		if (original.isDashPoint())
 			coord.setDashPoint(true);
@@ -1058,11 +1059,11 @@ bool BooleanTool::checkSegmentMatch(
         bool& out_is_curve )
 {
 	
-	const MapCoord& first = original->getCoordinate(coord_index);
+	const MapCoord first = original->getCoordinate(coord_index);
 	out_is_curve = first.isCurveStart();
 	
 	auto other_index = (coord_index + (out_is_curve ? 3 : 1)) % original->getCoordinateCount();
-	const MapCoord& other = original->getCoordinate(other_index);
+	const MapCoord other = original->getCoordinate(other_index);
 	
 	bool found = true;
 	if (first == polygon.at(start_index) && other == polygon.at(end_index))

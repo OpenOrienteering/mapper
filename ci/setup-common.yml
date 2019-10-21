@@ -1,0 +1,75 @@
+# This file is part of OpenOrienteering.
+
+# Copyright 2019 Kai Pastor
+#
+# Redistribution and use is allowed according to the terms of the BSD license:
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+# 
+# 1. Redistributions of source code must retain the copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+# 3. The name of the author may not be used to endorse or promote products 
+#    derived from this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+# IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+# NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+steps:
+- bash: |
+    if [ "${BUILD_REASON}" = "PullRequest" ] ; then
+      # Pull request display version: full source branch + build number
+      VERSION_DISPLAY="${BUILD_SOURCEBRANCH} v${BUILD_BUILDNUMBER}"
+    elif [ "${BUILD_SOURCEBRANCHNAME}" = "release" ] ; then
+      # Release build display version: left to Mapper build system
+      VERSION_DISPLAY=""
+    else
+      # Default display version: source branch name + build number
+      VERSION_DISPLAY="${BUILD_SOURCEBRANCHNAME} v${BUILD_BUILDNUMBER}"
+    fi
+    echo "##vso[task.setVariable variable=VERSION_DISPLAY]${VERSION_DISPLAY}"
+    echo "##vso[task.setVariable variable=SOURCE_DIR]${BUILD_SOURCESDIRECTORY}"
+    echo "##vso[task.setVariable variable=TEST_RESULTS]${BUILD_SOURCESDIRECTORY}/build/default/openorienteering-mapper-ci/Testing"
+    echo "##vso[task.setVariable variable=CMAKE_WRAPPING]-E env bash ${BUILD_SOURCESDIRECTORY}/ci/shell.sh cmake"
+    echo "##vso[task.setVariable variable=TARGET_SUFFIX]${TARGET_SUFFIX}"
+    echo "##vso[task.setVariable variable=CTEST_OUTPUT_ON_FAILURE]1"
+    if [ -z "${OUTPUT_SUFFIX}" ] ; then
+      echo "##vso[task.setVariable variable=OUTPUT_SUFFIX]${TARGET_SUFFIX}"
+    fi
+    if [ -z "${APP_ID_SUFFIX}" -a -n "${VERSION_DISPLAY}" ] ; then
+      echo "##vso[task.setVariable variable=APP_ID_SUFFIX].${BUILD_SOURCEBRANCHNAME}"
+    fi
+    env | sort
+  displayName: 'Update environment'
+
+- task: DownloadPipelineArtifact@0
+  inputs:
+    pipelineId: $(openorienteering.superbuild.buildId)
+    artifactName: 'superbuild-$(IMAGE_NAME)$(OUTPUT_SUFFIX)'
+    targetPath: $(SUPERBUILD_INSTALL_DIR)
+  displayName: 'Download superbuild artifacts'
+
+- bash: |
+    set -x
+    set -e
+    
+    if [ -d $(SUPERBUILD_INSTALL_DIR)/bin ] ; then
+      chmod +x $(SUPERBUILD_INSTALL_DIR)/bin/*
+      if [ -n "${TARGET}" ] ; then
+        chmod +x $(SUPERBUILD_INSTALL_DIR)/${TARGET}/toolchain/bin/*
+      fi
+    fi
+  displayName: 'Prepare common build tools'
+

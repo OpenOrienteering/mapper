@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,7 +72,7 @@
 #include "gui/map/map_widget.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/color_dropdown.h"
-#include "util/backports.h"
+#include "util/backports.h"  // IWYU pragma: keep
 
 // IWYU pragma: no_forward_declare QBoxLayout
 // IWYU pragma: no_forward_declare QGridLayout
@@ -103,7 +103,7 @@ PointSymbolEditorWidget::PointSymbolEditorWidget(MapEditorController* controller
 	}
 	
 	oriented_to_north = new QCheckBox(tr("Always oriented to north (not rotatable)"));
-	oriented_to_north->setChecked(!symbol->rotatable);
+	oriented_to_north->setChecked(!symbol->isRotatable());
 	
 	QLabel* elements_label = Util::Headline::create(tr("Elements"));
 	element_list = new QListWidget();
@@ -343,7 +343,7 @@ void PointSymbolEditorWidget::setVisible(bool visible)
 	QWidget::setVisible(visible);
 }
 
-bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
+bool PointSymbolEditorWidget::changeCurrentCoordinate(const MapCoordF& new_coord)
 {
 	Object* object = getCurrentElementObject();
 	if (object == midpoint_object)
@@ -368,7 +368,7 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 		auto coord_index = MapCoordVector::size_type(table_row);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
 		
-		MapCoord coord = path->getCoordinate(coord_index);
+		auto coord = path->getCoordinate(coord_index);
 		coord.setX(new_coord.x());
 		coord.setY(new_coord.y() - offset_y);
 		path->setCoordinate(coord_index, coord);
@@ -380,7 +380,7 @@ bool PointSymbolEditorWidget::changeCurrentCoordinate(MapCoordF new_coord)
 	return true;
 }
 
-bool PointSymbolEditorWidget::addCoordinate(MapCoordF new_coord)
+bool PointSymbolEditorWidget::addCoordinate(const MapCoordF& new_coord)
 {
 	Object* object = getCurrentElementObject();
 	if (object == midpoint_object)
@@ -427,7 +427,7 @@ void PointSymbolEditorWidget::initElementList()
 
 void PointSymbolEditorWidget::orientedToNorthClicked(bool checked)
 {
-	symbol->rotatable = !checked;
+	symbol->setRotatable(!checked);
 	emit symbolEdited();
 }
 
@@ -670,7 +670,7 @@ void PointSymbolEditorWidget::lineClosedClicked(bool checked)
 	auto path = static_cast<PathObject*>(object);
 	
 	if (!checked && path->getCoordinateCount() >= 4 && path->getCoordinate(path->getCoordinateCount() - 4).isCurveStart())
-		path->getCoordinate(path->getCoordinateCount() - 4).setCurveStart(false);
+		path->getCoordinateRef(path->getCoordinateCount() - 4).setCurveStart(false);
 	
 	Q_ASSERT(!path->parts().empty());
 	path->parts().front().setClosed(checked, true);
@@ -708,7 +708,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		}
 		else if (object->getType() == Object::Path)
 		{
-			auto path = static_cast<PathObject*>(object);
+			auto path = static_cast<const PathObject*>(object);
 			Q_ASSERT(coord_index < path->getCoordinateCount());
 			coord = path->getCoordinate(coord_index);
 		}
@@ -749,7 +749,7 @@ void PointSymbolEditorWidget::coordinateChanged(int row, int column)
 		Q_ASSERT(object->getType() == Object::Path);
 		auto path = static_cast<PathObject*>(object);
 		Q_ASSERT(coord_index < path->getCoordinateCount());
-		MapCoord coord = path->getCoordinate(coord_index);
+		auto coord = path->getCoordinate(coord_index);
 		coord.setCurveStart(coords_table->item(row, column)->checkState() == Qt::Checked);
 		path->setCoordinate(coord_index, coord);
 		
@@ -881,9 +881,9 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	
 	MapCoordF coordF(0, 0);
 	if (object->getType() == Object::Point)
-		coordF = static_cast<PointObject*>(object)->getCoordF();
+		coordF = static_cast<const PointObject*>(object)->getCoordF();
 	else if (object->getType() == Object::Path)
-		coordF = MapCoordF(static_cast<PathObject*>(object)->getCoordinate(coord_index));
+		coordF = MapCoordF(static_cast<const PathObject*>(object)->getCoordinate(coord_index));
 	
 	QLocale locale;
 	coords_table->item(row, 0)->setText(locale.toString(coordF.x(), 'f', 3));
@@ -891,7 +891,7 @@ void PointSymbolEditorWidget::updateCoordsRow(int row)
 	
 	if (object->getType() == Object::Path)
 	{
-		auto path = static_cast<PathObject*>(object);
+		auto path = static_cast<const PathObject*>(object);
 		bool has_curve_start_box = coord_index+3 < path->getCoordinateCount()
 		                           && (!path->getCoordinate(coord_index+1).isCurveStart() && !path->getCoordinate(coord_index+2).isCurveStart())
 		                           && (row <= 0 || !path->getCoordinate(coord_index-1).isCurveStart())
@@ -917,7 +917,7 @@ void PointSymbolEditorWidget::updateDeleteCoordButton()
 	
 	if (!is_point)
 	{
-		auto path = static_cast<PathObject*>(getCurrentElementObject());
+		auto path = static_cast<const PathObject*>(getCurrentElementObject());
 		for (int i = 1; i < 4; i++)
 		{
 			int row = coords_table->currentRow() - i;
@@ -989,7 +989,7 @@ void PointSymbolEditorTool::init()
 	MapEditorTool::init();
 }
 
-bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, MapCoordF map_coord, MapWidget* map_widget)
+bool PointSymbolEditorTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* map_widget)
 {
 	Q_UNUSED(map_widget);
 	if (event->button() == Qt::LeftButton)

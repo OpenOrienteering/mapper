@@ -72,10 +72,10 @@ struct TestMapEditor
 	TestMapEditor& operator=(const TestMapEditor&) = delete;
 	~TestMapEditor();
 	
-	void simulateClick(QPoint pos);
-	void simulateClick(QPointF pos);
-	void simulateDrag(QPoint start_pos, QPoint end_pos);
-	void simulateDrag(QPointF start_pos, QPointF end_pos);
+	void simulateClick(const QPoint& pos);
+	void simulateClick(const QPointF& pos);
+	void simulateDrag(const QPoint& start_pos, const QPoint& end_pos);
+	void simulateDrag(const QPointF& start_pos, const QPointF& end_pos);
 };
 
 
@@ -126,22 +126,22 @@ TestMapEditor::TestMapEditor(Map* map)
 
 TestMapEditor::~TestMapEditor()
 {
-	// The window may still be refered to by tools which are scheduled for
+	// The window may still be referred to by tools which are scheduled for
 	// deleteLater(), so we need to postpone the window deletion, too.
 	window->deleteLater();
 }
 
-void TestMapEditor::simulateClick(QPoint pos)
+void TestMapEditor::simulateClick(const QPoint& pos)
 {
 	QTest::mouseClick(map_widget, Qt::LeftButton, nullptr, pos);
 }
 
-void TestMapEditor::simulateClick(QPointF pos)
+void TestMapEditor::simulateClick(const QPointF& pos)
 {
 	simulateClick(pos.toPoint());
 }
 
-void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
+void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 {
 	QTest::mousePress(map_widget, Qt::LeftButton, nullptr, start_pos);
 	
@@ -154,7 +154,7 @@ void TestMapEditor::simulateDrag(QPoint start_pos, QPoint end_pos)
 	QTest::mouseRelease(map_widget, Qt::LeftButton, nullptr, end_pos);
 }
 
-void TestMapEditor::simulateDrag(QPointF start_pos, QPointF end_pos)
+void TestMapEditor::simulateDrag(const QPointF& start_pos, const QPointF& end_pos)
 {
 	simulateDrag(start_pos.toPoint(), end_pos.toPoint());
 }
@@ -178,11 +178,10 @@ void ToolsTest::editTool()
 	editor.editor->setTool(tool);
 	
 	// Move the first coordinate of the line object
-	MapWidget* map_widget = editor.map_widget;
-	PathObject* object = map.line_object;
+	const MapWidget* map_widget = editor.map_widget;
+	const PathObject* object = map.line_object;
 	
-	const MapCoord& coord = object->getCoordinate(0);
-	QPointF drag_start_pos = map_widget->mapToViewport(coord);
+	QPointF drag_start_pos = map_widget->mapToViewport(object->getCoordinate(0));
 	QPointF drag_end_pos = drag_start_pos + QPointF(0, -50);
 	
 	// Clear selection.
@@ -197,7 +196,7 @@ void ToolsTest::editTool()
 	editor.simulateDrag(drag_start_pos, drag_end_pos);
 	
 	// Check position deviation
-	QPointF difference = map_widget->mapToViewport(coord) - drag_end_pos;
+	QPointF difference = map_widget->mapToViewport(object->getCoordinate(0)) - drag_end_pos;
 	QCOMPARE(qMax(qAbs(difference.x()), 0.1), 0.1);
 	QCOMPARE(qMax(qAbs(difference.y()), 0.1), 0.1);
 	
@@ -212,7 +211,9 @@ void ToolsTest::editTool()
  * Normally, the "offscreen" plugin would be the correct one.
  * However, it bails out with a QFontDatabase error (cf. QTBUG-33674)
  */
-auto qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");
+namespace  {
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
 
 
 QTEST_MAIN(ToolsTest)

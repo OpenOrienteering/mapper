@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2018 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,9 +32,11 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QScroller>
+#include <QSettings>
 #include <QVBoxLayout>
 
 #include "settings.h"
+#include "core/app_permissions.h"
 #include "core/storage_location.h" // IWYU pragma: keep
 #include "fileformats/file_format_registry.h"
 #include "gui/home_screen_controller.h"
@@ -152,6 +154,10 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	
 	menu_layout->addStretch(1);
 	
+	auto* button_touch = makeButton(tr("Touch mode"), QIcon{QLatin1String(":/images/tool-touch-cursor.png")});
+	button_touch->setCheckable(true);
+	button_touch->setChecked(Settings::getInstance().touchModeEnabled());
+	menu_layout->addWidget(button_touch);
 	QAbstractButton* button_settings = makeButton(
 	  tr("Settings"), QIcon(QString::fromLatin1(":/images/settings.png")));
 	menu_layout->addWidget(button_settings);
@@ -167,6 +173,7 @@ QWidget* HomeScreenWidgetDesktop::makeMenuWidget(HomeScreenController* controlle
 	
 	connect(button_new_map, &QAbstractButton::clicked, window, &MainWindow::showNewMapWizard);
 	connect(button_open_map, &QAbstractButton::clicked, window, &MainWindow::showOpenDialog);
+	connect(button_touch, &QAbstractButton::toggled, this, [](bool enabled) { Settings::getInstance().setTouchModeEnabled(enabled); });
 	connect(button_settings, &QAbstractButton::clicked, window, &MainWindow::showSettings);
 	connect(button_about, &QAbstractButton::clicked, window, &MainWindow::showAbout);
 	connect(button_help, &QAbstractButton::clicked, window, &MainWindow::showHelp);
@@ -279,7 +286,7 @@ void HomeScreenWidgetDesktop::setRecentFiles(const QStringList& files)
 void HomeScreenWidgetDesktop::recentFileClicked(QListWidgetItem* item)
 {
 	setEnabled(false);
-	qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+	QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 	QString path = item->data(pathRole()).toString();
 	controller->getWindow()->openPath(path);
 	setEnabled(true);
@@ -334,7 +341,7 @@ HomeScreenWidgetMobile::HomeScreenWidgetMobile(HomeScreenController* controller,
 	layout->addWidget(title_label);
 	
 	file_list_widget = makeFileListWidget();
-	connect(file_list_widget, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::fileClicked);
+	connect(file_list_widget, &QListWidget::itemClicked, this, &HomeScreenWidgetMobile::itemClicked);
 	layout->addWidget(file_list_widget, 1);
 	
 	auto settings_button = new QPushButton(HomeScreenWidgetDesktop::tr("Settings"));
@@ -412,9 +419,11 @@ void HomeScreenWidgetMobile::showSettings()
 	dialog.exec();
 }
 
-void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
+void HomeScreenWidgetMobile::itemClicked(QListWidgetItem* item)
 {
 	auto file_path = item->data(pathRole()).toString();
+	auto hint = static_cast<StorageLocation::Hint>(item->data(hintRole()).toInt());
+	
 	if (file_path == QLatin1String("doc:"))
 	{
 #ifdef Q_OS_ANDROID
@@ -427,21 +436,49 @@ void HomeScreenWidgetMobile::fileClicked(QListWidgetItem* item)
 			history.pop_back();
 		updateFileListWidget();
 	}
+	else if (hint == StorageLocation::HintNoAccess)
+	{
+		AppPermissions::requestPermission(AppPermissions::StorageAccess, this, &HomeScreenWidgetMobile::permissionRequestDone);
+	}
 	else if (QFileInfo(file_path).isDir())
 	{
-		history.push_back({file_path, StorageLocation::Hint(item->data(hintRole()).toInt())});
+		history.emplace_back(file_path, hint);
 		updateFileListWidget();
 	}
 	else
 	{
-		auto hint_text = item->data(hintRole()).toString();
-		if (!hint_text.isEmpty())
-			QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
-		
 		setEnabled(false);
-		qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
+		if (hint != StorageLocation::HintNormal)
+		{
+			auto hint_text = StorageLocation::fileHintTextTemplate(hint);
+			QMessageBox::warning(this, ::OpenOrienteering::MainWindow::tr("Warning"), hint_text.arg(item->data(Qt::DisplayRole).toString()));
+		}
+		
+		QApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
 		controller->getWindow()->openPath(file_path);
 		setEnabled(true);
+	}
+}
+
+void HomeScreenWidgetMobile::permissionRequestDone()
+{
+	auto* item = file_list_widget->currentItem();
+	if (AppPermissions::checkPermission(AppPermissions::StorageAccess) == AppPermissions::Granted
+	    && item != nullptr)
+	{
+		// We only handle permissions for top-level storage locations.
+		auto path = item->data(pathRole()).toString();
+		StorageLocation::refresh();
+		const auto locations = StorageLocation::knownLocations();
+		for (const auto& location : *locations)
+		{
+			if (QFileInfo(location.path()).filePath() == path)
+			{
+				item->setData(hintRole(), location.hint());
+				itemClicked(item);
+				break;
+			}
+		}
 	}
 }
 
@@ -475,6 +512,7 @@ QListWidget* HomeScreenWidgetMobile::makeFileListWidget()
 void HomeScreenWidgetMobile::updateFileListWidget()
 {
 	file_list_widget->clear();
+	
 	if (history.empty())
 	{
 		// First screen.
@@ -490,7 +528,7 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 		
 #ifdef Q_OS_ANDROID
 		// If there are no recent files, offer a link to the Android storage manual page.
-		if (recent_files.isEmpty())
+		if (file_list_widget->count() == 0)
 		{
 			auto* help_item = new QListWidgetItem(tr("Help"));
 			help_item->setData(pathRole(), QLatin1String("doc:"));
@@ -535,13 +573,14 @@ void HomeScreenWidgetMobile::updateFileListWidget()
 			icon = file_list_widget->style()->standardIcon(QStyle::SP_MessageBoxWarning);
 			break;
 		case StorageLocation::HintNormal:
+		case StorageLocation::HintNoAccess:
 		case StorageLocation::HintInvalid:
 			break;
 		}
 		
 		constexpr auto filters = QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot;
 		constexpr auto flags = QDir::DirsLast | QDir::Name | QDir::IgnoreCase | QDir::LocaleAware;
-		auto info_list = QDir(location.path()).entryInfoList(filters, flags);
+		auto const info_list = QDir(location.path()).entryInfoList(filters, flags);
 		for (const auto& file_info : info_list)
 		{
 			addItemToFileList(file_info, location.hint(), icon);
@@ -558,31 +597,43 @@ void HomeScreenWidgetMobile::addItemToFileList(const QFileInfo& file_info, int h
 void HomeScreenWidgetMobile::addItemToFileList(const QString& label, const QFileInfo& file_info, int hint, const QIcon& icon)
 {
 	const auto file_path = file_info.filePath();
-	const auto* format = FileFormats.findFormatForFilename(file_path);
+	if (hint == StorageLocation::HintNoAccess)
+	{
+		// When there is no access, avoid extra QFileInfo calls.
+		auto* new_item = new QListWidgetItem(label);
+		new_item->setData(pathRole(), file_path);
+		new_item->setData(hintRole(), hint);
+		new_item->setToolTip(StorageLocation::fileHintTextTemplate(StorageLocation::HintNoAccess).arg(file_path));
+		new_item->setIcon(style()->standardIcon(QStyle::SP_MessageBoxQuestion));
+		file_list_widget->addItem(new_item);
+		return;
+	}
+	
+	const auto* format = FileFormats.findFormatForFilename(file_path, &FileFormat::supportsReading);
 	if (file_info.isDir() || 
 	    (format && format->fileType() == FileFormat::MapFile))
 	{
 		auto* new_item = new QListWidgetItem(label);
 		new_item->setData(pathRole(), file_path);
+		new_item->setData(hintRole(), hint);
 		new_item->setToolTip(file_path);
 		if (file_info.isDir())
 		{
-			// Use dir icon, numerical hint.
+			// Use dir icon.
 			new_item->setIcon(icon.isNull() ? file_list_widget->style()->standardIcon(QStyle::SP_DirIcon) : icon);
-			new_item->setData(hintRole(), hint);
 		}
 		else if (hint == StorageLocation::HintReadOnly
-		         || (file_info.isWritable() && format->supportsExport()))
+		         || (file_info.isWritable() && format->supportsWriting()))
 		{
-			// Use icon/hint as-is.
+			// Use icon as-is.
 			new_item->setIcon(icon);
-			new_item->setData(hintRole(), StorageLocation(file_path, StorageLocation::Hint(hint)).hintText());
 		}
 		else
 		{
 			// Override with read-only warning.
+			new_item->setData(hintRole(), StorageLocation::HintReadOnly);
 			new_item->setIcon(file_list_widget->style()->standardIcon(QStyle::SP_MessageBoxWarning));
-			new_item->setData(hintRole(), StorageLocation(file_path, StorageLocation::HintReadOnly).hintText());
+			new_item->setToolTip(StorageLocation::fileHintTextTemplate(StorageLocation::HintReadOnly).arg(file_path));
 		}
 		file_list_widget->addItem(new_item);
 	}

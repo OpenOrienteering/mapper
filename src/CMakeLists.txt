@@ -1,6 +1,6 @@
 #
 #    Copyright 2012-2014 Thomas Schöps
-#    Copyright 2012-2017 Kai Pastor
+#    Copyright 2012-2018 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -17,10 +17,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
 
-find_package(Qt5Core 5.3 REQUIRED)
+find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Sensors)
-find_package(Qt5Positioning)
 
 if(ANDROID)
 	find_package(Qt5AndroidExtras REQUIRED)
@@ -44,6 +42,7 @@ set(Mapper_Common_SRCS
   mapper_resource.cpp
   settings.cpp
   
+  core/app_permissions.cpp
   core/autosave.cpp
   core/crs_template.cpp
   core/crs_template_implementation.cpp
@@ -58,6 +57,7 @@ set(Mapper_Common_SRCS
   core/map_view.cpp
   core/path_coord.cpp
   core/storage_location.cpp
+  core/track.cpp
   core/virtual_coord_vector.cpp
   core/virtual_path.cpp
   
@@ -82,11 +82,12 @@ set(Mapper_Common_SRCS
   fileformats/file_format.cpp
   fileformats/file_format_registry.cpp
   fileformats/file_import_export.cpp
-  fileformats/native_file_format.cpp
   fileformats/ocad8_file_format.cpp
   fileformats/ocd_file_export.cpp
   fileformats/ocd_file_format.cpp
   fileformats/ocd_file_import.cpp
+  fileformats/ocd_georef_fields.cpp
+  fileformats/ocd_icon.cpp
   fileformats/ocd_types.cpp
   fileformats/xml_file_format.cpp
   
@@ -120,6 +121,7 @@ set(Mapper_Common_SRCS
   
   gui/symbols/area_symbol_settings.cpp
   gui/symbols/combined_symbol_settings.cpp
+  gui/symbols/icon_properties_widget.cpp
   gui/symbols/line_symbol_settings.cpp
   gui/symbols/point_symbol_editor_widget.cpp
   gui/symbols/point_symbol_settings.cpp
@@ -152,17 +154,13 @@ set(Mapper_Common_SRCS
   gui/widgets/template_list_widget.cpp
   gui/widgets/text_alignment_widget.cpp
   gui/widgets/text_browser.cpp
-  
-  sensors/compass.cpp
-  sensors/gps_display.cpp
-  sensors/gps_temporary_markers.cpp
-  sensors/gps_track.cpp
-  sensors/gps_track_recorder.cpp
+  gui/widgets/toast.cpp
   
   templates/template.cpp
   templates/template_adjust.cpp
   templates/template_dialog_reopen.cpp
   templates/template_image.cpp
+  templates/template_image_open_dialog.cpp
   templates/template_map.cpp
   templates/template_position_dock_widget.cpp
   templates/template_positioning_dialog.cpp
@@ -204,9 +202,9 @@ set(Mapper_Common_SRCS
   undo/undo.cpp
   undo/undo_manager.cpp
   
-  util/dxfparser.cpp
   util/encoding.cpp
   util/item_delegates.cpp
+  util/mapper_service_proxy.cpp
   util/matrix.cpp
   util/overriding_shortcut.cpp
   util/recording_translator.cpp
@@ -219,7 +217,6 @@ set(Mapper_Common_SRCS
 
 # Extra header to be shown in the IDE or to be translated
 set(Mapper_Common_HEADERS
-  core/autosave_p.h
   core/image_transparency_fixup.h
   core/objects/object_operations.h
   core/renderables/renderable.h
@@ -269,11 +266,10 @@ target_link_libraries(Mapper_Common
 )
 foreach(lib
   mapper-gdal
+  mapper-sensors
   printsupport
   Qt5::AndroidExtras
   Qt5::Network
-  Qt5::Positioning
-  Qt5::Sensors
 )
 	if(TARGET ${lib})
 		target_link_libraries(Mapper_Common ${lib})
@@ -285,6 +281,10 @@ target_compile_definitions(Mapper_Common PRIVATE
   QT_USE_QSTRINGBUILDER
   # MAPPER_ENABLE_COMPATIBILITY
 )
+target_compile_definitions(Mapper_Common INTERFACE
+  MAPPER_COMMON_LIB
+)
+
 
 mapper_translations_sources(${Mapper_Common_SRCS} ${Mapper_Common_HEADERS})
 
@@ -325,6 +325,15 @@ install(TARGETS Mapper
 )
 
 
+# Java sources for Android
+# This target's sources will be build with the APK.
+
+add_custom_target(Mapper_Android SOURCES
+  android/java/org/openorienteering/mapper/MapperActivity.java
+  android/java/org/openorienteering/mapper/MapperService.java
+)
+
+
 # Workaround Qt private include dir issue
 # Cf. https://bugreports.qt.io/browse/QTBUG-37417
 
@@ -342,5 +351,5 @@ foreach(module ${PRIVATE_MODULES})
 			endif()
 		endforeach()
 	endif()
-	target_include_directories(Mapper_Common PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
+	target_include_directories(Mapper_Common SYSTEM PRIVATE ${${qt5_module}_PRIVATE_INCLUDE_DIRS})
 endforeach()

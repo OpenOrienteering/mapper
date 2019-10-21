@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -33,7 +33,6 @@
 
 #include "symbol.h"
 
-class QIODevice;
 class QRectF;
 class QXmlStreamReader;
 class QXmlStreamWriter;
@@ -101,7 +100,7 @@ public:
 		 * 
 		 * \todo Switch to qreal when legacy native file format is dropped.
 		 */
-		float angle;
+		qreal angle;
 		/** Distance between parallel lines, as usual in 0.001mm */
 		int line_spacing;
 		/** Offset of the first line from the origin */
@@ -129,12 +128,11 @@ public:
 		
 		/** Creates a default fill pattern */
 		FillPattern() noexcept;
-		/** Loads the pattern in the old "native" format */
-		bool load(QIODevice* file, int version, Map* map);
+		
 		/** Saves the pattern in xml format */
 		void save(QXmlStreamWriter& file, const Map& map) const;
 		/** Loads the pattern in xml format */
-		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version);
 		/**
 		 * Checks if the pattern settings are equal to the other.
 		 * TODO: should the transient name really be compared?!
@@ -183,13 +181,13 @@ public:
 		/**
 		 * Creates renderables for this pattern to fill the area surrounded by the outline.
 		 * @param outline A renderable giving the extent and outline.
-		 * @param delta_rotation Rotation offest which is added to the pattern angle.
+		 * @param delta_rotation Rotation offset which is added to the pattern angle.
 		 * @param pattern_origin Origin point for line / point placement.
 		 * @param output Created renderables will be inserted here.
 		 */
 		void createRenderables(
 			const AreaRenderable& outline,
-			float delta_rotation,
+			qreal delta_rotation,
 			const MapCoord& pattern_origin,
 			ObjectRenderables& output
 		) const;
@@ -198,7 +196,7 @@ public:
 		template <int type>
 		void createRenderables(
 			const AreaRenderable& outline,
-			float delta_rotation,
+			qreal delta_rotation,
 			const MapCoord& pattern_origin,
 			const QRectF& point_extent,
 			LineSymbol* line,
@@ -212,7 +210,7 @@ public:
 			MapCoordF first, MapCoordF second,
 			qreal delta_offset,
 			LineSymbol* line,
-			float rotation,
+			qreal rotation,
 			const AreaRenderable& outline,
 			ObjectRenderables& output
 		) const;
@@ -221,7 +219,7 @@ public:
 		void createPointPatternLine(
 			MapCoordF first, MapCoordF second,
 			qreal delta_offset,
-			float rotation,
+			qreal rotation,
 			const AreaRenderable& outline,
 			ObjectRenderables& output
 		) const;
@@ -236,8 +234,12 @@ public:
 	
 	AreaSymbol() noexcept;
 	~AreaSymbol() override;
-	Symbol* duplicate(const MapColorMap* color_map = nullptr) const override;
 	
+protected:
+	explicit AreaSymbol(const AreaSymbol& proto);
+	AreaSymbol* duplicate() const override;
+	
+public:
 	void createRenderables(
 	        const Object *object,
 	        const VirtualCoordVector &coords,
@@ -265,9 +267,10 @@ public:
 	        const MapColor* color) const;
 	
 	
-	void colorDeleted(const MapColor* color) override;
+	void colorDeletedEvent(const MapColor* color) override;
 	bool containsColor(const MapColor* color) const override;
 	const MapColor* guessDominantColor() const override;
+	void replaceColors(const MapColorMap& color_map) override;
 	void scale(double factor) override;
 	
 	qreal dimensionForIcon() const override;
@@ -284,11 +287,8 @@ public:
 	SymbolPropertiesWidget* createPropertiesWidget(SymbolSettingDialog* dialog) override;
 	
 protected:
-#ifndef NO_NATIVE_FILE_FORMAT
-	bool loadImpl(QIODevice* file, int version, Map* map) override;
-#endif
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
-	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) override;
 	
 	/**
 	 * Compares AreaSymbol objects for equality.
@@ -297,9 +297,9 @@ protected:
 	 */
 	bool equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensitivity) const override;
 	
+	std::vector<FillPattern> patterns;
 	const MapColor* color;
 	int minimum_area;	// in mm^2 // FIXME: unit (factor) wrong
-	std::vector<FillPattern> patterns;
 };
 
 
