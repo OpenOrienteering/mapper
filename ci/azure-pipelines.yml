@@ -111,7 +111,7 @@ jobs:
 
 - job: Linux_Coverage
   displayName: Linux (Debug, coverage)
-  dependsOn: Linux_clazy
+  dependsOn: macOS
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
