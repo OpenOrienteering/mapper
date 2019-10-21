@@ -1614,25 +1614,37 @@ void MapEditorController::detach()
 		window->setWindowState(window->windowState() & ~Qt::WindowFullScreen);
 }
 
+
+void MapEditorController::setWindowStateChanged()
+{
+	if (!window_state_changed && !mobile_mode && mode != SymbolEditor)
+	{
+		window_state_changed = true;
+		QTimer::singleShot(10, this, &MapEditorController::saveWindowState);
+	}
+}
+
 void MapEditorController::saveWindowState()
 {
-	if (!mobile_mode && mode != SymbolEditor)
+	if (window_state_changed)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
 		settings.setValue(QString::fromLatin1("state"), window->saveState());
+		window_state_changed = false;
 	}
 }
 
 void MapEditorController::restoreWindowState()
 {
-	if (!mobile_mode)
+	if (!mobile_mode && mode != SymbolEditor)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
 		window->restoreState(settings.value(QString::fromLatin1("state")).toByteArray());
 		if (toolbar_mapparts && mappart_selector_box)
 			toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+		window_state_changed = false;
 	}
 }
 
@@ -3385,7 +3397,7 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 		if (geometry.height() > max_height)
 			geometry.setHeight(max_height);
 		dock_widget->setGeometry(geometry);
-		connect(dock_widget, &QDockWidget::dockLocationChanged, this, &MapEditorController::saveWindowState);
+		connect(dock_widget, &QDockWidget::dockLocationChanged, this, &MapEditorController::setWindowStateChanged);
 	}
 }
 
@@ -4198,7 +4210,7 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 {
 	if (editor)
 	{
-		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::saveWindowState);
+		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::setWindowStateChanged);
 	}
 	
 	if (action)
