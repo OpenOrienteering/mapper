@@ -1641,9 +1641,16 @@ void MapEditorController::restoreWindowState()
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
-		window->restoreState(settings.value(QString::fromLatin1("state")).toByteArray());
+		auto const key = QString::fromLatin1("state");
+		auto const state = settings.value(key).toByteArray();
+		settings.remove(key);  // Avoid repeated crash from invalid data, GH-1366.
+		settings.sync();
+		
+		window->restoreState(state);
 		if (toolbar_mapparts && mappart_selector_box)
 			toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+		
+		settings.setValue(key, state);  // Save valid state again.
 		window_state_changed = false;
 	}
 }
