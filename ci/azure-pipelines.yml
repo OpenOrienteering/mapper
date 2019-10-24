@@ -48,7 +48,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
@@ -60,7 +60,7 @@ jobs:
       parameters:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          "-DCMAKE_PREFIX_PATH=$(HOME)/superbuild\;/usr"
           -DCMAKE_FIND_FRAMEWORK=LAST
           -DCMAKE_FIND_APPBUNDLE=LAST
           -DMapper_CI_ENABLE_GDAL=0
@@ -74,7 +74,7 @@ jobs:
       parameters:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          "-DCMAKE_PREFIX_PATH=$(HOME)/superbuild\;/usr"
           -DCMAKE_FIND_FRAMEWORK=LAST
           -DCMAKE_FIND_APPBUNDLE=LAST
           -DMapper_CI_ENABLE_GDAL=1
@@ -89,7 +89,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CLAZY_VERSION: 1.5
     CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
     CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
@@ -115,7 +115,7 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CC: gcc
     CFLAGS: -fprofile-arcs -ftest-coverage
     CXX: g++
@@ -140,7 +140,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
   pool:
@@ -157,8 +157,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -173,7 +173,7 @@ jobs:
   dependsOn: Android_armv7
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
@@ -190,8 +190,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -206,7 +206,7 @@ jobs:
   dependsOn: Android_x86_64
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
@@ -223,8 +223,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -239,7 +239,7 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
@@ -256,8 +256,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -274,7 +274,7 @@ jobs:
   condition: False
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-w64-mingw32
     TARGET_SUFFIX: -$(TARGET)
   pool:
