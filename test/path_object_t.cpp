@@ -182,8 +182,8 @@ void PathObjectTest::constructorTest()
 	// PathObject(const Symbol* symbol = nullptr)
 	
 	PathObject no_symbol{};
-	QCOMPARE(no_symbol.getMap(), nullptr);
-	QCOMPARE(no_symbol.getSymbol(), nullptr);
+	QCOMPARE(no_symbol.getMap(), static_cast<Map*>(nullptr));
+	QCOMPARE(no_symbol.getSymbol(), static_cast<Symbol*>(nullptr));
 	QVERIFY(no_symbol.getRawCoordinateVector().empty());
 	QVERIFY(no_symbol.parts().empty());
 	QCOMPARE(no_symbol.getPatternOrigin(), MapCoord());
@@ -195,7 +195,7 @@ void PathObjectTest::constructorTest()
 	}
 	
 	PathObject empty_red{Map::getCoveringRedLine()};
-	QCOMPARE(empty_red.getMap(), nullptr);
+	QCOMPARE(empty_red.getMap(), static_cast<Map*>(nullptr));
 	QCOMPARE(empty_red.getSymbol(), Map::getCoveringRedLine());
 	QVERIFY(empty_red.getRawCoordinateVector().empty());
 	QVERIFY(empty_red.parts().empty());
@@ -248,7 +248,7 @@ void PathObjectTest::constructorTest()
 	auto piece = MapCoordVector::size_type(5);
 	QVERIFY(red_area.getRawCoordinateVector().size() > piece);
 	PathObject inner_piece{Map::getCoveringWhiteLine(), red_area, piece};
-	QCOMPARE(inner_piece.getMap(), nullptr);  // Is this the desired behaviour?
+	QCOMPARE(inner_piece.getMap(), static_cast<Map*>(nullptr));  // Is this the desired behaviour?
 	QCOMPARE(inner_piece.getSymbol(), Map::getCoveringWhiteLine());
 	QVERIFY(std::equal(
 	            begin(inner_piece.getRawCoordinateVector()),
