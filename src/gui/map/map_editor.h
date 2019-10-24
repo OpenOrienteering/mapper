@@ -550,10 +550,25 @@ public slots:
 	 *  such as with grid, with templates, with overprinting simulation. */
 	void setViewOptionsEnabled(bool enabled = true);
 	
-	/** Save the current toolbar and dock widget positions */
+	/**
+	 * Indicates a change of the current toolbar and dock widget positions,
+	 * and schedules saving.
+	 */
+	void setWindowStateChanged();
+	
+private:
+	/**
+	 * Immediately saves the window state if needed.
+	 * 
+	 * This will save the current toolbar and dock widget positions if the
+	 * window state is marked as changed.
+	 * After saving, it marks the state as clean.
+	 */
 	void saveWindowState();
 	
-	/** Restore previously saved toolbar and dock widget positions */
+	/**
+	 * Restores previously saved toolbar and dock widget positions.
+	 */
 	void restoreWindowState();
 	
 signals:
@@ -642,6 +657,7 @@ private:
 	
 	OperatingMode mode;
 	bool mobile_mode;
+	bool window_state_changed = false;
 	
 	MapEditorTool* current_tool;
 	MapEditorTool* override_tool;
