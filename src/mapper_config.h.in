@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2017, 2019 Kai Pastor
  *    
  *    This file is part of OpenOrienteering.
  * 
@@ -26,6 +26,7 @@
 
 #define APP_NAME qApp->translate("Global", QT_TRANSLATE_NOOP("Global", "OpenOrienteering Mapper"))
 #define APP_VERSION "@Mapper_VERSION_DISPLAY@"
+#define APP_COPYRIGHT "@Mapper_COPYRIGHT@"
 #define MAPPER_HELP_NAMESPACE "@Mapper_HELP_NAMESPACE@"
 
 #cmakedefine Mapper_DEBUG_TRANSLATIONS

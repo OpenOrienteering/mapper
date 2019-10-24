@@ -30,6 +30,7 @@ endif()
 # Project declaration
 
 project(Mapper VERSION 0.9.0 LANGUAGES CXX C)
+set(Mapper_COPYRIGHT "(C) 2019 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -40,8 +41,6 @@ elseif(CMAKE_BUILD_TYPE AND NOT CMAKE_BUILD_TYPE MATCHES "Release|MinSizeRel|Rel
 else()
 	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION}")
 endif()
-
-set(Mapper_COPYRIGHT "(C) 2012-2018 The OpenOrienteering developers")
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
