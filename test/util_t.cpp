@@ -133,31 +133,31 @@ void UtilTest::pointsFormCorner_data()
 	QTest::addColumn<qreal>("tolerance");
 	QTest::addColumn<bool>("expected_result");
 	
-	QTest::addRow("Straight line, zero tolerance")
+	QTest::newRow("Straight line, zero tolerance")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 1, 0 }
 	        << 0.0 << false;	           
-	QTest::addRow("Straight line, small tolerance")
+	QTest::newRow("Straight line, small tolerance")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 1, 0 }
 	        << 0.01 << false;	           
-	QTest::addRow("Bent line, well within tolerance")
+	QTest::newRow("Bent line, well within tolerance")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 200, 1 }
 	        << 0.01 << false;	           
-	QTest::addRow("Bent line, exactly within tolerance")
+	QTest::newRow("Bent line, exactly within tolerance")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 100, 1 }
 	        << 0.01 << false;	           
-	QTest::addRow("Bent line, slightly outside tolerance")
+	QTest::newRow("Bent line, slightly outside tolerance")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 99, 1 }
 	        << 0.01 << true;
-	QTest::addRow("Right angle")
+	QTest::newRow("Right angle")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 0, 1 }
 	        << 0.01 << true;
-	QTest::addRow("Acute angle")
+	QTest::newRow("Acute angle")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { -1, 1 }
 	        << 0.01 << true;
-	QTest::addRow("Zero angle")
+	QTest::newRow("Zero angle")
 	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { -1, 0 }
 	        << 0.01 << true;
-	QTest::addRow("Pathologic case")
+	QTest::newRow("Pathologic case")
 	        << MapCoord { -1, 0 } << MapCoord { -1, 0 } << MapCoord { -1, 0 }
 	        << 0.01 << false;
 }
