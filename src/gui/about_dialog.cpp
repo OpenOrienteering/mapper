@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -164,7 +164,7 @@ QString AboutDialog::about()
 	  "<p>"
 	  "<em>%3</em><br/>"
 	  "<a href=\"%4\">%4</a></p>"
-	  "<p>Copyright (C) 2018 The OpenOrienteering developers</p>"
+	  "<p>Copyright %2</p>"
 	  "<p>%5</p>"
 	  "<p>%6</p>"
 	  "<p>%7</p>"
@@ -174,6 +174,7 @@ QString AboutDialog::about()
 	).arg(
 	  tr("About %1").arg(APP_NAME), // %0
 	  qApp->applicationDisplayName(),   // %1
+	  QString::fromLatin1(APP_COPYRIGHT),   // %2
 	  tr("A free software for drawing orienteering maps"), // %3
 	  QString::fromLatin1("https://www.openorienteering.org/apps/mapper/"), // %4
 	  tr("This program is free software: you can redistribute it "
