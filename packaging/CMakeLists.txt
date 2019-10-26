@@ -119,14 +119,13 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 8)
 else()
 	set(_system_name "${CMAKE_SYSTEM_NAME}-unknown")
 endif()
-string(REGEX REPLACE "[\\/:*?| ]" "_" mapper_version_filesystem "${Mapper_VERSION_DISPLAY}")
 set(CPACK_PACKAGE_FILE_NAME 
-    "OpenOrienteering-Mapper-${mapper_version_filesystem}-${_system_name}")
+    "OpenOrienteering-Mapper-${Mapper_VERSION_FILESYSTEM}-${_system_name}")
 set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/COPYING")
 set(CPACK_STRIP_FILES "TRUE")
 
 set(CPACK_SOURCE_PACKAGE_FILE_NAME
-    "openorienteering-mapper_${mapper_version_filesystem}-src")
+    "openorienteering-mapper_${Mapper_VERSION_FILESYSTEM}-src")
 set(CPACK_SOURCE_IGNORE_FILES 
   "${PROJECT_BINARY_DIR}"
   "/[.]git/"
@@ -144,7 +143,7 @@ if(WIN32)
 	# Packaging as ZIP archive
 	set(CPACK_GENERATOR_DEFAULT "ZIP")
 	#set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${mapper_version_filesystem}")
+	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME} ${Mapper_VERSION_FILESYSTEM}")
 	
 	find_program(MAKENSIS_EXECUTABLE "makensis")
 	if(MAKENSIS_EXECUTABLE)

@@ -42,6 +42,8 @@ else()
 	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION}")
 endif()
 
+string(REGEX REPLACE "[\\/:*?| ]" "_" Mapper_VERSION_FILESYSTEM "${Mapper_VERSION_DISPLAY}")
+
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
 endif()
