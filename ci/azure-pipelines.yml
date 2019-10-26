@@ -35,6 +35,8 @@ jobs:
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: codespell.yml
 
 
@@ -43,6 +45,8 @@ jobs:
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: release-notes.yml
 
 
@@ -55,6 +59,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - bash: |
         echo "##vso[task.setVariable variable=ORIG_TEST_RESULTS]${TEST_RESULTS}"
@@ -101,6 +107,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
@@ -128,6 +136,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
@@ -150,6 +160,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -183,6 +195,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -216,6 +230,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -249,6 +265,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -284,6 +302,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
@@ -311,6 +331,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-msys2.yml
     - template: build.yml
       parameters:
@@ -335,6 +357,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-msys2.yml
     - template: build.yml
       parameters:
