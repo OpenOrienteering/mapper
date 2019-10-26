@@ -61,5 +61,9 @@ steps:
         sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
         ;;
     esac
+    
+    if  [ "${ENABLE_PDF_MANUAL}" = "1" ] ; then
+      sudo apt-get install doxygen-latex
+    fi
   displayName: 'Prepare Ubuntu build tools'
 

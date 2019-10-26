@@ -27,6 +27,9 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+variables:
+  ENABLE_PDF_MANUAL: 0
+
 jobs:
 - job: Codespell
   pool:
@@ -94,6 +97,7 @@ jobs:
     CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
     CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
     CLAZY_NO_WERROR: 1
+    ENABLE_PDF_MANUAL: 1
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
