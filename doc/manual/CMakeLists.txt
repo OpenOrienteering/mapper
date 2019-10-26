@@ -240,7 +240,7 @@ if(Mapper_MANUAL_PDF)
 		endif()
 	endif()
 	
-	set(Mapper_PDF_manual "Mapper ${Mapper_VERSION_FILESYSTEM} Manual.pdf")
+	set(Mapper_PDF_manual "OpenOrienteering-Mapper-${Mapper_VERSION_FILESYSTEM}-Manual.pdf")
 	
 	configure_file(Doxyfile-pdflatex.in Doxyfile-pdflatex @ONLY)
 	configure_file(preprocess-markdown-pdflatex.cmake.in preprocess-markdown-pdflatex.cmake @ONLY)
