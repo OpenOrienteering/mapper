@@ -78,8 +78,8 @@ if(NOT DOXYGEN_EXECUTABLE)
 	message(FATAL_ERROR "doxygen executable not found.")
 endif()
 
-set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_DISPLAY} Manual.qch")
-set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_DISPLAY} Manual.qhc")
+set(Mapper_COMPRESSED_HELP "Mapper ${Mapper_VERSION_FILESYSTEM} Manual.qch")
+set(Mapper_HELP_COLLECTION "Mapper ${Mapper_VERSION_FILESYSTEM} Manual.qhc")
 set(Mapper_HELP_NAMESPACE "openorienteering.mapper-${Mapper_VERSION}.help"
   CACHE INTERNAL "The namespace where the current version's help will be located."
 )
@@ -240,8 +240,7 @@ if(Mapper_MANUAL_PDF)
 		endif()
 	endif()
 	
-	set(Mapper_PDF_manual "Mapper ${Mapper_VERSION_DISPLAY} Manual.pdf")
-	string(REPLACE "-" "_" Mapper_VERSION_DISPLAY_PDFLATEX "${Mapper_VERSION_DISPLAY}")
+	set(Mapper_PDF_manual "Mapper ${Mapper_VERSION_FILESYSTEM} Manual.pdf")
 	
 	configure_file(Doxyfile-pdflatex.in Doxyfile-pdflatex @ONLY)
 	configure_file(preprocess-markdown-pdflatex.cmake.in preprocess-markdown-pdflatex.cmake @ONLY)
