@@ -97,8 +97,9 @@ steps:
 
 - bash: |
     set -x
+    set -e
     #
-    mkdir output
+    mkdir -p output
     cp build/${TARGET:-default}/openorienteering-mapper-ci/${{ parameters.outputFilter }} output/
     if  [ "${ENABLE_PDF_MANUAL}" = "1" ] ; then
       cp build/${TARGET:-default}/openorienteering-mapper-ci/doc/manual/Mapper*Manual.pdf output/
