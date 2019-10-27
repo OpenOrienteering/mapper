@@ -174,6 +174,32 @@ private slots:
 		QCOMPARE(out_buffer.buffer(), original_data);
 	}
 	
+	void geoTiffTemplateTest()
+	{
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/geotiff.xmap"), &view));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+		QCOMPARE(temp->getTemplateFilename(), QString::fromUtf8("\u0433\u0435\u043E.tiff"));
+#ifdef MAPPER_USE_GDAL
+#ifdef Q_OS_UNIX
+		if (QFile::encodeName(temp->getTemplateFilename()) != temp->getTemplateFilename().toUtf8())
+			QEXPECT_FAIL("", "Local 8 bit encoding is not UTF-8", Abort);
+#endif
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(temp->isTemplateGeoreferenced());
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QCOMPARE(rotation_template, rotation_map);
+#endif
+	}
+	
 };
 
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +23,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <initializer_list>
 #include <iterator>
 #include <memory>
 #include <utility>
@@ -1834,7 +1835,7 @@ void LineSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 	xml.writeEndElement(/*line_symbol*/);
 }
 
-bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	if (xml.name() != QLatin1String("line_symbol"))
 		return false;
@@ -1879,13 +1880,13 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("start_symbol"))
-			start_symbol = loadPointSymbol(xml, map, symbol_dict);
+			start_symbol = loadPointSymbol(xml, map, symbol_dict, version);
 		else if (xml.name() == QLatin1String("mid_symbol"))
-			mid_symbol = loadPointSymbol(xml, map, symbol_dict);
+			mid_symbol = loadPointSymbol(xml, map, symbol_dict, version);
 		else if (xml.name() == QLatin1String("end_symbol"))
-			end_symbol = loadPointSymbol(xml, map, symbol_dict);
+			end_symbol = loadPointSymbol(xml, map, symbol_dict, version);
 		else if (xml.name() == QLatin1String("dash_symbol"))
-			dash_symbol = loadPointSymbol(xml, map, symbol_dict);
+			dash_symbol = loadPointSymbol(xml, map, symbol_dict, version);
 		else if (xml.name() == QLatin1String("borders"))
 		{
 //			bool are_borders_different = (xml.attributes().value("borders_different") == "true");
@@ -1924,13 +1925,13 @@ bool LineSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 	return true;
 }
 
-PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+PointSymbol* LineSymbol::loadPointSymbol(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	while (xml.readNextStartElement())
 	{
 		if (xml.name() == QLatin1String("symbol"))
 		{
-			auto symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict).release());
+			auto symbol = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict, version).release());
 			xml.skipCurrentElement();
 			return symbol;
 		}

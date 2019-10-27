@@ -58,6 +58,7 @@ private:
 	QLineEdit* scale_x_edit;
 	QLineEdit* scale_y_edit;
 	QLineEdit* rotation_edit;
+	QLineEdit* shear_edit;
 	
 	bool react_to_changes;
 	Template* temp;

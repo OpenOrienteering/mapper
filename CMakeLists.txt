@@ -29,7 +29,8 @@ endif()
 
 # Project declaration
 
-project(Mapper VERSION 0.9.0 LANGUAGES CXX C)
+project(Mapper VERSION 0.9.1 LANGUAGES CXX C)
+set(Mapper_COPYRIGHT "(C) 2019 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -41,7 +42,7 @@ else()
 	set(Mapper_VERSION_DISPLAY "${Mapper_VERSION}")
 endif()
 
-set(Mapper_COPYRIGHT "(C) 2012-2018 The OpenOrienteering developers")
+string(REGEX REPLACE "[\\/:*?| ]" "_" Mapper_VERSION_FILESYSTEM "${Mapper_VERSION_DISPLAY}")
 
 if(${CMAKE_CURRENT_BINARY_DIR} STREQUAL ${PROJECT_SOURCE_DIR})
 	message(AUTHOR_WARNING "In-source builds are discouraged for development.")
@@ -99,17 +100,6 @@ option(Mapper_PACKAGE_GDAL      "Include all required GDAL components in the pac
 option(Mapper_PACKAGE_QT        "Include all required Qt components in the packages"   ${mapper_package_default})
 option(Mapper_PACKAGE_ASSISTANT "Include Qt Assistant in the packages"                 ${mapper_package_assistant})
 mark_as_advanced(Mapper_PACKAGE_PROJ Mapper_PACKAGE_GDAL Mapper_PACKAGE_QT Mapper_PACKAGE_ASSISTANT)
-
-
-# Migration of legacy configurations (before 0.7, affects developers)
-
-if(Mapper_BUILD_DOXYGEN)
-	unset(DOXYGEN_EXECUTABLE CACHE)
-endif()
-unset(Mapper_BUILD_DOXYGEN CACHE)
-unset(Mapper_BUILD_GDAL CACHE)
-unset(Mapper_BUILD_PROJ CACHE)
-unset(Mapper_BUILD_QT CACHE)
 
 
 # Installation configuration
@@ -197,11 +187,11 @@ if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
 endif()
 
 if(Mapper_USE_GDAL)
-	find_package(GDAL REQUIRED)
+	find_package(GDAL 2 REQUIRED)
 endif()
 
-find_package(Qt5Core 5.3 REQUIRED)
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050300)
+find_package(Qt5Core 5.5 REQUIRED)
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050500)
 if (ANDROID AND "${Qt5Core_VERSION}" VERSION_LESS 5.12.1)
 	message(FATAL_ERROR "At least Qt 5.12.1 is required to build for Android")
 elseif ("${Qt5Core_VERSION}" VERSION_LESS 5.8.0)
@@ -230,6 +220,30 @@ if(Mapper_DEVELOPMENT_BUILD)
 else()
 	add_definitions(-DQT_NO_DEBUG -DQT_NO_DEBUG_OUTPUT -DQT_NO_WARNING_OUTPUT -DNDEBUG)
 endif()
+
+
+# Build-time code checks
+
+if(NOT CMAKE_CXX_CLANG_TIDY)
+	set(min_version 8)
+	find_package(ClangTidy ${min_version})
+	if(ClangTidy_FOUND)
+		set(CMAKE_CXX_CLANG_TIDY "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${ClangTidy_EXECUTABLE}")
+	else()
+		message(AUTHOR_WARNING "Install clang-tidy >= ${min_version} for code checks during build")
+	endif()
+endif()
+
+if(NOT CMAKE_CXX_INCLUDE_WHAT_YOU_USE)
+	set(min_version 0.12)
+	find_package(IWYU ${min_version})
+	if(IWYU_FOUND)
+		set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "${PROJECT_SOURCE_DIR}/code-check-wrapper.sh;${IWYU_EXECUTABLE}")
+	else()
+		message(AUTHOR_WARNING "Install include-what-you-use >= ${min_version} for code checks during build")
+	endif()
+endif()
+
 
 # Subdirectories
 
@@ -286,7 +300,7 @@ add_custom_target(CI SOURCES ${ci})
 
 # Configuration report
 
-feature_summary(WHAT ALL)
+feature_summary(INCLUDE_QUIET_PACKAGES WHAT ALL)
 
 string(TOUPPER "${CMAKE_BUILD_TYPE}" type)
 foreach(lang CXX C)

@@ -22,16 +22,19 @@
 #ifndef OPENORIENTEERING_MAP_COORD_H
 #define OPENORIENTEERING_MAP_COORD_H
 
+#include <array>
 #include <cmath>
 #include <vector>
 
 #include <QtGlobal>
+#include <QByteArray>
 #include <QCoreApplication>
 #include <QFlags>
 #include <QPoint>
 #include <QPointF>
 #include <QString>
 
+class QChar;
 class QXmlStreamReader;
 class QXmlStreamWriter;
 
@@ -382,9 +385,41 @@ public:
 	
 	
 	/**
+	 * A buffer that can hold a compact MapCoord string representation.
+	 * 
+	 * The buffer size must allow for
+	 *  1x ';':   1
+	 *  2x '-':   2
+	 *  2x ' ':   2
+	 *  2x the decimal digits for values up to 0..2^31:
+	 *           20
+	 *  1x the decimal digits for 0..2^8-1:
+	 *            3
+	 *  Total:   28
+	 */
+	template<class c>
+	using StringBuffer = std::array<c, 28>;
+	
+	/**
 	 * Writes raw coordinates and flags to a string.
 	 */
 	QString toString() const;
+	
+	/**
+	 * Returns a string for the raw coordinates and flags, using the given buffer.
+	 * 
+	 * The string is created using QString::fromRawData(), so it is valid for
+	 * the lifetime of the buffer only.
+	 */
+	QString toString(StringBuffer<QChar>& buffer) const;
+	
+	/**
+	 * Returns an UTF-8 string for the raw coordinates and flags, using the given buffer.
+	 * 
+	 * The string is created using QByteArray::fromRawData(), so it is valid for
+	 * the lifetime of the buffer only.
+	 */
+	QByteArray toUtf8(StringBuffer<char>& buffer) const;
 	
 	/**
 	 * Constructs the MapCoord from the beginning of text, and moves the 

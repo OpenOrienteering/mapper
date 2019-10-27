@@ -46,11 +46,26 @@ using SelectionInfoVector = std::vector<std::pair<int, Object*>>;
 class ObjectMover
 {
 public:
+	enum HandleOpMode {
+		Never, ///< Never move opposite curve handles
+		Click, ///< Move opposite handles once they get aligned in line, move them
+		       ///< together from that point on
+	};
+
 	/** Creates a mover for the map with the given cursor start position. */
 	ObjectMover(Map* map, const MapCoordF& start_pos);
 	
 	/** Sets the start position. */
 	void setStartPos(const MapCoordF& start_pos);
+	
+	/** Sets corner point tolerance. A curve anchor point is considered a corner
+	 * point during editing when the moving curve handle is more than
+	 * corner_tolerance away from the direction line set by the opposite handle.
+	 * 
+	 * @param corner_tolerance Maximum difference in vector directions
+	 *                         in millimeters.
+	 */
+	void setCornerTolerance(qreal corner_tolerance);
 	
 	/** Adds an object to the set of elements to move. */
 	void addObject(Object* object);
@@ -66,14 +81,16 @@ public:
 	
 	/**
 	 * Moves the elements.
-	 * @param move_opposite_handles If false, opposite handles are reset to their original position.
+	 * @param move_opposite_handles Opposite curve handles either operate 
+	 *        in "click in" mode or move independently.
 	 * @param out_dx returns the move along the x coordinate in map units
 	 * @param out_dy returns the move along the y coordinate in map units
 	 */
-	void move(const MapCoordF& cursor_pos, bool move_opposite_handles, qint32* out_dx = nullptr, qint32* out_dy = nullptr);
+	void move(const MapCoordF& cursor_pos, HandleOpMode move_opposite_handles,
+	          qint32* out_dx = nullptr, qint32* out_dy = nullptr);
 	
 	/** Overload of move() taking delta values. */
-	void move(qint32 dx, qint32 dy, bool move_opposite_handles);
+	void move(qint32 dx, qint32 dy, HandleOpMode move_opposite_handles);
 	
 private:
 	using ObjectSet = std::unordered_set<Object*>;
@@ -84,8 +101,9 @@ private:
 	
 	// Basic information
 	MapCoordF start_position;
-	qint32 prev_drag_x;
-	qint32 prev_drag_y;
+	qreal corner_tolerance {};
+	qint32 prev_drag_x {};
+	qint32 prev_drag_y {};
 	ObjectSet objects;
 	std::unordered_map<PathObject*, CoordIndexSet> points;
 	std::unordered_map<TextObject*, MapCoordVector::size_type> text_handles;
@@ -101,13 +119,15 @@ private:
 		MapCoordVector::size_type opposite_handle_index;
 		/** Index of center point in the middle of the handles */
 		MapCoordVector::size_type curve_anchor_index;
+		/** Middle point is a corner point */
+		bool anchor_is_corner;
 		/** Distance of opposite handle to center point */
 		qreal opposite_handle_dist;
 		/** Original position of the opposite handle */
 		MapCoord opposite_handle_original_position;
 	};
 	std::vector<OppositeHandleConstraint> handle_constraints;
-	bool constraints_calculated;
+	bool constraints_calculated {true};
 };
 
 

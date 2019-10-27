@@ -23,9 +23,12 @@
 #include <QPointF>
 #include <QRectF>
 
+#include "core/map_coord.h"
 #include "util/util.h"
 
 using namespace OpenOrienteering;
+
+Q_DECLARE_METATYPE(MapCoord)
 
 
 /**
@@ -38,6 +41,8 @@ private slots:
 	void initTestCase();
 	void rectIncludeTest();
 	void rectIncludeSafeTest();
+	void pointsFormCorner_data();
+	void pointsFormCorner();
 };
 
 
@@ -117,6 +122,58 @@ void UtilTest::rectIncludeSafeTest()
 	rectIncludeSafe(rect, QRectF{ 0, 0, 1, 1});
 	QVERIFY(rect.isValid());
 	
+}
+
+
+void UtilTest::pointsFormCorner_data()
+{
+	QTest::addColumn<MapCoord>("first_point");
+	QTest::addColumn<MapCoord>("middle_point");
+	QTest::addColumn<MapCoord>("last_point");
+	QTest::addColumn<qreal>("tolerance");
+	QTest::addColumn<bool>("expected_result");
+	
+	QTest::newRow("Straight line, zero tolerance")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 1, 0 }
+	        << 0.0 << false;	           
+	QTest::newRow("Straight line, small tolerance")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 1, 0 }
+	        << 0.01 << false;	           
+	QTest::newRow("Bent line, well within tolerance")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 200, 1 }
+	        << 0.01 << false;	           
+	QTest::newRow("Bent line, exactly within tolerance")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 100, 1 }
+	        << 0.01 << false;	           
+	QTest::newRow("Bent line, slightly outside tolerance")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 99, 1 }
+	        << 0.01 << true;
+	QTest::newRow("Right angle")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { 0, 1 }
+	        << 0.01 << true;
+	QTest::newRow("Acute angle")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { -1, 1 }
+	        << 0.01 << true;
+	QTest::newRow("Zero angle")
+	        << MapCoord { -1, 0 } << MapCoord { 0, 0 } << MapCoord { -1, 0 }
+	        << 0.01 << true;
+	QTest::newRow("Pathologic case")
+	        << MapCoord { -1, 0 } << MapCoord { -1, 0 } << MapCoord { -1, 0 }
+	        << 0.01 << false;
+}
+
+
+void UtilTest::pointsFormCorner()
+{
+	QFETCH(MapCoord, first_point);
+	QFETCH(MapCoord, middle_point);
+	QFETCH(MapCoord, last_point);
+	QFETCH(qreal, tolerance);
+	QFETCH(bool, expected_result);
+	
+	const auto result = Util::pointsFormCorner(first_point, middle_point, last_point, tolerance);
+	
+	QCOMPARE(result, expected_result);
 }
 
 

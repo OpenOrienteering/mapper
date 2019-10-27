@@ -21,7 +21,7 @@
 
 #include "toast.h"
 
-#include <algorithm>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>

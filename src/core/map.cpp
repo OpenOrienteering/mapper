@@ -70,6 +70,11 @@
 // IWYU pragma: no_forward_declare QRectF
 
 
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
+
+
 namespace OpenOrienteering {
 
 QPointer<QTranslator> map_symbol_translator{};
@@ -1661,7 +1666,7 @@ void Map::setSymbolsDirty()
 	if (symbol_icon_scale > 0)
 	{
 		symbol_icon_scale = 0;
-		QTimer::singleShot(0, this, SLOT(updateSymbolIconZoom()));
+		QTimer::singleShot(0, this, &Map::updateSymbolIconZoom);
 	}
 	symbols_dirty = true;
 	setHasUnsavedChanges(true);

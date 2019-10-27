@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
 <notes></notes>
 <georeferencing scale="4000"><projected_crs id="Local"/></georeferencing>
 <colors count="6">
@@ -438,44 +438,44 @@ The orientation of the symbol indicates the direction in which the corner points
 <part name="default part"><objects count="42">
 <object type="0" symbol="16"><coords count="1">75000 -60000;</coords></object>
 <object type="0" symbol="124"><coords count="1">97500 -15000;</coords></object>
-<object type="4" symbol="25" rotation="0" h_align="1" v_align="2"><coords count="1">37500 0;</coords><text>101</text></object>
+<object type="4" symbol="25" h_align="1" v_align="2"><coords count="1">37500 0;</coords><text>101</text></object>
 <object type="0" symbol="81"><coords count="1">67500 30000;</coords></object>
 <object type="0" symbol="20"><coords count="1">75000 -15000;</coords></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">22500 30000;</coords><text>3</text></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">22500 45000;</coords><text>4</text></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">75000 -45000;</coords><text>M45, M50, W21</text></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">37500 -30000;</coords><text>4</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">22500 30000;</coords><text>3</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">22500 45000;</coords><text>4</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">75000 -45000;</coords><text>M45, M50, W21</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">37500 -30000;</coords><text>4</text></object>
 <object type="0" symbol="23"><coords count="1">22500 -15000;</coords></object>
 <object type="0" symbol="83"><coords count="1">67500 -15000;</coords></object>
 <object type="0" symbol="49"><coords count="1">67500 0;</coords></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">82500 -30000;</coords><text>1.1 km</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">82500 -30000;</coords><text>1.1 km</text></object>
 <object type="0" symbol="20"><coords count="1">75000 15000;</coords></object>
 <object type="0" symbol="84"><coords count="1">67500 45000;</coords></object>
 <object type="0" symbol="84"><coords count="1">82500 -15000;</coords></object>
 <object type="0" symbol="162"><coords count="1">112500 15000;</coords></object>
 <object type="0" symbol="19"><coords count="1">75000 -30000;</coords></object>
 <object type="0" symbol="117"><coords count="1">82500 30000;</coords></object>
-<object type="4" symbol="25" rotation="0" h_align="1" v_align="2"><coords count="1">37500 45000;</coords><text>100</text></object>
+<object type="4" symbol="25" h_align="1" v_align="2"><coords count="1">37500 45000;</coords><text>100</text></object>
 <object type="0" symbol="205"><coords count="1">75000 60000;</coords></object>
 <object type="0" symbol="20"><coords count="1">75000 30000;</coords></object>
 <object type="0" symbol="91"><coords count="1">67500 15000;</coords></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">120000 -30000;</coords><text>15 m</text></object>
-<object type="4" symbol="25" rotation="0" h_align="1" v_align="2"><coords count="1">37500 15000;</coords><text>212</text></object>
-<object type="4" symbol="25" rotation="0" h_align="1" v_align="2"><coords count="1">37500 30000;</coords><text>135</text></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">75000 -60000;</coords><text>OpenOrienteering</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">120000 -30000;</coords><text>15 m</text></object>
+<object type="4" symbol="25" h_align="1" v_align="2"><coords count="1">37500 15000;</coords><text>212</text></object>
+<object type="4" symbol="25" h_align="1" v_align="2"><coords count="1">37500 30000;</coords><text>135</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">75000 -60000;</coords><text>OpenOrienteering</text></object>
 <object type="0" symbol="124"><coords count="1">97500 45000;</coords></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">22500 0;</coords><text>1</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">22500 0;</coords><text>1</text></object>
 <object type="0" symbol="20"><coords count="1">75000 0;</coords></object>
-<object type="4" symbol="208" rotation="0" h_align="1" v_align="2"><coords count="1">75000 60000;</coords><text>120 m</text></object>
+<object type="4" symbol="208" h_align="1" v_align="2"><coords count="1">75000 60000;</coords><text>120 m</text></object>
 <object type="0" symbol="20"><coords count="1">75000 45000;</coords></object>
-<object type="4" symbol="24" rotation="0" h_align="1" v_align="2"><coords count="1">22500 15000;</coords><text>2</text></object>
+<object type="4" symbol="24" h_align="1" v_align="2"><coords count="1">22500 15000;</coords><text>2</text></object>
 <object type="0" symbol="16"><coords count="1">75000 -45000;</coords></object>
 <object type="1" symbol="0"><coords count="6">-143480 -33777 32;-144117 12630 32;-110523 50330 32;-89230 -1210 32;-70045 21178 32;-52345 24193 32;</coords><pattern rotation="0"><coord x="0" y="0"/></pattern></object>
-<object type="4" symbol="3" rotation="0" h_align="1" v_align="2"><coords count="1">-128125 10390;</coords><text>1</text></object>
+<object type="4" symbol="3" h_align="1" v_align="2"><coords count="1">-128125 10390;</coords><text>1</text></object>
 <object type="0" symbol="84"><coords count="1">82500 45000;</coords></object>
-<object type="4" symbol="3" rotation="0" h_align="1" v_align="2"><coords count="1">-97500 42573;</coords><text>2</text></object>
-<object type="4" symbol="3" rotation="0" h_align="1" v_align="2"><coords count="1">-75818 -11582;</coords><text>3</text></object>
-<object type="4" symbol="3" rotation="0" h_align="1" v_align="2"><coords count="1">-74900 32655;</coords><text>4</text></object>
+<object type="4" symbol="3" h_align="1" v_align="2"><coords count="1">-97500 42573;</coords><text>2</text></object>
+<object type="4" symbol="3" h_align="1" v_align="2"><coords count="1">-75818 -11582;</coords><text>3</text></object>
+<object type="4" symbol="3" h_align="1" v_align="2"><coords count="1">-74900 32655;</coords><text>4</text></object>
 <object type="0" symbol="22"><coords count="1">75000 -7500;</coords></object>
 <object type="0" symbol="22"><coords count="1">75000 37500;</coords></object>
 </objects></part>
@@ -488,9 +488,5 @@ The orientation of the symbol indicates the direction in which the corner points
 <map_view zoom="1" position_x="0" position_y="0" grid="true"><map opacity="1" visible="true"/><templates count="0"/></map_view>
 </view>
 <print scale="4000" resolution="600" templates_visible="true" mode="vector"><page_format paper_size="A4" orientation="portrait" h_overlap="5" v_overlap="5"><dimensions width="210" height="297"/><page_rect left="5" top="5" width="200" height="287"/></page_format><print_area left="5" top="5" width="200" height="287" center_area="true" single_page="true"/></print>
-</barrier>
-<barrier version="6" required="0.6.0">
-<undo/>
-<redo/>
 </barrier>
 </map>

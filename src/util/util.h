@@ -26,6 +26,7 @@
 #include <functional>
 #include <type_traits>
 
+#include <QtGlobal>
 #include <QtMath>
 #include <QPointF>
 #include <QRectF>
@@ -62,6 +63,7 @@ namespace std
 
 namespace OpenOrienteering {
 
+class MapCoord;
 class MapCoordF;
 
 
@@ -200,6 +202,25 @@ void gridOperation(const QRectF& extent, double horz_spacing, double vert_spacin
 	hatchingOperation(extent, horz_spacing, horz_offset, rotation, process_line);
 	hatchingOperation(extent, vert_spacing, vert_offset, rotation - M_PI / 2, process_line);
 }
+
+/**
+ * Tests whether three points form what we would call a corner. The function
+ * returns true when point2 lies at least quantum_size from continuation of
+ * line from point1 to anchor_point. quantum_size parameter is essential for
+ * use of this function in GUI code as for various zoom levels point1 position
+ * get quantized with varying step size.
+ *
+ * @param point1 First point on a line.
+ * @param anchor_point Point that is being tested as corner candidate.
+ * @param point2 Final point on potentially bent line.
+ * @param quantum_size How far can point2 lie from the line defined by
+ *        point1--anchor to be considered unaligned with the two other points.
+ * @return True if point2 is further than quantum_size from the line defined 
+ *         by point1--anchor_point or point2 is on the same side of 
+ *         anchor_point as point1.
+ */
+bool pointsFormCorner(const MapCoord& point1, const MapCoord& anchor_point,
+                      const MapCoord& point2, qreal quantum_size);
 
 }  // namespace Util
 

@@ -33,6 +33,7 @@
 #include <QKeyEvent>
 #include <QKeySequence>
 #include <QLatin1Char>
+#include <QList>
 #include <QMimeData>
 #include <QMouseEvent>
 #include <QPainter>
@@ -59,6 +60,11 @@
 #  endif
 #endif
 //#  define INPUT_METHOD_BUGS_RESOLVED
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
+#endif
 
 
 namespace OpenOrienteering {
@@ -142,7 +148,7 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 #else
 	// Workaround to set the focus to the map widget again after it was lost
 	// to the new dock widget (on X11, at least)
-	QTimer::singleShot(20, this, SLOT(claimFocus()));  // clazy:exclude=old-style-connect
+	QTimer::singleShot(20, this, &TextObjectEditorHelper::claimFocus);
 #endif
 }
 
@@ -378,7 +384,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return { selectionText() };
 	case Qt::ImMaximumTextLength:
 		return { }; // No limit.
-#if QT_VERSION >= 0x050300
 	case Qt::ImAbsolutePosition:
 		{
 			const auto point = argument.toPointF();
@@ -393,7 +398,6 @@ QVariant TextObjectEditorHelper::inputMethodQuery(Qt::InputMethodQuery property,
 		return pristine_text.mid(blockStart(), cursor_position - blockStart());
 	case Qt::ImTextAfterCursor:
 		return pristine_text.mid(cursor_position, blockEnd() - cursor_position);
-#endif
 	default:
 		return { };
 	}
@@ -439,7 +443,6 @@ bool TextObjectEditorHelper::inputMethodEvent(QInputMethodEvent* event)
 			}
 			pristine_text.remove(position, length);
 		}
-		length = 0;
 	}
 	
 	// Insert the commit string for the given replacement length

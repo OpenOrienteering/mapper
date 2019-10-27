@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2016 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -181,7 +181,7 @@ void DrawPointTool::dragStart()
 
 void DrawPointTool::dragMove()
 {
-	if (preview_object->getSymbol()->asPoint()->isRotatable())
+	if (preview_object->getSymbol()->isRotatable())
 	{
 		bool enable_angle_helper = active_modifiers & Qt::ControlModifier;
 		if (angle_helper->isActive() != enable_angle_helper)
@@ -275,7 +275,7 @@ void DrawPointTool::drawImpl(QPainter* painter, MapWidget* widget)
 	
 	painter->restore();
 	
-	if (preview_object->getSymbol()->asPoint()->isRotatable())
+	if (preview_object->getSymbol()->isRotatable())
 	{
 		if (isDragging())
 		{
@@ -304,7 +304,7 @@ int DrawPointTool::updateDirtyRectImpl(QRectF& rect)
 	
 	int result = 0;
 	rectIncludeSafe(rect, preview_object->getExtent());
-	if (isDragging() && preview_object->getSymbol()->asPoint()->isRotatable())
+	if (isDragging() && preview_object->getSymbol()->isRotatable())
 	{
 		rectInclude(rect, constrained_click_pos_map);
 		rectInclude(rect, constrained_pos_map);
@@ -334,7 +334,7 @@ void DrawPointTool::updateStatusText()
 		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
-	else if (static_cast<const PointSymbol*>(preview_object->getSymbol())->isRotatable())
+	else if (preview_object->getSymbol()->isRotatable())
 	{
 		auto parts = QStringList {
 		    tr("<b>Click</b>: Create a point object."),

@@ -121,8 +121,8 @@ namespace Util {
 		}
 		else
 		{
-			auto help_collection = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION " Manual.qhc") };
-			auto compiled_help = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION " Manual.qch") };
+			auto help_collection = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION_FILESYSTEM " Manual.qhc") };
+			auto compiled_help = QFileInfo{ QString::fromUtf8("doc:Mapper " APP_VERSION_FILESYSTEM " Manual.qch") };
 			if (!help_collection.exists() || !compiled_help.exists())
 			{
 				QMessageBox::warning(dialog_parent, QApplication::translate("OpenOrienteering::Util", "Error"), QApplication::translate("OpenOrienteering::Util", "Failed to locate the help files."));

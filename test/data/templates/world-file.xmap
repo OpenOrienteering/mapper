@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
     <notes></notes>
     <georeferencing scale="4000" declination="5.62" grivation="3.94">
         <projected_crs id="EPSG">
@@ -84,9 +84,5 @@
                 </templates>
             </map_view>
         </view>
-    </barrier>
-    <barrier version="6" required="0.6.0">
-        <undo/>
-        <redo/>
     </barrier>
 </map>

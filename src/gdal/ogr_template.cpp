@@ -20,8 +20,10 @@
 #include "ogr_template.h"
 
 #include <algorithm>
+#include <iosfwd>
 #include <iterator>
 #include <memory>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -50,6 +52,11 @@
 #include "templates/template.h"
 #include "templates/template_positioning_dialog.h"
 #include "templates/template_track.h"
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT
+#endif
 
 
 namespace OpenOrienteering {
@@ -436,10 +443,9 @@ void OgrTemplate::reloadLater()
 {
 	if (reload_pending)
 		return;
-		
 	if (template_state == Loaded)
 		templateMap()->clear(); // no expensive operations before reloading
-	QTimer::singleShot(0, this, SLOT(reload()));
+	QTimer::singleShot(0, this, &OgrTemplate::reload);
 	reload_pending = true;
 }
 

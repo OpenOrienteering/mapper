@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -132,7 +132,7 @@ public:
 		/** Saves the pattern in xml format */
 		void save(QXmlStreamWriter& file, const Map& map) const;
 		/** Loads the pattern in xml format */
-		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict);
+		void load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version);
 		/**
 		 * Checks if the pattern settings are equal to the other.
 		 * TODO: should the transient name really be compared?!
@@ -288,7 +288,7 @@ public:
 	
 protected:
 	void saveImpl(QXmlStreamWriter& xml, const Map& map) const override;
-	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict) override;
+	bool loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version) override;
 	
 	/**
 	 * Compares AreaSymbol objects for equality.

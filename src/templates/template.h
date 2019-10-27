@@ -52,9 +52,10 @@ class MapView;
 
 
 /**
- * Transformation parameters for non-georeferenced templates.
+ * Transformation parameters for non-georeferenced templates,
+ * transforming template coordinates to map coordinates.
  * 
- * The parameters are to applied in the order
+ * The parameters are applied to painter in the order
  * 1. translate
  * 2. rotate
  * 3. scale.
@@ -63,6 +64,9 @@ class MapView;
  * thus used in list initialization.
  * 
  * \see Template::applyTemplateTransform()
+ * 
+ * Coordinate transformations use the opposite order for the
+ * same effect.
  */
 struct TemplateTransform
 {
@@ -71,13 +75,15 @@ struct TemplateTransform
 	/// x position in 1/1000 mm
 	qint32 template_y = 0;
 	
-	/// Rotation in radians
+	/// Rotation in radians, a positive rotation is counter-clockwise.
 	double template_rotation = 0.0;
 	
-	/// Scaling in x direction (relative to 1 mm on map)
+	/// Scaling in x direction, smaller than 1 shrinks.
 	double template_scale_x = 1.0;
-	/// Scaling in y direction (relative to 1 mm on map)
+	/// Scaling in y direction, smaller than 1 shrinks.
 	double template_scale_y = 1.0;
+	/// Adjustment to scaling if anisotropy is askew.
+	double template_shear = 0.0;
 	
 	/**
 	 * Explicit implementation of aggregate initialization.
@@ -85,8 +91,8 @@ struct TemplateTransform
 	 * In C++11, there is no aggregate initialization when default initalizers are present.
 	 * \todo Remove when we can use C++14 everywhere.
 	 */
-	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y) noexcept
-	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}
+	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y, double shear = 0.0) noexcept
+	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}, template_shear{shear}
 	{}
 	
 	/**
@@ -552,6 +558,8 @@ public:
 	inline void setTemplateScaleX(double scale_x) {transform.template_scale_x = scale_x; updateTransformationMatrices();}
 	inline double getTemplateScaleY() const {return transform.template_scale_y;}
 	inline void setTemplateScaleY(double scale_y) {transform.template_scale_y = scale_y; updateTransformationMatrices();}
+	inline double getTemplateShear() const {return transform.template_shear;}
+	inline void setTemplateShear(double shear) {transform.template_shear = shear; updateTransformationMatrices();}
 	
 	inline double getTemplateRotation() const {return transform.template_rotation;}
 	inline void setTemplateRotation(double rotation) {transform.template_rotation = rotation; updateTransformationMatrices();}

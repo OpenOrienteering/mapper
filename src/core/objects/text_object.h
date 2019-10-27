@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012, 2014, 2015 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -258,17 +258,6 @@ public:
 	VerticalAlignment getVerticalAlignment() const;
 	
 	
-	/** Sets the rotation of the text.
-	 *  The rotation is measured in radians. The center of rotation is the anchor point.
-	 */ 
-	void setRotation(qreal new_rotation);
-	
-	/** Returns the rotation of the text.
-	 *  The rotation is measured in radians. The center of rotation is the anchor point.
-	 */ 
-	qreal getRotation() const;
-	
-	
 	bool intersectsBox(const QRectF& box) const override;
 	
 	
@@ -321,7 +310,6 @@ public:
 	
 private:
 	QString text;
-	qreal rotation;	// 0 to 2*M_PI
 	HorizontalAlignment h_align;
 	VerticalAlignment v_align;
 	
@@ -383,12 +371,6 @@ inline
 TextObject::VerticalAlignment TextObject::getVerticalAlignment() const
 {
 	return v_align;
-}
-
-inline
-qreal TextObject::getRotation() const
-{
-	return rotation;
 }
 
 inline

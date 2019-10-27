@@ -114,6 +114,8 @@ superbuild_package(
     >
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
       "-DMapper_DEVELOPMENT_BUILD:BOOL=FALSE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
+      "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
     >
     INSTALL_COMMAND
       "${CMAKE_COMMAND}" --build . --target package$<IF:$<STREQUAL:@CMAKE_GENERATOR@,Ninja>,,/fast>
@@ -121,6 +123,7 @@ superbuild_package(
     TEST_COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Test --no-compress-output
     $<$<BOOL:@Mapper_CI_ENABLE_COVERAGE@>:
+        --exclude-regex symbol_set_t
     COMMAND
       "${CMAKE_CTEST_COMMAND}" -T Coverage
     >

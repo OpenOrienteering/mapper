@@ -34,13 +34,14 @@ steps:
     set -e
     
     sudo apt-get update
-    sudo apt-get install doxygen graphviz ninja-build python-lxml
+    sudo apt-get install doxygen graphviz libgl-dev ninja-build python-lxml
     
     if [ "${TARGET}" = "x86_64-w64-mingw32" ] ; then
       sudo apt-get install g++-mingw-w64-x86-64
     fi
     
     if [ -n "${CLAZY_VERSION}" ] ; then
+      sudo apt-get install clang-tidy-8 # for extra checks
       CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/sums.txt -O
@@ -48,7 +49,9 @@ steps:
       chmod +x ${CLAZY_IMAGE}
       # Extract the app-image, or paths change on every invocation
       ./${CLAZY_IMAGE} --appimage-extract
+      set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
       echo "##vso[task.setVariable variable=CXX]${PWD}/squashfs-root/AppRun"
+      set -x
     fi
     
     case "${CXXFLAGS}" in
@@ -58,5 +61,9 @@ steps:
         sed -i -e "/autosave_t/s,MANUAL,," test/CMakeLists.txt
         ;;
     esac
+    
+    if  [ "${ENABLE_PDF_MANUAL}" = "1" ] ; then
+      sudo apt-get install doxygen-latex
+    fi
   displayName: 'Prepare Ubuntu build tools'
 

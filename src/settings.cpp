@@ -21,6 +21,8 @@
 
 #include "settings.h"
 
+#include <initializer_list>
+
 #include <QtGlobal>
 #if defined(QT_WIDGETS_LIB)
 #include <QApplication>

@@ -17,6 +17,7 @@
  *    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <initializer_list>
 #include <memory>
 
 #include <Qt>
@@ -25,7 +26,7 @@
 #include <QByteArray>
 #include <QColor>
 #include <QDir>
-#include <QFile>
+#include <QFile>  // IWYU pragma: keep
 #include <QFileInfo>
 #include <QImage>
 #include <QLatin1String>

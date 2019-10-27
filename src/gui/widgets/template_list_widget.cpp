@@ -73,6 +73,7 @@
 #include <QTableWidgetItem>
 #include <QToolButton>
 #include <QToolTip>
+#include <QTransform>
 #include <QVBoxLayout>
 #include <QVariant>
 
@@ -110,7 +111,16 @@ struct ApplyTemplateTransform
 	
 	void operator()(Object* object) const
 	{ 
-		object->scale(transform.template_scale_x, transform.template_scale_y);
+		/// \todo Move this if...else into a constructor that sets up a transform member.
+		if (qFuzzyIsNull(transform.template_shear))
+			object->scale(transform.template_scale_x, transform.template_scale_y);
+		else
+		{
+			QTransform scaling(transform.template_scale_x, transform.template_shear,
+			                   transform.template_shear, transform.template_scale_y,
+			                   0, 0);
+			object->transform(scaling);
+		}
 		object->rotate(transform.template_rotation);
 		object->move(transform.template_x, transform.template_y);
 	}
@@ -433,26 +443,30 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	}
 	
 	bool center_in_view = true;
-	QString error = tr("Cannot open template\n%1:\n%2").arg(path);
+	QString error;
 	auto new_temp = Template::templateForFile(path, controller->getMap());
 	if (!new_temp)
 	{
-		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(tr("File format not recognized.")));
+		error = tr("File format not recognized.");
 	}
 	else if (!new_temp->preLoadConfiguration(dialog_parent))
 	{
+		// For now, an empty error string means the step was canceled by the user.
+		error = new_temp->errorString();
 		new_temp.reset();
 	}
 	else if (!new_temp->loadTemplateFile(true))
 	{
-		QString error_detail = new_temp->errorString();
-		if (error_detail.isEmpty())
-			error_detail = tr("Failed to load template. Does the file exist and is it valid?");
-		QMessageBox::warning(dialog_parent, tr("Error"), error.arg(error_detail));
+		error = new_temp->errorString();
+		/// \todo Review the default error message. Don't use question mark.
+		if (error.isEmpty())
+			error = tr("Failed to load template. Does the file exist and is it valid?");
 		new_temp.reset();
 	}
 	else if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
 	{
+		// For now, an empty error string means the step was canceled by the user.
+		error = new_temp->errorString();
 		new_temp.reset();
 	}
 	// If the template is not georeferenced, position it at the viewport midpoint
@@ -462,6 +476,12 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 		auto view_pos = main_view->center();
 		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
 		new_temp->setTemplatePosition(view_pos - offset);
+	}
+	
+	if (!new_temp && !error.isEmpty())
+	{
+		auto const error_template = tr("Cannot open template\n%1:\n%2");
+		QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(path, error));
 	}
 	
 	return new_temp;

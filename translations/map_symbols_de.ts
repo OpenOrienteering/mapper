@@ -161,7 +161,7 @@
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden werden.</translation>
+        <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden.</translation>
     </message>
     <message>
         <source>Index contour</source>

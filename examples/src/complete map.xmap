@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="8">
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
     <notes></notes>
     <georeferencing scale="4000" declination="2.35" grivation="0.37">
         <ref_point x="10" y="35"/>
@@ -330,7 +330,7 @@ The relative height difference between neighbouring features must be represented
             </symbol>
             <symbol type="8" id="4" code="105" name="Contour value">
                 <description>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</description>
-                <text_symbol icon_text="375">
+                <text_symbol icon_text="375" rotatable="true">
                     <font family="Arial" size="2117"/>
                     <text color="5" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
@@ -2527,7 +2527,7 @@ North lines may be broken where they obscure small features such as boulders, kn
             </symbol>
             <symbol type="8" id="152" code="603.0.2" name="Spot height">
                 <description>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</description>
-                <text_symbol icon_text="321">
+                <text_symbol icon_text="321" rotatable="true">
                     <font family="Arial" size="1500"/>
                     <text color="2" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
@@ -7926,7 +7926,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="0" symbol="114" rotation="0">
+                    <object type="0" symbol="114">
                         <coords count="1">
                             <coord x="-26374" y="-48998"/>
                         </coords>
@@ -63145,7 +63145,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="0" symbol="114" rotation="0">
+                    <object type="0" symbol="114">
                         <coords count="1">
                             <coord x="-14797" y="2808"/>
                         </coords>
@@ -73690,7 +73690,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="171" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="171" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="73320" y="-54693"/>
                         </coords>
@@ -73707,7 +73707,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="171" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="171" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="85399" y="110654"/>
                         </coords>
@@ -73724,7 +73724,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="171" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="171" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-85692" y="22052"/>
                         </coords>
@@ -73745,7 +73745,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
             </part>
             <part name="Map key">
                 <objects count="54">
-                    <object type="4" symbol="169" rotation="0" h_align="0" v_align="1">
+                    <object type="4" symbol="169" h_align="0" v_align="1">
                         <coords count="1">
                             <coord x="-90770" y="-101448"/>
                         </coords>
@@ -73847,7 +73847,7 @@ Big signs, playground items, etc.</text>
                             <coord x="-93145" y="-93018"/>
                         </coords>
                     </object>
-                    <object type="4" symbol="169" rotation="0" h_align="0" v_align="1">
+                    <object type="4" symbol="169" h_align="0" v_align="1">
                         <coords count="1">
                             <coord x="-90746" y="-80314"/>
                         </coords>
@@ -74292,13 +74292,13 @@ Well; Small erosion gully
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-99428" y="-85496"/>
                         </coords>
                         <text>Legend</text>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-99743" y="-107017"/>
                         </coords>
@@ -74341,73 +74341,73 @@ Well; Small erosion gully
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="175" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="175" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="59183" y="-130917"/>
                         </coords>
                         <text>May 2013</text>
                     </object>
-                    <object type="4" symbol="175" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="175" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="59183" y="-123479"/>
                         </coords>
                         <text>Thomas Schöps</text>
                     </object>
-                    <object type="4" symbol="173" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="173" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-98032" y="-141948"/>
                         </coords>
                         <text>Orienteering map</text>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="24405" y="-130921"/>
                         </coords>
                         <text>Standing:</text>
                     </object>
-                    <object type="4" symbol="171" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="171" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-100736" y="-132215"/>
                         </coords>
                         <text>Garching</text>
                     </object>
-                    <object type="4" symbol="172" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="172" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-100438" y="-131472"/>
                         </coords>
                         <text>Garching</text>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="24405" y="-123483"/>
                         </coords>
                         <text>Cartography:</text>
                     </object>
-                    <object type="4" symbol="175" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="175" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="59183" y="-136073"/>
                         </coords>
                         <text>2.5 m</text>
                     </object>
-                    <object type="4" symbol="175" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="175" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="59183" y="-141376"/>
                         </coords>
                         <text>1 : 4,000</text>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="24405" y="-141380"/>
                         </coords>
                         <text>Scale:</text>
                     </object>
-                    <object type="4" symbol="174" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="174" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="24405" y="-136077"/>
                         </coords>
                         <text>Contours:</text>
                     </object>
-                    <object type="4" symbol="169" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="169" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="76149" y="131570"/>
                         </coords>
@@ -74794,37 +74794,37 @@ do not assume any liability!</text>
                             <coord x="0" y="0"/>
                         </pattern>
                     </object>
-                    <object type="4" symbol="177" rotation="0" h_align="1" v_align="2">
+                    <object type="4" symbol="177" h_align="1" v_align="2">
                         <coords count="1">
                             <coord x="-35070" y="136617"/>
                         </coords>
                         <text>Munich SprintCup</text>
                     </object>
-                    <object type="4" symbol="176" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="176" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-53727" y="113748"/>
                         </coords>
                         <text>www.ol-gruenwald.de</text>
                     </object>
-                    <object type="4" symbol="176" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="176" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-53661" y="117691"/>
                         </coords>
                         <text>www.ol-landshut.de</text>
                     </object>
-                    <object type="4" symbol="178" rotation="0" h_align="2" v_align="2">
+                    <object type="4" symbol="178" h_align="2" v_align="2">
                         <coords count="1">
                             <coord x="-54952" y="117697"/>
                         </coords>
                         <text>Landshut and Freising:</text>
                     </object>
-                    <object type="4" symbol="178" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="178" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-96409" y="113730"/>
                         </coords>
                         <text>Munich:</text>
                     </object>
-                    <object type="4" symbol="178" rotation="0" h_align="0" v_align="2">
+                    <object type="4" symbol="178" h_align="0" v_align="2">
                         <coords count="1">
                             <coord x="-96266" y="109471"/>
                         </coords>
@@ -74850,9 +74850,5 @@ do not assume any liability!</text>
             </page_format>
             <print_area left="-103.672" top="-146.153" width="201.54" height="289.94" center_area="true" single_page="true"/>
         </print>
-    </barrier>
-    <barrier version="6" required="0.6.0">
-        <undo/>
-        <redo/>
     </barrier>
 </map>

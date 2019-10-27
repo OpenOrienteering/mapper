@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2013, 2014, 2017 Kai Pastor
+ *    Copyright 2013, 2014, 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -63,7 +63,9 @@ public:
 	CutoutOperation(const CutoutOperation&) = delete;
 	
 	/**
-	 * Commits the changes.
+	 * Destructs the object.
+	 * 
+	 * commit() must be called before.
 	 */
 	~CutoutOperation();
 	
@@ -76,6 +78,14 @@ public:
 	 * Applies the configured cutting operation on the given object.
 	 */
 	void operator()(Object* object);
+	
+	/**
+	 * Commits the changes.
+	 * 
+	 * This must always be called before the destructor.
+	 * No other operations may be called after commit.
+	 */
+	void commit();
 	
 private:
 	UndoStep* finish();

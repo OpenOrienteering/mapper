@@ -1,6 +1,6 @@
 #
 #    Copyright 2012 Thomas Schöps
-#    Copyright 2012, 201, 2016 Kai Pastor
+#    Copyright 2012-2019 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -24,8 +24,8 @@ if(ANDROID)
 endif()
 
 set(Mapper_SYMBOL_SETS
-  10000/ISOM2017_10000.omap
-  15000/ISOM2017_15000.omap
+  "10000/ISOM 2017-2_10000.omap"
+  "15000/ISOM 2017-2_15000.omap"
   
   10000/ISOM2000_10000.omap
   15000/ISOM2000_15000.omap
@@ -50,10 +50,10 @@ set(Mapper_SYMBOL_SETS
 )
 
 set(Mapper_CRT_FILES
-  ./ISOM2000-ISOM2017.crt
+  "./ISOM2000-ISOM 2017-2.crt"
   ./ISOM2000-ISSOM.crt
   ./OSM-ISOM2000.crt
-  ./OSM-ISOM2017.crt
+  "./OSM-ISOM 2017-2.crt"
   ./OSM-ISSOM.crt
 )
 

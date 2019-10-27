@@ -98,7 +98,7 @@ void AreaSymbol::FillPattern::save(QXmlStreamWriter& xml, const Map& map) const
 	}
 }
 
-void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	Q_ASSERT (xml.name() == QLatin1String("pattern"));
 	
@@ -124,7 +124,7 @@ void AreaSymbol::FillPattern::load(QXmlStreamReader& xml, const Map& map, Symbol
 		while (xml.readNextStartElement())
 		{
 			if (xml.name() == QLatin1String("symbol"))
-				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict).release());
+				point = static_cast<PointSymbol*>(Symbol::load(xml, map, symbol_dict, version).release());
 			else
 				xml.skipCurrentElement();
 		}
@@ -791,7 +791,7 @@ void AreaSymbol::saveImpl(QXmlStreamWriter& xml, const Map& map) const
 		pattern.save(xml, map);
 }
 
-bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict)
+bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionary& symbol_dict, int version)
 {
 	if (xml.name() != QLatin1String("area_symbol"))
 		return false;
@@ -807,7 +807,7 @@ bool AreaSymbol::loadImpl(QXmlStreamReader& xml, const Map& map, SymbolDictionar
 		if (xml.name() == QLatin1String("pattern"))
 		{
 			patterns.push_back(FillPattern());
-			patterns.back().load(xml, map, symbol_dict);
+			patterns.back().load(xml, map, symbol_dict, version);
 		}
 		else
 		{

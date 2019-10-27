@@ -46,9 +46,16 @@ private slots:
 	/** Tests VirtualPath. */
 	void virtualPathTest();
 	
+	/** Tests PathObject constructors. */
+	void constructorTest();
+	
 	/** Tests PathObject::copyFrom(). */
 	void copyFromTest();
 	void copyFromTest_data();
+	
+	/** Basic test for PathObject::changePathBounds(), focus on flags. */
+	void changePathBoundsBasicTest();
+	void changePathBoundsBasicTest_data();
 	
 	/** Tests PathObject::changePathBounds(). */
 	void changePathBoundsTest();
@@ -57,6 +64,10 @@ private slots:
 	/** Tests properties of lines after splitting. */
 	void splitLineTest();
 	void splitLineTest_data();
+	
+	/** Tests PathObject::removeFromLine(). */
+	void removeFromLineTest();
+	void removeFromLineTest_data();
 	
 	/** Tests finding intersections with calcAllIntersectionsWith(). */
 	void calcIntersectionsTest();

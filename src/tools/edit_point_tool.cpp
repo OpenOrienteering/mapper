@@ -366,7 +366,8 @@ void EditPointTool::dragMove()
 			handle_offset = MapCoordF(0, 0);
 		}
 		
-		object_mover->move(constrained_pos_map, moveOppositeHandle());
+		object_mover->move(constrained_pos_map, 
+		                   moveOppositeHandle() ? ObjectMover::HandleOpMode::Click : ObjectMover::HandleOpMode::Never);
 		updatePreviewObjectsAsynchronously();
 	}
 	else if (box_selection)
@@ -929,6 +930,10 @@ void EditPointTool::startEditingSetup()
 		setupAngleHelperFromEditedObjects();
 		angle_helper->setCenter(click_pos_map);
 	}
+	
+	const auto px = Settings::getInstance().getMapEditorClickTolerancePx();
+	const auto corner_tolerance = cur_map_widget->getMapView()->pixelToLength(px);
+	object_mover->setCornerTolerance(corner_tolerance/1000);
 }
 
 bool EditPointTool::hoveringOverSingleText() const

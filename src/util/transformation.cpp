@@ -112,11 +112,9 @@ bool PassPointList::estimateSimilarityTransformation(not_null<TemplateTransform*
 	}
 	else if (num_pass_points >= 2)
 	{
-		// Create linear equation system and solve using the pseuo inverse
+		// Create linear equation system and solve using the pseudo inverse
 		
 		// Derivation:
-		// (Attention: not by a mathematician. Please correct any errors.)
-		//
 		// Start by stating that the original coordinates (x, y) multiplied
 		// with the transformation matrix should give the desired coordinates (X, Y):
 		//
@@ -126,10 +124,10 @@ bool PassPointList::estimateSimilarityTransformation(not_null<TemplateTransform*
 		//
 		// The parametrization of the transformation matrix should be simplified because
 		// we want to have isotropic scaling.
-		// With s = scaling, r = rotation and (x, y) = offset, it looks like this:
+		// With s = scaling, r = rotation and (ox, oy) = offset, it looks like this:
 		//
-		// | s*cos(r) s*sin(r) x|    | a  b  c|
-		// |-s*sin(r) s*cos(r) y| =: |-b  a  d|
+		// | s*cos(r) s*sin(r) ox|    | a  b  c|
+		// |-s*sin(r) s*cos(r) oy| =: |-b  a  d|
 		// 
 		// With this, reordering the matrices to have the unknowns
 		// in the second matrix results in:
@@ -225,11 +223,9 @@ bool PassPointList::estimateSimilarityTransformation(not_null<QTransform*> out)
 	}
 	else if (num_pass_points >= 2)
 	{
-		// Create linear equation system and solve using the pseuo inverse
+		// Create linear equation system and solve using the pseudo inverse
 		
 		// Derivation:
-		// (Attention: not by a mathematician. Please correct any errors.)
-		//
 		// Start by stating that the original coordinates (x, y) multiplied
 		// with the transformation matrix should give the desired coordinates (X, Y):
 		//
@@ -239,10 +235,10 @@ bool PassPointList::estimateSimilarityTransformation(not_null<QTransform*> out)
 		//
 		// The parametrization of the transformation matrix should be simplified because
 		// we want to have isotropic scaling.
-		// With s = scaling, r = rotation and (x, y) = offset, it looks like this:
+		// With s = scaling, r = rotation and (ox, oy) = offset, it looks like this:
 		//
-		// | s*cos(r) s*sin(r) x|    | a  b  c|
-		// |-s*sin(r) s*cos(r) y| =: |-b  a  d|
+		// | s*cos(r) s*sin(r) ox|    | a  b  c|
+		// |-s*sin(r) s*cos(r) oy| =: |-b  a  d|
 		// 
 		// With this, reordering the matrices to have the unknowns
 		// in the second matrix results in:
@@ -317,7 +313,7 @@ bool PassPointList::estimateNonIsometricSimilarityTransform(not_null<QTransform*
 	auto num_pass_points = int(size());
 	Q_ASSERT(num_pass_points >= 3);
 	
-	// Create linear equation system and solve using the pseuo inverse
+	// Create linear equation system and solve using the pseudo inverse
 	
 	// Derivation: see comment in estimateSimilarityTransformation().
 	// Here, the resulting matrices look a bit different because the constraint

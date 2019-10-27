@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -871,7 +871,7 @@ OCAD8FileImport::RectangleInfo* OCAD8FileImport::importRectSymbol(const OCADRect
 PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 {
     PointSymbol *symbol = new PointSymbol();
-    symbol->rotatable = true;
+    symbol->setRotatable(true);
     OCADPoint *p = pts, *end = pts + npts;
     while (p < end) {
         OCADSymbolElement *elt = (OCADSymbolElement *)p;
@@ -889,7 +889,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 				element_symbol->outer_width = 0;
 				if (multiple_elements)
 				{
-					element_symbol->rotatable = false;
+					element_symbol->setRotatable(false);
 					PointObject* element_object = new PointObject(element_symbol);
 					element_object->coords.resize(1);
 					symbol->addElement(element_index, element_object, element_symbol);
@@ -909,7 +909,7 @@ PointSymbol *OCAD8FileImport::importPattern(s16 npts, OCADPoint *pts)
 				element_symbol->outer_width = outer_width;
 				if (multiple_elements)
 				{
-					element_symbol->rotatable = false;
+					element_symbol->setRotatable(false);
 					PointObject* element_object = new PointObject(element_symbol);
 					element_object->coords.resize(1);
 					symbol->addElement(element_index, element_object, element_symbol);
@@ -1227,6 +1227,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateRotation(M_PI / 180 * background.angle);
 	templ->setTemplateScaleX(convertTemplateScale(background.sclx));
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
+	templ->setTemplateShear(0.0);
 	
 	map->templates.insert(map->templates.begin(), templ);
 	
@@ -1317,6 +1318,7 @@ Template *OCAD8FileImport::importRasterTemplate(const OCADBackground &background
         templ->setTemplateRotation(M_PI / 180 * background.angle);
         templ->setTemplateScaleX(convertTemplateScale(background.sclx));
         templ->setTemplateScaleY(convertTemplateScale(background.scly));
+        templ->setTemplateShear(0.0);
         // FIXME: import template view parameters: background.dimming and background.transparent
 		// TODO: import template visibility
         return templ;

@@ -21,12 +21,14 @@
 
 #include <clocale>
 #include <memory>
+// IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
 #include <QLatin1String>
+#include <QList>
 #include <QLocale>
 #include <QObject>
 #include <QPalette>
@@ -124,6 +126,9 @@ int main(int argc, char** argv)
 	
 #ifdef Q_OS_ANDROID
 	qputenv("QT_USE_ANDROID_NATIVE_STYLE", "1");
+	// Workaround for Mapper issue GH-1373, QTBUG-72408
+	/// \todo Remove QTBUG-72408 workaround once solved in Qt.
+	qputenv("QT_QPA_NO_TEXT_HANDLES", "1");
 #endif
 	
 	// Load resources

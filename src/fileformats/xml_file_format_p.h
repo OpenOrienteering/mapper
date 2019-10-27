@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2012-2015  Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_FILE_FORMAT_XML_P_H
 #define OPENORIENTEERING_FILE_FORMAT_XML_P_H
 
+#include <functional>
+
 #include <QCoreApplication>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -37,7 +39,13 @@ class XMLFileExporter : public Exporter
 	
 public:
 	XMLFileExporter(const QString& path, const Map* map, const MapView* view);
-	~XMLFileExporter() override {}
+	XMLFileExporter() = delete;
+	XMLFileExporter(const XMLFileExporter&) = delete;
+	XMLFileExporter(XMLFileExporter&&) = delete;
+	~XMLFileExporter() override;
+	
+	XMLFileExporter& operator=(const XMLFileExporter&) = delete;	
+	XMLFileExporter& operator=(XMLFileExporter&&) = delete;	
 	
 protected:
 	bool exportImplementation() override;
@@ -64,12 +72,20 @@ class XMLFileImporter : public Importer
 	
 public:
 	XMLFileImporter(const QString& path, Map *map, MapView *view);
-	~XMLFileImporter() override {}
+	XMLFileImporter() = delete;
+	XMLFileImporter(const XMLFileImporter&) = delete;
+	XMLFileImporter(XMLFileImporter&&) = delete;
+	~XMLFileImporter() override;
+	
+	XMLFileImporter& operator=(const XMLFileImporter&) = delete;	
+	XMLFileImporter& operator=(XMLFileImporter&&) = delete;	
 	
 protected:
 	bool importImplementation() override;
 	
 	void importElements();
+	
+	void handleBarrier(const std::function<void()>& reader);
 	
 	void addWarningUnsupportedElement();
 	void importMapNotes();
@@ -83,8 +99,10 @@ protected:
 	void importUndo();
 	void importRedo();
 	
+private:
 	QXmlStreamReader xml;
 	SymbolDictionary symbol_dict;
+	int version = -1;
 	bool georef_offset_adjusted;
 };
 

@@ -110,8 +110,12 @@ void ConstrainAngleToolHelper::addAngle(qreal angle)
 
 void ConstrainAngleToolHelper::addAngles(qreal base, qreal stepping)
 {
-	for (double angle = base; angle < base + 2*M_PI; angle += stepping)
-		addAngle(angle);
+	auto const count = qFloor(2*M_PI / stepping);
+	for (auto i = 0; i < count; ++i)
+	{
+		addAngle(base);
+		base += stepping;
+	}
 }
 
 void ConstrainAngleToolHelper::addAnglesDeg(qreal base, qreal stepping)
@@ -419,7 +423,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 		if (distance_sq < closest_distance_sq)
 		{
-			closest_distance_sq = distance_sq;
+			// unused: closest_distance_sq = distance_sq;
 			result_position = MapCoord(closest_grid_point);
 			result_info.type = GridCorners;
 			result_info.object = nullptr;

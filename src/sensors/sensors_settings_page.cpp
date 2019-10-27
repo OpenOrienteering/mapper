@@ -24,6 +24,7 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QLatin1String>
+#include <QList>
 #include <QSpacerItem>
 #include <QStringList>
 #include <QVariant>
