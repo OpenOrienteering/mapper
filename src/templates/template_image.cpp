@@ -376,14 +376,22 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 {
 	GeoreferencingOptions result;
 	
+	auto crs_spec = temp_crs_spec; // loaded or empty
+#ifdef MAPPER_USE_GDAL
+	auto const gdal_georef = GdalTemplate::tryReadProjection(template_path);
+	auto const proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
+	if (crs_spec.isEmpty())
+		crs_spec = proj_spec; // loaded or empty
+#endif
+	
 	WorldFile world_file;
 	if (world_file.tryToLoadForImage(template_path))
 	{
 		auto pixel_to_world = QTransform(world_file);
-		if (!temp_crs_spec.isEmpty())
+		if (!crs_spec.isEmpty())
 		{
 			Georeferencing tmp_georef;
-			tmp_georef.setProjectedCRS(QString{}, temp_crs_spec);
+			tmp_georef.setProjectedCRS(QString{}, crs_spec);
 			if (tmp_georef.isGeographic())
 			{
 				constexpr auto factor = qDegreesToRadians(1.0);
@@ -394,14 +402,12 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 				};
 			}
 		}
-		result.push_back({Georeferencing_WorldFile, "World file", temp_crs_spec, pixel_to_world});
+		result.push_back({Georeferencing_WorldFile, "World file", crs_spec, pixel_to_world});
 	}
 	
 #ifdef MAPPER_USE_GDAL
-	auto gdal_georef = GdalTemplate::tryReadProjection(template_path);
 	if (gdal_georef.valid)
 	{
-		auto proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
 		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
 	}
 #endif
