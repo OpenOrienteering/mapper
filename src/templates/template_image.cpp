@@ -192,35 +192,39 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 		if (open_dialog.exec() == QDialog::Rejected)
 			return false;
 		
-		if (open_dialog.isGeorefRadioChecked() && map->getGeoreferencing().isLocal())
+		if (!open_dialog.isGeorefRadioChecked())
+			break;
+		
+		Q_ASSERT(!available_georef.empty());  // implied by open_dialog.isGeorefRadioChecked()
+		temp_crs_spec = available_georef.front().crs_spec;
+		if (map->getGeoreferencing().isLocal())
 		{
-			// Make sure that the map is georeferenced;
-			// use the center coordinates of the image as initial reference point.
-			calculateGeoreferencing();
-			QPointF template_coords_center = georef->toProjectedCoords(MapCoordF(0.5 * (image.width() - 1), 0.5 * (image.height() - 1)));
-			bool template_coords_probably_geographic =
-				template_coords_center.x() >= -90 && template_coords_center.x() <= 90 &&
-				template_coords_center.y() >= -90 && template_coords_center.y() <= 90;
-			
+			// Make sure that the map is georeferenced.
 			Georeferencing initial_georef(map->getGeoreferencing());
-			if (template_coords_probably_geographic)
-				initial_georef.setGeographicRefPoint(LatLon(template_coords_center.y(), template_coords_center.x()));
-			else
-				initial_georef.setProjectedRefPoint(template_coords_center);
-			initial_georef.setState(Georeferencing::Local);
+			if (!initial_georef.setProjectedCRS({}, temp_crs_spec) || initial_georef.isLocal())
+				temp_crs_spec.clear();
+			
+			if (initial_georef.getMapRefPoint() == MapCoord{}
+			    && initial_georef.getProjectedRefPoint() == QPointF{})
+			{
+				// Use the center coordinates of the image as initial reference point.
+				calculateGeoreferencing();
+				auto const center_pixel = MapCoordF(0.5 * (image.width() - 1), 0.5 * (image.height() - 1));
+				initial_georef.setProjectedRefPoint(georef->toProjectedCoords(center_pixel));
+			}
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
-			if (template_coords_probably_geographic)
-				dialog.setKeepGeographicRefCoords();
-			else
+			if (initial_georef.isLocal())
 				dialog.setKeepProjectedRefCoords();
+			else
+				dialog.setKeepGeographicRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
 		}
 		
-		if (open_dialog.isGeorefRadioChecked() && available_georef.front().type == Georeferencing_WorldFile)
+		if (temp_crs_spec.isEmpty())
 		{
-			// Let user select the coordinate reference system, as this is not specified in world files
+			// Let the user select the coordinate reference system.
 			SelectCRSDialog dialog(
 			            map->getGeoreferencing(),
 			            dialog_parent,
