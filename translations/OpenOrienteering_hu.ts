@@ -5824,7 +5824,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>A(z) &quot;%1&quot; szöveges szimbólumban: egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD működéséhez</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD működéséhez</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
