@@ -29,6 +29,7 @@
 #include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
 #include <QCoreApplication>
+#include <QGuiApplication>
 #include <QLatin1String>
 #include <QList>
 #include <QLocale>
@@ -93,10 +94,10 @@ void resetActivationWindow()
 	auto app = qobject_cast<QtSingleApplication*>(qApp);
 	app->setActivationWindow(nullptr);
 	
-	if (!app->closingDown())
+	if (!QCoreApplication::closingDown())
 	{
 		const auto* old_window = app->activationWindow();
-		const auto top_level_widgets = app->topLevelWidgets();
+		const auto top_level_widgets = QApplication::topLevelWidgets();
 		for (auto* widget : top_level_widgets)
 		{	
 			auto new_window = qobject_cast<MainWindow*>(widget);
@@ -142,13 +143,13 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(resources);
 	
 	// QSettings on OS X benefits from using an internet domain here.
-	QApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QApplication::setApplicationName(QString::fromLatin1("Mapper"));
-	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QCoreApplication::setApplicationName(QString::fromLatin1("Mapper"));
+	QGuiApplication::setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
 	
 #ifdef WIN32
 	// Load plugins on Windows
-	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
+	QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
 #endif
 	
 	MapperResource::setSeachPaths();
@@ -168,11 +169,11 @@ int main(int argc, char** argv)
 	if (!translation.getAppTranslator().isEmpty())
 	{
 		// Debug translation only if there is a Mapper translation, i.e. not for English.
-		qapp.installTranslator(new RecordingTranslator());
+		QCoreApplication::installTranslator(new RecordingTranslator());
 	}
 #endif
-	qapp.installTranslator(&translation.getQtTranslator());
-	qapp.installTranslator(&translation.getAppTranslator());
+	QCoreApplication::installTranslator(&translation.getQtTranslator());
+	QCoreApplication::installTranslator(&translation.getAppTranslator());
 	map_symbol_translator = translation.load(QString::fromLatin1("map_symbols")).release();
 	if (map_symbol_translator)
 		map_symbol_translator->setParent(&qapp);
@@ -210,5 +211,5 @@ int main(int argc, char** argv)
 	// Let application run
 	first_window->setVisible(true);
 	first_window->raise();
-	return qapp.exec();
+	return QApplication::exec();
 }
