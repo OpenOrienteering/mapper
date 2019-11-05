@@ -21,12 +21,14 @@
 
 #include <clocale>
 #include <memory>
+#include <utility>
 // IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
+#include <QCoreApplication>
 #include <QLatin1String>
 #include <QList>
 #include <QLocale>
@@ -54,7 +56,6 @@
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
-#include "util/backports.h"  // IWYU pragma: keep
 #include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
 
@@ -77,6 +78,13 @@ extern QPointer<QTranslator> map_symbol_translator;
 }  // namespace OpenOrienteering
 
 
+QStringList firstRemoved(QStringList&& input)
+{
+	if (!input.empty())
+		input.removeFirst();
+	return std::move(input);
+}
+
 
 #if MAPPER_USE_QTSINGLEAPPLICATION
 
@@ -96,7 +104,7 @@ void resetActivationWindow()
 			{
 				app->setActivationWindow(new_window);
 				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
-				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, QOverload<const QString&>::of(&MainWindow::openPath));
+				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPathLater);
 				break;
 			}
 		}
@@ -114,10 +122,9 @@ int main(int argc, char** argv)
 	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
 	if (qapp.isRunning()) {
 		// Send a message to activate the running app, and optionally open a file
-		QString filepath = {};
-		if (argc > 1)
-			filepath = QFileInfo(QString::fromLocal8Bit(argv[1])).absoluteFilePath();
-		qapp.sendMessage(filepath);
+		auto const arguments = firstRemoved(QCoreApplication::arguments());
+		for (auto const& arg : arguments)
+			qapp.sendMessage(QFileInfo(arg).absoluteFilePath());
 		return 0;
 	}
 #else
@@ -190,12 +197,9 @@ int main(int argc, char** argv)
 	// top of a regular main window (home screen or other file).
 	
 	// Treat all program parameters as files to be opened
-	QStringList args(qapp.arguments());
-	args.removeFirst(); // the program name
-	for (const auto& arg : qAsConst(args))
-	{
+	auto const arguments = firstRemoved(QCoreApplication::arguments());
+	for (auto const& arg : arguments)
 		first_window->openPathLater(arg);
-	}
 	
 	first_window->applicationStateChanged();
 	
