@@ -89,23 +89,22 @@ QStringList firstRemoved(QStringList&& input)
 
 #if MAPPER_USE_QTSINGLEAPPLICATION
 
-void resetActivationWindow()
+void resetActivationWindow(QtSingleApplication& app)
 {
-	auto app = qobject_cast<QtSingleApplication*>(qApp);
-	app->setActivationWindow(nullptr);
+	app.setActivationWindow(nullptr);
 	
 	if (!QCoreApplication::closingDown())
 	{
-		const auto* old_window = app->activationWindow();
+		const auto* old_window = app.activationWindow();
 		const auto top_level_widgets = QApplication::topLevelWidgets();
 		for (auto* widget : top_level_widgets)
 		{	
 			auto new_window = qobject_cast<MainWindow*>(widget);
 			if (new_window && new_window != old_window)
 			{
-				app->setActivationWindow(new_window);
-				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
-				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPathLater);
+				app.setActivationWindow(new_window);
+				QObject::connect(new_window, &QObject::destroyed, &app, [&app]() { resetActivationWindow(app); });
+				QObject::connect(&app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPathLater);
 				break;
 			}
 		}
@@ -205,7 +204,7 @@ int main(int argc, char** argv)
 	first_window->applicationStateChanged();
 	
 #if MAPPER_USE_QTSINGLEAPPLICATION
-	resetActivationWindow();
+	resetActivationWindow(qapp);
 #endif
 	
 	// Let application run
