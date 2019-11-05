@@ -21,12 +21,15 @@
 
 #include <clocale>
 #include <memory>
+#include <utility>
 // IWYU pragma: no_include <type_traits>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QtPlugin>  // IWYU pragma: keep
 #include <QApplication>
+#include <QCoreApplication>
+#include <QGuiApplication>
 #include <QLatin1String>
 #include <QList>
 #include <QLocale>
@@ -39,22 +42,17 @@
 #include <QTranslator>
 #include <QWidget>
 
-#include <mapper_config.h>
-
-#if defined(QT_NETWORK_LIB)
-#  define MAPPER_USE_QTSINGLEAPPLICATION 1
-#  include <QtSingleApplication>
-#  include <QFileInfo>
-#else
-#  define MAPPER_USE_QTSINGLEAPPLICATION 0
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
+#include <QtSingleApplication>
+#include <QFileInfo>
 #endif
 
 #include "global.h"
+#include "mapper_config.h"
 #include "mapper_resource.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"
 #include "gui/widgets/mapper_proxystyle.h"
-#include "util/backports.h"  // IWYU pragma: keep
 #include "util/recording_translator.h"  // IWYU pragma: keep
 #include "util/translation_util.h"
 
@@ -77,26 +75,32 @@ extern QPointer<QTranslator> map_symbol_translator;
 }  // namespace OpenOrienteering
 
 
-
-#if MAPPER_USE_QTSINGLEAPPLICATION
-
-void resetActivationWindow()
+QStringList firstRemoved(QStringList&& input)
 {
-	auto app = qobject_cast<QtSingleApplication*>(qApp);
-	app->setActivationWindow(nullptr);
+	if (!input.empty())
+		input.removeFirst();
+	return std::move(input);
+}
+
+
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
+
+void resetActivationWindow(QtSingleApplication& app)
+{
+	const auto* const old_window = app.activationWindow();
+	app.setActivationWindow(nullptr);
 	
-	if (!app->closingDown())
+	if (!QCoreApplication::closingDown())
 	{
-		const auto* old_window = app->activationWindow();
-		const auto top_level_widgets = app->topLevelWidgets();
+		const auto top_level_widgets = QApplication::topLevelWidgets();
 		for (auto* widget : top_level_widgets)
 		{	
-			auto new_window = qobject_cast<MainWindow*>(widget);
+			auto* const new_window = qobject_cast<MainWindow*>(widget);
 			if (new_window && new_window != old_window)
 			{
-				app->setActivationWindow(new_window);
-				QObject::connect(new_window, &QObject::destroyed, &resetActivationWindow);
-				QObject::connect(app, &QtSingleApplication::messageReceived, new_window, QOverload<const QString&>::of(&MainWindow::openPath));
+				app.setActivationWindow(new_window);
+				QObject::connect(new_window, &QObject::destroyed, &app, [&app]() { resetActivationWindow(app); });
+				QObject::connect(&app, &QtSingleApplication::messageReceived, new_window, &MainWindow::openPathLater);
 				break;
 			}
 		}
@@ -108,16 +112,15 @@ void resetActivationWindow()
 
 int main(int argc, char** argv)
 {
-#if MAPPER_USE_QTSINGLEAPPLICATION
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
 	if (qapp.isRunning()) {
 		// Send a message to activate the running app, and optionally open a file
-		QString filepath = {};
-		if (argc > 1)
-			filepath = QFileInfo(QString::fromLocal8Bit(argv[1])).absoluteFilePath();
-		qapp.sendMessage(filepath);
+		auto const arguments = firstRemoved(QCoreApplication::arguments());
+		for (auto const& arg : arguments)
+			qapp.sendMessage(QFileInfo(arg).absoluteFilePath());
 		return 0;
 	}
 #else
@@ -135,13 +138,13 @@ int main(int argc, char** argv)
 	Q_INIT_RESOURCE(resources);
 	
 	// QSettings on OS X benefits from using an internet domain here.
-	QApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
-	QApplication::setApplicationName(QString::fromLatin1("Mapper"));
-	qapp.setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
+	QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+	QCoreApplication::setApplicationName(QString::fromLatin1("Mapper"));
+	QGuiApplication::setApplicationDisplayName(APP_NAME + QString::fromUtf8(" " APP_VERSION));
 	
 #ifdef WIN32
 	// Load plugins on Windows
-	qapp.addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
+	QCoreApplication::addLibraryPath(QCoreApplication::applicationDirPath() + QLatin1String("/plugins"));
 #endif
 	
 	MapperResource::setSeachPaths();
@@ -161,11 +164,11 @@ int main(int argc, char** argv)
 	if (!translation.getAppTranslator().isEmpty())
 	{
 		// Debug translation only if there is a Mapper translation, i.e. not for English.
-		qapp.installTranslator(new RecordingTranslator());
+		QCoreApplication::installTranslator(new RecordingTranslator());
 	}
 #endif
-	qapp.installTranslator(&translation.getQtTranslator());
-	qapp.installTranslator(&translation.getAppTranslator());
+	QCoreApplication::installTranslator(&translation.getQtTranslator());
+	QCoreApplication::installTranslator(&translation.getAppTranslator());
 	map_symbol_translator = translation.load(QString::fromLatin1("map_symbols")).release();
 	if (map_symbol_translator)
 		map_symbol_translator->setParent(&qapp);
@@ -190,21 +193,18 @@ int main(int argc, char** argv)
 	// top of a regular main window (home screen or other file).
 	
 	// Treat all program parameters as files to be opened
-	QStringList args(qapp.arguments());
-	args.removeFirst(); // the program name
-	for (const auto& arg : qAsConst(args))
-	{
+	auto const arguments = firstRemoved(QCoreApplication::arguments());
+	for (auto const& arg : arguments)
 		first_window->openPathLater(arg);
-	}
 	
 	first_window->applicationStateChanged();
 	
-#if MAPPER_USE_QTSINGLEAPPLICATION
-	resetActivationWindow();
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
+	resetActivationWindow(qapp);
 #endif
 	
 	// Let application run
 	first_window->setVisible(true);
 	first_window->raise();
-	return qapp.exec();
+	return QApplication::exec();
 }
