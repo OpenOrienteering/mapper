@@ -42,14 +42,13 @@
 #include <QTranslator>
 #include <QWidget>
 
-#include <mapper_config.h>
-
 #ifdef MAPPER_USE_QTSINGLEAPPLICATION
 #include <QtSingleApplication>
 #include <QFileInfo>
 #endif
 
 #include "global.h"
+#include "mapper_config.h"
 #include "mapper_resource.h"
 #include "gui/home_screen_controller.h"
 #include "gui/main_window.h"

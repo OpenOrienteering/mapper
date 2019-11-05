@@ -43,8 +43,7 @@
 #  include <QUrl>
 #endif
 
-#include <mapper_config.h>
-
+#include "mapper_config.h"
 #include "settings.h"
 #include "core/map.h"
 #include "core/map_view.h"
