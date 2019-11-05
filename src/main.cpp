@@ -87,15 +87,15 @@ QStringList firstRemoved(QStringList&& input)
 
 void resetActivationWindow(QtSingleApplication& app)
 {
+	const auto* const old_window = app.activationWindow();
 	app.setActivationWindow(nullptr);
 	
 	if (!QCoreApplication::closingDown())
 	{
-		const auto* old_window = app.activationWindow();
 		const auto top_level_widgets = QApplication::topLevelWidgets();
 		for (auto* widget : top_level_widgets)
 		{	
-			auto new_window = qobject_cast<MainWindow*>(widget);
+			auto* const new_window = qobject_cast<MainWindow*>(widget);
 			if (new_window && new_window != old_window)
 			{
 				app.setActivationWindow(new_window);
