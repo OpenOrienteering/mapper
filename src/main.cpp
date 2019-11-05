@@ -44,12 +44,9 @@
 
 #include <mapper_config.h>
 
-#if defined(QT_NETWORK_LIB)
-#  define MAPPER_USE_QTSINGLEAPPLICATION 1
-#  include <QtSingleApplication>
-#  include <QFileInfo>
-#else
-#  define MAPPER_USE_QTSINGLEAPPLICATION 0
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
+#include <QtSingleApplication>
+#include <QFileInfo>
 #endif
 
 #include "global.h"
@@ -87,7 +84,7 @@ QStringList firstRemoved(QStringList&& input)
 }
 
 
-#if MAPPER_USE_QTSINGLEAPPLICATION
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
 
 void resetActivationWindow(QtSingleApplication& app)
 {
@@ -116,7 +113,7 @@ void resetActivationWindow(QtSingleApplication& app)
 
 int main(int argc, char** argv)
 {
-#if MAPPER_USE_QTSINGLEAPPLICATION
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
 	// Create single-instance application.
 	// Use "oo-mapper" instead of the executable as identifier, in case we launch from different paths.
 	QtSingleApplication qapp(QString::fromLatin1("oo-mapper"), argc, argv);
@@ -203,7 +200,7 @@ int main(int argc, char** argv)
 	
 	first_window->applicationStateChanged();
 	
-#if MAPPER_USE_QTSINGLEAPPLICATION
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
 	resetActivationWindow(qapp);
 #endif
 	

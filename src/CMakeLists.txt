@@ -306,6 +306,7 @@ if(ANDROID)
 	add_library(Mapper SHARED ${Mapper_SRCS})
 else()
 	add_executable(Mapper WIN32 MACOSX_BUNDLE ${Mapper_SRCS})
+	target_compile_definitions(Mapper PRIVATE MAPPER_USE_QTSINGLEAPPLICATION)
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
 
