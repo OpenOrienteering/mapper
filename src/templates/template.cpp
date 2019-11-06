@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,7 +52,7 @@ namespace OpenOrienteering {
 class Template::ScopedOffsetReversal
 {
 public:
-	ScopedOffsetReversal(Template& temp)
+	explicit ScopedOffsetReversal(Template& temp)
 	: temp(temp)
 	, copy(temp.transform)
 	, needed(temp.accounted_offset != MapCoord{} )
@@ -73,6 +73,11 @@ public:
 			temp.updateTransformationMatrices();
 		}
 	}
+	
+	ScopedOffsetReversal(const ScopedOffsetReversal&) = delete;
+	ScopedOffsetReversal(ScopedOffsetReversal&&) = delete;
+	ScopedOffsetReversal& operator=(const ScopedOffsetReversal&) = delete;
+	ScopedOffsetReversal&& operator=(ScopedOffsetReversal&&) = delete;
 	
 private:
 	Template& temp;
