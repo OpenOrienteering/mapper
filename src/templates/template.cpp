@@ -21,19 +21,32 @@
 
 #include "template.h"
 
+#include <algorithm>
 #include <cmath>
+#include <iosfwd>
+#include <iterator>
 #include <new>
+#include <type_traits>
 
+#include <Qt>
+#include <QtMath>
+#include <QByteArray>
+#include <QColor>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QLatin1String>
 #include <QMessageBox>
 #include <QPainter>
-#include <QScopedValueRollback>
+#include <QRectF>
+#include <QStringRef>
+#include <QTransform>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map_view.h"
 #include "core/map.h"
 #include "fileformats/file_format.h"

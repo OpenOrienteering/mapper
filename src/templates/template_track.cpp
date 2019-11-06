@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,14 +21,31 @@
 
 #include "template_track.h"
 
+#include <Qt>
+#include <QBrush>
+#include <QByteArray>
 #include <QCommandLinkButton>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFont>
+#include <QFontMetrics>
+#include <QLatin1Char>
+#include <QLatin1String>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPainterPath>
+#include <QPen>
+#include <QRect>
+#include <QRgb>
+#include <QStringRef>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
+#include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
 #include "core/symbols/point_symbol.h"
@@ -36,6 +53,8 @@
 #include "gui/task_dialog.h"
 #include "undo/object_undo.h"
 #include "util/util.h"
+
+class QAbstractButton;
 
 
 namespace OpenOrienteering {

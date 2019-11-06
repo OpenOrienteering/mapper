@@ -23,12 +23,12 @@
 #define OPENORIENTEERING_TEMPLATE_H
 
 #include <memory>
+#include <vector>
 
 #include <QtGlobal>
 #include <QObject>
 #include <QPointF>
 #include <QString>
-#include <vector>
 
 #include "core/map_coord.h"
 #include "util/matrix.h"
@@ -39,6 +39,7 @@ class QColor;
 class QDir;
 class QFileInfo;
 class QPainter;
+class QPointF;
 class QRectF;
 class QTransform;
 class QWidget;
