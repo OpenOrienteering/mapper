@@ -573,9 +573,8 @@ bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 	       && loadTemplateFile(false);
 }
 
-bool Template::preLoadConfiguration(QWidget* dialog_parent)
+bool Template::preLoadConfiguration(QWidget* /*dialog_parent*/)
 {
-	Q_UNUSED(dialog_parent);
 	return true;
 }
 
@@ -626,10 +625,8 @@ bool Template::loadTemplateFile(bool configuring)
 	return template_state == Loaded;
 }
 
-bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool Template::postLoadConfiguration(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
 {
-	Q_UNUSED(dialog_parent);
-	Q_UNUSED(out_center_in_view);
 	return true;
 }
 
@@ -756,9 +753,8 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QCo
 	setHasUnsavedChanges(true);
 }
 
-void Template::drawOntoTemplateUndo(bool redo)
+void Template::drawOntoTemplateUndo(bool /*redo*/)
 {
-	Q_UNUSED(redo);
 	// nothing
 }
 
@@ -911,9 +907,8 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 
 
 
-void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
+void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& /*xml*/) const
 {
-	Q_UNUSED(xml);
 	// nothing
 }
 
@@ -923,12 +918,8 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, QColor /*color*/, float /*width*/)
 {
-	Q_UNUSED(coords);
-	Q_UNUSED(num_coords);
-	Q_UNUSED(color);
-	Q_UNUSED(width);
 	// nothing
 }
 

@@ -177,10 +177,8 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
-	Q_UNUSED(out_center_in_view);
-	
 	if (getTemplateFilename().endsWith(QLatin1String(".gif"), Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
 	
@@ -260,12 +258,8 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, float opacity) const
 {
-	Q_UNUSED(clip_rect);
-	Q_UNUSED(scale);
-	Q_UNUSED(on_screen);
-	
 	applyTemplateTransform(painter);
 	
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
