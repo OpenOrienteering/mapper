@@ -46,7 +46,6 @@
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
-#include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
