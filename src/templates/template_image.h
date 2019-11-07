@@ -24,6 +24,7 @@
 
 #include <vector>
 
+#include <QtGlobal>
 #include <QByteArray>
 #include <QColor>
 #include <QImage>
@@ -146,7 +147,7 @@ protected:
 	};
 	
 	Template* duplicateImpl() const override;
-	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, float width) override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();

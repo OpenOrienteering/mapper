@@ -732,7 +732,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, float width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);
@@ -743,7 +743,7 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, con
 		for (int i = 1; i < num_coords; ++i)
 			rectInclude(map_bbox, coords[i]);
 	}
-	float radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0f);
+	auto const radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0);
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,
 								map_bbox.width() + 2*radius, map_bbox.height() + 2*radius);
 	
@@ -918,7 +918,7 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, float /*width*/)
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/)
 {
 	// nothing
 }
