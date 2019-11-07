@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018  Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -167,7 +167,7 @@ void MapView::load(QXmlStreamReader& xml)
 		if (xml.name() == literal::map)
 		{
 			XmlElementReader map_element(xml);
-			map_visibility.opacity = map_element.attribute<float>(literal::opacity);
+			map_visibility.opacity = map_element.attribute<qreal>(literal::opacity);
 			if (map_element.hasAttribute(literal::visible))
 				map_visibility.visible = map_element.attribute<bool>(literal::visible);
 			else
@@ -356,7 +356,7 @@ TemplateVisibility MapView::effectiveMapVisibility() const
 {
 	if (all_templates_hidden)
 		return { 1.0f, true };
-	else if (map_visibility.opacity < 0.005f)
+	else if (map_visibility.opacity < 0.005)
 		return { 0.0f, false };
 	else
 		return map_visibility;

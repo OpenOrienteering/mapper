@@ -46,7 +46,6 @@
 #include <QXmlStreamWriter>
 
 #include "core/georeferencing.h"
-#include "core/latlon.h"
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "core/storage_location.h"  // IWYU pragma: keep
@@ -178,10 +177,8 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
-	Q_UNUSED(out_center_in_view);
-	
 	if (getTemplateFilename().endsWith(QLatin1String(".gif"), Qt::CaseInsensitive))
 		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
 	
@@ -261,12 +258,8 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, qreal opacity) const
 {
-	Q_UNUSED(clip_rect);
-	Q_UNUSED(scale);
-	Q_UNUSED(on_screen);
-	
 	applyTemplateTransform(painter);
 	
 	painter->setRenderHint(QPainter::SmoothPixmapTransform);
@@ -431,7 +424,7 @@ Template* TemplateImage::duplicateImpl() const
 	return new_template;
 }
 
-void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
 {
 	QPointF* points;
 	QRect radius_bbox;

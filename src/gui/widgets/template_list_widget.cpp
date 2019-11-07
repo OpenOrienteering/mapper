@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -779,13 +779,13 @@ void TemplateListWidget::cellChange(int row, int column)
 			
 		case 1:  // Opacity spinbox or slider
 			{
-				float opacity = template_table->item(row, column)->data(Qt::DisplayRole).toFloat();
-				if (!qFuzzyCompare(1.0f+opacity, 1.0f+visibility.opacity))
+				auto const opacity = template_table->item(row, column)->data(Qt::DisplayRole).toReal();
+				if (!qFuzzyCompare(1.0+opacity, 1.0+visibility.opacity))
 				{
-					visibility.opacity = qBound(0.0f, opacity, 1.0f);
+					visibility.opacity = qBound(0.0, opacity, 1.0);
 					updateVisibility(temp, visibility);
 					setAreaDirty();
-					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, qreal(visibility.opacity)));
+					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, visibility.opacity));
 				}
 			}
 			break;
@@ -1263,7 +1263,7 @@ void TemplateListWidget::updateRow(int row)
 		if (vis.visible)
 		{
 			check_state   = Qt::Checked;
-			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, qreal(vis.opacity));
+			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, vis.opacity);
 			text_color    = QPalette().color(color_group, QPalette::Foreground);
 			if (!mobile_mode)
 			{

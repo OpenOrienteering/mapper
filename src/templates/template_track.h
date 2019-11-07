@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_TEMPLATE_TRACK_H
 #define OPENORIENTEERING_TEMPLATE_TRACK_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
@@ -69,7 +70,7 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
     QRectF calculateTemplateBoundingBox() const override;
     int getTemplateBoundingBoxPixelBorder() override;
