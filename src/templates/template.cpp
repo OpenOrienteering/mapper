@@ -324,7 +324,7 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	QString path = attributes.value(QLatin1String("path")).toString();
 	auto temp = templateForFile(path, &map);
 	if (!temp)
-		temp.reset(new TemplateImage(path, &map)); // fallback
+		temp = std::make_unique<TemplateImage>(path, &map); // fallback
 	
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))
@@ -888,18 +888,18 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	
 	std::unique_ptr<Template> t;
 	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
-		t.reset(new TemplateImage(path, map));
+		t = std::make_unique<TemplateImage>(path, map);
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
-		t.reset(new TemplateMap(path, map));
+		t = std::make_unique<TemplateMap>(path, map);
 #ifdef MAPPER_USE_GDAL
 	else if (path_ends_with_any_of(OgrTemplate::supportedExtensions()))
-		t.reset(new OgrTemplate(path, map));
+		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
-		t.reset(new TemplateTrack(path, map));
+		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
 	else
-		t.reset(new OgrTemplate(path, map));
+		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	
 	return t;
