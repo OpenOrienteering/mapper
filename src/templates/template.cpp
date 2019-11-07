@@ -33,7 +33,6 @@
 #include <QByteArray>
 #include <QColor>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
 #include <QLatin1String>
@@ -354,7 +353,7 @@ Q_ASSERT(temp->passpoints.size() == 0);
 						temp->other_transform.load(xml);
 					else
 					{
-						qDebug() << xml.qualifiedName();
+						qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 						xml.skipCurrentElement(); // unsupported
 					}
 				}
@@ -372,13 +371,13 @@ Q_ASSERT(temp->passpoints.size() == 0);
 						temp->template_to_map_other.load(xml);
 					else
 					{
-						qDebug() << xml.qualifiedName();
+						qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 						xml.skipCurrentElement(); // unsupported
 					}
 				}
 				else
 				{
-					qDebug() << xml.qualifiedName();
+					qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 					xml.skipCurrentElement(); // unsupported
 				}
 			}
