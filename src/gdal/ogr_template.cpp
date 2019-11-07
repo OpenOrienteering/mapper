@@ -76,6 +76,7 @@ namespace {
 		// Keep a configured local reference point from initial_georef?
 		auto data_crs_spec = data_georef.getProjectedCRSSpec();
 		if ((!initial_georef.isValid() || initial_georef.isLocal())
+		    && initial_georef.getProjectedRefPoint() != QPointF{}
 		    && data_georef.isValid()
 		    && !data_georef.isLocal()
 		    && data_georef.getProjectedRefPoint() == QPointF{}
