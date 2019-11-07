@@ -732,7 +732,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, float width, QRectF map_bbox)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);
@@ -918,7 +918,7 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, QColor /*color*/, float /*width*/)
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, float /*width*/)
 {
 	// nothing
 }

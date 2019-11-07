@@ -424,7 +424,7 @@ Template* TemplateImage::duplicateImpl() const
 	return new_template;
 }
 
-void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, float width)
 {
 	QPointF* points;
 	QRect radius_bbox;

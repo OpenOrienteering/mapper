@@ -379,7 +379,7 @@ public:
 	 * 
 	 * \todo Rewrite using a range of MapCoordF.
 	 */
-	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, float width, QRectF map_bbox);
 	
 	/** 
 	 * Triggers an undo or redo action for template freehand drawing.
@@ -652,7 +652,7 @@ protected:
 	 * Draws the polyline given by the points onto the template.
 	 * Required if canBeDrawnOnto() returns true.
 	 */
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, float width);
 	
 	
 	/**

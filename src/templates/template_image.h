@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -146,7 +146,7 @@ protected:
 	};
 	
 	Template* duplicateImpl() const override;
-	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width) override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, float width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
