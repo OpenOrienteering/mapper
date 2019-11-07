@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2018  Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -51,8 +51,8 @@ class Template;
 class TemplateVisibility
 {
 public:
-	/** Opacity from 0.0f (invisible) to 1.0f (opaque) */
-	float opacity;
+	/** Opacity from 0.0 (invisible) to 1.0 (opaque) */
+	qreal opacity;
 	
 	/** Visibility flag */
 	bool visible;
@@ -431,7 +431,7 @@ inline
 bool operator==(TemplateVisibility lhs, TemplateVisibility rhs)
 {
 	return lhs.visible == rhs.visible
-	       && qFuzzyCompare(1.0f+rhs.opacity, 1.0f+lhs.opacity);
+	       && qFuzzyCompare(1.0+rhs.opacity, 1.0+lhs.opacity);
 }
 
 inline

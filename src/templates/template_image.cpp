@@ -258,7 +258,7 @@ void TemplateImage::unloadTemplateFileImpl()
 	image = QImage();
 }
 
-void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, float opacity) const
+void TemplateImage::drawTemplate(QPainter* painter, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, qreal opacity) const
 {
 	applyTemplateTransform(painter);
 	

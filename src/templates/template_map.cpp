@@ -129,7 +129,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map.reset();
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);

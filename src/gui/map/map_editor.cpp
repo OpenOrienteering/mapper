@@ -3465,7 +3465,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			
 			// Derive new visibility from previous/default one.
 			auto visibility = main_view->getTemplateVisibility(track);
-			visibility.opacity = std::max(0.5f, visibility.opacity);
+			visibility.opacity = std::max(0.5, visibility.opacity);
 			visibility.visible = true;
 			
 			if (!track)
