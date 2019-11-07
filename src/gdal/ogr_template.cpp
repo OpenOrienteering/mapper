@@ -71,25 +71,12 @@ namespace {
 	}
 	
 	
-	std::unique_ptr<Georeferencing> getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef)
-	{
-		Map tmp_map;
-		tmp_map.setGeoreferencing(initial_georef);
-		OgrFileImport importer{ path, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
-		importer.setGeoreferencingImportEnabled(true);
-		importer.setLoadSymbolsOnly(true);
-		if (!importer.doImport())
-			return {};  // failure
-		
-		return std::make_unique<Georeferencing>(tmp_map.getGeoreferencing());  // success
-	}
-	
-	
 	bool preserveRefPoints(Georeferencing& data_georef, const Georeferencing& initial_georef)
 	{
 		// Keep a configured local reference point from initial_georef?
 		auto data_crs_spec = data_georef.getProjectedCRSSpec();
 		if ((!initial_georef.isValid() || initial_georef.isLocal())
+		    && initial_georef.getProjectedRefPoint() != QPointF{}
 		    && data_georef.isValid()
 		    && !data_georef.isLocal()
 		    && data_georef.getProjectedRefPoint() == QPointF{}
@@ -116,6 +103,20 @@ namespace {
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 {
 	return GdalManager().supportedVectorImportExtensions();
+}
+
+
+std::unique_ptr<Georeferencing> OgrTemplate::getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef)
+{
+	Map tmp_map;
+	tmp_map.setGeoreferencing(initial_georef);
+	OgrFileImport importer{ path, &tmp_map, nullptr, OgrFileImport::UnitOnGround};
+	importer.setGeoreferencingImportEnabled(true);
+	importer.setLoadSymbolsOnly(true);
+	if (!importer.doImport())
+		return {};  // failure
+	
+	return std::make_unique<Georeferencing>(tmp_map.getGeoreferencing());  // success
 }
 
 

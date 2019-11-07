@@ -456,6 +456,9 @@ namespace {
 		{
 			auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 			OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+			OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
+#endif
 			
 			auto num_layers = OGR_DS_GetLayerCount(data_source);
 			for (int i = 0; i < num_layers; ++i)

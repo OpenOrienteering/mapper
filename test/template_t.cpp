@@ -34,6 +34,7 @@
 #include "core/map.h"
 #include "core/map_view.h"
 #include "fileformats/xml_file_format_p.h"
+#include "gdal/ogr_template.h"
 #include "templates/template.h"
 #include "templates/world_file.h"
 
@@ -200,6 +201,18 @@ private slots:
 #endif
 	}
 	
+#ifdef MAPPER_USE_GDAL
+	void ogrTemplateGeoreferencingTest()
+	{
+		auto const osm_fileinfo = QFileInfo(QStringLiteral("testdata:templates/map.osm"));
+		QVERIFY(osm_fileinfo.exists());
+		auto georef = OgrTemplate::getDataGeoreferencing(osm_fileinfo.absoluteFilePath(), Georeferencing{});
+		QVERIFY(georef);
+		auto latlon = georef->getGeographicRefPoint();
+		QCOMPARE(qRound(latlon.latitude()), 50);
+		QCOMPARE(qRound(latlon.longitude()), 8);
+	}
+#endif
 };
 
 
