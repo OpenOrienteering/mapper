@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2017 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,6 +41,8 @@
 #include "core/map_coord.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/file_import_export.h"
+
+class QPointF;
 
 namespace OpenOrienteering {
 
@@ -290,6 +292,8 @@ protected:
 	
 	
 	static LatLon calcAverageLatLon(OGRDataSourceH data_source);
+	
+	static QPointF calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs);
 	
 	
 private:

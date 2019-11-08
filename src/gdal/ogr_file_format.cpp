@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -413,7 +413,7 @@ namespace {
 	}
 	
 	
-	class AverageLatLon
+	class AverageCoords
 	{
 	private:
 		double x = 0;
@@ -452,14 +452,8 @@ namespace {
 		}
 		
 	public:
-		AverageLatLon(OGRDataSourceH data_source)
+		AverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs)
 		{
-			auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
-			OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
-#if GDAL_VERSION_MAJOR >= 3
-			OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
-#endif
-			
 			auto num_layers = OGR_DS_GetLayerCount(data_source);
 			for (int i = 0; i < num_layers; ++i)
 			{
@@ -469,7 +463,7 @@ namespace {
 					if (!spatial_reference)
 						continue;
 					
-					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
+					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, srs) };
 					if (!transformation)
 						continue;
 					
@@ -490,9 +484,9 @@ namespace {
 			}
 		}
 		
-		operator LatLon() const
+		operator QPointF() const
 		{
-			return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+			return num_coords ? QPointF{ x / num_coords, y / num_coords } : QPointF{};
 		}
 		
 	};
@@ -1608,8 +1602,23 @@ LatLon OgrFileImport::calcAverageLatLon(const QString& path)
 // static
 LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 {
-	return AverageLatLon(data_source);
+	auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+	OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
+#endif
+	
+	auto const average = calcAverageCoords(data_source, geo_srs.get());
+	return {average.y(), average.x()};
 }
+
+
+// static
+QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs)
+{
+	return QPointF{AverageCoords(data_source, srs)};
+}
+
 
 // ### OgrFileExport ###
 
