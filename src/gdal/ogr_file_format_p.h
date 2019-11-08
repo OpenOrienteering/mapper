@@ -327,15 +327,15 @@ private:
 	
 	ogr::unique_stylemanager manager;
 	
-	int empty_geometries;
-	int no_transformation;
-	int failed_transformation;
-	int unsupported_geometry_type;
-	int too_few_coordinates;
+	int empty_geometries = 0;
+	int no_transformation = 0;
+	int failed_transformation = 0;
+	int unsupported_geometry_type = 0;
+	int too_few_coordinates = 0;
 	
 	UnitType unit_type;
 	
-	bool georeferencing_import_enabled;
+	bool georeferencing_import_enabled = true;
 };
 
 
