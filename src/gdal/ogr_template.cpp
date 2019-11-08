@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -328,7 +328,7 @@ try
 				
 				if (!explicit_georef)
 				{
-					explicit_georef.reset(new Georeferencing());
+					explicit_georef = std::make_unique<Georeferencing>();
 					explicit_georef->setScaleDenominator(int(map_georef.getScaleDenominator()));
 					explicit_georef->setProjectedCRS(QString{}, projected_crs_spec);
 					explicit_georef->setProjectedRefPoint({}, false);
@@ -506,7 +506,7 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	if (xml.name() == literal::georeferencing)
 	{
-		explicit_georef.reset(new Georeferencing());
+		explicit_georef = std::make_unique<Georeferencing>();
 		explicit_georef->load(xml, false);
 	}
 	else if (xml.name() == literal::crs_spec)
