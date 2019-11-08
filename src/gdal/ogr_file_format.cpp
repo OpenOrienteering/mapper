@@ -21,6 +21,7 @@
 #include "ogr_file_format_p.h"  // IWYU pragma: associated
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <functional>
 #include <iterator>
@@ -820,8 +821,10 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 	if (projected_srs_spec)
 	{
 		// Found a suitable projected SRS
+		auto center = calcAverageCoords(data_source, suitable_srs.get());
 		auto georef = map->getGeoreferencing();  // copy
 		georef.setProjectedCRS(QStringLiteral("PROJ.4"), QString::fromLatin1(projected_srs_spec));
+		georef.setProjectedRefPoint({std::round(center.x()), std::round(center.y())});
 		map->setGeoreferencing(georef);
 		CPLFree(projected_srs_spec);
 		return suitable_srs;
