@@ -52,6 +52,7 @@ private slots:
 	{
 		Q_INIT_RESOURCE(resources);
 		doStaticInitializations();
+		qputenv("OSM_CONFIG_FILE", MAPPER_TEST_SOURCE_DIR "/../src/gdal/mapper-osmconf.ini");
 		// Static map initializations
 		Map map;
 		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
