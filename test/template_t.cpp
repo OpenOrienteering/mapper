@@ -207,7 +207,7 @@ private slots:
 		auto const osm_fileinfo = QFileInfo(QStringLiteral("testdata:templates/map.osm"));
 		QVERIFY(osm_fileinfo.exists());
 		auto georef = OgrTemplate::getDataGeoreferencing(osm_fileinfo.absoluteFilePath(), Georeferencing{});
-		QVERIFY(georef);
+		QVERIFY(bool(georef));
 		auto latlon = georef->getGeographicRefPoint();
 		QCOMPARE(qRound(latlon.latitude()), 50);
 		QCOMPARE(qRound(latlon.longitude()), 8);
