@@ -255,59 +255,43 @@
         </color>
     </colors>
     <barrier version="6" required="0.6.0">
-        <symbols count="19" id="ISOM 2017-2">
-            <symbol type="16" id="0" code="301" name="Uncrossable body of water (full colour), with bank line">
-                <description>The black bank line emphasises that the feature is uncrossable.
-Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
-Minimum width (inside): 0.3 mm.
-Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
-                <combined_symbol parts="2">
-                    <part symbol="1"/>
-                    <part symbol="2"/>
-                </combined_symbol>
-<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAUUlEQVQ4jWNgYGbexMDA8J+qmJl5EyOUw8AQHM5AFbB2JQMDAwMDC9zQ+SuoYzDUcCbqmYYKRg0eNXjU4FGDRw0eHAZDahBodUIVADeLRpUpAOkUM9bNALKgAAAAAElFTkSuQmCC"/>
-            </symbol>
-            <symbol type="4" id="1" code="301.1" name="Uncrossable body of water (full colour)">
-                <description>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
-Minimum width (inside): 0.3 mm.
-Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
-                <area_symbol inner_color="15" min_area="1000" patterns="0"/>
-<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
-            </symbol>
-            <symbol type="2" id="2" code="301.4" name="Uncrossable body of water, bank line">
-                <description>A black bank line indicates that the feature cannot be crossed.</description>
-                <line_symbol color="2" line_width="180" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
-            </symbol>
-            <symbol type="16" id="3" code="302" name="Shallow body of water, with solid outline">
-                <description>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
-Minimum width (inside): 0.3 mm.
-Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
-Minimum width (full colour): 0.3 mm.
-Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
+        <symbols count="19" id="ISSkiOM 2019">
+            <symbol type="16" id="0" code="301.1" name="Crossable body of water, with bank line">
+                <description>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
                 <combined_symbol parts="2">
                     <part symbol="5"/>
                     <part symbol="4"/>
                 </combined_symbol>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAATklEQVQ4jWMU/PL/3Pf/DOoMVATcDAw3GTk+//+6nZOBi5oGe3xj+MFETQORwajBowaPGjxq8KjBowaTBxiFv/w/9+UfgyY1DeVhZLgGAAAKEb4RXJ9FAAAAAElFTkSuQmCC"/>
             </symbol>
-            <symbol type="4" id="4" code="302.1" name="Shallow body of water">
-                <description>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
-Minimum width (inside): 0.3 mm.
-Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
-Minimum width (full colour): 0.3 mm.
-Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
+            <symbol type="16" id="1" code="301.2" name="Body of water that shall not be crossed, with bank line">
+                <description>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</description>
+                <combined_symbol parts="2">
+                    <part symbol="2"/>
+                    <part symbol="3"/>
+                </combined_symbol>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAUUlEQVQ4jWNgYGbexMDA8J+qmJl5EyOUw8AQHM5AFbB2JQMDAwMDC9zQ+SuoYzDUcCbqmYYKRg0eNXjU4FGDRw0eHAZDahBodUIVADeLRpUpAOkUM9bNALKgAAAAAElFTkSuQmCC"/>
+            </symbol>
+            <symbol type="4" id="2" code="301.3" name="Body of water that shall not be crossed">
+                <description>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</description>
+                <area_symbol inner_color="15" min_area="1000" patterns="0"/>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
+            </symbol>
+            <symbol type="2" id="3" code="301.4" name="Body of water that shall not be crossed, bank line">
+                <description>A black bank line indicates that the feature shall not be crossed.</description>
+                <line_symbol color="2" line_width="180" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            </symbol>
+            <symbol type="4" id="4" code="302.1" name="Crossable body of water">
+                <description>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
                 <area_symbol inner_color="17" min_area="500" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWPc/+c/A2WAiUL9o0aMGjFqxKgRo0aQBQAyngLmdBowpwAAAABJRU5ErkJggg=="/>
             </symbol>
-            <symbol type="2" id="5" code="302.2" name="Shallow body of water, solid outline">
-                <description>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</description>
+            <symbol type="2" id="5" code="302.2" name="Crossable body of water, bank line">
+                <description>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
                 <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="6" code="310" name="Indistinct marsh">
-                <description>An indistinct marsh, seasonal marsh or an area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground.
-The symbol shall be combined with other symbols to show runnability and openness.
-The symbol is orientated to north.
-Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</description>
+            <symbol type="4" id="6" code="310.1" name="Marsh (in ski orienteering map)">
+                <description>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</description>
                 <area_symbol inner_color="-1" min_area="1400" patterns="2">
                     <pattern type="2" angle="0" line_spacing="600" line_offset="0" offset_along_line="0" point_distance="1150">
                         <symbol type="1" code="" name="Pattern fill 1">
@@ -353,17 +337,17 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</description>
             </symbol>
             <symbol type="1" id="7" code="701" name="Start">
                 <description>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</description>
-                <point_symbol rotatable="true" inner_radius="857" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="3429" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3429" break_length="857" dashes_in_group="1" in_group_break_length="429" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1000" dashes_in_group="1" in_group_break_length="501" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="4">
-                                <coord x="-2697" y="1557"/>
-                                <coord x="0" y="-3114"/>
-                                <coord x="2697" y="1557"/>
-                                <coord x="-2697" y="1557" flags="18"/>
+                                <coord x="-3147" y="1817"/>
+                                <coord x="0" y="-3633"/>
+                                <coord x="3147" y="1817"/>
+                                <coord x="-3147" y="1817" flags="18"/>
                             </coords>
                             <pattern rotation="0">
                                 <coord x="0" y="0"/>
@@ -391,11 +375,20 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="9" code="703" name="Control point">
-                <description>For point features, the centre of the circle shall be the centre of the symbol. For line and area features, the centre of the circle shows the precise position of the control marker. Controls shall only be placed on points that are clearly identifiable on the map.
-Sections of the circle should be omitted to leave important detail showing.
-Footprint 75 m</description>
-                <point_symbol inner_radius="2325" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
+            <symbol type="1" id="9" code="703" name="Control point and focus point">
+                <description>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</description>
+                <point_symbol inner_radius="2625" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                    <element>
+                        <symbol type="1" code="">
+                            <point_symbol inner_radius="325" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
+                        </symbol>
+                        <object type="0">
+                            <coords count="1">
+                                <coord x="0" y="0"/>
+                            </coords>
+                        </object>
+                    </element>
+                </point_symbol>
             </symbol>
             <symbol type="8" id="10" code="704" name="Control number">
                 <description>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
@@ -407,14 +400,14 @@ The numbers are orientated to north.</description>
             </symbol>
             <symbol type="2" id="11" code="705" name="Course line">
                 <description>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</description>
-                <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="12" code="706" name="Finish">
                 <description>The end of the course.</description>
-                <point_symbol inner_radius="1825" inner_color="-1" outer_width="350" outer_color="7" elements="1">
+                <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="7" elements="1">
                     <element>
                         <symbol type="1" code="">
-                            <point_symbol inner_radius="2825" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
+                            <point_symbol inner_radius="3250" inner_color="-1" outer_width="500" outer_color="7" elements="0"/>
                         </symbol>
                         <object type="0">
                             <coords count="1">
@@ -427,7 +420,7 @@ The numbers are orientated to north.</description>
             <symbol type="2" id="13" code="707" name="Marked route">
                 <description>A marked route that is a part of the course. It is mandatory to follow the marked route.
 Minimum length: 2 dashes (4.5 mm – footprint: 67.5 m).</description>
-                <line_symbol color="0" line_width="350" minimum_length="4500" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="0" line_width="500" minimum_length="4500" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0" scale_dash_symbol="false"/>
             </symbol>
             <symbol type="4" id="14" code="709" name="Out-of-bounds area">
                 <description>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
@@ -449,22 +442,22 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                 <description>A dashed line indicates intermittent marking on the ground.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="17" code="799" name="Simple Orienteering Course">
+            <symbol type="2" id="17" code="799" name="Simple SkiO Course">
                 <description>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</description>
-                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="1150" end_length="3650" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1000" break_length="1450" dashes_in_group="1" in_group_break_length="1600" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
+                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="1342" end_length="5000" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1167" break_length="1692" dashes_in_group="1" in_group_break_length="1867" mid_symbols_per_spot="1" mid_symbol_distance="0" suppress_dash_symbol_at_ends="true">
                     <start_symbol>
                         <symbol type="1" code="" name="Start symbol">
-                            <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
+                            <point_symbol rotatable="true" inner_radius="1167" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
-                                            <coord x="3041" y="0"/>
-                                            <coord x="3541" y="0"/>
+                                            <coord x="3500" y="0"/>
+                                            <coord x="4500" y="0"/>
                                         </coords>
                                         <pattern rotation="0">
                                             <coord x="0" y="0"/>
@@ -473,14 +466,14 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                                 </element>
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="4">
-                                            <coord x="-1557" y="2697"/>
-                                            <coord x="3114" y="0"/>
-                                            <coord x="-1557" y="-2697"/>
-                                            <coord x="-1557" y="2697" flags="18"/>
+                                            <coord x="-1817" y="3147"/>
+                                            <coord x="3633" y="0"/>
+                                            <coord x="-1817" y="-3147"/>
+                                            <coord x="-1817" y="3147" flags="18"/>
                                         </coords>
                                         <pattern rotation="0">
                                             <coord x="0" y="0"/>
@@ -492,15 +485,15 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </start_symbol>
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
-                            <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
+                            <point_symbol rotatable="true" inner_radius="1167" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="350" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
-                                            <coord x="-600" y="0"/>
-                                            <coord x="600" y="0"/>
+                                            <coord x="-700" y="0"/>
+                                            <coord x="700" y="0"/>
                                         </coords>
                                         <pattern rotation="0">
                                             <coord x="0" y="0"/>
@@ -512,10 +505,10 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </mid_symbol>
                     <end_symbol>
                         <symbol type="1" code="" name="End symbol">
-                            <point_symbol rotatable="true" inner_radius="2825" inner_color="-1" outer_width="350" outer_color="7" elements="1">
+                            <point_symbol rotatable="true" inner_radius="3250" inner_color="-1" outer_width="500" outer_color="7" elements="1">
                                 <element>
                                     <symbol type="1" code="">
-                                        <point_symbol inner_radius="1825" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
+                                        <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="7" elements="0"/>
                                     </symbol>
                                     <object type="0">
                                         <coords count="1">
@@ -528,7 +521,18 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </end_symbol>
                     <dash_symbol>
                         <symbol type="1" code="" name="Dash symbol">
-                            <point_symbol rotatable="true" inner_radius="2325" inner_color="-1" outer_width="350" outer_color="7" elements="0"/>
+                            <point_symbol rotatable="true" inner_radius="2625" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                                <element>
+                                    <symbol type="1" code="">
+                                        <point_symbol inner_radius="325" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
+                                    </symbol>
+                                    <object type="0">
+                                        <coords count="1">
+                                            <coord x="0" y="0"/>
+                                        </coords>
+                                    </object>
+                                </element>
+                            </point_symbol>
                         </symbol>
                     </dash_symbol>
                 </line_symbol>
