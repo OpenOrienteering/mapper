@@ -70,7 +70,7 @@ namespace
 {
 
 const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
-  QString::fromLatin1("ISOM2000")
+  QString::fromLatin1("ISOM2000;ISOM2017")
   .split(QLatin1Char(';'));
 
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
@@ -360,8 +360,7 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM 2017-2 1:15000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 15000u;
 	QTest::newRow("ISOM 2017-2 1:10000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 10000u;
 	
-	QTest::newRow("ISOM2017 1:15000") << QString::fromLatin1("ISOM2017")  << 15000u << 15000u;
-	QTest::newRow("ISOM2017 1:10000") << QString::fromLatin1("ISOM2017")  << 15000u << 10000u;
+	QTest::newRow("ISOM2017 translation-only") << QString::fromLatin1("ISOM2017") << 15000u << 15000u;
 	
 	QTest::newRow("ISOM2000 translation-only") << QString::fromLatin1("ISOM2000") << 15000u << 15000u;
 	
@@ -464,25 +463,6 @@ void SymbolSetTool::processSymbolSet()
 				}
 			}
 			QCOMPARE(symbols_changed, 189);
-		}
-		else if (name.startsWith(QLatin1String("ISOM2017")))
-		{
-			const auto factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord{});
-			
-			int symbols_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-			}
-			QCOMPARE(symbols_changed, 184);
 		}
 		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
