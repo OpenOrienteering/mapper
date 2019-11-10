@@ -69,6 +69,10 @@ using namespace OpenOrienteering;
 namespace
 {
 
+const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
+  QString::fromLatin1(" (none) ")
+  .split(QLatin1Char(';'));
+
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
 const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
 const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
@@ -201,6 +205,9 @@ void writeObsoleteEntries(QXmlStreamWriter& xml, TranslationEntries& entries, co
 {
 	for (auto& entry: entries)
 	{
+		if (entry.type.isEmpty() && entry.translation.isEmpty() && legacy_symbol_sets.contains(context))
+			continue;
+		
 		if (entry.obsolete && entry.context == context)
 		{
 			entry.type = Obsolete;
@@ -618,6 +625,9 @@ void SymbolSetTool::processSymbolSet()
 		}
 	}
 	
+	if (legacy_symbol_sets.contains(id))
+		return;
+	
 	MapView* new_view = nullptr;
 	if (name.startsWith(QLatin1String("Course_Design")))
 	{
@@ -771,7 +781,12 @@ void SymbolSetTool::processSymbolSetTranslations() const
 				entry.translation = found->translation;
 			}
 		}
-		entry.write(xml);
+		
+		if (!entry.translation.isEmpty()
+		    || !legacy_symbol_sets.contains(context))
+		{
+			entry.write(xml);
+		}
 	}
 	if (!context.isEmpty())
 	{
