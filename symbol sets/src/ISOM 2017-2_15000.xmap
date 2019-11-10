@@ -2153,7 +2153,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</descriptio
                 <description>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</description>
                 <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="4" id="63" code="302.2" name="Small shallow body of water (full colour)">
+            <symbol type="4" id="63" code="302.5" name="Small shallow body of water (full colour)">
                 <description>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</description>
