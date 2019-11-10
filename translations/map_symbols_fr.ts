@@ -2682,11 +2682,6 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Courbe de niveau maîtresse</translation>
     </message>
     <message>
-        <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
-        <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
         <translation>Courbe de forme</translation>
@@ -2722,19 +2717,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Abrupt de terre</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
-        <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 106.0.1</comment>
         <translation>Abrupt de terre, taille minimale</translation>
-    </message>
-    <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
-        <comment>Description of symbol 106.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -2792,19 +2777,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Ravine</translation>
     </message>
     <message>
-        <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
-        <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
         <translation>Petite ravine</translation>
-    </message>
-    <message>
-        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
-        <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -2812,19 +2787,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Petite butte</translation>
     </message>
     <message>
-        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
-        <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Elongated knoll</source>
         <comment>Name of symbol 113</comment>
         <translation>Butte allongée</translation>
-    </message>
-    <message>
-        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
-        <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -2832,19 +2797,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Petite dépression</translation>
     </message>
     <message>
-        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
-        <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>Trou</translation>
-    </message>
-    <message>
-        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
-        <comment>Description of symbol 116</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Broken ground, small</source>
@@ -2857,49 +2812,14 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Attention ! Ce symbole est une partie composante les symboles de terrain accidentés (113 et 114).</translation>
     </message>
     <message>
-        <source>Broken ground, big</source>
-        <comment>Name of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The size of the dots may vary.</source>
-        <comment>Description of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special land form feature</source>
-        <comment>Name of symbol 118</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
-        <comment>Description of symbol 118</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
         <translation>Falaise infranchissable</translation>
     </message>
     <message>
-        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
-        <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
         <translation>Falaise infranchissable (taille minimale)</translation>
-    </message>
-    <message>
-        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
-        <comment>Description of symbol 201.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Impassable cliff, no tags</source>
-        <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
@@ -2917,34 +2837,14 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Utiliser ce symbole pour dessiner la surface d&apos;une grande falaise.</translation>
     </message>
     <message>
-        <source>Rock pillars/cliffs</source>
-        <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
-        <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
         <translation>Falaise franchissable</translation>
     </message>
     <message>
-        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
-        <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
         <translation>Falaise franchissable, taille minimum</translation>
-    </message>
-    <message>
-        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
-        <comment>Description of symbol 203.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Passable rock face, no tags</source>
@@ -2972,19 +2872,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Falaise franchissable, sans tirets, arrondie</translation>
     </message>
     <message>
-        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
-        <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passable rock face, no tags, rounded, minimum size</source>
         <comment>Name of symbol 203.2.1</comment>
         <translation>Falaise franchissable, sans tirets, arrondie, taille minimum</translation>
-    </message>
-    <message>
-        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
-        <comment>Description of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -2992,19 +2882,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Trou rocheux</translation>
     </message>
     <message>
-        <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
-        <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cave</source>
         <comment>Name of symbol 205</comment>
         <translation>Caverne</translation>
-    </message>
-    <message>
-        <source>A cave is represented by the same symbol as a rocky pit. In this case the symbol should be orientated to point up the slope as indicated opposite. The centre of gravity of the symbol marks the opening.</source>
-        <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -3012,29 +2892,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Rocher</translation>
     </message>
     <message>
-        <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
-        <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Boulder, enlarged</source>
-        <comment>Name of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
-        <comment>Description of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Large boulder</source>
         <comment>Name of symbol 207</comment>
         <translation>Grand bloc rocheux</translation>
-    </message>
-    <message>
-        <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
-        <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -3062,29 +2922,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Groupe de blocs rocheux</translation>
     </message>
     <message>
-        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
-        <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>Groupe de grands blocs rocheux</translation>
-    </message>
-    <message>
-        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
-        <comment>Description of symbol 209.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stony ground, small</source>
-        <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
-        <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Stony ground</source>
@@ -3092,19 +2932,9 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Terrain rocailleux</translation>
     </message>
     <message>
-        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
-        <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open sandy ground</source>
         <comment>Name of symbol 211</comment>
         <translation>Terrain sablonneux découvert</translation>
-    </message>
-    <message>
-        <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
-        <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -3112,54 +2942,14 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
         <translation>Affleurement rocheux</translation>
     </message>
     <message>
-        <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
-        <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lake</source>
-        <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Large areas of water are shown with dot screen. Small areas of water should be shown with full colour. A black bank line indicates that the feature cannot be crossed.</source>
-        <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lake, bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.1</comment>
         <translation>Attention ! Ce symbole est une partie composant le symbole étendue d&apos;eau infranchissable (310.0).</translation>
     </message>
     <message>
-        <source>Lake, with bank line</source>
-        <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pond</source>
-        <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Where the lake or pond is smaller than 1 mm² on the printed map, the bank line is omitted.</source>
-        <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Waterhole</source>
         <comment>Name of symbol 303</comment>
         <translation>Trou d&apos;eau</translation>
-    </message>
-    <message>
-        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
-        <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -3173,21 +2963,6 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
 Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
-        <source>Crossable small watercourse</source>
-        <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
-        <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minor water channel</source>
-        <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 307</comment>
         <translation type="unfinished">Cours d&apos;eau naturel ou creusé qui peut ne contenir de l&apos;eau que par intermittence.</translation>
@@ -3198,29 +2973,14 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation>Marais étroit</translation>
     </message>
     <message>
-        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
-        <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uncrossable marsh</source>
         <comment>Name of symbol 309</comment>
         <translation>Marais infranchissable (composant surface)</translation>
     </message>
     <message>
-        <source>A marsh which is uncrossable or dangerous for the runner. A black line surrounds the symbol.</source>
-        <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uncrossable marsh, border line</source>
         <comment>Name of symbol 309.1</comment>
         <translation>Marais infranchissable (composant rive)</translation>
-    </message>
-    <message>
-        <source>A black line surrounds the symbol.</source>
-        <comment>Description of symbol 309.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uncrossable marsh, with border line</source>
@@ -3233,11 +2993,6 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation>Marais</translation>
     </message>
     <message>
-        <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
-        <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Marsh, minimum size</source>
         <comment>Name of symbol 310.1</comment>
         <translation>Marais, taille minimum</translation>
@@ -3248,24 +3003,9 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation type="unfinished">Marais peu visible</translation>
     </message>
     <message>
-        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
-        <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 311.1</comment>
         <translation type="unfinished">Marais peu visible, taille minimum</translation>
-    </message>
-    <message>
-        <source>Well</source>
-        <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wells and captive springs, which are clearly visible on the ground.</source>
-        <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Spring</source>
@@ -3273,29 +3013,9 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation>Source</translation>
     </message>
     <message>
-        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
-        <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special water feature</source>
-        <comment>Name of symbol 314</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
-        <comment>Description of symbol 314</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
         <translation>Terrain découvert</translation>
-    </message>
-    <message>
-        <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
-        <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -3303,19 +3023,9 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation>Terrain découvert avec arbres dispersés</translation>
     </message>
     <message>
-        <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
-        <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
         <translation type="unfinished">Terrain découvert encombré</translation>
-    </message>
-    <message>
-        <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
-        <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -3323,29 +3033,14 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
         <translation>Terrain découvert encombré avec arbres dispersés</translation>
     </message>
     <message>
-        <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
-        <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Forest: easy running</source>
         <comment>Name of symbol 405</comment>
         <translation>Forêt : course facile</translation>
     </message>
     <message>
-        <source>Typically open runnable forest for the particular type of terrain. If no part of the forest is runnable then no white should appear on the map.</source>
-        <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Forest: slow running</source>
         <comment>Name of symbol 406</comment>
         <translation>Forêt : course ralentie</translation>
-    </message>
-    <message>
-        <source>An area with dense trees (low visibility) which reduces running to ca. 60-80% of normal speed.</source>
-        <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Undergrowth: slow running</source>
@@ -3365,11 +3060,6 @@ Surface minimum : 1,5 mm x 1 mm (22,5 m X 15 m au sol).</translation>
         <translation>Forêt : course difficile</translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
-        <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Undergrowth: difficult to run</source>
         <comment>Name of symbol 409</comment>
         <translation type="unfinished">Sous-bois : course difficile</translation>
@@ -3380,42 +3070,12 @@ Surface minimum : 1,5 mm x 1 mm (22,5 m X 15 m au sol).</translation>
         <translation type="unfinished">Zone de sous-bois dense mais présentant une bonne visibilité (ronces, buissons, arbustes, y compris branches coupées) qui réduisent la vitesse de course à environ 20-60 % de la vitesse normale. Ce symbole ne peut pas être combiné avec 406 (forêt : course ralentie) et 408 (forêt : course difficile).</translation>
     </message>
     <message>
-        <source>Vegetation: very difficult to run, impassable</source>
-        <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
-        <comment>Description of symbol 410</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vegetation: very difficult to run, impassable, line</source>
-        <comment>Name of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line of minimum width for symbol 410.</source>
-        <comment>Description of symbol 410.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forest runnable in one direction, 1</source>
-        <comment>Name of symbol 411.0</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
         <comment>Description of symbol 411.0</comment>
         <translation>Une zone avec une végétation dense (visibilité réduite) qui réduit la capacité à courir à environ 60-80% de la vitesse normale.
 La capacité à courir est meilleure dans une direction, un motif régulier de bandes blanches est inséré dans la trame. Elles indiquent la direction de course facilitée.
 Zone minimum : 1 mm x 1 mm (15 m x 15 m au sol).
 Largeur minimum : 0,4 mm (6 m au sol).</translation>
-    </message>
-    <message>
-        <source>Forest runnable in one direction, 2</source>
-        <comment>Name of symbol 411.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
@@ -3444,30 +3104,14 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
         <translation>Verger</translation>
     </message>
     <message>
-        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
-direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
-        <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Vineyard</source>
         <comment>Name of symbol 413</comment>
         <translation>Vigne en terrain découvert</translation>
     </message>
     <message>
-        <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
-        <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Distinct cultivation boundary</source>
         <comment>Name of symbol 414</comment>
         <translation>Limite de culture nette</translation>
-    </message>
-    <message>
-        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
-        <comment>Description of symbol 414</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -3485,109 +3129,9 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation type="unfinished">Limite de végétation distincte</translation>
     </message>
     <message>
-        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
-        <comment>Description of symbol 416</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special vegetation feature</source>
-        <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
-        <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special vegetation feature</source>
-        <comment>Name of symbol 419</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
-        <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special vegetation feature</source>
-        <comment>Name of symbol 420</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
-        <comment>Description of symbol 420</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Motorway</source>
-        <comment>Name of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Motorway, under construction</source>
-        <comment>Name of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 501.5</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Major road, minimum width</source>
-        <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Major road, minimum width, under construction</source>
-        <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minor road</source>
-        <comment>Name of symbol 503</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Minor road, under construction</source>
-        <comment>Name of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road under construction may be shown with broken lines.</source>
-        <comment>Description of symbol 503.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Road</source>
         <comment>Name of symbol 504</comment>
         <translation>Route</translation>
-    </message>
-    <message>
-        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
-        <comment>Description of symbol 504</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -3595,29 +3139,9 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>Chemin carrossable</translation>
     </message>
     <message>
-        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
-        <comment>Description of symbol 505</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Footpath</source>
         <comment>Name of symbol 506</comment>
         <translation>Chemin</translation>
-    </message>
-    <message>
-        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
-        <comment>Description of symbol 506</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Small path</source>
-        <comment>Name of symbol 507</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
-        <comment>Description of symbol 507</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Less distinct small path</source>
@@ -3625,19 +3149,9 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation type="unfinished">Sentier peu visible</translation>
     </message>
     <message>
-        <source>A less distinct small path or forestry extraction track.</source>
-        <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509</comment>
         <translation type="unfinished">Layon étroit</translation>
-    </message>
-    <message>
-        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
-        <comment>Description of symbol 509</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -3645,20 +3159,9 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>Pont piéton</translation>
     </message>
     <message>
-        <source>A footbridge with no path leading to it.
-Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
-        <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Railway</source>
         <comment>Name of symbol 515</comment>
         <translation type="unfinished">Chemin de fer</translation>
-    </message>
-    <message>
-        <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
-        <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Power line</source>
@@ -3666,49 +3169,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Ligne électrique, câble porteur, ou téléski</translation>
     </message>
     <message>
-        <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
-        <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Major power line</source>
         <comment>Name of symbol 517</comment>
         <translation type="unfinished">Ligne à haute tension</translation>
-    </message>
-    <message>
-        <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
-        <comment>Description of symbol 517</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tunnel</source>
-        <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
-        <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tunnel, minimum size</source>
-        <comment>Name of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
-        <comment>Description of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stone wall</source>
-        <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A stone wall or stone-faced bank.</source>
-        <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ruined stone wall</source>
@@ -3716,29 +3179,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Mur en ruine</translation>
     </message>
     <message>
-        <source>A ruined stone wall may be shown by a dashed line.</source>
-        <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High stone wall</source>
-        <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A stone wall higher than ca 1.5 m, not crossable to the average orienteer.</source>
-        <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>Clôture</translation>
-    </message>
-    <message>
-        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
-        <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ruined fence</source>
@@ -3746,29 +3189,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Clôture en ruine</translation>
     </message>
     <message>
-        <source>A ruined fence may be shown with a dashed line.</source>
-        <comment>Description of symbol 523</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>High fence</source>
-        <comment>Name of symbol 524</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
-        <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crossing point</source>
         <comment>Name of symbol 525</comment>
         <translation type="unfinished">Point de passage</translation>
-    </message>
-    <message>
-        <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (519) or a fence (522) or a pipeline (534).</source>
-        <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Building</source>
@@ -3776,64 +3199,14 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Bâtiment</translation>
     </message>
     <message>
-        <source>A building is shown with its ground plan so far as the scale permits.</source>
-        <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 526.1</comment>
         <translation>Bâtiment (taille minimale)</translation>
     </message>
     <message>
-        <source>Settlement</source>
-        <comment>Name of symbol 527</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
-        <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settlement</source>
-        <comment>Name of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
-        <comment>Description of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Permanently out of bounds</source>
-        <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
-        <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Permanently out of bounds, bounding line</source>
-        <comment>Name of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
-        <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>Zone pavée à bordure non franche</translation>
-    </message>
-    <message>
-        <source>An area of hard standing used for parking or other purposes.</source>
-        <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -3851,54 +3224,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Ruine</translation>
     </message>
     <message>
-        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
-        <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ruin, no dashes</source>
-        <comment>Name of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Very small ruins may be drawn with a solid line.</source>
-        <comment>Description of symbol 530.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>Ruine (taille minimale)</translation>
-    </message>
-    <message>
-        <source>Very small ruins may be drawn with a solid line.</source>
-        <comment>Description of symbol 530.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Firing range</source>
-        <comment>Name of symbol 531</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
-        <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grave</source>
-        <comment>Name of symbol 532</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
-        <comment>Description of symbol 532</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crossable pipeline</source>
-        <comment>Name of symbol 533</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
@@ -3906,24 +3234,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished">Une conduite (gaz, eau, pétrole, etc.) au-dessus du niveau du sol et qui peut être franchie par-dessus ou par-dessous.</translation>
     </message>
     <message>
-        <source>Uncrossable pipeline</source>
-        <comment>Name of symbol 534</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A pipeline which cannot be crossed.</source>
-        <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation type="unfinished">Haute tour</translation>
-    </message>
-    <message>
-        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
-        <comment>Description of symbol 535</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -3931,19 +3244,9 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished">Petite tour</translation>
     </message>
     <message>
-        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
-        <comment>Description of symbol 536</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
         <translation>Borne</translation>
-    </message>
-    <message>
-        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
-        <comment>Description of symbol 537</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -3951,25 +3254,10 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation type="unfinished">Mangeoire</translation>
     </message>
     <message>
-        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
-        <comment>Description of symbol 538</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Special man-made feature</source>
-        <comment>Name of symbol 539</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
         <translation>Sa position est le centre de gravité du symbole.
 Emprise au sol : 12 m x 12 m.</translation>
-    </message>
-    <message>
-        <source>Special man-made feature</source>
-        <comment>Name of symbol 540</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
@@ -3983,11 +3271,6 @@ Emprise au sol : 12 m x 12 m.</translation>
         <translation>Ligne du Nord magnétique</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
-        <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>North lines pattern</source>
         <comment>Name of symbol 601.1</comment>
         <translation>Lignes du nord magnétique</translation>
@@ -3998,11 +3281,6 @@ Emprise au sol : 12 m x 12 m.</translation>
         <translation>Lignes du nord magnétique, bleu</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
-        <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
         <translation type="unfinished">Ligne du nord magnétique, bleu, aide</translation>
@@ -4011,11 +3289,6 @@ Emprise au sol : 12 m x 12 m.</translation>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
         <translation type="unfinished">Croix de centrage</translation>
-    </message>
-    <message>
-        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
-        <comment>Description of symbol 602</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Spot height, dot</source>

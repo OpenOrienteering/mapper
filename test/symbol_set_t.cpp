@@ -70,7 +70,7 @@ namespace
 {
 
 const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
-  QString::fromLatin1(" (none) ")
+  QString::fromLatin1("ISOM2000")
   .split(QLatin1Char(';'));
 
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
@@ -360,8 +360,8 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISOM2017 1:15000") << QString::fromLatin1("ISOM2017")  << 15000u << 15000u;
 	QTest::newRow("ISOM2017 1:10000") << QString::fromLatin1("ISOM2017")  << 15000u << 10000u;
 	
-	QTest::newRow("ISOM2000 1:15000") << QString::fromLatin1("ISOM2000")  << 15000u << 15000u;
-	QTest::newRow("ISOM2000 1:10000") << QString::fromLatin1("ISOM2000")  << 15000u << 10000u;
+	QTest::newRow("ISOM2000 translation-only") << QString::fromLatin1("ISOM2000") << 15000u << 15000u;
+	
 	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
 	
@@ -440,47 +440,7 @@ void SymbolSetTool::processSymbolSet()
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name.startsWith(QLatin1String("ISOM2000")))
-		{
-			const double factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				const QColor& color = *symbol->guessDominantColor();
-				if (qAbs(purple - color.hueF()) > 0.1
-				    && code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-				
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 10000u:
-							pattern0.line_spacing = 40000;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(symbols_changed, 139);
-			QCOMPARE(north_lines_changed, 2);
-		}
-		else if (name.startsWith(QLatin1String("ISOM2017")))
+		if (name.startsWith(QLatin1String("ISOM2017")))
 		{
 			const auto factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord{});
