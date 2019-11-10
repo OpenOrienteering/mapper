@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -84,9 +84,7 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 		return entry.context == context && entry.comment == comment;
 	});
 	QVERIFY(found == end(entries));
-	entries.push_back({context, source, comment, {} });
-	// n occurrences of ';' means n+1 translations, plus translation template -> n+2
-	entries.back().translations.reserve(std::size_t(map_symbol_translations.count(';')) + 2);
+	entries.push_back({context, source, comment});
 }
 
 
@@ -129,7 +127,7 @@ QString findSuggestion(TranslationEntries& translation_entries, const QString& s
 #endif  // SYMBOL_SET_T_UNUSED
 
 
-TranslationEntries readTsFile(QIODevice& device, const QString& language)
+TranslationEntries readTsFile(QIODevice& device)
 {
 	auto result = TranslationEntries{};
 	
@@ -168,18 +166,18 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 							}
 							else if (xml.name() == QLatin1String("translation"))
 							{
-								auto type = xml.attributes().value(QLatin1String("type")).toString();
-								auto translation = xml.readElementText();
-								if (!translation.isEmpty())
-									entry.translations.resize(1, { language, translation, type });
+								entry.type = xml.attributes().value(QLatin1String("type")).toString();
+								entry.translation = xml.readElementText();
 							}
 							else
 							{
 								xml.skipCurrentElement();
 							}
 						}
-						if (!entry.translations.empty())
+						if (!entry.translation.isEmpty())
+						{
 							result.push_back(std::move(entry));
+						}
 					}
 					else
 					{
@@ -202,7 +200,7 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 
 
 
-void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
+void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml) const
 {
 	if (source.isEmpty())
 	{
@@ -214,18 +212,9 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString
 	xml.writeTextElement(QLatin1String("source"), source);
 	xml.writeTextElement(QLatin1String("comment"), comment);
 	xml.writeStartElement(QLatin1String("translation"));
-	for (const auto& translation : translations)
-	{
-		if (translation.language == language)
-		{
-			if (!translation.type.isEmpty())
-			{
-				xml.writeAttribute(QLatin1String("type"), translation.type);
-			}
-			xml.writeCharacters(translation.translation);		
-			break;
-		}
-	}
+	if (!type.isEmpty())
+		xml.writeAttribute(QLatin1String("type"), type);
+	xml.writeCharacters(translation);		
 	xml.writeEndElement();  //  translation
 	xml.writeEndElement();  // message
 }
@@ -669,7 +658,7 @@ void SymbolSetTool::processSymbolSetTranslations_data()
 #endif
 }
 	
-void SymbolSetTool::processSymbolSetTranslations()
+void SymbolSetTool::processSymbolSetTranslations() const
 {
 	auto translation_filename = QString::fromLatin1(QTest::currentDataTag());
 	auto language = translation_filename.mid(int(qstrlen("map_symbols_")));
@@ -696,7 +685,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 	}
 	
 	QBuffer buffer(&existing_data);
-	auto translations_from_ts = readTsFile(buffer, language);
+	auto translations_from_ts = readTsFile(buffer);
 	QVERIFY(!buffer.isOpen());
 	
 	buffer.setBuffer(&new_data);
@@ -711,8 +700,11 @@ void SymbolSetTool::processSymbolSetTranslations()
 		xml.writeAttribute(QLatin1String("language"), language);
 	
 	auto context = QString{};
-	for (auto& entry : translation_entries)
+	for (auto it = begin(translation_entries), last = end(translation_entries); it != last; ++it)
 	{
+		auto entry = TranslationEntry{*it};  // copy, don't touch original entry.
+		entry.type = NeedsReview;
+		
 		if (context != entry.context)
 		{
 			if (!context.isEmpty())
@@ -722,61 +714,53 @@ void SymbolSetTool::processSymbolSetTranslations()
 			context = entry.context;
 		}
 		
-		auto item = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& translation) {
-			return translation.language == language;
-		});
-		if (item == end(entry.translations))
-		{
-			entry.translations.push_back({language, {}, NeedsReview});
-			item = --entry.translations.end();
-		}
-		auto& translation = item->translation;
-		auto& type = item->type;
-		
-		
 		// First attempt: exact context + source + comment (symbol number!) match.
 		auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-			return entry.context == current.context && entry.source == current.source && entry.comment == current.comment;
+			return !current.translation.isEmpty()
+			       && entry.context == current.context
+			       && entry.source == current.source
+			       && entry.comment == current.comment;
 		});
 		if (found == end(translations_from_ts))
 		{
 			// Second attempt: exact context + source match.
 			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.source == current.source;
+				return !current.translation.isEmpty()
+				       && entry.context == current.context
+				       && entry.source == current.source;
 			});
 		}
 		if (found == end(translations_from_ts))
 		{
 			// Third attempt: exact source match.
 			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.source == current.source;
+				return !current.translation.isEmpty()
+				       && entry.source == current.source;
 			});
 		}
 		if (found != end(translations_from_ts))
 		{
 			// If any of the previous attempts to find a translation succeeded,
 			// the translation is chosen and marked as not being obsolete.
-			auto match = found->translations.front();
-			translation = match.translation;
-			if (match.type != Obsolete)
-				type = match.type;
+			entry.translation = found->translation;
+			if (found->type != Obsolete)
+				entry.type = found->type;
 		}
 		else
 		{
 			// Find an existing translation even with changed source,
 			// using the comment (symbol number!) instead of source.
 			auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.comment == current.comment;
+				return !current.translation.isEmpty()
+				       && entry.context == current.context
+				       && entry.comment == current.comment;
 			});
 			if (found != end(translations_from_ts))
 			{
-				auto match = found->translations.front();
-				translation = match.translation;
+				entry.translation = found->translation;
 			}
-			// Anyway, this translation needs review.
-			type = NeedsReview;
 		}
-		entry.write(xml, language);
+		entry.write(xml);
 	}
 	if (!context.isEmpty())
 	{
@@ -788,7 +772,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 	buffer.close();
 	
 	// Weblate uses lower-case "utf-8".
-	static auto lower_case_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+	static auto lower_case_xml = R"(<?xml version="1.0" encoding="utf-8"?>)";
 	if (!new_data.startsWith(lower_case_xml))
 	{
 		auto pos = new_data.indexOf('>');
