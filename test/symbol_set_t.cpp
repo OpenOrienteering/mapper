@@ -43,6 +43,7 @@
 #include <QRectF>
 #include <QStringList>
 #include <QStringRef>
+#include <QTextStream>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -56,6 +57,7 @@
 #include "core/map_coord.h"
 #include "core/map_printer.h"
 #include "core/map_view.h"
+#include "core/objects/symbol_rule_set.h"
 #include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/xml_file_format_p.h"
@@ -247,6 +249,41 @@ void writeObsoleteEntries(QXmlStreamWriter& xml, TranslationEntries& entries, co
 }
 
 
+bool isMarked(const Symbol& symbol) noexcept
+{
+	return symbol.getName().startsWith(QStringLiteral("[MARK]"));
+}
+
+void markSymbol(Symbol& symbol)
+{
+	if (!isMarked(symbol))
+		symbol.setName(QStringLiteral("[MARK]") + symbol.getName());
+}
+
+void markSymbolsByColor(Map& map, const MapColor* color)
+{
+	auto num_symbols = map.getNumSymbols();
+	for (auto i = 0; i < num_symbols; ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		if (symbol->containsColor(color))
+			markSymbol(*symbol);
+	}
+}
+
+void deleteMarkedSymbols(Map& map)
+{
+	auto num_symbols = map.getNumSymbols();
+	for (auto i = num_symbols; i > 0; --i)
+	{
+		auto const index = i - 1;
+		auto* symbol = map.getSymbol(index);
+		if (isMarked(*symbol))
+			map.deleteSymbol(index);
+	}
+}
+
+
 namespace ISOM_2017_2
 {
 
@@ -342,6 +379,176 @@ void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
 }
 
 }  // namespace ISMTBOM
+
+
+namespace ISSkiOM_2019 {
+
+auto const included_ISOM_codes = {
+    101, 102, 103, 104, 105, 107, 109, 111,  // Land forms
+    201, 202, 204, 205, 206, 207, 208, 209,  // Rock and boulders
+    304, 305,  // Water and marsh
+    401, 402, 403, 404, 405, 406, 413, 414, 415, 416, 419,  // Open land and vegetation
+    501, 502, 503, 504, 508, 509, 510, 511, 512, 513, 515,
+    516, 518, 519, 520, 521, 524, 525, 529, 530, 531,  // Man-made features
+    601,  // Technical symbols
+};
+
+void mergeISOM(Map& target, const QDir& symbol_set_dir)
+{
+	// Load to-be-merged symbol set
+	auto const target_scale = target.getScaleDenominator();
+	auto const source_filename = QString::fromLatin1("src/ISOM 2017-2_%1.xmap").arg(target_scale);
+	QVERIFY(symbol_set_dir.exists(source_filename));
+	
+	Map map;
+	MapView view{ &map };
+	map.loadFrom(symbol_set_dir.absoluteFilePath(source_filename), &view);
+	QCOMPARE(map.getScaleDenominator(), target_scale);
+	
+	// Delete some colors, and mark the symbols which use these colors
+	auto num_colors_deleted = 0;
+	auto const num_colors = map.getNumColors();
+	for (auto i = num_colors; i > 0; --i)
+	{
+		auto const index = i - 1;
+		auto* const color = map.getColor(index);
+		if (color->getSpotColorName() == QStringLiteral("GREEN 100, BLACK 50")
+		    || color->getSpotColorName() == QStringLiteral("GREEN 60") )
+		{
+			markSymbolsByColor(map, color);
+			map.deleteColor(index);
+			++num_colors_deleted;
+		}
+	}
+	QCOMPARE(num_colors_deleted, 3);
+	
+	// Mark all but explicitly included symbols
+	auto const first_code = begin(included_ISOM_codes);
+	auto const last_code = end(included_ISOM_codes);
+	auto num_symbols = map.getNumSymbols();
+	for (auto i = num_symbols; i > 0; --i)
+	{
+		auto const index = i - 1;
+		auto* const symbol = map.getSymbol(index);
+		auto const code = symbol->getNumberComponent(0);
+		if (std::find(first_code, last_code, code) == last_code)
+			markSymbol(*symbol);
+	}
+	
+	// Actual merge
+	auto first_imported_symbol = target.getNumSymbols();
+	target.importMap(map, Map::CompleteImport, nullptr);
+	
+	auto const crt_filename = QString::fromLatin1("%1-%2.crt").arg(map.symbolSetId(), target.symbolSetId());
+	QVERIFY(symbol_set_dir.exists(crt_filename));
+	
+	QFile crt_file {symbol_set_dir.absoluteFilePath(crt_filename)};
+	QVERIFY(crt_file.open(QIODevice::ReadOnly));
+	QTextStream stream {&crt_file};
+	
+	auto rules = SymbolRuleSet::loadCrt(stream, target);
+	QCOMPARE(stream.status(), QTextStream::Ok);
+	
+	// Postprocess CRT: Find symbols by code number
+	for (auto& item : rules)
+	{
+		QVERIFY(item.type != SymbolRule::NoAssignment);
+		QVERIFY(item.symbol);
+		QCOMPARE(item.query.getOperator(), ObjectQuery::OperatorSearch);
+		
+		auto operands = item.query.tagOperands();
+		QVERIFY(operands);
+		QVERIFY(!operands->value.isEmpty());
+		
+		// Find original symbol number matching the pattern
+		for (int i = first_imported_symbol; i < target.getNumSymbols(); ++i)
+		{
+			auto* symbol = target.getSymbol(i);
+			if (symbol->getNumberAsString() == operands->value
+			    && Symbol::areTypesCompatible(symbol->getType(), item.symbol->getType()))
+			{
+				item.query = { symbol };
+				break;
+			}
+		}
+		if (item.query.getOperator() == ObjectQuery::OperatorSearch)
+		{
+			QFAIL(qPrintable(QString::fromLatin1("Invalid replacement: ISOM %1 -> ISSkiOM 2019 %2")
+			                 .arg(operands->value, item.symbol->getNumberAsString())));
+		}
+		
+		// Find inconsistencies
+		if (item.query.getOperator() == ObjectQuery::OperatorSymbol)
+		{
+			auto has_conflict = [&item](const auto& other)->bool {
+				return &other != &item
+				       && other.type != SymbolRule::NoAssignment
+				       && item.query == other.query
+				       && item.symbol != other.symbol;
+			};
+			if (std::any_of(begin(rules), end(rules), has_conflict))
+			{
+				QFAIL(qPrintable(QString::fromLatin1("There are multiple replacements for symbol %1.")
+				                 .arg(item.query.symbolOperand()->getNumberAsString())));
+			}
+		}
+	}
+	
+	target.applyOnAllObjects(rules);
+		
+	deleteMarkedSymbols(target);
+	
+	target.sortSymbols(Symbol::lessByNumber);
+}
+
+
+struct ScaleFactors
+{
+	unsigned int scale;
+	double track_symbol_factor;
+	double general_factor;
+};
+
+auto const scale_factors = {
+    ScaleFactors { 15000u, 1.0,  1.0 },
+    ScaleFactors { 12500u, 1.0,  1.2 },
+    ScaleFactors { 10000u, 1.0,  1.5 },
+    ScaleFactors {  7500u, 1.33, 1.5 },
+    ScaleFactors {  5000u, 1.33, 1.5 },
+};
+
+void scaleSymbols(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	auto scaling = std::find_if(begin(scale_factors), end(scale_factors), [target_scale](auto const& factors) {
+		return factors.scale == target_scale;
+	});
+	QVERIFY(scaling != end(scale_factors));
+	
+	map.scaleAllObjects(scaling->general_factor, MapCoord());
+	
+	int track_symbols_changed = 0;
+	int general_symbols_changed = 0;
+	auto const num_symbols = map.getNumSymbols();
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		Symbol* symbol = map.getSymbol(i);
+		const int code = symbol->getNumberComponent(0);
+		if (code >= 800 && code < 900)
+		{
+			symbol->scale(scaling->track_symbol_factor);
+			++track_symbols_changed;
+		}
+		else
+		{
+			symbol->scale(scaling->general_factor);
+			++general_symbols_changed;
+		}
+	}
+	QCOMPARE(track_symbols_changed, 15);
+	QCOMPARE(general_symbols_changed, 115);
+}
+
+}  // namespace ISSkiOM_2019
 
 
 namespace ISSkiOM
@@ -593,6 +800,12 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;
 	QTest::newRow("ISSkiOM 1:5000")  << QString::fromLatin1("ISSkiOM") << 15000u <<  5000u;
 	
+	QTest::newRow("ISSkiOM 2019 1:15000") << QString::fromLatin1("ISSkiOM 2019") << 15000u << 15000u;
+	QTest::newRow("ISSkiOM 2019 1:12500") << QString::fromLatin1("ISSkiOM 2019") << 15000u << 12500u;
+	QTest::newRow("ISSkiOM 2019 1:10000") << QString::fromLatin1("ISSkiOM 2019") << 15000u << 10000u;
+	QTest::newRow("ISSkiOM 2019 1:7500")  << QString::fromLatin1("ISSkiOM 2019") << 15000u <<  7500u;
+	QTest::newRow("ISSkiOM 2019 1:5000")  << QString::fromLatin1("ISSkiOM 2019") << 15000u <<  5000u;
+	
 	QTest::newRow("Course Design 1:15000") << QString::fromLatin1("Course_Design") << 10000u << 15000u;
 	QTest::newRow("Course Design 1:10000") << QString::fromLatin1("Course_Design") << 10000u << 10000u;
 	QTest::newRow("Course Design 1:5000")  << QString::fromLatin1("Course_Design") << 10000u <<  5000u;
@@ -640,6 +853,11 @@ void SymbolSetTool::processSymbolSet()
 	}
 	saveIfDifferent(source_path, &map, &view);
 	
+	if (name.startsWith(QLatin1String("ISSkiOM 2019")))
+	{
+		ISSkiOM_2019::mergeISOM(map, symbol_set_dir);
+	}
+	
 	const int num_symbols = map.getNumSymbols();
 	QStringList previous_numbers;
 	for (int i = 0; i < num_symbols; ++i)
@@ -673,7 +891,11 @@ void SymbolSetTool::processSymbolSet()
 		{
 			ISMTBOM::scale(map, source_scale, target_scale);
 		}
-		else if (name.startsWith(QLatin1String("ISSkiOM")))
+		else if (name == QLatin1String("ISSkiOM 2019"))
+		{
+			ISSkiOM_2019::scaleSymbols(map, source_scale, target_scale);
+		}
+		else if (name == QLatin1String("ISSkiOM"))
 		{
 			ISSkiOM::scale(map, source_scale, target_scale);
 		}
