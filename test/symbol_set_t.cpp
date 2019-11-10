@@ -197,6 +197,19 @@ TranslationEntries readTsFile(QIODevice& device)
 	return result;
 }
 
+void writeObsoleteEntries(QXmlStreamWriter& xml, TranslationEntries& entries, const QString& context)
+{
+	for (auto& entry: entries)
+	{
+		if (entry.obsolete && entry.context == context)
+		{
+			entry.type = Obsolete;
+			entry.write(xml);
+		}
+	}
+}
+
+
 }  // namespace
 
 
@@ -705,11 +718,15 @@ void SymbolSetTool::processSymbolSetTranslations() const
 	{
 		auto entry = TranslationEntry{*it};  // copy, don't touch original entry.
 		entry.type = NeedsReview;
+		entry.obsolete = false;
 		
 		if (context != entry.context)
 		{
 			if (!context.isEmpty())
+			{
+				writeObsoleteEntries(xml, translations_from_ts, context);
 				xml.writeEndElement(); // context
+			}
 			xml.writeStartElement(QLatin1String("context"));
 			xml.writeTextElement(QLatin1String("name"), entry.context);
 			context = entry.context;
@@ -722,7 +739,11 @@ void SymbolSetTool::processSymbolSetTranslations() const
 			       && entry.source == current.source
 			       && entry.comment == current.comment;
 		});
-		if (found == end(translations_from_ts))
+		if (found != end(translations_from_ts))
+		{
+			found->obsolete = false;
+		}
+		else
 		{
 			// Second attempt: exact context + source match.
 			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
@@ -765,6 +786,7 @@ void SymbolSetTool::processSymbolSetTranslations() const
 	}
 	if (!context.isEmpty())
 	{
+		writeObsoleteEntries(xml, translations_from_ts, context);
 		xml.writeEndElement();  // context
 	}
 	

@@ -59,6 +59,7 @@ public:
 		QString comment;
 		QString translation = {};
 		QString type = {};
+		bool obsolete = true;
 		
 		void write(QXmlStreamWriter& xml) const;
 	};
