@@ -380,22 +380,9 @@ void SymbolSetTool::processSymbolSet()
 	auto completeness  = translations_complete;
 	translations_complete = false;
 	
-	auto raw_tag = QTest::currentDataTag();
-	auto tag = QByteArray::fromRawData(raw_tag, int(qstrlen(raw_tag)));
-	
 	QFETCH(QString, name);
 	QFETCH(unsigned int, source_scale);
 	QFETCH(unsigned int, target_scale);
-	
-	auto id = name;
-	auto language = QString{};
-	if (!tag.endsWith('0'))
-	{
-		auto suffix_index = name.lastIndexOf(QLatin1Char('_'));
-		id = name.left(suffix_index);
-		language = name.mid(suffix_index + 1);
-		Q_ASSERT(language.length() == 2);
-	}
 	
 	QString source_filename = QString::fromLatin1("src/%1_%2.xmap").arg(name, QString::number(source_scale));
 	QVERIFY(symbol_set_dir.exists(source_filename));
@@ -408,7 +395,9 @@ void SymbolSetTool::processSymbolSet()
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
-	map.setSymbolSetId(id);
+	auto id = map.symbolSetId();
+	QCOMPARE(id, name);
+	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
 	for (int i = 0; i < map.getNumColors(); ++i)
