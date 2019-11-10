@@ -357,6 +357,9 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
 
+	QTest::newRow("ISOM 2017-2 1:15000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 15000u;
+	QTest::newRow("ISOM 2017-2 1:10000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 10000u;
+	
 	QTest::newRow("ISOM2017 1:15000") << QString::fromLatin1("ISOM2017")  << 15000u << 15000u;
 	QTest::newRow("ISOM2017 1:10000") << QString::fromLatin1("ISOM2017")  << 15000u << 10000u;
 	
@@ -440,7 +443,29 @@ void SymbolSetTool::processSymbolSet()
 	{
 		map.setScaleDenominator(target_scale);
 		
-		if (name.startsWith(QLatin1String("ISOM2017")))
+		if (name == QStringLiteral("ISOM 2017-2"))
+		{
+			const auto factor = double(source_scale) / double(target_scale);
+			map.scaleAllObjects(factor, MapCoord{});
+			
+			int symbols_changed = 0;
+			for (int i = 0; i < num_symbols; ++i)
+			{
+				Symbol* symbol = map.getSymbol(i);
+				const int code = symbol->getNumberComponent(0);
+				switch (code)
+				{
+				case 602:  // Registration mark
+				case 999:  // OpenOrienteering logo
+					break;
+				default:
+					symbol->scale(factor);
+					++symbols_changed;
+				}
+			}
+			QCOMPARE(symbols_changed, 189);
+		}
+		else if (name.startsWith(QLatin1String("ISOM2017")))
 		{
 			const auto factor = double(source_scale) / double(target_scale);
 			map.scaleAllObjects(factor, MapCoord{});
