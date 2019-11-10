@@ -69,6 +69,7 @@ using namespace OpenOrienteering;
 namespace
 {
 
+const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
 const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
 const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
 
@@ -743,7 +744,7 @@ void SymbolSetTool::processSymbolSetTranslations() const
 			// If any of the previous attempts to find a translation succeeded,
 			// the translation is chosen and marked as not being obsolete.
 			entry.translation = found->translation;
-			if (found->type != Obsolete)
+			if (found->type != Obsolete && found->type != Vanished)
 				entry.type = found->type;
 		}
 		else
