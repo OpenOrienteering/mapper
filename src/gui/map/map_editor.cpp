@@ -1473,13 +1473,19 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
-	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
+	auto* temp_path_button = bottom_action_bar->getButtonForAction(gps_temporary_path_act);
+	auto* mobile_gps_temp_path_menu = new QMenu(temp_path_button);
+	mobile_gps_temp_path_menu->addAction(gps_temporary_clear_act);
+	temp_path_button->setMenu(mobile_gps_temp_path_menu);
 	
-	bottom_action_bar->addAction(gps_temporary_clear_act, 0, col++);
+	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
-	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
-	
+	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_on_template_act);
+	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
+	mobile_paint_on_template_menu->addAction(paint_on_template_settings_act);
+	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
+
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	auto button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
