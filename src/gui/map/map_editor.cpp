@@ -959,8 +959,8 @@ void MapEditorController::createActions()
 	fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()), nullptr, QString{}, "view_menu.html");
 	custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()), nullptr, QString{}, "view_menu.html");
 	
-	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), nullptr, QString{}, "view_menu.html");
-	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), nullptr, QString{}, "view_menu.html");
+	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), "view-hatch-areas.png", QString{}, "view_menu.html");
+	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), "view-baseline.png", QString{}, "view_menu.html");
 	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), nullptr, QString{}, "view_menu.html");
 	overprinting_simulation_act = newCheckAction("overprintsimulation", tr("Overprinting simulation"), this, SLOT(overprintingSimulation(bool)), nullptr, QString{}, "view_menu.html");
 	
@@ -1472,6 +1472,9 @@ void MapEditorController::createMobileGUI()
 
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
+	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
+	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
+
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
 	auto* temp_path_button = bottom_action_bar->getButtonForAction(gps_temporary_path_act);
 	auto* mobile_gps_temp_path_menu = new QMenu(temp_path_button);
