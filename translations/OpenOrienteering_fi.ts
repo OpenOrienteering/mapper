@@ -5887,7 +5887,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1749"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä.</translation>
+        <translation>Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1765"/>
@@ -5948,7 +5948,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2122"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Tason %1 luominen epäonnistui: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2129"/>
