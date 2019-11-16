@@ -2987,16 +2987,16 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den
 inte kan eller är farlig att passera.
 Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens
-avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste
-baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas
-vid linjesluten.
+avslutningar kan vara avrundade eller raka. Kortare lutningsstreck kan
+användas vid linjesluten.
+ Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. 
 Avståndet mellan två opasserbara branter eller mellan opasserbar brant
 och andra opasserbara symboler måste vara mer än 0,3 mm.
 När en brant ligger i anslutning till vatten så att passage längs med
 stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller
 ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant
 ska ansluta till höjdkurvorna.
-Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m)</translation>
+Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -3022,7 +3022,7 @@ For vertical rock faces the tags may be omitted if space is short. &lt;b&gt;For 
 The gap between two impassable cliffs or between impassable cliffs and other impassable feature symbols must exceed 0.3 mm on the map.
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera. Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas vid linjesluten. Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm. När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
+        <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den inte kan eller är farlig att passera. Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens avslutningar kan vara avrundade eller raka. &lt;b&gt;Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred.&lt;/b&gt; Kortare lutningsstreck kan användas vid linjesluten. Avståndet mellan två opasserbara branter eller mellan opasserbar brant och andra opasserbara symboler måste vara mer än 0,3 mm. När en brant ligger i anslutning till vatten så att passage längs med stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant ska ansluta till höjdkurvorna. Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -3141,7 +3141,7 @@ Utbredning: 10,5 x 12 m.</translation>
     <message>
         <source>Rocky pit or cave with distinct entrance</source>
         <comment>Name of symbol 203.2</comment>
-        <translation>Steniga gropar, hålor, grottor eller gruvhål med tydlig ingång (symbolen ska orienteras in i grottan).</translation>
+        <translation>Steniga gropar, hålor, grottor eller gruvhål med tydlig ingång (symbolen ska orienteras in i grottan)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -3176,7 +3176,7 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
     <message>
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
-        <translation>Sten, förstorad storlek</translation>
+        <translation>Stenblock eller stort stenblock, olika storlek</translation>
     </message>
     <message>
         <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -3249,7 +3249,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished">Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5. Minst 2 trianglar ska användas. The going is indicated by the density of the triangles. För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -3314,7 +3314,7 @@ Minsta yta: 1 x 1 mm (15 x 15 m).</translation>
     <message>
         <source>Trench</source>
         <comment>Name of symbol 215</comment>
-        <translation type="unfinished">Värn (eller skreva)</translation>
+        <translation>Dike (eller skreva, skyttevärn)</translation>
     </message>
     <message>
         <source>Uncrossable body of water, with bank line</source>
