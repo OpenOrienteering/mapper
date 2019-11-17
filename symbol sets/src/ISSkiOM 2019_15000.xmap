@@ -651,6 +651,7 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
                         </symbol>
                     </end_symbol>
                 </line_symbol>
+<icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAABHElEQVRYhe2TsUoDQRRFz5uwKAgWQtxCO200YmMVf0BIYSP6E6m38AsstvYnFBuLhfyAqWyE1cZSi2XBQhBclvgsskQyO2OpReaU7965983AQCAQCAQWHQHY0P3Nmsm5gT7woXBTsHyJ3NeuQ2u6vRqxlABHzWhUU6Vv8vzubNGDKOZzKHACrHzBOKJz8SoPL7Kue1uCjoGutVtWsHOMXE8c5XdAz6rJa6rD1hJ62ol5ugUdWP5Skb4RNG2XA+gg5vHMnjY3t8sBeo02xzSjVQ7QFTQ1/DxjewW35vW7NE/GzG9+Ef8EA4x8org1r9+leTJmfqNIApSO+qxg98qe1lQpkDvC8kabY5ohmcNfKpL8+zd0+gOBQCCwUHwDg9drcoBHbJ0AAAAASUVORK5CYII="/>
             </symbol>
             <symbol type="2" id="24" code="805" name="Road covered with snow">
                 <description>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</description>
