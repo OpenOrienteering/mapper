@@ -92,6 +92,36 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 	entries.push_back({context, source, comment});
 }
 
+void processTranslation(const Map& map, TranslationEntries& translation_entries)
+{
+	auto const id = map.symbolSetId();
+	
+	auto num_colors = map.getNumColors();
+	for (int i = 0; i < num_colors; ++i)
+	{
+		auto* color = map.getColor(i);
+		auto const& source = color->getName();
+		auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
+		addSource(translation_entries, id, source, comment);
+	}
+	
+	auto num_symbols = map.getNumSymbols();
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		auto symbol = map.getSymbol(i);
+		auto source = symbol->getName();
+		auto comment = QString{QLatin1String("Name of symbol ") + symbol->getNumberAsString()};
+		addSource(translation_entries, id, source, comment);
+		
+		source = symbol->getDescription();
+		comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
+		if (source.isEmpty())
+			qInfo("%s: empty", qPrintable(comment));
+		else
+			addSource(translation_entries, id, source, comment);
+	}
+}
+
 
 /// \todo Review unused function
 #ifdef SYMBOL_SET_T_UNUSED
@@ -215,6 +245,192 @@ void writeObsoleteEntries(QXmlStreamWriter& xml, TranslationEntries& entries, co
 		}
 	}
 }
+
+
+namespace ISOM_2017_2
+{
+
+void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = double(source_scale) / double(target_scale);
+	map.scaleAllObjects(factor, MapCoord{});
+	
+	int symbols_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		switch (code)
+		{
+		case 602:  // Registration mark
+		case 999:  // OpenOrienteering logo
+			break;
+		default:
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+	}
+	QCOMPARE(symbols_changed, 189);
+}
+
+}  // namespace ISOM_2017_2
+
+
+namespace ISSOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	int north_lines_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		if (code == 601 && symbol->getType() == Symbol::Area)
+		{
+			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
+			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
+			{
+				switch (target_scale)
+				{
+				case 4000u:
+					pattern0.line_spacing = 37500;
+					break;
+				default:
+					QFAIL("Undefined north line spacing for this scale");
+				}
+				++north_lines_changed;
+			}
+		}
+	}
+	QCOMPARE(north_lines_changed, 2);
+}
+
+}  // namespace ISSOM
+
+
+namespace ISMTBOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+	map.scaleAllObjects(factor, MapCoord());
+	
+	int symbols_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		switch (code)
+		{
+		case 602:  // Registration mark
+		case 999:  // OpenOrienteering logo
+			break;
+		default:
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+	}
+	QCOMPARE(symbols_changed, 168);
+}
+
+}  // namespace ISMTBOM
+
+
+namespace ISSkiOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+	map.scaleAllObjects(factor, MapCoord());
+	
+	int symbols_changed = 0;
+	int north_lines_changed = 0;
+	auto const purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		auto const& color = static_cast<const QColor&>(*symbol->guessDominantColor());
+		if (qAbs(purple - color.hueF()) > 0.1
+		    && code != 602
+		    && code != 999)
+		{
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+		
+		if (code == 601 && symbol->getType() == Symbol::Area)
+		{
+			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
+			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
+			{
+				switch (target_scale)
+				{
+				case 5000u:
+				case 10000u:
+					pattern0.line_spacing = 40000;
+					break;
+				default:
+					QFAIL("Undefined north line spacing for this scale");
+				}
+				++north_lines_changed;
+			}
+		}
+	}
+	QCOMPARE(symbols_changed, 152);
+	QCOMPARE(north_lines_changed, 2);
+}
+
+}  // namespace ISSkiOM
+
+
+namespace Course_Design
+{
+
+MapView* makeView(Map& map, unsigned int target_scale)
+{
+	[&map]() { QCOMPARE(map.getNumTemplates(), 1); } ();
+	auto* view = new MapView { &map };
+	view->setGridVisible(true);
+	if (target_scale == 10000)
+		view->setTemplateVisibility(map.getTemplate(0), { 1, true });
+	else
+		map.deleteTemplate(0);
+	return view;
+}
+
+void resetPrinterConfig(Map& map)
+{
+	auto printer_config = map.printerConfig();
+	printer_config.options.show_templates = true;
+	printer_config.single_page_print_area = true;
+	printer_config.center_print_area = true;
+	printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
+	printer_config.page_format.page_size = QPageSize::A4; 
+	printer_config.print_area = printer_config.page_format.page_rect;
+	map.setPrinterConfig(printer_config);
+}
+
+void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = double(source_scale) / double(target_scale);
+	map.scaleAllObjects(factor, MapCoord());
+}
+
+}  // namespace Course_Design
 
 
 }  // namespace
@@ -437,156 +653,37 @@ void SymbolSetTool::processSymbolSet()
 		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
 	}
 	
-	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
+	if (std::none_of(begin(translation_entries), end(translation_entries),
+	                 [&id](auto const& entry) { return entry.context == id; }) )
+	{
+		processTranslation(map, translation_entries);
+	}
+	
 	if (source_scale != target_scale)
 	{
-		map.setScaleDenominator(target_scale);
-		
 		if (name == QStringLiteral("ISOM 2017-2"))
 		{
-			const auto factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord{});
-			
-			int symbols_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				switch (code)
-				{
-				case 602:  // Registration mark
-				case 999:  // OpenOrienteering logo
-					break;
-				default:
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-			}
-			QCOMPARE(symbols_changed, 189);
+			ISOM_2017_2::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 4000u:
-							pattern0.line_spacing = 37500;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(north_lines_changed, 2);
+			ISSOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
-			QCOMPARE(source_scale, 15000u);
-			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-			}
-			QCOMPARE(symbols_changed, 168);
+			ISMTBOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
-			QCOMPARE(source_scale, 15000u);
-			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				const QColor& color = *symbol->guessDominantColor();
-				if (qAbs(purple - color.hueF()) > 0.1
-				    && code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-				
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 5000u:
-						case 10000u:
-							pattern0.line_spacing = 40000;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(symbols_changed, 152);
-			QCOMPARE(north_lines_changed, 2);
+			ISSkiOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("Course_Design")))
 		{
-			const double factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord());
+			Course_Design::scale(map, source_scale, target_scale);
 		}
 		else
 		{
 			QFAIL("Symbol set not recognized");
-		}
-	}
-	else
-	{
-		// Not scaled: Collect translation source strings.
-		auto num_colors = map.getNumColors();
-		for (int i = 0; i < num_colors; ++i)
-		{
-			auto color = map.getColor(i);
-			auto source = color->getName();
-			auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
-			addSource(translation_entries, id, source, comment);
-		}
-		
-		for (int i = 0; i < num_symbols; ++i)
-		{
-			auto symbol = map.getSymbol(i);
-			auto source = symbol->getName();
-			auto comment = QString{QLatin1String("Name of symbol ") + symbol->getNumberAsString()};
-			addSource(translation_entries, id, source, comment);
-			
-			source = symbol->getDescription();
-			comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
-			if (source.isEmpty())
-				qInfo("%s: empty", qPrintable(comment));
-			else
-				addSource(translation_entries, id, source, comment);
 		}
 	}
 	
@@ -596,22 +693,8 @@ void SymbolSetTool::processSymbolSet()
 	MapView* new_view = nullptr;
 	if (name.startsWith(QLatin1String("Course_Design")))
 	{
-		QCOMPARE(map.getNumTemplates(), 1);
-		new_view = new MapView { &map };
-		new_view->setGridVisible(true);
-		if (target_scale == 10000)
-			new_view->setTemplateVisibility(map.getTemplate(0), { 1, true });
-		else
-			map.deleteTemplate(0);
-		
-		auto printer_config = map.printerConfig();
-		printer_config.options.show_templates = true;
-		printer_config.single_page_print_area = true;
-		printer_config.center_print_area = true;
-		printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
-		printer_config.page_format.page_size = QPageSize::A4; 
-		printer_config.print_area = printer_config.page_format.page_rect;
-		map.setPrinterConfig(printer_config);
+		new_view = Course_Design::makeView(map, target_scale);
+		Course_Design::resetPrinterConfig(map);
 	}
 	else
 	{
