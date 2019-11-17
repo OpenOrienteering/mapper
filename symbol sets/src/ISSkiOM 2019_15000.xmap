@@ -4,7 +4,7 @@
     <georeferencing scale="15000">
         <projected_crs id="Local"/>
     </georeferencing>
-    <colors count="35">
+    <colors count="36">
         <color priority="0" name="Purple for course overprint" c="0.35" m="0.85" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <namedcolor>PURPLE</namedcolor>
@@ -14,241 +14,249 @@
         </color>
         <color priority="1" name="White for course overprint" c="0" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0" spotcolor="2"/>
+                <component factor="0" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
-        <color priority="2" name="Black 100%" c="0" m="0" y="0" k="1" opacity="1">
+        <color priority="2" name="Green for SkiO" c="0.91" m="0" y="0.83" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.912" spotcolor="4"/>
+                <component factor="0.707" spotcolor="6"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.09" g="1" b="0.17"/>
+        </color>
+        <color priority="3" name="Black 100%" c="0" m="0" y="0" k="1" opacity="1">
             <spotcolors>
                 <namedcolor>BLACK</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0" g="0" b="0"/>
         </color>
-        <color priority="3" name="Green 100%" c="0.76" m="0" y="0.91" k="0" opacity="1">
+        <color priority="4" name="Green 100%" c="0.76" m="0" y="0.91" k="0" opacity="1">
             <spotcolors>
                 <namedcolor>GREEN</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="0.24" g="1" b="0.09"/>
         </color>
-        <color priority="4" name="White for railway" c="0" m="0" y="0" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="1" g="1" b="1"/>
-        </color>
-        <color priority="5" name="Blue 100%" c="1" m="0" y="0" k="0" opacity="1">
-            <spotcolors>
-                <namedcolor>BLUE</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0" g="1" b="1"/>
-        </color>
-        <color priority="6" name="Brown 100%" c="0" m="0.56" y="1" k="0.18" opacity="1">
-            <spotcolors>
-                <namedcolor>BROWN</namedcolor>
-            </spotcolors>
-            <cmyk method="custom"/>
-            <rgb method="cmyk" r="0.82" g="0.361" b="0"/>
-        </color>
-        <color priority="7" name="Purple for track symbols" c="0.35" m="0.85" y="0" k="0" opacity="1">
-            <spotcolors>
-                <component factor="1" spotcolor="0"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.65" g="0.15" b="1"/>
-        </color>
-        <color priority="8" name="Black below purple for track symbols" c="0" m="0" y="0" k="1" opacity="1">
-            <spotcolors>
-                <component factor="1" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0" g="0" b="0"/>
-        </color>
-        <color priority="9" name="Black 65%" c="0" m="0" y="0" k="0.65" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.65" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.35" g="0.35" b="0.35"/>
-        </color>
-        <color priority="10" name="Black 20%" c="0" m="0" y="0" k="0.2" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.2" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.8" g="0.8" b="0.8"/>
-        </color>
-        <color priority="11" name="Upper brown 50%" c="0" m="0.28" y="0.5" k="0.09" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="6"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.91" g="0.68" b="0.5"/>
-        </color>
-        <color priority="12" name="Black below upper brown 50%" c="0" m="0" y="0" k="1" opacity="1">
-            <spotcolors>
-                <component factor="1" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0" g="0" b="0"/>
-        </color>
-        <color priority="13" name="Lower brown 50%" c="0" m="0.28" y="0.5" k="0.09" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="6"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.91" g="0.68" b="0.5"/>
-        </color>
-        <color priority="14" name="Black below lower brown 50%" c="0" m="0" y="0" k="1" opacity="1">
-            <spotcolors>
-                <component factor="1" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0" g="0" b="0"/>
-        </color>
-        <color priority="15" name="Blue 100% for area features" c="1" m="0" y="0" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="5"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0" g="1" b="1"/>
-        </color>
-        <color priority="16" name="Blue 70%" c="0.7" m="0" y="0" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.7" spotcolor="5"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.3" g="1" b="1"/>
-        </color>
-        <color priority="17" name="Blue 50%" c="0.5" m="0" y="0" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="5"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.5" g="1" b="1"/>
-        </color>
-        <color priority="18" name="OpenOrienteering Orange" c="0" m="0.474" y="0.895" k="0.09" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="6"/>
-                <component factor="1" spotcolor="32"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.91" g="0.497" b="0.105"/>
-        </color>
-        <color priority="19" name="Yellow 100% for narrow ride" c="0" m="0.27" y="0.79" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="32"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
-        </color>
-        <color priority="20" name="Green 60% for narrow ride" c="0.456" m="0" y="0.546" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.6" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
-        </color>
-        <color priority="21" name="Green 30% for narrow ride" c="0.228" m="0" y="0.273" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
-        </color>
-        <color priority="22" name="White over green" c="0" m="0" y="0" k="0" opacity="1">
+        <color priority="5" name="White for railway" c="0" m="0" y="0" k="0" opacity="1">
             <spotcolors knockout="true">
                 <component factor="0" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="1" b="1"/>
         </color>
-        <color priority="23" name="Yellow 100%/Green 50%" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="3"/>
-                <component factor="1" spotcolor="32"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.62" g="0.73" b="0.114"/>
-        </color>
-        <color priority="24" name="Black 25% (Grey)" c="0" m="0" y="0" k="0.25" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.25" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
-        </color>
-        <color priority="25" name="Green 100%/Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="3"/>
-                <component factor="0.5" spotcolor="2"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
-        </color>
-        <color priority="26" name="Green 100% for area features" c="0.76" m="0" y="0.91" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
-        </color>
-        <color priority="27" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.6" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
-        </color>
-        <color priority="28" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0.3" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
-        </color>
-        <color priority="29" name="Green 100% for undergrowth" c="0.76" m="0" y="0.91" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="1" spotcolor="3"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
-        </color>
-        <color priority="30" name="White over yellow" c="0" m="0" y="0" k="0" opacity="1">
-            <spotcolors knockout="true">
-                <component factor="0" spotcolor="32"/>
-            </spotcolors>
-            <cmyk method="spotcolor"/>
-            <rgb method="spotcolor" r="1" g="1" b="1"/>
-        </color>
-        <color priority="31" name="Black for open land" c="0" m="0" y="0" k="1" opacity="1">
+        <color priority="6" name="Blue 100%" c="1" m="0" y="0" k="0" opacity="1">
             <spotcolors>
-                <component factor="1" spotcolor="2"/>
+                <namedcolor>BLUE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0" g="1" b="1"/>
+        </color>
+        <color priority="7" name="Brown 100%" c="0" m="0.56" y="1" k="0.18" opacity="1">
+            <spotcolors>
+                <namedcolor>BROWN</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.82" g="0.361" b="0"/>
+        </color>
+        <color priority="8" name="Purple for track symbols" c="0.35" m="0.85" y="0" k="0" opacity="1">
+            <spotcolors>
+                <component factor="1" spotcolor="0"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.65" g="0.15" b="1"/>
+        </color>
+        <color priority="9" name="Black below purple for track symbols" c="0" m="0" y="0" k="1" opacity="1">
+            <spotcolors>
+                <component factor="1" spotcolor="3"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="0" g="0" b="0"/>
         </color>
-        <color priority="32" name="Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="10" name="Black 65%" c="0" m="0" y="0" k="0.65" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.65" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.35" g="0.35" b="0.35"/>
+        </color>
+        <color priority="11" name="Black 20%" c="0" m="0" y="0" k="0.2" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.2" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.8" g="0.8" b="0.8"/>
+        </color>
+        <color priority="12" name="Upper brown 50%" c="0" m="0.28" y="0.5" k="0.09" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.5" spotcolor="7"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.91" g="0.68" b="0.5"/>
+        </color>
+        <color priority="13" name="Black below upper brown 50%" c="0" m="0" y="0" k="1" opacity="1">
+            <spotcolors>
+                <component factor="1" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0" g="0" b="0"/>
+        </color>
+        <color priority="14" name="Lower brown 50%" c="0" m="0.28" y="0.5" k="0.09" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.5" spotcolor="7"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.91" g="0.68" b="0.5"/>
+        </color>
+        <color priority="15" name="Black below lower brown 50%" c="0" m="0" y="0" k="1" opacity="1">
+            <spotcolors>
+                <component factor="1" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0" g="0" b="0"/>
+        </color>
+        <color priority="16" name="Blue 100% for area features" c="1" m="0" y="0" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="6"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0" g="1" b="1"/>
+        </color>
+        <color priority="17" name="Blue 70%" c="0.7" m="0" y="0" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.7" spotcolor="6"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.3" g="1" b="1"/>
+        </color>
+        <color priority="18" name="Blue 50%" c="0.5" m="0" y="0" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.5" spotcolor="6"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.5" g="1" b="1"/>
+        </color>
+        <color priority="19" name="OpenOrienteering Orange" c="0" m="0.474" y="0.895" k="0.09" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.5" spotcolor="7"/>
+                <component factor="1" spotcolor="33"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.91" g="0.497" b="0.105"/>
+        </color>
+        <color priority="20" name="Yellow 100% for narrow ride" c="0" m="0.27" y="0.79" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="33"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
+        </color>
+        <color priority="21" name="Green 60% for narrow ride" c="0.456" m="0" y="0.546" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.6" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
+        </color>
+        <color priority="22" name="Green 30% for narrow ride" c="0.228" m="0" y="0.273" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.3" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
+        </color>
+        <color priority="23" name="White over green" c="0" m="0" y="0" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1" g="1" b="1"/>
+        </color>
+        <color priority="24" name="Yellow 100%/Green 50%" c="0.38" m="0.27" y="0.886" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.5" spotcolor="4"/>
+                <component factor="1" spotcolor="33"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.62" g="0.73" b="0.114"/>
+        </color>
+        <color priority="25" name="Black 25% (Grey)" c="0" m="0" y="0" k="0.25" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.25" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.75" g="0.75" b="0.75"/>
+        </color>
+        <color priority="26" name="Green 100%/Black 50%" c="0.76" m="0" y="0.91" k="0.5" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="4"/>
+                <component factor="0.5" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.12" g="0.5" b="0.045"/>
+        </color>
+        <color priority="27" name="Green 100% for area features" c="0.76" m="0" y="0.91" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
+        </color>
+        <color priority="28" name="Green 60%" c="0.456" m="0" y="0.546" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.6" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.544" g="1" b="0.454"/>
+        </color>
+        <color priority="29" name="Green 30%" c="0.228" m="0" y="0.273" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0.3" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.772" g="1" b="0.727"/>
+        </color>
+        <color priority="30" name="Green 100% for undergrowth" c="0.76" m="0" y="0.91" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="1" spotcolor="4"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0.24" g="1" b="0.09"/>
+        </color>
+        <color priority="31" name="White over yellow" c="0" m="0" y="0" k="0" opacity="1">
+            <spotcolors knockout="true">
+                <component factor="0" spotcolor="33"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="1" g="1" b="1"/>
+        </color>
+        <color priority="32" name="Black for open land" c="0" m="0" y="0" k="1" opacity="1">
+            <spotcolors>
+                <component factor="1" spotcolor="3"/>
+            </spotcolors>
+            <cmyk method="spotcolor"/>
+            <rgb method="spotcolor" r="0" g="0" b="0"/>
+        </color>
+        <color priority="33" name="Yellow" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
                 <namedcolor>YELLOW</namedcolor>
             </spotcolors>
             <cmyk method="custom"/>
             <rgb method="cmyk" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="33" name="Yellow 100% for area features" c="0" m="0.27" y="0.79" k="0" opacity="1">
+        <color priority="34" name="Yellow 100% for area features" c="0" m="0.27" y="0.79" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="1" spotcolor="32"/>
+                <component factor="1" spotcolor="33"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.73" b="0.21"/>
         </color>
-        <color priority="34" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
+        <color priority="35" name="Yellow 50%" c="0" m="0.135" y="0.395" k="0" opacity="1">
             <spotcolors knockout="true">
-                <component factor="0.5" spotcolor="32"/>
+                <component factor="0.5" spotcolor="33"/>
             </spotcolors>
             <cmyk method="spotcolor"/>
             <rgb method="spotcolor" r="1" g="0.865" b="0.605"/>
@@ -274,21 +282,21 @@
             </symbol>
             <symbol type="4" id="2" code="301.3" name="Body of water that shall not be crossed">
                 <description>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</description>
-                <area_symbol inner_color="15" min_area="1000" patterns="0"/>
+                <area_symbol inner_color="16" min_area="1000" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWNk+PSfgTLARKH+USNGjRg1YtSIUSPIAgCt1AIdbYPnGQAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="2" id="3" code="301.4" name="Body of water that shall not be crossed, bank line">
                 <description>A black bank line indicates that the feature shall not be crossed.</description>
-                <line_symbol color="2" line_width="180" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="3" line_width="180" minimum_length="0" join_style="0" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="4" id="4" code="302.1" name="Crossable body of water">
                 <description>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
-                <area_symbol inner_color="17" min_area="500" patterns="0"/>
+                <area_symbol inner_color="18" min_area="500" patterns="0"/>
 <icon src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAIAAABL1vtsAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAH0lEQVQ4jWPc/+c/A2WAiUL9o0aMGjFqxKgRo0aQBQAyngLmdBowpwAAAABJRU5ErkJggg=="/>
             </symbol>
             <symbol type="2" id="5" code="302.2" name="Crossable body of water, bank line">
                 <description>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
-                <line_symbol color="5" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="6" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="1250" break_length="250" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="4" id="6" code="310.1" name="Marsh (in ski orienteering map)">
                 <description>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</description>
@@ -298,7 +306,7 @@
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="15" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -318,7 +326,7 @@
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="15" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="16" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -340,7 +348,7 @@
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
                         <symbol type="2" code="">
-                            <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1000" dashes_in_group="1" in_group_break_length="501" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                            <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4001" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4001" break_length="1000" dashes_in_group="1" in_group_break_length="501" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="4">
@@ -377,7 +385,7 @@
             </symbol>
             <symbol type="1" id="9" code="703" name="Control point and focus point">
                 <description>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</description>
-                <point_symbol inner_radius="2625" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                <point_symbol inner_radius="2625" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                     <element>
                         <symbol type="1" code="">
                             <point_symbol inner_radius="325" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
@@ -400,14 +408,14 @@ The numbers are orientated to north.</description>
             </symbol>
             <symbol type="2" id="11" code="705" name="Course line">
                 <description>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</description>
-                <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
             <symbol type="1" id="12" code="706" name="Finish">
                 <description>The end of the course.</description>
-                <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                     <element>
                         <symbol type="1" code="">
-                            <point_symbol inner_radius="3250" inner_color="-1" outer_width="500" outer_color="7" elements="0"/>
+                            <point_symbol inner_radius="3250" inner_color="-1" outer_width="500" outer_color="8" elements="0"/>
                         </symbol>
                         <object type="0">
                             <coords count="1">
@@ -452,7 +460,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <point_symbol rotatable="true" inner_radius="1167" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -466,7 +474,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                                 </element>
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="4">
@@ -488,7 +496,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                             <point_symbol rotatable="true" inner_radius="1167" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                                 <element>
                                     <symbol type="2" code="">
-                                        <line_symbol color="7" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+                                        <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4667" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4667" break_length="1167" dashes_in_group="1" in_group_break_length="583" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
                                     </symbol>
                                     <object type="1">
                                         <coords count="2">
@@ -505,10 +513,10 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </mid_symbol>
                     <end_symbol>
                         <symbol type="1" code="" name="End symbol">
-                            <point_symbol rotatable="true" inner_radius="3250" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                            <point_symbol rotatable="true" inner_radius="3250" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                                 <element>
                                     <symbol type="1" code="">
-                                        <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="7" elements="0"/>
+                                        <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="8" elements="0"/>
                                     </symbol>
                                     <object type="0">
                                         <coords count="1">
@@ -521,7 +529,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </end_symbol>
                     <dash_symbol>
                         <symbol type="1" code="" name="Dash symbol">
-                            <point_symbol rotatable="true" inner_radius="2625" inner_color="-1" outer_width="500" outer_color="7" elements="1">
+                            <point_symbol rotatable="true" inner_radius="2625" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                                 <element>
                                     <symbol type="1" code="">
                                         <point_symbol inner_radius="325" inner_color="0" outer_width="0" outer_color="-1" elements="0"/>
@@ -542,7 +550,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                 <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="24" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="25" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="10">
@@ -564,7 +572,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="24" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="25" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="14">
@@ -590,7 +598,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="26">
@@ -628,7 +636,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="37">
@@ -677,7 +685,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="35">
@@ -724,7 +732,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="25">
@@ -761,7 +769,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="5">
@@ -778,7 +786,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="26">
@@ -816,7 +824,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="37">
@@ -865,7 +873,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="39">
@@ -916,7 +924,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="26">
@@ -954,7 +962,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="26">
@@ -992,7 +1000,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="35">
@@ -1039,7 +1047,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="25">
@@ -1076,7 +1084,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="5">
@@ -1093,7 +1101,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="37">
@@ -1142,7 +1150,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="74">
@@ -1228,7 +1236,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="69">
@@ -1309,7 +1317,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="17" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="89">
@@ -1410,7 +1418,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="38">
@@ -1460,7 +1468,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="89">
@@ -1561,7 +1569,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="89">
@@ -1662,7 +1670,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="89">
@@ -1763,7 +1771,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="87">
@@ -1862,7 +1870,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="38">
@@ -1912,7 +1920,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="18" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="19" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="74">
@@ -1998,7 +2006,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="1794">
@@ -3804,7 +3812,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="24" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="25" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="572">
@@ -4388,7 +4396,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="31">
@@ -4431,7 +4439,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </element>
                     <element>
                         <symbol type="4" code="">
-                            <area_symbol inner_color="2" min_area="0" patterns="0"/>
+                            <area_symbol inner_color="3" min_area="0" patterns="0"/>
                         </symbol>
                         <object type="1">
                             <coords count="31">
