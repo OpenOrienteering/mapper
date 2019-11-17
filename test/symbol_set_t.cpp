@@ -545,7 +545,7 @@ void scaleSymbols(Map& map, unsigned int /*source_scale*/, unsigned int target_s
 		}
 	}
 	QCOMPARE(track_symbols_changed, 15);
-	QCOMPARE(general_symbols_changed, 115);
+	QCOMPARE(general_symbols_changed, 116);
 }
 
 }  // namespace ISSkiOM_2019

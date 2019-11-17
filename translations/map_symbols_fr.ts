@@ -12802,6 +12802,16 @@ Minimum width: 0.4 mm (footprint 6 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Vegetation: slow running, minimum width</source>
+        <comment>Name of symbol 406.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
+        <comment>Description of symbol 406.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
         <translation>Verger en terrain découvert</translation>

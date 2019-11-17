@@ -263,7 +263,7 @@
         </color>
     </colors>
     <barrier version="6" required="0.6.0">
-        <symbols count="35" id="ISSkiOM 2019">
+        <symbols count="36" id="ISSkiOM 2019">
             <symbol type="16" id="0" code="301.1" name="Crossable body of water, with bank line">
                 <description>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</description>
                 <combined_symbol parts="2">
@@ -343,7 +343,11 @@
                     </pattern>
                 </area_symbol>
             </symbol>
-            <symbol type="1" id="7" code="701" name="Start">
+            <symbol type="2" id="7" code="406.4" name="Vegetation: slow running, minimum width">
+                <description>An area with dense vegetation (low visibility) which reduces running speed.</description>
+                <line_symbol color="29" line_width="400" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            </symbol>
+            <symbol type="1" id="8" code="701" name="Start">
                 <description>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -364,7 +368,7 @@
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="8" code="702" name="Map issue point">
+            <symbol type="1" id="9" code="702" name="Map issue point">
                 <description>If there is a marked route to the start point, the map issue point is marked using this symbol.</description>
                 <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
                     <element>
@@ -383,7 +387,7 @@
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="1" id="9" code="703" name="Control point and focus point">
+            <symbol type="1" id="10" code="703" name="Control point and focus point">
                 <description>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</description>
                 <point_symbol inner_radius="2625" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                     <element>
@@ -398,7 +402,7 @@
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="8" id="10" code="704" name="Control number">
+            <symbol type="8" id="11" code="704" name="Control number">
                 <description>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 The numbers are orientated to north.</description>
                 <text_symbol icon_text="5">
@@ -406,11 +410,11 @@ The numbers are orientated to north.</description>
                     <text color="0" line_spacing="1" paragraph_spacing="0" character_spacing="0" kerning="true"/>
                 </text_symbol>
             </symbol>
-            <symbol type="2" id="11" code="705" name="Course line">
+            <symbol type="2" id="12" code="705" name="Course line">
                 <description>Where controls are to be visited in order, the sequence is shown using straight lines from the start to the first control and then from each control to the next one. Sections of lines should be omitted to leave important detail showing. The line should be drawn via mandatory crossing points. There should be gaps between the line and the control circle in order to increase the readability of the underlying detail close to the control.</description>
                 <line_symbol color="8" line_width="500" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="12" code="706" name="Finish">
+            <symbol type="1" id="13" code="706" name="Finish">
                 <description>The end of the course.</description>
                 <point_symbol inner_radius="2250" inner_color="-1" outer_width="500" outer_color="8" elements="1">
                     <element>
@@ -425,12 +429,12 @@ The numbers are orientated to north.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="13" code="707" name="Marked route">
+            <symbol type="2" id="14" code="707" name="Marked route">
                 <description>A marked route that is a part of the course. It is mandatory to follow the marked route.
 Minimum length: 2 dashes (4.5 mm – footprint: 67.5 m).</description>
                 <line_symbol color="0" line_width="500" minimum_length="4500" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="2000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0" scale_dash_symbol="false"/>
             </symbol>
-            <symbol type="4" id="14" code="709" name="Out-of-bounds area">
+            <symbol type="4" id="15" code="709" name="Out-of-bounds area">
                 <description>An out-of-bounds area. A bounding line may be drawn if there is no natural boundary, as follows:
 – a solid line indicates that the boundary is marked continuously (tapes, etc.) in the terrain,
 – a dashed line indicates intermittent marking in the terrain,
@@ -442,15 +446,15 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     <pattern type="1" angle="5.49779" line_spacing="800" line_offset="0" offset_along_line="0" color="0" line_width="250"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="15" code="709.1" name="Out-of-bounds area, solid boundary">
+            <symbol type="2" id="16" code="709.1" name="Out-of-bounds area, solid boundary">
                 <description>A solid line indicates that the boundary is marked continuously (tapes, etc.) on the ground.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="16" code="709.2" name="Out-of-bounds area, dashed boundary">
+            <symbol type="2" id="17" code="709.2" name="Out-of-bounds area, dashed boundary">
                 <description>A dashed line indicates intermittent marking on the ground.</description>
                 <line_symbol color="0" line_width="250" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="17" code="715" name="Equipment deposit">
+            <symbol type="1" id="18" code="715" name="Equipment deposit">
                 <description>A deposit for spare equipment in the terrain.</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="2">
                     <element>
@@ -485,7 +489,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="18" code="799" name="Simple SkiO Course">
+            <symbol type="2" id="19" code="799" name="Simple SkiO Course">
                 <description>This symbol provides a simple and quick way to make training courses.
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</description>
@@ -580,21 +584,21 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
                     </dash_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="19" code="801" name="Very wide track &gt; 3.0 m">
+            <symbol type="2" id="20" code="801" name="Very wide track &gt; 3.0 m">
                 <description>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</description>
                 <line_symbol color="2" line_width="850" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="20" code="802" name="Wide track 1.5 - 3.0 m">
+            <symbol type="2" id="21" code="802" name="Wide track 1.5 - 3.0 m">
                 <description>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
 rougher and softer than the wide skateable tracks in the area.</description>
                 <line_symbol color="2" line_width="599" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="21" code="803" name="Track 1.0 - 1.5 m">
+            <symbol type="2" id="22" code="803" name="Track 1.0 - 1.5 m">
                 <description>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
 be made wider to reduce widening during competition.</description>
                 <line_symbol color="2" line_width="499" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="22" code="804" name="Track, slow 0.8 - 1.0 m">
+            <symbol type="2" id="23" code="804" name="Track, slow 0.8 - 1.0 m">
                 <description>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
 slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
 technique for slowing and stopping.
@@ -648,11 +652,11 @@ In order to clarify a junction, the beginning of a slow track is drawn with a sh
                     </end_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="2" id="23" code="805" name="Road covered with snow">
+            <symbol type="2" id="24" code="805" name="Road covered with snow">
                 <description>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</description>
                 <line_symbol color="3" line_width="700" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="24" code="806" name="Sanded or snowless road, line symbol">
+            <symbol type="2" id="25" code="806" name="Sanded or snowless road, line symbol">
                 <description>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</description>
@@ -680,7 +684,7 @@ heavily sanded roads should normally be marked as forbidden routes.</description
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="25" code="806.1" name="Sanded or snowless road, single symbol">
+            <symbol type="1" id="26" code="806.1" name="Sanded or snowless road, single symbol">
                 <description>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</description>
@@ -702,7 +706,7 @@ heavily sanded roads should normally be marked as forbidden routes.</description
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="2" id="26" code="807" name="Unploughed road">
+            <symbol type="2" id="27" code="807" name="Unploughed road">
                 <description>A road which is not opened for traffic, no skiable track.</description>
                 <line_symbol color="-1" line_width="140" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" dashed="true" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="3000" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <borders>
@@ -710,15 +714,15 @@ heavily sanded roads should normally be marked as forbidden routes.</description
                     </borders>
                 </line_symbol>
             </symbol>
-            <symbol type="16" id="27" code="808" name="Prepared area">
+            <symbol type="16" id="28" code="808" name="Prepared area">
                 <description>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</description>
                 <combined_symbol parts="2">
-                    <part symbol="28"/>
                     <part symbol="29"/>
+                    <part symbol="30"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="28" code="808.0.1" name="Prepared area, fill pattern">
+            <symbol type="4" id="29" code="808.0.1" name="Prepared area, fill pattern">
                 <description>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="2">
@@ -726,11 +730,11 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
                     <pattern type="1" angle="5.49779" line_spacing="800" line_offset="0" offset_along_line="0" color="2" line_width="200"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="29" code="808.0.2" name="Prepared area, boundary">
+            <symbol type="2" id="30" code="808.0.2" name="Prepared area, boundary">
                 <description>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</description>
                 <line_symbol color="2" line_width="130" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="2" id="30" code="809" name="Forbidden route, crossable, line symbol">
+            <symbol type="2" id="31" code="809" name="Forbidden route, crossable, line symbol">
                 <description>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
@@ -772,7 +776,7 @@ that it is more clearly visible in the track network.</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="31" code="809.0.1" name="Forbidden route, crossable, single symbol">
+            <symbol type="1" id="32" code="809.0.1" name="Forbidden route, crossable, single symbol">
                 <description>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
@@ -808,7 +812,7 @@ that it is more clearly visible in the track network.</description>
                     </element>
                 </point_symbol>
             </symbol>
-            <symbol type="16" id="32" code="813" name="Public snow mobile route">
+            <symbol type="16" id="33" code="813" name="Public snow mobile route">
                 <description>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</description>
                 <combined_symbol parts="2">
                     <part private="true">
@@ -827,12 +831,12 @@ that it is more clearly visible in the track network.</description>
                     </part>
                 </combined_symbol>
             </symbol>
-            <symbol type="2" id="33" code="814" name="Forbidden route, forbidden to cross">
+            <symbol type="2" id="34" code="814" name="Forbidden route, forbidden to cross">
                 <description>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
 A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</description>
                 <line_symbol color="0" line_width="499" minimum_length="2800" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
-            <symbol type="1" id="34" code="999" name="OpenOrienteering Logo">
+            <symbol type="1" id="35" code="999" name="OpenOrienteering Logo">
                 <description>The OpenOrienteering Logo.</description>
                 <point_symbol inner_radius="250" inner_color="-1" outer_width="0" outer_color="-1" elements="30">
                     <element>
