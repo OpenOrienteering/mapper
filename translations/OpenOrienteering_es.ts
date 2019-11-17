@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo grabar el archivo: %1</translation>
     </message>
 </context>
 <context>
@@ -60,7 +60,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">¡Archivos OCD de versión %1 no están soportados!</translation>
+        <translation>¡Los archivos OCD de la versión %1 no están soportados!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
@@ -71,28 +71,28 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Algunas coordenadas permanecen fuera del área de dibujo OCAD 8. Puede que no sean alcanzables en OCAD.</translation>
+        <translation>Algunas coordenadas permanecen fuera del área de dibujo OCAD 8. Puede que no sean utilizables en OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>La georeferenciación no se puede salvar en versión 8 de OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>El mapa contiene más de 24 colores directos, lo que no está soportado por OCAD versión 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>El mapa contiene más de 256 colores, lo que no está soportado por OCAD versión 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Color directo no válido.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
@@ -102,12 +102,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Imposible exportar plantilla: el tipo de archivo &quot;%1&quot; no está soportado todavía</translation>
+        <translation>Imposible exportar plantilla: el tipo de archivo de &quot;%1&quot; no está soportado todavía</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Texto truncado en &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -456,7 +456,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -690,7 +690,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>

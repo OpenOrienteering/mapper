@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -69,6 +69,11 @@ using namespace OpenOrienteering;
 namespace
 {
 
+const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
+  QString::fromLatin1("ISOM2000;ISOM2017")
+  .split(QLatin1Char(';'));
+
+const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
 const auto Obsolete = QString::fromLatin1("obsolete");       // clazy:exclude=non-pod-global-static
 const auto NeedsReview = QString::fromLatin1("unfinished");  // clazy:exclude=non-pod-global-static
 
@@ -84,9 +89,37 @@ void addSource(TranslationEntries& entries, const QString& context, const QStrin
 		return entry.context == context && entry.comment == comment;
 	});
 	QVERIFY(found == end(entries));
-	entries.push_back({context, source, comment, {} });
-	// n occurrences of ';' means n+1 translations, plus translation template -> n+2
-	entries.back().translations.reserve(std::size_t(map_symbol_translations.count(';')) + 2);
+	entries.push_back({context, source, comment});
+}
+
+void processTranslation(const Map& map, TranslationEntries& translation_entries)
+{
+	auto const id = map.symbolSetId();
+	
+	auto num_colors = map.getNumColors();
+	for (int i = 0; i < num_colors; ++i)
+	{
+		auto* color = map.getColor(i);
+		auto const& source = color->getName();
+		auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
+		addSource(translation_entries, id, source, comment);
+	}
+	
+	auto num_symbols = map.getNumSymbols();
+	for (int i = 0; i < num_symbols; ++i)
+	{
+		auto symbol = map.getSymbol(i);
+		auto source = symbol->getName();
+		auto comment = QString{QLatin1String("Name of symbol ") + symbol->getNumberAsString()};
+		addSource(translation_entries, id, source, comment);
+		
+		source = symbol->getDescription();
+		comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
+		if (source.isEmpty())
+			qInfo("%s: empty", qPrintable(comment));
+		else
+			addSource(translation_entries, id, source, comment);
+	}
 }
 
 
@@ -129,7 +162,7 @@ QString findSuggestion(TranslationEntries& translation_entries, const QString& s
 #endif  // SYMBOL_SET_T_UNUSED
 
 
-TranslationEntries readTsFile(QIODevice& device, const QString& language)
+TranslationEntries readTsFile(QIODevice& device)
 {
 	auto result = TranslationEntries{};
 	
@@ -168,18 +201,18 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 							}
 							else if (xml.name() == QLatin1String("translation"))
 							{
-								auto type = xml.attributes().value(QLatin1String("type")).toString();
-								auto translation = xml.readElementText();
-								if (!translation.isEmpty())
-									entry.translations.resize(1, { language, translation, type });
+								entry.type = xml.attributes().value(QLatin1String("type")).toString();
+								entry.translation = xml.readElementText();
 							}
 							else
 							{
 								xml.skipCurrentElement();
 							}
 						}
-						if (!entry.translations.empty())
+						if (!entry.translation.isEmpty())
+						{
 							result.push_back(std::move(entry));
+						}
 					}
 					else
 					{
@@ -198,11 +231,213 @@ TranslationEntries readTsFile(QIODevice& device, const QString& language)
 	return result;
 }
 
+void writeObsoleteEntries(QXmlStreamWriter& xml, TranslationEntries& entries, const QString& context)
+{
+	for (auto& entry: entries)
+	{
+		if (entry.type.isEmpty() && entry.translation.isEmpty() && legacy_symbol_sets.contains(context))
+			continue;
+		
+		if (entry.obsolete && entry.context == context)
+		{
+			entry.type = Obsolete;
+			entry.write(xml);
+		}
+	}
+}
+
+
+namespace ISOM_2017_2
+{
+
+void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = double(source_scale) / double(target_scale);
+	map.scaleAllObjects(factor, MapCoord{});
+	
+	int symbols_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		switch (code)
+		{
+		case 602:  // Registration mark
+		case 999:  // OpenOrienteering logo
+			break;
+		default:
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+	}
+	QCOMPARE(symbols_changed, 189);
+}
+
+}  // namespace ISOM_2017_2
+
+
+namespace ISSOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	int north_lines_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		if (code == 601 && symbol->getType() == Symbol::Area)
+		{
+			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
+			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
+			{
+				switch (target_scale)
+				{
+				case 4000u:
+					pattern0.line_spacing = 37500;
+					break;
+				default:
+					QFAIL("Undefined north line spacing for this scale");
+				}
+				++north_lines_changed;
+			}
+		}
+	}
+	QCOMPARE(north_lines_changed, 2);
+}
+
+}  // namespace ISSOM
+
+
+namespace ISMTBOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+	map.scaleAllObjects(factor, MapCoord());
+	
+	int symbols_changed = 0;
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		switch (code)
+		{
+		case 602:  // Registration mark
+		case 999:  // OpenOrienteering logo
+			break;
+		default:
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+	}
+	QCOMPARE(symbols_changed, 168);
+}
+
+}  // namespace ISMTBOM
+
+
+namespace ISSkiOM
+{
+
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = (target_scale >= 15000u) ? 1.0 : 1.5;
+	map.scaleAllObjects(factor, MapCoord());
+	
+	int symbols_changed = 0;
+	int north_lines_changed = 0;
+	auto const purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
+	for (int i = 0; i < map.getNumSymbols(); ++i)
+	{
+		auto* symbol = map.getSymbol(i);
+		auto const code = symbol->getNumberComponent(0);
+		auto const& color = static_cast<const QColor&>(*symbol->guessDominantColor());
+		if (qAbs(purple - color.hueF()) > 0.1
+		    && code != 602
+		    && code != 999)
+		{
+			symbol->scale(factor);
+			++symbols_changed;
+		}
+		
+		if (code == 601 && symbol->getType() == Symbol::Area)
+		{
+			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
+			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
+			{
+				switch (target_scale)
+				{
+				case 5000u:
+				case 10000u:
+					pattern0.line_spacing = 40000;
+					break;
+				default:
+					QFAIL("Undefined north line spacing for this scale");
+				}
+				++north_lines_changed;
+			}
+		}
+	}
+	QCOMPARE(symbols_changed, 152);
+	QCOMPARE(north_lines_changed, 2);
+}
+
+}  // namespace ISSkiOM
+
+
+namespace Course_Design
+{
+
+MapView* makeView(Map& map, unsigned int target_scale)
+{
+	[&map]() { QCOMPARE(map.getNumTemplates(), 1); } ();
+	auto* view = new MapView { &map };
+	view->setGridVisible(true);
+	if (target_scale == 10000)
+		view->setTemplateVisibility(map.getTemplate(0), { 1, true });
+	else
+		map.deleteTemplate(0);
+	return view;
+}
+
+void resetPrinterConfig(Map& map)
+{
+	auto printer_config = map.printerConfig();
+	printer_config.options.show_templates = true;
+	printer_config.single_page_print_area = true;
+	printer_config.center_print_area = true;
+	printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
+	printer_config.page_format.page_size = QPageSize::A4; 
+	printer_config.print_area = printer_config.page_format.page_rect;
+	map.setPrinterConfig(printer_config);
+}
+
+void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
+{
+	map.setScaleDenominator(target_scale);
+	
+	auto const factor = double(source_scale) / double(target_scale);
+	map.scaleAllObjects(factor, MapCoord());
+}
+
+}  // namespace Course_Design
+
+
 }  // namespace
 
 
 
-void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString& language)
+void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml) const
 {
 	if (source.isEmpty())
 	{
@@ -214,18 +449,9 @@ void SymbolSetTool::TranslationEntry::write(QXmlStreamWriter& xml, const QString
 	xml.writeTextElement(QLatin1String("source"), source);
 	xml.writeTextElement(QLatin1String("comment"), comment);
 	xml.writeStartElement(QLatin1String("translation"));
-	for (const auto& translation : translations)
-	{
-		if (translation.language == language)
-		{
-			if (!translation.type.isEmpty())
-			{
-				xml.writeAttribute(QLatin1String("type"), translation.type);
-			}
-			xml.writeCharacters(translation.translation);		
-			break;
-		}
-	}
+	if (!type.isEmpty())
+		xml.writeAttribute(QLatin1String("type"), type);
+	xml.writeCharacters(translation);		
 	xml.writeEndElement();  //  translation
 	xml.writeEndElement();  // message
 }
@@ -347,11 +573,13 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::addColumn<unsigned int>("source_scale");
 	QTest::addColumn<unsigned int>("target_scale");
 
-	QTest::newRow("ISOM2017 1:15000") << QString::fromLatin1("ISOM2017")  << 15000u << 15000u;
-	QTest::newRow("ISOM2017 1:10000") << QString::fromLatin1("ISOM2017")  << 15000u << 10000u;
+	QTest::newRow("ISOM 2017-2 1:15000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 15000u;
+	QTest::newRow("ISOM 2017-2 1:10000") << QString::fromLatin1("ISOM 2017-2")  << 15000u << 10000u;
 	
-	QTest::newRow("ISOM2000 1:15000") << QString::fromLatin1("ISOM2000")  << 15000u << 15000u;
-	QTest::newRow("ISOM2000 1:10000") << QString::fromLatin1("ISOM2000")  << 15000u << 10000u;
+	QTest::newRow("ISOM2017 translation-only") << QString::fromLatin1("ISOM2017") << 15000u << 15000u;
+	
+	QTest::newRow("ISOM2000 translation-only") << QString::fromLatin1("ISOM2000") << 15000u << 15000u;
+	
 	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
 	
@@ -377,22 +605,9 @@ void SymbolSetTool::processSymbolSet()
 	auto completeness  = translations_complete;
 	translations_complete = false;
 	
-	auto raw_tag = QTest::currentDataTag();
-	auto tag = QByteArray::fromRawData(raw_tag, int(qstrlen(raw_tag)));
-	
 	QFETCH(QString, name);
 	QFETCH(unsigned int, source_scale);
 	QFETCH(unsigned int, target_scale);
-	
-	auto id = name;
-	auto language = QString{};
-	if (!tag.endsWith('0'))
-	{
-		auto suffix_index = name.lastIndexOf(QLatin1Char('_'));
-		id = name.left(suffix_index);
-		language = name.mid(suffix_index + 1);
-		Q_ASSERT(language.length() == 2);
-	}
 	
 	QString source_filename = QString::fromLatin1("src/%1_%2.xmap").arg(name, QString::number(source_scale));
 	QVERIFY(symbol_set_dir.exists(source_filename));
@@ -405,7 +620,9 @@ void SymbolSetTool::processSymbolSet()
 	QCOMPARE(map.getScaleDenominator(), source_scale);
 	QCOMPARE(map.getNumClosedTemplates(), 0);
 	
-	map.setSymbolSetId(id);
+	auto id = map.symbolSetId();
+	QCOMPARE(id, name);
+	
 	map.resetPrinterConfig();
 	map.undoManager().clear();
 	for (int i = 0; i < map.getNumColors(); ++i)
@@ -436,215 +653,48 @@ void SymbolSetTool::processSymbolSet()
 		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
 	}
 	
-	auto purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
+	if (std::none_of(begin(translation_entries), end(translation_entries),
+	                 [&id](auto const& entry) { return entry.context == id; }) )
+	{
+		processTranslation(map, translation_entries);
+	}
+	
 	if (source_scale != target_scale)
 	{
-		map.setScaleDenominator(target_scale);
-		
-		if (name.startsWith(QLatin1String("ISOM2000")))
+		if (name == QStringLiteral("ISOM 2017-2"))
 		{
-			const double factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				const QColor& color = *symbol->guessDominantColor();
-				if (qAbs(purple - color.hueF()) > 0.1
-				    && code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-				
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 10000u:
-							pattern0.line_spacing = 40000;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(symbols_changed, 139);
-			QCOMPARE(north_lines_changed, 2);
-		}
-		else if (name.startsWith(QLatin1String("ISOM2017")))
-		{
-			const auto factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord{});
-			
-			int symbols_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-			}
-			QCOMPARE(symbols_changed, 184);
+			ISOM_2017_2::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISSOM")))
 		{
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 4000u:
-							pattern0.line_spacing = 37500;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(north_lines_changed, 2);
+			ISSOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
-			QCOMPARE(source_scale, 15000u);
-			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				if (code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-			}
-			QCOMPARE(symbols_changed, 168);
+			ISMTBOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISSkiOM")))
 		{
-			QCOMPARE(source_scale, 15000u);
-			const double factor = (target_scale >= 15000u) ? 1.0 : 1.5;
-			map.scaleAllObjects(factor, MapCoord());
-			
-			int symbols_changed = 0;
-			int north_lines_changed = 0;
-			for (int i = 0; i < num_symbols; ++i)
-			{
-				Symbol* symbol = map.getSymbol(i);
-				const int code = symbol->getNumberComponent(0);
-				const QColor& color = *symbol->guessDominantColor();
-				if (qAbs(purple - color.hueF()) > 0.1
-				    && code != 602
-				    && code != 999)
-				{
-					symbol->scale(factor);
-					++symbols_changed;
-				}
-				
-				if (code == 601 && symbol->getType() == Symbol::Area)
-				{
-					AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-					if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-					{
-						switch (target_scale)
-						{
-						case 5000u:
-						case 10000u:
-							pattern0.line_spacing = 40000;
-							break;
-						default:
-							QFAIL("Undefined north line spacing for this scale");
-						}
-						++north_lines_changed;
-					}
-				}
-			}
-			QCOMPARE(symbols_changed, 152);
-			QCOMPARE(north_lines_changed, 2);
+			ISSkiOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("Course_Design")))
 		{
-			const double factor = double(source_scale) / double(target_scale);
-			map.scaleAllObjects(factor, MapCoord());
+			Course_Design::scale(map, source_scale, target_scale);
 		}
 		else
 		{
 			QFAIL("Symbol set not recognized");
 		}
 	}
-	else
-	{
-		// Not scaled: Collect translation source strings.
-		auto num_colors = map.getNumColors();
-		for (int i = 0; i < num_colors; ++i)
-		{
-			auto color = map.getColor(i);
-			auto source = color->getName();
-			auto comment = QString{QLatin1String("Color ") + QString::number(color->getPriority())};
-			addSource(translation_entries, id, source, comment);
-		}
-		
-		for (int i = 0; i < num_symbols; ++i)
-		{
-			auto symbol = map.getSymbol(i);
-			auto source = symbol->getName();
-			auto comment = QString{QLatin1String("Name of symbol ") + symbol->getNumberAsString()};
-			addSource(translation_entries, id, source, comment);
-			
-			source = symbol->getDescription();
-			comment = QString{QLatin1String("Description of symbol ") + symbol->getNumberAsString()};
-			if (source.isEmpty())
-				qInfo("%s: empty", qPrintable(comment));
-			else
-				addSource(translation_entries, id, source, comment);
-		}
-	}
+	
+	if (legacy_symbol_sets.contains(id))
+		return;
 	
 	MapView* new_view = nullptr;
 	if (name.startsWith(QLatin1String("Course_Design")))
 	{
-		QCOMPARE(map.getNumTemplates(), 1);
-		new_view = new MapView { &map };
-		new_view->setGridVisible(true);
-		if (target_scale == 10000)
-			new_view->setTemplateVisibility(map.getTemplate(0), { 1, true });
-		else
-			map.deleteTemplate(0);
-		
-		auto printer_config = map.printerConfig();
-		printer_config.options.show_templates = true;
-		printer_config.single_page_print_area = true;
-		printer_config.center_print_area = true;
-		printer_config.page_format = { { 200.0, 287.0 }, 5.0 };
-		printer_config.page_format.page_size = QPageSize::A4; 
-		printer_config.print_area = printer_config.page_format.page_rect;
-		map.setPrinterConfig(printer_config);
+		new_view = Course_Design::makeView(map, target_scale);
+		Course_Design::resetPrinterConfig(map);
 	}
 	else
 	{
@@ -669,7 +719,7 @@ void SymbolSetTool::processSymbolSetTranslations_data()
 #endif
 }
 	
-void SymbolSetTool::processSymbolSetTranslations()
+void SymbolSetTool::processSymbolSetTranslations() const
 {
 	auto translation_filename = QString::fromLatin1(QTest::currentDataTag());
 	auto language = translation_filename.mid(int(qstrlen("map_symbols_")));
@@ -696,7 +746,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 	}
 	
 	QBuffer buffer(&existing_data);
-	auto translations_from_ts = readTsFile(buffer, language);
+	auto translations_from_ts = readTsFile(buffer);
 	QVERIFY(!buffer.isOpen());
 	
 	buffer.setBuffer(&new_data);
@@ -711,75 +761,84 @@ void SymbolSetTool::processSymbolSetTranslations()
 		xml.writeAttribute(QLatin1String("language"), language);
 	
 	auto context = QString{};
-	for (auto& entry : translation_entries)
+	for (auto it = begin(translation_entries), last = end(translation_entries); it != last; ++it)
 	{
+		auto entry = TranslationEntry{*it};  // copy, don't touch original entry.
+		entry.type = NeedsReview;
+		entry.obsolete = false;
+		
 		if (context != entry.context)
 		{
 			if (!context.isEmpty())
+			{
+				writeObsoleteEntries(xml, translations_from_ts, context);
 				xml.writeEndElement(); // context
+			}
 			xml.writeStartElement(QLatin1String("context"));
 			xml.writeTextElement(QLatin1String("name"), entry.context);
 			context = entry.context;
 		}
 		
-		auto item = std::find_if(begin(entry.translations), end(entry.translations), [&language](auto& translation) {
-			return translation.language == language;
-		});
-		if (item == end(entry.translations))
-		{
-			entry.translations.push_back({language, {}, NeedsReview});
-			item = --entry.translations.end();
-		}
-		auto& translation = item->translation;
-		auto& type = item->type;
-		
-		
 		// First attempt: exact context + source + comment (symbol number!) match.
 		auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-			return entry.context == current.context && entry.source == current.source && entry.comment == current.comment;
+			return !current.translation.isEmpty()
+			       && entry.context == current.context
+			       && entry.source == current.source
+			       && entry.comment == current.comment;
 		});
-		if (found == end(translations_from_ts))
+		if (found != end(translations_from_ts))
+		{
+			found->obsolete = false;
+		}
+		else
 		{
 			// Second attempt: exact context + source match.
 			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.source == current.source;
+				return !current.translation.isEmpty()
+				       && entry.context == current.context
+				       && entry.source == current.source;
 			});
 		}
 		if (found == end(translations_from_ts))
 		{
 			// Third attempt: exact source match.
 			found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.source == current.source;
+				return !current.translation.isEmpty()
+				       && entry.source == current.source;
 			});
 		}
 		if (found != end(translations_from_ts))
 		{
 			// If any of the previous attempts to find a translation succeeded,
 			// the translation is chosen and marked as not being obsolete.
-			auto match = found->translations.front();
-			translation = match.translation;
-			if (match.type != Obsolete)
-				type = match.type;
+			entry.translation = found->translation;
+			if (found->type != Obsolete && found->type != Vanished)
+				entry.type = found->type;
 		}
 		else
 		{
 			// Find an existing translation even with changed source,
 			// using the comment (symbol number!) instead of source.
 			auto found = std::find_if(begin(translations_from_ts), end(translations_from_ts), [&entry](auto& current) {
-				return entry.context == current.context && entry.comment == current.comment;
+				return !current.translation.isEmpty()
+				       && entry.context == current.context
+				       && entry.comment == current.comment;
 			});
 			if (found != end(translations_from_ts))
 			{
-				auto match = found->translations.front();
-				translation = match.translation;
+				entry.translation = found->translation;
 			}
-			// Anyway, this translation needs review.
-			type = NeedsReview;
 		}
-		entry.write(xml, language);
+		
+		if (!entry.translation.isEmpty()
+		    || !legacy_symbol_sets.contains(context))
+		{
+			entry.write(xml);
+		}
 	}
 	if (!context.isEmpty())
 	{
+		writeObsoleteEntries(xml, translations_from_ts, context);
 		xml.writeEndElement();  // context
 	}
 	
@@ -788,7 +847,7 @@ void SymbolSetTool::processSymbolSetTranslations()
 	buffer.close();
 	
 	// Weblate uses lower-case "utf-8".
-	static auto lower_case_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+	static auto lower_case_xml = R"(<?xml version="1.0" encoding="utf-8"?>)";
 	if (!new_data.startsWith(lower_case_xml))
 	{
 		auto pos = new_data.indexOf('>');

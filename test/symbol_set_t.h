@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2017 Kai Pastor
+ *    Copyright 2014-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,19 +54,14 @@ Q_OBJECT
 public:	
 	struct TranslationEntry
 	{
-		struct Translation
-		{
-			QString language;
-			QString translation;
-			QString type;
-		};
-
 		QString context;
 		QString source;
 		QString comment;
-		std::vector<Translation> translations;
+		QString translation = {};
+		QString type = {};
+		bool obsolete = true;
 		
-		void write(QXmlStreamWriter& xml, const QString& language);
+		void write(QXmlStreamWriter& xml) const;
 	};
 	
 private slots:
@@ -74,7 +69,7 @@ private slots:
 	void processSymbolSet_data();
 	void processSymbolSet();
 	void processSymbolSetTranslations_data();
-	void processSymbolSetTranslations();
+	void processSymbolSetTranslations() const;
 	void processExamples_data();
 	void processExamples();
 	void processTestData_data();
