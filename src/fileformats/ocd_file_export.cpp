@@ -1256,6 +1256,8 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 		ocd_area_common.fill_color = convertColor(area_symbol->getColor());
 	}
 	
+	ocd_area_common.structure_draw_V12 = 0;
+	
 	quint8 flags = 0;
 	// Hatch
 	// ocd_area_common.hatch_mode = Ocd::HatchNone; // 0
@@ -1333,7 +1335,28 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area_symbol->getPlainTextName()));
 			}
 		}
+		
+		if (ocd_version >= 12
+		    && ocd_area_common.structure_mode != Ocd::StructureNone)
+		{
+			switch (pattern.clipping())
+			{
+			case AreaSymbol::FillPattern::NoClippingIfCompletelyInside:
+				ocd_area_common.structure_draw_V12 = 1;
+				break;
+			case AreaSymbol::FillPattern::NoClippingIfCenterInside:
+				ocd_area_common.structure_draw_V12 = 2;
+				break;
+			case AreaSymbol::FillPattern::NoClippingIfPartiallyInside:
+				ocd_area_common.structure_draw_V12 = 3;
+				break;
+			default:
+				// no change
+				break;
+			}
+		}
 	}
+	
 	return flags;
 }
 
