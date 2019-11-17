@@ -722,7 +722,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
                     <part symbol="30"/>
                 </combined_symbol>
             </symbol>
-            <symbol type="4" id="29" code="808.0.1" name="Prepared area, fill pattern">
+            <symbol type="4" id="29" code="808.1" name="Prepared area, fill pattern">
                 <description>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</description>
                 <area_symbol inner_color="-1" min_area="0" patterns="2">
@@ -730,7 +730,7 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
                     <pattern type="1" angle="5.49779" line_spacing="800" line_offset="0" offset_along_line="0" color="2" line_width="200"/>
                 </area_symbol>
             </symbol>
-            <symbol type="2" id="30" code="808.0.2" name="Prepared area, boundary">
+            <symbol type="2" id="30" code="808.2" name="Prepared area, boundary">
                 <description>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</description>
                 <line_symbol color="2" line_width="130" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
             </symbol>
@@ -776,7 +776,7 @@ that it is more clearly visible in the track network.</description>
                     </mid_symbol>
                 </line_symbol>
             </symbol>
-            <symbol type="1" id="32" code="809.0.1" name="Forbidden route, crossable, single symbol">
+            <symbol type="1" id="32" code="809.1" name="Forbidden route, crossable, single symbol">
                 <description>Linear features marked with the forbidden route symbol can be crossed but not followed.
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so

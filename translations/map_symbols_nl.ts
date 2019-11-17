@@ -10173,23 +10173,23 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     </message>
     <message>
         <source>Prepared area, fill pattern</source>
-        <comment>Name of symbol 808.0.1</comment>
+        <comment>Name of symbol 808.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.1</comment>
+        <comment>Description of symbol 808.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Prepared area, boundary</source>
-        <comment>Name of symbol 808.0.2</comment>
+        <comment>Name of symbol 808.2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.2</comment>
+        <comment>Description of symbol 808.2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10207,7 +10207,7 @@ that it is more clearly visible in the track network.</source>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
-        <comment>Name of symbol 809.0.1</comment>
+        <comment>Name of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -10215,7 +10215,7 @@ that it is more clearly visible in the track network.</source>
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809.0.1</comment>
+        <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>

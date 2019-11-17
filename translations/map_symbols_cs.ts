@@ -13989,23 +13989,23 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
     </message>
     <message>
         <source>Prepared area, fill pattern</source>
-        <comment>Name of symbol 808.0.1</comment>
+        <comment>Name of symbol 808.1</comment>
         <translation>Upravená plocha, výplň</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.1</comment>
+        <comment>Description of symbol 808.1</comment>
         <translation>Slalomové svahy (svahy pro alpské lyžování) a ostatní plochy, které jsou široké, pevné a umožňují lyžování. Hranice upravené plochy je zobrazena plnou zelenou čarou (0,13 mm) tak, že každá hrana může být jasně čitelná.</translation>
     </message>
     <message>
         <source>Prepared area, boundary</source>
-        <comment>Name of symbol 808.0.2</comment>
+        <comment>Name of symbol 808.2</comment>
         <translation>Upravená plocha, hranice</translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.2</comment>
+        <comment>Description of symbol 808.2</comment>
         <translation>Hranice upravené plochy jsou zobrazeny plnou zelenou čárou (0.13 mm) tak, že každý okraj je jasně čitelný.</translation>
     </message>
     <message>
@@ -14023,7 +14023,7 @@ that it is more clearly visible in the track network.</source>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
-        <comment>Name of symbol 809.0.1</comment>
+        <comment>Name of symbol 809.1</comment>
         <translation>Zakázaná trasa, překonatelná, samotná značka</translation>
     </message>
     <message>
@@ -14031,7 +14031,7 @@ that it is more clearly visible in the track network.</source>
 At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809.0.1</comment>
+        <comment>Description of symbol 809.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -14064,6 +14064,32 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
         <translation>Logo OpenOrienteering.</translation>
+    </message>
+    <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation type="obsolete">Upravená plocha, výplň</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.1</comment>
+        <translation type="obsolete">Slalomové svahy (svahy pro alpské lyžování) a ostatní plochy, které jsou široké, pevné a umožňují lyžování. Hranice upravené plochy je zobrazena plnou zelenou čarou (0,13 mm) tak, že každá hrana může být jasně čitelná.</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 808.0.2</comment>
+        <translation type="obsolete">Upravená plocha, hranice</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.2</comment>
+        <translation type="obsolete">Hranice upravené plochy jsou zobrazeny plnou zelenou čárou (0.13 mm) tak, že každý okraj je jasně čitelný.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation type="obsolete">Zakázaná trasa, překonatelná, samotná značka</translation>
     </message>
 </context>
 <context>
