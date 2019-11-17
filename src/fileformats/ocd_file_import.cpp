@@ -1659,6 +1659,25 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 			pattern.offset_along_line = pattern.point_distance / 2;
 			pattern.point = duplicate(*pattern.point).release();
 		}
+		
+		if (ocd_version >= 12)
+		{
+			switch (ocd_symbol.structure_draw_V12)
+			{
+			case 0:
+				pattern.setClipping(AreaSymbol::FillPattern::Default);
+				break;
+			case 1:
+				pattern.setClipping(AreaSymbol::FillPattern::NoClippingIfCompletelyInside);
+				break;
+			case 2:
+				pattern.setClipping(AreaSymbol::FillPattern::NoClippingIfCenterInside);
+				break;
+			case 3:
+				pattern.setClipping(AreaSymbol::FillPattern::NoClippingIfPartiallyInside);
+				break;
+			}
+		}
 		symbol->patterns.push_back(pattern);
 	}
 }
