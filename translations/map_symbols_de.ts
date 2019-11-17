@@ -10582,19 +10582,9 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
 <context>
     <name>ISSkiOM</name>
     <message>
-        <source>Opaque Purple</source>
-        <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Purple</source>
         <comment>Color 1</comment>
         <translation>Violett</translation>
-    </message>
-    <message>
-        <source>Upper Green</source>
-        <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Black</source>
@@ -10710,11 +10700,6 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
         <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Der normale Abstand zwischen Normalkurven beträgt 5 m. Die kleinste Kurve in einer Höhenlinie hat einen Abstand von 0,25 mm von Linienmitte zu Linienmitte.</translation>
-    </message>
-    <message>
-        <source>Contour (narrow)</source>
-        <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -11017,29 +11002,9 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
         <translation type="unfinished">Unpassierbares Gewässer (verboten)</translation>
     </message>
     <message>
-        <source>When a body of water is not covered with ice or is otherwise dangerous to cross, the colour of the area shall be blue 100 %. That means also that the area is forbidden to cross.</source>
-        <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uncrossable waterbody (forbidden to cross), bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.1</comment>
         <translation type="unfinished">Eine schwarze Umrisslinie gibt an, dass das Objekt nicht überquert werden kann.</translation>
-    </message>
-    <message>
-        <source>Uncrossable waterbody (forbidden to cross), with bank line</source>
-        <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crossable waterbody</source>
-        <comment>Name of symbol 301.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When a body of water can be safely crossed, the colour shall be blue 50 %, so that the track symbols drawn can be read more clearly.
@@ -11545,184 +11510,6 @@ Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
         <translation type="unfinished">Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
     </message>
     <message>
-        <source>Very wide track &gt; 3m</source>
-        <comment>Name of symbol 801</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
-        <comment>Description of symbol 801</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Wide track 1.5-3.0 m</source>
-        <comment>Name of symbol 802</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A fast, skateable track made by a snow mobile, width usually 2-3 m. Skateable tracks
-rougher and softer than the wide skateable tracks in the area.</source>
-        <comment>Description of symbol 802</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Track 0.8-1.2 m</source>
-        <comment>Name of symbol 803</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A good track made by a snow mobile, usually 1-1.2 m wide. In steep slopes, tracks may
-be made wider to reduce widening during competition.</source>
-        <comment>Description of symbol 803</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Track, slow 0.8-1 m</source>
-        <comment>Name of symbol 804</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
-slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
-technique for slowing and stopping.
-
-In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
-        <comment>Description of symbol 804</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Road covered with snow</source>
-        <comment>Name of symbol 805</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
-        <comment>Description of symbol 805</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sanded or snowless road, line symbol</source>
-        <comment>Name of symbol 806</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
-        <comment>Description of symbol 806</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sanded or snowless road, single symbol</source>
-        <comment>Name of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
-marks across the road symbol show that the road is not skiable. Snowless roads and
-heavily sanded roads should normally be marked as forbidden routes.</source>
-        <comment>Description of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unploughed road</source>
-        <comment>Name of symbol 807</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A road which is not opened for traffic, no skiable track.</source>
-        <comment>Description of symbol 807</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prepared area</source>
-        <comment>Name of symbol 808</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
-The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prepared area, fill pattern</source>
-        <comment>Name of symbol 808.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
-The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 808.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prepared area, boundary</source>
-        <comment>Name of symbol 801.0.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 801.0.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Public snow mobile route</source>
-        <comment>Name of symbol 813</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
-        <comment>Description of symbol 813</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden route, forbidden to cross</source>
-        <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
-        <comment>Description of symbol 814</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden route, crossable, line symbol</source>
-        <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
-At least two symbols must be used to mark a forbidden route.
-The symbol 711 Forbidden route is drawn in a bigger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden route, crossable, single symbol</source>
-        <comment>Name of symbol 809.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
-At least two symbols must be used to mark a forbidden route.
-The symbol 711 Forbidden route is drawn in a bigger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment deposit</source>
-        <comment>Name of symbol 812</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A deposit for spare equipment in the terrain.</source>
-        <comment>Description of symbol 812</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
         <translation type="unfinished">Start</translation>
@@ -11741,16 +11528,6 @@ that it is more clearly visible in the track network.</source>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
         <translation type="unfinished">Die Kontrollposten werden mit Kreisen dargestellt. Der Mittelpunkt des Kreises gibt die genaue Lage des Objektes an. Teile der Kreise können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
-    </message>
-    <message>
-        <source>Control point and focus point</source>
-        <comment>Name of symbol 810</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. In ski orienteering, a control is preferably placed in one track only, not in crossings or junctions. A focus point helps specify the exact track where a control is situated.</source>
-        <comment>Description of symbol 810</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Control number</source>

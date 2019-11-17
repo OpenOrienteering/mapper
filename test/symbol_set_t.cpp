@@ -72,7 +72,7 @@ namespace
 {
 
 const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
-  QString::fromLatin1("ISOM2000;ISOM2017")
+  QString::fromLatin1("ISOM2000;ISOM2017;ISSkiOM")
   .split(QLatin1Char(';'));
 
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
@@ -551,57 +551,6 @@ void scaleSymbols(Map& map, unsigned int /*source_scale*/, unsigned int target_s
 }  // namespace ISSkiOM_2019
 
 
-namespace ISSkiOM
-{
-
-void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
-{
-	map.setScaleDenominator(target_scale);
-	
-	auto const factor = (target_scale >= 15000u) ? 1.0 : 1.5;
-	map.scaleAllObjects(factor, MapCoord());
-	
-	int symbols_changed = 0;
-	int north_lines_changed = 0;
-	auto const purple = QColor::fromCmykF(0, 1, 0, 0).hueF();
-	for (int i = 0; i < map.getNumSymbols(); ++i)
-	{
-		auto* symbol = map.getSymbol(i);
-		auto const code = symbol->getNumberComponent(0);
-		auto const& color = static_cast<const QColor&>(*symbol->guessDominantColor());
-		if (qAbs(purple - color.hueF()) > 0.1
-		    && code != 602
-		    && code != 999)
-		{
-			symbol->scale(factor);
-			++symbols_changed;
-		}
-		
-		if (code == 601 && symbol->getType() == Symbol::Area)
-		{
-			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-			{
-				switch (target_scale)
-				{
-				case 5000u:
-				case 10000u:
-					pattern0.line_spacing = 40000;
-					break;
-				default:
-					QFAIL("Undefined north line spacing for this scale");
-				}
-				++north_lines_changed;
-			}
-		}
-	}
-	QCOMPARE(symbols_changed, 152);
-	QCOMPARE(north_lines_changed, 2);
-}
-
-}  // namespace ISSkiOM
-
-
 namespace Course_Design
 {
 
@@ -796,9 +745,7 @@ void SymbolSetTool::processSymbolSet_data()
 	QTest::newRow("ISMTBOM 1:7500")  << QString::fromLatin1("ISMTBOM") << 15000u <<  7500u;
 	QTest::newRow("ISMTBOM 1:5000")  << QString::fromLatin1("ISMTBOM") << 15000u <<  5000u;
 	
-	QTest::newRow("ISSkiOM 1:15000") << QString::fromLatin1("ISSkiOM") << 15000u << 15000u;
-	QTest::newRow("ISSkiOM 1:10000") << QString::fromLatin1("ISSkiOM") << 15000u << 10000u;
-	QTest::newRow("ISSkiOM 1:5000")  << QString::fromLatin1("ISSkiOM") << 15000u <<  5000u;
+	QTest::newRow("ISSkiOM translation-only") << QString::fromLatin1("ISSkiOM") << 15000u << 15000u;
 	
 	QTest::newRow("ISSkiOM 2019 1:15000") << QString::fromLatin1("ISSkiOM 2019") << 15000u << 15000u;
 	QTest::newRow("ISSkiOM 2019 1:12500") << QString::fromLatin1("ISSkiOM 2019") << 15000u << 12500u;
@@ -894,10 +841,6 @@ void SymbolSetTool::processSymbolSet()
 		else if (name == QLatin1String("ISSkiOM 2019"))
 		{
 			ISSkiOM_2019::scaleSymbols(map, source_scale, target_scale);
-		}
-		else if (name == QLatin1String("ISSkiOM"))
-		{
-			ISSkiOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("Course_Design")))
 		{

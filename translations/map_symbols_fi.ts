@@ -9945,37 +9945,14 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation>Ylipääsemätön vesialue (kielletty ylittää)</translation>
     </message>
     <message>
-        <source>When a body of water is not covered with ice or is otherwise dangerous to cross, the colour of the area shall be blue 100 %. That means also that the area is forbidden to cross.</source>
-        <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uncrossable waterbody (forbidden to cross), bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.1</comment>
         <translation type="unfinished">Rantaviiva esittää ylipääsemättömyyttä. Kahluupaikan kohdalta rantaviiva jätetään pois.</translation>
     </message>
     <message>
-        <source>Uncrossable waterbody (forbidden to cross), with bank line</source>
-        <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Crossable waterbody</source>
         <comment>Name of symbol 301.0.1</comment>
         <translation>Ylitettävä vesialue</translation>
-    </message>
-    <message>
-        <source>When a body of water can be safely crossed, the colour shall be blue 50 %, so that the track symbols drawn can be read more clearly.
-The bank line of the crossable waterbody is not presented in ski orienteering map.
-
-The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank lines of the ISOM 301 Lake symbol and of the 301.2 ISSkiOM Uncrossable Waterbody symbol.</source>
-        <comment>Description of symbol 301.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -9996,18 +9973,6 @@ The ISSkiOM symbol number is 301.1. Mapper uses this number already for the bank
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
         <translation type="unfinished">Ylitettävä, maastossa selvästi havaittava puro tai oja , leveys alle 2 m.</translation>
-    </message>
-    <message>
-        <source>Marsh (in ski orienteering map)</source>
-        <comment>Name of symbol 310.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A crossable marsh, usually with a distinct edge. Symbol 403 Rough open land shall be used with the symbol, if there are no trees or bushes.
-
-The ISSkiOM symbol number is 310.1. Mapper uses this number already for the minimum-sized 310 Marsh symbol in the ISOM symbol set.</source>
-        <comment>Description of symbol 310.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Open land</source>
@@ -10538,11 +10503,6 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
         <translation>Kilpailun aikana hiekoituksen tai lumettomuuden takia hiihtokelvoton tie.</translation>
     </message>
     <message>
-        <source>Sanded or snowless road, single symbol</source>
-        <comment>Name of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
@@ -10571,25 +10531,10 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
     </message>
     <message>
-        <source>Prepared area, fill pattern</source>
-        <comment>Name of symbol 808.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.0.1</comment>
         <translation>Laajat, hiihtokelpoiset ja kovapintaiset alueet, esim. laskettelurinteet. Alueen reunat selvennetään reunaviivalla, jotta alueen muodot ovat selkeästi luettavissa kartasta.</translation>
-    </message>
-    <message>
-        <source>Prepared area, boundary</source>
-        <comment>Name of symbol 801.0.2</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
-        <comment>Description of symbol 801.0.2</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
@@ -10600,42 +10545,6 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
         <translation>Yleisessä käytössä oleva maastoon merkitty reitti moottorikelkkailua varten. Reitti voi olla käytössä hiihtosuunnistuskilpailun aikana. Tällaiset reitit ovat usein pinnaltaan epätasaisia ja niiden leveys ja laatu vaihtelevat. Järjestäjien pitää ilmoittaa kilpailuohjeissa reittien laatu (esim. valokuvilla) ja varmistaa kilpailijoiden turvallisuus sulkemalla reitti väliaikaisesti, miehittämällä reitti tai muulla tavoin ilmoittamalla jokaiselle moottorikelkkailijalle mahdollisuudesta kohdata hiihtosuunnistajia reitillä. Jos kilpailijoiden turvallisuutta ei voida taata, IOF:n valvojan pitää merkitä reitti kielletyksi reitiksi ja varmistaa turvalliset ylityspaikat.</translation>
-    </message>
-    <message>
-        <source>Forbidden route, forbidden to cross</source>
-        <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
-        <comment>Description of symbol 814</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden route, crossable, line symbol</source>
-        <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
-At least two symbols must be used to mark a forbidden route.
-The symbol 711 Forbidden route is drawn in a bigger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forbidden route, crossable, single symbol</source>
-        <comment>Name of symbol 809.0.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
-At least two symbols must be used to mark a forbidden route.
-The symbol 711 Forbidden route is drawn in a bigger size in a ski orienteering map so
-that it is more clearly visible in the track network.</source>
-        <comment>Description of symbol 809.0.1</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipment deposit</source>
