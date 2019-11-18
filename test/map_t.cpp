@@ -294,7 +294,7 @@ void MapTest::hasAlpha()
 
 void MapTest::crtFileTest()
 {
-	auto original =  symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"));
+	auto original =  symbol_set_dir.absoluteFilePath(QString::fromLatin1("src/ISOM2000_15000.xmap"));
 	Map original_map;
 	QVERIFY(original_map.loadFrom(original));
 	QVERIFY(original_map.getNumSymbols() > 100);
@@ -352,12 +352,12 @@ void MapTest::matchQuerySymbolNumberTest_data()
 	QTest::addColumn<int>("matching");
 
 	QTest::newRow("ISOM>ISMTBOM")
-	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"))
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("src/ISOM2000_15000.xmap"))
 	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISMTBOM_15000.omap"))
 	        << 157; // Our ISMTBOM set has a (maybe hidden) match for every ISOM symbol.
 	
 	QTest::newRow("ISOM>ISSOM")
-	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("15000/ISOM2000_15000.omap"))
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("src/ISOM2000_15000.xmap"))
 	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("5000/ISSOM_5000.omap"))
 	        << 104; // Many ISOM symbol do not have a same-number counterpart in ISSOM.
 	

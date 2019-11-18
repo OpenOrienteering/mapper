@@ -58,9 +58,10 @@ QByteArray GdalTemplate::RasterGeoreferencing::toProjSpec(const QByteArray& gdal
 	auto const spatial_reference = OSRNewSpatialReference(gdal_spec);
 	char* proj_spec_cstring;
 	auto const ogr_error = OSRExportToProj4(spatial_reference, &proj_spec_cstring);
-	auto const result = QByteArray(ogr_error == OGRERR_NONE ? proj_spec_cstring : nullptr);
+	auto result = QByteArray(ogr_error == OGRERR_NONE ? proj_spec_cstring : nullptr);
 	CPLFree(proj_spec_cstring);
 	OSRDestroySpatialReference(spatial_reference);
+	result.replace("+k=0 ", "+k=1 ");  // https://github.com/OSGeo/PROJ/issues/1700
 	return result;
 }
 

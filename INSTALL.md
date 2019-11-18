@@ -62,9 +62,17 @@ libcups2-dev \
 libgdal-dev \
 libpolyclipping-dev \
 libproj-dev \
+libqt5sensors5-dev \
+libqt5serialport5-dev \
+libqt5sql5-sqlite \
 qt5-default \
-qtbase5-dev qtbase5-private-dev qtbase5-dev-tools \
-qttools5-dev qttools5-dev-tools libqt5sql5-sqlite \
+qt5-image-formats-plugins \
+qtbase5-dev \
+qtbase5-dev-tools \
+qtbase5-private-dev \
+qtpositioning5-dev \
+qttools5-dev \
+qttools5-dev-tools \
 zlib1g-dev
 ```
 

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,12 +23,12 @@
 #define OPENORIENTEERING_TEMPLATE_H
 
 #include <memory>
+#include <vector>
 
 #include <QtGlobal>
 #include <QObject>
 #include <QPointF>
 #include <QString>
-#include <vector>
 
 #include "core/map_coord.h"
 #include "util/matrix.h"
@@ -39,6 +39,7 @@ class QColor;
 class QDir;
 class QFileInfo;
 class QPainter;
+class QPointF;
 class QRectF;
 class QTransform;
 class QWidget;
@@ -84,24 +85,6 @@ struct TemplateTransform
 	double template_scale_y = 1.0;
 	/// Adjustment to scaling if anisotropy is askew.
 	double template_shear = 0.0;
-	
-	/**
-	 * Explicit implementation of aggregate initialization.
-	 * 
-	 * In C++11, there is no aggregate initialization when default initalizers are present.
-	 * \todo Remove when we can use C++14 everywhere.
-	 */
-	TemplateTransform(qint32 x, qint32 y, double rotation, double scale_x, double scale_y, double shear = 0.0) noexcept
-	: template_x{x}, template_y{y}, template_rotation{rotation}, template_scale_x{scale_x}, template_scale_y{scale_y}, template_shear{shear}
-	{}
-	
-	/**
-	 * Explicitly defaulted default constructor.
-	 * 
-	 * This is needed because of the other explicit constructor.
-	 * \todo Remove when we can use C++14 everywhere.
-	 */
-	TemplateTransform() noexcept = default;
 	
 	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
 	
@@ -350,7 +333,7 @@ public:
 	 * The scale is the combined view & template scale. It can be used to give
 	 * a minimum size to elements.
 	 */
-    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const = 0;
+    virtual void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const = 0;
 	
 	
 	/** 
@@ -396,7 +379,7 @@ public:
 	 * 
 	 * \todo Rewrite using a range of MapCoordF.
 	 */
-	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox);
+	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox);
 	
 	/** 
 	 * Triggers an undo or redo action for template freehand drawing.
@@ -669,7 +652,7 @@ protected:
 	 * Draws the polyline given by the points onto the template.
 	 * Required if canBeDrawnOnto() returns true.
 	 */
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width);
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width);
 	
 	
 	/**

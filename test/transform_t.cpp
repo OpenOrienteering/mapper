@@ -362,7 +362,8 @@ void TransformTest::testEstimateNonIsometric()
 	QCOMPARE(t.template_y, 0);
 	QCOMPARE(t.template_scale_x, 16.36);
 	QCOMPARE(t.template_scale_y, 9.64);
-	QCOMPARE(t.template_rotation, 0.0);
+	// 2.049642507e-16 on z Systems/s390x: QCOMPARE(t.template_rotation, 0.0);
+	QVERIFY(std::abs(t.template_rotation) < 0.000000001);
 	QCOMPARE(t.template_shear, 11.52);
 }
 

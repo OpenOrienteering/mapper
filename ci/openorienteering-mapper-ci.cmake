@@ -27,8 +27,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-set(Mapper_CI_GIT_REPOSITORY "mapper" CACHE STRING "Mapper (CI): Repository reference")
-set(Mapper_CI_GIT_TAG  "master" CACHE STRING "Mapper (CI): Tag or commit to checkout")
+set(Mapper_CI_SOURCE_DIR "NOTFOUND" CACHE STRING "Mapper (CI): Source code directory")
 set(Mapper_CI_VERSION_DISPLAY "ci" CACHE STRING "Mapper (CI): Version display string")
 set(Mapper_CI_APP_ID "org.openorienteering.mapper.ci" CACHE STRING "Mapper (CI): Android App ID")
 set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3rd-party licensing information")
@@ -44,6 +43,11 @@ set(patch_command PATCH_COMMAND sed -e s/autosave_t.MANUAL/autosave_t/ -i -- tes
 if(APPLE)
 	set(patch_command )
 endif()
+
+add_custom_target(openorienteering-mapper-ci-source)
+set_property(TARGET openorienteering-mapper-ci-source
+  PROPERTY SB_SOURCE_DIR "${Mapper_CI_SOURCE_DIR}"
+)
 
 superbuild_package(
   NAME           openorienteering-mapper
@@ -62,11 +66,6 @@ superbuild_package(
     zlib
     host:doxygen
     host:qttools-${Mapper_CI_QT_VERSION}
-
-  SOURCE
-    GIT_REPOSITORY ${Mapper_CI_GIT_REPOSITORY}
-    GIT_TAG        ${Mapper_CI_GIT_TAG}
-    ${patch_command}
 
   USING
     Mapper_CI_VERSION_DISPLAY
@@ -117,6 +116,7 @@ superbuild_package(
       "-DCMAKE_DISABLE_FIND_PACKAGE_ClangTidy:BOOL=TRUE"
       "-DCMAKE_DISABLE_FIND_PACKAGE_IWYU:BOOL=TRUE"
     >
+    BUILD_ALWAYS 1
     INSTALL_COMMAND
       "${CMAKE_COMMAND}" --build . --target package$<IF:$<STREQUAL:@CMAKE_GENERATOR@,Ninja>,,/fast>
   $<$<NOT:$<BOOL:@CMAKE_CROSSCOMPILING@>>:

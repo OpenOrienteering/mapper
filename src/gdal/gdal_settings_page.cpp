@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -94,10 +94,8 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	connect(parameters, &QTableWidget::cellChanged, this, &GdalSettingsPage::cellChange);
 }
 
-GdalSettingsPage::~GdalSettingsPage()
-{
-	// nothing, not inlined
-}
+GdalSettingsPage::~GdalSettingsPage() = default;
+
 
 QString GdalSettingsPage::title() const
 {

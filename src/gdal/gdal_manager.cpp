@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -68,6 +68,9 @@ public:
 	}
 	
 	GdalManagerPrivate(const GdalManagerPrivate&) = delete;
+	GdalManagerPrivate(GdalManagerPrivate&&) = delete;
+	GdalManagerPrivate& operator=(const GdalManagerPrivate&) = delete;
+	GdalManagerPrivate&& operator=(GdalManagerPrivate&&) = delete;
 	
 	void configure()
 	{
