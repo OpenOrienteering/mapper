@@ -53,6 +53,7 @@ set(Mapper_CRT_FILES
   "./ISOM2000-ISOM 2017-2.crt"
   ./ISOM2000-ISSOM.crt
   "./OSM-ISOM 2017-2.crt"
+  "./OSM-ISSkiOM 2019.crt"
   ./OSM-ISSOM.crt
 )
 
