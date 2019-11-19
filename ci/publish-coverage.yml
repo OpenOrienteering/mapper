@@ -33,11 +33,10 @@ steps:
     #
     mkdir coverage
     # Run gcovr from source dir, cf. https://github.com/gcovr/gcovr/issues/64
-    cd build/source/openorienteering-mapper-ci
     gcovr \
       --xml \
       --output $(Build.SourcesDirectory)/coverage/coverage.xml \
-      --root $(Build.SourcesDirectory)/build/source/openorienteering-mapper-ci \
+      --root . \
       --filter src/ \
       --filter test/ \
       --object-directory $(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci/Testing/CoverageInfo \

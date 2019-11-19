@@ -113,6 +113,7 @@ jobs:
     - template: build.yml
       parameters:
         cmakeArgs: >
+          -G Ninja
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - template: publish.yml
     - bash: |
@@ -142,7 +143,6 @@ jobs:
     - template: build.yml
       parameters:
         cmakeArgs: >
-          -G Ninja
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
         buildArgs:
