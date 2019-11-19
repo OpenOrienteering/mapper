@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">לא יכול לשמור קובץ: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">לא יכול לפתוח קובץ
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,12 +29,15 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">לא יכול פתוח קובץ:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="634"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">סוג קובץ שגוי.</translation>
     </message>
 </context>
 <context>
@@ -40,14 +45,16 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>שאלה</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished"></translation>
+        <translation>קנה המידה שהושג מהיבוא 1:%1 הוא שונה מקנה המידה של המפה 1:%2.
+
+לשנות את קנה המידה של היבוא?</translation>
     </message>
 </context>
 <context>
@@ -55,18 +62,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>קבצי OCAD מגרסא %1 לא נתמכים!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>הקורדינאטות שונו בכדי להתאים לאזור השרטוט של OCAD גרסא 8 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>חלק מהקורדינאטות נשארו מחוץ לאזור השרטוט של OCAD 8. יש סיכוי שלא תוכל להשיגם בOCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -76,23 +83,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>המפה מכילה יותר מ24 נקודות צבע מה שלא נתמך בOCAD 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>המפה מכילה יותר מ256 צבעים מה שלא נתמך בOCAD 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>נקודת צבע שגויה.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2383"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>לא ניתן לשמור את המיקום הנכון של התבנית החסרה: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
@@ -423,7 +430,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -672,7 +679,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
