@@ -104,12 +104,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2399"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished"></translation>
+        <translation>לא ניתן לייצא: סוג קובץ &quot;%1&quot; לא נתמך כעת</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2648"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>הטקסט נקטע ב &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -117,17 +117,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../packaging/translations.cpp" line="10"/>
         <source>Orienteering map</source>
-        <translation type="unfinished"></translation>
+        <translation>מפת ניווט</translation>
     </message>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation type="unfinished"></translation>
+        <translation>תוכנה לשרטוט מפות ניווט</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>קידוד &apos;%1&apos; לא זמין. בדקו את ההגדרות.</translation>
     </message>
 </context>
 <context>
@@ -300,27 +300,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>אלמנט שרטוט בגבול</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>קליפ אלמנט בגבול.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>שרטט אלמנטים אם האמצע בתוך הגבול.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>שרטט אלמנטים אם ישנה נקודה בתוך הגבול.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>שרטט אלמנטים אם כל הנקודות בתוך הגבול.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -410,12 +410,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>ערוך</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>הדפסת נקודת צבע</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -425,7 +425,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>תדירות מסך:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -435,12 +435,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>לא מוגדר</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>זווית מסך:</translation>
     </message>
     <message>
         <source>°</source>
@@ -560,12 +560,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- ללא שם -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="623"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>אזהרה</translation>
     </message>
 </context>
 <context>
@@ -658,7 +658,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 (העתקה)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="251"/>
@@ -1071,7 +1071,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_path_tool.cpp" line="1177"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1204"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: סגמנט אזימוט ומרחק. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1193"/>
@@ -1121,7 +1121,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>מידע</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
@@ -1170,7 +1170,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחיצה&lt;/b&gt;: סיום הגדרת האובייקט. </translation>
     </message>
 </context>
 <context>
@@ -1197,7 +1197,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_point_tool.cpp" line="334"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="346"/>
         <source>&lt;b&gt;Angle:&lt;/b&gt; %1° </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;זווית:&lt;/b&gt; %1° </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="335"/>
@@ -1208,17 +1208,17 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחיצה&lt;/b&gt;: צור אובייקט נקודה.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;גרור&lt;/b&gt;: צור אובייקט והגדר את כיוונו.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: אפס סיבוב.</translation>
     </message>
 </context>
 <context>
@@ -1259,17 +1259,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="746"/>
         <source>&lt;b&gt;Click or Drag&lt;/b&gt;: Start drawing a rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ או גרור&lt;/b&gt;: התחל לצייר מלבן. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="759"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to previous lines. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: הצמד את הקווים הקודמים. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;לחץ&lt;/b&gt;: הגדר פינה. &lt;b&gt;מקש ימני או לחיצה כפולה&lt;/b&gt;: סיים את המלבן. </translation>
     </message>
 </context>
 <context>
@@ -1283,12 +1283,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: סיים עריכה. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: בטל עריכה. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
