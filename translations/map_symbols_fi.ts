@@ -31,12 +31,12 @@
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruskea 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -86,7 +86,7 @@
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -121,7 +121,7 @@
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100%/Vihreä 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,7 +131,7 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100%/Musta 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -2879,7 +2879,7 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
         <comment>Description of symbol 113</comment>
-        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm2 (9-13 %).</translation>
+        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm² (9-13 %).</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -2905,7 +2905,7 @@ Density: 8 to 10 dots / mm² (25-32%).</source>
         <comment>Description of symbol 114</comment>
         <translation>Erittäin pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on selkeä hidastava vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä
 kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 7 m x 7 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.38 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.25 mm.
-Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 7-9 pistettä / mm2 (22-28 %).</translation>
+Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 7-9 pistettä / mm² (22-28 %).</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
