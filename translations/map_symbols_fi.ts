@@ -11945,16 +11945,6 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crossable body of water, with bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
-        <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
         <translation type="unfinished"></translation>
@@ -11982,6 +11972,16 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossable body of water, with bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
+        <comment>Description of symbol 301.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
