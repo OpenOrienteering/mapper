@@ -393,6 +393,20 @@ auto const included_ISOM_codes = {
     601,  // Technical symbols
 };
 
+bool symbolOrder(const Symbol* s1, const Symbol* s2)
+{
+	if (s1->getNumberComponent(0) == 301
+	    && s2->getNumberComponent(0) == 301)
+	{
+		// ISSkiOM 301.1 goes after 301.x
+		if (s1->getNumberComponent(1) == 1)
+			return false;
+		if (s2->getNumberComponent(1) == 1)
+			return true;
+	}
+	return Symbol::lessByNumber(s1, s2);
+}
+
 void mergeISOM(Map& target, const QDir& symbol_set_dir)
 {
 	// Load to-be-merged symbol set
@@ -498,7 +512,7 @@ void mergeISOM(Map& target, const QDir& symbol_set_dir)
 		
 	deleteMarkedSymbols(target);
 	
-	target.sortSymbols(Symbol::lessByNumber);
+	target.sortSymbols(ISSkiOM_2019::symbolOrder);
 }
 
 
