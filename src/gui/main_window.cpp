@@ -103,10 +103,7 @@ MainWindow::MainWindow(bool as_main_window, QWidget* parent, Qt::WindowFlags fla
 	status_label = new QLabel();
 	statusBar()->addWidget(status_label, 1);
 	statusBar()->setSizeGripEnabled(as_main_window);
-	if (Settings::mobileModeEnforced())
-	{
-		toast = new Toast(this);
-	}
+	updateToastEnabled();
 	
 	central_widget = new QStackedWidget(this);
 	QMainWindow::setCentralWidget(central_widget);
@@ -140,6 +137,20 @@ MainWindow::~MainWindow()
 void MainWindow::settingsChanged()
 {
 	updateRecentFileActions();
+	updateToastEnabled();
+}
+
+void MainWindow::updateToastEnabled()
+{
+	if (!Settings::getInstance().touchModeEnabled())
+	{
+		delete toast;
+		toast = nullptr;
+	}
+	else if (!toast)
+	{
+		toast = new Toast(this);
+	}
 }
 
 

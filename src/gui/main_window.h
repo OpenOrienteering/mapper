@@ -435,6 +435,12 @@ protected slots:
 	 */
 	void settingsChanged();
 	
+private:
+	/**
+	 * Enables or disables the "toast" which replaces the status bar in touch mode.
+	 */
+	void updateToastEnabled();
+	
 protected:
 	/** 
 	 * Sets the path of the file edited by this windows' controller.
