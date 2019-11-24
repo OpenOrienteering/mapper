@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 
 #include <QObject>
 #include <QDialog>
+#include <QString>
 
 class QCheckBox;
 class QIODevice;
@@ -88,6 +89,14 @@ private:
 	ReplaceSymbolSetDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& replacements, Mode mode);
 	~ReplaceSymbolSetDialog() override;
 	
+public:
+	ReplaceSymbolSetDialog(const ReplaceSymbolSetDialog&) = delete;
+	ReplaceSymbolSetDialog(ReplaceSymbolSetDialog&&) = delete;
+	
+	ReplaceSymbolSetDialog& operator=(const ReplaceSymbolSetDialog&) = delete;
+	ReplaceSymbolSetDialog&& operator=(ReplaceSymbolSetDialog&&) = delete;
+	
+private:
 	void showHelp();
 	
 	void matchByName();
@@ -107,10 +116,10 @@ private:
 	const Map& symbol_set;
 	SymbolRuleSet& replacements;
 	
-	QCheckBox* import_all_check;
-	QCheckBox* delete_unused_symbols_check;
-	QCheckBox* delete_unused_colors_check;
-	QCheckBox* preserve_symbol_states_check;
+	QCheckBox* import_all_check = nullptr;
+	QCheckBox* delete_unused_symbols_check = nullptr;
+	QCheckBox* delete_unused_colors_check = nullptr;
+	QCheckBox* preserve_symbol_states_check = nullptr;
 	QComboBox* id_edit;
 	QTableWidget* mapping_table;
 	std::vector<std::unique_ptr<SymbolDropDownDelegate>> symbol_widget_delegates;

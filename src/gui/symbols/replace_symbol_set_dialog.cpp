@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,6 +25,7 @@
 #include <cstddef>
 #include <functional>
 #include <iterator>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -35,6 +36,7 @@
 #include <QColor>
 #include <QDialogButtonBox>
 #include <QFile>
+#include <QFileInfo>
 #include <QFlags>
 #include <QFormLayout>
 #include <QGuiApplication>
@@ -75,7 +77,6 @@
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/widgets/symbol_dropdown.h"
-#include "util/util.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
 // IWYU pragma: no_forward_declare QColor
@@ -91,10 +92,6 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
  , object_map{ object_map }
  , symbol_set{ symbol_set }
  , replacements{ replacements }
- , import_all_check{ nullptr }
- , delete_unused_symbols_check{ nullptr }
- , delete_unused_colors_check{ nullptr }
- , preserve_symbol_states_check{ nullptr }
  , mode( &object_map==&symbol_set ? AssignByPattern : mode )
 {
 	QFormLayout* form_layout = nullptr;
@@ -190,10 +187,7 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 }
 
 
-ReplaceSymbolSetDialog::~ReplaceSymbolSetDialog()
-{
-	// nothing, not inlined
-}
+ReplaceSymbolSetDialog::~ReplaceSymbolSetDialog() = default;
 
 
 
@@ -469,7 +463,7 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 		//auto hide = (mode == ModeCRT && original_symbol->isHidden());
 		//mapping_table->setRowHidden(row, hide);
 		
-		symbol_widget_delegates[row].reset(new SymbolDropDownDelegate(compatible_symbols));
+		symbol_widget_delegates[row] = std::make_unique<SymbolDropDownDelegate>(compatible_symbols);
 		mapping_table->setItemDelegateForRow(int(row), symbol_widget_delegates[row].get());
 		
 		++row;
@@ -520,7 +514,7 @@ bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
 			return false;
 		}
 		
-		symbol_set.reset(new Map);
+		symbol_set = std::make_unique<Map>();
 		auto importer = selected.fileFormat()->makeImporter(selected.filePath(), symbol_set.get(), nullptr);
 		if (!importer)
 		{
