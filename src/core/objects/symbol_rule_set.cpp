@@ -309,6 +309,30 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 
 
 
+const Symbol* SymbolRuleSet::findDuplicateSymbolPattern() const
+{
+	for (auto const& item : *this)
+	{
+		if (item.query.getOperator() != ObjectQuery::OperatorSymbol)
+			continue;
+		
+		auto has_conflict = [&item](const auto& other)->bool {
+			return &other != &item
+			       && other.type != SymbolRule::NoAssignment
+			       && item.query == other.query
+			       && item.symbol != other.symbol;
+		};
+		using std::begin; using std::end;
+		if (std::any_of(begin(*this), end(*this), has_conflict))
+		{
+			return item.symbol;
+		}
+	}
+	return nullptr;
+}
+
+
+
 void SymbolRuleSet::operator()(Object* object) const
 {
 	for (const auto& item : *this)

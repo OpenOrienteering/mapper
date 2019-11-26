@@ -157,6 +157,14 @@ public:
 	
 	
 	/**
+	 * Finds symbols that are matched by multiple symbol number patterns.
+	 * 
+	 * Returns an arbitrary affected symbol, or nullptr if no such symbol exists.
+	 */
+	Symbol const* findDuplicateSymbolPattern() const;
+	
+	
+	/**
 	 * Applies the matching rules to the object.
 	 * 
 	 * This operator can be used with Map::applyOnAllObjects etc.

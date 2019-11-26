@@ -270,26 +270,14 @@ void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
 					break;
 				}
 			}
-			
-			// Find inconsistencies
-			if (item.query.getOperator() == ObjectQuery::OperatorSymbol)
-			{
-				auto has_conflict = [&item](const auto& other)->bool {
-					return &other != &item
-					       && other.type != SymbolRule::NoAssignment
-					       && item.query == other.query
-					       && item.symbol != other.symbol;
-				};
-				if (std::any_of(begin(new_replacements), end(new_replacements), has_conflict))
-				{
-					stream.setStatus(QTextStream::ReadCorruptData);
-					auto error_msg = tr("There are multiple replacements for symbol %1.")
-					                 .arg(item.query.symbolOperand()->getNumberAsString());
-					QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
-					  tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg) );
-					return;
-				}
-			}
+		}
+		if (auto const* ambiguous = new_replacements.findDuplicateSymbolPattern())
+		{
+			auto error_msg = tr("There are multiple replacements for symbol %1.")
+			                 .arg(ambiguous->getNumberAsString());
+			QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
+			                     tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg) );
+			return;
 		}
 		
 		// Apply
