@@ -248,29 +248,7 @@ void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
 	if (stream.status() == QTextStream::Ok)
 	{
 		// Postprocess CRT
-		for (auto& item : new_replacements)
-		{
-			if (item.type == SymbolRule::NoAssignment
-			    || item.query.getOperator() != ObjectQuery::OperatorSearch)
-				continue;
-			Q_ASSERT(item.symbol);
-			
-			auto operands = item.query.tagOperands();
-			if (!operands || operands->value.isEmpty())
-				continue;
-			
-			// Find original symbol number matching the pattern
-			for (int i = 0; i < object_map.getNumSymbols(); ++i)
-			{
-				auto symbol = object_map.getSymbol(i);
-				if (symbol->getNumberAsString() == operands->value)
-				{
-					if (Symbol::areTypesCompatible(symbol->getType(), item.symbol->getType()))
-						item.query = { symbol };
-					break;
-				}
-			}
-		}
+		new_replacements.recognizeSymbolPatterns(object_map);
 		if (auto const* ambiguous = new_replacements.findDuplicateSymbolPattern())
 		{
 			auto error_msg = tr("There are multiple replacements for symbol %1.")

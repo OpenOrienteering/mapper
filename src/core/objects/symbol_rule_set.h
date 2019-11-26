@@ -157,6 +157,11 @@ public:
 	
 	
 	/**
+	 * Converts plain search patterns into symbol patterns where possible.
+	 */
+	void recognizeSymbolPatterns(Map const& symbol_set);
+	
+	/**
 	 * Finds symbols that are matched by multiple symbol number patterns.
 	 * 
 	 * Returns an arbitrary affected symbol, or nullptr if no such symbol exists.

@@ -309,6 +309,35 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 
 
 
+void SymbolRuleSet::recognizeSymbolPatterns(const Map& symbol_set)
+{
+	for (auto& item : *this)
+	{
+		if (item.type == SymbolRule::NoAssignment
+		    || item.query.getOperator() != ObjectQuery::OperatorSearch)
+			continue;
+		Q_ASSERT(item.symbol);
+		
+		auto operands = item.query.tagOperands();
+		if (!operands || operands->value.isEmpty())
+			continue;
+		
+		// Find original symbol number matching the pattern
+		for (int i = 0; i < symbol_set.getNumSymbols(); ++i)
+		{
+			auto symbol = symbol_set.getSymbol(i);
+			if (symbol->getNumberAsString() == operands->value)
+			{
+				if (Symbol::areTypesCompatible(symbol->getType(), item.symbol->getType()))
+					item.query = { symbol };
+				break;
+			}
+		}
+	}
+}
+
+
+
 const Symbol* SymbolRuleSet::findDuplicateSymbolPattern() const
 {
 	for (auto const& item : *this)
