@@ -6728,7 +6728,7 @@ dalījumi</translation>
     </message>
 </context>
 <context>
-    <name>OpenOrienteering::ReplaceSymbolSetDialog</name>
+    <name>OpenOrienteering::SymbolReplacementDialog</name>
     <message>
         <location filename="../src/gui/symbols/replace_symbol_set_dialog.cpp" line="107"/>
         <source>Replace symbol set</source>

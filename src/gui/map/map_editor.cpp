@@ -46,7 +46,6 @@
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
-#include <QFile>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFont>
@@ -123,7 +122,7 @@
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
-#include "gui/symbols/replace_symbol_set_dialog.h"
+#include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
@@ -2062,13 +2061,13 @@ void MapEditorController::symbolSetIdClicked()
 
 void MapEditorController::loadSymbolsFromClicked()
 {
-	ReplaceSymbolSetDialog::showDialog(window, *map);
+	SymbolReplacement(*map).withSymbolSetFileDialog(window);
 }
 
 
 void MapEditorController::loadCrtClicked()
 {
-	ReplaceSymbolSetDialog::showDialogForCRT(window, *map, *map);
+	SymbolReplacement(*map, *map).withCrtFileDialog(window);
 }
 
 
@@ -4126,24 +4125,8 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	
 	if (imported_map.symbolSetId() != map->symbolSetId())
 	{
-		auto crt_filename = filename;
-		crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".crt"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename = ReplaceSymbolSetDialog::discoverCrtFile(imported_map.symbolSetId(), map->symbolSetId());
-		
-		if (QFileInfo::exists(crt_filename))
 		{
-			QFile crt_file{ crt_filename };
-			if (!crt_file.open(QFile::ReadOnly))
-			{
-				QMessageBox::warning(window,
-				                     ::OpenOrienteering::Map::tr("Error"),
-				                     ::OpenOrienteering::Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
-				return false;
-			}
-			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
+			if (!SymbolReplacement(imported_map, *map).withAutoCrtFile(window, filename))
 			{
 				auto choice = QMessageBox::question(window,
 				                                    ::OpenOrienteering::Map::tr("Import..."),

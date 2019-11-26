@@ -125,8 +125,9 @@ set(Mapper_Common_SRCS
   gui/symbols/line_symbol_settings.cpp
   gui/symbols/point_symbol_editor_widget.cpp
   gui/symbols/point_symbol_settings.cpp
-  gui/symbols/replace_symbol_set_dialog.cpp
   gui/symbols/symbol_properties_widget.cpp
+  gui/symbols/symbol_replacement.cpp
+  gui/symbols/symbol_replacement_dialog.cpp
   gui/symbols/symbol_setting_dialog.cpp
   gui/symbols/text_symbol_settings.cpp
   

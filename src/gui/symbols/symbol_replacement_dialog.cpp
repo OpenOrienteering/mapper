@@ -19,7 +19,7 @@
  */
 
 
-#include "replace_symbol_set_dialog.h"
+#include "symbol_replacement_dialog.h"
 
 #include <algorithm>
 #include <cstddef>
@@ -36,7 +36,6 @@
 #include <QColor>
 #include <QDialogButtonBox>
 #include <QFile>
-#include <QFileInfo>
 #include <QFlags>
 #include <QFormLayout>
 #include <QGuiApplication>
@@ -71,11 +70,9 @@
 #include "core/symbols/point_symbol.h"
 #include "core/symbols/symbol.h"
 #include "core/symbols/text_symbol.h"
-#include "fileformats/file_format.h"
-#include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
-#include "gui/main_window.h"
 #include "gui/util_gui.h"
+#include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/symbol_dropdown.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
@@ -87,13 +84,16 @@
 
 namespace OpenOrienteering {
 
-ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& replacements, Mode mode)
+
+SymbolReplacementDialog::SymbolReplacementDialog(QWidget* parent, Map& object_map, const Map& symbol_set, SymbolRuleSet& symbol_rules, Mode mode)
  : QDialog{ parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint }
  , object_map{ object_map }
  , symbol_set{ symbol_set }
- , replacements{ replacements }
+ , symbol_rules{ symbol_rules }
  , mode( &object_map==&symbol_set ? AssignByPattern : mode )
 {
+	setWindowModality(Qt::WindowModal);
+	
 	QFormLayout* form_layout = nullptr;
 	auto mapping_menu = new QMenu(this);
 	
@@ -133,9 +133,9 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 		horizontal_headers << tr("Original") << tr("Replacement");
 		
 		auto action = mapping_menu->addAction(tr("Match replacement symbols by symbol number"));
-		connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::matchByNumber);
+		connect(action, &QAction::triggered, this, &SymbolReplacementDialog::matchByNumber);
 		action = mapping_menu->addAction(tr("Match by symbol name"));
-		connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::matchByName);
+		connect(action, &QAction::triggered, this, &SymbolReplacementDialog::matchByName);
 	}
 	else
 	{
@@ -153,12 +153,12 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 	mapping_table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 	
 	auto action = mapping_menu->addAction(tr("Clear replacements"));
-	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::resetReplacements);
+	connect(action, &QAction::triggered, this, &SymbolReplacementDialog::resetReplacements);
 	mapping_menu->addSeparator();
 	action = mapping_menu->addAction(QIcon{QLatin1String{":/images/open.png"}}, tr("Open CRT file..."));
-	connect(action, &QAction::triggered, this, QOverload<>::of(&ReplaceSymbolSetDialog::openCrtFile));
+	connect(action, &QAction::triggered, this, QOverload<>::of(&SymbolReplacementDialog::openCrtFile));
 	action = mapping_menu->addAction(QIcon{QLatin1String{":/images/save.png"}}, tr("Save CRT file..."));
-	connect(action, &QAction::triggered, this, &ReplaceSymbolSetDialog::saveCrtFile);
+	connect(action, &QAction::triggered, this, &SymbolReplacementDialog::saveCrtFile);
 	
 	auto button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Help, Qt::Horizontal);
 	auto mapping_button = button_box->addButton(tr("Symbol mapping:").replace(QLatin1Char{':'}, QString{}), QDialogButtonBox::ActionRole);
@@ -173,48 +173,42 @@ ReplaceSymbolSetDialog::ReplaceSymbolSetDialog(QWidget* parent, Map& object_map,
 	layout->addWidget(button_box);
 	setLayout(layout);
 	
-	connect(button_box, &QDialogButtonBox::helpRequested, this, &ReplaceSymbolSetDialog::showHelp);
+	connect(button_box, &QDialogButtonBox::helpRequested, this, &SymbolReplacementDialog::showHelp);
 	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-	
-	if (replacements.empty() && mode == ReplaceSymbolSet)
-	{
-		this->replacements = SymbolRuleSet::forOriginalSymbols(object_map);
-		this->replacements.matchQuerySymbolName(symbol_set);
-	}
 	
 	updateMappingTable();
 }
 
 
-ReplaceSymbolSetDialog::~ReplaceSymbolSetDialog() = default;
+SymbolReplacementDialog::~SymbolReplacementDialog() = default;
 
 
 
-void ReplaceSymbolSetDialog::showHelp()
+void SymbolReplacementDialog::showHelp()
 {
 	Util::showHelp(this, "symbol_replace_dialog.html");
 }
 
 
 
-void ReplaceSymbolSetDialog::matchByName()
+void SymbolReplacementDialog::matchByName()
 {
-	replacements.matchQuerySymbolName(symbol_set);
+	symbol_rules.matchQuerySymbolName(symbol_set);
 	updateMappingTable();
 }
 
 
-void ReplaceSymbolSetDialog::matchByNumber()
+void SymbolReplacementDialog::matchByNumber()
 {
-	replacements.matchQuerySymbolNumber(symbol_set);
+	symbol_rules.matchQuerySymbolNumber(symbol_set);
 	updateMappingTable();
 }
 
 
-void ReplaceSymbolSetDialog::resetReplacements()
+void SymbolReplacementDialog::resetReplacements()
 {
-	for (auto& item : replacements)
+	for (auto& item : symbol_rules)
 	{
 		item.symbol = nullptr;
 		item.type = SymbolRule::NoAssignment;
@@ -224,43 +218,21 @@ void ReplaceSymbolSetDialog::resetReplacements()
 
 
 
-void ReplaceSymbolSetDialog::openCrtFile()
+void SymbolReplacementDialog::openCrtFile()
 {
-	auto dir = QLatin1String{"data:/symbol sets"};
-	auto filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
-	QString path = FileDialog::getOpenFileName(this, tr("Open CRT file..."), dir, filter);
-	if (!path.isEmpty())
-		openCrtFile(path);
-}
-	
-void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
-{
-	QFile crt_file{path};
-	crt_file.open(QIODevice::ReadOnly);
-	QTextStream stream{ &crt_file };
-	auto new_replacements = SymbolRuleSet::loadCrt(stream, symbol_set);
-	if (stream.status() == QTextStream::Ok)
+	auto const dir = QLatin1String{"data:/symbol sets"};
+	auto const filter = QString{tr("CRT file") + QLatin1String{" (*.crt)"}};
+	auto const filepath = FileDialog::getOpenFileName(this, tr("Open CRT file..."), dir, filter);
+	if (!filepath.isEmpty())
 	{
-		// Postprocess CRT
-		new_replacements.recognizeSymbolPatterns(object_map);
-		if (auto const* ambiguous = new_replacements.findDuplicateSymbolPattern())
-		{
-			auto error_msg = tr("There are multiple replacements for symbol %1.")
-			                 .arg(ambiguous->getNumberAsString());
-			QMessageBox::warning(this, ::OpenOrienteering::Map::tr("Error"),
-			                     tr("Cannot open file:\n%1\n\n%2").arg(path, error_msg) );
-			return;
-		}
-		
-		// Apply
-		auto merge_mode = (mode == AssignByPattern) ? SymbolRuleSet::UpdateAndAppend : SymbolRuleSet::UpdateOnly;
-		replacements.merge(std::move(new_replacements), merge_mode);
+		auto new_rules = SymbolReplacement(object_map, symbol_set).loadCrtFile(this, filepath);
+		symbol_rules.merge(std::move(new_rules), SymbolRuleSet::UpdateAndAppend);
 		updateMappingTable();
 	}
 }
+	
 
-
-bool ReplaceSymbolSetDialog::saveCrtFile()
+bool SymbolReplacementDialog::saveCrtFile()
 {
 	/// \todo Choose user-writable directory.
 	auto dir = QLatin1String{"data:/symbol sets"};
@@ -272,7 +244,7 @@ bool ReplaceSymbolSetDialog::saveCrtFile()
 		QFile crt_file{path};
 		crt_file.open(QIODevice::WriteOnly);
 		QTextStream stream{ &crt_file };
-		replacements.writeCrt(stream);
+		symbol_rules.writeCrt(stream);
 		if (stream.pos() != -1)
 		{
 			return true;
@@ -287,10 +259,10 @@ bool ReplaceSymbolSetDialog::saveCrtFile()
 
 
 
-void ReplaceSymbolSetDialog::done(int r)
+void SymbolReplacementDialog::done(int r)
 {
 	updateMappingFromTable();
-	if (std::any_of(begin(replacements), end(replacements), [](const auto& item) {
+	if (std::any_of(begin(symbol_rules), end(symbol_rules), [](const auto& item) {
 	                return item.type == SymbolRule::ManualAssignment;
 	}))
 	{
@@ -322,18 +294,21 @@ void ReplaceSymbolSetDialog::done(int r)
 
 
 
-void ReplaceSymbolSetDialog::updateMappingTable()
+void SymbolReplacementDialog::updateMappingTable()
 {
+	if (!mapping_table)
+		return;
+	
 	mapping_table->setUpdatesEnabled(false);
 	
 	mapping_table->clearContents();
-	mapping_table->setRowCount(int(replacements.size()));
+	mapping_table->setRowCount(int(symbol_rules.size()));
 	
 	symbol_widget_delegates.clear();
-	symbol_widget_delegates.resize(replacements.size());
+	symbol_widget_delegates.resize(symbol_rules.size());
 	
 	std::size_t row = 0;
-	for (const auto& item : replacements)
+	for (const auto& item : symbol_rules)
 	{
 		const Symbol* original_symbol = nullptr;
 		auto original_icon = QImage{};
@@ -473,10 +448,10 @@ void ReplaceSymbolSetDialog::updateMappingTable()
 }
 
 
-void ReplaceSymbolSetDialog::updateMappingFromTable()
+void SymbolReplacementDialog::updateMappingFromTable()
 {
-	Q_ASSERT(int(replacements.size()) == mapping_table->rowCount());
-	auto item = begin(replacements);
+	Q_ASSERT(int(symbol_rules.size()) == mapping_table->rowCount());
+	auto item = begin(symbol_rules);
 	for (int row = 0; row < mapping_table->rowCount(); ++row)
 	{
 		auto replacement_symbol = mapping_table->item(row, 1)->data(Qt::UserRole).toList().at(1).value<const Symbol*>();
@@ -491,180 +466,27 @@ void ReplaceSymbolSetDialog::updateMappingFromTable()
 
 
 
-// static
-bool ReplaceSymbolSetDialog::showDialog(QWidget* parent, Map& object_map)
+SymbolRuleSet::Options SymbolReplacementDialog::replacementOptions() const
 {
-	auto symbol_set = std::unique_ptr<Map>{};
-	while (!symbol_set)
+	auto options = SymbolRuleSet::Options{};
+	if (mode == ReplaceSymbolSet)
 	{
-		auto selected = MainWindow::getOpenFileName(
-		                    parent,
-		                    tr("Choose map file to load symbols from"),
-		                    FileFormat::MapFile);
-		if (!selected)
-		{
-			// canceled
-			return false;
-		}
-		
-		if (!selected.fileFormat())
-		{
-			/// \todo More precise message
-			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
-			return false;
-		}
-		
-		symbol_set = std::make_unique<Map>();
-		auto importer = selected.fileFormat()->makeImporter(selected.filePath(), symbol_set.get(), nullptr);
-		if (!importer)
-		{
-			/// \todo More precise message
-			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
-			return false;
-		}
-		
-		if (!importer->doImport())
-		{
-			/// \todo Show error from importer
-			QMessageBox::warning(parent, tr("Error"), tr("Cannot load symbol set, aborting."));
-			return false;
-		}
-		
-		if (!importer->warnings().empty())
-		{
-			MainWindow::showMessageBox(parent, tr("Warning"), tr("The symbol set import generated warnings."), importer->warnings());
-		}
-		
-		if (symbol_set->getScaleDenominator() != object_map.getScaleDenominator())
-		{
-			if (QMessageBox::warning(parent, tr("Warning"),
-				tr("The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?").arg(symbol_set->getScaleDenominator()).arg(object_map.getScaleDenominator()),
-				QMessageBox::Yes | QMessageBox::No) == QMessageBox::No)
-			{
-				symbol_set.reset(nullptr);
-			}
-		}
+		options.setFlag(SymbolRuleSet::ImportAllSymbols, import_all_check->isChecked());
+		options.setFlag(SymbolRuleSet::PreserveSymbolState, preserve_symbol_states_check->isChecked());
+		options.setFlag(SymbolRuleSet::KeepUnusedSymbols, !delete_unused_symbols_check->isChecked());
+		options.setFlag(SymbolRuleSet::KeepUnusedColors, !delete_unused_colors_check->isChecked());
 	}
-	
-	auto replacements = SymbolRuleSet::forOriginalSymbols(object_map);
-	replacements.matchQuerySymbolName(*symbol_set);
-	
-	auto flags_from_dialog = [](const ReplaceSymbolSetDialog& dialog){
-		auto options = SymbolRuleSet::Options{};
-		if (dialog.import_all_check->isChecked())
-			options |= SymbolRuleSet::ImportAllSymbols;
-		if (dialog.preserve_symbol_states_check->isChecked())
-			options |= SymbolRuleSet::PreserveSymbolState;
-		if (!dialog.delete_unused_symbols_check->isChecked())
-			options |= SymbolRuleSet::KeepUnusedSymbols;
-		if (!dialog.delete_unused_colors_check->isChecked())
-			options |= SymbolRuleSet::KeepUnusedColors;
-		return options;
-	};
-
-	ReplaceSymbolSetDialog dialog(parent, object_map, *symbol_set, replacements, ReplaceSymbolSet);
-	dialog.setWindowModality(Qt::WindowModal);
-	auto crt_file = discoverCrtFile(object_map.symbolSetId(), symbol_set->symbolSetId());
-	if (QFileInfo::exists(crt_file))
-	{
-		dialog.show();
-		dialog.openCrtFile(crt_file);
-	}
-	auto result = dialog.exec();
-	switch (result)
-	{
-	case QDialog::Accepted:
-		replacements.squeezed().apply(object_map, *symbol_set, flags_from_dialog(dialog));
-		object_map.setSymbolSetId(dialog.id_edit->currentText());
-		return true;
-		
-	case QDialog::Rejected:
-		return false;
-	}
-	
-	Q_UNREACHABLE();
+	return options;
 }
 
-
-// static
-bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set)
+QString SymbolReplacementDialog::replacementId() const
 {
-	auto replacements = SymbolRuleSet{};
-	ReplaceSymbolSetDialog dialog(parent, object_map, symbol_set, replacements, AssignByPattern);
-	dialog.setWindowModality(Qt::WindowModal);
-	dialog.show();
-	dialog.openCrtFile();
-	auto result = dialog.exec();
-	switch (result)
+	auto id = object_map.symbolSetId();
+	if (mode == ReplaceSymbolSet)
 	{
-	case QDialog::Accepted:
-		replacements.squeezed().apply(object_map, symbol_set);
-		return true;
-		
-	case QDialog::Rejected:
-		return false;
+		id = id_edit->currentText();
 	}
-	
-	Q_UNREACHABLE();
-}
-
-
-// static
-bool ReplaceSymbolSetDialog::showDialogForCRT(QWidget* parent, Map& object_map, const Map& symbol_set, QIODevice& crt_file)
-{
-	QTextStream stream{ &crt_file };
-	auto replacements = SymbolRuleSet::loadCrt(stream, symbol_set);
-	if (stream.status() != QTextStream::Ok)
-	{
-		QMessageBox::warning(parent, tr("Error"), tr("Cannot load CRT file, aborting."));
-		return false;
-	}
-	
-	for (auto& item : replacements)
-	{
-		if (item.query.getOperator() != ObjectQuery::OperatorSearch)
-			continue;
-		
-		auto operands = item.query.tagOperands();
-		if (operands && !operands->value.isEmpty())
-		{
-			// Construct layer queries
-			item.query = { QLatin1String("Layer"), ObjectQuery::OperatorIs, operands->value };
-		}
-	}
-		
-	/// \todo Collect source symbols for all patterns, for source icon in dialog
-	
-	ReplaceSymbolSetDialog dialog(parent, object_map, symbol_set, replacements, AssignByPattern);
-	dialog.setWindowModality(Qt::WindowModal);
-	auto result = dialog.exec();
-	switch (result)
-	{
-	case QDialog::Accepted:
-		replacements.squeezed().apply(object_map, symbol_set);
-		return true;
-		
-	case QDialog::Rejected:
-		return false;
-	}
-	
-	Q_UNREACHABLE();
-}
-
-
-// static
-QString ReplaceSymbolSetDialog::discoverCrtFile(const QString& source_id, const QString& target_id)
-{
-	QString name = QLatin1String("data:/symbol sets/")
-	               + source_id + QLatin1Char('-')
-	               + target_id + QLatin1String(".crt");
-#ifdef MAPPER_DEVELOPMENT_BUILD
-	if (!QFileInfo::exists(name))
-		name = QLatin1String("data:/symbol sets/COPY_OF_")
-		       + source_id + QLatin1Char('-')
-		       + target_id + QLatin1String(".crt");
-#endif
-	return name;
+	return id;
 }
 
 
