@@ -75,6 +75,13 @@ private slots:
 	 * through an implicit export-import-cycle before the test.
 	 */
 	void pristineMapTest();
+	
+	/**
+	 * Tests export of geospatial vector data via OGR.
+	 */
+	void ogrExportTest();
+	void ogrExportTest_data();
+	
 };
 
 #endif // OPENORIENTEERING_FILE_FORMAT_T_H
