@@ -87,6 +87,19 @@ public:
 	 */
 	SymbolRuleSet squeezed() const;
 	
+	/**
+	 * Modes for merging rule sets
+	 */
+	enum MergeMode
+	{
+		UpdateOnly,       ///< Update existing rules only.
+		UpdateAndAppend,  ///< Update existing rules, and append new rules.
+	};
+	
+	/**
+	 * Merges a second rule set into this one.
+	 */
+	void merge(SymbolRuleSet&& other, MergeMode mode);
 	
 	/** 
 	 * Sorts the items by original symbol number and name if possible.

@@ -90,6 +90,38 @@ SymbolRuleSet SymbolRuleSet::squeezed() const
 }
 
 
+void SymbolRuleSet::merge(SymbolRuleSet&& other, MergeMode mode)
+{
+	for (auto& item : other)
+	{
+		for (auto& current : *this)
+		{
+			if (item.query == current.query)
+			{
+				if (item.type != SymbolRule::NoAssignment)
+				{
+					current.symbol = item.symbol;
+					current.type = item.type;
+					item = {};
+				}
+				break;
+			}
+		}
+	}
+	
+	if (mode == UpdateAndAppend)
+	{
+		for (auto&& item : other)
+		{
+			if (item.query.getOperator() != ObjectQuery::OperatorInvalid)
+			{
+				emplace_back(std::move(item));
+			}
+		}
+	}
+}
+
+
 
 void SymbolRuleSet::sortByQuerySymbol()
 {

@@ -259,33 +259,8 @@ void ReplaceSymbolSetDialog::openCrtFile(const QString& path)
 		}
 		
 		// Apply
-		for (auto& item : new_replacements)
-		{
-			for (auto& current : replacements)
-			{
-				if (item.query == current.query)
-				{
-					if (item.type != SymbolRule::NoAssignment)
-					{
-						current.symbol = item.symbol;
-						current.type = item.type;
-						item = {};
-					}
-					break;
-				}
-			}
-		}
-		if (mode == AssignByPattern)
-		{
-			for (auto&& item : new_replacements)
-			{
-				if (item.query.getOperator() != ObjectQuery::OperatorInvalid)
-				{
-					replacements.emplace_back(std::move(item));
-				}
-			}
-		}
-		
+		auto merge_mode = (mode == AssignByPattern) ? SymbolRuleSet::UpdateAndAppend : SymbolRuleSet::UpdateOnly;
+		replacements.merge(std::move(new_replacements), merge_mode);
 		updateMappingTable();
 	}
 }
