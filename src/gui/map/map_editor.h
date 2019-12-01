@@ -559,6 +559,8 @@ public:
 	bool importGpxFile(const QString& filename);
 	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename, bool show_errors);
+	/** Imports a data file supported by OGR into the map */
+	bool importOgrFile(const QString& filename);
 	
 public slots:
 	/** Sets the enabled state of actions which change how the map is rendered,
