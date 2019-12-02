@@ -11334,12 +11334,12 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -11349,12 +11349,12 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ruskea 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -11404,7 +11404,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sininen 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -11439,7 +11439,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Keltainen 100%/Vihreä 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -11449,7 +11449,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vihreä 100%/Musta 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
