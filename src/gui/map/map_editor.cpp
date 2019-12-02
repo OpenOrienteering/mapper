@@ -4123,24 +4123,28 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	if (show_errors && !importer->warnings().empty())
 	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
-	if (imported_map.symbolSetId() != map->symbolSetId())
+	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
+}
+
+
+bool MapEditorController::importMapWithReplacement(
+        Map& imported_map,
+        Map::ImportMode mode,
+        const QString& crt_file_hint)
+{
+	if (!SymbolReplacement(imported_map, *map).withAutoCrtFile(window, crt_file_hint))
 	{
-		{
-			if (!SymbolReplacement(imported_map, *map).withAutoCrtFile(window, filename))
-			{
-				auto choice = QMessageBox::question(window,
-				                                    ::OpenOrienteering::Map::tr("Import..."),
-				                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
-				                                                                "Import the data anyway?"),
-				                                    QMessageBox::Yes | QMessageBox::No,
-				                                    QMessageBox::No);
-				if (choice == QMessageBox::No)
-					return false;
-			}
-		}
+		auto choice = QMessageBox::question(window,
+		                                    ::OpenOrienteering::Map::tr("Import..."),
+		                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
+		                                                                "Import the data anyway?"),
+		                                    QMessageBox::Yes | QMessageBox::No,
+		                                    QMessageBox::No);
+		if (choice == QMessageBox::No)
+			return false;
 	}
 	
-	importMap(imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
+	importMap(imported_map, mode, window);
 	return true;
 }
 
