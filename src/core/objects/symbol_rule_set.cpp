@@ -65,17 +65,33 @@ Q_STATIC_ASSERT(std::is_nothrow_move_assignable<SymbolRuleSet>::value);
 
 
 // static
-SymbolRuleSet SymbolRuleSet::forOriginalSymbols(const Map& map)
+SymbolRuleSet SymbolRuleSet::forMatchingSymbols(const Map& map, const std::function<bool (int)>& predicate)
 {
 	SymbolRuleSet list;
 	list.reserve(std::size_t(map.getNumSymbols()));
 	for (int i = 0; i < map.getNumSymbols(); ++i)
 	{
+		if (!predicate(i))
+			continue;
 		auto original = map.getSymbol(i);
 		list.push_back({{original}, nullptr, SymbolRule::NoAssignment});
 	}
 	list.sortByQueryKeyAndValue();
 	return list;
+}
+
+// static
+SymbolRuleSet SymbolRuleSet::forAllSymbols(const Map& map)
+{
+	return SymbolRuleSet::forMatchingSymbols(map, [](int /*i*/) { return true; });
+}
+
+// static
+SymbolRuleSet SymbolRuleSet::forUsedSymbols(const Map& map)
+{
+	std::vector<bool> symbols_in_use(std::size_t(map.getNumSymbols()));
+	map.determineSymbolsInUse(symbols_in_use);
+	return SymbolRuleSet::forMatchingSymbols(map, [&symbols_in_use](int i) { return symbols_in_use[std::size_t(i)]; });
 }
 
 

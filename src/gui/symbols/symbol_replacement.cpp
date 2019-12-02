@@ -102,7 +102,7 @@ bool SymbolReplacement::withSymbolSetFileDialog(QWidget* parent)
 
 bool SymbolReplacement::withNewSymbolSet(QWidget* parent)
 {
-	auto symbol_rules = SymbolRuleSet::forOriginalSymbols(object_map);
+	auto symbol_rules = SymbolRuleSet::forAllSymbols(object_map);
 	symbol_rules.matchQuerySymbolName(symbol_set);
 	
 	auto const crt_file = crtFileById();
@@ -142,7 +142,7 @@ bool SymbolReplacement::withAutoCrtFile(QWidget* parent, const QString& hint)
 	if (!filepath.isEmpty())
 		return withCrtFile(parent, filepath);
 	
-	auto symbol_rules = SymbolRuleSet::forOriginalSymbols(object_map);
+	auto symbol_rules = SymbolRuleSet::forUsedSymbols(object_map);
 	symbol_rules.matchQuerySymbolName(symbol_set);
 	
 	SymbolReplacementDialog dialog(parent, object_map, symbol_set, symbol_rules, SymbolReplacementDialog::AssignByPattern);
