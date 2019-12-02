@@ -1903,6 +1903,9 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 		// Formats with NeedsWgs84 quirk need coords in EPSG:4326/WGS 1984
 		auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 		OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+		OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
+#endif
 		transformation = ogr::unique_transformation { OCTNewCoordinateTransformation(map_srs.get(), geo_srs.get()) };
 	}
 }

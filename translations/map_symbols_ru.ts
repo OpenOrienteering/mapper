@@ -16,27 +16,27 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для железной дороги</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Коричневый 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -86,7 +86,7 @@
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -116,12 +116,12 @@
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх зелёного</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100%/Зелёный 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,7 +131,7 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%/Чёрный 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -156,7 +156,7 @@
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх жёлтого</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -969,7 +969,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation>Мелководье,  сплошной контур</translation>
+        <translation>Мелководье, сплошной контур</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
@@ -11185,27 +11185,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для железной дороги</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Коричневый 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -11255,7 +11255,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -11285,12 +11285,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх зелёного</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100%/Зелёный 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -11300,7 +11300,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%/Чёрный 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -11325,7 +11325,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх жёлтого</translation>
     </message>
     <message>
         <source>Black for open land</source>

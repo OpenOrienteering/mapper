@@ -6,42 +6,42 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lila a pálya felülnyomáshoz</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a pálya felülnyomáshoz</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a vasúthoz</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kék 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Barna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lila a pálya szimbólumaihoz</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
@@ -61,7 +61,7 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felső barna 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -71,7 +71,7 @@
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alsó barna 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -86,7 +86,7 @@
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kék 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sárga 100%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 60%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 30%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér zöld felett</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sárga 100%/Zöld 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%/Fekete 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%-a a terület jellemzőkhöz</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,12 +151,12 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%-a az aljnövényzethez</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a sárga fölött</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -320,7 +320,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Különálló földfal,töltés,sánc. Minimális magasság: 1 m.
+Minimális hosszúság: 1,4 mm (lábnyom 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -331,7 +332,8 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kis vagy részben romos földfal.A minimális magasság 0,5 méter.
+ A minimális hossz: két szakasz (3,65 mm- a lábnyoma 55 m). Ha rövidebb, akkor a szimbólumot a minimális hosszúságra el kell túlozni, vagy a 105 (földfal,töltés, sánc) szimbólumra kell cserélni a jelet.</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -343,7 +345,9 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m. 
+Minimális hossz: 1,15 mm (lábnyoma 17 m).
+ A környező szintvonalakat nem kell megszakítani.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -355,7 +359,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis vízmosás, száraz árok vagy árok. Minimális mélység: 0,5 m.
+Minimális hossz (izolált): három pont (1,15 mm - lábnyoma 17 m)
+A jel körül meg kell szakítani a szintvonalakat.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -395,7 +401,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy olyan kis mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk. 
+Minimális mélység: 1 m. Minimum szélesség: 2 m.
+A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljük.
+A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal.A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk.
+Lábnyoma: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -409,7 +419,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gödrök, vagy lyukak olyan megkülönböztethető meredek oldalakkal, amiket nem lehet ábrázolni a 104-es jellel (földletörés).
+Minimális mélység: 1 m. Minimum szélesség: 1 m.
+Az  5 m x 5 m-nél nagyobb gödröt általában el kell túlozni és a 104-es (földletörés) jellel kell ábrázolni. A meredek oldalak nélküli gödröket a 111-es (kis mélyedés) jellel ábrázoljuk.
+A szimbólum nem érinthet vagy fedhet barna szimbólumokat. A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk be.
+Lábnyoma: 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -472,7 +486,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tereptárgynak nagyon világosan megkülönböztethetőnek kell lennie a környezetétől. 
+Helye az északra tájolt szimbólum súlypontja. 
+A szimbólum nem érinthet vagy fedhet át másik barna szimbólumokat.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyoma: 13,5 m x 11,5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -505,7 +523,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Járhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -2675,7 +2693,7 @@ A lila vonalat pontonként a rajttól a célig halad.   Ez az egyszerű megköze
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.</translation>
+        <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepen 2,5 méteres szintvonalköz használható.A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -2930,7 +2948,8 @@ Sűrűség: 8-10 pont / mm² (25-32%).</translation>
         <comment>Description of symbol 115</comment>
         <translation>A tereptárgynak nagyon világosan megkülönböztethetőnek kell lennie a környezetétől. 
 Helye az északra tájolt szimbólum súlypontja. 
-A szimbólum nem érinthet vagy fedhet át másik barna szimbólumokat.</translation>
+A szimbólum nem érinthet vagy fedhet át másik barna szimbólumokat.
+Lábnyoma:13,5 x 11,5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -11872,12 +11891,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lila a pálya felülnyomáshoz</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a pálya felülnyomáshoz</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -11887,32 +11906,32 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a vasúthoz</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kék 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Barna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lila a pálya szimbólumaihoz</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
@@ -11932,7 +11951,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felső barna 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -11942,7 +11961,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alsó barna 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -11957,7 +11976,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kék 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -11972,27 +11991,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sárga 100%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 60%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 30%-os keskeny nyiladékhoz</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér zöld felett</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sárga 100%/Zöld 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -12002,12 +12021,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%/Fekete 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%-a a terület jellemzőkhöz</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -12022,12 +12041,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 100%-a az aljnövényzethez</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a sárga fölött</translation>
     </message>
     <message>
         <source>Black for open land</source>
@@ -12191,7 +12210,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Különálló földfal,töltés,sánc. Minimális magasság: 1 m.
+Minimális hosszúság: 1,4 mm (lábnyom 21 m).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -12203,7 +12223,9 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy metsződést, ami már túl kicsi ahhoz, hogy a 104-es szimbólummal (földletörés) jelöljük, egy vonallal kell jelölni. Minimum mélység 1 m. 
+Minimális hossz: 1,15 mm (lábnyoma 17 m).
+ A környező szintvonalakat nem kell megszakítani.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -12230,7 +12252,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy olyan kis mélyedés vagy üreg meredek oldalak nélkül, ami túl kicsi ahhoz, hogy szintvonallal ábrázoljuk. 
+Minimális mélység: 1 m. Minimum szélesség: 2 m.
+A kisebb, meredek oldalú mélyedéseket a 112 (gödör) szimbólummal jelöljük.
+A szimbólum nem lehet érintésben vagy átfedésben más barna szimbólumokkal.A hely a szimbólum súlypontja, és a szimbólumot északnak tájoljuk.
+Lábnyoma: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -12263,7 +12289,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Járhatatlan szirt, sziklafal forma ábrázolással (ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
