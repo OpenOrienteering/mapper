@@ -61,7 +61,7 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Верхний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -71,7 +71,7 @@
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нижний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -81,7 +81,7 @@
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Blue 70%</source>
@@ -101,17 +101,17 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 60% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 30% для узкой полосы</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -136,7 +136,7 @@
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,7 +151,7 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для подлеска</translation>
     </message>
     <message>
         <source>White over yellow</source>
@@ -161,7 +161,7 @@
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный для открытой местности</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -281,7 +281,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation>Грунтовый обрыв, без зубцов</translation>
+        <translation>Грунтовый обрыв, бровка</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -309,12 +309,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation>Грунтовый вал</translation>
+        <translation>Земляной вал</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
@@ -355,7 +355,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небольшая промоина, сухой ров или траншея. Минимальная глубина: 0,5 м.
+Минимальная длина (изолированная): 3 точки (1,15 мм - проекция 17 м).
+Горизонтали должны быть разорваны при пересечении с этим знаком.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -368,7 +370,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выделяющийся микробугор или холмик, который невозможно отобразить с помощью горизонтали.
+Минимальная высота: 1 м.
+Знак не должен касаться или разрывать горизонтали.
+Проекция: 7,5 м х 7,5 м.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -381,7 +386,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выделяющийся удлинённый холмик, который нельзя показать горизонталью.
+Минимальная высота: 1 м.
+Знак не должен касаться или разрывать горизонтали.
+Проекция: 12 м х 6 м.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -395,12 +403,16 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небольшое углубление или понижение без крутых склонов, которое слишком мало для показа горизонталями.
+Минимальная глубина: 1 м, минимальная ширина: 2 м.
+Небольшие ямки с крутыми склонами обозначаются символом 112 (воронка).
+Знак не должен касаться или накладываться на другие коричневые символы. Расположение - центр тяжести знака, который ориентирован на север.
+Проекция: 12 м х 6 м.</translation>
     </message>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 112</comment>
-        <translation>Искусственная внемасштабная яма</translation>
+        <translation>Воронка</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol Earth bank (104).
@@ -409,7 +421,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ямы и углубления с отчётливо выраженными крутыми стенками, которые нельзя показать в масштабе с помощью знака 104 (земляной обрыв).
+Минимальная глубина: 1 м, минимальная ширина: 1 м.
+Выемка размером более 5 м х 5 м обычно должна быть преувеличена и нарисована с использованием знака 104 (земляной обрыв). Ямы с пологими склонами обозначаются знаком 111 (ямка).
+Знак не должен касаться или накладываться на другие коричневые знаки. Расположение - центр тяжести знака, который ориентирован на север.
+Проекция: 10,5 м х 12 м.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -472,7 +488,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Этот объект должен очень чётко отличаться от его окружения.
+Расположение - центр тяжести знака, который ориентирован на север.
+Знак не должен касаться или накладываться на другие коричневые знаки.
+Определение знака должно быть дано на карте.
+Проекция: 13,5 м х 11,5 м.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
