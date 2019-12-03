@@ -133,17 +133,17 @@ Skaalataanko tuotu tieto?</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Muodon luonti epäonnistui kerroksessa: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Tason %1 luominen epäonnistui: %2</translation>
+        <translation>Tason %1 luominen epäonnistui: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Nimikentän luonti epäonnistui: %1</translation>
+        <translation>Nimikentän luonti epäonnistui: %1</translation>
     </message>
 </context>
 <context>
@@ -5794,7 +5794,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="522"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Väri &quot;%1&quot; on tuotu erikoisvärinä &quot;Rekisteröity musta&quot;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
@@ -5951,7 +5951,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1972"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2021"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Muodon luonti epäonnistui kerroksessa: %1</translation>
     </message>
     <message>
         <source>Failed to create layer %1: %2</source>
@@ -7149,7 +7149,7 @@ erottelut</translation>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lisäluvat tarvitaan pääsyyn &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -8369,7 +8369,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Viiste:</translation>
     </message>
 </context>
 <context>
