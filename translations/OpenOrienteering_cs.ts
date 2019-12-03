@@ -133,17 +133,17 @@ Změnit měřítko importovaných dat na měřítko mapy?</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">Nepodařilo se vytvořit objekt ve vrstvě: %1</translation>
+        <translation>Nepodařilo se vytvořit objekt ve vrstvě: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Nepodařilo se vytvořit vrstvu %1: %2</translation>
+        <translation>Nepodařilo se vytvořit vrstvu %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Nepodařilo se vytvořit název pole: %1</translation>
+        <translation>Nepodařilo se vytvořit název pole: %1</translation>
     </message>
 </context>
 <context>
@@ -7751,7 +7751,7 @@ Chcete uložit vaše změny?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="265"/>
         <source>The symbol set import generated warnings.</source>
-        <translation>Import sady symbolů  generoval varování.</translation>
+        <translation>Import sady symbolů generoval varování.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="273"/>
@@ -8516,7 +8516,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zkosení:</translation>
     </message>
 </context>
 <context>
