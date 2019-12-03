@@ -205,6 +205,18 @@ Map* TemplateMap::templateMap()
 	return template_map.get();
 }
 
+std::unique_ptr<Map> TemplateMap::takeTemplateMap()
+{
+	std::unique_ptr<Map> result;
+	if (template_state == Loaded)
+	{
+		swap(result, template_map);
+		setTemplateState(Unloaded);
+		emit templateStateChanged();
+	}
+	return result;
+}
+
 void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)
 {
 	template_map = std::move(map);

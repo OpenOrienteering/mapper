@@ -46,7 +46,6 @@
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
-#include <QFile>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFont>
@@ -123,7 +122,7 @@
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
-#include "gui/symbols/replace_symbol_set_dialog.h"
+#include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
@@ -165,6 +164,10 @@
 #include "undo/undo.h"
 #include "undo/undo_manager.h"
 #include "util/backports.h" // IWYU pragma: keep
+
+#ifdef MAPPER_USE_GDAL
+#include "gdal/ogr_template.h"
+#endif
 
 
 #ifdef __clang_analyzer__
@@ -2062,13 +2065,13 @@ void MapEditorController::symbolSetIdClicked()
 
 void MapEditorController::loadSymbolsFromClicked()
 {
-	ReplaceSymbolSetDialog::showDialog(window, *map);
+	SymbolReplacement(*map).withSymbolSetFileDialog(window);
 }
 
 
 void MapEditorController::loadCrtClicked()
 {
-	ReplaceSymbolSetDialog::showDialogForCRT(window, *map, *map);
+	SymbolReplacement(*map, *map).withCrtFileDialog(window);
 }
 
 
@@ -4037,68 +4040,76 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
 	
-	QStringList map_names;
 	QStringList map_extensions;
 	for (auto* format : FileFormats.formats())
 	{
-		if (!format->supportsReading())
-			continue;
-		
-		map_names.push_back(format->primaryExtension().toUpper());
-		map_extensions.append(format->fileExtensions());
+		if (format->supportsReading())
+			map_extensions.append(format->fileExtensions());
 	}
-	map_names.removeDuplicates();
+	map_extensions.push_back(QLatin1String("gpx"));
+	map_extensions.sort(Qt::CaseInsensitive);
 	map_extensions.removeDuplicates();
 	
 	QString filename = FileDialog::getOpenFileName(
 	                       window,
-	                       tr("Import %1 or GPX file").arg(
-	                           map_names.join(QString::fromLatin1(", "))),
+	                       tr("Import..."),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2 *.gpx);;%3 (*.*)").arg(
+	                       QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
 	                           tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
-	if (filename.isEmpty() || filename.isNull())
+	if (filename.isEmpty())
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
 	
-	bool success = false;
+	/**
+	 * Finding the most appropriate import function in the following way:
+	 * - If the extensions is ".gpx", the (default) import is via TemplateTrack.
+	 * - If the format is understood by OgrFileFormat, it is handled by
+	 *   OgrTemplate import. Note that the OgrTemplate import may also handle
+	 *   GPX, but it is left to the OgrFileFormat (user configuration) whether
+	 *   it wants to report its support for the GPX format.
+	 * - Every other recognized map file is imported regularly.
+	 */
+	char const* format_id = "";
+	if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
+		format_id = "GPX";
+	
 	auto* map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsFileImport);
 	if (map_format)
+		format_id = map_format->id();
+	
+	if (qstrcmp(format_id, "OGR") == 0)
 	{
-		// Map format recognized by filename extension
-		importMapFile(filename, true); // Error reporting in importMapFile()
-		return;
-	}
-	else if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
-	{
-		// Fallback: Legacy GPX file import
-		importGpxFile(filename);
-		return; // Error reporting in Track::import()
-	}
-	else if (importMapFile(filename, false))
-	{
-		// Last resort: Map format recognition by try-and-error
-		success = true;
-	}
-	else
-	{
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		importOgrFile(filename);
 		return;
 	}
 	
-	if (!success)
+	if (qstrcmp(format_id, "GPX") == 0)
 	{
-		/// \todo Reword message (not a map file here). Requires new translations
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));
+		// Legacy GPX file import
+		importGpxFile(filename);
+		return; // Error reporting in Track::import()
 	}
+	
+	if (format_id != nullptr)
+	{
+		importMapFile(filename, false);
+		return;
+	}
+	
+	QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 }
 
 bool MapEditorController::importGpxFile(const QString& filename)
 {
-	TemplateTrack temp(filename, map);
-	return !temp.configureAndLoad(window, main_view)
-	       || temp.import(window);
+	Map imported_map;
+	imported_map.setGeoreferencing(map->getGeoreferencing());
+	
+	TemplateTrack temp(filename, &imported_map);
+	if (!temp.configureAndLoad(window, main_view))
+		return false;
+	
+	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
 }
 
 bool MapEditorController::importMapFile(const QString& filename, bool show_errors)
@@ -4124,40 +4135,59 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	if (show_errors && !importer->warnings().empty())
 	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
-	if (imported_map.symbolSetId() != map->symbolSetId())
+	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
+}
+
+bool MapEditorController::importOgrFile(const QString& filename)
+{
+#if MAPPER_USE_GDAL
+	OgrTemplate ogr_template {filename, map};
+	if (!ogr_template.configureAndLoad(window, main_view))
+		return false;
+	
+	auto template_map = ogr_template.takeTemplateMap();
+	if (Q_UNLIKELY(!template_map))
+		return false;
+	
+	TemplateTransform transform;
+	if (!ogr_template.isTemplateGeoreferenced())
 	{
-		auto crt_filename = filename;
-		crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".crt"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename = ReplaceSymbolSetDialog::discoverCrtFile(imported_map.symbolSetId(), map->symbolSetId());
-		
-		if (QFileInfo::exists(crt_filename))
-		{
-			QFile crt_file{ crt_filename };
-			if (!crt_file.open(QFile::ReadOnly))
-			{
-				QMessageBox::warning(window,
-				                     ::OpenOrienteering::Map::tr("Error"),
-				                     ::OpenOrienteering::Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
-				return false;
-			}
-			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
-			{
-				auto choice = QMessageBox::question(window,
-				                                    ::OpenOrienteering::Map::tr("Import..."),
-				                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
-				                                                                "Import the data anyway?"),
-				                                    QMessageBox::Yes | QMessageBox::No,
-				                                    QMessageBox::No);
-				if (choice == QMessageBox::No)
-					return false;
-			}
-		}
+		ogr_template.getTransform(transform);
+		template_map->applyOnAllObjects(transform.makeObjectTransform());
+		template_map->setGeoreferencing(map->getGeoreferencing());
+	}
+	auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
+	template_scale *= qreal(template_map->getScaleDenominator()) / map->getScaleDenominator();
+	if (!qFuzzyCompare(template_scale, 1))
+	{
+		template_map->scaleAllSymbols(template_scale);
 	}
 	
-	importMap(imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
+	return importMapWithReplacement(*template_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
+#else
+	return false;
+#endif
+}
+
+
+bool MapEditorController::importMapWithReplacement(
+        Map& imported_map,
+        Map::ImportMode mode,
+        const QString& crt_file_hint)
+{
+	if (!SymbolReplacement(imported_map, *map).withAutoCrtFile(window, crt_file_hint))
+	{
+		auto choice = QMessageBox::question(window,
+		                                    ::OpenOrienteering::Map::tr("Import..."),
+		                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
+		                                                                "Import the data anyway?"),
+		                                    QMessageBox::Yes | QMessageBox::No,
+		                                    QMessageBox::No);
+		if (choice == QMessageBox::No)
+			return false;
+	}
+	
+	importMap(imported_map, mode, window);
 	return true;
 }
 

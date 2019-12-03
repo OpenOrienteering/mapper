@@ -82,6 +82,14 @@ public:
 	
 	const Map* templateMap() const;
 	
+	/**
+	 * Returns the template's map.
+	 * 
+	 * The template must be in loaded state before calling this method.
+	 * The template will be in unloaded state afterwards.
+	 */
+	std::unique_ptr<Map> takeTemplateMap();
+	
 protected:
 	Template* duplicateImpl() const override;
 	
