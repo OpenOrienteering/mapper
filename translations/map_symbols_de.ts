@@ -6370,7 +6370,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation>Drei Passkreuze müssen innerhalb des zu druckenden Teils einer Karte in einer asymmetrischen Position angebracht werden.</translation>
+        <translation>Wenigstens drei Passkreuze müssen innerhalb des Rahmens einer Karte in nicht-symmetrischer Anordnung ausgegeben werden. Außerdem soll eine Farbprüfung möglich sein.</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -6380,9 +6380,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
-
-Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
+        <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -8558,7 +8556,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0.1</comment>
-        <translation>Absolute Höhenangaben dienen der groben Abschätzung von Höhendifferenzen. Die Höhe soll auf ganze Meter gerundet angegeben werden. Die Zahl wird nach Norden ausgerichtet. Wasserspiegel können ohne den Punkt angegeben werden.</translation>
+        <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
     </message>
     <message>
         <source>Spot height</source>
@@ -9704,49 +9702,47 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished">Drei Passkreuze müssen innerhalb des zu druckenden Teils einer Karte in einer asymmetrischen Position angebracht werden.</translation>
+        <translation>Wenigstens drei Passkreuze müssen innerhalb des Rahmens einer Karte in nicht-symmetrischer Anordnung ausgegeben werden. Außerdem soll eine Farbprüfung möglich sein.</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
-        <translation type="unfinished">Höhenkote, Punkt</translation>
+        <translation>Höhenkote, Punkt</translation>
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation type="unfinished">Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert.
-
-Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
+        <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
     </message>
     <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
-        <translation type="unfinished">Höhenkote, Text</translation>
+        <translation>Höhenkote, Text</translation>
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation type="unfinished">Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
+        <translation>Höhenkoten dienen der Abschätzung großer Höhenunterschiede. Die Höhe wird auf ganze Meter gerundet angegeben. Die Ziffern werden nach Norden orientiert. Gewässertiefen werden ohne den Punkt angegeben.</translation>
     </message>
     <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
-        <translation type="unfinished">Start</translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control. The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished">Der Start- oder Kartenausgabepunkt (falls nicht am Start) wird durch ein gleichseitiges Dreieck dargestellt, das in die Richtung zum ersten Posten zeigt. Der Mittelpunkt des Dreiecks gibt die genaue Lage des Objektes an.</translation>
+        <translation>Der Start- oder Kartenausgabepunkt (falls nicht am Start) wird durch ein gleichseitiges Dreieck dargestellt, das in die Richtung zum ersten Posten zeigt. Der Mittelpunkt des Dreiecks gibt die genaue Lage des Objektes an.</translation>
     </message>
     <message>
         <source>Control point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished">Kontrollposten</translation>
+        <translation>Kontrollposten</translation>
     </message>
     <message>
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
-        <translation type="unfinished">Die Kontrollposten werden mit Kreisen dargestellt. Der Mittelpunkt des Kreises gibt die genaue Lage des Objektes an. Teile der Kreise können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
+        <translation>Die Kontrollposten werden mit Kreisen dargestellt. Der Mittelpunkt des Kreises gibt die genaue Lage des Objektes an. Teile der Kreise können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
     </message>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
@@ -9761,12 +9757,12 @@ Achtung: Gewässertiefen werden ohne den Punkt angegeben.</translation>
     <message>
         <source>Control number</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished">Postennummer</translation>
+        <translation>Postennummer</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail. The numbers are orientated to north.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished">Die Nummer des Kontrollpostens ist so in der Nähe des Kontrollposten-Kreises zu platzieren, dass wichtige Details nicht verdeckt werden. Die Nummern sind nach Norden orientiert.</translation>
+        <translation>Die Nummer des Kontrollpostens ist so in der Nähe des Kontrollposten-Kreises zu platzieren, dass wichtige Details nicht verdeckt werden. Die Nummern sind nach Norden orientiert.</translation>
     </message>
     <message>
         <source>Line</source>
