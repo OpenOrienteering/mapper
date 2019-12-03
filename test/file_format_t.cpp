@@ -761,7 +761,7 @@ void FileFormatTest::ogrExportTest()
 		QVERIFY(format);
 		
 		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
-		QVERIFY(exporter);
+		QVERIFY(bool(exporter));
 		QVERIFY(exporter->doExport());
 	}
 	
@@ -772,7 +772,7 @@ void FileFormatTest::ogrExportTest()
 		QVERIFY(format);
 		
 		auto importer = format->makeImporter(ogr_filepath, &map, nullptr);
-		QVERIFY(importer);
+		QVERIFY(bool(importer));
 		QVERIFY(importer->doImport());
 		QVERIFY(map.getGeoreferencing().isValid());
 		
