@@ -4040,27 +4040,23 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
 	
-	QStringList map_names;
 	QStringList map_extensions;
 	for (auto* format : FileFormats.formats())
 	{
-		if (!format->supportsReading())
-			continue;
-		
-		map_names.push_back(format->primaryExtension().toUpper());
-		map_extensions.append(format->fileExtensions());
+		if (format->supportsReading())
+			map_extensions.append(format->fileExtensions());
 	}
-	map_names.removeDuplicates();
+	map_extensions.push_back(QLatin1String("gpx"));
+	map_extensions.sort(Qt::CaseInsensitive);
 	map_extensions.removeDuplicates();
 	
 	QString filename = FileDialog::getOpenFileName(
 	                       window,
-	                       tr("Import %1 or GPX file").arg(
-	                           map_names.join(QString::fromLatin1(", "))),
+	                       tr("Import..."),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2 *.gpx);;%3 (*.*)").arg(
+	                       QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
 	                           tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
-	if (filename.isEmpty() || filename.isNull())
+	if (filename.isEmpty())
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
