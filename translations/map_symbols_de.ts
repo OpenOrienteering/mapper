@@ -11,32 +11,32 @@
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß für Bahneindruck</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß für Bahngleis</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Braun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -61,32 +61,32 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Oberes Braun 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz unter oberem Braun 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unteres Braun 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz unter unterem Braun 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 60% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 30% für schmale Schneise</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Grün</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100%/Grün 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100%/Schwarz 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100% für Bodenbewuchs</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Gelb</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz für offenes Land</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -1776,7 +1776,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 509</comment>
-        <translation>Bahngeleise</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track.
@@ -3513,7 +3513,7 @@ Minimale Länge (isoliert): 1 mm (Wirklichkeit 15 m).</translation>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 306</comment>
-        <translation>Ein natürlicher oder künstlicher Wassergraben, der nur zeitweise Wasser führt.</translation>
+        <translation>Ein natürlicher oder künstlicher kleiner Wasserlauf, der möglicherweise nur zeitweise Wasser führt.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with border line</source>
@@ -3953,7 +3953,7 @@ Kann mit Symbol 407 (Bodenvegetation leichte Laufbehinderung, gute Sicht) oder 4
     <message>
         <source>Vineyard</source>
         <comment>Name of symbol 414</comment>
-        <translation>Rebberg</translation>
+        <translation>Weinberg</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. Must be combined with either symbol 401 (open land) or symbol 403 (rough open land).</source>
@@ -4233,15 +4233,15 @@ Belaufbarkeit: Normal belaufbar.</translation>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 509</comment>
-        <translation>Bahngeleise</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track.
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
         <comment>Description of symbol 509</comment>
-        <translation>Ein Geleise für Eisenbahnen oder andere Fahrzeuge.
-Falls es verboten ist, dem Geleise entlang zu laufen, muss es mit dem Symbol 711 (verbotene Strecke) kombiniert werden.
-Falls das Überqueren des Geleises verboten ist, muss es mit einem Symbol für verbotene Gebiete kombiniert werden.</translation>
+        <translation>Ein Gleis für Eisenbahnen oder andere Fahrzeuge.
+Falls es verboten ist, das Gleis entlang zu laufen, muss es mit dem Symbol 711 (verbotene Strecke) kombiniert werden.
+Falls das Überqueren des Gleises verboten ist, muss es mit einem Symbol für verbotene Gebiete kombiniert werden.</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -4412,7 +4412,7 @@ Bei unpassierbaren Objekten muss die Linie beim Durchgang unterbrochen werden. B
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area.
 The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</source>
         <comment>Description of symbol 520</comment>
-        <translation>Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt.
+        <translation>Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngleise und große Gebäude werden im verbotenen Gebiet dargestellt.
 Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen. Verbotenes Gebiet sollte mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol (z.B. Zaun) begrenzt werden.</translation>
     </message>
     <message>
@@ -4434,8 +4434,8 @@ Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Ausspar
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area.
 Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</source>
         <comment>Description of symbol 520.2</comment>
-        <translation>Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngeleise und grosse Gebäude werden im verbotenen Gebiet dargestellt.
-Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B., wenn ein Waldteil verbotenes Gebiet ist).
+        <translation>Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngleise und große Gebäude werden im verbotenen Gebiet dargestellt.
+Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B. wenn ein Waldteil verbotenes Gebiet ist).
 Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen. Verbotenes Gebiet sollte mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol (z.B. Zaun) begrenzt werden.</translation>
     </message>
     <message>
@@ -4852,11 +4852,7 @@ markiert ist (z.B. durch Absperrband).</translation>
     <message>
         <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
         <comment>Description of symbol 710</comment>
-        <translation>Ein Durchgang oder Übergang, z. B. durch oder über eine Mauer oder einen Zaun,
-über eine Strasse oder Eisenbahngleise, durch einen Tunnel oder ein Sperrgebiet
-oder über eine unpassierbare Begrenzung, wird auf der Karte mit zwei nach aussen
-gebogenen Linien dargestellt. Die Linien müssen der Länge des Durchgangs
-entsprechen.</translation>
+        <translation>Ein Durchgang oder Übergang, z. B. durch oder über eine Mauer oder einen Zaun, über eine Straße oder Eisenbahngleise, durch einen Tunnel oder ein Sperrgebiet oder über eine unpassierbare Begrenzung, wird auf der Karte mit zwei nach außen gebogenen Linien dargestellt. Die Linien müssen der Länge des Durchgangs entsprechen.</translation>
     </message>
     <message>
         <source>Out-of-bounds route</source>
@@ -5551,7 +5547,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
-        <translation>Ein passierbarer Wasserlauf (einschließlich große Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
+        <translation>Ein passierbarer Wasserlauf (einschließlich großer Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
     </message>
     <message>
         <source>Minor water channel</source>
@@ -5561,7 +5557,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 307</comment>
-        <translation>Ein natürlicher oder künstlicher Wassergraben, der nur zeitweise Wasser führen kann.</translation>
+        <translation>Ein natürlicher oder künstlicher kleiner Wasserlauf, der möglicherweise nur zeitweise Wasser führt.</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -6014,12 +6010,12 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Railway</source>
         <comment>Name of symbol 515</comment>
-        <translation>Eisenbahn</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
         <comment>Description of symbol 515</comment>
-        <translation>Eine Eisenbahn oder andere Arten von Schienenweg (Straßenbahn, Feldbahn usw.).</translation>
+        <translation>Eine Eisenbahn oder andere Arten von Schienenwegen (Straßenbahn, Feldbahn usw.).</translation>
     </message>
     <message>
         <source>Power line</source>
@@ -6039,7 +6035,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation>Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien soll de Breite der Überlandleitung entsprechen.</translation>
+        <translation>Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien kann die Breite der Überlandleitung andeuten.</translation>
     </message>
     <message>
         <source>Tunnel</source>
@@ -6324,7 +6320,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Spezielle, künstliche Objekte werden mit diesem Symbol dargestellt. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
@@ -6334,7 +6330,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation>Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Spezielle, künstliche Objekte werden mit diesem Symbol dargestellt. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -7592,7 +7588,7 @@ Mindestbreite: 0,25 mm.</translation>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation>Obstplantage</translation>
+        <translation>Obstgarten</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to represent the direction of planting.</source>
@@ -7817,7 +7813,7 @@ Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 515.1</comment>
-        <translation>Eisenbahngleis</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway is a permanent track laid with rails on which locomotives, carriages or wagons can travel. If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol area with forbidden access (528.1).</source>
@@ -8653,7 +8649,7 @@ Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span
     <message>
         <source>Crossing point</source>
         <comment>Name of symbol 708</comment>
-        <translation>Übergangspunkt</translation>
+        <translation>Durchgang</translation>
     </message>
     <message>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
@@ -9179,32 +9175,32 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
     <message>
         <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished">Ein passierbarer Wasserlauf mit einer minimalen Breite von 2 m. Flüsse mit einer Breite von mehr als 5 m sollen maßstäblich dargestellt werden.</translation>
+        <translation>Ein passierbarer Wasserlauf mit einer minimalen Breite von 2 m. Flüsse mit einer Breite von mehr als 5 m sollen maßstäblich dargestellt werden.</translation>
     </message>
     <message>
         <source>Crossable small watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished">Passierbarer kleiner Wasserlauf</translation>
+        <translation>Passierbarer kleiner Wasserlauf</translation>
     </message>
     <message>
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished">Ein passierbarer Wasserlauf (einschließlich große Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
+        <translation>Ein passierbarer Wasserlauf (einschließlich großer Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
     </message>
     <message>
         <source>Minor water channel</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished">Kleiner Wassergraben</translation>
+        <translation>Kleiner Wassergraben</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished">Ein natürlicher oder künstlicher Wassergraben, der nur zeitweise Wasser führen kann.</translation>
+        <translation>Ein natürlicher oder künstlicher kleiner Wasserlauf, der möglicherweise nur zeitweise Wasser führt.</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
         <comment>Name of symbol 309</comment>
-        <translation type="unfinished">Unpassierbarer Sumpf</translation>
+        <translation>Unpassierbarer Sumpf</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
@@ -9214,77 +9210,77 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
     <message>
         <source>Uncrossable marsh, border line</source>
         <comment>Name of symbol 309.1</comment>
-        <translation type="unfinished">Unpassierbarer Sumpf, Umrisslinie</translation>
+        <translation>Unpassierbarer Sumpf, Umrisslinie</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with border line</source>
         <comment>Name of symbol 309.2</comment>
-        <translation type="unfinished">Unpassierbarer Sumpf, mit Umrisslinie</translation>
+        <translation>Unpassierbarer Sumpf, mit Umrisslinie</translation>
     </message>
     <message>
         <source>Marsh</source>
         <comment>Name of symbol 310</comment>
-        <translation type="unfinished">Sumpf</translation>
+        <translation>Sumpf</translation>
     </message>
     <message>
         <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished">Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
+        <translation>Ein passierbarer Sumpf, im Allgemeinen mit deutlicher Begrenzung. Die Signatur sollte mit Vegetationssignaturen kombiniert werden, um die Belaufbarkeit und Offenheit darzustellen. Wenn kleine Sumpfflächen mit den Signaturen 403/404 kombiniert werden sollen, ist zur Verbesserung der Lesbarkeit die Verwendung der Signaturen 401/402 zulässig.</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished">Sumpf, Minimalgröße</translation>
+        <translation>Sumpf, Minimalgröße</translation>
     </message>
     <message>
         <source>Special water feature</source>
         <comment>Name of symbol 314</comment>
-        <translation type="unfinished">Besonderes Gewässerobjekt</translation>
+        <translation>Besonderes Gewässerobjekt</translation>
     </message>
     <message>
         <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
         <comment>Description of symbol 314</comment>
-        <translation type="unfinished">Ein besonderes kleines Gewässerobjekt. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Ein besonderes kleines Gewässerobjekt. Die Bedeutung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation type="unfinished">Offenes Gebiet</translation>
+        <translation>Offenes Gebiet</translation>
     </message>
     <message>
         <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished">Kultiviertes Land, Felder, Wiesen, Weideland usw. ohne Bäume, das leicht belaufbar ist. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Kultiviertes Land, Felder, Wiesen, Weideland usw. ohne Bäume, das leicht belaufbar ist. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation type="unfinished">Offenes Gebiet mit einzelnen Bäumen</translation>
+        <translation>Offenes Gebiet mit einzelnen Bäumen</translation>
     </message>
     <message>
         <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished">Wiesen mit einzelnen Bäumen oder Büschen, Gras oder ähnlicher Bodenvegetation, die leicht belaufbar sind. Gebiete, die kleiner sind als 10 mm² im Kartenmaßstab, werden als offenes Gebiet (Signatur 401) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420). Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Wiesen mit einzelnen Bäumen oder Büschen, Gras oder ähnlicher Bodenvegetation, die leicht belaufbar sind. Gebiete, die kleiner sind als 10 mm² im Kartenmaßstab, werden als offenes Gebiet (Signatur 401) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420). Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation type="unfinished">Raues offenes Gebiet</translation>
+        <translation>Raues offenes Gebiet</translation>
     </message>
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished">Heide, Moorflächen, Kahlschläge, Neuanpflanzungen (Bäume kleiner als ca. 1 m) oder anderes überwiegend offenes Gelände mit rauer Bodenvegetation, Heidekraut oder hohem Gras. Die Signatur 403 kann mit den Signaturen 407 und 409 kombiniert werden, um langsame Belaufbarkeit darzustellen.</translation>
+        <translation>Heide, Moorflächen, Kahlschläge, Neuanpflanzungen (Bäume kleiner als ca. 1 m) oder anderes überwiegend offenes Gelände mit rauer Bodenvegetation, Heidekraut oder hohem Gras. Die Signatur 403 kann mit den Signaturen 407 und 409 kombiniert werden, um langsame Belaufbarkeit darzustellen.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation type="unfinished">Raues offenes Gebiet mit einzelnen Bäumen</translation>
+        <translation>Raues offenes Gebiet mit einzelnen Bäumen</translation>
     </message>
     <message>
         <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished">Wo in rauem offenen Gebiet einzelne Bäume stehen, sollen weiße (oder grüne) Flächen im Gelbton erscheinen. Solche Gebiete können durch ein regelmäßiges Muster von großen weißen Punkten generalisiert werden. Gebiete, die kleiner sind als 16 mm² im Kartenmaßstab, werden als raues offenes Gebiet (Signatur 403) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420).</translation>
+        <translation>Wo in rauem offenen Gebiet einzelne Bäume stehen, sollen weiße (oder grüne) Flächen im Gelbton erscheinen. Solche Gebiete können durch ein regelmäßiges Muster von großen weißen Punkten generalisiert werden. Gebiete, die kleiner sind als 16 mm² im Kartenmaßstab, werden als raues offenes Gebiet (Signatur 403) dargestellt. Einzelne Bäume können hinzugefügt werden (Signaturen 418, 419, 420).</translation>
     </message>
     <message>
         <source>Forest: good visibility</source>
@@ -9309,83 +9305,83 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation type="unfinished">Obstgarten</translation>
+        <translation>Obstgarten</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished">Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Vineyard</source>
         <comment>Name of symbol 413</comment>
-        <translation type="unfinished">Weinberg</translation>
+        <translation>Weinberg</translation>
     </message>
     <message>
         <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished">Die grünen Linien können zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Die grünen Linien können zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished">Besonderes Vegetationsobjekt</translation>
+        <translation>Besonderes Vegetationsobjekt</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished">Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 419</comment>
-        <translation type="unfinished">Besonderes Vegetationsobjekt</translation>
+        <translation>Besonderes Vegetationsobjekt</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished">Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 420</comment>
-        <translation type="unfinished">Besonderes Vegetationsobjekt</translation>
+        <translation>Besonderes Vegetationsobjekt</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 420</comment>
-        <translation type="unfinished">Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Mit Signatur 418 kann ein kleines Vegetationsobjekt dargestellt werden. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Motorway</source>
         <comment>Name of symbol 501.0</comment>
-        <translation type="unfinished">Autobahn</translation>
+        <translation>Autobahn</translation>
     </message>
     <message>
         <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 501.0</comment>
-        <translation type="unfinished">Eine Straße mit zwei Fahrbahnen. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe an dem Autobahnrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
+        <translation>Eine Straße mit zwei Fahrbahnen. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe an dem Autobahnrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
     </message>
     <message>
         <source>Major road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished">Hauptstraße, Mindestbreite</translation>
+        <translation>Hauptstraße, Mindestbreite</translation>
     </message>
     <message>
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished">Eine Straße breiter als 5 m. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe am Straßenrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
+        <translation>Eine Straße breiter als 5 m. Die Breite der Signatur soll maßstabsgetreu gezeichnet werden, jedoch nicht schmaler als die minimale Breite. Die äußeren Begrenzungslinien können durch die Signaturen 519, 521, 522 oder 524 ersetzt werden, wenn ein Zaun oder eine Mauer so nahe am Straßenrand steht, dass sie nicht als eigene Signatur gezeichnet werden können. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
     </message>
     <message>
         <source>Minor road</source>
         <comment>Name of symbol 503</comment>
-        <translation type="unfinished">Nebenstraße</translation>
+        <translation>Nebenstraße</translation>
     </message>
     <message>
         <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished">Eine Straße mit 3-5 m Breite. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
+        <translation>Eine Straße mit 3-5 m Breite. Der Raum zwischen den schwarzen Linien muss mit Braun (50%) ausgefüllt werden. Eine im Bau befindliche Straße kann mit unterbrochenen Linien dargestellt werden.</translation>
     </message>
     <message>
         <source>Track: fast riding</source>
@@ -9472,7 +9468,7 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509.1</comment>
-        <translation type="unfinished">Schmale Schneise</translation>
+        <translation>Schmale Schneise</translation>
     </message>
     <message>
         <source>Non-ridable narrow forest rides should be represented.</source>
@@ -9482,228 +9478,228 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished">Eisenbahn</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished">Eine Eisenbahn oder andere Arten von Schienenweg (Straßenbahn, Feldbahn usw.).</translation>
+        <translation>Eine Eisenbahn oder andere Arten von Schienenwegen (Straßenbahn, Feldbahn usw.).</translation>
     </message>
     <message>
         <source>Power line</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished">Stromleitung</translation>
+        <translation>Stromleitung</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished">Stromleitung, Seilbahn oder Skilift. Die Querstriche bezeichnen den genauen Standort der Masten.</translation>
+        <translation>Stromleitung, Seilbahn oder Skilift. Die Querstriche bezeichnen den genauen Standort der Masten.</translation>
     </message>
     <message>
         <source>Major power line</source>
         <comment>Name of symbol 517</comment>
-        <translation type="unfinished">Überlandleitung</translation>
+        <translation>Überlandleitung</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished">Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien soll de Breite der Überlandleitung entsprechen.</translation>
+        <translation>Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien kann die Breite der Überlandleitung andeuten.</translation>
     </message>
     <message>
         <source>Tunnel</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished">Tunnel</translation>
+        <translation>Tunnel</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished">Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
+        <translation>Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
     </message>
     <message>
         <source>Tunnel, minimum size</source>
         <comment>Name of symbol 518.1</comment>
-        <translation type="unfinished">Tunnel, Minimalgröße</translation>
+        <translation>Tunnel, Minimalgröße</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518.1</comment>
-        <translation type="unfinished">Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
+        <translation>Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
     </message>
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished">Steinmauer</translation>
+        <translation>Steinmauer</translation>
     </message>
     <message>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
 cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished">Mit diesem Symbol Steinmauer sollen alle sichtbaren Mauern dargestellt werden. Wenn es verboten ist, die Mauer zu überqueren, ist Symbol 707 (uncrossable boundary) zu verwenden.</translation>
+        <translation>Mit diesem Symbol Steinmauer sollen alle sichtbaren Mauern dargestellt werden. Wenn es verboten ist, die Mauer zu überqueren, ist Symbol 707 (uncrossable boundary) zu verwenden.</translation>
     </message>
     <message>
         <source>High fence</source>
         <comment>Name of symbol 524</comment>
-        <translation type="unfinished">Hoher Zaun</translation>
+        <translation>Hoher Zaun</translation>
     </message>
     <message>
         <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished">Ein Bretter- oder Drahtzaun mit mehr als 1,5 m Höhe, wie z. B. ein Wildzaun, der von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
+        <translation>Ein Bretter- oder Drahtzaun mit mehr als 1,5 m Höhe, wie z. B. ein Wildzaun, der von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
     </message>
     <message>
         <source>Crossing point</source>
         <comment>Name of symbol 525</comment>
-        <translation type="unfinished">Durchgang</translation>
+        <translation>Durchgang</translation>
     </message>
     <message>
         <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished">Alle Stellen, an denen hohe Zäune oder Mauern durch- oder überquert werden können, müssen dargestellt werden. Das Symbol kann auch für ein Tor oder einen Übertritt über eine Steinmauer (521), einen Zaun (524) oder eine Pipeline (534) verwendet werden.</translation>
+        <translation>Alle Stellen, an denen hohe Zäune oder Mauern durch- oder überquert werden können, müssen dargestellt werden. Das Symbol kann auch für ein Tor oder einen Übertritt über eine Steinmauer (521), einen Zaun (524) oder eine Pipeline (534) verwendet werden.</translation>
     </message>
     <message>
         <source>Building</source>
         <comment>Name of symbol 526</comment>
-        <translation type="unfinished">Gebäude</translation>
+        <translation>Gebäude</translation>
     </message>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished">Ein Gebäude wird mit seinem Grundriss gezeichnet, sofern es der Maßstab erlaubt.</translation>
+        <translation>Ein Gebäude wird mit seinem Grundriss gezeichnet, sofern es der Maßstab erlaubt.</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 526.1</comment>
-        <translation type="unfinished">Gebäude, Minimalgröße</translation>
+        <translation>Gebäude, Minimalgröße</translation>
     </message>
     <message>
         <source>Settlement</source>
         <comment>Name of symbol 527</comment>
-        <translation type="unfinished">Siedlungsgebiet</translation>
+        <translation>Siedlungsgebiet</translation>
     </message>
     <message>
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished">Häuser, Gärten und andere bebaute Gebiete. Straßen, Gebäude und andere markante Objekte in einem Siedlungsgebiet müssen dargestellt werden. Wenn nicht alle Gebäude gezeichnet werden können, kann die alternative Signatur (schwarzer Linienraster) herangezogen werden.</translation>
+        <translation>Häuser, Gärten und andere bebaute Gebiete. Straßen, Gebäude und andere markante Objekte in einem Siedlungsgebiet müssen dargestellt werden. Wenn nicht alle Gebäude gezeichnet werden können, kann die alternative Signatur (schwarzer Linienraster) herangezogen werden.</translation>
     </message>
     <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
-        <translation type="unfinished">Befestigte Fläche</translation>
+        <translation>Befestigte Fläche</translation>
     </message>
     <message>
         <source>An area of hard standing used for parking or other purposes.</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished">Eine Fläche mit fester Oberfläche zum Parken oder zu anderen Zwecken.</translation>
+        <translation>Eine Fläche mit fester Oberfläche zum Parken oder zu anderen Zwecken.</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
         <comment>Name of symbol 529.1</comment>
-        <translation type="unfinished">Befestigte Fläche, Randlinie</translation>
+        <translation>Befestigte Fläche, Randlinie</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
         <comment>Name of symbol 529.2</comment>
-        <translation type="unfinished">Befestigte Fläche, mit Randlinie</translation>
+        <translation>Befestigte Fläche, mit Randlinie</translation>
     </message>
     <message>
         <source>Firing range</source>
         <comment>Name of symbol 531</comment>
-        <translation type="unfinished">Schießplatz</translation>
+        <translation>Schießplatz</translation>
     </message>
     <message>
         <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished">Ein Schießplatz wird mit einer Spezialsignatur dargestellt, um auf die nötige Vorsicht hinzuweisen. Dazugehörende Gebäude werden gesondert gezeichnet.</translation>
+        <translation>Ein Schießplatz wird mit einer Spezialsignatur dargestellt, um auf die nötige Vorsicht hinzuweisen. Dazugehörende Gebäude werden gesondert gezeichnet.</translation>
     </message>
     <message>
         <source>Grave</source>
         <comment>Name of symbol 532</comment>
-        <translation type="unfinished">Grab</translation>
+        <translation>Grab</translation>
     </message>
     <message>
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
-        <translation type="unfinished">Ein deutliches Grab mit Kreuz oder Schrein. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden orientiert ist. Ein Friedhof wird durch Grabsignaturen dargestellt, sofern genügend Platz ist.</translation>
+        <translation>Ein deutliches Grab mit Kreuz oder Schrein. Die Lage entspricht dem Schwerpunkt der Signatur, die nach Norden orientiert ist. Ein Friedhof wird durch Grabsignaturen dargestellt, sofern genügend Platz ist.</translation>
     </message>
     <message>
         <source>Uncrossable pipeline</source>
         <comment>Name of symbol 534</comment>
-        <translation type="unfinished">Unpassierbare Pipeline</translation>
+        <translation>Unpassierbare Pipeline</translation>
     </message>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished">Eine unpassierbare Pipeline. Wenn eine unpassierbare Pipeline nicht passiert werden darf, ist sie mit dem Symbol 707 (uncrossable boundary) zu versehen.</translation>
+        <translation>Eine unpassierbare Pipeline. Wenn eine unpassierbare Pipeline nicht passiert werden darf, ist sie mit dem Symbol 707 (uncrossable boundary) zu versehen.</translation>
     </message>
     <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
-        <translation type="unfinished">Hoher Turm</translation>
+        <translation>Hoher Turm</translation>
     </message>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 535</comment>
-        <translation type="unfinished">Ein hoher Turm oder großer Mast, der über die Höhe des umgebenden Waldes hinausragt. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
+        <translation>Ein hoher Turm oder großer Mast, der über die Höhe des umgebenden Waldes hinausragt. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
     </message>
     <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
-        <translation type="unfinished">Kleiner Turm</translation>
+        <translation>Kleiner Turm</translation>
     </message>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 536</comment>
-        <translation type="unfinished">Ein markanter Hochsitz oder kleiner Turm. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
+        <translation>Ein markanter Hochsitz oder kleiner Turm. Die Lage entspricht dem Schwerpunkt der Signatur.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
         <comment>Name of symbol 538</comment>
-        <translation type="unfinished">Futterkrippe</translation>
+        <translation>Futterkrippe</translation>
     </message>
     <message>
         <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
         <comment>Description of symbol 538</comment>
-        <translation type="unfinished">Eine freistehende oder an einen Baum gebaute Futterkrippe. Die Lage entspricht dem Schwerpunkt der Signatur. Aus Gründen des Waldbetretungsrechts können sie weggelassen werden.</translation>
+        <translation>Eine freistehende oder an einen Baum gebaute Futterkrippe. Die Lage entspricht dem Schwerpunkt der Signatur. Aus Gründen des Waldbetretungsrechts können sie weggelassen werden.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 539</comment>
-        <translation type="unfinished">Besonderes künstliches Objekt</translation>
+        <translation>Besonderes künstliches Objekt</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Spezielle, künstliche Objekte werden mit diesem Symbol dargestellt. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 540</comment>
-        <translation type="unfinished">Besonderes künstliches Objekt</translation>
+        <translation>Besonderes künstliches Objekt</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation type="unfinished">Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
+        <translation>Spezielle, künstliche Objekte werden mit diesem Symbol dargestellt. Die Beschreibung der Signatur muss immer in der Kartenlegende angegeben werden.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
-        <translation type="unfinished">Magnetisch-Nordlinien, blau</translation>
+        <translation>Magnetisch-Nordlinien, blau</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished">Magnetische Nordlinien sind Linien, die nach magnetisch Nord zeigen. In den Maßstäben 1:5000, 1:7500 und 1:10000 soll der Abstand der Nordlinien auf der Karte 30 mm betragen; in dem Maßstäben 1:15000 und 1:20000 sollte der Abstand auf der Karte 20 mm betragen. Nordlinien können unterbrochen werden, wenn sie kleine Objekte wie z.B. Felsen, Klippen, Bachmündungen oder Pfadenden verdecken.</translation>
+        <translation>Magnetische Nordlinien sind Linien, die nach magnetisch Nord zeigen. In den Maßstäben 1:5000, 1:7500 und 1:10000 soll der Abstand der Nordlinien auf der Karte 30 mm betragen; in dem Maßstäben 1:15000 und 1:20000 sollte der Abstand auf der Karte 20 mm betragen. Nordlinien können unterbrochen werden, wenn sie kleine Objekte wie z.B. Felsen, Klippen, Bachmündungen oder Pfadenden verdecken.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation type="unfinished">Nordlinien-Raster, blau</translation>
+        <translation>Nordlinien-Raster, blau</translation>
     </message>
     <message>
         <source>Registration mark</source>
         <comment>Name of symbol 602</comment>
-        <translation type="unfinished">Passkreuz</translation>
+        <translation>Passkreuz</translation>
     </message>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
@@ -11215,37 +11211,37 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Railway</source>
         <comment>Name of symbol 515</comment>
-        <translation type="unfinished">Eisenbahn</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished">Eine Eisenbahn oder andere Arten von Schienenweg (Straßenbahn, Feldbahn usw.).</translation>
+        <translation>Eine Eisenbahn oder andere Arten von Schienenwegen (Straßenbahn, Feldbahn usw.).</translation>
     </message>
     <message>
         <source>Power line</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished">Stromleitung</translation>
+        <translation>Stromleitung</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished">Stromleitung, Seilbahn oder Skilift. Die Querstriche bezeichnen den genauen Standort der Masten.</translation>
+        <translation>Stromleitung, Seilbahn oder Skilift. Die Querstriche bezeichnen den genauen Standort der Masten.</translation>
     </message>
     <message>
         <source>Major power line</source>
         <comment>Name of symbol 517</comment>
-        <translation type="unfinished">Überlandleitung</translation>
+        <translation>Überlandleitung</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished">Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien soll de Breite der Überlandleitung entsprechen.</translation>
+        <translation>Überlandleitungen sollen mit einer Doppellinie gezeichnet werden. Der Abstand zwischen den Linien kann die Breite der Überlandleitung andeuten.</translation>
     </message>
     <message>
         <source>Tunnel</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished">Tunnel</translation>
+        <translation>Tunnel</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
@@ -11255,52 +11251,52 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Tunnel, minimum size</source>
         <comment>Name of symbol 518.1</comment>
-        <translation type="unfinished">Tunnel, Minimalgröße</translation>
+        <translation>Tunnel, Minimalgröße</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518.1</comment>
-        <translation type="unfinished">Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
+        <translation>Durchgänge unter Straßen, Eisenbahnen usw., die vom Läufer benutzt werden können. Die Signatur ist unabhängig davon, ob ein Weg zum Tunnel führt oder nicht.</translation>
     </message>
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished">Steinmauer</translation>
+        <translation>Steinmauer</translation>
     </message>
     <message>
         <source>A stone wall or stone-faced bank.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished">Eine Steinmauer oder ein Steinwall.</translation>
+        <translation>Eine Steinmauer oder ein Steinwall.</translation>
     </message>
     <message>
         <source>High stone wall</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished">Hohe Steinmauer</translation>
+        <translation>Hohe Steinmauer</translation>
     </message>
     <message>
         <source>A stone wall higher than ca 1.5 m, not crossable to the average orienteer.</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished">Eine Steinmauer von mehr als 1,5 m Höhe, die von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
+        <translation>Eine Steinmauer von mehr als 1,5 m Höhe, die von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
     </message>
     <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
-        <translation type="unfinished">Zaun</translation>
+        <translation>Zaun</translation>
     </message>
     <message>
         <source>A wooden or wire fence less than ca. 1.5 m high.</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished">Ein Holz- oder Drahtzaun von weniger als 1,5 m Höhe.</translation>
+        <translation>Ein Holz- oder Drahtzaun von weniger als 1,5 m Höhe.</translation>
     </message>
     <message>
         <source>High fence</source>
         <comment>Name of symbol 524</comment>
-        <translation type="unfinished">Hoher Zaun</translation>
+        <translation>Hoher Zaun</translation>
     </message>
     <message>
         <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished">Ein Bretter- oder Drahtzaun mit mehr als 1,5 m Höhe, wie z. B. ein Wildzaun, der von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
+        <translation>Ein Bretter- oder Drahtzaun mit mehr als 1,5 m Höhe, wie z. B. ein Wildzaun, der von einem durchschnittlichen Orientierungsläufer nicht überquert werden kann.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -12262,17 +12258,17 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün für Ski-OL</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -12282,12 +12278,12 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Braun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -12312,32 +12308,32 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Oberes Braun 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz unter oberem Braun 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Unteres Braun 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz unter unterem Braun 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blau 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -12352,27 +12348,27 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 60% für schmale Schneise</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 30% für schmale Schneise</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Grün</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100%/Grün 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -12382,12 +12378,12 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100%/Schwarz 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -12402,17 +12398,17 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grün 100% für Bodenbewuchs</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Gelb</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz für offenes Land</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -12422,7 +12418,7 @@ Hinweis: Wenn der Bach breiter ist, muss das Symbol angepasst werden, so dass es
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gelb 100% für Flächenobjekte</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -13298,7 +13294,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Railway</source>
         <comment>Name of symbol 509</comment>
-        <translation>Bahngeleise</translation>
+        <translation>Bahngleis</translation>
     </message>
     <message>
         <source>A railway or other kind of railed track.
@@ -13995,22 +13991,22 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>Black for control descriptions</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz für Postenbeschreibung</translation>
     </message>
     <message>
         <source>White above framing</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß über Rahmen</translation>
     </message>
     <message>
         <source>Black for framing</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Schwarz für Rahmen</translation>
     </message>
     <message>
         <source>White below framing</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Weiß unter Rahmen</translation>
     </message>
     <message>
         <source>Black</source>
