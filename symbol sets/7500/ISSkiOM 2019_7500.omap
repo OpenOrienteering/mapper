@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
 <notes></notes>
-<georeferencing scale="15000"><projected_crs id="Local"/></georeferencing>
+<georeferencing scale="7500"><projected_crs id="Local"/></georeferencing>
 <colors count="36">
 <color priority="0" name="Purple for course overprint" c="0.35" m="0.85" y="0" k="0" opacity="1"><spotcolors knockout="true"><namedcolor>PURPLE</namedcolor></spotcolors><cmyk method="custom"/><rgb method="cmyk" r="0.65" g="0.15" b="1"/></color>
 <color priority="1" name="White for course overprint" c="0" m="0" y="0" k="0" opacity="1"><spotcolors knockout="true"><component factor="0" spotcolor="3"/></spotcolors><cmyk method="spotcolor"/><rgb method="spotcolor" r="1" g="1" b="1"/></color>
