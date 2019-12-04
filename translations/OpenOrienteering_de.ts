@@ -133,17 +133,17 @@ Importierte Daten auf Kartenmaßstab umrechnen?</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">Objekt konnte nicht angelegt werden: %1</translation>
+        <translation>Objekt konnte nicht angelegt werden: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Ebene &apos;%1&apos; konnte nicht angelegt werden: %2</translation>
+        <translation>Ebene &apos;%1&apos; konnte nicht angelegt werden: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Namensfeld konnte nicht angelegt werden: %1</translation>
+        <translation>Namensfeld konnte nicht angelegt werden: %1</translation>
     </message>
 </context>
 <context>
@@ -8280,7 +8280,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Scherung:</translation>
     </message>
 </context>
 <context>

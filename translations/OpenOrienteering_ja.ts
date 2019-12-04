@@ -133,17 +133,17 @@ Rescale the imported data?</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">レイヤーにフィーチャーを作成できませんでした: %1</translation>
+        <translation>レイヤーにフィーチャーを作成できませんでした: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">レイヤー %1 の作成に失敗しました: %2</translation>
+        <translation>レイヤー %1 の作成に失敗しました: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">名前フィールドの作成に失敗しました: %1</translation>
+        <translation>名前フィールドの作成に失敗しました: %1</translation>
     </message>
 </context>
 <context>
@@ -8981,7 +8981,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>せん断:</translation>
     </message>
 </context>
 <context>
