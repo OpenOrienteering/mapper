@@ -16,7 +16,7 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished">Неможливо відкрити файл
+        <translation>Неможливо відкрити файл
 %1:
 %2</translation>
     </message>
@@ -29,7 +29,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Неможливо відкрити файл:
+        <translation>Неможливо відкрити файл:
 %1
 
 %2</translation>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="649"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Некоректний тип файлу.</translation>
+        <translation>Некоректний тип файлу.</translation>
     </message>
 </context>
 <context>
@@ -52,7 +52,7 @@
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Масштаб імпортованих даних 1:%1 що відрізняється від масштабу даної карти 1:%2.
+        <translation>Масштаб імпортованих даних 1:%1 що відрізняється від масштабу даної карти 1:%2.
 
 Перемасштабувати імпортовані дані?</translation>
     </message>
@@ -62,18 +62,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">OCD файли версії %1 не підтримуються!</translation>
+        <translation>OCD файли версії %1 не підтримуються!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Координати обмежено щоб вмістити в зону креслення OCAD 8 (-2 м ... 2 м).</translation>
+        <translation>Координати обмежено щоб вмістити в зону креслення OCAD 8 (-2 м ... 2 м).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Деякі координати виходять за межі зони креслення OCAD 8. Вони можуть бути недоступними в OCAD.</translation>
+        <translation>Деякі координати виходять за межі зони креслення OCAD 8. Вони можуть бути недоступними в OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
@@ -99,12 +99,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished">Неможливо зберегти коректне положення втраченої підложки: &quot;%1&quot;</translation>
+        <translation>Неможливо зберегти коректне положення втраченої підложки: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Неможливо експортувати підложку: тип файлу &quot;%1&quot; поки що не підтримується</translation>
+        <translation>Неможливо експортувати підложку: тип файлу &quot;%1&quot; поки що не підтримується</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
@@ -127,7 +127,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Кодування &apos;%1&apos; не доступне. Перевірте налаштування.</translation>
+        <translation>Кодування &apos;%1&apos; не доступне. Перевірте налаштування.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
@@ -138,12 +138,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Не вдалося створити шар %1: %2</translation>
+        <translation>Не вдалося створити шар %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Не вдалося створити поле імені: %1</translation>
+        <translation>Не вдалося створити поле імені: %1</translation>
     </message>
 </context>
 <context>
@@ -1574,7 +1574,7 @@ Rescale the imported data?</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Неможливо зберегти файл
+        <translation>Неможливо зберегти файл
 %1:
 %2</translation>
     </message>
@@ -1668,17 +1668,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Templates</source>
-        <translation type="unfinished">Підложки</translation>
+        <translation>Підложки</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Заштрихувати площі</translation>
+        <translation>Заштрихувати площі</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Вид основних ліній</translation>
+        <translation>Вид основних ліній</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
@@ -2196,7 +2196,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Сенсорний режим</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2262,7 +2262,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="533"/>
         <source>Help</source>
-        <translation type="unfinished">Довідка</translation>
+        <translation>Довідка</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
@@ -2288,12 +2288,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="48"/>
         <source>PNG</source>
-        <translation type="unfinished">PNG</translation>
+        <translation>PNG</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">Усі файли (*.*)</translation>
+        <translation>Усі файли (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
@@ -2329,7 +2329,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished">Ширина:</translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
@@ -2355,7 +2355,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="234"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
@@ -2374,7 +2374,7 @@ Rescale the imported data?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Неможливо відкрити файл:
+        <translation>Неможливо відкрити файл:
 %1
 
 %2</translation>
@@ -3067,7 +3067,7 @@ Do you want to save your changes?</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Неможливо відкрити файл:
+        <translation>Неможливо відкрити файл:
 %1
 
 %2</translation>
@@ -3097,7 +3097,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Некоректний тип файлу.</translation>
+        <translation>Некоректний тип файлу.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="868"/>
@@ -3215,14 +3215,14 @@ Press No to choose a different format.</source>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">Неможливо експортувати карту у
+        <translation>Неможливо експортувати карту у
 &quot;%1&quot;
 томущо формат невідомий.</translation>
     </message>
@@ -3231,7 +3231,7 @@ because the format is unknown.</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Неможливо експортувати карту у
+        <translation>Неможливо експортувати карту у
 &quot;%1&quot;
 бо збереження як %2 (.%3) не підтримується.</translation>
     </message>
@@ -3988,7 +3988,7 @@ Import the data anyway?</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">Неможливо експортувати карту у
+        <translation>Неможливо експортувати карту у
 &quot;%1&quot;
 бо збереження як %2 (.%3) не підтримується.</translation>
     </message>
@@ -3997,7 +3997,7 @@ because saving as %2 (.%3) is not supported.</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Неможливо зберегти файл
+        <translation>Неможливо зберегти файл
 %1:
 %2</translation>
     </message>
@@ -4006,18 +4006,18 @@ because saving as %2 (.%3) is not supported.</source>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="620"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">Експорт карти містить попередження.</translation>
+        <translation>Експорт карти містить попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Імпорт карти містить попередження.</translation>
+        <translation>Імпорт карти містить попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="957"/>
@@ -4233,7 +4233,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Немає що імпортувати.</translation>
+        <translation>Немає що імпортувати.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
@@ -4245,7 +4245,7 @@ selected</source>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Масштаб імпортованих даних 1:%1 що відрізняється від масштабу даної карти 1:%2.
+        <translation>Масштаб імпортованих даних 1:%1 що відрізняється від масштабу даної карти 1:%2.
 
 Перемасштабувати імпортовані дані?</translation>
     </message>
@@ -5475,12 +5475,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунком.</translation>
+        <translation>Для площинного знаку &quot;%1&quot;, пропущено заповнення візерунком.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">Для площинного знаку &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
+        <translation>Для площинного знаку &quot;%1&quot;, виявлено &quot;зміщення рядків&quot; точкового візерунку. Це може бути як добре так і погано.</translation>
     </message>
 </context>
 <context>
@@ -5695,7 +5695,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
     </message>
 </context>
 <context>
@@ -5703,22 +5703,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, неможливо відобразити комбінацію закінчення/з’єднання.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">Для лінійного знаку &quot;%1&quot;, не виконано групування штрихів.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, не виконано групування штрихів.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Для лінійного знаку &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
+        <translation>Для лінійного знаку &quot;%1&quot;, кількість штрихів у групі зменшено в 2 рази.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Для лінійного знаку %1, неможливо експортувати границі.</translation>
+        <translation>Для лінійного знаку %1, неможливо експортувати границі.</translation>
     </message>
 </context>
 <context>
@@ -5731,12 +5731,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Для текстового знаку %1: проігноровано підкреслення</translation>
+        <translation>Для текстового знаку %1: проігноровано підкреслення</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Для текстового знаку %1: проігноровано кернінг</translation>
+        <translation>Для текстового знаку %1: проігноровано кернінг</translation>
     </message>
 </context>
 <context>
@@ -6719,7 +6719,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий масштаб:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
@@ -6846,23 +6846,23 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="61"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>Послідовний порт (NMEA):</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="80"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Датчики</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="112"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="149"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="115"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Послідовний порт (NMEA)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="118"/>
@@ -7908,7 +7908,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">Карта геоприв&apos;язана</translation>
+        <translation>Карта геоприв&apos;язана</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
@@ -7999,17 +7999,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Неможливо завантажити файл карти, перервано.</translation>
+        <translation>Неможливо завантажити файл карти, перервано.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">Імпорт карти містить попередження.</translation>
+        <translation>Імпорт карти містить попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
@@ -8048,7 +8048,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_map.cpp" line="107"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">Неможливо завантажити файл карти, перервано.</translation>
+        <translation>Неможливо завантажити файл карти, перервано.</translation>
     </message>
 </context>
 <context>
@@ -8552,7 +8552,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="626"/>

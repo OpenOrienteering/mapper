@@ -133,17 +133,17 @@ Rescale the imported data?</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">Не удалось создать элемент в слое: %1</translation>
+        <translation>Не удалось создать элемент в слое: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Не удалось создать слой %1: %2</translation>
+        <translation>Не удалось создать слой %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Не удалось создать поле имени: %1</translation>
+        <translation>Не удалось создать поле имени: %1</translation>
     </message>
 </context>
 <context>
@@ -8134,7 +8134,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Скос:</translation>
     </message>
 </context>
 <context>
