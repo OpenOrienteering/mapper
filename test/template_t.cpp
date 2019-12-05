@@ -34,6 +34,7 @@
 #include "core/map.h"
 #include "core/map_view.h"
 #include "fileformats/xml_file_format_p.h"
+#include "gdal/ogr_template.h"
 #include "templates/template.h"
 #include "templates/world_file.h"
 
@@ -188,6 +189,10 @@ private slots:
 		QCOMPARE(temp->getTemplateType(), "TemplateImage");
 		QCOMPARE(temp->getTemplateFilename(), QString::fromUtf8("\u0433\u0435\u043E.tiff"));
 #ifdef MAPPER_USE_GDAL
+#ifdef Q_OS_UNIX
+		if (QFile::encodeName(temp->getTemplateFilename()) != temp->getTemplateFilename().toUtf8())
+			QEXPECT_FAIL("", "Local 8 bit encoding is not UTF-8", Abort);
+#endif
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		QVERIFY(temp->isTemplateGeoreferenced());
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
@@ -196,6 +201,18 @@ private slots:
 #endif
 	}
 	
+#ifdef MAPPER_USE_GDAL
+	void ogrTemplateGeoreferencingTest()
+	{
+		auto const osm_fileinfo = QFileInfo(QStringLiteral("testdata:templates/map.osm"));
+		QVERIFY(osm_fileinfo.exists());
+		auto georef = OgrTemplate::getDataGeoreferencing(osm_fileinfo.absoluteFilePath(), Georeferencing{});
+		QVERIFY(bool(georef));
+		auto latlon = georef->getGeographicRefPoint();
+		QCOMPARE(qRound(latlon.latitude()), 50);
+		QCOMPARE(qRound(latlon.longitude()), 8);
+	}
+#endif
 };
 
 

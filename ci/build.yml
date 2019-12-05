@@ -39,7 +39,6 @@ steps:
     set -x
     set -e
     git clone --branch master --depth 1 https://github.com/openorienteering/superbuild.git
-    cp ci/openorienteering-mapper-ci.cmake superbuild/
   displayName: 'Checkout superbuild source'
 
 - task: CMake@1
@@ -50,13 +49,13 @@ steps:
       $(SOURCE_DIR)/superbuild
       -DCMAKE_BUILD_TYPE=Release
       -DSUPERBUILD_DISABLE_DEPENDENCIES=TRUE
-      -DMapper_CI_GIT_REPOSITORY=$(SOURCE_DIR)
-      -DMapper_CI_GIT_TAG=$(Build.SourceVersion)
+      -DMapper_CI_SOURCE_DIR=$(SOURCE_DIR)
       "-DMapper_CI_VERSION_DISPLAY=$(VERSION_DISPLAY)"
       -DMapper_CI_QT_VERSION=$(openorienteering.mapper.qt.version)
       -DMapper_CI_LICENSING_PROVIDER=$(openorienteering.mapper.licensing.provider)
       -DMapper_CI_ENABLE_POSITIONING=$(openorienteering.mapper.positioning.enabled)
       -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/share/gdal
+      -DMapper_CI_MANUAL_PDF=$(ENABLE_PDF_MANUAL)
       -Ddefault_INSTALL_DIR=
       -Ddefault_INSTALL_PREFIX=$(SUPERBUILD_INSTALL_DIR)
       -Ddefault_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/toolchain
@@ -96,9 +95,14 @@ steps:
 
 - bash: |
     set -x
+    set -e
     #
-    mkdir output
+    mkdir -p output
     cp build/${TARGET:-default}/openorienteering-mapper-ci/${{ parameters.outputFilter }} output/
+    if  [ "${ENABLE_PDF_MANUAL}" = "1" ] ; then
+      cp build/${TARGET:-default}/openorienteering-mapper-ci/doc/manual/*-Manual.pdf output/
+    fi
+    
     #
     if [ ! -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
       set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331

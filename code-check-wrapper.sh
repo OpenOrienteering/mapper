@@ -84,14 +84,19 @@ PATTERN=" \
   renderable_implementation.cpp \
   settings_dialog.cpp \
   /symbol.cpp \
+  symbol_replacement.cpp \
+  symbol_replacement_dialog.cpp \
   symbol_rule_set.cpp \
   symbol_t.cpp \
   symbol_tooltip.cpp \
   tag_select_widget.cpp \
+  /template.cpp \
   template_image.cpp \
   template_image_open_dialog.cpp \
   template_list_widget.cpp \
+  template_map.cpp \
   template_tool \
+  template_track.cpp \
   text_brwoser_dialog \
   toast.cpp \
   track_t.cpp \

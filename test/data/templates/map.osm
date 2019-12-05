@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="dg0yt" copyright="OpenOrienteering" attribution="2019 OpenOrienteering" license="GPL-3+">
+ <bounds minlat="50.0008100" minlon="7.9994900" maxlat="50.0009000" maxlon="7.9996600"/>
+ <node id="1" visible="true" version="1" changeset="234" timestamp="2010-10-26T11:11:11Z" user="dg0yt" uid="3456" lat="50.00082" lon="7.99965"/>
+ <node id="2" visible="true" version="1" changeset="234" timestamp="2010-10-26T11:11:11Z" user="dg0yt" uid="3456" lat="50.00089" lon="7.99965"/>
+ <node id="3" visible="true" version="1" changeset="234" timestamp="2010-10-26T11:11:11Z" user="dg0yt" uid="3456" lat="50.00089" lon="7.99950"/>
+ <node id="4" visible="true" version="1" changeset="234" timestamp="2010-10-26T11:11:11Z" user="dg0yt" uid="3456" lat="50.00082" lon="7.99950"/>
+ <way id="5" visible="true" version="1" changeset="234" timestamp="2010-10-26T11:11:11Z" user="dg0yt" uid="3456">
+  <nd ref="1"/>
+  <nd ref="2"/>
+  <nd ref="3"/>
+  <nd ref="4"/>
+  <nd ref="1"/>
+  <tag k="building" v="yes"/>
+  <tag k="name" v="Virtual Building"/>
+ </way>
+</osm>

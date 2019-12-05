@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +24,7 @@
 
 #include <vector>
 
+#include <QtGlobal>
 #include <QByteArray>
 #include <QColor>
 #include <QImage>
@@ -95,7 +96,7 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
 	bool canBeDrawnOnto() const override {return true;}
 
@@ -146,7 +147,7 @@ protected:
 	};
 	
 	Template* duplicateImpl() const override;
-	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width) override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();

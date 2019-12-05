@@ -135,7 +135,7 @@ void DrawTextTool::startEditing()
 	connect(text_editor.get(), &TextObjectEditorHelper::stateChanged, this, &DrawTextTool::updatePreviewText);
 	connect(text_editor.get(), &TextObjectEditorHelper::finished, this, &DrawTextTool::finishEditing);
 	
-	editor->setEditingInProgress(true);
+	MapEditorToolBase::startEditing();
 	
 	updatePreviewText();
 	updateStatusText();
@@ -148,7 +148,7 @@ void DrawTextTool::abortEditing()
 	renderables.removeRenderablesOfObject(preview_text.get(), false);
 	map()->clearDrawingBoundingBox();
 	
-	editor->setEditingInProgress(false);
+	MapEditorToolBase::abortEditing();
 	resetWaitingForMouseRelease();
 	
 	if (key_button_bar)
@@ -182,7 +182,7 @@ void DrawTextTool::finishEditing()
 		preview_text.reset(new TextObject(drawing_symbol));
 	}
 	
-	editor->setEditingInProgress(false);
+	MapEditorToolBase::finishEditing();
 	
 	if (QGuiApplication::mouseButtons())
 	{

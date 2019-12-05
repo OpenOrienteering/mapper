@@ -46,7 +46,6 @@
 #include <QDir>
 #include <QDockWidget>
 #include <QEvent>
-#include <QFile>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFont>
@@ -123,7 +122,7 @@
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
-#include "gui/symbols/replace_symbol_set_dialog.h"
+#include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
 #include "gui/widgets/compass_display.h"
@@ -166,6 +165,10 @@
 #include "undo/undo_manager.h"
 #include "util/backports.h" // IWYU pragma: keep
 
+#ifdef MAPPER_USE_GDAL
+#include "gdal/ogr_template.h"
+#endif
+
 
 #ifdef __clang_analyzer__
 #define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT 
@@ -189,10 +192,10 @@ namespace {
 	 */
 	QSplitter* createDockWidgetSubstitute(MainWindow* window, QWidget* child)
 	{
-		auto splitter = new QSplitter(window);
+		auto* splitter = new QSplitter(window);
 		splitter->setChildrenCollapsible(false);
 		
-		auto placeholder = new QWidget();
+		auto* placeholder = new QWidget();
 		
 		splitter->setAttribute(Qt::WA_NoSystemBackground, true);
 		placeholder->setAttribute(Qt::WA_NoSystemBackground, true);
@@ -502,7 +505,7 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 void MapEditorController::addTemplatePositionDockWidget(Template* temp)
 {
 	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
-	auto dock_widget = new TemplatePositionDockWidget(temp, this, window);
+	auto* dock_widget = new TemplatePositionDockWidget(temp, this, window);
 	addFloatingDockWidget(dock_widget);
 	template_position_widgets.insert(temp, dock_widget);
 }
@@ -537,7 +540,7 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 	}
 	else
 	{
-		auto dock_widget = new QDockWidget(title, window);
+		auto* dock_widget = new QDockWidget(title, window);
 		dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 		dock_widget->setWidget(child_widget);
 		
@@ -696,7 +699,7 @@ void MapEditorController::attach(MainWindow* window)
 	else
 	{
 		// Add zoom / cursor position field to status bar
-		auto statusbar_zoom_icon = new QLabel();
+		auto* statusbar_zoom_icon = new QLabel();
 		auto fontmetrics = statusbar_zoom_icon->fontMetrics();
 		auto pixmap = QPixmap(QLatin1String(":/images/magnifying-glass.png"));
 		auto scale = qreal(fontmetrics.height()) / pixmap.height();
@@ -704,7 +707,7 @@ void MapEditorController::attach(MainWindow* window)
 			pixmap = pixmap.scaledToHeight(qRound(scale * pixmap.height()), Qt::SmoothTransformation);
 		statusbar_zoom_icon->setPixmap(pixmap);
 		
-		auto statusbar_zoom_label = new QLabel();
+		auto* statusbar_zoom_label = new QLabel();
 		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
@@ -719,7 +722,7 @@ void MapEditorController::attach(MainWindow* window)
 #else
 		statusbar_zoom_frame->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 #endif
-		auto statusbar_zoom_frame_layout = new QHBoxLayout();
+		auto* statusbar_zoom_frame_layout = new QHBoxLayout();
 		statusbar_zoom_frame_layout->setMargin(0);
 		statusbar_zoom_frame_layout->setSpacing(0);
 		statusbar_zoom_frame_layout->addSpacing(1);
@@ -826,7 +829,7 @@ QAction* MapEditorController::newAction(const char* id, const QString &tr_text, 
 
 QAction* MapEditorController::newCheckAction(const char* id, const QString &tr_text, QObject* receiver, const char* slot, const char* icon, const QString& tr_tip, const char* whats_this_link)
 {
-	auto action = newAction(id, tr_text, nullptr, nullptr, icon, tr_tip, whats_this_link);
+	auto* action = newAction(id, tr_text, nullptr, nullptr, icon, tr_tip, whats_this_link);
 	action->setCheckable(true);
 	if (receiver) QObject::connect(action, SIGNAL(triggered(bool)), receiver, slot);
 	return action;
@@ -912,7 +915,7 @@ void MapEditorController::createActions()
 {
 	// Define all the actions, saving them into variables as necessary. Can also get them by ID.
 #ifdef QT_PRINTSUPPORT_LIB
-	auto print_act_mapper = new QSignalMapper(this);
+	auto* print_act_mapper = new QSignalMapper(this);
 	connect(print_act_mapper, QOverload<int>::of(&QSignalMapper::mapped), this, QOverload<int>::of(&MapEditorController::printClicked));
 	print_act = newAction("print", tr("Print..."), print_act_mapper, SLOT(map()), "print.png", QString{}, "file_menu.html");
 	print_act_mapper->setMapping(print_act, PrintWidget::PRINT_TASK);
@@ -920,7 +923,7 @@ void MapEditorController::createActions()
 	print_act_mapper->setMapping(export_image_act, PrintWidget::EXPORT_IMAGE_TASK);
 	export_pdf_act = newAction("export-pdf", tr("&PDF"), print_act_mapper, SLOT(map()), nullptr, QString{}, "file_menu.html");
 	print_act_mapper->setMapping(export_pdf_act, PrintWidget::EXPORT_PDF_TASK);
-	if (auto vector_format = FileFormats.findFormat("OGR-export"))
+	if (auto* vector_format = FileFormats.findFormat("OGR-export"))
 		export_vector_act = newAction("export-vector", vector_format->description(), this, SLOT(exportVector()), nullptr, {}, "edit_menu.html");
 	else
 		export_vector_act = nullptr;
@@ -959,8 +962,8 @@ void MapEditorController::createActions()
 	fullscreen_act = newAction("fullscreen", tr("Toggle fullscreen mode"), window, SLOT(toggleFullscreenMode()), nullptr, QString{}, "view_menu.html");
 	custom_zoom_act = newAction("setzoom", tr("Set custom zoom factor..."), this, SLOT(setCustomZoomFactorClicked()), nullptr, QString{}, "view_menu.html");
 	
-	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), nullptr, QString{}, "view_menu.html");
-	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), nullptr, QString{}, "view_menu.html");
+	hatch_areas_view_act = newCheckAction("hatchareasview", tr("Hatch areas"), this, SLOT(hatchAreas(bool)), "view-hatch-areas.png", QString{}, "view_menu.html");
+	baseline_view_act = newCheckAction("baselineview", tr("Baseline view"), this, SLOT(baselineView(bool)), "view-baseline.png", QString{}, "view_menu.html");
 	hide_all_templates_act = newCheckAction("hidealltemplates", tr("Hide all templates"), this, SLOT(hideAllTemplates(bool)), nullptr, QString{}, "view_menu.html");
 	overprinting_simulation_act = newCheckAction("overprintsimulation", tr("Overprinting simulation"), this, SLOT(overprintingSimulation(bool)), nullptr, QString{}, "view_menu.html");
 	
@@ -1069,7 +1072,7 @@ void MapEditorController::createActions()
 	geographic_coordinates_act->setCheckable(true);
 	geographic_coordinates_dms_act = new QAction(tr("Latitude/Longitude (DMS)"), this);
 	geographic_coordinates_dms_act->setCheckable(true);
-	auto coordinates_group = new QActionGroup(this);
+	auto* coordinates_group = new QActionGroup(this);
 	coordinates_group->addAction(map_coordinates_act);
 	coordinates_group->addAction(projected_coordinates_act);
 	coordinates_group->addAction(geographic_coordinates_act);
@@ -1257,11 +1260,11 @@ void MapEditorController::createMenuAndToolbars()
 	// View toolbar
 	toolbar_view = window->addToolBar(tr("View"));
 	toolbar_view->setObjectName(QString::fromLatin1("View toolbar"));
-	auto grid_button = new QToolButton();
+	auto* grid_button = new QToolButton();
 	grid_button->setCheckable(true);
 	grid_button->setDefaultAction(show_grid_act);
 	grid_button->setPopupMode(QToolButton::MenuButtonPopup);
-	auto grid_menu = new QMenu(grid_button);
+	auto* grid_menu = new QMenu(grid_button);
 	grid_menu->addAction(tr("Configure grid..."));
 	grid_button->setMenu(grid_menu);
 	connect(grid_menu, &QMenu::triggered, this, &MapEditorController::configureGrid);
@@ -1300,11 +1303,11 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
-	auto paint_on_template_button = new QToolButton();
+	auto* paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
 	paint_on_template_button->setDefaultAction(paint_on_template_act);
 	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
-	auto paint_on_template_menu = new QMenu(paint_on_template_button);
+	auto* paint_on_template_menu = new QMenu(paint_on_template_button);
 	paint_on_template_menu->addAction(tr("Select template..."));
 	paint_on_template_button->setMenu(paint_on_template_menu);
 	connect(paint_on_template_menu, &QMenu::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
@@ -1322,7 +1325,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_editing->addAction(boolean_union_act);
 	toolbar_editing->addAction(cut_tool_act);
 	
-	auto cut_hole_button = new QToolButton();
+	auto* cut_hole_button = new QToolButton();
 	cut_hole_button->setCheckable(true);
 	cut_hole_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	cut_hole_button->setDefaultAction(cut_hole_act);
@@ -1375,9 +1378,9 @@ void MapEditorController::createMobileGUI()
 	
 	mobile_symbol_button_menu = new QMenu(window);
 	mobile_symbol_button_menu->addAction(QString{}); // reserved for symbol name
-	auto description_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolPropertiesWidget", "Description"));
+	auto* description_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolPropertiesWidget", "Description"));
 	connect(description_action, &QAction::triggered, this, [this]() {
-		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		auto* symbol = symbol_widget->getSingleSelectedSymbol();
 		auto document = QString{ symbol->getNumberAsString() + QLatin1Char(' ')
 		                         + QLatin1String("<b>") + symbol->getName() + QLatin1String("</b>\n\n")
 		                         + symbol->getDescription() };
@@ -1388,10 +1391,10 @@ void MapEditorController::createMobileGUI()
 		description_dialog.exec();
 	});
 	mobile_symbol_button_menu->addSeparator();
-	auto hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Hide objects with this symbol"));
+	auto* hide_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Hide objects with this symbol"));
 	hide_symbol_action->setCheckable(true);
 	connect(hide_symbol_action, &QAction::triggered, this, [this](bool value) {
-		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		auto* symbol = symbol_widget->getSingleSelectedSymbol();
 		symbol->setHidden(value);
 		if (!value && map->removeSymbolFromSelection(symbol, false))
 		    map->emitSelectionChanged();
@@ -1399,10 +1402,10 @@ void MapEditorController::createMobileGUI()
 		map->setSymbolsDirty();
 		selectedSymbolsChanged();
 	});
-	auto protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Protect objects with this symbol"));
+	auto* protected_symbol_action = mobile_symbol_button_menu->addAction(QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Protect objects with this symbol"));
 	protected_symbol_action->setCheckable(true);
 	connect(protected_symbol_action, &QAction::triggered, this, [this](bool value) {
-		auto symbol = symbol_widget->getSingleSelectedSymbol();
+		auto* symbol = symbol_widget->getSingleSelectedSymbol();
 		symbol->setProtected(value);
 		if (!value && map->removeSymbolFromSelection(symbol, false))
 		    map->emitSelectionChanged();
@@ -1419,7 +1422,7 @@ void MapEditorController::createMobileGUI()
 	Q_ASSERT(mappart_selector_box);
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
 	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
-		auto mappart_button = top_action_bar->getButtonForAction(mappart_action);
+		auto* mappart_button = top_action_bar->getButtonForAction(mappart_action);
 		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
 			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
 		mappart_selector_box->setGeometry(mappart_button->geometry());
@@ -1458,13 +1461,13 @@ void MapEditorController::createMobileGUI()
 	bottom_action_bar->addAction(pan_act, 1, col++);
 	
 	bottom_action_bar->addAction(zoom_out_act, 0, col);
-	auto zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
-	auto mobile_zoom_out_menu = new QMenu(zoom_out_button);
-	auto zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
+	auto* zoom_out_button = bottom_action_bar->getButtonForAction(zoom_out_act);
+	auto* mobile_zoom_out_menu = new QMenu(zoom_out_button);
+	auto* zoom_1x_action = mobile_zoom_out_menu->addAction(tr("1x zoom"));
 	connect(zoom_1x_action, &QAction::triggered, this, [this]() {
 		main_view->setZoom(1);
 	});
-	auto zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
+	auto* zoom_2x_action = mobile_zoom_out_menu->addAction(tr("2x zoom"));
 	connect(zoom_2x_action, &QAction::triggered, this, [this]() {
 		main_view->setZoom(2);
 	});
@@ -1472,17 +1475,26 @@ void MapEditorController::createMobileGUI()
 
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
 	
+	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
+	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
+
 	bottom_action_bar->addAction(gps_temporary_path_act, 0, col);
-	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
+	auto* temp_path_button = bottom_action_bar->getButtonForAction(gps_temporary_path_act);
+	auto* mobile_gps_temp_path_menu = new QMenu(temp_path_button);
+	mobile_gps_temp_path_menu->addAction(gps_temporary_clear_act);
+	temp_path_button->setMenu(mobile_gps_temp_path_menu);
 	
-	bottom_action_bar->addAction(gps_temporary_clear_act, 0, col++);
+	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
 	bottom_action_bar->addAction(paint_on_template_act, 0, col);
-	bottom_action_bar->addAction(paint_on_template_settings_act, 1, col++);
-	
+	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_on_template_act);
+	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
+	mobile_paint_on_template_menu->addAction(paint_on_template_settings_act);
+	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
+
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
-	auto button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
+	auto* button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
 	button->setPopupMode(QToolButton::DelayedPopup);
 	
 	col = 2;
@@ -1563,8 +1575,8 @@ void MapEditorController::createMobileGUI()
 	
 	top_action_bar->setParent(map_widget);
 	
-	auto container_widget = new QWidget();
-	auto layout = new QVBoxLayout();
+	auto* container_widget = new QWidget();
+	auto* layout = new QVBoxLayout();
 	layout->setMargin(0);
 	layout->setSpacing(0);
 	layout->addWidget(map_widget, 1);
@@ -1614,25 +1626,44 @@ void MapEditorController::detach()
 		window->setWindowState(window->windowState() & ~Qt::WindowFullScreen);
 }
 
+
+void MapEditorController::setWindowStateChanged()
+{
+	if (!window_state_changed && !mobile_mode && mode != SymbolEditor)
+	{
+		window_state_changed = true;
+		QTimer::singleShot(10, this, &MapEditorController::saveWindowState);
+	}
+}
+
 void MapEditorController::saveWindowState()
 {
-	if (!mobile_mode && mode != SymbolEditor)
+	if (window_state_changed)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
 		settings.setValue(QString::fromLatin1("state"), window->saveState());
+		window_state_changed = false;
 	}
 }
 
 void MapEditorController::restoreWindowState()
 {
-	if (!mobile_mode)
+	if (!mobile_mode && mode != SymbolEditor)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
-		window->restoreState(settings.value(QString::fromLatin1("state")).toByteArray());
+		auto const key = QString::fromLatin1("state");
+		auto const state = settings.value(key).toByteArray();
+		settings.remove(key);  // Avoid repeated crash from invalid data, GH-1366.
+		settings.sync();
+		
+		window->restoreState(state);
 		if (toolbar_mapparts && mappart_selector_box)
 			toolbar_mapparts->setVisible(mappart_selector_box->count() > 1);
+		
+		settings.setValue(key, state);  // Save valid state again.
+		window_state_changed = false;
 	}
 }
 
@@ -1674,7 +1705,7 @@ void MapEditorController::exportVector()
 	QSettings settings;
 	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
 	
-	auto format = FileFormats.findFormat("OGR-export");
+	auto* format = FileFormats.findFormat("OGR-export");
 	if (!format)
 		return;  /// \todo Error message?
 	
@@ -1786,7 +1817,7 @@ void MapEditorController::copy()
 	// Duplicate all selected objects into copy map
 	for (const auto* object : map->selectedObjects())
 	{
-		auto new_object = object->duplicate();
+		auto* new_object = object->duplicate();
 		if (symbol_map.contains(new_object->getSymbol()))
 			new_object->setSymbol(symbol_map.value(new_object->getSymbol()), true);
 		
@@ -1802,7 +1833,7 @@ void MapEditorController::copy()
 	}
 	
 	// Put buffer into clipboard
-	auto mime_data = new QMimeData();
+	auto* mime_data = new QMimeData();
 	mime_data->setData(MimeType::OpenOrienteeringObjects(), buffer.data());
 	QApplication::clipboard()->setMimeData(mime_data);
 	
@@ -2034,13 +2065,13 @@ void MapEditorController::symbolSetIdClicked()
 
 void MapEditorController::loadSymbolsFromClicked()
 {
-	ReplaceSymbolSetDialog::showDialog(window, *map);
+	SymbolReplacement(*map).withSymbolSetFileDialog(window);
 }
 
 
 void MapEditorController::loadCrtClicked()
 {
-	ReplaceSymbolSetDialog::showDialogForCRT(window, *map, *map);
+	SymbolReplacement(*map, *map).withCrtFileDialog(window);
 }
 
 
@@ -2079,18 +2110,18 @@ void MapEditorController::mapNotesClicked()
 	dialog.setWindowTitle(tr("Map notes"));
 	dialog.setWindowModality(Qt::WindowModal);
 	
-	auto text_edit = new QTextEdit();
+	auto* text_edit = new QTextEdit();
 	text_edit->setPlainText(map->getMapNotes());
 	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
 	QPushButton* ok_button = new QPushButton(QIcon(QString::fromLatin1(":/images/arrow-right.png")), tr("OK"));
 	ok_button->setDefault(true);
 	
-	auto buttons_layout = new QHBoxLayout();
+	auto* buttons_layout = new QHBoxLayout();
 	buttons_layout->addWidget(cancel_button);
 	buttons_layout->addStretch(1);
 	buttons_layout->addWidget(ok_button);
 	
-	auto layout = new QVBoxLayout();
+	auto* layout = new QVBoxLayout();
 	layout->addWidget(text_edit);
 	layout->addLayout(buttons_layout);
 	dialog.setLayout(layout);
@@ -2122,7 +2153,7 @@ void MapEditorController::createTemplateWindow()
 	}
 	else
 	{
-		auto dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
+		auto* dock_widget = new EditorDockWidget(tr("Templates"), template_window_act, this, window);
 		dock_widget->setWidget(template_list_widget);
 		dock_widget->setObjectName(QString::fromLatin1("Templates dock widget"));
 		if (!window->restoreDockWidget(dock_widget))
@@ -2162,7 +2193,7 @@ void MapEditorController::reopenTemplateClicked()
 	QString map_directory = window->currentPath();
 	if (!map_directory.isEmpty())
 		map_directory = QFileInfo(map_directory).canonicalPath();
-	auto dialog = new ReopenTemplateDialog(window, map, map_directory); 
+	auto* dialog = new ReopenTemplateDialog(window, map, map_directory); 
 	dialog->setWindowModality(Qt::WindowModal);
 	dialog->exec();
 	delete dialog;
@@ -2183,7 +2214,7 @@ void MapEditorController::createTagEditor()
 {
 	Q_ASSERT(!tags_dock_widget);
 	
-	auto tags_widget = new TagsWidget(map, main_view, this);
+	auto* tags_widget = new TagsWidget(map, main_view, this);
 	tags_dock_widget = new EditorDockWidget(tr("Tag Editor"), tags_window_act, this, window);
 	tags_dock_widget->setWidget(tags_widget);
 	tags_dock_widget->setObjectName(QString::fromLatin1("Tag editor dock widget"));
@@ -2206,7 +2237,7 @@ void MapEditorController::editGeoreferencing()
 {
 	if (georeferencing_dialog.isNull())
 	{
-		auto dialog = new GeoreferencingDialog(this); 
+		auto* dialog = new GeoreferencingDialog(this); 
 		georeferencing_dialog.reset(dialog);
 		connect(dialog, &QDialog::finished, this, &MapEditorController::georeferencingDialogFinished);
 	}
@@ -2234,7 +2265,7 @@ void MapEditorController::selectedSymbolsChanged()
 	
 	if (mobile_mode)
 	{
-		auto symbol_button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
+		auto* symbol_button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
 		        
 		// (Re-)create the mobile_symbol_selector_action icon
 		QSize icon_size = bottom_action_bar->getIconSize(2, 2);
@@ -2635,7 +2666,7 @@ void MapEditorController::duplicateClicked()
 		new_objects.push_back(duplicate);
 	}
 	
-	auto undo_step = new DeleteObjectsUndoStep(map);
+	auto* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	map->clearObjectSelection(false);
@@ -2715,7 +2746,7 @@ void MapEditorController::switchSymbolClicked()
 			{
 				for (const auto& part : path_object->parts())
 				{
-					auto new_object = new PathObject { part };
+					auto* new_object = new PathObject { part };
 					new_object->setSymbol(symbol, true);
 					new_objects.push_back(new_object);
 				}
@@ -2734,11 +2765,11 @@ void MapEditorController::switchSymbolClicked()
 	if (split_up)	
 	{
 		map->clearObjectSelection(false);
-		for (auto object : old_objects)
+		for (auto* object : old_objects)
 		{
 			map->deleteObject(object, true);
 		}
-		for (auto object : new_objects)
+		for (auto* object : new_objects)
 		{
 			map->addObject(object);
 			map->addObjectToSelection(object, false);
@@ -2746,7 +2777,7 @@ void MapEditorController::switchSymbolClicked()
 		map->emitSelectionChanged();
 		// Do not merge this loop into the upper one;
 		// theoretically undo step indices could be wrong this way.
-		for (auto object : new_objects)
+		for (auto* object : new_objects)
 		{
 			delete_step->addObject(part->findObjectIndex(object));
 		}
@@ -2759,7 +2790,7 @@ void MapEditorController::switchSymbolClicked()
 	}
 	else if (split_up)
 	{
-		auto combined_step = new CombinedUndoStep(map);
+		auto* combined_step = new CombinedUndoStep(map);
 		combined_step->push(add_step);
 		combined_step->push(delete_step);
 		map->push(combined_step);
@@ -2786,7 +2817,7 @@ void MapEditorController::fillBorderClicked()
 	else if (contained_types & Symbol::Line && !(contained_types & Symbol::Area))
 		split_up = true;
 	
-	auto undo_step = new DeleteObjectsUndoStep(map);
+	auto* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (const auto* object : map->selectedObjects())
@@ -2796,7 +2827,7 @@ void MapEditorController::fillBorderClicked()
 			const auto* path_object = object->asPath();
 			for (const auto& part : path_object->parts())
 			{
-				auto new_object = new PathObject { part };
+				auto* new_object = new PathObject { part };
 				new_object->setSymbol(symbol, true);
 				map->addObject(new_object);
 				new_objects.push_back(new_object);
@@ -2932,7 +2963,7 @@ void MapEditorController::selectByCurrentSymbols()
 
 void MapEditorController::switchDashesClicked()
 {
-	auto undo_step = new SwitchDashesUndoStep(map);
+	auto* undo_step = new SwitchDashesUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (auto* object : map->selectedObjects())
@@ -3160,7 +3191,7 @@ void MapEditorController::connectPathsClicked()
 	
 	if (add_step)
 	{
-		for (auto object : deleted_objects)
+		for (auto* object : deleted_objects)
 		{
 			map->removeObjectFromSelection(object, false);
 			map->getCurrentPart()->deleteObject(object, false);
@@ -3169,7 +3200,7 @@ void MapEditorController::connectPathsClicked()
 	
 	if (add_step || replace_step)
 	{
-		auto undo_step = new CombinedUndoStep(map);
+		auto* undo_step = new CombinedUndoStep(map);
 		if (replace_step)
 			undo_step->push(replace_step);
 		if (add_step)
@@ -3221,7 +3252,7 @@ void MapEditorController::measureClicked(bool checked)
 	{
 		measure_dock_widget = new EditorDockWidget(tr("Measure"), measure_act, this, window);
 		measure_dock_widget->toggleViewAction()->setVisible(false);
-		auto measure_widget = new MeasureWidget(map);
+		auto* measure_widget = new MeasureWidget(map);
 		measure_dock_widget->setWidget(measure_widget);
 		measure_dock_widget->setObjectName(QString::fromLatin1("Measure dock widget"));
 		addFloatingDockWidget(measure_dock_widget);
@@ -3265,7 +3296,7 @@ void MapEditorController::booleanMergeHolesClicked()
 
 void MapEditorController::convertToCurvesClicked()
 {
-	auto undo_step = new ReplaceObjectsUndoStep(map);
+	auto* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (auto* object : map->selectedObjects())
@@ -3300,7 +3331,7 @@ void MapEditorController::simplifyPathClicked()
 	// TODO: make threshold configurable!
 	const auto threshold = 0.1;
 	
-	auto undo_step = new ReplaceObjectsUndoStep(map);
+	auto* undo_step = new ReplaceObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	
 	for (auto* object : map->selectedObjects())
@@ -3355,13 +3386,13 @@ void MapEditorController::distributePointsClicked()
 		return;
 	
 	// Add points to map
-	for (auto o : created_objects)
+	for (auto* o : created_objects)
 		map->addObject(o);
 	
 	// Create undo step and select new objects
 	map->clearObjectSelection(false);
 	MapPart* part = map->getCurrentPart();
-	auto delete_step = new DeleteObjectsUndoStep(map);
+	auto* delete_step = new DeleteObjectsUndoStep(map);
 	for (std::size_t i = 0; i < created_objects.size(); ++i)
 	{
 		Object* object = created_objects[i];
@@ -3385,7 +3416,7 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 		if (geometry.height() > max_height)
 			geometry.setHeight(max_height);
 		dock_widget->setGeometry(geometry);
-		connect(dock_widget, &QDockWidget::dockLocationChanged, this, &MapEditorController::saveWindowState);
+		connect(dock_widget, &QDockWidget::dockLocationChanged, this, &MapEditorController::setWindowStateChanged);
 	}
 }
 
@@ -3434,7 +3465,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			int template_index = 0;
 			for ( ; template_index < map->getNumTemplates(); ++template_index)
 			{
-				auto temp = map->getTemplate(template_index);
+				auto* temp = map->getTemplate(template_index);
 				if (temp->getTemplatePath() == gpx_file_path)
 				{
 					// There is a template for this track.
@@ -3446,7 +3477,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			
 			// Derive new visibility from previous/default one.
 			auto visibility = main_view->getTemplateVisibility(track);
-			visibility.opacity = std::max(0.5f, visibility.opacity);
+			visibility.opacity = std::max(0.5, visibility.opacity);
 			visibility.visible = true;
 			
 			if (!track)
@@ -3690,7 +3721,7 @@ void MapEditorController::updateMapPartsUI()
 			
 			if (i != current)
 			{
-				auto action = new QAction(part_name, this);
+				auto* action = new QAction(part_name, this);
 				mappart_merge_mapper->setMapping(action, i);
 				connect(action, QOverload<bool>::of(&QAction::triggered), mappart_merge_mapper, QOverload<>::of(&QSignalMapper::map));
 				mappart_merge_menu->addAction(action);
@@ -3718,7 +3749,7 @@ void MapEditorController::addMapPart()
 	                   &accepted );
 	if (accepted && !name.isEmpty())
 	{
-		auto part = new MapPart(name, map);
+		auto* part = new MapPart(name, map);
 		map->addPart(part, map->getCurrentPartIndex() + 1);
 		map->setCurrentPart(part);
 		map->push(new MapPartUndoStep(map, MapPartUndoStep::RemoveMapPart, part));
@@ -3727,7 +3758,7 @@ void MapEditorController::addMapPart()
 
 void MapEditorController::removeMapPart()
 {
-	auto part = map->getCurrentPart();
+	auto* part = map->getCurrentPart();
 	
 	QMessageBox::StandardButton button =
 	        QMessageBox::question(
@@ -3744,17 +3775,17 @@ void MapEditorController::removeMapPart()
 		auto i = part->getNumObjects();
 		if (i > 0)
 		{
-			auto add_step = new AddObjectsUndoStep(map);
+			auto* add_step = new AddObjectsUndoStep(map);
 			do
 			{
 				--i;
-				auto object = part->getObject(i);
+				auto* object = part->getObject(i);
 				add_step->addObject(i, object);
 				part->deleteObject(object, true);
 			}
 			while (i > 0);
 			
-			auto combined_step = new CombinedUndoStep(map);
+			auto* combined_step = new CombinedUndoStep(map);
 			combined_step->push(add_step);
 			combined_step->push(undo_step);
 			undo_step = combined_step;
@@ -3803,7 +3834,7 @@ void MapEditorController::reassignObjectsToMapPart(int target)
 	std::sort(objects.rbegin(), objects.rend());
 	map->reassignObjectsToMapPart(begin(objects), end(objects), current, target);
 	
-	auto undo = new SwitchPartUndoStep(map, target, current);
+	auto* undo = new SwitchPartUndoStep(map, target, current);
 	for (auto i : objects)
 		undo->addObject(i);
 	map->push(undo);
@@ -3831,11 +3862,11 @@ void MapEditorController::mergeCurrentMapPartTo(int target)
 		
 		auto first  = map->mergeParts(source, target);
 		
-		auto switch_part_undo = new SwitchPartUndoStep(map, target, source);
+		auto* switch_part_undo = new SwitchPartUndoStep(map, target, source);
 		for (auto i = target_part->getNumObjects(); i > first; --i)
 			switch_part_undo->addObject(0);
 		
-		auto undo = new CombinedUndoStep(map);
+		auto* undo = new CombinedUndoStep(map);
 		undo->push(switch_part_undo);
 		undo->push(add_part_step);
 		map->push(undo);
@@ -3854,7 +3885,7 @@ void MapEditorController::mergeAllMapParts()
 	
 	if (button == QMessageBox::Yes)
 	{
-		auto undo = new CombinedUndoStep(map);
+		auto* undo = new CombinedUndoStep(map);
 		
 		// For simplicity, we merge to the first part,
 		// but keep the properties (i.e. name) of the current part.
@@ -3865,7 +3896,7 @@ void MapEditorController::mergeAllMapParts()
 		{
 			UndoStep* add_part_step = new MapPartUndoStep(map, MapPartUndoStep::AddMapPart, i);
 			auto first = map->mergeParts(i, 0);
-			auto switch_part_undo = new SwitchPartUndoStep(map, 0, i);
+			auto* switch_part_undo = new SwitchPartUndoStep(map, 0, i);
 			for (auto j = target_part->getNumObjects(); j > first; --j)
 				switch_part_undo->addObject(0);
 			undo->push(switch_part_undo);
@@ -3882,7 +3913,7 @@ void MapEditorController::mergeAllMapParts()
 
 void MapEditorController::paintOnTemplate(Template* temp)
 {
-	auto tool = qobject_cast<PaintOnTemplateTool*>(getTool());
+	auto* tool = qobject_cast<PaintOnTemplateTool*>(getTool());
 	if (!tool)
 	{
 		tool = new PaintOnTemplateTool(this, paint_on_template_act);
@@ -3900,7 +3931,7 @@ void MapEditorController::paintOnTemplate(Template* temp)
 
 void MapEditorController::finishPaintOnTemplate()
 {
-	if (auto tool = qobject_cast<PaintOnTemplateTool*>(current_tool))
+	if (auto* tool = qobject_cast<PaintOnTemplateTool*>(current_tool))
 	{
 		tool->deactivate();
 	}
@@ -4009,68 +4040,76 @@ void MapEditorController::importClicked()
 	QSettings settings;
 	QString import_directory = settings.value(QString::fromLatin1("importFileDirectory"), QDir::homePath()).toString();
 	
-	QStringList map_names;
 	QStringList map_extensions;
-	for (auto format : FileFormats.formats())
+	for (auto* format : FileFormats.formats())
 	{
-		if (!format->supportsReading())
-			continue;
-		
-		map_names.push_back(format->primaryExtension().toUpper());
-		map_extensions.append(format->fileExtensions());
+		if (format->supportsReading())
+			map_extensions.append(format->fileExtensions());
 	}
-	map_names.removeDuplicates();
+	map_extensions.push_back(QLatin1String("gpx"));
+	map_extensions.sort(Qt::CaseInsensitive);
 	map_extensions.removeDuplicates();
 	
 	QString filename = FileDialog::getOpenFileName(
 	                       window,
-	                       tr("Import %1 or GPX file").arg(
-	                           map_names.join(QString::fromLatin1(", "))),
+	                       tr("Import..."),
 	                       import_directory,
-	                       QString::fromLatin1("%1 (%2 *.gpx);;%3 (*.*)").arg(
+	                       QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
 	                           tr("Importable files"), QLatin1String("*.") + map_extensions.join(QString::fromLatin1(" *.")), tr("All files")) );
-	if (filename.isEmpty() || filename.isNull())
+	if (filename.isEmpty())
 		return;
 	
 	settings.setValue(QString::fromLatin1("importFileDirectory"), QFileInfo(filename).canonicalPath());
 	
-	bool success = false;
-	auto map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsFileImport);
+	/**
+	 * Finding the most appropriate import function in the following way:
+	 * - If the extensions is ".gpx", the (default) import is via TemplateTrack.
+	 * - If the format is understood by OgrFileFormat, it is handled by
+	 *   OgrTemplate import. Note that the OgrTemplate import may also handle
+	 *   GPX, but it is left to the OgrFileFormat (user configuration) whether
+	 *   it wants to report its support for the GPX format.
+	 * - Every other recognized map file is imported regularly.
+	 */
+	char const* format_id = "";
+	if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
+		format_id = "GPX";
+	
+	auto* map_format = FileFormats.findFormatForFilename(filename, &FileFormat::supportsFileImport);
 	if (map_format)
+		format_id = map_format->id();
+	
+	if (qstrcmp(format_id, "OGR") == 0)
 	{
-		// Map format recognized by filename extension
-		importMapFile(filename, true); // Error reporting in importMapFile()
-		return;
-	}
-	else if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
-	{
-		// Fallback: Legacy GPX file import
-		importGpxFile(filename);
-		return; // Error reporting in Track::import()
-	}
-	else if (importMapFile(filename, false))
-	{
-		// Last resort: Map format recognition by try-and-error
-		success = true;
-	}
-	else
-	{
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
+		importOgrFile(filename);
 		return;
 	}
 	
-	if (!success)
+	if (qstrcmp(format_id, "GPX") == 0)
 	{
-		/// \todo Reword message (not a map file here). Requires new translations
-		QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected map file because it could not be loaded."));
+		// Legacy GPX file import
+		importGpxFile(filename);
+		return; // Error reporting in Track::import()
 	}
+	
+	if (format_id != nullptr)
+	{
+		importMapFile(filename, false);
+		return;
+	}
+	
+	QMessageBox::critical(window, tr("Error"), tr("Cannot import the selected file because its file format is not supported."));
 }
 
 bool MapEditorController::importGpxFile(const QString& filename)
 {
-	TemplateTrack temp(filename, map);
-	return !temp.configureAndLoad(window, main_view)
-	       || temp.import(window);
+	Map imported_map;
+	imported_map.setGeoreferencing(map->getGeoreferencing());
+	
+	TemplateTrack temp(filename, &imported_map);
+	if (!temp.configureAndLoad(window, main_view))
+		return false;
+	
+	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
 }
 
 bool MapEditorController::importMapFile(const QString& filename, bool show_errors)
@@ -4096,40 +4135,59 @@ bool MapEditorController::importMapFile(const QString& filename, bool show_error
 	if (show_errors && !importer->warnings().empty())
 	    MainWindow::showMessageBox(window, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
 	
-	if (imported_map.symbolSetId() != map->symbolSetId())
+	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
+}
+
+bool MapEditorController::importOgrFile(const QString& filename)
+{
+#if MAPPER_USE_GDAL
+	OgrTemplate ogr_template {filename, map};
+	if (!ogr_template.configureAndLoad(window, main_view))
+		return false;
+	
+	auto template_map = ogr_template.takeTemplateMap();
+	if (Q_UNLIKELY(!template_map))
+		return false;
+	
+	TemplateTransform transform;
+	if (!ogr_template.isTemplateGeoreferenced())
 	{
-		auto crt_filename = filename;
-		crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".crt"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename.replace(filename.lastIndexOf(QLatin1Char('.')), 4, QLatin1String(".CRT"));
-		if (!QFileInfo::exists(crt_filename))
-			crt_filename = ReplaceSymbolSetDialog::discoverCrtFile(imported_map.symbolSetId(), map->symbolSetId());
-		
-		if (QFileInfo::exists(crt_filename))
-		{
-			QFile crt_file{ crt_filename };
-			if (!crt_file.open(QFile::ReadOnly))
-			{
-				QMessageBox::warning(window,
-				                     ::OpenOrienteering::Map::tr("Error"),
-				                     ::OpenOrienteering::Map::tr("Cannot open file:\n%1\nfor reading.").arg(crt_filename));
-				return false;
-			}
-			if (!ReplaceSymbolSetDialog::showDialogForCRT(window, imported_map, *map, crt_file))
-			{
-				auto choice = QMessageBox::question(window,
-				                                    ::OpenOrienteering::Map::tr("Import..."),
-				                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
-				                                                                "Import the data anyway?"),
-				                                    QMessageBox::Yes | QMessageBox::No,
-				                                    QMessageBox::No);
-				if (choice == QMessageBox::No)
-					return false;
-			}
-		}
+		ogr_template.getTransform(transform);
+		template_map->applyOnAllObjects(transform.makeObjectTransform());
+		template_map->setGeoreferencing(map->getGeoreferencing());
+	}
+	auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
+	template_scale *= qreal(template_map->getScaleDenominator()) / map->getScaleDenominator();
+	if (!qFuzzyCompare(template_scale, 1))
+	{
+		template_map->scaleAllSymbols(template_scale);
 	}
 	
-	importMap(imported_map, Map::MinimalObjectImport | Map::GeorefImport, window);
+	return importMapWithReplacement(*template_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
+#else
+	return false;
+#endif
+}
+
+
+bool MapEditorController::importMapWithReplacement(
+        Map& imported_map,
+        Map::ImportMode mode,
+        const QString& crt_file_hint)
+{
+	if (!SymbolReplacement(imported_map, *map).withAutoCrtFile(window, crt_file_hint))
+	{
+		auto choice = QMessageBox::question(window,
+		                                    ::OpenOrienteering::Map::tr("Import..."),
+		                                    ::OpenOrienteering::Map::tr("Symbol replacement was canceled.\n"
+		                                                                "Import the data anyway?"),
+		                                    QMessageBox::Yes | QMessageBox::No,
+		                                    QMessageBox::No);
+		if (choice == QMessageBox::No)
+			return false;
+	}
+	
+	importMap(imported_map, mode, window);
 	return true;
 }
 
@@ -4198,7 +4256,7 @@ EditorDockWidget::EditorDockWidget(const QString& title, QAction* action, MapEdi
 {
 	if (editor)
 	{
-		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::saveWindowState);
+		connect(this, &EditorDockWidget::dockLocationChanged, editor, &MapEditorController::setWindowStateChanged);
 	}
 	
 	if (action)

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,11 +21,11 @@
 
 #include "template_map.h"
 
-#include <algorithm>
+#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>
-#include <QPaintEngine>
+#include <QPaintDevice>
 #include <QPainter>
 #include <QRectF>
 #include <QStringList>
@@ -129,7 +129,7 @@ void TemplateMap::unloadTemplateFileImpl()
 	template_map.reset();
 }
 
-void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const
+void TemplateMap::drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const
 {
 	if (!is_georeferenced)
 		applyTemplateTransform(painter);
@@ -203,6 +203,18 @@ const Map* TemplateMap::templateMap() const
 Map* TemplateMap::templateMap()
 {
 	return template_map.get();
+}
+
+std::unique_ptr<Map> TemplateMap::takeTemplateMap()
+{
+	std::unique_ptr<Map> result;
+	if (template_state == Loaded)
+	{
+		swap(result, template_map);
+		setTemplateState(Unloaded);
+		emit templateStateChanged();
+	}
+	return result;
 }
 
 void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)

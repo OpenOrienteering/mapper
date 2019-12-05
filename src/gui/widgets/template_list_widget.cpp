@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2018 Kai Pastor
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,7 +73,6 @@
 #include <QTableWidgetItem>
 #include <QToolButton>
 #include <QToolTip>
-#include <QTransform>
 #include <QVBoxLayout>
 #include <QVariant>
 
@@ -81,7 +80,6 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "core/objects/object.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
@@ -99,34 +97,6 @@
 
 
 namespace OpenOrienteering {
-
-// ### ApplyTemplateTransform ###
-
-/**
- * A local functor which is used when importing map templates into the current map.
- */
-struct ApplyTemplateTransform
-{
-	const TemplateTransform& transform;
-	
-	void operator()(Object* object) const
-	{ 
-		/// \todo Move this if...else into a constructor that sets up a transform member.
-		if (qFuzzyIsNull(transform.template_shear))
-			object->scale(transform.template_scale_x, transform.template_scale_y);
-		else
-		{
-			QTransform scaling(transform.template_scale_x, transform.template_shear,
-			                   transform.template_shear, transform.template_scale_y,
-			                   0, 0);
-			object->transform(scaling);
-		}
-		object->rotate(transform.template_rotation);
-		object->move(transform.template_x, transform.template_y);
-	}
-};
-
-
 
 // ### TemplateListWidget ###
 
@@ -779,13 +749,13 @@ void TemplateListWidget::cellChange(int row, int column)
 			
 		case 1:  // Opacity spinbox or slider
 			{
-				float opacity = template_table->item(row, column)->data(Qt::DisplayRole).toFloat();
-				if (!qFuzzyCompare(1.0f+opacity, 1.0f+visibility.opacity))
+				auto const opacity = template_table->item(row, column)->data(Qt::DisplayRole).toReal();
+				if (!qFuzzyCompare(1.0+opacity, 1.0+visibility.opacity))
 				{
-					visibility.opacity = qBound(0.0f, opacity, 1.0f);
+					visibility.opacity = qBound(0.0, opacity, 1.0);
 					updateVisibility(temp, visibility);
 					setAreaDirty();
-					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, qreal(visibility.opacity)));
+					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, visibility.opacity));
 				}
 			}
 			break;
@@ -1006,7 +976,7 @@ void TemplateListWidget::importClicked()
 		template_map.importMap(*prototype->templateMap(), Map::MinimalObjectImport);
 		if (!prototype->isTemplateGeoreferenced())
 		{
-			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+			template_map.applyOnAllObjects(transform.makeObjectTransform());
 			template_map.setGeoreferencing(map->getGeoreferencing());
 		}
 		auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
@@ -1035,7 +1005,7 @@ void TemplateListWidget::importClicked()
 		}
 		
 		if (!prototype->isTemplateGeoreferenced())
-			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+			template_map.applyOnAllObjects(transform.makeObjectTransform());
 		
 		auto nominal_scale = double(template_map.getScaleDenominator()) / map->getScaleDenominator();
 		auto current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
@@ -1263,7 +1233,7 @@ void TemplateListWidget::updateRow(int row)
 		if (vis.visible)
 		{
 			check_state   = Qt::Checked;
-			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, qreal(vis.opacity));
+			opacity_color = QColor::fromCmykF(0.0, 0.0, 0.0, vis.opacity);
 			text_color    = QPalette().color(color_group, QPalette::Foreground);
 			if (!mobile_mode)
 			{

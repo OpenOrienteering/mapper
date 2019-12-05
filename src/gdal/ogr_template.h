@@ -49,6 +49,8 @@ Q_OBJECT
 public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
+	static std::unique_ptr<Georeferencing> getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef);
+	
 	
 	OgrTemplate(const QString& path, Map* map);
 	

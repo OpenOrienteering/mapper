@@ -125,8 +125,9 @@ set(Mapper_Common_SRCS
   gui/symbols/line_symbol_settings.cpp
   gui/symbols/point_symbol_editor_widget.cpp
   gui/symbols/point_symbol_settings.cpp
-  gui/symbols/replace_symbol_set_dialog.cpp
   gui/symbols/symbol_properties_widget.cpp
+  gui/symbols/symbol_replacement.cpp
+  gui/symbols/symbol_replacement_dialog.cpp
   gui/symbols/symbol_setting_dialog.cpp
   gui/symbols/text_symbol_settings.cpp
   
@@ -306,6 +307,7 @@ if(ANDROID)
 	add_library(Mapper SHARED ${Mapper_SRCS})
 else()
 	add_executable(Mapper WIN32 MACOSX_BUNDLE ${Mapper_SRCS})
+	target_compile_definitions(Mapper PRIVATE MAPPER_USE_QTSINGLEAPPLICATION)
 	target_link_libraries(Mapper QtSingleApplication)
 endif()
 

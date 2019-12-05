@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,21 +21,34 @@
 
 #include "template.h"
 
+#include <algorithm>
 #include <cmath>
+#include <iosfwd>
+#include <iterator>
 #include <new>
+#include <type_traits>
 
+#include <Qt>
+#include <QtMath>
+#include <QByteArray>
+#include <QColor>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QFileInfo>
+#include <QLatin1String>
 #include <QMessageBox>
 #include <QPainter>
-#include <QScopedValueRollback>
+#include <QRectF>
+#include <QStringRef>
+#include <QTransform>
+#include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include "core/georeferencing.h"
 #include "core/map_view.h"
 #include "core/map.h"
+#include "core/objects/object.h"
 #include "fileformats/file_format.h"
 #include "gdal/ogr_template.h"
 #include "gui/file_dialog.h"
@@ -52,7 +65,7 @@ namespace OpenOrienteering {
 class Template::ScopedOffsetReversal
 {
 public:
-	ScopedOffsetReversal(Template& temp)
+	explicit ScopedOffsetReversal(Template& temp)
 	: temp(temp)
 	, copy(temp.transform)
 	, needed(temp.accounted_offset != MapCoord{} )
@@ -73,6 +86,11 @@ public:
 			temp.updateTransformationMatrices();
 		}
 	}
+	
+	ScopedOffsetReversal(const ScopedOffsetReversal&) = delete;
+	ScopedOffsetReversal(ScopedOffsetReversal&&) = delete;
+	ScopedOffsetReversal& operator=(const ScopedOffsetReversal&) = delete;
+	ScopedOffsetReversal&& operator=(ScopedOffsetReversal&&) = delete;
 	
 private:
 	Template& temp;
@@ -108,6 +126,42 @@ TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexce
 	         (scaling.m12()+scaling.m21())/2 };
 }
 
+
+struct NonShearingObjectTransform
+{
+	TemplateTransform const& transform;
+	
+	void operator()(Object* object) const
+	{
+		object->scale(transform.template_scale_x, transform.template_scale_y);
+		object->rotate(transform.template_rotation);
+		object->move(transform.template_x, transform.template_y);
+	}
+};
+
+struct ShearingObjectTransform
+{
+	TemplateTransform const& transform;
+	QTransform const scaling;
+	
+	void operator()(Object* object) const
+	{
+		object->transform(scaling);
+		object->rotate(transform.template_rotation);
+		object->move(transform.template_x, transform.template_y);
+	}
+};
+
+std::function<void (Object*)> TemplateTransform::makeObjectTransform() const
+{
+	if (qFuzzyIsNull(template_shear))
+		return NonShearingObjectTransform{*this};
+	
+	return ShearingObjectTransform{*this,
+	                               {template_scale_x, template_shear,
+	                                template_shear, template_scale_y,
+	                                0, 0}};
+}
 
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const
@@ -306,7 +360,7 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	QString path = attributes.value(QLatin1String("path")).toString();
 	auto temp = templateForFile(path, &map);
 	if (!temp)
-		temp.reset(new TemplateImage(path, &map)); // fallback
+		temp = std::make_unique<TemplateImage>(path, &map); // fallback
 	
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))
@@ -336,7 +390,7 @@ Q_ASSERT(temp->passpoints.size() == 0);
 						temp->other_transform.load(xml);
 					else
 					{
-						qDebug() << xml.qualifiedName();
+						qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 						xml.skipCurrentElement(); // unsupported
 					}
 				}
@@ -354,13 +408,13 @@ Q_ASSERT(temp->passpoints.size() == 0);
 						temp->template_to_map_other.load(xml);
 					else
 					{
-						qDebug() << xml.qualifiedName();
+						qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 						xml.skipCurrentElement(); // unsupported
 					}
 				}
 				else
 				{
-					qDebug() << xml.qualifiedName();
+					qDebug("%s", xml.qualifiedName().toLocal8Bit().constData());
 					xml.skipCurrentElement(); // unsupported
 				}
 			}
@@ -555,9 +609,8 @@ bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 	       && loadTemplateFile(false);
 }
 
-bool Template::preLoadConfiguration(QWidget* dialog_parent)
+bool Template::preLoadConfiguration(QWidget* /*dialog_parent*/)
 {
-	Q_UNUSED(dialog_parent);
 	return true;
 }
 
@@ -608,10 +661,8 @@ bool Template::loadTemplateFile(bool configuring)
 	return template_state == Loaded;
 }
 
-bool Template::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool Template::postLoadConfiguration(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
 {
-	Q_UNUSED(dialog_parent);
-	Q_UNUSED(out_center_in_view);
 	return true;
 }
 
@@ -717,7 +768,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QColor color, float width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);
@@ -728,7 +779,7 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QCo
 		for (int i = 1; i < num_coords; ++i)
 			rectInclude(map_bbox, coords[i]);
 	}
-	float radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0f);
+	auto const radius = qMin(getTemplateScaleX(), getTemplateScaleY()) * qMax((width+1) / 2, 1.0);
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,
 								map_bbox.width() + 2*radius, map_bbox.height() + 2*radius);
 	
@@ -738,9 +789,8 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, QCo
 	setHasUnsavedChanges(true);
 }
 
-void Template::drawOntoTemplateUndo(bool redo)
+void Template::drawOntoTemplateUndo(bool /*redo*/)
 {
-	Q_UNUSED(redo);
 	// nothing
 }
 
@@ -874,18 +924,18 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	
 	std::unique_ptr<Template> t;
 	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
-		t.reset(new TemplateImage(path, map));
+		t = std::make_unique<TemplateImage>(path, map);
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
-		t.reset(new TemplateMap(path, map));
+		t = std::make_unique<TemplateMap>(path, map);
 #ifdef MAPPER_USE_GDAL
 	else if (path_ends_with_any_of(OgrTemplate::supportedExtensions()))
-		t.reset(new OgrTemplate(path, map));
+		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
-		t.reset(new TemplateTrack(path, map));
+		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
 	else
-		t.reset(new OgrTemplate(path, map));
+		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	
 	return t;
@@ -893,9 +943,8 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 
 
 
-void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
+void Template::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& /*xml*/) const
 {
-	Q_UNUSED(xml);
 	// nothing
 }
 
@@ -905,12 +954,8 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, QColor color, float width)
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/)
 {
-	Q_UNUSED(coords);
-	Q_UNUSED(num_coords);
-	Q_UNUSED(color);
-	Q_UNUSED(width);
 	// nothing
 }
 

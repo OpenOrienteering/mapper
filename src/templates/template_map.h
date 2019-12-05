@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2012-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +25,7 @@
 #include <memory>
 #include <vector>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QString>
 
@@ -70,7 +72,7 @@ public:
 	void unloadTemplateFileImpl() override;
 	
 	
-	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, float opacity) const override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	
 	QRectF getTemplateExtent() const override;
 	
@@ -79,6 +81,14 @@ public:
 	
 	
 	const Map* templateMap() const;
+	
+	/**
+	 * Returns the template's map.
+	 * 
+	 * The template must be in loaded state before calling this method.
+	 * The template will be in unloaded state afterwards.
+	 */
+	std::unique_ptr<Map> takeTemplateMap();
 	
 protected:
 	Template* duplicateImpl() const override;

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 #include "ogr_file_format_p.h"  // IWYU pragma: associated
 
 #include <algorithm>
+#include <cmath>
 #include <cstddef>
 #include <functional>
 #include <iterator>
@@ -413,7 +414,7 @@ namespace {
 	}
 	
 	
-	class AverageLatLon
+	class AverageCoords
 	{
 	private:
 		double x = 0;
@@ -452,11 +453,8 @@ namespace {
 		}
 		
 	public:
-		AverageLatLon(OGRDataSourceH data_source)
+		AverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs)
 		{
-			auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
-			OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
-			
 			auto num_layers = OGR_DS_GetLayerCount(data_source);
 			for (int i = 0; i < num_layers; ++i)
 			{
@@ -466,7 +464,7 @@ namespace {
 					if (!spatial_reference)
 						continue;
 					
-					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, geo_srs.get()) };
+					auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(spatial_reference, srs) };
 					if (!transformation)
 						continue;
 					
@@ -487,9 +485,9 @@ namespace {
 			}
 		}
 		
-		operator LatLon() const
+		operator QPointF() const
 		{
-			return num_coords ? LatLon{ y / num_coords, x / num_coords } : LatLon{};
+			return num_coords ? QPointF{ x / num_coords, y / num_coords } : QPointF{};
 		}
 		
 	};
@@ -543,7 +541,6 @@ OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitT
  : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
- , georeferencing_import_enabled{ true }
 {
 	GdalManager().configure();
 	
@@ -823,13 +820,16 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 	if (projected_srs_spec)
 	{
 		// Found a suitable projected SRS
+		auto center = calcAverageCoords(data_source, suitable_srs.get());
 		auto georef = map->getGeoreferencing();  // copy
 		georef.setProjectedCRS(QStringLiteral("PROJ.4"), QString::fromLatin1(projected_srs_spec));
+		georef.setProjectedRefPoint({std::round(center.x()), std::round(center.y())});
 		map->setGeoreferencing(georef);
 		CPLFree(projected_srs_spec);
 		return suitable_srs;
 	}
-	else if (suitable_srs)
+	
+	if (suitable_srs)
 	{
 		// Found a suitable SRS but it is not projected.
 		// Setting up a local orthographic projection.
@@ -847,7 +847,8 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		map->setGeoreferencing(ortho_georef);
 		return srsFromMap();
 	}
-	else if (local_srs || no_srs)
+	
+	if (local_srs || no_srs)
 	{
 		auto georef = Georeferencing();
 		georef.setScaleDenominator(int(map->getScaleDenominator()));
@@ -855,10 +856,8 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		map->setGeoreferencing(georef);
 		return local_srs ? std::move(local_srs) : srsFromMap();
 	}
-	else
-	{
-		throw FileFormatException(tr("The geospatial data has no suitable spatial reference."));
-	}
+	
+	throw FileFormatException(tr("The geospatial data has no suitable spatial reference."));
 }
 
 
@@ -1000,7 +999,8 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 		object->setPosition(toMapCoord(OGR_G_GetX(geometry, 0), OGR_G_GetY(geometry, 0)));
 		return object;
 	}
-	else if (symbol->getType() == Symbol::Text)
+	
+	if (symbol->getType() == Symbol::Text)
 	{
 		const auto& description = symbol->getDescription();
 		auto length = description.length();
@@ -1035,7 +1035,7 @@ Object* OgrFileImport::importPointGeometry(OGRFeatureH feature, OGRGeometryH geo
 				applyLabelAnchor(anchor, object);
 			}
 				
-			auto angle = QStringRef(&description, 3, split-3).toFloat(&ok);
+			auto angle = QStringRef(&description, 3, split-3).toDouble(&ok);
 			if (ok)
 			{
 				object->setRotation(qDegreesToRadians(angle));
@@ -1121,7 +1121,7 @@ PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometr
 
 Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string)
 {
-	auto style_string = QByteArray::fromRawData(raw_style_string, qstrlen(raw_style_string));
+	auto style_string = QByteArray::fromRawData(raw_style_string, int(qstrlen(raw_style_string)));
 	Symbol* symbol = nullptr;
 	switch (type)
 	{
@@ -1164,7 +1164,7 @@ Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string
 
 MapColor* OgrFileImport::makeColor(OGRStyleToolH tool, const char* color_string)
 {
-	auto key = QByteArray::fromRawData(color_string, qstrlen(color_string));
+	auto key = QByteArray::fromRawData(color_string, int(qstrlen(color_string)));
 	auto color = colors.value(key);
 	if (!color)
 	{	
@@ -1369,7 +1369,7 @@ PointSymbol* OgrFileImport::getSymbolForOgrSymbol(OGRStyleToolH tool, const QByt
 		break;
 	default:
 		return nullptr;
-	};
+	}
 	
 	int is_null;
 	auto color_string = OGR_ST_GetParamStr(tool, color_key, &is_null);
@@ -1412,7 +1412,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 	
 	// Don't use the style string as a key: The style contains the label.
 	QByteArray key;
-	key.reserve(qstrlen(color_string) + qstrlen(font_size_string) + 1);
+	key.reserve(int(qstrlen(color_string) + qstrlen(font_size_string) + 1));
 	key.append(color_string);
 	key.append(font_size_string);
 	auto text_symbol = static_cast<TextSymbol*>(text_symbols.value(key));
@@ -1446,7 +1446,7 @@ TextSymbol* OgrFileImport::getSymbolForLabel(OGRStyleToolH tool, const QByteArra
 		angle = 0.0;
 	
 	QString description;
-	description.reserve(qstrlen(label_string) + 100);
+	description.reserve(int(qstrlen(label_string) + 100));
 	description.append(QString::number(100 + anchor));
 	description.append(QString::number(angle, 'g', 1));
 	description.append(QLatin1Char(' '));
@@ -1461,7 +1461,7 @@ LineSymbol* OgrFileImport::getSymbolForPen(OGRStyleToolH tool, const QByteArray&
 	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCPen);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
-	auto tool_key = QByteArray::fromRawData(raw_tool_key, qstrlen(raw_tool_key));
+	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
 	auto symbol = line_symbols.value(tool_key);
 	if (symbol && symbol->getType() == Symbol::Line)
 		return static_cast<LineSymbol*>(symbol);
@@ -1493,7 +1493,7 @@ AreaSymbol* OgrFileImport::getSymbolForBrush(OGRStyleToolH tool, const QByteArra
 	Q_ASSERT(OGR_ST_GetType(tool) == OGRSTCBrush);
 	
 	auto raw_tool_key = OGR_ST_GetStyleString(tool);
-	auto tool_key = QByteArray::fromRawData(raw_tool_key, qstrlen(raw_tool_key));
+	auto tool_key = QByteArray::fromRawData(raw_tool_key, int(qstrlen(raw_tool_key)));
 	auto symbol = area_symbols.value(tool_key);
 	if (symbol && symbol->getType() == Symbol::Area)
 		return static_cast<AreaSymbol*>(symbol);
@@ -1605,8 +1605,23 @@ LatLon OgrFileImport::calcAverageLatLon(const QString& path)
 // static
 LatLon OgrFileImport::calcAverageLatLon(OGRDataSourceH data_source)
 {
-	return AverageLatLon(data_source);
+	auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
+	OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+	OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
+#endif
+	
+	auto const average = calcAverageCoords(data_source, geo_srs.get());
+	return {average.y(), average.x()};
 }
+
+
+// static
+QPointF OgrFileImport::calcAverageCoords(OGRDataSourceH data_source, OGRDataSourceH srs)
+{
+	return QPointF{AverageCoords(data_source, srs)};
+}
+
 
 // ### OgrFileExport ###
 
@@ -1888,6 +1903,9 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 		// Formats with NeedsWgs84 quirk need coords in EPSG:4326/WGS 1984
 		auto geo_srs = ogr::unique_srs { OSRNewSpatialReference(nullptr) };
 		OSRSetWellKnownGeogCS(geo_srs.get(), "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+		OSRSetAxisMappingStrategy(geo_srs.get(), OAMS_TRADITIONAL_GIS_ORDER);
+#endif
 		transformation = ogr::unique_transformation { OCTNewCoordinateTransformation(map_srs.get(), geo_srs.get()) };
 	}
 }
@@ -1994,7 +2012,7 @@ void OgrFileExport::addTextToLayer(OGRLayerH layer, const std::function<bool (co
 		{
 			// There is no label field, or the text is too long.
 			// Put the text directly in the label.
-			text.replace(QRegularExpression(QLatin1String("([\"\\\\])"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
+			text.replace(QRegularExpression(QLatin1String(R"((["\\]))"), QRegularExpression::MultilineOption), QLatin1String("\\\\1"));
 			style.replace("{Name}", text.toUtf8());
 		}
 		OGR_F_SetStyleString(po_feature.get(), style);
@@ -2013,7 +2031,7 @@ void OgrFileExport::addLinesToLayer(OGRLayerH layer, const std::function<bool (c
 	auto add_feature = [&](const Object* object) {
 		const auto* symbol = object->getSymbol();
 		const auto* path = object->asPath();
-		if (path->parts().size() < 1)
+		if (path->parts().empty())
 			return;
 
 		QString sym_name = symbol->getPlainTextName();
@@ -2054,7 +2072,7 @@ void OgrFileExport::addAreasToLayer(OGRLayerH layer, const std::function<bool (c
 	auto add_feature = [&](const Object* object) {
 		const auto* symbol = object->getSymbol();
 		const auto* path = object->asPath();
-		if (path->parts().size() < 1)
+		if (path->parts().empty())
 			return;
 
 		auto po_feature = ogr::unique_feature(OGR_F_Create(OGR_L_GetLayerDefn(layer)));

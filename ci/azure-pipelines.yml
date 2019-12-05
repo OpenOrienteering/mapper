@@ -27,11 +27,16 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+variables:
+  ENABLE_PDF_MANUAL: 0
+
 jobs:
 - job: Codespell
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: codespell.yml
 
 
@@ -40,6 +45,8 @@ jobs:
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: release-notes.yml
 
 
@@ -48,10 +55,12 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - bash: |
         echo "##vso[task.setVariable variable=ORIG_TEST_RESULTS]${TEST_RESULTS}"
@@ -60,7 +69,7 @@ jobs:
       parameters:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          "-DCMAKE_PREFIX_PATH=$(HOME)/superbuild\;/usr"
           -DCMAKE_FIND_FRAMEWORK=LAST
           -DCMAKE_FIND_APPBUNDLE=LAST
           -DMapper_CI_ENABLE_GDAL=0
@@ -74,7 +83,7 @@ jobs:
       parameters:
         cmakeArgs: >
           -DCMAKE_BUILD_TYPE=Release
-          "-DCMAKE_PREFIX_PATH=/Users/vsts/superbuild\;/usr"
+          "-DCMAKE_PREFIX_PATH=$(HOME)/superbuild\;/usr"
           -DCMAKE_FIND_FRAMEWORK=LAST
           -DCMAKE_FIND_APPBUNDLE=LAST
           -DMapper_CI_ENABLE_GDAL=1
@@ -89,18 +98,22 @@ jobs:
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CLAZY_VERSION: 1.5
     CLAZY_CHECKS: 'level0,level1,no-rule-of-two-soft,no-const-signal-or-slot,no-fully-qualified-moc-types'
     CLAZY_IGNORE_DIRS: '.*printsupport.qt-5.*'
     CLAZY_NO_WERROR: 1
+    ENABLE_PDF_MANUAL: 1
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
         cmakeArgs: >
+          -G Ninja
           -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - template: publish.yml
     - bash: |
@@ -111,11 +124,11 @@ jobs:
 
 - job: Linux_Coverage
   displayName: Linux (Debug, coverage)
-  dependsOn: Linux_clazy
+  dependsOn: macOS
   condition: succeededOrFailed()
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     CC: gcc
     CFLAGS: -fprofile-arcs -ftest-coverage
     CXX: g++
@@ -124,11 +137,12 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
         cmakeArgs: >
-          -G Ninja
           -DCMAKE_BUILD_TYPE=Debug
           -DMapper_CI_ENABLE_COVERAGE=1
         buildArgs:
@@ -140,12 +154,14 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: armv7a-linux-androideabi
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -157,8 +173,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -173,12 +189,14 @@ jobs:
   dependsOn: Android_armv7
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: aarch64-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -190,8 +208,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -206,12 +224,14 @@ jobs:
   dependsOn: Android_x86_64
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: i686-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -223,8 +243,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -239,12 +259,14 @@ jobs:
   dependsOn: Release_Notes
   variables:
     IMAGE_NAME: 'macos-10.13'
-    SUPERBUILD_INSTALL_DIR:  /Users/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-linux-android
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-macos.yml
     - template: build.yml
       parameters:
@@ -256,8 +278,8 @@ jobs:
           -D$(TARGET)_TOOLCHAIN_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/toolchain
           -DMapper_CI_APP_ID=org.openorienteering.mapper$(APP_ID_SUFFIX)
           -DMapper_CI_GDAL_DATA_DIR=$(SUPERBUILD_INSTALL_DIR)/$(TARGET)/usr/share/gdal
-          -DANDROID_SDK_INSTALL_ROOT=/Users/vsts
-          -DANDROID_NDK_INSTALL_ROOT=/Users/vsts
+          -DANDROID_SDK_INSTALL_ROOT=$(HOME)
+          -DANDROID_NDK_INSTALL_ROOT=$(HOME)
           -DANDROID_BUILD_LIBCXX=1
         buildArgs: -j5
         toolchainTargets:
@@ -274,12 +296,14 @@ jobs:
   condition: False
   variables:
     IMAGE_NAME: 'ubuntu-18.04'
-    SUPERBUILD_INSTALL_DIR:  /home/vsts/superbuild
+    SUPERBUILD_INSTALL_DIR:  $(HOME)/superbuild
     TARGET: x86_64-w64-mingw32
     TARGET_SUFFIX: -$(TARGET)
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-ubuntu.yml
     - template: build.yml
       parameters:
@@ -307,6 +331,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-msys2.yml
     - template: build.yml
       parameters:
@@ -331,6 +357,8 @@ jobs:
   pool:
     vmImage: '$(IMAGE_NAME)'
   steps:
+    - checkout: self
+      fetchDepth: 1
     - template: setup-msys2.yml
     - template: build.yml
       parameters:
