@@ -2514,7 +2514,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Description of symbol 799</comment>
         <translation>Цей знак дозволяє легко та швидко планувати тренувальні дистанції.
 
-Пурпурова лінія трохи  накладається на кінцевий знак. Це є недоліком цього простого методу.</translation>
+Пурпурова лінія трохи накладається на кінцевий знак. Це є недоліком цього простого методу.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -8782,7 +8782,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201</comment>
-        <translation>Непрохідна скеля, кар&apos;єр або земляний обрив (УЗ 106), показується з лінією, товщиною 0,35 мм і вусами, спрямованими вниз по схилу та відповідно до площі стіни в плані. Оскільки для вертикальної скелі часто бувають випадки, коли немає місця для вусів, вони можуть бути опущені. При цьому, якщо недостатньо місця, наприклад, у проході між скелями, прохід повинен бути розсунутий принаймні до ширини в 0,3 мм. Вуси можуть простиратися на об&apos;єкти під скелею. Якщо скеля входить у воду, і неможливо пройти під нею по краю води, то берегова лінія опускається або вуси повинні ясно простиратися через берегову</translation>
+        <translation>Непрохідна скеля, кар&apos;єр або земляний обрив (УЗ 106), показується з лінією, товщиною 0,35 мм і вусами, спрямованими вниз по схилу та відповідно до площі стіни в плані. Оскільки для вертикальної скелі часто бувають випадки, коли немає місця для вусів, вони можуть бути опущені. При цьому, якщо недостатньо місця, наприклад, у проході між скелями, прохід повинен бути розсунутий принаймні до ширини в 0,3 мм. Вуси можуть простиратися на об&apos;єкти під скелею. Якщо скеля входить у воду, і неможливо пройти під нею по краю води, то берегова лінія опускається або вуси повинні ясно простиратися через берегову.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -8792,7 +8792,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Непрохідна скеля, кар&apos;єр або земляний обрив (УЗ 106), показується з лінією, товщиною 0,35 мм і вусами, спрямованими вниз по схилу та відповідно до площі стіни в плані. Оскільки для вертикальної скелі часто бувають випадки, коли немає місця для вусів, вони можуть бути опущені. При цьому, якщо недостатньо місця, наприклад, у проході між скелями, прохід повинен бути розсунутий принаймні до ширини в 0,3 мм. Вуси можуть простиратися на об&apos;єкти під скелею. Якщо скеля входить у воду, і неможливо пройти під нею по краю води, то берегова лінія опускається або вуси повинні ясно простиратися через берегову</translation>
+        <translation>Непрохідна скеля, кар&apos;єр або земляний обрив (УЗ 106), показується з лінією, товщиною 0,35 мм і вусами, спрямованими вниз по схилу та відповідно до площі стіни в плані. Оскільки для вертикальної скелі часто бувають випадки, коли немає місця для вусів, вони можуть бути опущені. При цьому, якщо недостатньо місця, наприклад, у проході між скелями, прохід повинен бути розсунутий принаймні до ширини в 0,3 мм. Вуси можуть простиратися на об&apos;єкти під скелею. Якщо скеля входить у воду, і неможливо пройти під нею по краю води, то берегова лінія опускається або вуси повинні ясно простиратися через берегову.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags</source>
@@ -9427,7 +9427,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation>Зміст знака має бути наведеним в позарамковому оформленні</translation>
+        <translation>Зміст знака має бути наведеним в позарамковому оформленні.</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
@@ -9437,7 +9437,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation>Зміст знака має бути наведеним в позарамковому оформленні</translation>
+        <translation>Зміст знака має бути наведеним в позарамковому оформленні.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -12602,16 +12602,6 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crossable body of water, with bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
-        <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
         <translation type="unfinished"></translation>
@@ -12639,6 +12629,16 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossable body of water, with bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
+        <comment>Description of symbol 301.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13528,7 +13528,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Description of symbol 799</comment>
         <translation>Цей знак дозволяє легко та швидко планувати тренувальні дистанції.
 
-Пурпурова лінія трохи  накладається на кінцевий знак. Це є недоліком цього простого методу.</translation>
+Пурпурова лінія трохи накладається на кінцевий знак. Це є недоліком цього простого методу.</translation>
     </message>
     <message>
         <source>Very wide track &gt; 3.0 m</source>

@@ -171,7 +171,7 @@ void Toast::paintEvent(QPaintEvent* /*event*/)
 	QStyleOption style_option;
 	auto const radius = style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option)
 	                    + style()->pixelMetric(QStyle::PM_LayoutTopMargin, &style_option);
-	painter.drawRoundRect(0, 0, width(), height(), radius);
+	painter.drawRoundedRect(0, 0, width(), height(), radius, radius, Qt::AbsoluteSize);
 }
 
 

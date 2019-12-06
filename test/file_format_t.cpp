@@ -37,6 +37,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
+#include <QLatin1String>
 #include <QPageSize>
 #include <QPoint>
 #include <QPointF>
@@ -719,6 +720,67 @@ void FileFormatTest::pristineMapTest()
 	auto reloaded_map = saveAndLoadMap(map, &format);
 	QVERIFY(bool(reloaded_map));
 	compareMaps(*reloaded_map, map);
+}
+
+
+
+void FileFormatTest::ogrExportTest_data()
+{
+	QTest::addColumn<QString>("map_filepath");
+	QTest::addColumn<QString>("ogr_extension");
+	QTest::addColumn<int>("latitude");
+	QTest::addColumn<int>("longitude");
+	
+	QTest::newRow("complete map") << QString::fromLatin1("data:/examples/complete map.omap")
+	                              << QString::fromLatin1("gpx")
+	                              << 48 << 12;
+}
+
+void FileFormatTest::ogrExportTest()
+{
+#ifdef MAPPER_USE_GDAL
+	QFETCH(QString, map_filepath);
+	QFETCH(QString, ogr_extension);
+	QFETCH(int, latitude);
+	QFETCH(int, longitude);
+	
+	QTemporaryDir dir;
+	QVERIFY(dir.isValid());
+	auto const ogr_filepath = QString {dir.path() + QLatin1String("/ogrexport.") + ogr_extension};
+	
+	{
+		Map map;
+		QVERIFY(map.loadFrom(map_filepath));
+		QVERIFY(map.getGeoreferencing().isValid());
+		
+		auto const exported_latlon = map.getGeoreferencing().getGeographicRefPoint();
+		QCOMPARE(qRound(exported_latlon.latitude()), latitude);
+		QCOMPARE(qRound(exported_latlon.longitude()), longitude);
+		
+		auto const* format = FileFormats.findFormat("OGR-export");
+		QVERIFY(format);
+		
+		auto exporter = format->makeExporter(ogr_filepath, &map, nullptr);
+		QVERIFY(bool(exporter));
+		QVERIFY(exporter->doExport());
+	}
+	
+	{
+		Map map;
+		
+		auto const* format = FileFormats.findFormat("OGR");
+		QVERIFY(format);
+		
+		auto importer = format->makeImporter(ogr_filepath, &map, nullptr);
+		QVERIFY(bool(importer));
+		QVERIFY(importer->doImport());
+		QVERIFY(map.getGeoreferencing().isValid());
+		
+		auto const imported_latlon = map.getGeoreferencing().getGeographicRefPoint();
+		QCOMPARE(qRound(imported_latlon.latitude()), latitude);
+		QCOMPARE(qRound(imported_latlon.longitude()), longitude);
+	}
+#endif
 }
 
 

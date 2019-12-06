@@ -16,12 +16,12 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nigra 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verda 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -31,12 +31,12 @@
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blua 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -86,7 +86,7 @@
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blua 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -121,7 +121,7 @@
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Flava 100%/Verda 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,7 +131,7 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verda 100%/Nigra 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -7528,12 +7528,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nigra 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verda 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
@@ -7543,12 +7543,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blua 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bruna 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -7598,7 +7598,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blua 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -7633,7 +7633,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Flava 100%/Verda 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -7643,7 +7643,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Verda 100%/Nigra 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -8139,16 +8139,6 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crossable body of water, with bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
-        <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
         <translation type="unfinished"></translation>
@@ -8176,6 +8166,16 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossable body of water, with bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
+        <comment>Description of symbol 301.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>

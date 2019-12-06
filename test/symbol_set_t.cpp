@@ -393,6 +393,20 @@ auto const included_ISOM_codes = {
     601,  // Technical symbols
 };
 
+bool symbolOrder(const Symbol* s1, const Symbol* s2)
+{
+	if (s1->getNumberComponent(0) == 301
+	    && s2->getNumberComponent(0) == 301)
+	{
+		// ISSkiOM 301.1 goes after 301.x
+		if (s1->getNumberComponent(1) == 1)
+			return false;
+		if (s2->getNumberComponent(1) == 1)
+			return true;
+	}
+	return Symbol::lessByNumber(s1, s2);
+}
+
 void mergeISOM(Map& target, const QDir& symbol_set_dir)
 {
 	// Load to-be-merged symbol set
@@ -498,7 +512,7 @@ void mergeISOM(Map& target, const QDir& symbol_set_dir)
 		
 	deleteMarkedSymbols(target);
 	
-	target.sortSymbols(Symbol::lessByNumber);
+	target.sortSymbols(ISSkiOM_2019::symbolOrder);
 }
 
 
@@ -517,8 +531,10 @@ auto const scale_factors = {
     ScaleFactors {  5000u, 1.33, 1.5 },
 };
 
-void scaleSymbols(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
+void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
 {
+	map.setScaleDenominator(target_scale);
+	
 	auto scaling = std::find_if(begin(scale_factors), end(scale_factors), [target_scale](auto const& factors) {
 		return factors.scale == target_scale;
 	});
@@ -800,7 +816,7 @@ void SymbolSetTool::processSymbolSet()
 	}
 	saveIfDifferent(source_path, &map, &view);
 	
-	if (name.startsWith(QLatin1String("ISSkiOM 2019")))
+	if (name == QLatin1String("ISSkiOM 2019"))
 	{
 		ISSkiOM_2019::mergeISOM(map, symbol_set_dir);
 	}
@@ -840,7 +856,7 @@ void SymbolSetTool::processSymbolSet()
 		}
 		else if (name == QLatin1String("ISSkiOM 2019"))
 		{
-			ISSkiOM_2019::scaleSymbols(map, source_scale, target_scale);
+			ISSkiOM_2019::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("Course_Design")))
 		{
@@ -851,6 +867,7 @@ void SymbolSetTool::processSymbolSet()
 			QFAIL("Symbol set not recognized");
 		}
 	}
+	QCOMPARE(map.getScaleDenominator(), target_scale);
 	
 	if (legacy_symbol_sets.contains(id))
 		return;

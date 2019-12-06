@@ -73,7 +73,6 @@
 #include <QTableWidgetItem>
 #include <QToolButton>
 #include <QToolTip>
-#include <QTransform>
 #include <QVBoxLayout>
 #include <QVariant>
 
@@ -81,7 +80,6 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "core/objects/object.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
@@ -99,34 +97,6 @@
 
 
 namespace OpenOrienteering {
-
-// ### ApplyTemplateTransform ###
-
-/**
- * A local functor which is used when importing map templates into the current map.
- */
-struct ApplyTemplateTransform
-{
-	const TemplateTransform& transform;
-	
-	void operator()(Object* object) const
-	{ 
-		/// \todo Move this if...else into a constructor that sets up a transform member.
-		if (qFuzzyIsNull(transform.template_shear))
-			object->scale(transform.template_scale_x, transform.template_scale_y);
-		else
-		{
-			QTransform scaling(transform.template_scale_x, transform.template_shear,
-			                   transform.template_shear, transform.template_scale_y,
-			                   0, 0);
-			object->transform(scaling);
-		}
-		object->rotate(transform.template_rotation);
-		object->move(transform.template_x, transform.template_y);
-	}
-};
-
-
 
 // ### TemplateListWidget ###
 
@@ -1006,7 +976,7 @@ void TemplateListWidget::importClicked()
 		template_map.importMap(*prototype->templateMap(), Map::MinimalObjectImport);
 		if (!prototype->isTemplateGeoreferenced())
 		{
-			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+			template_map.applyOnAllObjects(transform.makeObjectTransform());
 			template_map.setGeoreferencing(map->getGeoreferencing());
 		}
 		auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
@@ -1035,7 +1005,7 @@ void TemplateListWidget::importClicked()
 		}
 		
 		if (!prototype->isTemplateGeoreferenced())
-			template_map.applyOnAllObjects(ApplyTemplateTransform{transform});
+			template_map.applyOnAllObjects(transform.makeObjectTransform());
 		
 		auto nominal_scale = double(template_map.getScaleDenominator()) / map->getScaleDenominator();
 		auto current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);

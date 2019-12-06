@@ -21,6 +21,7 @@
 #ifndef OPENORIENTEERING_SYMBOL_RULE_SET_H
 #define OPENORIENTEERING_SYMBOL_RULE_SET_H
 
+#include <functional>
 #include <vector>
 
 #include <QFlags>
@@ -71,22 +72,54 @@ public:
 	// Intentionally no user-defined constructors, destructor, assignment.
 	// Default ones are fine.
 	
-	/** 
-	 * Creates a list of NoAssignment items for the map's symbols as originals.
+	/**
+	 * Creates a list which has a NoAssignment rule for every original symbol
+	 * that the predicate returns true for.
 	 * 
-	 * This function can be used to easily initialize variables of type
-	 * SymbolRuleSet despite the absence of specialized constructors.
-	 * Each item is initialized with an object query for a symbol from the map.
+	 * The argument to the predicate is the symbol number.
 	 * 
 	 * The created list is sorted by formatted symbol number.
 	 */
-	static SymbolRuleSet forOriginalSymbols(const Map& map);
+	static SymbolRuleSet forMatchingSymbols(const Map& map, const std::function<bool (int)>& predicate);
+	
+	/** 
+	 * Creates a list which has a NoAssignment rule for every original symbol.
+	 * 
+	 * This function can be used to easily initialize variables of type
+	 * SymbolRuleSet despite the absence of specialized constructors.
+	 * 
+	 * \see SymbolRuleSet::forMatchingSymbols
+	 */
+	static SymbolRuleSet forAllSymbols(const Map& map);
+	
+	/**
+	 * Creates a list which has a NoAssignment rule for every used original symbol.
+	 * 
+	 * This function can be used to easily initialize variables of type
+	 * SymbolRuleSet despite the absence of specialized constructors.
+	 * 
+	 * \see SymbolRuleSet::forMatchingSymbols
+	 */
+	static SymbolRuleSet forUsedSymbols(const Map& map);
 	
 	/**
 	 * Returns a copy which has all NoAssignment items removed.
 	 */
 	SymbolRuleSet squeezed() const;
 	
+	/**
+	 * Modes for merging rule sets
+	 */
+	enum MergeMode
+	{
+		UpdateOnly,       ///< Update existing rules only.
+		UpdateAndAppend,  ///< Update existing rules, and append new rules.
+	};
+	
+	/**
+	 * Merges a second rule set into this one.
+	 */
+	void merge(SymbolRuleSet&& other, MergeMode mode);
 	
 	/** 
 	 * Sorts the items by original symbol number and name if possible.
@@ -154,6 +187,19 @@ public:
 	 * \see loadCrt
 	 */
 	void writeCrt(QTextStream& stream) const;
+	
+	
+	/**
+	 * Converts plain search patterns into symbol patterns where possible.
+	 */
+	void recognizeSymbolPatterns(Map const& symbol_set);
+	
+	/**
+	 * Finds symbols that are matched by multiple symbol number patterns.
+	 * 
+	 * Returns an arbitrary affected symbol, or nullptr if no such symbol exists.
+	 */
+	Symbol const* findDuplicateSymbolPattern() const;
 	
 	
 	/**

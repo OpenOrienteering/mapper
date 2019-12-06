@@ -65,17 +65,33 @@ Q_STATIC_ASSERT(std::is_nothrow_move_assignable<SymbolRuleSet>::value);
 
 
 // static
-SymbolRuleSet SymbolRuleSet::forOriginalSymbols(const Map& map)
+SymbolRuleSet SymbolRuleSet::forMatchingSymbols(const Map& map, const std::function<bool (int)>& predicate)
 {
 	SymbolRuleSet list;
 	list.reserve(std::size_t(map.getNumSymbols()));
 	for (int i = 0; i < map.getNumSymbols(); ++i)
 	{
+		if (!predicate(i))
+			continue;
 		auto original = map.getSymbol(i);
 		list.push_back({{original}, nullptr, SymbolRule::NoAssignment});
 	}
 	list.sortByQueryKeyAndValue();
 	return list;
+}
+
+// static
+SymbolRuleSet SymbolRuleSet::forAllSymbols(const Map& map)
+{
+	return SymbolRuleSet::forMatchingSymbols(map, [](int /*i*/) { return true; });
+}
+
+// static
+SymbolRuleSet SymbolRuleSet::forUsedSymbols(const Map& map)
+{
+	std::vector<bool> symbols_in_use(std::size_t(map.getNumSymbols()));
+	map.determineSymbolsInUse(symbols_in_use);
+	return SymbolRuleSet::forMatchingSymbols(map, [&symbols_in_use](int i) { return symbols_in_use[std::size_t(i)]; });
 }
 
 
@@ -87,6 +103,38 @@ SymbolRuleSet SymbolRuleSet::squeezed() const
 		return item.type != SymbolRule::NoAssignment;
 	});
 	return list;
+}
+
+
+void SymbolRuleSet::merge(SymbolRuleSet&& other, MergeMode mode)
+{
+	for (auto& item : other)
+	{
+		for (auto& current : *this)
+		{
+			if (item.query == current.query)
+			{
+				if (item.type != SymbolRule::NoAssignment)
+				{
+					current.symbol = item.symbol;
+					current.type = item.type;
+					item = {};
+				}
+				break;
+			}
+		}
+	}
+	
+	if (mode == UpdateAndAppend)
+	{
+		for (auto&& item : other)
+		{
+			if (item.query.getOperator() != ObjectQuery::OperatorInvalid)
+			{
+				emplace_back(std::move(item));
+			}
+		}
+	}
 }
 
 
@@ -305,6 +353,59 @@ void SymbolRuleSet::writeCrt(QTextStream& stream) const
 			}
 		}
 	}
+}
+
+
+
+void SymbolRuleSet::recognizeSymbolPatterns(const Map& symbol_set)
+{
+	for (auto& item : *this)
+	{
+		if (item.type == SymbolRule::NoAssignment
+		    || item.query.getOperator() != ObjectQuery::OperatorSearch)
+			continue;
+		Q_ASSERT(item.symbol);
+		
+		auto operands = item.query.tagOperands();
+		if (!operands || operands->value.isEmpty())
+			continue;
+		
+		// Find original symbol number matching the pattern
+		for (int i = 0; i < symbol_set.getNumSymbols(); ++i)
+		{
+			auto symbol = symbol_set.getSymbol(i);
+			if (symbol->getNumberAsString() == operands->value)
+			{
+				if (Symbol::areTypesCompatible(symbol->getType(), item.symbol->getType()))
+					item.query = { symbol };
+				break;
+			}
+		}
+	}
+}
+
+
+
+const Symbol* SymbolRuleSet::findDuplicateSymbolPattern() const
+{
+	for (auto const& item : *this)
+	{
+		if (item.query.getOperator() != ObjectQuery::OperatorSymbol)
+			continue;
+		
+		auto has_conflict = [&item](const auto& other)->bool {
+			return &other != &item
+			       && other.type != SymbolRule::NoAssignment
+			       && item.query == other.query
+			       && item.symbol != other.symbol;
+		};
+		using std::begin; using std::end;
+		if (std::any_of(begin(*this), end(*this), has_conflict))
+		{
+			return item.symbol;
+		}
+	}
+	return nullptr;
 }
 
 

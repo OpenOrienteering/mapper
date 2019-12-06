@@ -48,6 +48,7 @@
 #include "core/georeferencing.h"
 #include "core/map_view.h"
 #include "core/map.h"
+#include "core/objects/object.h"
 #include "fileformats/file_format.h"
 #include "gdal/ogr_template.h"
 #include "gui/file_dialog.h"
@@ -125,6 +126,42 @@ TemplateTransform TemplateTransform::fromQTransform(const QTransform& qt) noexce
 	         (scaling.m12()+scaling.m21())/2 };
 }
 
+
+struct NonShearingObjectTransform
+{
+	TemplateTransform const& transform;
+	
+	void operator()(Object* object) const
+	{
+		object->scale(transform.template_scale_x, transform.template_scale_y);
+		object->rotate(transform.template_rotation);
+		object->move(transform.template_x, transform.template_y);
+	}
+};
+
+struct ShearingObjectTransform
+{
+	TemplateTransform const& transform;
+	QTransform const scaling;
+	
+	void operator()(Object* object) const
+	{
+		object->transform(scaling);
+		object->rotate(transform.template_rotation);
+		object->move(transform.template_x, transform.template_y);
+	}
+};
+
+std::function<void (Object*)> TemplateTransform::makeObjectTransform() const
+{
+	if (qFuzzyIsNull(template_shear))
+		return NonShearingObjectTransform{*this};
+	
+	return ShearingObjectTransform{*this,
+	                               {template_scale_x, template_shear,
+	                                template_shear, template_scale_y,
+	                                0, 0}};
+}
 
 
 void TemplateTransform::save(QXmlStreamWriter& xml, const QString& role) const

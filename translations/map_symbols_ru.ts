@@ -16,27 +16,27 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для железной дороги</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Коричневый 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -61,7 +61,7 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Верхний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -71,7 +71,7 @@
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нижний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -81,12 +81,12 @@
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 60% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 30% для узкой полосы</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх зелёного</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100%/Зелёный 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%/Чёрный 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для подлеска</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх жёлтого</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный для открытой местности</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -281,7 +281,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation>Грунтовый обрыв, без зубцов</translation>
+        <translation>Грунтовый обрыв, бровка</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -309,12 +309,12 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation>Грунтовый вал</translation>
+        <translation>Земляной вал</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
@@ -355,7 +355,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небольшая промоина, сухой ров или траншея. Минимальная глубина: 0,5 м.
+Минимальная длина (изолированная): 3 точки (1,15 мм - проекция 17 м).
+Горизонтали должны быть разорваны при пересечении с этим знаком.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -368,7 +370,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выделяющийся микробугор или холмик, который невозможно отобразить с помощью горизонтали.
+Минимальная высота: 1 м.
+Знак не должен касаться или разрывать горизонтали.
+Проекция: 7,5 м х 7,5 м.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -381,7 +386,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выделяющийся удлинённый холмик, который нельзя показать горизонталью.
+Минимальная высота: 1 м.
+Знак не должен касаться или разрывать горизонтали.
+Проекция: 12 м х 6 м.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -395,12 +403,16 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небольшое углубление или понижение без крутых склонов, которое слишком мало для показа горизонталями.
+Минимальная глубина: 1 м, минимальная ширина: 2 м.
+Небольшие ямки с крутыми склонами обозначаются символом 112 (воронка).
+Знак не должен касаться или накладываться на другие коричневые символы. Расположение - центр тяжести знака, который ориентирован на север.
+Проекция: 12 м х 6 м.</translation>
     </message>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 112</comment>
-        <translation>Искусственная внемасштабная яма</translation>
+        <translation>Воронка</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol Earth bank (104).
@@ -409,7 +421,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ямы и углубления с отчётливо выраженными крутыми стенками, которые нельзя показать в масштабе с помощью знака 104 (земляной обрыв).
+Минимальная глубина: 1 м, минимальная ширина: 1 м.
+Выемка размером более 5 м х 5 м обычно должна быть преувеличена и нарисована с использованием знака 104 (земляной обрыв). Ямы с пологими склонами обозначаются знаком 111 (ямка).
+Знак не должен касаться или накладываться на другие коричневые знаки. Расположение - центр тяжести знака, который ориентирован на север.
+Проекция: 10,5 м х 12 м.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -472,7 +488,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Этот объект должен очень чётко отличаться от его окружения.
+Расположение - центр тяжести знака, который ориентирован на север.
+Знак не должен касаться или накладываться на другие коричневые знаки.
+Определение знака должно быть дано на карте.
+Проекция: 13,5 м х 11,5 м.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -510,7 +530,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -544,7 +564,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -610,7 +630,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
@@ -646,7 +666,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -969,7 +989,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation>Мелководье,  сплошной контур</translation>
+        <translation>Мелководье, сплошной контур</translation>
     </message>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
@@ -1635,7 +1655,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -11185,27 +11205,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый для железной дороги</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Коричневый 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -11230,7 +11250,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Верхний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -11240,7 +11260,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нижний коричневый 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -11250,12 +11270,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синий 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -11270,27 +11290,27 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 60% для узкой полосы</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 30% для узкой полосы</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх зелёного</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100%/Зелёный 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -11300,12 +11320,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100%/Чёрный 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -11320,17 +11340,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зелёный 100% для подлеска</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Белый поверх жёлтого</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрный для открытой местности</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -11340,7 +11360,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Жёлтый 100% для площадных объектов</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -11478,7 +11498,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -11514,7 +11534,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выделяющийся микробугор или холмик, который невозможно отобразить с помощью горизонтали.
+Минимальная высота: 1 м.
+Знак не должен касаться или разрывать горизонтали.
+Проекция: 7,5 м х 7,5 м.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -11528,7 +11551,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Небольшое углубление или понижение без крутых склонов, которое слишком мало для показа горизонталями.
+Минимальная глубина: 1 м, минимальная ширина: 2 м.
+Небольшие ямки с крутыми склонами обозначаются символом 112 (воронка).
+Знак не должен касаться или накладываться на другие коричневые символы. Расположение - центр тяжести знака, который ориентирован на север.
+Проекция: 12 м х 6 м.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -11566,7 +11593,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -11600,7 +11627,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -11666,7 +11693,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -11796,16 +11823,6 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crossable body of water, with bank line</source>
-        <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
-        <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
         <translation type="unfinished"></translation>
@@ -11833,6 +11850,16 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossable body of water, with bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
+        <comment>Description of symbol 301.1</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -12128,7 +12155,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Предусмотрено для миграции из ISOM2000. Использование этого варианта символа не рекомендуется для новых карт.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>

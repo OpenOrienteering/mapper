@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_TEMPLATE_H
 #define OPENORIENTEERING_TEMPLATE_H
 
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -50,6 +51,7 @@ namespace OpenOrienteering {
 
 class Map;
 class MapView;
+class Object;
 
 
 /**
@@ -87,6 +89,8 @@ struct TemplateTransform
 	double template_shear = 0.0;
 	
 	static TemplateTransform fromQTransform(const QTransform& qt) noexcept;
+	
+	std::function<void (Object*)> makeObjectTransform() const;
 	
 	void save(QXmlStreamWriter& xml, const QString& role) const;
  	void load(QXmlStreamReader& xml);

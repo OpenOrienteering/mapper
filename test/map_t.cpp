@@ -372,9 +372,9 @@ void MapTest::matchQuerySymbolNumberTest()
 	
 	Map original_map;
 	QVERIFY(original_map.loadFrom(original));
-	QVERIFY(original_map.getNumSymbols() > 0);
+	QVERIFY(original_map.getNumSymbols() > 100);
 	
-	auto r = SymbolRuleSet::forOriginalSymbols(original_map);
+	auto r = SymbolRuleSet::forAllSymbols(original_map);
 	QCOMPARE(r.size(), std::size_t(original_map.getNumSymbols()));
 	QCOMPARE(r.squeezed().size(), std::size_t(0));
 	
@@ -386,9 +386,19 @@ void MapTest::matchQuerySymbolNumberTest()
 	QVERIFY(replacement_map.loadFrom(replacement));
 	QVERIFY(replacement_map.getNumSymbols() > 100);
 	
-	r = SymbolRuleSet::forOriginalSymbols(original_map);
+	r = SymbolRuleSet::forAllSymbols(original_map);
 	r.matchQuerySymbolNumber(replacement_map);
 	QCOMPARE(r.squeezed().size(), std::size_t(matching));
+	
+	std::vector<bool> symbols_in_use;
+	original_map.determineSymbolsInUse(symbols_in_use);
+	auto count = std::size_t(std::count(begin(symbols_in_use), end(symbols_in_use), true));
+	QVERIFY(count > 10u);
+	
+	r = SymbolRuleSet::forUsedSymbols(original_map);
+	QCOMPARE(r.size(), count);
+	r.matchQuerySymbolNumber(replacement_map);
+	QVERIFY(r.squeezed().size() > 10u);
 }
 
 

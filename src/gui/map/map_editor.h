@@ -523,6 +523,21 @@ public slots:
 	
 public:
 	/**
+	 * Imports another map into this map, after successful symbol replacement.
+	 * 
+	 * The filepath given in crt_file_hint is used in addition (and preferred)
+	 * to the symbol set IDs to locate a CRT file for initializing the
+	 * replacement table.
+	 * 
+	 * Returns true on success.
+	 */
+	bool importMapWithReplacement(
+	        Map& imported_map,
+	        Map::ImportMode mode,
+	        const QString& crt_file_hint
+	);
+	
+	/**
 	 * Imports another map into this map.
 	 * 
 	 * This method changes the given 'other' map if the	maps' scales differ.
@@ -544,6 +559,8 @@ public:
 	bool importGpxFile(const QString& filename);
 	/** Imports a map file into the loaded map */
 	bool importMapFile(const QString& filename, bool show_errors);
+	/** Imports a data file supported by OGR into the map */
+	bool importOgrFile(const QString& filename);
 	
 public slots:
 	/** Sets the enabled state of actions which change how the map is rendered,
