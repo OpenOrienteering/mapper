@@ -263,6 +263,7 @@ Template* Template::duplicate() const
 	copy->other_transform = other_transform;
 	copy->adjusted = adjusted;
 	copy->adjustment_dirty = adjustment_dirty;
+	copy->passpoints = passpoints;
 	
 	copy->map_to_template = map_to_template;
 	copy->template_to_map = template_to_map;
