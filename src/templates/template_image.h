@@ -158,7 +158,7 @@ protected:
 	
 	std::vector< DrawOnImageUndoStep > undo_steps;
 	/// Current index in undo_steps, where 0 means before the first item.
-	int undo_index;
+	int undo_index = 0;
 	
 	GeoreferencingOptions available_georef;
 	std::unique_ptr<Georeferencing> georef;

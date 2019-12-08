@@ -219,22 +219,13 @@ bool Template::suppressAbsolutePaths = false;
 
 
 Template::Template(const QString& path, not_null<Map*> map)
- : map(map)
- , template_group(0)
+: map(map)
 {
-	template_path = path;
-	if (! QFileInfo(path).canonicalFilePath().isEmpty())
-		template_path = QFileInfo(path).canonicalFilePath();
-	template_file = QFileInfo(path).fileName();
-	template_relative_path = QString{};
-	template_state = Unloaded;
+	QFileInfo file_info{path};
+	template_file = file_info.fileName();
 	
-	has_unsaved_changes = false;
-	
-	is_georeferenced = false;
-	
-	adjusted = false;
-	adjustment_dirty = true;
+	auto canonical_path = file_info.canonicalFilePath();
+	template_path = canonical_path.isEmpty() ? path : canonical_path;
 	
 	updateTransformationMatrices();
 }

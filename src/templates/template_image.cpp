@@ -79,10 +79,10 @@ const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 	return extensions;
 }
 
-TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
+TemplateImage::TemplateImage(const QString& path, Map* map)
+: Template(path, map)
+, georef(std::make_unique<Georeferencing>())
 {
-	undo_index = 0;
-	georef.reset(new Georeferencing());
 	available_georef.push_back({Georeferencing_None, "no georeferencing information", {}, {}});
 	
 	const Georeferencing& georef = map->getGeoreferencing();
