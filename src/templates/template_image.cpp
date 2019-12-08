@@ -89,11 +89,33 @@ TemplateImage::TemplateImage(const QString& path, Map* map)
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
 }
+
+TemplateImage::TemplateImage(const TemplateImage& proto)
+: Template(proto)
+, image(proto.image)
+// not copied: undo_steps
+// not copied: undo_index
+, available_georef(proto.available_georef)
+, georef(new Georeferencing(*proto.georef))
+, temp_crs_spec(proto.temp_crs_spec)
+{
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
+}
+
 TemplateImage::~TemplateImage()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
 }
+
+
+TemplateImage* TemplateImage::duplicate() const
+{
+	return new TemplateImage(*this);
+}
+
 
 bool TemplateImage::saveTemplateFile() const
 {
@@ -415,14 +437,6 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 	return result;
 }
 
-
-Template* TemplateImage::duplicateImpl() const
-{
-	auto new_template = new TemplateImage(template_path, map);
-	new_template->image = image;
-	new_template->available_georef = available_georef;
-	return new_template;
-}
 
 void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
 {

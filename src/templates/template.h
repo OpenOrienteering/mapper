@@ -147,16 +147,19 @@ protected:
 	 * Initializes the template as "Unloaded".
 	 */
 	Template(const QString& path, not_null<Map*> map);
-
+	
+	/**
+	 * Copy-construction as duplication helper.
+	 */
+	Template(const Template& proto);
+	
 public:	
 	~Template() override;
 	
 	/**
 	 * Creates a duplicate of the template
-	 * 
-	 * \todo Rewrite as virtual function, using protected copy constructor.
 	 */
-	Template* duplicate() const;
+	virtual Template* duplicate() const = 0;
 	
 	/**
 	 * Returns a string which should identify the type of the template uniquely:
@@ -605,18 +608,7 @@ protected:
 	void setErrorString(const QString &text);
 	
 	
-	/** 
-	 * Derived classes must create a duplicate and transfer
-	 * 
-	 * type specific information over to the copy here.
-	 * This includes the content of the template file if it is loaded.
-	 * 
-	 * \todo Rewrite together with duplicate().
-	 */
-	virtual Template* duplicateImpl() const = 0;
-	
-	
-	/** 
+	/**
 	 * Hook for saving parameters needed by the actual template type.
 	 * 
 	 * The default implementation does nothing.

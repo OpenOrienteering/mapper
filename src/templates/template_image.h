@@ -84,7 +84,13 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
+protected:
+	TemplateImage(const TemplateImage& proto);
+public:
     ~TemplateImage() override;
+	
+	TemplateImage* duplicate() const override;
+	
 	const char* getTemplateType() const override {return "TemplateImage";}
 	bool isRasterGraphics() const override {return true;}
 
@@ -146,7 +152,6 @@ protected:
 		int y;
 	};
 	
-	Template* duplicateImpl() const override;
 	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
