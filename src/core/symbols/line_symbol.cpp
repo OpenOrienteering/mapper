@@ -512,7 +512,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 	          tangent_in, tangent_out, 
 	          middle0, middle1;
 	auto last_i = path.last_index;
-	for (auto i = path.first_index; i < size; ++i)
+	for (auto i = path.first_index; i <= last_i; ++i)
 	{
 		auto coords_i = path.coords[i];
 		const auto& flags_i  = path.coords.flags[i];
