@@ -258,6 +258,10 @@ void TagSelectWidget::moveRow(bool up)
 	if (!up)
 		row += 1;
 
+	// Commit current cell by changing the index.
+	auto const col = currentColumn();
+	setCurrentCell(row > 0 ? 0 : 1, col);
+	
 	// Col 1, 3 are items
 	auto* top_item = takeItem(row - 1, 1);
 	auto* bottom_item = takeItem(row, 1);
@@ -288,11 +292,10 @@ void TagSelectWidget::moveRow(bool up)
 		bottom_combo->setCurrentIndex(top_selection);
 	}
 
-	// Keep the moved row selected
-	int col = currentColumn();
 	// For the down case we already adjusted the row
 	if (up)
 		row -= 1;
+	// Keep the moved row selected
 	setCurrentCell(row, col);
 }
 
