@@ -79,6 +79,7 @@ TagSelectWidget::TagSelectWidget(QWidget* parent)
 	addRowItems(0);
 
 	connect(this, &QTableWidget::cellChanged, this, &TagSelectWidget::onCellChanged);
+	connect(this, &QTableWidget::currentCellChanged, this, &TagSelectWidget::onCurrentCellChanged);
 }
 
 
@@ -89,16 +90,19 @@ TagSelectWidget::~TagSelectWidget() = default;
 QWidget* TagSelectWidget::makeButtons(QWidget* parent)
 {
 	auto* add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
-	auto* delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	delete_button->setEnabled(false);
 	
 	auto* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(add_button);
 	add_remove_layout->addWidget(delete_button);
 
-	auto* move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	auto* move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	move_up_button->setEnabled(false);
+	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
+	move_down_button->setEnabled(false);
 
 	auto* up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
@@ -197,6 +201,13 @@ void TagSelectWidget::onCellChanged(int row, int column)
 }
 
 
+void TagSelectWidget::onCurrentCellChanged(int current_row, int /*current_column*/, int /*previous_row*/, int /*previous_column*/)
+{
+	move_up_button->setEnabled(current_row > 0);
+	move_down_button->setEnabled(current_row+1 < rowCount());
+}
+
+
 
 void TagSelectWidget::addRow()
 {
@@ -208,6 +219,7 @@ void TagSelectWidget::addRow()
 
 	insertRow(row);
 	addRowItems(row);
+	delete_button->setEnabled(rowCount() > 1);
 
 	// Move the selection to the new row
 	int col = currentColumn();
@@ -228,6 +240,7 @@ void TagSelectWidget::deleteRow()
 		row = rowCount() - 1;
 
 	removeRow(row);
+	delete_button->setEnabled(rowCount() > 1);
 
 	// If we delete first row, need to fix logical operator
 	if (row == 0)
