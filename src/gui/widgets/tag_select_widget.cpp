@@ -188,11 +188,9 @@ void TagSelectWidget::onCellChanged(int row, int column)
 	{
 	case 1:
 	case 3:
-		{
-			auto* item = this->item(row, column);
+		if (auto* item = this->item(row, column))
 			item->setText(item->text().trimmed());
-			break;
-		}
+		break;
 	default:
 		; // nothing
 	}
