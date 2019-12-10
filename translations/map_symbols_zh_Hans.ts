@@ -6,182 +6,182 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>路线叠印紫色</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>路线叠印白色</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>铁路符号的白色</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>蓝色 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>棕色 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>轨道符号的紫色</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>轨道符号紫色下面的黑色</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>上层棕色 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>上层棕色 50%下的黑色</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>下层棕色 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>下层棕色 50%下的黑色</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>面状符号填充蓝色 100%</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>蓝色 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>蓝色 50%</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 18</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrinenteering橙色</translation>
     </message>
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>狭窄行车道用的黄色 100%</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>狭窄行车道用的绿色 60%</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>狭窄行车道用的绿色 30%</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色上层的白色</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>黄色 100%/绿色 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色 25%（灰色）</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色 100%/黑色 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>面状符号填充绿色 100%</translation>
     </message>
     <message>
         <source>Green 60%</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色 60%</translation>
     </message>
     <message>
         <source>Green 30%</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿色 30%</translation>
     </message>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>低矮植被的绿色 100%</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>黄色上层的白色</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>开阔地的黑色</translation>
     </message>
     <message>
         <source>Yellow</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>黄色</translation>
     </message>
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>面状符号填充黄色 100%</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>黄色 50%</translation>
     </message>
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -195,12 +195,21 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>等高的连接点。等高线之间的标准垂直距离是5米。平坦地形的等高线间距为2.5米。
+在等高线的下侧可以画出坡度线，以明确坡度的方向。当使用时，他们应该放在山凹。
+闭合的轮廓表示一个小山丘或洼地。凹地必须至少有一条斜线。最低高度/深度应为1米。
+相邻的等高线之间的关系很重要。相邻的等高线表示形状和结构。轮廓上的小细节应该避免，因为它们往往掩盖了地形的主要特征。
+如洼地、山凹、山凸、土坎和台地等突出的特征可能需要被夸大。
+绝对高度精度并不重要，但相邻地物之间的相对高度差应尽可能准确地表示在地图上。允许稍微改变轮廓的高度，如果这样可以改进特征的表示。该偏差不应超过等值线间距的25%，应注意相邻特征。
+等高线上的弯道最小为中线至中线0.25毫米(脚印4米)。重入中线或支线的开口，由中线至中线的宽度必须超过0.5毫米(脚印8米)。
+轮廓丘的最小长度为0.9毫米(足迹13.5米)，最小宽度为0.6毫米(足迹9米)。小而突出的小山丘可以用符号Small knoll(109)或小而细长的knoll(110)来表示，也可以在地图上夸张以满足最小维度。
+洼地必须能容纳一条斜坡线，因此最小长度为1.1毫米(占地16.5米)，最小宽度为0.7毫米(占地10.5米)。更小、突出的凹陷可以用符号Small depression(111)表示，也可以通过夸张来满足最小维度。
+为了不接触符号小丘(109)或小伸长丘(110)，轮廓应适应(不破坏)。</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
