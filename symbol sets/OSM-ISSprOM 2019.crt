@@ -1,9 +1,9 @@
 #
-# (C) 2017 Kai Pastor
+# Copyright 2017, 2019 Kai Pastor
 #
 # Based on ISOM_rules.yaml from https://github.com/sembruk/osm2xmap/ rev 3c6cdb5
 #
-# (C) 2016 Semyon Yakimov
+# Copyright 2016 Semyon Yakimov
 #
 # This file is part of OpenOrienteering.
 #
@@ -31,10 +31,8 @@
 213    natural = beach AND surface = sand
 203.9  natural = cave_entrance
 201    natural = cliff
-201.2  natural = cliff AND area = yes
 213    natural = dune
-203.1  natural = hole AND rock != no
-201.2  natural = rock AND area = yes
+203    natural = hole AND rock != no
 213    natural = sand
 205    natural = stone
 
@@ -54,17 +52,15 @@
 404    natural = wood AND wood:density = sparse
 408    natural = wood AND wood:density = dense
 
-304    waterway = canal
 306    waterway = ditch
 305    waterway = drain
 306    waterway = drain AND intermittent = yes
-304    waterway = river
 301    waterway = riverbank
 305    waterway = stream
 306    waterway = stream AND intermittent = yes
 
 520    landuse = allotments
-520.2  landuse = cemetery
+520    landuse = cemetery
 520    landuse = commercial
 # 710    landuse = construction
 412    landuse = farmland
@@ -86,44 +82,34 @@
 401    leisure = park
 401    leisure = pitch
 
-503    highway = cycleway
+501.8  highway = cycleway
 
-505    highway = footway
+505.1  highway = footway
 
 526    highway = milestone
 
-502.2  highway = motorway
-502.1  highway = motorway_link
 
 506    highway = path
-505    highway = path AND (smoothness = good OR smoothness = intermediate)
+505.1  highway = path AND (smoothness = good OR smoothness = intermediate)
 506    highway = path AND (smoothness = bad OR smoothness = very_bad)
 507    highway = path AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = primary
-502.1  highway = secondary
-502.1  highway = tertiary
 
-504    highway = track
-503    highway = track AND (smoothness = good OR smoothness = intermediate)
-504    highway = track AND (smoothness = bad OR smoothness = very_bad)
-505    highway = track AND (smoothness = horrible OR smoothness = very_horrible)
+505.2  highway = track
+501.8  highway = track AND (smoothness = good OR smoothness = intermediate)
+505.2  highway = track AND (smoothness = bad OR smoothness = very_bad)
+505.1  highway = track AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = trunk AND lanes = 2
-502.1  highway = trunk_link AND lanes = 1
 
-503    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street)
-502    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)
+501.8  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street)
+501.9  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)
 # 503.1  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = compacted OR surface = gravel)
-503    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = ground OR surface = sand OR surface = unpaved)
-504    (highway = unclassified OR highway = residential) AND (surface = grass OR surface = dirt)
+501.8  (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = ground OR surface = sand OR surface = unpaved)
+505.2  (highway = unclassified OR highway = residential) AND (surface = grass OR surface = dirt)
 
-509    railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
+509.1  railway ~= "" AND railway != "abandoned" AND tunnel != "yes"
 
-523    building = ruins
 521    building ~= "" AND building != ruins
-523    building ~= "" AND building != ruins AND ruins = yes
-523    building ~= "" AND building != ruins AND historic = ruins
 
 526    man_made = cairn
 524    man_made = chimney
@@ -155,11 +141,9 @@
 
 108    barrier = ditch
 518    barrier = fence
-517    barrier = fence AND ruins = yes
-411.2  barrier = hedge
+410.1  barrier = hedge
 410    barrier = hedge AND area = yes
 515    barrier = wall
-514    barrier = wall AND ruins = yes
 
 521    tourism = alpine_hut
 531    tourism = artwork
@@ -169,4 +153,3 @@
 
 531    pipeline = marker
 
-713    shop = convenience

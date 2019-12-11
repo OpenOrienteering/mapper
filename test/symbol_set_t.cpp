@@ -72,7 +72,7 @@ namespace
 {
 
 const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
-  QString::fromLatin1("ISOM2000;ISOM2017;ISSkiOM")
+  QString::fromLatin1("ISOM2000;ISOM2017;ISSOM;ISSkiOM")
   .split(QLatin1Char(';'));
 
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
@@ -313,41 +313,6 @@ void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
 }
 
 }  // namespace ISOM_2017_2
-
-
-namespace ISSOM
-{
-
-void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
-{
-	map.setScaleDenominator(target_scale);
-	
-	int north_lines_changed = 0;
-	for (int i = 0; i < map.getNumSymbols(); ++i)
-	{
-		auto* symbol = map.getSymbol(i);
-		auto const code = symbol->getNumberComponent(0);
-		if (code == 601 && symbol->getType() == Symbol::Area)
-		{
-			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-			{
-				switch (target_scale)
-				{
-				case 4000u:
-					pattern0.line_spacing = 37500;
-					break;
-				default:
-					QFAIL("Undefined north line spacing for this scale");
-				}
-				++north_lines_changed;
-			}
-		}
-	}
-	QCOMPARE(north_lines_changed, 2);
-}
-
-}  // namespace ISSOM
 
 
 namespace ISMTBOM
@@ -752,8 +717,9 @@ void SymbolSetTool::processSymbolSet_data()
 	
 	QTest::newRow("ISOM2000 translation-only") << QString::fromLatin1("ISOM2000") << 15000u << 15000u;
 	
-	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
+	QTest::newRow("ISSprOM 2019 1:4000") << QString::fromLatin1("ISSprOM 2019") <<  4000u <<  4000u;
+	
+	QTest::newRow("ISSOM translation-only") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
@@ -845,10 +811,6 @@ void SymbolSetTool::processSymbolSet()
 		if (name == QStringLiteral("ISOM 2017-2"))
 		{
 			ISOM_2017_2::scale(map, source_scale, target_scale);
-		}
-		else if (name.startsWith(QLatin1String("ISSOM")))
-		{
-			ISSOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
