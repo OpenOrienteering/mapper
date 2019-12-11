@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -63,7 +63,7 @@ TagSelectWidget::TagSelectWidget(QWidget* parent)
 	setHorizontalHeaderLabels(QStringList() << tr("Relation") << tr("Key") << tr("Comparison") << tr("Value"));
 	verticalHeader()->setVisible(false);
 	
-	auto header_view = horizontalHeader();
+	auto* header_view = horizontalHeader();
 	header_view->setSectionsClickable(false);
 	header_view->setSectionResizeMode(0, QHeaderView::Fixed);
 	header_view->setSectionResizeMode(1, QHeaderView::Stretch);
@@ -79,6 +79,7 @@ TagSelectWidget::TagSelectWidget(QWidget* parent)
 	addRowItems(0);
 
 	connect(this, &QTableWidget::cellChanged, this, &TagSelectWidget::onCellChanged);
+	connect(this, &QTableWidget::currentCellChanged, this, &TagSelectWidget::onCurrentCellChanged);
 }
 
 
@@ -88,28 +89,31 @@ TagSelectWidget::~TagSelectWidget() = default;
 
 QWidget* TagSelectWidget::makeButtons(QWidget* parent)
 {
-	auto add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
-	auto delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	auto* add_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add Row"));
+	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove Row"));
+	delete_button->setEnabled(false);
 	
-	auto add_remove_layout = new SegmentedButtonLayout();
+	auto* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(add_button);
 	add_remove_layout->addWidget(delete_button);
 
-	auto move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
+	move_up_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-up.png")), tr("Move Up"));
 	move_up_button->setAutoRepeat(true);
-	auto move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
+	move_up_button->setEnabled(false);
+	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
+	move_down_button->setEnabled(false);
 
-	auto up_down_layout = new SegmentedButtonLayout();
+	auto* up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
-	auto list_buttons_layout = new QHBoxLayout();
+	auto* list_buttons_layout = new QHBoxLayout();
 	list_buttons_layout->setContentsMargins(0,0,0,0);
 	list_buttons_layout->addLayout(add_remove_layout);
 	list_buttons_layout->addLayout(up_down_layout);
 	
-	auto list_buttons_group = new QWidget(parent);
+	auto* list_buttons_group = new QWidget(parent);
 	list_buttons_group->setLayout(list_buttons_layout);
 	
 	// Connections
@@ -125,7 +129,7 @@ QWidget* TagSelectWidget::makeButtons(QWidget* parent)
 
 QToolButton* TagSelectWidget::newToolButton(const QIcon& icon, const QString& text)
 {
-	auto button = new QToolButton();
+	auto* button = new QToolButton();
 	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	button->setToolTip(text);
 	button->setIcon(icon);
@@ -152,12 +156,12 @@ void TagSelectWidget::showEvent(QShowEvent* event)
 
 void TagSelectWidget::addRowItems(int row)
 {
-	auto item = new QTableWidgetItem();
+	auto* item = new QTableWidgetItem();
 	setItem(row, 1, item);
 	item = new QTableWidgetItem();
 	setItem(row, 3, item);
 
-	auto compare_op = new QComboBox();
+	auto* compare_op = new QComboBox();
 	for (auto op : { ObjectQuery::OperatorIs, ObjectQuery::OperatorIsNot, ObjectQuery::OperatorContains })
 		compare_op->addItem(ObjectQuery::labelFor(op), QVariant::fromValue(op));
 	setCellWidget(row, 2, compare_op);
@@ -172,7 +176,7 @@ void TagSelectWidget::addRowItems(int row)
 	}
 	else
 	{
-		auto logical_op = new QComboBox();
+		auto* logical_op = new QComboBox();
 		auto and_label = QString { QLatin1String("  ") + ObjectQuery::labelFor(ObjectQuery::OperatorAnd) };
 		logical_op->addItem(and_label, QVariant::fromValue(ObjectQuery::OperatorAnd));
 		logical_op->addItem(ObjectQuery::labelFor(ObjectQuery::OperatorOr), QVariant::fromValue(ObjectQuery::OperatorOr));
@@ -188,14 +192,19 @@ void TagSelectWidget::onCellChanged(int row, int column)
 	{
 	case 1:
 	case 3:
-		{
-			auto item = this->item(row, column);
+		if (auto* item = this->item(row, column))
 			item->setText(item->text().trimmed());
-			break;
-		}
+		break;
 	default:
 		; // nothing
 	}
+}
+
+
+void TagSelectWidget::onCurrentCellChanged(int current_row, int /*current_column*/, int /*previous_row*/, int /*previous_column*/)
+{
+	move_up_button->setEnabled(current_row > 0);
+	move_down_button->setEnabled(current_row+1 < rowCount());
 }
 
 
@@ -210,6 +219,7 @@ void TagSelectWidget::addRow()
 
 	insertRow(row);
 	addRowItems(row);
+	delete_button->setEnabled(rowCount() > 1);
 
 	// Move the selection to the new row
 	int col = currentColumn();
@@ -230,12 +240,13 @@ void TagSelectWidget::deleteRow()
 		row = rowCount() - 1;
 
 	removeRow(row);
+	delete_button->setEnabled(rowCount() > 1);
 
 	// If we delete first row, need to fix logical operator
 	if (row == 0)
 	{
 		removeCellWidget(row, 0);
-		auto item = new QTableWidgetItem();
+		auto* item = new QTableWidgetItem();
 		item->setFlags(Qt::NoItemFlags);
 		item->setBackground(QBrush(QGuiApplication::palette().window()));
 		setItem(row, 0, item);
@@ -260,9 +271,13 @@ void TagSelectWidget::moveRow(bool up)
 	if (!up)
 		row += 1;
 
+	// Commit current cell by changing the index.
+	auto const col = currentColumn();
+	setCurrentCell(row > 0 ? 0 : 1, col);
+	
 	// Col 1, 3 are items
-	auto top_item = takeItem(row - 1, 1);
-	auto bottom_item = takeItem(row, 1);
+	auto* top_item = takeItem(row - 1, 1);
+	auto* bottom_item = takeItem(row, 1);
 	setItem(row, 1, top_item);
 	setItem(row - 1, 1, bottom_item);
 	top_item = takeItem(row - 1, 3);
@@ -271,8 +286,8 @@ void TagSelectWidget::moveRow(bool up)
 	setItem(row - 1, 3, bottom_item);
 
 	// Col 2 is comparison combobox
-	auto top_combo = qobject_cast<QComboBox*>(cellWidget(row - 1, 2));
-	auto bottom_combo = qobject_cast<QComboBox*>(cellWidget(row, 2));
+	auto* top_combo = qobject_cast<QComboBox*>(cellWidget(row - 1, 2));
+	auto* bottom_combo = qobject_cast<QComboBox*>(cellWidget(row, 2));
 	auto top_selection = top_combo->currentIndex();
 	auto bottom_selection = bottom_combo->currentIndex();
 	top_combo->setCurrentIndex(bottom_selection);
@@ -290,11 +305,10 @@ void TagSelectWidget::moveRow(bool up)
 		bottom_combo->setCurrentIndex(top_selection);
 	}
 
-	// Keep the moved row selected
-	int col = currentColumn();
 	// For the down case we already adjusted the row
 	if (up)
 		row -= 1;
+	// Keep the moved row selected
 	setCurrentCell(row, col);
 }
 

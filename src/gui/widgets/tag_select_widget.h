@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,6 +73,11 @@ private:
 
 	void addRowItems(int row);
 	void onCellChanged(int row, int column);
+	void onCurrentCellChanged(int current_row, int current_column, int previous_row, int previous_column);
+	
+	QToolButton* delete_button;
+	QToolButton* move_down_button;
+	QToolButton* move_up_button;
 
 	Q_DISABLE_COPY(TagSelectWidget)
 };
