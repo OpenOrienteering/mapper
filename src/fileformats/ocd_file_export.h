@@ -170,6 +170,12 @@ protected:
 	void setupBaseSymbol(const Symbol* symbol, quint32 symbol_number, OcdBaseSymbol& ocd_base_symbol);
 	
 	template< class OcdBaseSymbol >
+	void setupSymbolColors(const Symbol* symbol, OcdBaseSymbol& ocd_base_symbol);
+	
+	template< typename Counter, typename Iterator >
+	void setupSymbolColors(const Symbol* symbol, Counter& num_colors, Iterator first, Iterator last);
+	
+	template< class OcdBaseSymbol >
 	void setupIcon(const Symbol* symbol, OcdBaseSymbol& ocd_base_symbol);
 	
 	template< class OcdPointSymbol >

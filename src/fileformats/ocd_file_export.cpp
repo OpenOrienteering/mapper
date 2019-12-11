@@ -1040,7 +1040,14 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 	if (symbol->isHidden())
 		ocd_base_symbol.status |= Ocd::SymbolHidden;
 
-	// Set of used colors
+	setupSymbolColors(symbol, ocd_base_symbol);
+	setupIcon(symbol, ocd_base_symbol);
+}
+
+
+template< >
+void OcdFileExport::setupSymbolColors<Ocd::BaseSymbolV8>(const Symbol* symbol, Ocd::BaseSymbolV8& ocd_base_symbol)
+{
 	using ColorBitmask = typename std::remove_extent<typename std::remove_pointer<decltype(ocd_base_symbol.colors)>::type>::type;
 	Q_STATIC_ASSERT(std::is_unsigned<ColorBitmask>::value);
 	ColorBitmask bitmask = 1;
@@ -1066,8 +1073,43 @@ void OcdFileExport::setupBaseSymbol(const Symbol* symbol, quint32 symbol_number,
 				break;
 		}
 	}
+}
+
+template< class OcdBaseSymbol >
+void OcdFileExport::setupSymbolColors(const Symbol* symbol, OcdBaseSymbol& ocd_base_symbol)
+{
+	using std::begin; using std::end;
+	setupSymbolColors(symbol, ocd_base_symbol.num_colors, begin(ocd_base_symbol.colors), end(ocd_base_symbol.colors));
+}
+
+template< typename Counter, typename Iterator >
+void OcdFileExport::setupSymbolColors(const Symbol* symbol, Counter& num_colors, Iterator first, Iterator last)
+{
+	using IndexType = typename std::remove_reference<decltype(*first)>::type;
+	Q_STATIC_ASSERT(std::is_signed<Counter>::value);
 	
-	setupIcon(symbol, ocd_base_symbol);
+	num_colors = 0;
+	auto registration = 0;
+	if (uses_registration_color && symbol->containsColor(map->getRegistrationColor()))
+	{
+		registration = 1;
+	}
+	
+	auto it = first;
+	for (int c = 0; c < map->getNumColors(); ++c)
+	{
+		if (!symbol->containsColor(map->getColor(c)))
+			continue;
+		
+		++num_colors;
+		*it = IndexType(c + registration);
+		
+		if (++it == last)
+		{
+			num_colors = Counter(-1);
+			break;
+		}
+	}
 }
 
 
@@ -2057,6 +2099,7 @@ QByteArray OcdFileExport::exportCombinedAreaSymbol(
 {
 	auto ocd_symbol = exportAreaSymbol<OcdAreaSymbol>(area_symbol, symbol_number);
 	auto ocd_subsymbol_data = reinterpret_cast<OcdAreaSymbol*>(ocd_symbol.data());
+	setupSymbolColors(combined_symbol, ocd_subsymbol_data->base);
 	setupIcon(combined_symbol, ocd_subsymbol_data->base);
 	ocd_subsymbol_data->common.border_on_V9 = 1;
 	ocd_subsymbol_data->border_symbol = symbol_numbers[line_symbol];
@@ -2074,6 +2117,7 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 {
 	auto ocd_symbol = exportLineSymbol<OcdLineSymbol>(main_line, symbol_number);
 	auto ocd_symbol_data = reinterpret_cast<OcdLineSymbol*>(ocd_symbol.data());
+	setupSymbolColors(combined_symbol, ocd_symbol_data->base);
 	setupIcon(combined_symbol, ocd_symbol_data->base);
 	
 	auto& ocd_line_common = ocd_symbol_data->common;
