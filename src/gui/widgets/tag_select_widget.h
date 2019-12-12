@@ -73,7 +73,7 @@ private:
 
 	void addRowItems(int row);
 	void onCellChanged(int row, int column);
-	void onCurrentCellChanged(int current_row, int current_column, int previous_row, int previous_column);
+	void updateRowButtons();
 	
 	QToolButton* delete_button;
 	QToolButton* move_down_button;

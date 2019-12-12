@@ -79,7 +79,7 @@ TagSelectWidget::TagSelectWidget(QWidget* parent)
 	addRowItems(0);
 
 	connect(this, &QTableWidget::cellChanged, this, &TagSelectWidget::onCellChanged);
-	connect(this, &QTableWidget::currentCellChanged, this, &TagSelectWidget::onCurrentCellChanged);
+	connect(this, &QTableWidget::currentCellChanged, this, &TagSelectWidget::updateRowButtons, Qt::QueuedConnection);
 }
 
 
@@ -201,8 +201,9 @@ void TagSelectWidget::onCellChanged(int row, int column)
 }
 
 
-void TagSelectWidget::onCurrentCellChanged(int current_row, int /*current_column*/, int /*previous_row*/, int /*previous_column*/)
+void TagSelectWidget::updateRowButtons()
 {
+	auto current_row = currentRow();
 	move_up_button->setEnabled(current_row > 0);
 	move_down_button->setEnabled(current_row+1 < rowCount());
 }
