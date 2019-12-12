@@ -169,6 +169,22 @@ public:
 	 */
 	bool deleteObject(Object* object, bool remove_only);
 	
+	/**
+	  * Relinquish object ownership.
+	  *
+	  * This method removes object references from MapPart's internal
+	  * structures. Object deletion is caller's responsibility.
+	  */
+	Object* releaseObject(int pos);
+
+	/**
+	  * Relinquish object ownership.
+	  *
+	  * This method removes object references from MapPart's internal
+	  * structures. Object deletion is caller's responsibility.
+	  */
+	Object* releaseObject(Object* object);
+
 	
 	/**
 	 * Imports the contents another part into this part.
