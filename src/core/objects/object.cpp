@@ -92,10 +92,10 @@ Object::Object(Object::Type type, const Symbol* symbol)
 	// nothing
 }
 
-Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
+Object::Object(Object::Type type, const Symbol* symbol, MapCoordVector coords, Map* map)
 : type(type)
 , symbol(symbol)
-, coords(coords)
+, coords(std::move(coords))
 , map(map)
 , output(*this)
 {
@@ -858,8 +858,8 @@ PathObject::PathObject(const Symbol* symbol)
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 
-PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
-: Object(Object::Path, symbol, coords, map)
+PathObject::PathObject(const Symbol* symbol, MapCoordVector coords, Map* map)
+: Object(Object::Path, symbol, std::move(coords), map)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	recalculateParts();
@@ -3081,10 +3081,9 @@ void PathObject::createRenderables(ObjectRenderables& output, Symbol::Renderable
 // ### PointObject ###
 
 PointObject::PointObject(const Symbol* symbol)
- : Object(Object::Point, symbol)
+: Object(Object::Point, symbol, { MapCoord{0,0} })
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
-	coords.push_back(MapCoord(0, 0));
 }
 
 PointObject::PointObject(const PointObject& /*proto*/) = default;
