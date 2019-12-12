@@ -234,7 +234,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 		if (op != Difference || object == subject)
 		{
 			map->removeObjectFromSelection(object, false);
-			map->getCurrentPart()->deleteObject(object, true);
+			map->getCurrentPart()->releaseObject(object);
 			object->setMap(map); // necessary so objects are saved correctly
 		}
 	}

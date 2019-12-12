@@ -247,7 +247,7 @@ void SymbolSettingDialog::createPreviewMap()
 	symbol_icon_label->setPixmap(QPixmap::fromImage(symbol->getIcon(source_map)));
 	
 	for (auto& object : preview_objects)
-		preview_map->deleteObject(object, false);
+		preview_map->deleteObject(object);
 	
 	preview_objects.clear();
 	
