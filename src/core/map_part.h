@@ -44,7 +44,7 @@ class Map;
 class MapCoordF;
 class Object;
 class Symbol;
-using SymbolDictionary = QHash<QString, Symbol*>; // from symbol.h
+using SymbolDictionary = QHash<qint32, Symbol*>; // from symbol.h
 class UndoStep;
 
 

@@ -26,6 +26,8 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 #include "util/xml_stream_util.h"
 
 
@@ -605,8 +607,15 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 		{
 			if (xml.name() == QLatin1String("ref"))
 			{
-				QString key = xml.attributes().value(QLatin1String("symbol")).toString();
-				target_symbols.push_back(symbol_dict[key]);
+				bool conversion_ok;
+				const auto key = xml.attributes().value(QLatin1String("symbol"));
+				const auto key_converted = key.toInt(&conversion_ok);
+				if (!key.isEmpty() && conversion_ok)
+					target_symbols.push_back(symbol_dict[key_converted]);
+				else
+					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+				                              .arg(key).arg(xml.lineNumber())
+				                              .arg(xml.columnNumber()));
 			}
 			
 			xml.skipCurrentElement(); // unknown
