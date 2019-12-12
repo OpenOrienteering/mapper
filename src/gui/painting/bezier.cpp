@@ -33,7 +33,9 @@
 #include <qlist.h>
 #include <qmath.h>
 
+#ifdef WITH_PRIVATE_QT_API
 #include <private/qnumeric_p.h>
+#endif // WITH_PRIVATE_QT_API
 
 #include <tuple> // for std::tie()
 
@@ -124,6 +126,7 @@ void Bezier::addToPolygon(QPolygonF *polygon, qreal bezier_flattening_threshold)
     }
 }
 
+#ifdef WITH_PRIVATE_QT_API
 void Bezier::addToPolygon(QDataBuffer<QPointF> &polygon, qreal bezier_flattening_threshold) const
 {
     Bezier beziers[10];
@@ -159,6 +162,7 @@ void Bezier::addToPolygon(QDataBuffer<QPointF> &polygon, qreal bezier_flattening
         }
     }
 }
+#endif  // WITH_PRIVATE_QT_API
 
 QRectF Bezier::bounds() const
 {

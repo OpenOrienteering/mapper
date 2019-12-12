@@ -27,7 +27,9 @@
 #ifndef OPENORIENTEERING_BEZIER_H
 #define OPENORIENTEERING_BEZIER_H
 
+#ifdef WITH_PRIVATE_QT_API
 #include <QtGui/private/qtguiglobal_p.h>
+#endif  // WITH_PRIVATE_QT_API
 #include "QtCore/qpoint.h"
 #include "QtCore/qline.h"
 #include "QtCore/qrect.h"
@@ -35,7 +37,9 @@
 #include "QtCore/qlist.h"
 #include "QtCore/qpair.h"
 #include "QtGui/qtransform.h"
+#ifdef WITH_PRIVATE_QT_API
 #include <private/qdatabuffer_p.h>
+#endif  // WITH_PRIVATE_QT_API
 
 QT_BEGIN_NAMESPACE
 
@@ -63,7 +67,9 @@ public:
 
     QPolygonF toPolygon(qreal bezier_flattening_threshold = 0.5) const;
     void addToPolygon(QPolygonF *p, qreal bezier_flattening_threshold = 0.5) const;
+#ifdef WITH_PRIVATE_QT_API
     void addToPolygon(QDataBuffer<QPointF> &polygon, qreal bezier_flattening_threshold) const;
+#endif  // WITH_PRIVATE_QT_API
 
     QRectF bounds() const;
     qreal length(qreal error = 0.01) const;
