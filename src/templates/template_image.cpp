@@ -604,19 +604,19 @@ void TemplateImage::updatePosFromGeoreferencing()
 	// Determine map coords of three image corner points
 	// by transforming the points from one Georeferencing into the other
 	bool ok;
-	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, 0.0), &ok);
+	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(0.0, 0.0), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width(), 0.0), &ok);
+	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(image.width(), 0.0), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, image.height()), &ok);
+	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(0.0, image.height()), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);

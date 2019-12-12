@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
 #define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
@@ -32,7 +33,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
-#include <QScopedPointer>
 #include <QString>
 #include <QTransform>
 #include <QVarLengthArray>
@@ -161,7 +161,7 @@ protected:
 	int undo_index;
 	
 	GeoreferencingOptions available_georef;
-	QScopedPointer<Georeferencing> georef;
+	std::unique_ptr<Georeferencing> georef;
 	// Temporary storage for crs spec. Use georef instead.
 	QString temp_crs_spec;
 };
