@@ -37,8 +37,8 @@
 **
 ****************************************************************************/
 
-#ifndef QBEZIER_P_H
-#define QBEZIER_P_H
+#ifndef OPENORIENTEERING_BEZIER_H
+#define OPENORIENTEERING_BEZIER_H
 
 //
 //  W A R N I N G
@@ -266,4 +266,4 @@ inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
 
 QT_END_NAMESPACE
 
-#endif // QBEZIER_P_H
+#endif // OPENORIENTEERING_BEZIER_H

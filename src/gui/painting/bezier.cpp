@@ -37,7 +37,8 @@
 **
 ****************************************************************************/
 
-#include "qbezier_p.h"
+#include "bezier.h"
+
 #include <qdebug.h>
 #include <qline.h>
 #include <qpolygon.h>
