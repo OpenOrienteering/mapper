@@ -5,6 +5,8 @@
 **
 ****************************************************************************/
 /**
+ * Copyright 2019 Kai Pastor
+ *
  * This file is part of OpenOrienteering.
  *
  * This is a modified version of a file from the Qt Toolkit.
@@ -25,17 +27,6 @@
 #ifndef OPENORIENTEERING_BEZIER_H
 #define OPENORIENTEERING_BEZIER_H
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists for the convenience
-// of other Qt classes.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
-
 #include <QtGui/private/qtguiglobal_p.h>
 #include "QtCore/qpoint.h"
 #include "QtCore/qline.h"
@@ -50,10 +41,15 @@ QT_BEGIN_NAMESPACE
 
 class QPolygonF;
 
-class Q_GUI_EXPORT QBezier
+QT_END_NAMESPACE
+
+
+namespace OpenOrienteering {
+
+class Bezier
 {
 public:
-    static QBezier fromPoints(const QPointF &p1, const QPointF &p2,
+    static Bezier fromPoints(const QPointF &p1, const QPointF &p2,
                               const QPointF &p3, const QPointF &p4)
     { return {p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), p4.x(), p4.y()}; }
 
@@ -83,7 +79,7 @@ public:
     QPointF pt3() const { return QPointF(x3, y3); }
     QPointF pt4() const { return QPointF(x4, y4); }
 
-    QBezier mapBy(const QTransform &transform) const;
+    Bezier mapBy(const QTransform &transform) const;
 
     inline QPointF midPoint() const;
     inline QLineF midTangent() const;
@@ -91,24 +87,24 @@ public:
     inline QLineF startTangent() const;
     inline QLineF endTangent() const;
 
-    inline void parameterSplitLeft(qreal t, QBezier *left);
-    inline std::pair<QBezier, QBezier> split() const;
+    inline void parameterSplitLeft(qreal t, Bezier *left);
+    inline std::pair<Bezier, Bezier> split() const;
 
-    int shifted(QBezier *curveSegments, int maxSegmets,
+    int shifted(Bezier *curveSegments, int maxSegmets,
                 qreal offset, float threshold) const;
 
-    QBezier bezierOnInterval(qreal t0, qreal t1) const;
-    QBezier getSubRange(qreal t0, qreal t1) const;
+    Bezier bezierOnInterval(qreal t0, qreal t1) const;
+    Bezier getSubRange(qreal t0, qreal t1) const;
 
     qreal x1, y1, x2, y2, x3, y3, x4, y4;
 };
 
-inline QPointF QBezier::midPoint() const
+inline QPointF Bezier::midPoint() const
 {
     return QPointF((x1 + x4 + 3*(x2 + x3))/8., (y1 + y4 + 3*(y2 + y3))/8.);
 }
 
-inline QLineF QBezier::midTangent() const
+inline QLineF Bezier::midTangent() const
 {
     QPointF mid = midPoint();
     QLineF dir(QLineF(x1, y1, x2, y2).pointAt(0.5), QLineF(x3, y3, x4, y4).pointAt(0.5));
@@ -116,7 +112,7 @@ inline QLineF QBezier::midTangent() const
                   mid.x() + dir.dx(), mid.y() + dir.dy());
 }
 
-inline QLineF QBezier::startTangent() const
+inline QLineF Bezier::startTangent() const
 {
     QLineF tangent(pt1(), pt2());
     if (tangent.isNull())
@@ -126,7 +122,7 @@ inline QLineF QBezier::startTangent() const
     return tangent;
 }
 
-inline QLineF QBezier::endTangent() const
+inline QLineF Bezier::endTangent() const
 {
     QLineF tangent(pt4(), pt3());
     if (tangent.isNull())
@@ -136,7 +132,7 @@ inline QLineF QBezier::endTangent() const
     return tangent;
 }
 
-inline void QBezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
+inline void Bezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &d)
 {
     qreal m_t = 1. - t;
     b = m_t * m_t;
@@ -147,7 +143,7 @@ inline void QBezier::coefficients(qreal t, qreal &a, qreal &b, qreal &c, qreal &
     c *= 3. * m_t;
 }
 
-inline QPointF QBezier::pointAt(qreal t) const
+inline QPointF Bezier::pointAt(qreal t) const
 {
     // numerically more stable:
     qreal x, y;
@@ -172,7 +168,7 @@ inline QPointF QBezier::pointAt(qreal t) const
     return QPointF(x, y);
 }
 
-inline QPointF QBezier::normalVector(qreal t) const
+inline QPointF Bezier::normalVector(qreal t) const
 {
     qreal m_t = 1. - t;
     qreal a = m_t * m_t;
@@ -182,7 +178,7 @@ inline QPointF QBezier::normalVector(qreal t) const
     return QPointF((y2-y1) * a + (y3-y2) * b + (y4-y3) * c,  -(x2-x1) * a - (x3-x2) * b - (x4-x3) * c);
 }
 
-inline QPointF QBezier::derivedAt(qreal t) const
+inline QPointF Bezier::derivedAt(qreal t) const
 {
     // p'(t) = 3 * (-(1-2t+t^2) * p0 + (1 - 4 * t + 3 * t^2) * p1 + (2 * t - 3 * t^2) * p2 + t^2 * p3)
 
@@ -197,7 +193,7 @@ inline QPointF QBezier::derivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-inline QPointF QBezier::secondDerivedAt(qreal t) const
+inline QPointF Bezier::secondDerivedAt(qreal t) const
 {
     qreal a = 2. - 2. * t;
     qreal b = -4 + 6 * t;
@@ -208,7 +204,7 @@ inline QPointF QBezier::secondDerivedAt(qreal t) const
                        a * y1 + b * y2 + c * y3 + d * y4);
 }
 
-std::pair<QBezier, QBezier> QBezier::split() const
+std::pair<Bezier, Bezier> Bezier::split() const
 {
     const auto mid = [](QPointF lhs, QPointF rhs) { return (lhs + rhs) * .5; };
 
@@ -225,7 +221,7 @@ std::pair<QBezier, QBezier> QBezier::split() const
     };
 }
 
-inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
+inline void Bezier::parameterSplitLeft(qreal t, Bezier *left)
 {
     left->x1 = x1;
     left->y1 = y1;
@@ -249,6 +245,6 @@ inline void QBezier::parameterSplitLeft(qreal t, QBezier *left)
     left->y4 = y1 = left->y3 + t * (y2 - left->y3);
 }
 
-QT_END_NAMESPACE
+}  // namespace OpenOrienteering
 
 #endif // OPENORIENTEERING_BEZIER_H
