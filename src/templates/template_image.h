@@ -104,7 +104,7 @@ public:
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
-	bool canBeDrawnOnto() const override {return true;}
+	bool canBeDrawnOnto() const override { return drawable; }
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -164,6 +164,8 @@ protected:
 	std::vector< DrawOnImageUndoStep > undo_steps;
 	/// Current index in undo_steps, where 0 means before the first item.
 	int undo_index = 0;
+	/// A flag indicating that this template can be drawn onto.
+	bool drawable = false;
 	
 	GeoreferencingOptions available_georef;
 	std::unique_ptr<Georeferencing> georef;

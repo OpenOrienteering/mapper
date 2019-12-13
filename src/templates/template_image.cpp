@@ -31,9 +31,9 @@
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
 #include <QImageReader>
+#include <QImageWriter>
 #include <QLatin1String>
 #include <QList>
-#include <QMessageBox>
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPen>
@@ -157,6 +157,10 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl(bool configuring)
 {
 	QImageReader reader(template_path);
+	
+	// QImageReader::format() cannot be called after reading.
+	drawable = QImageWriter::supportedImageFormats().contains(reader.format());
+	
 	const QSize size = reader.size();
 	const QImage::Format format = reader.imageFormat();
 	if (size.isEmpty() || format == QImage::Format_Invalid)
@@ -199,11 +203,9 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
+
 bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
-	if (getTemplateFilename().endsWith(QLatin1String(".gif"), Qt::CaseInsensitive))
-		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
-	
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
 	while (true)
