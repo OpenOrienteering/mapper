@@ -59,7 +59,7 @@ class SymbolSettingDialog;
 class TextSymbol;
 class VirtualCoordVector;
 
-typedef QHash<QString, Symbol*> SymbolDictionary;
+typedef QHash<qint32, Symbol*> SymbolDictionary;
 
 
 /**

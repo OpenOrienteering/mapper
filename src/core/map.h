@@ -827,12 +827,18 @@ public:
 	
 	/**
 	 * Deletes the given object from the map.
-	 * remove_only will remove the object from the map, but not call "delete object";
-	 * be sure to call removeObjectFromSelection() if necessary.
 	 * 
-	 * TODO: make a separate method "removeObject()", remove_only is misleading!
+	 * Be sure to call removeObjectFromSelection() if necessary.
 	 */
-	void deleteObject(Object* object, bool remove_only);
+	void deleteObject(Object* object);
+
+	/**
+	 * Relinquish object ownership.
+	 *
+	 * Searches map parts and returns pointer if the object was found.
+	 * Otherwise nullptr is returned.
+	 */
+	Object* releaseObject(Object* object);
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.

@@ -299,12 +299,28 @@ std::unique_ptr<Symbol> Symbol::load(QXmlStreamReader& xml, const Map& map, Symb
 	auto code = symbol_element.attribute<QString>(QLatin1String("code"));
 	if (symbol_element.hasAttribute(QLatin1String("id")))
 	{
-		auto id = symbol_element.attribute<QString>(QLatin1String("id"));
-		if (symbol_dict.contains(id)) 
-			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+		const auto id = symbol_element.attribute<QString>(QLatin1String("id"));
 		
-		symbol_dict[id] = symbol.get();  // Will be dangling pointer when we throw an exception later
+		bool conversion_ok;
+		auto const converted_id = id.toInt(&conversion_ok);
 		
+		if (!id.isEmpty())
+		{
+			if (conversion_ok)
+			{
+				if (symbol_dict.contains(converted_id))
+					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Symbol ID '%1' not unique at line %2 column %3.").arg(id).arg(xml.lineNumber()).arg(xml.columnNumber()));
+
+				symbol_dict[converted_id] = symbol.get();  // Will be dangling pointer when we throw an exception later
+			}
+			else
+			{
+				throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+			                              .arg(id).arg(xml.lineNumber())
+			                              .arg(xml.columnNumber()));
+			}
+		}
+
 		if (code.isEmpty())
 			code = id;
 	}

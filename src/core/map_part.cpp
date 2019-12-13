@@ -164,31 +164,42 @@ void MapPart::addObject(Object* object, int pos)
 		map->updateAllMapWidgets();
 }
 
-void MapPart::deleteObject(int pos, bool remove_only)
+void MapPart::deleteObject(int pos)
+{
+	delete releaseObject(pos);
+}
+
+bool MapPart::deleteObject(Object* object)
+{
+	auto object_ptr = releaseObject(object);
+	delete object_ptr;
+
+	return object_ptr;
+}
+
+Object* MapPart::releaseObject(int pos)
 {
 	map->removeRenderablesOfObject(objects[pos], true);
-	if (remove_only)
-		objects[pos]->setMap(nullptr);
-	else
-		delete objects[pos];
+	auto object_to_return = objects[pos];
 	objects.erase(objects.begin() + pos);
 	
 	if (objects.empty() && map->getNumObjects() == 0)
 		map->updateAllMapWidgets();
+
+	return object_to_return;
 }
 
-bool MapPart::deleteObject(Object* object, bool remove_only)
+Object* MapPart::releaseObject(Object* object)
 {
 	int size = objects.size();
 	for (int i = size - 1; i >= 0; --i)
 	{
 		if (objects[i] == object)
 		{
-			deleteObject(i, remove_only);
-			return true;
+			return releaseObject(i);
 		}
 	}
-	return false;
+	return nullptr;
 }
 
 std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<const Symbol*, Symbol*>& symbol_map, const QTransform& transform, bool select_new_objects)

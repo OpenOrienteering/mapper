@@ -321,7 +321,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	else
 	{
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
-		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
+		bool conversion_ok;
+		const auto id_converted = symbol_id.toInt(&conversion_ok);
+		if (!symbol_id.isEmpty() && !conversion_ok)
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+		                              .arg(symbol_id).arg(xml.lineNumber())
+		                              .arg(xml.columnNumber()));
+		object->symbol = symbol_dict[id_converted]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be nullptr.
 	}
 	

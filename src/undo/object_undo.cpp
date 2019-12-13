@@ -26,6 +26,8 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "core/symbols/symbol.h"
+#include "fileformats/file_format.h"
+#include "fileformats/file_import_export.h"
 #include "util/xml_stream_util.h"
 
 
@@ -332,7 +334,7 @@ UndoStep* DeleteObjectsUndoStep::undo()
 	for (int i = 0; i < size; ++i)
 	{
 		undo_step->addObject(modified_objects[i], part->getObject(modified_objects[i]));
-		part->deleteObject(modified_objects[i], true);
+		part->releaseObject(modified_objects[i]);
 	}
 	
 	return undo_step;
@@ -404,7 +406,7 @@ void AddObjectsUndoStep::removeContainedObjects(bool emit_selection_changed)
 			map->removeObjectFromSelection(objects[i], false);
 			object_deselected = true;
 		}
-		part->deleteObject(objects[i], true);
+		part->releaseObject(objects[i]);
 		map->setObjectsDirty();
 	}
 	if (object_deselected && emit_selection_changed)
@@ -481,7 +483,7 @@ UndoStep* SwitchPartUndoStep::undo()
 			auto object = target->getObject(i);
 			if (map->getCurrentPart() == target && map->isObjectSelected(object))
 				map->removeObjectFromSelection(object, false);
-			target->deleteObject(i, true);
+			target->releaseObject(i);
 			source->addObject(object);
 		});
 	}
@@ -494,7 +496,7 @@ UndoStep* SwitchPartUndoStep::undo()
 			auto object = source->getObject(i);
 			if (map->getCurrentPart() == source && map->isObjectSelected(object))
 				map->removeObjectFromSelection(object, false);
-			source->deleteObject(i, true);
+			source->releaseObject(i);
 			target->addObject(object, j);
 		});
 	}
@@ -605,8 +607,15 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 		{
 			if (xml.name() == QLatin1String("ref"))
 			{
-				QString key = xml.attributes().value(QLatin1String("symbol")).toString();
-				target_symbols.push_back(symbol_dict[key]);
+				bool conversion_ok;
+				const auto key = xml.attributes().value(QLatin1String("symbol"));
+				const auto key_converted = key.toInt(&conversion_ok);
+				if (!key.isEmpty() && conversion_ok)
+					target_symbols.push_back(symbol_dict[key_converted]);
+				else
+					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+				                              .arg(key).arg(xml.lineNumber())
+				                              .arg(xml.columnNumber()));
 			}
 			
 			xml.skipCurrentElement(); // unknown

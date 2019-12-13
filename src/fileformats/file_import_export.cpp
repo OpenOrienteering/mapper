@@ -163,7 +163,7 @@ void Importer::validate()
 				else
 				{
 					// There is no undefined symbol for this type of object, delete the object
-					part->deleteObject(o, false);
+					part->deleteObject(o);
 					--o;
 					continue;
 				}
