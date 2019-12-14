@@ -28,6 +28,7 @@ set(MAPPER_GDAL_HEADERS
 )
 	
 set(MAPPER_GDAL_SOURCES
+  gdal_image_reader.cpp
   gdal_manager.cpp
   gdal_settings_page.cpp
   gdal_template.cpp
