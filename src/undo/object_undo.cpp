@@ -614,7 +614,7 @@ void SwitchSymbolUndoStep::loadImpl(QXmlStreamReader& xml, SymbolDictionary& sym
 					target_symbols.push_back(symbol_dict[key_converted]);
 				else
 					throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
-				                              .arg(key).arg(xml.lineNumber())
+				                              .arg(key.toString()).arg(xml.lineNumber())
 				                              .arg(xml.columnNumber()));
 			}
 			
