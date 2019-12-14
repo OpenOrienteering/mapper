@@ -60,8 +60,6 @@ PATTERN=" \
   georeferencing.cpp \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
-  gdal_manager.cpp \
-  gdal_template.cpp \
   key_button_bar.cpp \
   line_symbol.cpp \
   main.cpp \
@@ -75,8 +73,6 @@ PATTERN=" \
   object_query.cpp \
   ocd_file_format.cpp \
   ocd_t.cpp \
-  ogr_file_format.cpp \
-  ogr_template.cpp \
   overriding_shortcut.cpp \
   point_symbol.cpp \
   print_widget.cpp \
@@ -108,6 +104,7 @@ PATTERN=" \
   xml_file_format.cpp \
   xml_stream_util.cpp \
   \
+  gdal/ \
   ocd \
   src/sensors/ \
   src/tools/ \
