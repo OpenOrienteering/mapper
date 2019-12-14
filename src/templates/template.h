@@ -147,16 +147,19 @@ protected:
 	 * Initializes the template as "Unloaded".
 	 */
 	Template(const QString& path, not_null<Map*> map);
-
+	
+	/**
+	 * Copy-construction as duplication helper.
+	 */
+	Template(const Template& proto);
+	
 public:	
 	~Template() override;
 	
 	/**
 	 * Creates a duplicate of the template
-	 * 
-	 * \todo Rewrite as virtual function, using protected copy constructor.
 	 */
-	Template* duplicate() const;
+	virtual Template* duplicate() const = 0;
 	
 	/**
 	 * Returns a string which should identify the type of the template uniquely:
@@ -605,18 +608,7 @@ protected:
 	void setErrorString(const QString &text);
 	
 	
-	/** 
-	 * Derived classes must create a duplicate and transfer
-	 * 
-	 * type specific information over to the copy here.
-	 * This includes the content of the template file if it is loaded.
-	 * 
-	 * \todo Rewrite together with duplicate().
-	 */
-	virtual Template* duplicateImpl() const = 0;
-	
-	
-	/** 
+	/**
 	 * Hook for saving parameters needed by the actual template type.
 	 * 
 	 * The default implementation does nothing.
@@ -681,16 +673,16 @@ protected:
 	QString template_relative_path;
 	
 	/// The template lifetime state
-	State template_state;
+	State template_state = Unloaded;
 	
 	/// The description of the last error
 	QString error_string;
 	
 	/// Does the template itself (not its transformation) have unsaved changes (e.g. GPS track has changed, image has been painted on)
-	bool has_unsaved_changes;
+	bool has_unsaved_changes = false;
 	
 	/// Is the template in georeferenced mode?
-	bool is_georeferenced;
+	bool is_georeferenced = false;
 	
 private:	
 	// Properties for non-georeferenced templates (invalid if is_georeferenced is true) 
@@ -714,16 +706,17 @@ protected:
 	TemplateTransform other_transform;
 	
 	/// If true, transform is the adjusted transformation, otherwise it is the original one
-	bool adjusted;
+	bool adjusted = false;
 	
 	/// If true, the adjusted transformation has to be recalculated
-	bool adjustment_dirty;
+	bool adjustment_dirty = true;
 	
 	/// List of pass points for position adjustment
 	PassPointList passpoints;
 	
 	/// Number of the template group. If the template is not grouped, this is set to -1.
-	int template_group;
+	/// \todo Switch to initialization with -1. ATM 0 is kept for compatibility.
+	int template_group = 0;
 	
 	// Transformation matrices calculated from cur_trans
 	Matrix map_to_template;

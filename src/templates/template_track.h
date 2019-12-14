@@ -60,7 +60,13 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateTrack(const QString& path, Map* map);
+protected:
+	TemplateTrack(const TemplateTrack& proto);
+public:
     ~TemplateTrack() override;
+	
+	TemplateTrack* duplicate() const override;
+	
 	const char* getTemplateType() const override {return "TemplateTrack";}
 	bool isRasterGraphics() const override {return false;}
 	
@@ -98,8 +104,6 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-	Template* duplicateImpl() const override;
-	
     void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
     bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
@@ -118,9 +122,6 @@ protected:
 	QString projected_crs_spec;
 	friend class OgrTemplate; // for migration
 	std::unique_ptr<Georeferencing> preserved_georef;
-	
-private:
-	Q_DISABLE_COPY(TemplateTrack)
 };
 
 

@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
 #define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
@@ -32,7 +33,6 @@
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
-#include <QScopedPointer>
 #include <QString>
 #include <QTransform>
 #include <QVarLengthArray>
@@ -84,7 +84,13 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
+protected:
+	TemplateImage(const TemplateImage& proto);
+public:
     ~TemplateImage() override;
+	
+	TemplateImage* duplicate() const override;
+	
 	const char* getTemplateType() const override {return "TemplateImage";}
 	bool isRasterGraphics() const override {return true;}
 
@@ -98,7 +104,7 @@ public:
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
-	bool canBeDrawnOnto() const override {return true;}
+	bool canBeDrawnOnto() const override { return drawable; }
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -146,7 +152,6 @@ protected:
 		int y;
 	};
 	
-	Template* duplicateImpl() const override;
 	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
@@ -158,10 +163,12 @@ protected:
 	
 	std::vector< DrawOnImageUndoStep > undo_steps;
 	/// Current index in undo_steps, where 0 means before the first item.
-	int undo_index;
+	int undo_index = 0;
+	/// A flag indicating that this template can be drawn onto.
+	bool drawable = false;
 	
 	GeoreferencingOptions available_georef;
-	QScopedPointer<Georeferencing> georef;
+	std::unique_ptr<Georeferencing> georef;
 	// Temporary storage for crs spec. Use georef instead.
 	QString temp_crs_spec;
 };

@@ -78,10 +78,32 @@ TemplateTrack::TemplateTrack(const QString& path, Map* map)
 	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
 }
 
+TemplateTrack::TemplateTrack(const TemplateTrack& proto)
+: Template(proto)
+, track(proto.track)
+, track_crs_spec(proto.track_crs_spec)
+, projected_crs_spec(proto.projected_crs_spec)
+{
+	if (proto.preserved_georef)
+		preserved_georef = std::make_unique<Georeferencing>(*proto.preserved_georef);
+	
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::stateChanged, this, &TemplateTrack::updateGeoreferencing);
+	connect(&georef, &Georeferencing::declinationChanged, this, &TemplateTrack::updateGeoreferencing);
+}
+
 TemplateTrack::~TemplateTrack()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
+}
+
+
+TemplateTrack* TemplateTrack::duplicate() const
+{
+	return new TemplateTrack(*this);
 }
 
 
@@ -364,13 +386,6 @@ bool TemplateTrack::hasAlpha() const
 	return false;
 }
 
-
-Template* TemplateTrack::duplicateImpl() const
-{
-	TemplateTrack* copy = new TemplateTrack(template_path, map);
-	copy->track = track;
-	return copy;
-}
 
 PathObject* TemplateTrack::importPathStart()
 {
