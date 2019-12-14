@@ -155,9 +155,9 @@ public:
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
 	{
-		/// \todo
-		static std::vector<QByteArray> ret;
-		return ret; 
+		if (dirty)
+			const_cast<GdalManagerPrivate*>(this)->update();
+		return enabled_raster_import_extensions; 
 	}
 	
 	const std::vector<QByteArray>& supportedVectorImportExtensions() const
@@ -210,6 +210,8 @@ private:
 	void update()
 	{
 		auto count = GDALGetDriverCount();
+		enabled_raster_import_extensions.clear();
+		enabled_raster_import_extensions.reserve(std::size_t(count));
 		enabled_vector_import_extensions.clear();
 		enabled_vector_import_extensions.reserve(std::size_t(count));
 		enabled_vector_export_extensions.clear();
@@ -230,11 +232,18 @@ private:
 		for (auto i = 0; i < count; ++i)
 		{
 			auto driver_data = GDALGetDriver(i);
+			auto cap_raster = GDALGetMetadataItem(driver_data, GDAL_DCAP_RASTER, nullptr);
 			auto cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
 			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
 			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
 			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
 			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+
+			if (qstrcmp(cap_raster, "YES") == 0)
+			{
+				if (qstrcmp(cap_open, "YES") == 0)
+					append_extensions(enabled_raster_import_extensions, extensions);
+			}
 
 			if (qstrcmp(cap_vector, "YES") == 0)
 			{
@@ -328,6 +337,8 @@ private:
 	
 	mutable bool dirty;
 	
+	mutable std::vector<QByteArray> enabled_raster_import_extensions;
+
 	mutable std::vector<QByteArray> enabled_vector_import_extensions;
 
 	mutable std::vector<QByteArray> enabled_vector_export_extensions;
