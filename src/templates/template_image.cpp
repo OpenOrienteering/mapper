@@ -193,8 +193,11 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
+#ifdef MAPPER_USE_GDAL
+	available_georef = findAvailableGeoreferencing(readGdalGeoTransform(template_path));
+#else
 	available_georef = findAvailableGeoreferencing();
-	
+#endif
 	if (!configuring && is_georeferenced)
 	{
 		if (available_georef.front().type == Georeferencing_None)
@@ -399,16 +402,13 @@ void TemplateImage::updateGeoreferencing()
 		updatePosFromGeoreferencing();
 }
 
-TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing() const
+TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(TemplateImage::GeoreferencingOption&& hint) const
 {
 	GeoreferencingOptions result;
 	
 	auto crs_spec = temp_crs_spec; // loaded or empty
-#ifdef MAPPER_USE_GDAL
-	auto hint = readGdalGeoTransform(template_path);
 	if (crs_spec.isEmpty())
 		crs_spec = hint.crs_spec; // loaded or empty
-#endif
 	
 	WorldFile world_file;
 	if (world_file.tryToLoadForImage(template_path))
@@ -431,12 +431,8 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 		result.push_back({Georeferencing_WorldFile, "World file", crs_spec, pixel_to_world});
 	}
 	
-#ifdef MAPPER_USE_GDAL
 	if (hint.type != Georeferencing_None)
-	{
 		result.push_back(std::move(hint));
-	}
-#endif
 	
 	Q_ASSERT(available_georef.back().type == Georeferencing_None);
 	result.push_back(available_georef.back());
