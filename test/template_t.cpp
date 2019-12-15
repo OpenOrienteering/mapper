@@ -186,9 +186,11 @@ private slots:
 		
 		QCOMPARE(map.getNumTemplates(), 1);
 		auto temp = map.getTemplate(0);
-		QCOMPARE(temp->getTemplateType(), "TemplateImage");
 		QCOMPARE(temp->getTemplateFilename(), QString::fromUtf8("\u0433\u0435\u043E.tiff"));
-#ifdef MAPPER_USE_GDAL
+#ifndef MAPPER_USE_GDAL
+		QCOMPARE(temp->getTemplateType(), "TemplateImage");
+#else
+		QCOMPARE(temp->getTemplateType(), "GdalTemplate");
 #ifdef Q_OS_UNIX
 		if (QFile::encodeName(temp->getTemplateFilename()) != temp->getTemplateFilename().toUtf8())
 			QEXPECT_FAIL("", "Local 8 bit encoding is not UTF-8", Abort);

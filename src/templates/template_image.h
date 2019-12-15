@@ -134,9 +134,10 @@ public slots:
 	
 protected:
 	/**
-	 * Searches for available georeferencing methods.
+	 * Searches for available georeferencing methods, using hint as additional
+	 * provider of CRS and transformation information.
 	 */
-	GeoreferencingOptions findAvailableGeoreferencing() const;
+	GeoreferencingOptions findAvailableGeoreferencing(GeoreferencingOption&& hint = {}) const;
 	
 	
 	/** Information about an undo step for the paint-on-template functionality. */

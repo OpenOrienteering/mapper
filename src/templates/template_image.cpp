@@ -23,6 +23,7 @@
 
 #include <iosfwd>
 #include <iterator>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -59,12 +60,17 @@
 #include "util/transformation.h"
 #include "util/util.h"
 
-#ifdef MAPPER_USE_GDAL
-#include "gdal/gdal_template.h"
-#endif
-
 
 namespace OpenOrienteering {
+
+#ifdef MAPPER_USE_GDAL
+
+// Forward declaration, from "gdal/gdal_image_reader.h",
+// to avoid a direct dependency on GDAL API includes.
+TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
+
+#endif
+
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
@@ -187,8 +193,11 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
+#ifdef MAPPER_USE_GDAL
+	available_georef = findAvailableGeoreferencing(readGdalGeoTransform(template_path));
+#else
 	available_georef = findAvailableGeoreferencing();
-	
+#endif
 	if (!configuring && is_georeferenced)
 	{
 		if (available_georef.front().type == Georeferencing_None)
@@ -393,17 +402,13 @@ void TemplateImage::updateGeoreferencing()
 		updatePosFromGeoreferencing();
 }
 
-TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing() const
+TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(TemplateImage::GeoreferencingOption&& hint) const
 {
 	GeoreferencingOptions result;
 	
 	auto crs_spec = temp_crs_spec; // loaded or empty
-#ifdef MAPPER_USE_GDAL
-	auto const gdal_georef = GdalTemplate::tryReadProjection(template_path);
-	auto const proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
 	if (crs_spec.isEmpty())
-		crs_spec = proj_spec; // loaded or empty
-#endif
+		crs_spec = hint.crs_spec; // loaded or empty
 	
 	WorldFile world_file;
 	if (world_file.tryToLoadForImage(template_path))
@@ -426,12 +431,8 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 		result.push_back({Georeferencing_WorldFile, "World file", crs_spec, pixel_to_world});
 	}
 	
-#ifdef MAPPER_USE_GDAL
-	if (gdal_georef.valid)
-	{
-		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
-	}
-#endif
+	if (hint.type != Georeferencing_None)
+		result.push_back(std::move(hint));
 	
 	Q_ASSERT(available_georef.back().type == Georeferencing_None);
 	result.push_back(available_georef.back());
