@@ -1054,23 +1054,26 @@ void OcdFileExport::setupSymbolColors<Ocd::BaseSymbolV8>(const Symbol* symbol, O
 	
 	auto bitpos = std::begin(ocd_base_symbol.colors);
 	auto last = std::end(ocd_base_symbol.colors);
-	if (uses_registration_color && symbol->containsColor(map->getRegistrationColor()))
+	if (uses_registration_color)
 	{
-		*bitpos |= bitmask;
-		bitmask *= 2;
+		if (symbol->containsColor(map->getRegistrationColor()))
+			*bitpos |= bitmask;
+		bitmask <<= 1;
 	}
 	for (int c = 0; c < map->getNumColors(); ++c)
 	{
 		if (symbol->containsColor(map->getColor(c)))
 			*bitpos |= bitmask;
 		
-		bitmask *= 2;
-		if (bitmask == 0) 
+		if (bitmask == 0x80u) 
 		{
 			bitmask = 1;
-			++bitpos;
 			if (++bitpos == last)
 				break;
+		}
+		else
+		{
+			bitmask <<= 1;
 		}
 	}
 }
@@ -1089,20 +1092,27 @@ void OcdFileExport::setupSymbolColors(const Symbol* symbol, Counter& num_colors,
 	Q_STATIC_ASSERT(std::is_signed<Counter>::value);
 	
 	num_colors = 0;
-	auto registration = 0;
-	if (uses_registration_color && symbol->containsColor(map->getRegistrationColor()))
+	auto it = first;
+	auto registration_offset = 0;
+	
+	if (uses_registration_color)
 	{
-		registration = 1;
+		registration_offset = 1;
+		if (symbol->containsColor(map->getRegistrationColor()))
+		{
+			++num_colors;
+			*it = IndexType(0);
+			++it;
+		}
 	}
 	
-	auto it = first;
 	for (int c = 0; c < map->getNumColors(); ++c)
 	{
 		if (!symbol->containsColor(map->getColor(c)))
 			continue;
 		
 		++num_colors;
-		*it = IndexType(c + registration);
+		*it = IndexType(c + registration_offset);
 		
 		if (++it == last)
 		{
