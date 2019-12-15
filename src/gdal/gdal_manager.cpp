@@ -241,6 +241,10 @@ private:
 
 			if (qstrcmp(cap_raster, "YES") == 0)
 			{
+				auto driver_name = GDALGetDriverShortName(driver_data);
+				if (QByteArray("BMP,PNG,GIF").contains(driver_name))
+					continue;  // To be handled by TemplateImage, for painting/updating
+				
 				if (qstrcmp(cap_open, "YES") == 0)
 					append_extensions(enabled_raster_import_extensions, extensions);
 			}

@@ -50,6 +50,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "fileformats/file_format.h"
+#include "gdal/gdal_template.h"
 #include "gdal/ogr_template.h"
 #include "gui/file_dialog.h"
 #include "templates/template_image.h"
@@ -909,7 +910,14 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	};
 	
 	std::unique_ptr<Template> t;
-	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
+	// Start with placeholder 'if', for consistency in the following macro/if-else sequence
+	if (false)  // NOLINT
+		{} // nothing
+#ifdef MAPPER_USE_GDAL
+	else if (path_ends_with_any_of(GdalTemplate::supportedExtensions()))
+		t = std::make_unique<GdalTemplate>(path, map);
+#endif 
+	else if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
 		t = std::make_unique<TemplateMap>(path, map);
