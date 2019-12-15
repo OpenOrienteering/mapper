@@ -19,6 +19,7 @@
 
 #include "gdal_image_reader.h"
 
+#include <array>
 #include <initializer_list>
 
 #include <Qt>
@@ -28,9 +29,13 @@
 #include <QImageReader>
 #include <QSize>
 #include <QString>
+#include <QTransform>
 #include <QVarLengthArray>
 
+#include <cpl_conv.h>
 #include <gdal.h>
+#include <ogr_api.h>
+#include <ogr_srs_api.h>
 
 #include "gdal/gdal_manager.h"
 
@@ -176,6 +181,47 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	}
 	
 	return raster;
+}
+
+TemplateImage::GeoreferencingOption GdalImageReader::readGeoTransform()
+{
+	auto georef = TemplateImage::GeoreferencingOption {};
+	if (dataset != nullptr)
+	{
+		auto geo_transform = std::array<double, 6> {};
+		auto const result = GDALGetGeoTransform(dataset, geo_transform.data());
+		if (result == CE_None)
+		{
+			georef.type = TemplateImage::Georeferencing_GDAL;
+			georef.source = GDALGetDriverShortName(GDALGetDatasetDriver(dataset));
+			georef.crs_spec = toProjSpec(GDALGetProjectionRef(dataset));
+			georef.pixel_to_world = { geo_transform[1], geo_transform[2],
+			                          geo_transform[4], geo_transform[5],
+			                          geo_transform[0], geo_transform[3] };
+		}
+	}
+	return georef;
+}
+
+
+// static
+QString GdalImageReader::toProjSpec(const QByteArray& gdal_spec)
+{
+	auto const spatial_reference = OSRNewSpatialReference(gdal_spec);
+	char* proj_spec_cstring;
+	auto const ogr_error = OSRExportToProj4(spatial_reference, &proj_spec_cstring);
+	auto result = QByteArray(ogr_error == OGRERR_NONE ? proj_spec_cstring : nullptr);
+	CPLFree(proj_spec_cstring);
+	OSRDestroySpatialReference(spatial_reference);
+	result.replace("+k=0 ", "+k=1 ");  // https://github.com/OSGeo/PROJ/issues/1700
+	return QString::fromUtf8(result);
+}
+
+
+
+TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath)
+{
+	return GdalImageReader(filepath).readGeoTransform();
 }
 
 

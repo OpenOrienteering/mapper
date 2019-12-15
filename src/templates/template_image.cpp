@@ -23,6 +23,7 @@
 
 #include <iosfwd>
 #include <iterator>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -59,12 +60,17 @@
 #include "util/transformation.h"
 #include "util/util.h"
 
-#ifdef MAPPER_USE_GDAL
-#include "gdal/gdal_template.h"
-#endif
-
 
 namespace OpenOrienteering {
+
+#ifdef MAPPER_USE_GDAL
+
+// Forward declaration, from "gdal/gdal_image_reader.h",
+// to avoid a direct dependency on GDAL API includes.
+TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
+
+#endif
+
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
@@ -399,10 +405,9 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 	
 	auto crs_spec = temp_crs_spec; // loaded or empty
 #ifdef MAPPER_USE_GDAL
-	auto const gdal_georef = GdalTemplate::tryReadProjection(template_path);
-	auto const proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
+	auto hint = readGdalGeoTransform(template_path);
 	if (crs_spec.isEmpty())
-		crs_spec = proj_spec; // loaded or empty
+		crs_spec = hint.crs_spec; // loaded or empty
 #endif
 	
 	WorldFile world_file;
@@ -427,9 +432,9 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 	}
 	
 #ifdef MAPPER_USE_GDAL
-	if (gdal_georef.valid)
+	if (hint.type != Georeferencing_None)
 	{
-		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
+		result.push_back(std::move(hint));
 	}
 #endif
 	

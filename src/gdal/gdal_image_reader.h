@@ -30,6 +30,8 @@
 
 #include <gdal.h>
 
+#include "templates/template_image.h"
+
 namespace OpenOrienteering {
 
 
@@ -82,6 +84,15 @@ public:
 	
 	RasterInfo readRasterInfo() const;
 	
+	/**
+	 * Returns the file's geotransform in a type suitable for TemplateImage.
+	 * 
+	 * For valid data, the result's type member is set to Georeferencing_GDAL.
+	 */
+	TemplateImage::GeoreferencingOption readGeoTransform();
+	
+	static QString toProjSpec(const QByteArray& gdal_spec);
+	
 	
 	// Translation
 	
@@ -96,6 +107,17 @@ private:
 	int raster_count = 0;
 	
 };
+
+
+/**
+ * Returns the file's geotransform via GDAL in a type suitable for TemplateImage.
+ * 
+ * This is a convienence function which can beforward-declared to avoid the
+ * dependency on GDAL header files which results from including this header.
+ * 
+ * \see GdalImageReader::readGeoTransform()
+ */
+TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
 
 
 }  // namespace OpenOrienteering
