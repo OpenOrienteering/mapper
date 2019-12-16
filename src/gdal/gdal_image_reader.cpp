@@ -51,7 +51,7 @@ GdalImageReader::GdalImageReader(const QString& path)
 	if (dataset)
 		raster_count = GDALGetRasterCount(dataset);
 	if (!canRead())
-		error_string = tr("Failed to read image data: %s").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		error_string = tr("Failed to read image data: %1").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
 }
 
 GdalImageReader::~GdalImageReader()
@@ -137,7 +137,8 @@ bool GdalImageReader::read(QImage* image)
 	if (result >= CE_Warning)
 	{
 		err = QImageReader::InvalidDataError;
-		error_string = tr("Failed to read image data: %s").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		error_string = tr("Failed to read image data: %1").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		return false;
 	}
 	
 	return true;
