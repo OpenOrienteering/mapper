@@ -146,15 +146,13 @@ bool GdalImageReader::read(QImage* image)
 
 int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation) const
 {
-	auto band = raster_count;
-	while (band > 0)
+	for (auto i = raster_count; i > 0; --i)
 	{
-		auto hBand = GDALGetRasterBand(dataset, band);
-		if (GDALGetRasterColorInterpretation(hBand) == color_interpretation)
-			break;
-		--band;
+		auto raster_band = GDALGetRasterBand(dataset, i);
+		if (GDALGetRasterColorInterpretation(raster_band) == color_interpretation)
+			return i;
 	}
-	return band;
+	return 0;
 }
 
 GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
