@@ -142,6 +142,7 @@ bool GdalImageReader::read(QImage* image)
 		return false;
 	}
 	
+	raster.postprocessing(*image);
 	return true;
 }
 
@@ -235,7 +236,13 @@ QString GdalImageReader::toProjSpec(const QByteArray& gdal_spec)
 	return QString::fromUtf8(result);
 }
 
+// static
+void GdalImageReader::noop(QImage& /*image*/)
+{}
 
+
+
+// ### Free function ###
 
 TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath)
 {

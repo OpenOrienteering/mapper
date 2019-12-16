@@ -20,6 +20,8 @@
 #ifndef OPENORIENTEERING_GDAL_IMAGE_READER_H
 #define OPENORIENTEERING_GDAL_IMAGE_READER_H
 
+#include <functional>
+
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QImage>
@@ -79,6 +81,7 @@ public:
 		QVarLengthArray<int, 4> bands;
 		QSize size;
 		QImage::Format image_format = QImage::Format_Invalid;
+		std::function<void(QImage&)> postprocessing = GdalImageReader::noop;
 		int pixel_space = 1;   ///< The byte offset from one pixel to the next one.
 		int band_space  = 1;   ///< The in-pixel byte offset from one band value to the next one.
 		int band_offset = 0;   ///< The in-pixel byte offset of the first band value.
@@ -99,6 +102,10 @@ public:
 	// Translation
 	
 	Q_DECLARE_TR_FUNCTIONS(GdalImageReader)
+	
+	
+protected:
+	static void noop(QImage& /*image*/);
 	
 	
 private:
