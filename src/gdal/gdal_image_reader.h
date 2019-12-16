@@ -70,6 +70,8 @@ public:
 	
 	// GDAL related API
 	
+	QByteArray rasterBandsAsText() const;
+	
 	int findRasterBand(GDALColorInterp color_interpretation) const;
 	
 	struct RasterInfo

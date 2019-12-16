@@ -107,7 +107,8 @@ bool GdalImageReader::read(QImage* image)
 	if (raster.image_format == QImage::Format_Invalid)
 	{
 		err = QImageReader::UnsupportedFormatError;
-		error_string = tr("Unsupported image format");
+		error_string = tr("Unsupported raster data: %1")
+		               .arg(QString::fromUtf8(rasterBandsAsText()));
 		return false;
 	}
 	
@@ -144,6 +145,22 @@ bool GdalImageReader::read(QImage* image)
 	return true;
 }
 
+QByteArray GdalImageReader::rasterBandsAsText() const
+{
+	QByteArray text;
+	text.reserve(raster_count * 15);
+	for (int i = 1; i <= raster_count; ++i)
+	{
+		auto const raster_band = GDALGetRasterBand(dataset, i);
+		auto const ci = GDALGetRasterColorInterpretation(raster_band);
+		text += GDALGetColorInterpretationName(ci);
+		text += GDALGetDataTypeName(GDALGetRasterDataType(raster_band));
+		if (i < raster_count)
+			text += ", ";
+	}
+	return text;
+}
+
 int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation) const
 {
 	for (auto i = raster_count; i > 0; --i)
@@ -159,6 +176,8 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 {
 	RasterInfo raster;
 	raster.size = { GDALGetRasterXSize(dataset), GDALGetRasterYSize(dataset) };
+	
+	qDebug("GdalTemplate raster bands: %s", rasterBandsAsText().constData());
 	
 	for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
 	{
