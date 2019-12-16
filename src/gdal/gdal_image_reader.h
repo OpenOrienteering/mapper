@@ -107,6 +107,8 @@ public:
 protected:
 	static void noop(QImage& /*image*/);
 	
+	static void premultiplyARGB32(QImage& image);
+	
 	
 private:
 	QString path;

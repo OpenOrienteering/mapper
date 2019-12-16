@@ -19,6 +19,7 @@
 
 #include "gdal_image_reader.h"
 
+#include <algorithm>
 #include <array>
 #include <initializer_list>
 
@@ -27,6 +28,7 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QSize>
 #include <QString>
 #include <QTransform>
@@ -191,7 +193,8 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 		if (auto alpha_band = findRasterBand(GCI_AlphaBand))
 		{
 			raster.bands.push_back(alpha_band);
-			raster.image_format = QImage::Format_ARGB32;
+			raster.image_format = QImage::Format_ARGB32_Premultiplied;
+			raster.postprocessing = GdalImageReader::premultiplyARGB32;
 		}
 		else
 		{
@@ -239,6 +242,17 @@ QString GdalImageReader::toProjSpec(const QByteArray& gdal_spec)
 // static
 void GdalImageReader::noop(QImage& /*image*/)
 {}
+
+// static
+void GdalImageReader::premultiplyARGB32(QImage &image)
+{
+	if (image.depth() != 32)
+		return;
+	
+	auto const first = reinterpret_cast<QRgb*>(image.bits());
+	auto const last = first + image.width() * image.height();
+	std::transform(first, last, first, [](auto qrgb) { return qPremultiply(qrgb); });
+}
 
 
 
