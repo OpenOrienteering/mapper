@@ -88,7 +88,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartet inneholder mer enn 256 farger, noe som ikke støttes av OCD versjon 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
@@ -109,7 +109,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst forkortet ved &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1520,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Størrelse på handlingsknapp:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -2509,7 +2509,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
@@ -2604,7 +2604,7 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD versjon 8, gammel implementasjon</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
@@ -3015,12 +3015,12 @@ Skal de importerte dataene omskaleres?</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskyvning ved start:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="683"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forskyvning ved slutt:</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1725"/>
@@ -3325,7 +3325,10 @@ Vil du tilpasse symbolemene til den valgte målestokken?</translation>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan ikke åpne fil:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
@@ -7145,7 +7148,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="80"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Sensorer</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="112"/>
@@ -7156,7 +7159,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="115"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>Seriellport (NMEA)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="118"/>
@@ -7166,7 +7169,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="121"/>
         <source>GeoClue</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="124"/>
@@ -7682,7 +7685,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="248"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="257"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kan ikke laste inn symbolsett. Avbryter.</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
