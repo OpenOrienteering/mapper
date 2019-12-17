@@ -26,9 +26,11 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QSize>
 #include <QString>
 #include <QVarLengthArray>
+#include <QVector>
 
 #include <gdal.h>
 
@@ -89,6 +91,8 @@ public:
 	
 	RasterInfo readRasterInfo() const;
 	
+	QVector<QRgb> readColorTable(int band) const;
+	
 	/**
 	 * Returns the file's geotransform in a type suitable for TemplateImage.
 	 * 
@@ -108,6 +112,8 @@ protected:
 	static void noop(QImage& /*image*/);
 	
 	static void premultiplyARGB32(QImage& image);
+	
+	static void premultiplyGray8(QImage& image);
 	
 	
 private:

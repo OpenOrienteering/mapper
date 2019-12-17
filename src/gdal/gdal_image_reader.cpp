@@ -182,27 +182,91 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	
 	qDebug("GdalTemplate raster bands: %s", rasterBandsAsText().constData());
 	
-	for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
+	auto alpha_band = findRasterBand(GCI_AlphaBand);
+	if (raster_count == 1)
 	{
-		if (auto found = findRasterBand(color_interpretation))
-			raster.bands.push_back(found);
-	}
-	if (raster.bands.count() == 3)
-	{
-		raster.pixel_space = 4;
-		if (auto alpha_band = findRasterBand(GCI_AlphaBand))
+		auto const gdal_raster_band = GDALGetRasterBand(dataset, 1);
+		auto const color_interpretation = GDALGetRasterColorInterpretation(gdal_raster_band);
+		switch (color_interpretation)
 		{
-			raster.bands.push_back(alpha_band);
-			raster.image_format = QImage::Format_ARGB32_Premultiplied;
-			raster.postprocessing = GdalImageReader::premultiplyARGB32;
+		case GCI_GrayIndex:
+			raster.image_format = QImage::Format_Grayscale8;
+			raster.pixel_space = 1;
+			raster.bands.push_back(1);
+			break;
+		case GCI_PaletteIndex:
+			raster.image_format = QImage::Format_Indexed8;
+			raster.pixel_space = 1;
+			raster.bands.push_back(1);
+			raster.postprocessing = [this](QImage& image) {
+				image.setColorTable(readColorTable(1));
+			};
+			break;
+		default:
+			// unsupported
+			break;
 		}
-		else
+	}
+	else if (raster_count == 2 && alpha_band)
+	{
+		auto color_band = 3 - alpha_band;
+		auto const raster_band = GDALGetRasterBand(dataset, color_band);
+		auto const color_interpretation = GDALGetRasterColorInterpretation(raster_band);
+		switch (color_interpretation)
 		{
-			raster.image_format = QImage::Format_RGB32;
+		case GCI_GrayIndex:
+			raster.image_format = QImage::Format_ARGB32_Premultiplied;
+			raster.postprocessing = GdalImageReader::premultiplyGray8;
+			raster.pixel_space = 4;
+			raster.band_offset = 2;  // store gray to red, alpha to alpha
+			raster.bands.push_back(color_band);
+			raster.bands.push_back(alpha_band);
+			break;
+		default:
+			// unsupported
+			break;
+		}
+	}
+	else if (raster_count >= 3)
+	{
+		for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
+		{
+			if (auto color_band = findRasterBand(color_interpretation))
+				raster.bands.push_back(color_band);
+		}
+		if (raster.bands.count() == 3)
+		{
+			raster.pixel_space = 4;
+			if (alpha_band)
+			{
+				raster.bands.push_back(alpha_band);
+				raster.image_format = QImage::Format_ARGB32_Premultiplied;
+				raster.postprocessing = GdalImageReader::premultiplyARGB32;
+			}
+			else
+			{
+				raster.image_format = QImage::Format_RGB32;
+			}
 		}
 	}
 	
 	return raster;
+}
+
+QVector<QRgb> GdalImageReader::readColorTable(int band) const
+{
+	QVector<QRgb> palette;
+	auto const raster_band = GDALGetRasterBand(dataset, band);
+	auto const color_table = GDALGetRasterColorTable(raster_band);
+	auto count = GDALGetColorEntryCount(color_table);
+	palette.reserve(count);
+	for (int i = 0; i < count; ++i)
+	{
+		GDALColorEntry entry;
+		GDALGetColorEntryAsRGB(color_table, i, &entry);
+		palette.push_back(qRgb(entry.c1, entry.c2, entry.c3));
+	}
+	return palette;
 }
 
 TemplateImage::GeoreferencingOption GdalImageReader::readGeoTransform()
@@ -252,6 +316,20 @@ void GdalImageReader::premultiplyARGB32(QImage &image)
 	auto const first = reinterpret_cast<QRgb*>(image.bits());
 	auto const last = first + image.width() * image.height();
 	std::transform(first, last, first, [](auto qrgb) { return qPremultiply(qrgb); });
+}
+
+// static
+void GdalImageReader::premultiplyGray8(QImage &image)
+{
+	if (image.depth() != 32)
+		return;
+	
+	auto const first = reinterpret_cast<QRgb*>(image.bits());
+	auto const last = first + image.width() * image.height();
+	std::transform(first, last, first, [](auto qrgb) {
+		auto const gray = qRed(qrgb);
+		return qPremultiply(qRgba(gray, gray, gray, qAlpha(qrgb))); 
+	});
 }
 
 
