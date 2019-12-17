@@ -164,15 +164,22 @@ QByteArray GdalImageReader::rasterBandsAsText() const
 	return text;
 }
 
-int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation) const
+int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation, GDALDataType data_type) const
 {
 	for (auto i = raster_count; i > 0; --i)
 	{
-		auto raster_band = GDALGetRasterBand(dataset, i);
-		if (GDALGetRasterColorInterpretation(raster_band) == color_interpretation)
+		if (getColorInterpretationWithType(i, data_type) == color_interpretation)
 			return i;
 	}
 	return 0;
+}
+
+GDALColorInterp GdalImageReader::getColorInterpretationWithType(int index, GDALDataType data_type) const
+{
+	auto raster_band = GDALGetRasterBand(dataset, index);
+	return (GDALGetRasterDataType(raster_band) == data_type)
+	       ? GDALGetRasterColorInterpretation(raster_band)
+	       : GCI_Undefined;
 }
 
 GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
@@ -182,24 +189,24 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	
 	qDebug("GdalTemplate raster bands: %s", rasterBandsAsText().constData());
 	
-	auto alpha_band = findRasterBand(GCI_AlphaBand);
+	auto alpha_band = findRasterBand(GCI_AlphaBand, GDT_Byte);
 	if (raster_count == 1)
 	{
-		auto const gdal_raster_band = GDALGetRasterBand(dataset, 1);
-		auto const color_interpretation = GDALGetRasterColorInterpretation(gdal_raster_band);
+		auto const color_band = 1;
+		auto const color_interpretation = getColorInterpretationWithType(color_band, GDT_Byte);
 		switch (color_interpretation)
 		{
 		case GCI_GrayIndex:
 			raster.image_format = QImage::Format_Grayscale8;
 			raster.pixel_space = 1;
-			raster.bands.push_back(1);
+			raster.bands.push_back(color_band);
 			break;
 		case GCI_PaletteIndex:
 			raster.image_format = QImage::Format_Indexed8;
 			raster.pixel_space = 1;
-			raster.bands.push_back(1);
+			raster.bands.push_back(color_band);
 			raster.postprocessing = [this](QImage& image) {
-				image.setColorTable(readColorTable(1));
+				image.setColorTable(readColorTable(color_band));
 			};
 			break;
 		default:
@@ -210,8 +217,7 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	else if (raster_count == 2 && alpha_band)
 	{
 		auto color_band = 3 - alpha_band;
-		auto const raster_band = GDALGetRasterBand(dataset, color_band);
-		auto const color_interpretation = GDALGetRasterColorInterpretation(raster_band);
+		auto const color_interpretation = getColorInterpretationWithType(color_band, GDT_Byte);
 		switch (color_interpretation)
 		{
 		case GCI_GrayIndex:
@@ -231,7 +237,7 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	{
 		for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
 		{
-			if (auto color_band = findRasterBand(color_interpretation))
+			if (auto color_band = findRasterBand(color_interpretation, GDT_Byte))
 				raster.bands.push_back(color_band);
 		}
 		if (raster.bands.count() == 3)

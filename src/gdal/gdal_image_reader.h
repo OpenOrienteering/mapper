@@ -76,7 +76,9 @@ public:
 	
 	QByteArray rasterBandsAsText() const;
 	
-	int findRasterBand(GDALColorInterp color_interpretation) const;
+	int findRasterBand(GDALColorInterp color_interpretation, GDALDataType data_type) const;
+	
+	GDALColorInterp getColorInterpretationWithType(int index, GDALDataType data_type) const;
 	
 	struct RasterInfo
 	{
