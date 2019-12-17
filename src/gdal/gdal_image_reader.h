@@ -20,13 +20,17 @@
 #ifndef OPENORIENTEERING_GDAL_IMAGE_READER_H
 #define OPENORIENTEERING_GDAL_IMAGE_READER_H
 
+#include <functional>
+
 #include <QByteArray>
 #include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QSize>
 #include <QString>
 #include <QVarLengthArray>
+#include <QVector>
 
 #include <gdal.h>
 
@@ -70,19 +74,26 @@ public:
 	
 	// GDAL related API
 	
-	int findRasterBand(GDALColorInterp color_interpretation) const;
+	QByteArray rasterBandsAsText() const;
+	
+	int findRasterBand(GDALColorInterp color_interpretation, GDALDataType data_type) const;
+	
+	GDALColorInterp getColorInterpretationWithType(int index, GDALDataType data_type) const;
 	
 	struct RasterInfo
 	{
 		QVarLengthArray<int, 4> bands;
 		QSize size;
 		QImage::Format image_format = QImage::Format_Invalid;
+		std::function<void(QImage&)> postprocessing = GdalImageReader::noop;
 		int pixel_space = 1;   ///< The byte offset from one pixel to the next one.
 		int band_space  = 1;   ///< The in-pixel byte offset from one band value to the next one.
 		int band_offset = 0;   ///< The in-pixel byte offset of the first band value.
 	};
 	
 	RasterInfo readRasterInfo() const;
+	
+	QVector<QRgb> readColorTable(int band) const;
 	
 	/**
 	 * Returns the file's geotransform in a type suitable for TemplateImage.
@@ -97,6 +108,14 @@ public:
 	// Translation
 	
 	Q_DECLARE_TR_FUNCTIONS(GdalImageReader)
+	
+	
+protected:
+	static void noop(QImage& /*image*/);
+	
+	static void premultiplyARGB32(QImage& image);
+	
+	static void premultiplyGray8(QImage& image);
 	
 	
 private:

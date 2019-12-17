@@ -19,6 +19,7 @@
 
 #include "gdal_image_reader.h"
 
+#include <algorithm>
 #include <array>
 #include <initializer_list>
 
@@ -27,6 +28,7 @@
 #include <QCoreApplication>
 #include <QImage>
 #include <QImageReader>
+#include <QRgb>
 #include <QSize>
 #include <QString>
 #include <QTransform>
@@ -51,7 +53,7 @@ GdalImageReader::GdalImageReader(const QString& path)
 	if (dataset)
 		raster_count = GDALGetRasterCount(dataset);
 	if (!canRead())
-		error_string = tr("Failed to read image data: %s").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		error_string = tr("Failed to read image data: %1").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
 }
 
 GdalImageReader::~GdalImageReader()
@@ -107,7 +109,8 @@ bool GdalImageReader::read(QImage* image)
 	if (raster.image_format == QImage::Format_Invalid)
 	{
 		err = QImageReader::UnsupportedFormatError;
-		error_string = tr("Unsupported image format");
+		error_string = tr("Unsupported raster data: %1")
+		               .arg(QString::fromUtf8(rasterBandsAsText()));
 		return false;
 	}
 	
@@ -137,23 +140,46 @@ bool GdalImageReader::read(QImage* image)
 	if (result >= CE_Warning)
 	{
 		err = QImageReader::InvalidDataError;
-		error_string = tr("Failed to read image data: %s").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		error_string = tr("Failed to read image data: %1").arg(QString::fromUtf8(CPLGetLastErrorMsg()));
+		return false;
 	}
 	
+	raster.postprocessing(*image);
 	return true;
 }
 
-int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation) const
+QByteArray GdalImageReader::rasterBandsAsText() const
 {
-	auto band = raster_count;
-	while (band > 0)
+	QByteArray text;
+	text.reserve(raster_count * 15);
+	for (int i = 1; i <= raster_count; ++i)
 	{
-		auto hBand = GDALGetRasterBand(dataset, band);
-		if (GDALGetRasterColorInterpretation(hBand) == color_interpretation)
-			break;
-		--band;
+		auto const raster_band = GDALGetRasterBand(dataset, i);
+		auto const ci = GDALGetRasterColorInterpretation(raster_band);
+		text += GDALGetColorInterpretationName(ci);
+		text += GDALGetDataTypeName(GDALGetRasterDataType(raster_band));
+		if (i < raster_count)
+			text += ", ";
 	}
-	return band;
+	return text;
+}
+
+int GdalImageReader::findRasterBand(GDALColorInterp color_interpretation, GDALDataType data_type) const
+{
+	for (auto i = raster_count; i > 0; --i)
+	{
+		if (getColorInterpretationWithType(i, data_type) == color_interpretation)
+			return i;
+	}
+	return 0;
+}
+
+GDALColorInterp GdalImageReader::getColorInterpretationWithType(int index, GDALDataType data_type) const
+{
+	auto raster_band = GDALGetRasterBand(dataset, index);
+	return (GDALGetRasterDataType(raster_band) == data_type)
+	       ? GDALGetRasterColorInterpretation(raster_band)
+	       : GCI_Undefined;
 }
 
 GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
@@ -161,26 +187,92 @@ GdalImageReader::RasterInfo GdalImageReader::readRasterInfo() const
 	RasterInfo raster;
 	raster.size = { GDALGetRasterXSize(dataset), GDALGetRasterYSize(dataset) };
 	
-	for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
+	qDebug("GdalTemplate raster bands: %s", rasterBandsAsText().constData());
+	
+	auto alpha_band = findRasterBand(GCI_AlphaBand, GDT_Byte);
+	if (raster_count == 1)
 	{
-		if (auto found = findRasterBand(color_interpretation))
-			raster.bands.push_back(found);
-	}
-	if (raster.bands.count() == 3)
-	{
-		raster.pixel_space = 4;
-		if (auto alpha_band = findRasterBand(GCI_AlphaBand))
+		auto const color_band = 1;
+		auto const color_interpretation = getColorInterpretationWithType(color_band, GDT_Byte);
+		switch (color_interpretation)
 		{
-			raster.bands.push_back(alpha_band);
-			raster.image_format = QImage::Format_ARGB32;
+		case GCI_GrayIndex:
+			raster.image_format = QImage::Format_Grayscale8;
+			raster.pixel_space = 1;
+			raster.bands.push_back(color_band);
+			break;
+		case GCI_PaletteIndex:
+			raster.image_format = QImage::Format_Indexed8;
+			raster.pixel_space = 1;
+			raster.bands.push_back(color_band);
+			raster.postprocessing = [this](QImage& image) {
+				image.setColorTable(readColorTable(color_band));
+			};
+			break;
+		default:
+			// unsupported
+			break;
 		}
-		else
+	}
+	else if (raster_count == 2 && alpha_band)
+	{
+		auto color_band = 3 - alpha_band;
+		auto const color_interpretation = getColorInterpretationWithType(color_band, GDT_Byte);
+		switch (color_interpretation)
 		{
-			raster.image_format = QImage::Format_RGB32;
+		case GCI_GrayIndex:
+			raster.image_format = QImage::Format_ARGB32_Premultiplied;
+			raster.postprocessing = GdalImageReader::premultiplyGray8;
+			raster.pixel_space = 4;
+			raster.band_offset = 2;  // store gray to red, alpha to alpha
+			raster.bands.push_back(color_band);
+			raster.bands.push_back(alpha_band);
+			break;
+		default:
+			// unsupported
+			break;
+		}
+	}
+	else if (raster_count >= 3)
+	{
+		for (auto color_interpretation : { GCI_BlueBand, GCI_GreenBand, GCI_RedBand })
+		{
+			if (auto color_band = findRasterBand(color_interpretation, GDT_Byte))
+				raster.bands.push_back(color_band);
+		}
+		if (raster.bands.count() == 3)
+		{
+			raster.pixel_space = 4;
+			if (alpha_band)
+			{
+				raster.bands.push_back(alpha_band);
+				raster.image_format = QImage::Format_ARGB32_Premultiplied;
+				raster.postprocessing = GdalImageReader::premultiplyARGB32;
+			}
+			else
+			{
+				raster.image_format = QImage::Format_RGB32;
+			}
 		}
 	}
 	
 	return raster;
+}
+
+QVector<QRgb> GdalImageReader::readColorTable(int band) const
+{
+	QVector<QRgb> palette;
+	auto const raster_band = GDALGetRasterBand(dataset, band);
+	auto const color_table = GDALGetRasterColorTable(raster_band);
+	auto count = GDALGetColorEntryCount(color_table);
+	palette.reserve(count);
+	for (int i = 0; i < count; ++i)
+	{
+		GDALColorEntry entry;
+		GDALGetColorEntryAsRGB(color_table, i, &entry);
+		palette.push_back(qRgb(entry.c1, entry.c2, entry.c3));
+	}
+	return palette;
 }
 
 TemplateImage::GeoreferencingOption GdalImageReader::readGeoTransform()
@@ -217,7 +309,38 @@ QString GdalImageReader::toProjSpec(const QByteArray& gdal_spec)
 	return QString::fromUtf8(result);
 }
 
+// static
+void GdalImageReader::noop(QImage& /*image*/)
+{}
 
+// static
+void GdalImageReader::premultiplyARGB32(QImage &image)
+{
+	if (image.depth() != 32)
+		return;
+	
+	auto const first = reinterpret_cast<QRgb*>(image.bits());
+	auto const last = first + image.width() * image.height();
+	std::transform(first, last, first, [](auto qrgb) { return qPremultiply(qrgb); });
+}
+
+// static
+void GdalImageReader::premultiplyGray8(QImage &image)
+{
+	if (image.depth() != 32)
+		return;
+	
+	auto const first = reinterpret_cast<QRgb*>(image.bits());
+	auto const last = first + image.width() * image.height();
+	std::transform(first, last, first, [](auto qrgb) {
+		auto const gray = qRed(qrgb);
+		return qPremultiply(qRgba(gray, gray, gray, qAlpha(qrgb))); 
+	});
+}
+
+
+
+// ### Free function ###
 
 TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath)
 {
