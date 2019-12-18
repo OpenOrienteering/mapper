@@ -64,3 +64,11 @@ add_custom_command(OUTPUT "${PROJECT_BINARY_DIR}/gdal/mapper-osmconf.ini"
   COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_CURRENT_SOURCE_DIR}/mapper-osmconf.ini" "gdal/mapper-osmconf.ini"
   WORKING_DIRECTORY "${PROJECT_BINARY_DIR}"
 )
+
+
+# Utility to dump GDAL format information
+
+add_executable(mapper-gdal-info mapper_gdal_info.cpp)
+target_include_directories(mapper-gdal-info SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
+target_link_libraries(mapper-gdal-info "${GDAL_LIBRARY}")
+
