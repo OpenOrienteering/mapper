@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法写入文件</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,7 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件</translation>
     </message>
 </context>
 <context>
@@ -27,12 +27,12 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="649"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">无效的文件类型。</translation>
+        <translation>无效的文件类型。</translation>
     </message>
 </context>
 <context>
