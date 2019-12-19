@@ -76,6 +76,10 @@
 #include <QVBoxLayout>
 #include <QVariant>
 
+#ifdef WITH_COVE
+#include <app/coverunner.h>
+#endif /* WITH_COVE */
+
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
@@ -91,6 +95,7 @@
 #include "gui/widgets/segmented_button_layout.h"
 #include "templates/template.h"
 #include "templates/template_adjust.h"
+#include "templates/template_image.h"
 #include "templates/template_map.h"
 #include "templates/template_tool_move.h"
 #include "util/item_delegates.h"
@@ -260,6 +265,12 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	edit_menu->addSeparator();
 	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
 	
+#if WITH_COVE
+	vectorize_action = edit_menu->addAction(tr("Vectorize lines"), this, SLOT(vectorizeClicked()));
+#else
+	vectorize_action = nullptr;
+#endif /* WITH_COVE */
+
 	edit_button = newToolButton(QIcon(QString::fromLatin1(":/images/settings.png")),
 	                            ::OpenOrienteering::MapEditorController::tr("&Edit").remove(QLatin1Char('&')));
 	edit_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -827,6 +838,7 @@ void TemplateListWidget::updateButtons()
 		bool georef_enabled = false;
 		bool custom_enabled = false;
 		bool import_enabled = false;
+		bool vectorize_enabled  = false;
 		if (single_template_selected)
 		{
 			auto temp = map->getTemplate(posFromRow(visited_row));
@@ -837,6 +849,8 @@ void TemplateListWidget::updateButtons()
 				georef_enabled = temp->canChangeTemplateGeoreferenced();
 				custom_enabled = !is_georeferenced;
 				import_enabled = bool(qobject_cast<TemplateMap*>(getCurrentTemplate()));
+				vectorize_enabled = qobject_cast<TemplateImage*>(getCurrentTemplate())
+									&& getCurrentTemplate()->getTemplateState() == Template::Loaded;
 			}
 		}
 		else if (single_row_selected)
@@ -852,6 +866,8 @@ void TemplateListWidget::updateButtons()
 		adjust_button->setEnabled(custom_enabled);
 		position_action->setEnabled(custom_enabled);
 		import_action->setEnabled(import_enabled);
+		if (vectorize_action)
+			vectorize_action->setEnabled(vectorize_enabled);
 	}
 }
 
@@ -1093,6 +1109,15 @@ void TemplateListWidget::changeGeorefClicked()
 		}
 		updateButtons();
 	}
+}
+
+void TemplateListWidget::vectorizeClicked()
+{
+#ifdef WITH_COVE
+	cove::CoveRunner cr;
+	auto templ = qobject_cast<TemplateImage*>(getCurrentTemplate());
+	cr.run(controller->getWindow(), map, templ);
+#endif /* WITH_COVE */
 }
 
 void TemplateListWidget::moreActionClicked(QAction* action)

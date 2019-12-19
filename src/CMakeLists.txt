@@ -35,6 +35,9 @@ execute_process(
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
+if(Mapper_WITH_COVE)
+	include_directories(AFTER "../3rd-party/cove")
+endif()
 include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
@@ -265,6 +268,9 @@ target_link_libraries(Mapper_Common
   PROJ4::proj
   Qt5::Widgets
 )
+if(Mapper_WITH_COVE)
+	target_link_libraries(Mapper_Common cove)
+endif()
 foreach(lib
   mapper-gdal
   mapper-sensors
