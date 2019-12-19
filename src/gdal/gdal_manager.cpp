@@ -211,6 +211,19 @@ public:
 	}
 	
 private:
+	static void copyExtensions(QByteArray const& extension_cstring, ExtensionList& extension_list)
+	{
+		for (auto pos = 0; pos >= 0; )
+		{
+			auto start = pos ? pos + 1 : 0;
+			pos = extension_cstring.indexOf(' ', start);
+			auto extension = extension_cstring.mid(start, pos - start);
+			if (extension.isEmpty())
+				continue;
+			extension_list.emplace_back(extension);
+		}
+	}
+	
 	void updateExtensions(QSettings& settings)
 	{
 		auto count = GDALGetDriverCount();
@@ -220,18 +233,6 @@ private:
 		enabled_vector_import_extensions.reserve(std::size_t(count));
 		enabled_vector_export_extensions.clear();
 		enabled_vector_export_extensions.reserve(std::size_t(count));
-		
-		auto append_extensions = [](auto& list, auto const& extensions) {
-			for (auto pos = 0; pos >= 0; )
-			{
-				auto start = pos ? pos + 1 : 0;
-				pos = extensions.indexOf(' ', start);
-				auto extension = extensions.mid(start, pos - start);
-				if (extension.isEmpty())
-					continue;
-				list.emplace_back(extension);
-			}
-		};
 		
 		for (auto i = 0; i < count; ++i)
 		{
@@ -250,16 +251,16 @@ private:
 					continue;  // To be handled by TemplateImage, for painting/updating
 				
 				if (qstrcmp(cap_open, "YES") == 0)
-					append_extensions(enabled_raster_import_extensions, extensions);
+					copyExtensions(extensions, enabled_raster_import_extensions);
 			}
 
 			if (qstrcmp(cap_vector, "YES") == 0)
 			{
 				if (qstrcmp(cap_open, "YES") == 0)
-					append_extensions(enabled_vector_import_extensions, extensions);
+					copyExtensions(extensions, enabled_vector_import_extensions);
 				
 				if (qstrcmp(cap_create, "YES") == 0)
-					append_extensions(enabled_vector_export_extensions, extensions);
+					copyExtensions(extensions, enabled_vector_export_extensions);
 			}
 		}
 		
