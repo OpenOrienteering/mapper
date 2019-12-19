@@ -59,6 +59,10 @@ public:
 	// Export options
 	const QString ogr_one_layer_per_symbol_key{ QStringLiteral("per_symbol_layer") };
 	
+	
+	using ExtensionList = std::vector<QByteArray>;
+	
+	
 	GdalManagerPrivate()
 	: dirty{ true }
 	{
@@ -153,21 +157,21 @@ public:
 		return settings.value(key, QVariant{ false }).toBool();
 	}
 	
-	const std::vector<QByteArray>& supportedRasterExtensions() const
+	const ExtensionList& supportedRasterExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_raster_import_extensions; 
 	}
 	
-	const std::vector<QByteArray>& supportedVectorImportExtensions() const
+	const ExtensionList& supportedVectorImportExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_vector_import_extensions;
 	}
 
-	const std::vector<QByteArray>& supportedVectorExportExtensions() const
+	const ExtensionList& supportedVectorExportExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
@@ -350,11 +354,11 @@ private:
 	
 	mutable bool dirty;
 	
-	mutable std::vector<QByteArray> enabled_raster_import_extensions;
+	mutable ExtensionList enabled_raster_import_extensions;
 
-	mutable std::vector<QByteArray> enabled_vector_import_extensions;
+	mutable ExtensionList enabled_vector_import_extensions;
 
-	mutable std::vector<QByteArray> enabled_vector_export_extensions;
+	mutable ExtensionList enabled_vector_export_extensions;
 	
 	mutable QStringList applied_parameters;
 	
