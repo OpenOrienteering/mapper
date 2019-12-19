@@ -207,7 +207,7 @@ public:
 	}
 	
 private:
-	void update()
+	void updateExtensions(QSettings& settings)
 	{
 		auto count = GDALGetDriverCount();
 		enabled_raster_import_extensions.clear();
@@ -259,7 +259,6 @@ private:
 			}
 		}
 		
-		QSettings settings;
 		settings.beginGroup(gdal_manager_group);
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{
@@ -267,6 +266,11 @@ private:
 			enabled_vector_import_extensions.erase(gpx);
 		}
 		settings.endGroup();
+	}
+	
+	void updateConfig(QSettings& settings)
+	{
+		settings.beginGroup(gdal_configuration_group);
 		
 		// Using osmconf.ini to detect a directory with data from gdal. The
 		// data:/gdal directory will always exist, due to mapper-osmconf.ini.
@@ -278,8 +282,6 @@ private:
 			// The user may overwrite this default in the settings.
 			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data).toLocal8Bit());
 		}
-		
-		settings.beginGroup(gdal_configuration_group);
 		
 		const char* defaults[][2] = {
 		    { "CPL_DEBUG",               "OFF" },
@@ -334,7 +336,14 @@ private:
 			}
 		}
 		applied_parameters.swap(new_parameters);
+		settings.endGroup();
+	}
 		
+	void update()
+	{
+		QSettings settings;
+		updateExtensions(settings);
+		updateConfig(settings);
 		CPLFinderClean(); // force re-initialization of file finding tools
 		dirty = false;
 	}
