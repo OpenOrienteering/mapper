@@ -653,15 +653,14 @@ void MapPrinter::updatePaperDimensions()
 		printer->setOrientation((page_format.orientation == MapPrinterPageFormat::Portrait) ? QPrinter::Portrait : QPrinter::Landscape);
 	}
 	
+	printer->setFullPage(true);
 	page_format.page_rect = printer->paperRect(QPrinter::Millimeter);
 	page_format.paper_dimensions = page_format.page_rect.size();
 	
 	if ( target != imageTarget() && target != pdfTarget() &&
 		 page_format.page_size != QPageSize::Custom )
 	{
-		qreal left, top, right, bottom;
-		printer->getPageMargins(&left, &top, &right, &bottom, QPrinter::Millimeter);
-		page_format.page_rect.adjust(left, top, -right, -bottom);
+		page_format.page_rect = printer->pageRect(QPrinter::Millimeter);
 	}
 	page_format.h_overlap = qMax(qreal(0), qMin(page_format.h_overlap, page_format.page_rect.width()));
 	page_format.v_overlap = qMax(qreal(0), qMin(page_format.v_overlap, page_format.page_rect.height()));

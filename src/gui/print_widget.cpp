@@ -761,9 +761,12 @@ void PrintWidget::applyPrintAreaPolicy() const
 	{
 		setOverlapEditEnabled(false);
 		auto print_area = map_printer->getPrintArea();
+		const auto center = print_area.center();
 		print_area.setSize(map_printer->getPageRectPrintAreaSize());
 		if (center_check->isChecked())
 			centerOnMap(print_area);
+		else
+			print_area.moveCenter(center);
 		map_printer->setPrintArea(print_area);
 	}
 	else
