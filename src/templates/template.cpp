@@ -50,6 +50,7 @@
 #include "core/map.h"
 #include "core/objects/object.h"
 #include "fileformats/file_format.h"
+#include "gdal/gdal_template.h"
 #include "gdal/ogr_template.h"
 #include "gui/file_dialog.h"
 #include "templates/template_image.h"
@@ -219,58 +220,44 @@ bool Template::suppressAbsolutePaths = false;
 
 
 Template::Template(const QString& path, not_null<Map*> map)
- : map(map)
- , template_group(0)
+: map(map)
 {
-	template_path = path;
-	if (! QFileInfo(path).canonicalFilePath().isEmpty())
-		template_path = QFileInfo(path).canonicalFilePath();
-	template_file = QFileInfo(path).fileName();
-	template_relative_path = QString{};
-	template_state = Unloaded;
+	QFileInfo file_info{path};
+	template_file = file_info.fileName();
 	
-	has_unsaved_changes = false;
-	
-	is_georeferenced = false;
-	
-	adjusted = false;
-	adjustment_dirty = true;
+	auto canonical_path = file_info.canonicalFilePath();
+	template_path = canonical_path.isEmpty() ? path : canonical_path;
 	
 	updateTransformationMatrices();
+}
+
+Template::Template(const Template& proto)
+: QObject(nullptr)
+, map(proto.map)
+, template_file(proto.template_file)
+, template_path(proto.template_path)
+, template_relative_path(proto.template_relative_path)
+, template_state(proto.template_state)
+, error_string(proto.error_string)
+, has_unsaved_changes(proto.has_unsaved_changes)
+, is_georeferenced(proto.is_georeferenced)
+, accounted_offset(proto.accounted_offset)
+, transform(proto.transform)
+, other_transform(proto.other_transform)
+, adjusted(proto.adjusted)
+, adjustment_dirty(proto.adjustment_dirty)
+, passpoints(proto.passpoints)
+, template_group(proto.template_group)
+, map_to_template(proto.map_to_template)
+, template_to_map(proto.template_to_map)
+, template_to_map_other(proto.template_to_map_other)
+{
+	// nothing else
 }
 
 Template::~Template()
 {
 	Q_ASSERT(template_state != Loaded);
-}
-
-Template* Template::duplicate() const
-{
-	Template* copy = duplicateImpl();
-	
-	copy->map = map;
-	
-	copy->template_path = template_path;
-	copy->template_relative_path = template_relative_path;
-	copy->template_file = template_file;
-	copy->template_state = template_state;
-	copy->is_georeferenced = is_georeferenced;
-	
-	// Prevent saving the changes twice (if has_unsaved_changes == true)
-	copy->has_unsaved_changes = false;
-	
-	copy->transform = transform;
-	copy->other_transform = other_transform;
-	copy->adjusted = adjusted;
-	copy->adjustment_dirty = adjustment_dirty;
-	
-	copy->map_to_template = map_to_template;
-	copy->template_to_map = template_to_map;
-	copy->template_to_map_other = template_to_map_other;
-	
-	copy->template_group = template_group;
-	
-	return copy;
 }
 
 QString Template::errorString() const
@@ -923,7 +910,14 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	};
 	
 	std::unique_ptr<Template> t;
-	if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
+	// Start with placeholder 'if', for consistency in the following macro/if-else sequence
+	if (false)  // NOLINT
+		{} // nothing
+#ifdef MAPPER_USE_GDAL
+	else if (path_ends_with_any_of(GdalTemplate::supportedExtensions()))
+		t = std::make_unique<GdalTemplate>(path, map);
+#endif 
+	else if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
 		t = std::make_unique<TemplateMap>(path, map);

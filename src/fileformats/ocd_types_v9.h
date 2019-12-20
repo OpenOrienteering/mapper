@@ -205,7 +205,7 @@ namespace Ocd
 		qint32  extent;
 		qint32  file_pos;
 		quint16 group;
-		quint16 num_colors;
+		qint16  num_colors;
 		quint16 colors[14];
 		PascalString<31> description;
 		IconV9  icon;

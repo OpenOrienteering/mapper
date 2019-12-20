@@ -57,7 +57,13 @@ public:
 	
 	TemplateMap(const QString& path, Map* map);
 	
+protected:
+	TemplateMap(const TemplateMap& proto);
+	
+public:
 	~TemplateMap() override;
+	
+	TemplateMap* duplicate() const override;
 	
 	
 	const char* getTemplateType() const override;
@@ -91,8 +97,6 @@ public:
 	std::unique_ptr<Map> takeTemplateMap();
 	
 protected:
-	Template* duplicateImpl() const override;
-	
 	Map* templateMap();
 	
 	void setTemplateMap(std::unique_ptr<Map>&& map);

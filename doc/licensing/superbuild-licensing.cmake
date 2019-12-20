@@ -37,10 +37,11 @@ if(NOT LICENSING_COPYRIGHT_DIR OR NOT LICENSING_COMMON_DIR)
 endif()	
 
 
-# Based on OpenOrienteering superbuild as of 2017-04
+# Based on OpenOrienteering superbuild as of 2019-12-15
 list(APPEND third_party_components
   libjpeg-turbo
   liblzma
+  libopenjp2
   libpcre3
   libpng
   libtiff
@@ -98,6 +99,7 @@ list(APPEND common_license_names
 set(package_names
   libcurl:curl
   libexpat:expat
+  libopenjp2:openjpeg2
   libpcre2:pcre2
   libpcre3:pcre3
   libsqlite:sqlite3

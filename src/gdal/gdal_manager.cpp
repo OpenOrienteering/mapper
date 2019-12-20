@@ -19,7 +19,9 @@
 
 #include "gdal_manager.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 // IWYU pragma: no_include <type_traits>
 
 #include <cpl_conv.h>
@@ -153,9 +155,9 @@ public:
 	
 	const std::vector<QByteArray>& supportedRasterExtensions() const
 	{
-		/// \todo
-		static std::vector<QByteArray> ret;
-		return ret; 
+		if (dirty)
+			const_cast<GdalManagerPrivate*>(this)->update();
+		return enabled_raster_import_extensions; 
 	}
 	
 	const std::vector<QByteArray>& supportedVectorImportExtensions() const
@@ -207,42 +209,15 @@ public:
 private:
 	void update()
 	{
-		QSettings settings;
-		
-		settings.beginGroup(gdal_manager_group);
 		auto count = GDALGetDriverCount();
+		enabled_raster_import_extensions.clear();
+		enabled_raster_import_extensions.reserve(std::size_t(count));
 		enabled_vector_import_extensions.clear();
 		enabled_vector_import_extensions.reserve(std::size_t(count));
 		enabled_vector_export_extensions.clear();
 		enabled_vector_export_extensions.reserve(std::size_t(count));
-		for (auto i = 0; i < count; ++i)
-		{
-			auto driver_data = GDALGetDriver(i);
-			auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
-			if (qstrcmp(type, "YES") != 0)
-				continue;
-
-			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
-			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
-
-			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
-			if (qstrcmp(cap_create, "YES") == 0)
-			{
-				for (auto pos = 0; pos >= 0; )
-				{
-					auto start = pos ? pos + 1 : 0;
-					pos = extensions.indexOf(' ', start);
-					auto extension = extensions.mid(start, pos - start);
-					if (extension.isEmpty())
-						continue;
-					enabled_vector_export_extensions.emplace_back(extension);
-				}
-			}
-
-			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
-			if (qstrcmp(cap_open, "YES") != 0)
-				continue;
-
+		
+		auto append_extensions = [](auto& list, auto const& extensions) {
 			for (auto pos = 0; pos >= 0; )
 			{
 				auto start = pos ? pos + 1 : 0;
@@ -250,10 +225,46 @@ private:
 				auto extension = extensions.mid(start, pos - start);
 				if (extension.isEmpty())
 					continue;
-				if (extension == "gpx" && !settings.value(gdal_gpx_key, false).toBool())
-					continue;
-				enabled_vector_import_extensions.emplace_back(extension);
+				list.emplace_back(extension);
 			}
+		};
+		
+		for (auto i = 0; i < count; ++i)
+		{
+			auto driver_data = GDALGetDriver(i);
+			auto cap_raster = GDALGetMetadataItem(driver_data, GDAL_DCAP_RASTER, nullptr);
+			auto cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
+			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
+			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
+			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
+
+			if (qstrcmp(cap_raster, "YES") == 0)
+			{
+				auto driver_name = GDALGetDriverShortName(driver_data);
+				if (QByteArray("BMP,PNG,GIF").contains(driver_name))
+					continue;  // To be handled by TemplateImage, for painting/updating
+				
+				if (qstrcmp(cap_open, "YES") == 0)
+					append_extensions(enabled_raster_import_extensions, extensions);
+			}
+
+			if (qstrcmp(cap_vector, "YES") == 0)
+			{
+				if (qstrcmp(cap_open, "YES") == 0)
+					append_extensions(enabled_vector_import_extensions, extensions);
+				
+				if (qstrcmp(cap_create, "YES") == 0)
+					append_extensions(enabled_vector_export_extensions, extensions);
+			}
+		}
+		
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		if (!settings.value(gdal_gpx_key, false).toBool())
+		{
+			auto gpx = std::find(begin(enabled_vector_import_extensions), end(enabled_vector_import_extensions), "gpx");
+			enabled_vector_import_extensions.erase(gpx);
 		}
 		settings.endGroup();
 		
@@ -330,6 +341,8 @@ private:
 	
 	mutable bool dirty;
 	
+	mutable std::vector<QByteArray> enabled_raster_import_extensions;
+
 	mutable std::vector<QByteArray> enabled_vector_import_extensions;
 
 	mutable std::vector<QByteArray> enabled_vector_export_extensions;

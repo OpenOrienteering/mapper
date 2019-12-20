@@ -900,8 +900,8 @@ void XMLFileImporter::importSymbols()
 	auto num_symbols = symbols_element.attribute<std::size_t>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, std::size_t(1000))); // 1000 is not a limit
 	
-	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
-	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
+	symbol_dict[map->findSymbolIndex(map->getUndefinedPoint())] = map->getUndefinedPoint();
+	symbol_dict[map->findSymbolIndex(map->getUndefinedLine())] = map->getUndefinedLine();
 	
 	while (xml.readNextStartElement())
 	{

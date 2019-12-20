@@ -92,10 +92,10 @@ Object::Object(Object::Type type, const Symbol* symbol)
 	// nothing
 }
 
-Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
+Object::Object(Object::Type type, const Symbol* symbol, MapCoordVector coords, Map* map)
 : type(type)
 , symbol(symbol)
-, coords(coords)
+, coords(std::move(coords))
 , map(map)
 , output(*this)
 {
@@ -321,7 +321,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	else
 	{
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
-		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
+		bool conversion_ok;
+		const auto id_converted = symbol_id.toInt(&conversion_ok);
+		if (!symbol_id.isEmpty() && !conversion_ok)
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+		                              .arg(symbol_id).arg(xml.lineNumber())
+		                              .arg(xml.columnNumber()));
+		object->symbol = symbol_dict[id_converted]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be nullptr.
 	}
 	
@@ -858,8 +864,8 @@ PathObject::PathObject(const Symbol* symbol)
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 
-PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
-: Object(Object::Path, symbol, coords, map)
+PathObject::PathObject(const Symbol* symbol, MapCoordVector coords, Map* map)
+: Object(Object::Path, symbol, std::move(coords), map)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	recalculateParts();
@@ -3081,10 +3087,9 @@ void PathObject::createRenderables(ObjectRenderables& output, Symbol::Renderable
 // ### PointObject ###
 
 PointObject::PointObject(const Symbol* symbol)
- : Object(Object::Point, symbol)
+: Object(Object::Point, symbol, { MapCoord{0,0} })
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
-	coords.push_back(MapCoord(0, 0));
 }
 
 PointObject::PointObject(const PointObject& /*proto*/) = default;

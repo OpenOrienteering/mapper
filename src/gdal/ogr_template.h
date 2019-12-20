@@ -54,7 +54,13 @@ public:
 	
 	OgrTemplate(const QString& path, Map* map);
 	
+protected:
+	OgrTemplate(const OgrTemplate& proto);
+	
+public:
 	~OgrTemplate() override;
+	
+	OgrTemplate* duplicate() const override;
 	
 	
 	const char* getTemplateType() const override;
@@ -95,8 +101,6 @@ protected:
 	void mapProjectionChanged();
 	
 	void mapTransformationChanged();
-	
-	OgrTemplate* duplicateImpl() const override;
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	

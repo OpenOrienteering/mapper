@@ -23,6 +23,7 @@
 
 #include <iosfwd>
 #include <iterator>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -31,9 +32,9 @@
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
 #include <QImageReader>
+#include <QImageWriter>
 #include <QLatin1String>
 #include <QList>
-#include <QMessageBox>
 #include <QPaintEngine>
 #include <QPainter>
 #include <QPen>
@@ -59,12 +60,17 @@
 #include "util/transformation.h"
 #include "util/util.h"
 
-#ifdef MAPPER_USE_GDAL
-#include "gdal/gdal_template.h"
-#endif
-
 
 namespace OpenOrienteering {
+
+#ifdef MAPPER_USE_GDAL
+
+// Forward declaration, from "gdal/gdal_image_reader.h",
+// to avoid a direct dependency on GDAL API includes.
+TemplateImage::GeoreferencingOption readGdalGeoTransform(const QString& filepath);
+
+#endif
+
 
 const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 {
@@ -79,21 +85,43 @@ const std::vector<QByteArray>& TemplateImage::supportedExtensions()
 	return extensions;
 }
 
-TemplateImage::TemplateImage(const QString& path, Map* map) : Template(path, map)
+TemplateImage::TemplateImage(const QString& path, Map* map)
+: Template(path, map)
+, georef(std::make_unique<Georeferencing>())
 {
-	undo_index = 0;
-	georef.reset(new Georeferencing());
 	available_georef.push_back({Georeferencing_None, "no georeferencing information", {}, {}});
 	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
 }
+
+TemplateImage::TemplateImage(const TemplateImage& proto)
+: Template(proto)
+, image(proto.image)
+// not copied: undo_steps
+// not copied: undo_index
+, available_georef(proto.available_georef)
+, georef(new Georeferencing(*proto.georef))
+, temp_crs_spec(proto.temp_crs_spec)
+{
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
+	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
+}
+
 TemplateImage::~TemplateImage()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
 }
+
+
+TemplateImage* TemplateImage::duplicate() const
+{
+	return new TemplateImage(*this);
+}
+
 
 bool TemplateImage::saveTemplateFile() const
 {
@@ -135,6 +163,10 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 bool TemplateImage::loadTemplateFileImpl(bool configuring)
 {
 	QImageReader reader(template_path);
+	
+	// QImageReader::format() cannot be called after reading.
+	drawable = QImageWriter::supportedImageFormats().contains(reader.format());
+	
 	const QSize size = reader.size();
 	const QImage::Format format = reader.imageFormat();
 	if (size.isEmpty() || format == QImage::Format_Invalid)
@@ -161,8 +193,11 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 		return false;
 	}
 	
+#ifdef MAPPER_USE_GDAL
+	available_georef = findAvailableGeoreferencing(readGdalGeoTransform(template_path));
+#else
 	available_georef = findAvailableGeoreferencing();
-	
+#endif
 	if (!configuring && is_georeferenced)
 	{
 		if (available_georef.front().type == Georeferencing_None)
@@ -177,11 +212,9 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	
 	return true;
 }
+
 bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
-	if (getTemplateFilename().endsWith(QLatin1String(".gif"), Qt::CaseInsensitive))
-		QMessageBox::warning(dialog_parent, tr("Warning"), tr("Loading a GIF image template.\nSaving GIF files is not supported. This means that drawings on this template won't be saved!\nIf you do not intend to draw on this template however, that is no problem."));
-	
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
 	while (true)
@@ -369,17 +402,13 @@ void TemplateImage::updateGeoreferencing()
 		updatePosFromGeoreferencing();
 }
 
-TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing() const
+TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(TemplateImage::GeoreferencingOption&& hint) const
 {
 	GeoreferencingOptions result;
 	
 	auto crs_spec = temp_crs_spec; // loaded or empty
-#ifdef MAPPER_USE_GDAL
-	auto const gdal_georef = GdalTemplate::tryReadProjection(template_path);
-	auto const proj_spec = QString::fromUtf8(GdalTemplate::RasterGeoreferencing::toProjSpec(gdal_georef.spec));
 	if (crs_spec.isEmpty())
-		crs_spec = proj_spec; // loaded or empty
-#endif
+		crs_spec = hint.crs_spec; // loaded or empty
 	
 	WorldFile world_file;
 	if (world_file.tryToLoadForImage(template_path))
@@ -402,12 +431,8 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 		result.push_back({Georeferencing_WorldFile, "World file", crs_spec, pixel_to_world});
 	}
 	
-#ifdef MAPPER_USE_GDAL
-	if (gdal_georef.valid)
-	{
-		result.push_back({Georeferencing_GDAL, gdal_georef.driver, proj_spec, QTransform(gdal_georef)});
-	}
-#endif
+	if (hint.type != Georeferencing_None)
+		result.push_back(std::move(hint));
 	
 	Q_ASSERT(available_georef.back().type == Georeferencing_None);
 	result.push_back(available_georef.back());
@@ -415,14 +440,6 @@ TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(
 	return result;
 }
 
-
-Template* TemplateImage::duplicateImpl() const
-{
-	auto new_template = new TemplateImage(template_path, map);
-	new_template->image = image;
-	new_template->available_georef = available_georef;
-	return new_template;
-}
 
 void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
 {
@@ -604,19 +621,19 @@ void TemplateImage::updatePosFromGeoreferencing()
 	// Determine map coords of three image corner points
 	// by transforming the points from one Georeferencing into the other
 	bool ok;
-	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, 0.0), &ok);
+	MapCoordF top_left = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(0.0, 0.0), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(image.width(), 0.0), &ok);
+	MapCoordF top_right = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(image.width(), 0.0), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);
 		return; // TODO: proper error message?
 	}
-	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.data(), MapCoordF(0.0, image.height()), &ok);
+	MapCoordF bottom_left = map->getGeoreferencing().toMapCoordF(georef.get(), MapCoordF(0.0, image.height()), &ok);
 	if (!ok)
 	{
 		qDebug("%s failed", Q_FUNC_INFO);
