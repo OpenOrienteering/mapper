@@ -868,7 +868,7 @@ void SymbolSetTool::processSymbolSetTranslations() const
 	auto translation_filename = QString::fromLatin1(QTest::currentDataTag());
 	auto language = translation_filename.mid(int(qstrlen("map_symbols_")));
 	language.chop(int(qstrlen(".ts")));
-	if (language.length() > 2)
+	if (language == QLatin1String("template"))
 		language.clear();
 	
 	QByteArray new_data;

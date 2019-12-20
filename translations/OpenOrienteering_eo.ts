@@ -107,7 +107,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Teksto estis fortranĉita ĉe &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>

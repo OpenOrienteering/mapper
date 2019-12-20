@@ -844,7 +844,7 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Terreno despejado y arenoso</translation>
+        <translation>Terreno despejado y arenoso</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
@@ -1786,7 +1786,7 @@ Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished">Tendido eléctrico</translation>
+        <translation>Tendido eléctrico, teleférico o telesquí</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.
@@ -1878,7 +1878,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Ruined wall</source>
         <comment>Name of symbol 514</comment>
-        <translation type="unfinished">Muro de piedra en ruinas</translation>
+        <translation>Muro de piedra en ruinas</translation>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.
@@ -3316,7 +3316,7 @@ Para evitar confusión con el símbolo 416 (límite de vegetación distinguible)
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Terreno despejado y arenoso</translation>
+        <translation>Terreno despejado y arenoso</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -4175,7 +4175,7 @@ Si está prohibido correr sobre la vía férrea, se debe combinar con el símbol
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished">Tendido eléctrico</translation>
+        <translation>Tendido eléctrico, teleférico o telesquí</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.</source>
@@ -4269,7 +4269,7 @@ Nota: si el cauce es más ancho de 0,25 mm, ajustar este símbolo de forma que s
     <message>
         <source>Ruined wall</source>
         <comment>Name of symbol 514</comment>
-        <translation type="unfinished">Muro de piedra en ruinas</translation>
+        <translation>Muro de piedra en ruinas</translation>
     </message>
     <message>
         <source>A ruined or less distinct wall. Minimum height 0.5 m.</source>
@@ -7334,7 +7334,7 @@ Tramways are generally not represented. However, if they serve navigation or ori
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished">Tendido eléctrico</translation>
+        <translation>Tendido eléctrico, teleférico o telesquí</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift.
@@ -8375,7 +8375,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished">Tendido eléctrico</translation>
+        <translation>Tendido eléctrico, teleférico o telesquí</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -12200,7 +12200,7 @@ Minimum length (isolated): two dashes (4 mm - footprint 60 m).</source>
     <message>
         <source>Power line, cableway or skilift</source>
         <comment>Name of symbol 510</comment>
-        <translation type="unfinished">Tendido eléctrico</translation>
+        <translation>Tendido eléctrico, teleférico o telesquí</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars show the exact location of the pylons. The line may be broken to improve legibility.

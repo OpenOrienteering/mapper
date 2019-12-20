@@ -133,17 +133,17 @@ Rescale the imported data?</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished">Nem sikerült létrehozni egy objektumot a rétegben:% 1</translation>
+        <translation>Nem sikerült létrehozni egy objektumot a rétegben:% 1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Nem sikerült létrehozni a(z)% 1 réteget:% 2</translation>
+        <translation>Nem sikerült létrehozni a(z)% 1 réteget:% 2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">A név mező létrehozása nem sikerült:% 1</translation>
+        <translation>A név mező létrehozása nem sikerült:% 1</translation>
     </message>
 </context>
 <context>
@@ -5835,7 +5835,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation>A(z) &quot;%1&quot; szöveges szimbólumban egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD működéséhez</translation>
+        <translation>A(z) &quot;%1&quot; szöveges szimbólumban egyedi betűköz van beállítva, aminek a viselkedése egyelőre nem illeszkedik az OCAD-hoz</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
@@ -7530,7 +7530,7 @@ separations</source>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
         <translation>A kereszthivatkozás-táblázat módosult.
-Elmented  a változtatásaidat?</translation>
+Elmented a változtatásaidat?</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="430"/>
@@ -8259,7 +8259,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyírás:</translation>
     </message>
 </context>
 <context>
