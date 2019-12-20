@@ -104,6 +104,7 @@ protected slots:
 	void importClicked();
 	void changeGeorefClicked();
 	void moreActionClicked(QAction* action);
+	void vectorizeClicked();
 	
 	void templateAdded(int pos, const OpenOrienteering::Template* temp);
 	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
@@ -142,6 +143,7 @@ private:
 	QAction* position_action;
 	QAction* import_action;
 	QAction* georef_action;
+	QAction* vectorize_action;
 	
 	// Buttons
 	QWidget* list_buttons_group;

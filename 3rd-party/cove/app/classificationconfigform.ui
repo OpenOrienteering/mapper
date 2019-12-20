@@ -1,0 +1,307 @@
+<ui version="4.0" >
+ <author></author>
+ <comment></comment>
+ <exportmacro></exportmacro>
+ <class>ClassificationConfigForm</class>
+ <widget class="QDialog" name="ClassificationConfigForm" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>296</width>
+    <height>324</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" >
+   <property name="margin" >
+    <number>8</number>
+   </property>
+   <property name="spacing" >
+    <number>6</number>
+   </property>
+   <item>
+    <layout class="QGridLayout" >
+     <property name="margin" >
+      <number>0</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item row="1" column="2" >
+      <widget class="QLineEdit" name="pInput" />
+     </item>
+     <item row="1" column="0" colspan="2" >
+      <widget class="QLabel" name="label_2_2" >
+       <property name="text" >
+        <string>Minkowski metric's parameter:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>colorSpaceComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2" >
+      <widget class="QLabel" name="label_2" >
+       <property name="text" >
+        <string>Color space:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>colorSpaceComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" >
+      <widget class="QComboBox" name="colorSpaceComboBox" >
+       <item>
+        <property name="text" >
+         <string>RGB</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>HSV</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="2" >
+      <widget class="QComboBox" name="learningMethodComboBox" >
+       <item>
+        <property name="text" >
+         <string>Kohonen learning</string>
+        </property>
+       </item>
+       <item>
+        <property name="text" >
+         <string>Batch learning</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="2" column="0" colspan="2" >
+      <widget class="QLabel" name="label" >
+       <property name="text" >
+        <string>Learning method:</string>
+       </property>
+       <property name="buddy" >
+        <cstring>learningMethodComboBox</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3" >
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox2" >
+     <property name="title" >
+      <string>Kohonen learning</string>
+     </property>
+     <layout class="QGridLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item row="2" column="2" >
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="1" >
+       <widget class="QLineEdit" name="minAlphaInput" />
+      </item>
+      <item row="2" column="1" >
+       <widget class="QLineEdit" name="eInput" />
+      </item>
+      <item row="1" column="1" >
+       <widget class="QLineEdit" name="qInput" />
+      </item>
+      <item row="0" column="1" >
+       <widget class="QLineEdit" name="initAlphaInput" />
+      </item>
+      <item row="3" column="0" >
+       <widget class="QLabel" name="label_4_2_2_3" >
+        <property name="text" >
+         <string>Final alpha</string>
+        </property>
+        <property name="buddy" >
+         <cstring>minAlphaInput</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <widget class="QLabel" name="label_4_2_2" >
+        <property name="text" >
+         <string>Number of steps</string>
+        </property>
+        <property name="buddy" >
+         <cstring>eInput</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="label_4_2" >
+        <property name="text" >
+         <string>Quotient</string>
+        </property>
+        <property name="buddy" >
+         <cstring>qInput</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" >
+       <widget class="QLabel" name="label_4" >
+        <property name="text" >
+         <string>Initial alpha</string>
+        </property>
+        <property name="buddy" >
+         <cstring>initAlphaInput</cstring>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox3" >
+     <property name="title" >
+      <string>Batch learning</string>
+     </property>
+     <layout class="QVBoxLayout" >
+      <property name="margin" >
+       <number>9</number>
+      </property>
+      <property name="spacing" >
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_3" >
+        <property name="text" >
+         <string>There are no options to set.</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" >
+     <property name="margin" >
+      <number>1</number>
+     </property>
+     <property name="spacing" >
+      <number>6</number>
+     </property>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>21</width>
+         <height>24</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="okButton" >
+       <property name="text" >
+        <string>&amp;OK</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton" >
+       <property name="text" >
+        <string>&amp;Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <widget class="QWidget" name="widget" >
+   <property name="geometry" >
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>374</width>
+     <height>52</height>
+    </rect>
+   </property>
+  </widget>
+ </widget>
+ <pixmapfunction></pixmapfunction>
+ <tabstops>
+  <tabstop>colorSpaceComboBox</tabstop>
+  <tabstop>pInput</tabstop>
+  <tabstop>learningMethodComboBox</tabstop>
+  <tabstop>initAlphaInput</tabstop>
+  <tabstop>qInput</tabstop>
+  <tabstop>eInput</tabstop>
+  <tabstop>minAlphaInput</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>okButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ClassificationConfigForm</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>332</x>
+     <y>280</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>241</x>
+     <y>270</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>ClassificationConfigForm</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>363</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>396</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
