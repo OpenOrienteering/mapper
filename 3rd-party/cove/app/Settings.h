@@ -20,8 +20,8 @@
 #ifndef COVE_SETTINGS_H
 #define COVE_SETTINGS_H
 
-#include <string>
 #include <vector>
+
 #include <QRgb>
 #include <QString>
 

@@ -22,11 +22,17 @@
 
 #include <memory>
 
+#include <QObject>
+#include <QPoint>
+#include <QRect>
 #include <QScrollArea>
+#include <QString>
 #include <QWidget>
 
 class QImage;
+class QMouseEvent;
 class QPaintEvent;
+class QWheelEvent;
 
 namespace cove {
 class ImageWidget : public QWidget

@@ -22,8 +22,9 @@
 
 #include <memory>
 #include <vector>
-#include <QColor>
+
 #include <QImage>
+#include <QRgb>
 
 #include "libvectorizer/MapColor.h"
 

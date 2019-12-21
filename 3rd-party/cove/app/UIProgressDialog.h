@@ -20,9 +20,14 @@
 #ifndef COVE_PROGRESSDIALOG_H
 #define COVE_PROGRESSDIALOG_H
 
+#include <QObject>
 #include <QProgressDialog>
+#include <QString>
+#include <Qt>
 
 #include "libvectorizer/Vectorizer.h"
+
+class QWidget;
 
 namespace cove {
 class UIProgressDialog : public QObject, public ProgressObserver

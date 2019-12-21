@@ -18,7 +18,14 @@
  */
 
 #include "coverunner.h"
-#include "mainform.h"
+
+#include <gui/main_window.h>
+
+#include "app/mainform.h"
+
+namespace OpenOrienteering {
+class Map;
+} // namespace OpenOrienteering
 
 namespace cove {
 void CoveRunner::run(OpenOrienteering::MainWindow* parent,

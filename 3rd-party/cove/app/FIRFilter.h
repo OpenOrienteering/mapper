@@ -21,7 +21,9 @@
 #define COVE_FIRFILTER_H
 
 #include <vector>
+
 #include <QImage>
+#include <QRgb>
 
 namespace cove {
 class ProgressObserver;

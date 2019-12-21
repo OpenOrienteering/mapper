@@ -17,13 +17,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "colorseditform.h"
+#include "ui_colorseditform.h"
+
+#include <memory>
+
+#include <QAbstractItemModel>
+#include <QBrush>
+#include <QColor>
 #include <QColorDialog>
+#include <QEvent>
+#include <QFlags>
+#include <QFrame>
 #include <QItemDelegate>
 #include <QModelIndex>
-#include <QWidget>
+#include <QRadioButton>
+#include <QStyleOptionViewItem>
+#include <QTableView>
 
-#include "app/colorseditform.h"
-#include "ui_colorseditform.h"
+class QStyleOptionViewItem;
+class QWidget;
 
 namespace cove {
 /*! \ingroup gui */

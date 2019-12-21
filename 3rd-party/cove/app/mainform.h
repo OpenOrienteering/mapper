@@ -20,26 +20,33 @@
 #ifndef COVE_MAINFORM_H
 #define COVE_MAINFORM_H
 
+#include <memory>
+#include <vector>
+
 #include <QDialog>
 #include <QImage>
 #include <QList>
-#include <QTranslator>
+#include <QObject>
+#include <QRgb>
+#include <QString>
+#include <Qt>
 
 #include "Settings.h"
-#include "Thread.h"
 #include "libvectorizer/Vectorizer.h"
-#include "templates/template.h"
 #include "ui_mainform.h"
+
+class QPushButton;
+class QWidget;
 
 namespace OpenOrienteering {
 class Map;
+class Template;
 class TemplateImage;
 } // namespace OpenOrienteering
 
 namespace cove {
-class ProgressObserver;
+class ClassificationThread;
 class UIProgressDialog;
-class Vectorizer;
 
 class mainForm : public QDialog
 {

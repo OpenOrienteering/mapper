@@ -17,19 +17,28 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>
-#include <cmath>
-#include <iterator>
-#include <limits>
+#include "Polygons.h"
 
+#include <algorithm>
+#include <cerrno>
+#include <climits>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
+#include <iosfwd>
+#include <limits>
+#include <memory>
 #include <stdexcept>
+
+#include <QByteArray>
+#include <QString>
+#include <QtGlobal>
+
 #include <QImage>
 #include <QRect>
 
-#include "app/cove-potrace.h"
-#include "app/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
-
+  
 #define JOIN_DEBUG 0
 #define JOIN_DEBUG_PRINT(...)            \
 do                                       \

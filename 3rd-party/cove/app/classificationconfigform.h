@@ -21,8 +21,15 @@
 #define COVE_CLASSIFICATIONCONFIGFORM_H
 
 #include <QDialog>
+#include <QDoubleValidator>
+#include <QIntValidator>
+#include <QObject>
+#include <QString>
+#include <QValidator>
 
 #include "ui_classificationconfigform.h"
+
+class QWidget;
 
 namespace cove {
 namespace classificationconfigform_private {

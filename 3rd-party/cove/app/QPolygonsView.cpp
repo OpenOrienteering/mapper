@@ -17,15 +17,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <memory>
+#include "QPolygonsView.h"
 
 #include <iterator>
+#include <memory>
+
 #include <QBrush>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
+#include <QPointF>
+#include <QRect>
+#include <QRectF>
+#include <QSize>
+#include <QSizeF>
+#include <Qt>
 
-#include "app/QPolygonsView.h"
+class QPaintEvent;
+class QWidget;
 
 namespace cove {
 //@{

@@ -17,9 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QImage>
+#include <QObject>
+#include <QString>
 
-#include <Polygons.h>
+#include "app/Polygons.h"
 
 class PolygonTest : public QObject
 {

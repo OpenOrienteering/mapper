@@ -17,9 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "app/Thread.h"
+#include "Thread.h"
+
 #include "app/UIProgressDialog.h"
 #include "libvectorizer/Vectorizer.h"
+
+class QObject;
 
 namespace cove {
 //@{

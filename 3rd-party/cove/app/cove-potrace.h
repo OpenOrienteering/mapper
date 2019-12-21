@@ -31,10 +31,12 @@
 
 extern "C" {
 
+// IWYU pragma: begin_exports
 #include "potrace/auxiliary.h"
 #include "potrace/curve.h"
 #include "potrace/lists.h"
 #include "potrace/trace.h"
+// IWYU pragma: end_exports
 
 }
 

@@ -17,12 +17,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#include "PolygonTest.h"
+
+#include <algorithm>
+#include <vector>
+
+#include <QDataStream>
+#include <QFile>
+#include <QIODevice>
+#include <QImage>
+#include <QtGlobal>
 #include <QtTest>
 
-#include <Polygons.h>
-
-#include "PolygonTest.h"
+#include "app/Polygons.h"
 
 void PolygonTest::testJoins_data()
 {

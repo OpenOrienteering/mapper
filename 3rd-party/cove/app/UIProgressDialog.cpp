@@ -17,11 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QMenuBar>
+#include "UIProgressDialog.h"
 
-#include "app/UIProgressDialog.h"
+#include <QWidget>
 
 namespace cove {
 //@{

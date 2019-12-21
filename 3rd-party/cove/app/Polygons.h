@@ -20,7 +20,7 @@
 #ifndef COVE_POLYGONS_H
 #define COVE_POLYGONS_H
 
-#include <deque>
+#include <algorithm>
 #include <functional>
 #include <vector>
 

@@ -17,14 +17,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "vectorizationconfigform.h"
+
 #include <climits>
 #include <limits>
 
+#include <QCheckBox>
 #include <QDoubleValidator>
 #include <QIntValidator>
+#include <QLineEdit>
+#include <Qt>
 
-#include "app/vectorizationconfigform.h"
 #include "ui_vectorizationconfigform.h"
+
+class QDoubleValidator;
+class QWidget;
 
 namespace cove {
 VectorizationConfigForm::VectorizationConfigForm(QWidget* parent)

@@ -21,8 +21,12 @@
 #define COVE_VECTORIZATIONCONFIGFORM_H
 
 #include <QDialog>
+#include <QObject>
+#include <QString>
 
 #include "ui_vectorizationconfigform.h"
+
+class QWidget;
 
 namespace cove {
 class VectorizationConfigForm : public QDialog

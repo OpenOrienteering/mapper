@@ -17,9 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "FIRFilter.h"
+
+#include <memory>
+
 #include <QImage>
 
-#include "app/FIRFilter.h"
 #include "libvectorizer/MapColor.h"
 #include "libvectorizer/Vectorizer.h"
 

@@ -17,20 +17,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <functional>
+#include "Vectorizer.h"
 
+#include <cstdlib>
+#include <iosfwd>
+
+#include <QColor>
 #include <QImage>
-#include <QList>
-#include <QPainter>
-#include <QThread>
-#include <QtConcurrent>
+#include <QVector>
+#include <Qt>
+#include <QtGlobal>
 
 #include "libvectorizer/AlphaGetter.h"
+#include "libvectorizer/KohonenMap.h"
 #include "libvectorizer/MapColor.h"
 #include "libvectorizer/Morphology.h"
 #include "libvectorizer/ParallelImageProcessing.h"
 #include "libvectorizer/PatternGetter.h"
-#include "libvectorizer/Vectorizer.h"
 
 namespace cove {
 //@{

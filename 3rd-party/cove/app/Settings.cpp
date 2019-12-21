@@ -17,15 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmath>
-#include <QDateTime>
-#include <QFile>
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QTextStream>
+#include "Settings.h"
 
-#include "app/Settings.h"
+#include <cmath>
+#include <memory>
+
+#include <QString>
 
 namespace cove {
 //@{

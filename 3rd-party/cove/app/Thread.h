@@ -22,6 +22,8 @@
 
 #include <QThread>
 
+class QObject;
+
 namespace cove {
 class UIProgressDialog;
 class Vectorizer;

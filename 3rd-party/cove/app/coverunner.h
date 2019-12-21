@@ -20,9 +20,9 @@
 #ifndef COVERUNNER_H
 #define COVERUNNER_H
 
-#include "../src/gui/main_window.h"
-
 namespace OpenOrienteering {
+class MainWindow;
+class Map;
 class TemplateImage;
 } // namespace OpenOrienteering
 

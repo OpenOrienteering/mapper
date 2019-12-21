@@ -20,7 +20,7 @@
 #ifndef COVE_MAPCOLOR_H
 #define COVE_MAPCOLOR_H
 
-#include <QColor>
+#include <QRgb>
 
 #include "libvectorizer/KohonenMap.h"
 

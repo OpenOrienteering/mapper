@@ -17,9 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmath>
+#include "Morphology.h"
 
-#include "libvectorizer/Morphology.h"
+#include <algorithm>
+#include <cmath>  // IWYU pragma: keep
+#include <vector>
+
+#include <QtGlobal>
+
 #include "libvectorizer/Vectorizer.h"
 
 namespace cove {

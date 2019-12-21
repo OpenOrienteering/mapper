@@ -17,20 +17,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "QImageView.h"
+
 #include <cmath>
 
 #include <QAction>
 #include <QBitmap>
 #include <QBrush>
+#include <QColor>
 #include <QCursor>
+#include <QFlags>
 #include <QGuiApplication>
 #include <QImage>
+#include <QMouseEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QRgb>
 #include <QScrollBar>
+#include <QSize>
+#include <QVector>
+#include <QWheelEvent>
 #include <QWidget>
+#include <Qt>
 
-#include "app/QImageView.h"
+class QMouseEvent;
+class QWheelEvent;
 
 namespace cove {
 //@{

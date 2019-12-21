@@ -20,13 +20,20 @@
 #ifndef COVE_COLORSEDITFORM_H
 #define COVE_COLORSEDITFORM_H
 
-#include <QAbstractTableModel>
-#include <QDialog>
-#include <QVariant>
-
 #include <vector>
 
+#include <QAbstractTableModel>
+#include <QDialog>
+#include <QObject>
+#include <QRgb>
+#include <QString>
+#include <QVariant>
+#include <Qt>
+
 #include "ui_colorseditform.h"
+
+class QModelIndex;
+class QWidget;
 
 namespace cove {
 class ColorsListModel : public QAbstractTableModel

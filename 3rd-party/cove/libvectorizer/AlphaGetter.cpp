@@ -17,9 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmath>
+#include "AlphaGetter.h"
 
-#include "libvectorizer/AlphaGetter.h"
+#include <cmath>
+#include <new>
+
 #include "libvectorizer/Vectorizer.h"
 
 namespace cove {

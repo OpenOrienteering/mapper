@@ -20,10 +20,15 @@
 #ifndef COVE_QPOLYGONSVIEW_H
 #define COVE_QPOLYGONSVIEW_H
 
+#include <vector>
+
 #include <QPainterPath>
 
 #include "app/Polygons.h"
 #include "app/QImageView.h"
+
+class QPaintEvent;
+class QWidget;
 
 namespace cove {
 class PaintablePolygonList : public Polygons::PolygonList

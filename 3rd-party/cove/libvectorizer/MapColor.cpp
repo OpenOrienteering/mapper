@@ -17,11 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "MapColor.h"
+
 #include <cmath>
 
 #include <QColor>
-
-#include "libvectorizer/MapColor.h"
+#include <QtGlobal>
 
 namespace cove {
 /*! \class MapColor

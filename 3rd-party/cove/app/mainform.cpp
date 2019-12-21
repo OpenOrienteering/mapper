@@ -17,41 +17,55 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdlib.h>
-#include <time.h>
+#include "mainform.h"
+#include "ui_mainform.h"
 
-#include <stdexcept>
+#include <cstdlib>
+#include <ctime>
+#include <iosfwd>
 
-#include <QEvent>
+#include <QByteArray>
+#include <QColor>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
 #include <QFileDialog>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QIcon>
 #include <QImage>
 #include <QImageReader>
+#include <QLabel>
 #include <QList>
-#include <QListIterator>
-#include <QLocale>
-#include <QMenu>
-#include <QMenuBar>
 #include <QMessageBox>
-#include <QObjectList>
 #include <QPainter>
 #include <QPixmap>
+#include <QPoint>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTabWidget>
+#include <QtGlobal>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+#include "templates/template.h"
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
 #include "app/FIRFilter.h"
 #include "app/Polygons.h"
+#include "app/QImageView.h"
+#include "app/QPolygonsView.h"
+#include "app/Settings.h"
 #include "app/Thread.h"
 #include "app/UIProgressDialog.h"
 #include "app/classificationconfigform.h"
 #include "app/colorseditform.h"
-#include "app/mainform.h"
 #include "app/vectorizationconfigform.h"
 #include "libvectorizer/Vectorizer.h"
-#include "ui_mainform.h"
 
 using namespace std;
 namespace cove {
