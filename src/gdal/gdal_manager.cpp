@@ -224,6 +224,15 @@ private:
 		}
 	}
 	
+	static void prefixDuplicates(ExtensionList const& primary_list, ExtensionList& secondary_list, char const* prefix)
+	{
+		for (auto& extension : secondary_list)
+		{
+			if (std::find(begin(primary_list), end(primary_list), extension) != end(primary_list))
+				extension.prepend(prefix);
+		}
+	}
+	
 	static void removeExtension(ExtensionList& list, const char* extension)
 	{
 		list.erase(std::find(begin(list), end(list), extension), end(list));
@@ -231,6 +240,29 @@ private:
 	
 	void updateExtensions(QSettings& settings)
 	{
+		// Some extensions are to be used with QImageReader/TemplateImage.
+		// The GDAL raster driver will be regarded as secondary and get its
+		// ambiguous extensions prefixed with "raster.".
+		static const ExtensionList qimagereader_extensions {
+			"bmp",
+			"gif",
+			"jpeg",
+			"jpg",
+			"png",
+		};
+		
+		// In case of extensions which are claimed by both vector and raster
+		// drivers, the raster driver will be regarded as secondary and get its
+		// ambiguous extensions prefixed with "raster.". However, by naming a
+		// vector driver here, that driver will become secondary and get its
+		// ambiguous extensions prefixed by "vector."
+		static const QByteArray secondary_vector_drivers {
+			"JP2OpenJPEG,"
+			"MBTiles,"
+			"PCIDSK,"
+		};
+		ExtensionList secondary_vector_extensions;
+		
 		auto count = GDALGetDriverCount();
 		enabled_raster_import_extensions.clear();
 		enabled_raster_import_extensions.reserve(std::size_t(count));
@@ -239,6 +271,7 @@ private:
 		enabled_vector_export_extensions.clear();
 		enabled_vector_export_extensions.reserve(std::size_t(count));
 		
+		// Register extensions, either directly (enabled_*), or staged for ambiguity check (secondary_*)
 		for (auto i = 0; i < count; ++i)
 		{
 			auto driver_data = GDALGetDriver(i);
@@ -251,30 +284,38 @@ private:
 
 			if (qstrcmp(cap_raster, "YES") == 0)
 			{
-				auto driver_name = GDALGetDriverShortName(driver_data);
-				if (QByteArray("BMP,PNG,GIF").contains(driver_name))
-					continue;  // To be handled by TemplateImage, for painting/updating
-				
 				if (qstrcmp(cap_open, "YES") == 0)
 					copyExtensions(extensions, enabled_raster_import_extensions);
 			}
 
 			if (qstrcmp(cap_vector, "YES") == 0)
 			{
+				auto const driver_name = GDALGetDriverShortName(driver_data);
+				bool const is_secondary = secondary_vector_drivers.contains(driver_name);
+				auto &list = is_secondary ? secondary_vector_extensions : enabled_vector_import_extensions;
 				if (qstrcmp(cap_open, "YES") == 0)
-					copyExtensions(extensions, enabled_vector_import_extensions);
+					copyExtensions(extensions, list);
 				
 				if (qstrcmp(cap_create, "YES") == 0)
 					copyExtensions(extensions, enabled_vector_export_extensions);
 			}
 		}
 		
+		// Handle GDAL/OGR activation settings, before checking ambiguity
 		settings.beginGroup(gdal_manager_group);
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{
 			removeExtension(enabled_vector_import_extensions, "gpx");
+			removeExtension(secondary_vector_extensions, "gpx");
 		}
 		settings.endGroup();
+		
+		// Prefix ambiguous extensions for known vector drivers
+		prefixDuplicates(enabled_raster_import_extensions, secondary_vector_extensions, "vector.");
+		enabled_vector_import_extensions.insert(end(enabled_vector_import_extensions), begin(secondary_vector_extensions), end(secondary_vector_extensions));
+		// Prefix ambiguous extensions for remaining raster drivers
+		prefixDuplicates(enabled_vector_import_extensions, enabled_raster_import_extensions, "raster.");
+		prefixDuplicates(qimagereader_extensions, enabled_raster_import_extensions, "raster.");
 	}
 	
 	void updateConfig(QSettings& settings)
