@@ -43,7 +43,7 @@ With the [line edit tool](toolbars.md#tool_edit_line), select the object you wan
 
 ### How can I cut out a part of a map to take it for a new map?
 
-First you save the map to the new file. Then draw some closed line or area (symbol doesn't matter) arround the border of the part which you want to keep. Now when this border object is finished and selected, click on the "Cutout" icon or menu item, then press the enter key.
+First you save the map to the new file. Then draw some closed line or area (symbol doesn't matter) around the border of the part which you want to keep. Now when this border object is finished and selected, click on the "Cutout" icon or menu item, then press the enter key.
 
 
 ## File formats
