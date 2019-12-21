@@ -587,8 +587,8 @@ void Object::rotate(qreal angle)
 	for (auto& coord : coords)
 	{
 		auto const old_coord = MapCoordF(coord);
-		coord.setX(cos_angle * old_coord.x() + sin_angle * old_coord.y());
-		coord.setY(sin_angle * old_coord.x() + cos_angle * old_coord.y());
+		coord.setX(+ cos_angle * old_coord.x() + sin_angle * old_coord.y());
+		coord.setY(- sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
 	if (symbol->isRotatable())
