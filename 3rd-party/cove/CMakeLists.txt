@@ -51,6 +51,8 @@ set(Cove_SRCS
 )
 
 add_library(cove STATIC ${Cove_SRCS})
+target_compile_definitions(cove INTERFACE WITH_COVE)
+target_include_directories(cove INTERFACE AFTER "${CMAKE_CURRENT_SOURCE_DIR}")
 target_link_libraries(cove Qt5::Widgets Qt5::Concurrent)
 
 add_subdirectory("tests")
