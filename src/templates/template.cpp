@@ -31,10 +31,12 @@
 #include <Qt>
 #include <QtMath>
 #include <QByteArray>
+#include <QChar>
 #include <QColor>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileInfo>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QMessageBox>
 #include <QPainter>
@@ -905,7 +907,9 @@ std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* ma
 	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
 		using namespace std;
 		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
-			return path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
+			return path.size() > extension.size()
+			       && path[path.size() - extension.size() - 1] == QLatin1Char('.')
+			       && path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
 		} );
 	};
 	
