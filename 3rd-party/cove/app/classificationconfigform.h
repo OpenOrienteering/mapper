@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CLASSIFICATIONCONFIGFORM_H__
-#define __CLASSIFICATIONCONFIGFORM_H__
+#ifndef COVE_CLASSIFICATIONCONFIGFORM_H
+#define COVE_CLASSIFICATIONCONFIGFORM_H
 
 #include <QDialog>
 

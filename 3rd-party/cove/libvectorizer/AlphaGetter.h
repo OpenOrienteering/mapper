@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __ALPHAGETTER_H__
-#define __ALPHAGETTER_H__
+#ifndef COVE_ALPHAGETTER_H
+#define COVE_ALPHAGETTER_H
 
 #include "libvectorizer/KohonenMap.h"
 

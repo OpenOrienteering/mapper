@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __KOHONENMAP_H__
-#define __KOHONENMAP_H__
+#ifndef COVE_KOHONENMAP_H
+#define COVE_KOHONENMAP_H
 
 #include <memory>
 #include <vector>

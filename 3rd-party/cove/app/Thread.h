@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __THREAD_H__
-#define __THREAD_H__
+#ifndef COVE_THREAD_H
+#define COVE_THREAD_H
 
 #include <QThread>
 

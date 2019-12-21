@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTORIZER_H__
-#define __VECTORIZER_H__
+#ifndef COVE_VECTORIZER_H
+#define COVE_VECTORIZER_H
 
 #include <memory>
 #include <vector>

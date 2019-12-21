@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __FIRFILTER_H__
-#define __FIRFILTER_H__
+#ifndef COVE_FIRFILTER_H
+#define COVE_FIRFILTER_H
 
 #include <vector>
 #include <QImage>

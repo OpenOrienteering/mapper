@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __QPOLYGONSVIEW_H__
-#define __QPOLYGONSVIEW_H__
+#ifndef COVE_QPOLYGONSVIEW_H
+#define COVE_QPOLYGONSVIEW_H
 
 #include <QPainterPath>
 

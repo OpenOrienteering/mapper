@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __POLYGONS_H__
-#define __POLYGONS_H__
+#ifndef COVE_POLYGONS_H
+#define COVE_POLYGONS_H
 
 #include <deque>
 #include <functional>

@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SETTINGS_H__
-#define __SETTINGS_H__
+#ifndef COVE_SETTINGS_H
+#define COVE_SETTINGS_H
 
 #include <string>
 #include <vector>

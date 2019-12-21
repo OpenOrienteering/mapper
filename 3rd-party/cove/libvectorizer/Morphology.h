@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __THINNER_H__
-#define __THINNER_H__
+#ifndef COVE_THINNER_H
+#define COVE_THINNER_H
 
 #include <QImage>
 

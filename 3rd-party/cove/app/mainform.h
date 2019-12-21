@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MAINFORM_H__
-#define __MAINFORM_H__
+#ifndef COVE_MAINFORM_H
+#define COVE_MAINFORM_H
 
 #include <QDialog>
 #include <QImage>

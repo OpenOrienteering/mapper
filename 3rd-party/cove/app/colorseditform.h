@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLORSEDITFORM_H__
-#define __COLORSEDITFORM_H__
+#ifndef COVE_COLORSEDITFORM_H
+#define COVE_COLORSEDITFORM_H
 
 #include <QAbstractTableModel>
 #include <QDialog>

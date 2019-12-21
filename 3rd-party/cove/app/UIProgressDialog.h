@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __PROGRESSDIALOG_H__
-#define __PROGRESSDIALOG_H__
+#ifndef COVE_PROGRESSDIALOG_H
+#define COVE_PROGRESSDIALOG_H
 
 #include <QProgressDialog>
 

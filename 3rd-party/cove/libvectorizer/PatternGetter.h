@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATTERNGETTER_H__
-#define __PATTERNGETTER_H__
+#ifndef COVE_PATTERNGETTER_H
+#define COVE_PATTERNGETTER_H
 
 #include <QImage>
 

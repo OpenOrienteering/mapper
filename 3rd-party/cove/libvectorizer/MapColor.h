@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MAPCOLOR_H__
-#define __MAPCOLOR_H__
+#ifndef COVE_MAPCOLOR_H
+#define COVE_MAPCOLOR_H
 
 #include <QColor>
 

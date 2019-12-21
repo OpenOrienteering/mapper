@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __QIMAGEVIEW_H__
-#define __QIMAGEVIEW_H__
+#ifndef COVE_QIMAGEVIEW_H
+#define COVE_QIMAGEVIEW_H
 
 #include <memory>
 

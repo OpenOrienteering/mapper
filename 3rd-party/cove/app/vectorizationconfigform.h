@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTORIZATIONCONFIGFORM_H__
-#define __VECTORIZATIONCONFIGFORM_H__
+#ifndef COVE_VECTORIZATIONCONFIGFORM_H
+#define COVE_VECTORIZATIONCONFIGFORM_H
 
 #include <QDialog>
 
