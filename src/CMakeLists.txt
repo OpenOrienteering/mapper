@@ -268,10 +268,8 @@ target_link_libraries(Mapper_Common
   PROJ4::proj
   Qt5::Widgets
 )
-if(Mapper_WITH_COVE)
-	target_link_libraries(Mapper_Common cove)
-endif()
 foreach(lib
+  cove
   mapper-gdal
   mapper-sensors
   printsupport
