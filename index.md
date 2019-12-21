@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 17 October 2018
+edited: 21 December 2019
 redirect_from:
   - /
   - /Home
@@ -32,6 +32,9 @@ Showing a helper grid in the map view.
 
 [Templates](templates-index.md){: .subpage}
 Working with templates.
+
+[Geospatial data](gdal.md){: .subpage}
+Geospatial raster data and vector data support based on GDAL.
 
 [Colors and symbols](colors_symbols.md){: .subpage}
 Modifying map colors and symbols.
