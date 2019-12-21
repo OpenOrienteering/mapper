@@ -23,6 +23,9 @@ foreach(file ${input_files})
 	# Turn internal typewriter-face hrefs into regular PDF hyperlinks
 	string(REGEX REPLACE "\\\\href{#([^}]*)}{\\\\tt ([^}]*)}" "\\\\hyperlink{\\1}{\\2}" output "${input}")
 	
+	# Fix anchors in URLs, cf. https://suchideas.com/articles/computing/latex/errors/
+	string(REGEX REPLACE "(\\\\href{[^}]*[^\\\\])#" "\\1\\\\#" output "${output}")
+	
 	string(MD5 input_md5 "${input}")
 	string(MD5 output_md5 "${output}")
 	if(NOT "${output_md5}" STREQUAL "${input_md5}")
