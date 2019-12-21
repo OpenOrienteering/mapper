@@ -224,6 +224,11 @@ private:
 		}
 	}
 	
+	static void removeExtension(ExtensionList& list, const char* extension)
+	{
+		list.erase(std::find(begin(list), end(list), extension), end(list));
+	}
+	
 	void updateExtensions(QSettings& settings)
 	{
 		auto count = GDALGetDriverCount();
@@ -267,8 +272,7 @@ private:
 		settings.beginGroup(gdal_manager_group);
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{
-			auto gpx = std::find(begin(enabled_vector_import_extensions), end(enabled_vector_import_extensions), "gpx");
-			enabled_vector_import_extensions.erase(gpx);
+			removeExtension(enabled_vector_import_extensions, "gpx");
 		}
 		settings.endGroup();
 	}
