@@ -18,6 +18,7 @@
  */
 
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <iterator>
 #include <string>
@@ -26,6 +27,56 @@
 
 #include <cpl_string.h>
 #include <gdal.h>
+
+#include "gdal_extensions.h"
+
+/*
+ * Add prefix to ambiguous extensions in secondary string.
+ * 
+ * Both primary and secondary string are expected to be lines in the form
+ * 
+ * | short name | long name | one_extension another_extension |
+ * 
+ * so that a list of extensions can be found at the end between '|'  and ' ',
+ * and each extension is a pattern like " one_extension ".
+ */
+void prefixDuplicates(std::string const& primary, std::string& secondary, const char* prefix)
+{
+	auto primary_end = primary.find_last_of(' ');
+	auto primary_begin = primary.find_last_of('|', primary_end) + 1;
+	
+	auto secondary_end = secondary.find_last_of(' ');
+	auto secondary_begin = secondary.find_last_of('|', secondary_end) + 1;
+	
+	while (primary_begin != primary_end)
+	{
+		auto pos = primary.find(' ', primary_begin + 1);
+		auto pattern = primary.substr(primary_begin, pos - primary_begin + 1);
+		auto found = secondary.find(pattern, secondary_begin);
+		if (found != std::string::npos)
+		{
+			secondary.insert(found + 1, prefix);
+			secondary_end += std::strlen(prefix);
+		}
+		primary_begin = pos;
+	}
+}
+
+void prefixDuplicates(std::string const& primary, std::vector<std::string>& secondary_list, const char* prefix)
+{
+	for (auto& secondary : secondary_list)
+	{
+		prefixDuplicates(primary, secondary, prefix);
+	}
+}
+
+void prefixDuplicates(std::vector<std::string> const& primary_list, std::vector<std::string>& secondary_list, const char* prefix)
+{
+	for (auto& primary : primary_list)
+	{
+		prefixDuplicates(primary, secondary_list, prefix);
+	}
+}
 
 
 void dumpDriverList(std::string const& headline, std::vector<std::string> list)
@@ -41,14 +92,26 @@ void dumpDriverList(std::string const& headline, std::vector<std::string> list)
 
 void dumpGdalDrivers()
 {
+	auto qimagereader_extensions = std::string("| Qt | QImageReader | ");
+	for (auto& extension : OpenOrienteering::gdal::qImageReaderExtensions<std::vector<const char*>>())
+	{
+		 qimagereader_extensions += extension;
+		 qimagereader_extensions += " ";
+	}
+	qimagereader_extensions += "|";
+	auto const secondary_vector_drivers = OpenOrienteering::gdal::secondaryVectorDrivers<const char*>();
+	
+	
 	std::vector<std::string> raster_import_drivers;
 	std::vector<std::string> vector_import_drivers;
+	std::vector<std::string> secondary_vector_import_drivers;
 	std::vector<std::string> vector_export_drivers;
 	
 	auto const count = GDALGetDriverCount();
 	for (auto i = 0; i < count; ++i)
 	{
 		auto driver_data = GDALGetDriver(i);
+		auto driver_name = GDALGetDriverShortName(driver_data);
 		auto cap_raster = GDALGetMetadataItem(driver_data, GDAL_DCAP_RASTER, nullptr);
 		auto cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
 		auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
@@ -60,7 +123,7 @@ void dumpGdalDrivers()
 			continue;  // Not supported at the moment
 		
 		auto driver_line = std::string("| ");
-		driver_line += GDALGetDriverShortName(driver_data);
+		driver_line += driver_name;
 		driver_line += " | ";
 		if (help_topic)
 		{
@@ -86,12 +149,22 @@ void dumpGdalDrivers()
 		
 		if (cap_vector && CPLTestBoolean(cap_vector))
 		{
+			bool const is_secondary = (driver_name && strstr(secondary_vector_drivers, driver_name) != nullptr);
+			auto &list = is_secondary ? secondary_vector_import_drivers : vector_import_drivers;
 			if (cap_open && CPLTestBoolean(cap_open))
-				vector_import_drivers.push_back(driver_line);
+				list.push_back(driver_line);
 			if (cap_create && CPLTestBoolean(cap_create))
 				vector_export_drivers.push_back(driver_line);
 		}
 	}
+	
+	// This block duplicates code in GdalManagerPrivate::updateExtensions().
+	// Prefix ambiguous extensions for known vector drivers
+	prefixDuplicates(raster_import_drivers, secondary_vector_import_drivers, "vector.");
+	vector_import_drivers.insert(end(vector_import_drivers), begin(secondary_vector_import_drivers), end(secondary_vector_import_drivers));
+	// Prefix ambiguous extensions for remaining raster drivers
+	prefixDuplicates(vector_import_drivers, raster_import_drivers, "raster.");
+	prefixDuplicates(qimagereader_extensions, raster_import_drivers, "raster.");
 	
 	std::cout << "## GDAL/OGR driver list for OpenOrienteering Mapper" << std::endl << std::endl;
 	dumpDriverList("Raster import drivers", std::move(raster_import_drivers));
