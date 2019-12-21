@@ -4,7 +4,7 @@ authors:
   - Peter Hoban
   - Thomas Schoeps
 keywords: Templates
-edited: 25 February 2013
+edited: 21 December 2019
 ---
 
 Images, tracks recorded with GPS receivers and other layers which are used to provide base information for the mapper are called templates. They can be loaded into the map file using the template setup window which is available via the menu item Templates -&gt; Template Setup Window. Templates can also be "abused" to display information on the final map, for example sponsor logos which are only available as raster images.
@@ -15,9 +15,10 @@ Images, tracks recorded with GPS receivers and other layers which are used to pr
 
 OpenOrienteering Mapper supports the following file formats to be loaded as templates:
 
- - [Image templates](#image-templates): bmp, jpg, png, tif, gif files
- - [Track templates](#track-templates): dxf, gpx, osm files
- - [Map templates](#map-templates): omap, ocd files
+ - [Raster images](#image-templates) (bmp, jpg, png, gif and [formats supported by GDAL](gdal.md))
+ - Geospatial vector data (cf. [geospatial data support with GDAL](gdal.md))
+ - [GPX tracks](#track-templates) (gpx)
+ - [Map files](#map-templates) (omap, xmap, ocd)
 
 
 Additionally, templates can be classified into **georeferenced** and **non-georeferenced** templates. For georeferenced templates, information about the exact positioning of the template in a known world coordinate system is available - see [georeferencing](georeferencing.md). This way, they can be positioned on the map automatically provided that the map is georeferenced too. For non-georeferenced templates, this information is not available, so they have to be [positioned manually](#positioning).
@@ -65,11 +66,30 @@ Raster images are loaded as this template type. When opening such a template, th
 
 #### Georeferenced positioning
 
-This option is only available if the image has georeferencing information associated. OpenOrienteering supports this via so-called world files. A world file for an image must have the same file name as the image file and be in the same directory. The world file extension is determined by the image extension: it consists of the first character of the image file extension, then the last character of this extension, and then the letter w. For example, a world file for a bmp file would have the extension bpw, or for tiff it would be tfw. Alternatively, the world file extension can also be wld.
+This option is only available if the image has georeferencing information associated.
+Depending on the format, the information may be embedded (e.g. for GeoTIFF), or
+come in auxiliary files such as so-called world files.
 
-World files are text files containing 6 entries of a transformation matrix mapping pixel coordinates to grid coordinates of some geodesic coordinate reference system ([more information on Wikipedia](http://en.wikipedia.org/wiki/World_file)). Unfortunately, they do not specify which coordinate reference system it is. So if you choose this option for positioning, you have to specify the coordinate reference system in the next step. You should get this information from the place where you got the georeferenced image from. For example, in Germany it is usually UTM or Gauss-Kr&uuml;ger with a limited range of possible middle meridians.
+World files are text files containing 6 entries of a transformation matrix
+mapping pixel coordinates to grid coordinates of some geodesic coordinate reference system
+([more information on Wikipedia](http://en.wikipedia.org/wiki/World_file)).
+Unfortunately, a world file does not specify the actual coordinate reference system.
+So if you choose this option for positioning, you usually have to specify the
+coordinate reference system in the next step. You should get this information
+from the place where you got the georeferenced image from.
 
-In order for georeferenced positioning to work, the map must be georeferenced, too. If it is not at this point in time, the [map georeferencing dialog](georeferencing.md) is shown as the next step, with the reference point coordinates already pre-filled as the center of the loaded image.
+A world file for an image must have the same file name as the image file and
+be located in the same directory.
+The world file extension is determined by the image extension:
+it starts with the first character of the image file extension,
+followed by the last character of this extension, and then the letter 'w'.
+For example, a world file for a png file would have the extension "pgw".
+Alternatively, the world file extension can also be "wld".
+
+In order for georeferenced positioning to work, the map must be georeferenced, too.
+If the georeferencing is not yet configured when loading a georeferenced template,
+the [map georeferencing dialog](georeferencing.md) is shown as the next step,
+with reference point coordinates already pre-filled as the center of the loaded image.
 
 #### Manual positioning
 
@@ -82,7 +102,11 @@ Note that if you do not know the image scale and / or if you are going to adjust
 
 ### Track templates
 
-These templates can be tracks from a GPS receiver (including waypoints) or vector graphics such as dxf files. For the latter, you have to select a coordinate reference system when loading the file. If it is just a drawing which is not georeferenced, select the option "Local" so will not be distorted.
+These templates represent tracks from a GPS receiver or similar.
+By default, mapper uses a special template type to display this type of files.
+However, it is possible to disable this special template type on the
+GDAL [settings](settings.md) page, so that GPX tracks will be handled as
+regular geospatial vector data via [GDAL](gdal.md).
 
 ### Map templates
 
@@ -91,4 +115,3 @@ This template type enables to load other map files as a template. This has two m
  - Loading an old orienteering map as a base map for a new one.
  - Loading a map as a base layer to set a course on top of it.
 
-For now, map templates can only be loaded as non-georeferenced.
