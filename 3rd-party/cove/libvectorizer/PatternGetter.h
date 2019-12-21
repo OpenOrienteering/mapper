@@ -63,7 +63,7 @@ private:
 
 public:
 	SequentialPatternGetter(const QImage& im, MapColor* mc,
-							ProgressObserver* progressObserver = 0);
+							ProgressObserver* progressObserver = nullptr);
 	virtual ~SequentialPatternGetter();
 	virtual const OrganizableElement* getPattern();
 	virtual int getLastElementClass() const;

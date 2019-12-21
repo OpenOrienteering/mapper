@@ -45,7 +45,7 @@ class ColorsEditingDelegate : public QItemDelegate
 	{
 		if (index.column() <= 1)
 		{
-			return 0;
+			return nullptr;
 		}
 		else
 		{
@@ -66,7 +66,7 @@ class ColorsEditingDelegate : public QItemDelegate
 									 Qt::BackgroundRole);
 			QColor c = v.value<QBrush>().color();
 			clr = QColorDialog::getRgba(c.rgb());
-			setModelData(0, model, index);
+			setModelData(nullptr, model, index);
 			event->accept();
 			return true;
 		}
@@ -234,8 +234,8 @@ auto ColorsListModel::getComments()
 //! Form constructor, adds QitemDelegate to initialColorsListView.
 ColorsEditForm::ColorsEditForm(QWidget* parent)
 	: QDialog(parent)
-	, m(0)
-	, d(0)
+	, m(nullptr)
+	, d(nullptr)
 {
 	ui.setupUi(this);
 	ColorsEditingDelegate* d = new ColorsEditingDelegate();
@@ -247,12 +247,12 @@ ColorsEditForm::~ColorsEditForm()
 {
 	if (m)
 	{
-		ui.initialColorsListView->setModel(0);
+		ui.initialColorsListView->setModel(nullptr);
 		delete m;
 	}
 	if (d)
 	{
-		ui.initialColorsListView->setItemDelegate(0);
+		ui.initialColorsListView->setItemDelegate(nullptr);
 		delete d;
 	}
 }
@@ -273,9 +273,9 @@ void ColorsEditForm::setColors(const std::vector<QRgb>& colors,
 {
 	if (m)
 	{
-		ui.initialColorsListView->setModel(0);
+		ui.initialColorsListView->setModel(nullptr);
 		delete m;
-		m = 0;
+		m = nullptr;
 	}
 
 	if (!colors.empty())

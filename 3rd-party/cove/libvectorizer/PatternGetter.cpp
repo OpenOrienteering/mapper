@@ -75,7 +75,7 @@ PatternGetterDataMembers::~PatternGetterDataMembers()
 RandomPatternGetter::RandomPatternGetter(const QImage& im, MapColor* mc)
 	: PatternGetterDataMembers(im, mc)
 {
-	srand(time(NULL));
+	srand(time(nullptr));
 }
 
 /*! Destructor, does nothing.  Needed to avoid compiler warnings. */
@@ -159,11 +159,11 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 												(width * height),
 											0.2)));
 
-				return 0;
+				return nullptr;
 			}
 
 			if (progressObserver && progressObserver->getCancelPressed())
-				return 0;
+				return nullptr;
 		}
 
 		retval->setRGBTriplet(image.pixel(x, y));
@@ -171,7 +171,7 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 	}
 	else
 	{
-		return 0;
+		return nullptr;
 	}
 }
 

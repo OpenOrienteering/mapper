@@ -298,7 +298,7 @@ bool Polygons::findNextPixel(const QImage& image, int& xp, int& yp)
   \param[in,out] x X-ccordinate of the first pixel of the path.
   \param[in,out] y Y-ccordinate of the first pixel of the path.
   \param[in,out] path Pointer to Polygons::Path where the pixel coordinates will
-  be stored. The variable can be NULL in which case no coordinates are recorded.
+  be stored. The variable can be nullptr in which case no coordinates are recorded.
  */
 void Polygons::followPath(const QImage& image, int& x, int& y, Path* path)
 {
@@ -431,7 +431,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 						  ProgressObserver* progressObserver) const
 {
 	path_t* p;
-	path_t* plist = NULL;   /* linked list of path objects */
+	path_t* plist = nullptr;   /* linked list of path objects */
 	path_t** hook = &plist; /* used to speed up appending to linked list */
 
 	Polygon list;

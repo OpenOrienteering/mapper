@@ -72,7 +72,7 @@ public:
 		RandomFromImage,
 		Predefined
 	};
-	ColorsEditForm(QWidget* parent = 0);
+	ColorsEditForm(QWidget* parent = nullptr);
 	~ColorsEditForm();
 	std::vector<QRgb> getColors();
 	std::vector<QString> getComments();

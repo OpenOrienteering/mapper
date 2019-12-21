@@ -134,8 +134,8 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 {
 	ui.setupUi(this);
 
-	vectorizerApp = 0;
-	progressDialog = 0;
+	vectorizerApp = nullptr;
+	progressDialog = nullptr;
 
 	setTabEnabled(ui.imageTab, true);
 	setTabEnabled(ui.thinningTab, false);
@@ -160,7 +160,7 @@ void mainForm::clearBWImageTab()
 	bwImageClearHistory();
 	ui.bwImageView->setPolygons(Polygons::PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
-	ui.bwImageView->setImage(0);
+	ui.bwImageView->setImage(nullptr);
 }
 
 //! Clears the Colors tab, i.e. removes displayed image and color buttons
@@ -172,7 +172,7 @@ void mainForm::clearColorsTab()
 	}
 	else
 	{
-		ui.classifiedColorsView->setImage(0);
+		ui.classifiedColorsView->setImage(nullptr);
 	}
 	clearColorButtonsGroup();
 }
@@ -231,7 +231,7 @@ void mainForm::aboutDialog()
  * makes an average color of its pixels. */
 QRgb mainForm::getColorFromImage(const QImage& image)
 {
-	srand(time(NULL));
+	srand(time(nullptr));
 	unsigned long r, g, b, divisor;
 	r = g = b = divisor = 0;
 	for (int a = 0; a < 5; a++)
@@ -345,7 +345,7 @@ void mainForm::classificationFinished()
 			vectorizerApp->getClassifiedImage(&quality, progressDialog);
 		progressDialog->percentageChanged(100);
 		progressDialog->deleteLater();
-		progressDialog = 0;
+		progressDialog = nullptr;
 		if (!newClassifiedBitmap.isNull())
 		{
 			classifiedBitmap = newClassifiedBitmap;
@@ -478,7 +478,7 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		vectorizerApp->getBWImage(selectedColors, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (!newBWBitmap.isNull())
 	{
 		bwBitmap = newBWBitmap;
@@ -517,7 +517,7 @@ bool mainForm::performMorphologicalOperation(
 		Vectorizer::getTransformedImage(bwBitmap, mo, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 
 	if (!transBitmap.isNull())
 	{
@@ -789,7 +789,7 @@ void mainForm::on_createVectorsButton_clicked()
 	*q = p.createPolygonsFromImage(bwBitmap, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (q->empty())
 	{
 		delete q;
@@ -915,7 +915,7 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 		f.apply(imageBitmap, qRgb(127, 127, 127), progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;
 	ui.imageView->setImage(&imageBitmap);
 }

@@ -171,19 +171,19 @@ private:
 	inline float dstfun(const dpoint_t* a, const dpoint_t* b, const dpoint_t* c,
 						const dpoint_t* d) const;
 	bool joinPolygons(path_t*& plist,
-					  ProgressObserver* progressObserver = 0) const;
+					  ProgressObserver* progressObserver = nullptr) const;
 
 protected:
 	static bool findNextPixel(const QImage& image, int& xp, int& yp);
-	static void followPath(const QImage& image, int& x, int& y, Path* path = 0);
+	static void followPath(const QImage& image, int& x, int& y, Path* path = nullptr);
 	static Path recordPath(const QImage& image, const int initX,
 						   const int initY);
 	static void removePathFromImage(QImage& image, const Path& path);
 	PathList
 	decomposeImageIntoPaths(const QImage& sourceImage,
-							ProgressObserver* progressObserver = 0) const;
+							ProgressObserver* progressObserver = nullptr) const;
 	PolygonList getPathPolygons(const PathList& constpaths,
-								ProgressObserver* progressObserver = 0) const;
+								ProgressObserver* progressObserver = nullptr) const;
 	static float distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
 
 public:
@@ -198,7 +198,7 @@ public:
 	double distDirRatio() const;
 	PolygonList
 	createPolygonsFromImage(const QImage& image,
-							ProgressObserver* progressObserver = 0) const;
+							ProgressObserver* progressObserver = nullptr) const;
 	// search for best value of NPOINTS_MAX - optinpoints.cpp
 	friend void perfcheck(void);
 };

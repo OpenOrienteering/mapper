@@ -46,7 +46,7 @@ private:
 	PaintablePolygonList polygonsList;
 
 public:
-	PolyImageWidget(QWidget* parent = 0);
+	PolyImageWidget(QWidget* parent = nullptr);
 	Polygons::PolygonList polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
 	virtual void paintEvent(QPaintEvent* pe);
@@ -55,7 +55,7 @@ public:
 class QPolygonsView : public QImageView
 {
 public:
-	QPolygonsView(QWidget* parent = 0);
+	QPolygonsView(QWidget* parent = nullptr);
 	Polygons::PolygonList polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
 };

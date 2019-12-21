@@ -77,7 +77,7 @@ protected:
 
 public:
 	mainForm(QWidget* parent, OpenOrienteering::Map* map,
-			 OpenOrienteering::TemplateImage* templ, Qt::WindowFlags flags = 0);
+	         OpenOrienteering::TemplateImage* templ, Qt::WindowFlags flags = {});
 	~mainForm();
 	void loadImage(const QImage& imageToLoad, const QString& imageName);
 	void clearColorButtonsGroup();

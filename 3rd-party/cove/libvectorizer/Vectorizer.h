@@ -97,16 +97,16 @@ public:
 	virtual void setE(int E);
 	virtual void setNumberOfColors(int nColors);
 	virtual void setInitColors(const std::vector<QRgb>& initColors);
-	virtual bool performClassification(ProgressObserver* progressObserver = 0);
+	virtual bool performClassification(ProgressObserver* progressObserver = nullptr);
 	std::vector<QRgb> getClassifiedColors();
-	virtual QImage getClassifiedImage(double* qualityPtr = 0,
-									  ProgressObserver* progressObserver = 0);
+	virtual QImage getClassifiedImage(double* qualityPtr = nullptr,
+	                                  ProgressObserver* progressObserver = nullptr);
 	virtual QImage getBWImage(std::vector<bool> selectedColors,
-							  ProgressObserver* progressObserver = 0);
+	                          ProgressObserver* progressObserver = nullptr);
 	virtual QImage getTransformedImage(MorphologicalOperation mo,
-									   ProgressObserver* progressObserver = 0);
+	                                   ProgressObserver* progressObserver = nullptr);
 	static QImage getTransformedImage(QImage bwImage, MorphologicalOperation mo,
-									  ProgressObserver* progressObserver = 0);
+	                                  ProgressObserver* progressObserver = nullptr);
 };
 } // cove
 

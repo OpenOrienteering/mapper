@@ -40,7 +40,7 @@ protected:
 	virtual void paintEvent(QPaintEvent* pe);
 
 public:
-	ImageWidget(QWidget* parent = 0);
+	ImageWidget(QWidget* parent = nullptr);
 	virtual ~ImageWidget();
 	const QImage* image() const;
 	void setImage(const QImage* im);
@@ -74,7 +74,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event);
 
 public:
-	QImageView(QWidget* parent = 0);
+	QImageView(QWidget* parent = nullptr);
 	void reset();
 	const QImage* image() const;
 	void setImage(const QImage* im);

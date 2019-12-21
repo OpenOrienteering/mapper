@@ -38,7 +38,7 @@ public:
 	FIRFilter& a(double center);
 	QImage apply(const QImage& source,
 				 QRgb outOfBoundsColor = qRgb(128, 128, 128),
-				 ProgressObserver* progressObserver = 0);
+				 ProgressObserver* progressObserver = nullptr);
 };
 } // cove
 

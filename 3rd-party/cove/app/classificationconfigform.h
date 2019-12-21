@@ -56,7 +56,7 @@ public:
 	int colorSpace;
 	double p;
 
-	ClassificationConfigForm(QWidget* parent = 0);
+	ClassificationConfigForm(QWidget* parent = nullptr);
 	void accept();
 	void setValues();
 

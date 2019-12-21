@@ -35,7 +35,7 @@ public:
 	double speckleSize, joinDistance, distDirBalance, cornerMin, optTolerance;
 	bool doConnections, simpleConnectionsOnly;
 
-	VectorizationConfigForm(QWidget* parent = 0);
+	VectorizationConfigForm(QWidget* parent = nullptr);
 	void accept();
 	void setValues();
 

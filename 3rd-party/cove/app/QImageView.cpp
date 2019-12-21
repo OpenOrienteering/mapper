@@ -69,7 +69,7 @@ namespace cove {
 //! Default constructor.
 ImageWidget::ImageWidget(QWidget* parent)
 	: QWidget(parent)
-	, dispImage(0)
+	, dispImage(nullptr)
 	, dispMagnification(1)
 	, scalingSmooth(false)
 	, dispRealPaintEnabled(true)

@@ -34,7 +34,7 @@ protected:
 
 public:
 	UIProgressDialog(const QString& labelText, const QString& cancelButtonText,
-					 QWidget* creator = 0, Qt::WindowFlags f = 0);
+	                 QWidget* creator = nullptr, Qt::WindowFlags f = {});
 	virtual ~UIProgressDialog();
 	virtual void percentageChanged(int percentage) override;
 	virtual bool getCancelPressed() override;

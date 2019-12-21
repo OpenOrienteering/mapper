@@ -43,7 +43,7 @@ namespace cove {
 //! Constructor
 Morphology::Morphology(const QImage& img)
 	: image(img)
-	, thinnedImage(0)
+	, thinnedImage(nullptr)
 {
 	if (image.depth() > 1) qWarning("Morphology:: can thin only 1bpp images");
 }
