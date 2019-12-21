@@ -111,6 +111,9 @@ endif()
 if(Mapper_PACKAGE_ASSISTANT)
 	list(APPEND third_party_components qttools)
 endif()
+if(TARGET cove)
+	list(APPEND third_party_components potrace)
+endif()
 
 message(STATUS "Direct third-party components: ${third_party_components}")
 
@@ -129,6 +132,11 @@ set(explicit_copyright_GPL-3
 set(explicit_copyright_qtsingleapplication
   "qtsingleapplication.txt"
   "${PROJECT_SOURCE_DIR}/3rd-party/qtsingleapplication/copyright"
+  "3rd-party"
+)
+set(explicit_copyright_potrace
+  "potrace-1.6.txt"
+  "${PROJECT_SOURCE_DIR}/3rd-party/cove/potrace/copyright"
   "3rd-party"
 )
 if(Mapper_BUILD_CLIPPER)
