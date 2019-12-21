@@ -38,6 +38,7 @@
 #include <QStringList>
 #include <QVariant>
 
+#include "gdal/gdal_extensions.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
 
@@ -240,27 +241,8 @@ private:
 	
 	void updateExtensions(QSettings& settings)
 	{
-		// Some extensions are to be used with QImageReader/TemplateImage.
-		// The GDAL raster driver will be regarded as secondary and get its
-		// ambiguous extensions prefixed with "raster.".
-		static const ExtensionList qimagereader_extensions {
-			"bmp",
-			"gif",
-			"jpeg",
-			"jpg",
-			"png",
-		};
-		
-		// In case of extensions which are claimed by both vector and raster
-		// drivers, the raster driver will be regarded as secondary and get its
-		// ambiguous extensions prefixed with "raster.". However, by naming a
-		// vector driver here, that driver will become secondary and get its
-		// ambiguous extensions prefixed by "vector."
-		static const QByteArray secondary_vector_drivers {
-			"JP2OpenJPEG,"
-			"MBTiles,"
-			"PCIDSK,"
-		};
+		static auto const qimagereader_extensions = gdal::qImageReaderExtensions<ExtensionList>();
+		static auto const secondary_vector_drivers = gdal::secondaryVectorDrivers<QByteArray>();
 		ExtensionList secondary_vector_extensions;
 		
 		auto count = GDALGetDriverCount();
@@ -310,6 +292,7 @@ private:
 		}
 		settings.endGroup();
 		
+		// This block is duplicated in mapper_gdal_info.cpp dumpGdalDrivers().
 		// Prefix ambiguous extensions for known vector drivers
 		prefixDuplicates(enabled_raster_import_extensions, secondary_vector_extensions, "vector.");
 		enabled_vector_import_extensions.insert(end(enabled_vector_import_extensions), begin(secondary_vector_extensions), end(secondary_vector_extensions));
