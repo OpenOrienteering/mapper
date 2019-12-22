@@ -31,7 +31,7 @@ private slots:
 
 private:
 	void saveResults(const cove::Polygons::PolygonList& polys,
-					 const QString& filename);
-	bool compareResults(const cove::Polygons::PolygonList& polys,
-						const QString& filename);
+	                 const QString& filename) const;
+	void compareResults(const cove::Polygons::PolygonList& polys,
+	                    const QString& filename) const;
 };

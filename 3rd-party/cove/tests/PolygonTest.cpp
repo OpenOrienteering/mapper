@@ -19,9 +19,6 @@
 
 #include "PolygonTest.h"
 
-#include <algorithm>
-#include <vector>
-
 #include <QDataStream>
 #include <QFile>
 #include <QIODevice>
@@ -71,53 +68,52 @@ void PolygonTest::testJoins()
 	}
 
 	//    saveResults(polys, QFINDTESTDATA(resultFile));
-	QVERIFY(compareResults(polys, QFINDTESTDATA(resultFile)));
+	compareResults(polys, QFINDTESTDATA(resultFile));
 }
 
 void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
-							  const QString& filename)
+							  const QString& filename) const
 {
 	QFile file(filename);
 	file.open(QIODevice::WriteOnly);
 	QDataStream out(&file);
 
-	foreach (auto poly, polys)
+	for (auto const& poly : polys)
 	{
 		out << poly.isClosed();
-		out << (quint32)poly.size();
-
-		std::for_each(poly.begin(), poly.end(),
-					  [&](const auto p) { out << (double)p.x << (double)p.y; });
+		out << quint32(poly.size());
+		for (auto const& p : poly)
+			out << double(p.x) << double(p.y);
 	}
 }
 
-bool PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
-								 const QString& filename)
+void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
+								 const QString& filename) const
 {
 	QFile file(filename);
-	file.open(QIODevice::ReadOnly);
+	QVERIFY(file.open(QIODevice::ReadOnly));
 	QDataStream in(&file);
 
-	foreach (auto poly, polys)
+	for (auto const& poly : polys)
 	{
 		bool isClosed;
 		in >> isClosed;
-		if (poly.isClosed() != isClosed) return false;
+		QCOMPARE(poly.isClosed(), isClosed);
 
 		quint32 polyLength;
 		in >> polyLength;
-		if (polyLength != poly.size()) return false;
+		QCOMPARE(quint32(poly.size()), polyLength);
 
-		bool all_ok = true;
-		std::for_each(poly.begin(), poly.end(), [&](const auto p) {
+		for (auto const& p : poly)
+		{
 			double x, y;
 			in >> x >> y;
-			if (x != p.x || y != p.y) all_ok = false;
-		});
-		if (!all_ok) return false;
+			if (!qIsNull(p.x) && !qIsNull(x))
+				QCOMPARE(p.x, x);
+			if (!qIsNull(p.y) && !qIsNull(y))
+				QCOMPARE(p.y, y);
+		}
 	}
-
-	return true;
 }
 
 QTEST_MAIN(PolygonTest)
