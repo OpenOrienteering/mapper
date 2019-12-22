@@ -1,6 +1,8 @@
-find_package(Qt5 COMPONENTS Core Gui Widgets Concurrent REQUIRED)
-
 project(Cove)
+
+find_package(Qt5Core ${Qt5Core_VERSION} REQUIRED)
+find_package(Qt5Widgets ${Qt5Core_VERSION} REQUIRED)
+find_package(Qt5Concurrent ${Qt5Core_VERSION} REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOUIC ON)
