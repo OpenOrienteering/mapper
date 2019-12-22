@@ -68,7 +68,7 @@ public:
 	const OrganizableElement* getPattern() override;
 	int getLastElementClass() const override;
 	void setLastElementClass(int classNumber) override;
-	void reset() override;
+	void reset() final;
 	int numberOfChanges() override;
 	virtual QImage* getClassifiedImage();
 };

@@ -61,7 +61,7 @@ public:
 	MapColorRGB(QRgb i, double ip = 2);
 	OrganizableElement* clone() const override;
 	QRgb getRGBTriplet() const override;
-	void setRGBTriplet(QRgb i) override;
+	void setRGBTriplet(QRgb i) final;
 };
 
 class MapColorHSV : public MapColor
@@ -71,7 +71,7 @@ public:
 	MapColorHSV(QRgb i, double ip = 2);
 	OrganizableElement* clone() const override;
 	QRgb getRGBTriplet() const override;
-	void setRGBTriplet(QRgb i) override;
+	void setRGBTriplet(QRgb i) final;
 };
 } // cove
 
