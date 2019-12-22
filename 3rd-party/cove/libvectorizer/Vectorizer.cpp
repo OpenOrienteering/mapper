@@ -440,7 +440,7 @@ public:
 	{
 	}
 
-	virtual bool operator()(const ImagePart& p) override
+	bool operator()(const ImagePart& p) override
 	{
 		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
 		int width = outputImage.width();
@@ -543,7 +543,7 @@ public:
 	{
 	}
 
-	virtual bool operator()(const ImagePart& p) override
+	bool operator()(const ImagePart& p) override
 	{
 		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
 		int width = outputImage.width();

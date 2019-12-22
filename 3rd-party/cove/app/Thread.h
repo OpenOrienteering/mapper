@@ -36,8 +36,8 @@ protected:
 
 public:
 	ClassificationThread() = delete;
-	ClassificationThread(Vectorizer& v, UIProgressDialog* const p, QObject* parent = nullptr);
-	virtual void run();
+	ClassificationThread(Vectorizer& v, UIProgressDialog* p, QObject* parent = nullptr);
+	void run() override;
 };
 } // cove
 

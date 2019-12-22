@@ -54,7 +54,7 @@ public:
 	PolyImageWidget(QWidget* parent = nullptr);
 	Polygons::PolygonList polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
-	virtual void paintEvent(QPaintEvent* pe);
+	void paintEvent(QPaintEvent* pe) override;
 };
 
 class QPolygonsView : public QImageView

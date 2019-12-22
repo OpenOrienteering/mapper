@@ -46,8 +46,8 @@ private:
 
 public:
 	RandomPatternGetter(const QImage& im, MapColor* mc);
-	virtual ~RandomPatternGetter();
-	virtual const OrganizableElement* getPattern();
+	~RandomPatternGetter() override;
+	const OrganizableElement* getPattern() override;
 };
 
 class SequentialPatternGetter : public BatchPatternGetter,
@@ -64,12 +64,12 @@ private:
 public:
 	SequentialPatternGetter(const QImage& im, MapColor* mc,
 	                        ProgressObserver* progressObserver = nullptr);
-	virtual ~SequentialPatternGetter();
-	virtual const OrganizableElement* getPattern();
-	virtual int getLastElementClass() const;
-	virtual void setLastElementClass(int classNumber);
-	virtual void reset();
-	virtual int numberOfChanges();
+	~SequentialPatternGetter() override;
+	const OrganizableElement* getPattern() override;
+	int getLastElementClass() const override;
+	void setLastElementClass(int classNumber) override;
+	void reset() override;
+	int numberOfChanges() override;
 	virtual QImage* getClassifiedImage();
 };
 } // cove

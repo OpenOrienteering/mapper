@@ -43,11 +43,11 @@ protected:
 	bool scalingSmooth;
 	bool dispRealPaintEnabled;
 	QRect drect;
-	virtual void paintEvent(QPaintEvent* pe);
+	void paintEvent(QPaintEvent* pe) override;
 
 public:
 	ImageWidget(QWidget* parent = nullptr);
-	virtual ~ImageWidget();
+	~ImageWidget() override;
 	const QImage* image() const;
 	void setImage(const QImage* im);
 	float magnification() const;
@@ -74,10 +74,10 @@ protected:
 		ZOOM_OUT
 	} opMode;
 	int lastSliderHPos, lastSliderVPos;
-	void wheelEvent(QWheelEvent* event);
-	void mousePressEvent(QMouseEvent* event);
-	void mouseMoveEvent(QMouseEvent* event);
-	void mouseReleaseEvent(QMouseEvent* event);
+	void wheelEvent(QWheelEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
 	QImageView(QWidget* parent = nullptr);

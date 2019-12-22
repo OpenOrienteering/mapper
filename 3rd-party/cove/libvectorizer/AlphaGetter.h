@@ -37,8 +37,8 @@ public:
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha);
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha,
 	                   ProgressObserver* progressObserver);
-	virtual double getAlpha();
-	virtual unsigned int getE();
+	double getAlpha() override;
+	unsigned int getE() override;
 
 	virtual void setAlpha(double alpha);
 	virtual void setMinAlpha(double minAlpha);

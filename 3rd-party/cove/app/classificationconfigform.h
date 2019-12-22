@@ -41,7 +41,7 @@ public:
 	QDoubleInfValidator(QObject* parent);
 	QDoubleInfValidator(double bottom, double top, int decimals,
 	                    QObject* parent);
-	virtual QValidator::State validate(QString& input, int& pos) const;
+	QValidator::State validate(QString& input, int& pos) const override;
 };
 } // classificationconfigform_private
 
@@ -64,7 +64,7 @@ public:
 	double p;
 
 	ClassificationConfigForm(QWidget* parent = nullptr);
-	void accept();
+	void accept() override;
 	void setValues();
 
 public slots:

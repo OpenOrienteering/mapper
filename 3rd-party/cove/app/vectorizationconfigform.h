@@ -40,11 +40,11 @@ public:
 	bool doConnections, simpleConnectionsOnly;
 
 	VectorizationConfigForm(QWidget* parent = nullptr);
-	void accept();
+	void accept() override;
 	void setValues();
 
 public slots:
-	int exec();
+	int exec() override;
 	void on_simpleConnectionsCheckBox_toggled(bool);  // clazy:exclude=connect-by-name
 	void on_doConnectionsCheckBox_toggled(bool);      // clazy:exclude=connect-by-name
 };

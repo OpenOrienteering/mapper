@@ -52,9 +52,9 @@ class ColorsEditingDelegate : public QItemDelegate
 
 	//! Reimplemented QItemDelegate::createEditor returning 0 on the first two
 	// columns, calling QItemDelegate::createEditor otherwise.
-	virtual QWidget* createEditor(QWidget* parent,
-								  const QStyleOptionViewItem& option,
-								  const QModelIndex& index) const
+	QWidget* createEditor(QWidget* parent,
+	                      const QStyleOptionViewItem& option,
+	                      const QModelIndex& index) const override
 	{
 		if (index.column() <= 1)
 		{
@@ -69,9 +69,9 @@ class ColorsEditingDelegate : public QItemDelegate
 	//! Reimplemented QItemDelegate::editorEvent spawning QColorDialog and
 	// returning true on the first two columns, calling
 	// QItemDelegate::editorEvent otherwise.
-	virtual bool editorEvent(QEvent* event, QAbstractItemModel* model,
-							 const QStyleOptionViewItem& option,
-							 const QModelIndex& index)
+	bool editorEvent(QEvent* event, QAbstractItemModel* model,
+	                 const QStyleOptionViewItem& option,
+	                 const QModelIndex& index) override
 	{
 		if (event->type() == QEvent::MouseButtonDblClick && index.column() <= 1)
 		{
@@ -90,7 +90,7 @@ class ColorsEditingDelegate : public QItemDelegate
 	//! to
 	// the model.
 	void setModelData(QWidget* editor, QAbstractItemModel* model,
-					  const QModelIndex& index) const
+	                  const QModelIndex& index) const override
 	{
 		if (index.column() <= 1)
 		{

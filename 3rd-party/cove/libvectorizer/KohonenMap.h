@@ -33,7 +33,7 @@ public:
 	virtual double squares(const OrganizableElement& y) const = 0;
 	virtual void add(const OrganizableElement& y) = 0;
 	virtual void substract(const OrganizableElement& y) = 0;
-	virtual void multiply(const double y) = 0;
+	virtual void multiply(double y) = 0;
 };
 
 class KohonenAlphaGetter
@@ -54,7 +54,7 @@ public:
 class BatchPatternGetter : public KohonenPatternGetter
 {
 public:
-	virtual ~BatchPatternGetter();
+	~BatchPatternGetter() override;
 	virtual int getLastElementClass() const = 0;
 	virtual void setLastElementClass(int classNumber) = 0;
 	virtual void reset() = 0;

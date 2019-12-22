@@ -48,14 +48,14 @@ private:
 public:
 	ColorsListModel(const std::vector<QRgb>& colors,
 	                const std::vector<QString>& comments);
-	virtual int rowCount(const QModelIndex&) const;
-	virtual int columnCount(const QModelIndex&) const;
-	virtual QVariant data(const QModelIndex& index, int role) const;
-	virtual QVariant headerData(int section, Qt::Orientation orientation,
-	                            int role) const;
-	virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-	virtual bool setData(const QModelIndex& index, const QVariant& value,
-	                     int role);
+	int rowCount(const QModelIndex&) const override;
+	int columnCount(const QModelIndex&) const override;
+	QVariant data(const QModelIndex& index, int role) const override;
+	QVariant headerData(int section, Qt::Orientation orientation,
+	                    int role) const override;
+	Qt::ItemFlags flags(const QModelIndex& index) const override;
+	bool setData(const QModelIndex& index, const QVariant& value,
+	             int role) override;
 
 	auto getColors();
 	auto getComments();
@@ -80,7 +80,7 @@ public:
 		Predefined
 	};
 	ColorsEditForm(QWidget* parent = nullptr);
-	~ColorsEditForm();
+	~ColorsEditForm() override;
 	std::vector<QRgb> getColors();
 	std::vector<QString> getComments();
 	void setColors(const std::vector<QRgb>& colors,

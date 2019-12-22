@@ -42,14 +42,14 @@ protected:
 	MapColor(int i1, int i2, int i3, double ip = 2);
 
 public:
-	virtual ~MapColor() override;
-	virtual double distance(const OrganizableElement& y) const override;
-	virtual double squares(const OrganizableElement& y) const override;
-	virtual void add(const OrganizableElement& y) override;
-	virtual void substract(const OrganizableElement& y) override;
-	virtual void multiply(const double y) override;
+	~MapColor() override;
+	double distance(const OrganizableElement& y) const override;
+	double squares(const OrganizableElement& y) const override;
+	void add(const OrganizableElement& y) override;
+	void substract(const OrganizableElement& y) override;
+	void multiply(double y) override;
 	virtual QRgb getRGBTriplet() const = 0;
-	virtual void setRGBTriplet(const QRgb i) = 0;
+	virtual void setRGBTriplet(QRgb i) = 0;
 	void setP(double p);
 	double getP();
 };
@@ -59,9 +59,9 @@ class MapColorRGB : public MapColor
 public:
 	MapColorRGB(double ip = 2);
 	MapColorRGB(QRgb i, double ip = 2);
-	virtual OrganizableElement* clone() const override;
-	virtual QRgb getRGBTriplet() const override;
-	virtual void setRGBTriplet(const QRgb i) override;
+	OrganizableElement* clone() const override;
+	QRgb getRGBTriplet() const override;
+	void setRGBTriplet(QRgb i) override;
 };
 
 class MapColorHSV : public MapColor
@@ -69,9 +69,9 @@ class MapColorHSV : public MapColor
 public:
 	MapColorHSV(double ip = 2);
 	MapColorHSV(QRgb i, double ip = 2);
-	virtual OrganizableElement* clone() const override;
-	virtual QRgb getRGBTriplet() const override;
-	virtual void setRGBTriplet(const QRgb i) override;
+	OrganizableElement* clone() const override;
+	QRgb getRGBTriplet() const override;
+	void setRGBTriplet(QRgb i) override;
 };
 } // cove
 
