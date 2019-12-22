@@ -40,7 +40,7 @@ class QDoubleInfValidator : public QDoubleValidator
 public:
 	QDoubleInfValidator(QObject* parent);
 	QDoubleInfValidator(double bottom, double top, int decimals,
-						QObject* parent);
+	                    QObject* parent);
 	virtual QValidator::State validate(QString& input, int& pos) const;
 };
 } // classificationconfigform_private

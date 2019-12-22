@@ -72,7 +72,7 @@ public:
 	int findClosest(const OrganizableElement& v, double& bestDistance) const;
 	void learn(const OrganizableElement& v, double alfa);
 	void performLearning(KohonenAlphaGetter& alphaGetter,
-						 KohonenPatternGetter& patternGetter);
+	                     KohonenPatternGetter& patternGetter);
 	double performBatchLearning(BatchPatternGetter& patternGetter);
 };
 } // cove

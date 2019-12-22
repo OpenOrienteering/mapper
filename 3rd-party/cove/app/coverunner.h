@@ -31,7 +31,7 @@ class CoveRunner
 {
 public:
 	void run(OpenOrienteering::MainWindow* parent, OpenOrienteering::Map* map,
-			 OpenOrienteering::TemplateImage* templ);
+	         OpenOrienteering::TemplateImage* templ);
 };
 } // cove
 

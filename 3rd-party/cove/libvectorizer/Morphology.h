@@ -35,9 +35,9 @@ protected:
 	static bool isPrunable[];
 	QImage image, thinnedImage;
 	bool runMorpholo(bool* table, bool insert,
-					 ProgressObserver* progressObserver = nullptr);
+	                 ProgressObserver* progressObserver = nullptr);
 	int modifyImage(bool* table, bool insert,
-					ProgressObserver* progressObserver = nullptr);
+	                ProgressObserver* progressObserver = nullptr);
 
 public:
 	Morphology(const QImage& img);

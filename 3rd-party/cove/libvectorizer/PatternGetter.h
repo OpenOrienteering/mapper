@@ -39,7 +39,7 @@ protected:
 };
 
 class RandomPatternGetter : public KohonenPatternGetter,
-							protected PatternGetterDataMembers
+                            protected PatternGetterDataMembers
 {
 private:
 	RandomPatternGetter();
@@ -51,7 +51,7 @@ public:
 };
 
 class SequentialPatternGetter : public BatchPatternGetter,
-								protected PatternGetterDataMembers
+                                protected PatternGetterDataMembers
 {
 protected:
 	QImage classifiedImage;
@@ -63,7 +63,7 @@ private:
 
 public:
 	SequentialPatternGetter(const QImage& im, MapColor* mc,
-							ProgressObserver* progressObserver = nullptr);
+	                        ProgressObserver* progressObserver = nullptr);
 	virtual ~SequentialPatternGetter();
 	virtual const OrganizableElement* getPattern();
 	virtual int getLastElementClass() const;

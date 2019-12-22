@@ -47,15 +47,15 @@ private:
 
 public:
 	ColorsListModel(const std::vector<QRgb>& colors,
-					const std::vector<QString>& comments);
+	                const std::vector<QString>& comments);
 	virtual int rowCount(const QModelIndex&) const;
 	virtual int columnCount(const QModelIndex&) const;
 	virtual QVariant data(const QModelIndex& index, int role) const;
 	virtual QVariant headerData(int section, Qt::Orientation orientation,
-								int role) const;
+	                            int role) const;
 	virtual Qt::ItemFlags flags(const QModelIndex& index) const;
 	virtual bool setData(const QModelIndex& index, const QVariant& value,
-						 int role);
+	                     int role);
 
 	auto getColors();
 	auto getComments();
@@ -84,7 +84,7 @@ public:
 	std::vector<QRgb> getColors();
 	std::vector<QString> getComments();
 	void setColors(const std::vector<QRgb>& colors,
-				   const std::vector<QString>& comments);
+	               const std::vector<QString>& comments);
 	ColorsSource getColorsSource();
 	void setColorsSource(ColorsSource s);
 

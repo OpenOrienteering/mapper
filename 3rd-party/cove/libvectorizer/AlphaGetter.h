@@ -36,7 +36,7 @@ public:
 	ClassicAlphaGetter(ProgressObserver* progressObserver);
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha);
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha,
-					   ProgressObserver* progressObserver);
+	                   ProgressObserver* progressObserver);
 	virtual double getAlpha();
 	virtual unsigned int getE();
 
