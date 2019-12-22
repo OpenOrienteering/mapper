@@ -20,7 +20,7 @@
 #include <QObject>
 #include <QString>
 
-#include "app/Polygons.h"
+#include "libvectorizer/Polygons.h"
 
 class PolygonTest : public QObject
 {

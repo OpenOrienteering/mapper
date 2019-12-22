@@ -19,6 +19,7 @@ add_library(cove-vectorizer STATIC
     libvectorizer/MapColor.cpp
     libvectorizer/Morphology.cpp
     libvectorizer/PatternGetter.cpp
+    libvectorizer/Polygons.cpp
     libvectorizer/Vectorizer.cpp
     libvectorizer/ParallelImageProcessing.h
 )
@@ -37,7 +38,6 @@ set(Cove_SRCS
     app/coverunner.cpp
     app/FIRFilter.cpp
     app/mainform.cpp
-    app/Polygons.cpp
     app/QImageView.cpp
     app/QPolygonsView.cpp
     app/Settings.cpp

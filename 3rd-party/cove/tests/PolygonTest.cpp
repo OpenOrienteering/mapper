@@ -29,7 +29,7 @@
 #include <QtGlobal>
 #include <QtTest>
 
-#include "app/Polygons.h"
+#include "libvectorizer/Polygons.h"
 
 void PolygonTest::testJoins_data()
 {

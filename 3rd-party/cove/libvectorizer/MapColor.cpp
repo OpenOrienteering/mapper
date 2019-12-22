@@ -24,6 +24,8 @@
 #include <QColor>
 #include <QtGlobal>
 
+#include "KohonenMap.h"  // IWYU pragma: keep
+
 namespace cove {
 /*! \class MapColor
  * \brief This class represents a color layer in topographic map.

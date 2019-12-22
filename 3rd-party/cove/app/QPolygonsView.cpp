@@ -34,6 +34,8 @@
 #include <QSizeF>
 #include <Qt>
 
+#include "libvectorizer/Polygons.h"
+
 #include "QImageView.h"
 
 class QPaintEvent;

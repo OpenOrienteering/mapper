@@ -14,7 +14,7 @@ add_executable(cove-PolygonTest
 )
 target_link_libraries(cove-PolygonTest
   PRIVATE
-    cove
+    cove-vectorizer
     Qt5::Test
     Qt5::Gui
 )

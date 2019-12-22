@@ -24,7 +24,8 @@
 
 #include <QPainterPath>
 
-#include "Polygons.h"
+#include "libvectorizer/Polygons.h"
+
 #include "QImageView.h"
 
 class QPaintEvent;

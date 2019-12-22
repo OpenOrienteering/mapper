@@ -55,10 +55,10 @@
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
+#include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
 #include "FIRFilter.h"
-#include "Polygons.h"
 #include "QImageView.h"
 #include "QPolygonsView.h"
 #include "Settings.h"

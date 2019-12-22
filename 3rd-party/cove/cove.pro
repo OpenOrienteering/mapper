@@ -11,7 +11,6 @@ HEADERS += \
     app/colorseditform.h \
     app/FIRFilter.h \
     app/mainform.h \
-    app/Polygons.h \
     app/QImageView.h \
     app/QPolygonsView.h \
     app/Settings.h \
@@ -23,6 +22,7 @@ HEADERS += \
     libvectorizer/MapColor.h \
     libvectorizer/Morphology.h \
     libvectorizer/PatternGetter.h \
+    libvectorizer/Polygons.h \
     libvectorizer/Vectorizer.h \
     potrace/auxiliary.h \
     potrace/config.h \
@@ -38,7 +38,6 @@ SOURCES += \
     app/colorseditform.cpp \
     app/FIRFilter.cpp \
     app/mainform.cpp \
-    app/Polygons.cpp \
     app/QImageView.cpp \
     app/QPolygonsView.cpp \
     app/Settings.cpp \
@@ -50,6 +49,7 @@ SOURCES += \
     libvectorizer/MapColor.cpp \
     libvectorizer/Morphology.cpp \
     libvectorizer/PatternGetter.cpp \
+    libvectorizer/Polygons.cpp \
     libvectorizer/Vectorizer.cpp \
     potrace/curve.c \
     potrace/potracelib.c \

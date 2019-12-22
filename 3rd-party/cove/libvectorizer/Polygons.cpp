@@ -37,7 +37,7 @@
 #include <QImage>
 #include <QRect>
 
-#include "libvectorizer/Vectorizer.h"
+#include "Vectorizer.h"
 
 #define JOIN_DEBUG 0
 #define JOIN_DEBUG_PRINT(...)            \
