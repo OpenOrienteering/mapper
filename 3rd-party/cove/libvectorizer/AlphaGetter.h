@@ -20,7 +20,7 @@
 #ifndef COVE_ALPHAGETTER_H
 #define COVE_ALPHAGETTER_H
 
-#include "libvectorizer/KohonenMap.h"
+#include "KohonenMap.h"
 
 namespace cove {
 class ProgressObserver;

@@ -34,6 +34,8 @@
 #include <QSizeF>
 #include <Qt>
 
+#include "QImageView.h"
+
 class QPaintEvent;
 class QWidget;
 

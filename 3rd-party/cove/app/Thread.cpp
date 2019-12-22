@@ -19,8 +19,9 @@
 
 #include "Thread.h"
 
-#include "app/UIProgressDialog.h"
 #include "libvectorizer/Vectorizer.h"
+
+#include "UIProgressDialog.h"
 
 class QObject;
 

@@ -31,8 +31,9 @@
 #include <QString>
 #include <Qt>
 
-#include "Settings.h"
 #include "libvectorizer/Vectorizer.h"
+
+#include "Settings.h"
 #include "ui_mainform.h"
 
 class QPushButton;

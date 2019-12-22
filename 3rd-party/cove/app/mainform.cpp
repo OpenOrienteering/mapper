@@ -55,17 +55,18 @@
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
-#include "app/FIRFilter.h"
-#include "app/Polygons.h"
-#include "app/QImageView.h"
-#include "app/QPolygonsView.h"
-#include "app/Settings.h"
-#include "app/Thread.h"
-#include "app/UIProgressDialog.h"
-#include "app/classificationconfigform.h"
-#include "app/colorseditform.h"
-#include "app/vectorizationconfigform.h"
 #include "libvectorizer/Vectorizer.h"
+
+#include "FIRFilter.h"
+#include "Polygons.h"
+#include "QImageView.h"
+#include "QPolygonsView.h"
+#include "Settings.h"
+#include "Thread.h"
+#include "UIProgressDialog.h"
+#include "classificationconfigform.h"
+#include "colorseditform.h"
+#include "vectorizationconfigform.h"
 
 using namespace std;
 namespace cove {

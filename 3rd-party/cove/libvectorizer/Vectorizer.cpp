@@ -28,12 +28,12 @@
 #include <Qt>
 #include <QtGlobal>
 
-#include "libvectorizer/AlphaGetter.h"
-#include "libvectorizer/KohonenMap.h"
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/Morphology.h"
-#include "libvectorizer/ParallelImageProcessing.h"
-#include "libvectorizer/PatternGetter.h"
+#include "AlphaGetter.h"
+#include "KohonenMap.h"
+#include "MapColor.h"
+#include "Morphology.h"
+#include "ParallelImageProcessing.h"
+#include "PatternGetter.h"
 
 namespace cove {
 //@{

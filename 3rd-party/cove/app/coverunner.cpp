@@ -21,7 +21,7 @@
 
 #include <gui/main_window.h>
 
-#include "app/mainform.h"
+#include "mainform.h"
 
 namespace OpenOrienteering {
 class Map;

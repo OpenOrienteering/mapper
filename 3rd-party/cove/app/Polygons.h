@@ -24,7 +24,7 @@
 #include <functional>
 #include <vector>
 
-#include "app/cove-potrace.h"
+#include "cove-potrace.h"
 
 class QImage;
 class QRect;

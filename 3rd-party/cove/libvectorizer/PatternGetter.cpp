@@ -23,8 +23,8 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/Vectorizer.h"
+#include "MapColor.h"
+#include "Vectorizer.h"
 
 namespace cove {
 //@{

@@ -22,7 +22,7 @@
 
 #include <QRgb>
 
-#include "libvectorizer/KohonenMap.h"
+#include "KohonenMap.h"
 
 namespace cove {
 class MapColor : public OrganizableElement

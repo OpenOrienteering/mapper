@@ -25,7 +25,7 @@
 
 #include <QtGlobal>
 
-#include "libvectorizer/Vectorizer.h"
+#include "Vectorizer.h"
 
 namespace cove {
 //@{

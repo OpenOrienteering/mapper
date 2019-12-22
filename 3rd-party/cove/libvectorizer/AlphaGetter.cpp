@@ -22,7 +22,7 @@
 #include <cmath>
 #include <new>
 
-#include "libvectorizer/Vectorizer.h"
+#include "Vectorizer.h"
 
 namespace cove {
 //{@

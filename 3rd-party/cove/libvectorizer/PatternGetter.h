@@ -22,7 +22,7 @@
 
 #include <QImage>
 
-#include "libvectorizer/KohonenMap.h"
+#include "KohonenMap.h"
 
 namespace cove {
 class MapColor;

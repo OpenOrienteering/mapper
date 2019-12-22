@@ -26,7 +26,7 @@
 #include <QImage>
 #include <QRgb>
 
-#include "libvectorizer/MapColor.h"
+#include "MapColor.h"
 
 namespace cove {
 class ProgressObserver

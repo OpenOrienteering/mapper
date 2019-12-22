@@ -5,30 +5,33 @@ find_package(Qt5Widgets ${Qt5Core_VERSION} REQUIRED)
 find_package(Qt5Concurrent ${Qt5Core_VERSION} REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories("../../src")
+
+add_library(cove-potrace STATIC
+    potrace/curve.c
+    potrace/potracelib.c
+    potrace/trace.c
+)
+target_include_directories(cove-potrace INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
+
+add_library(cove-vectorizer STATIC
+    libvectorizer/AlphaGetter.cpp
+    libvectorizer/KohonenMap.cpp
+    libvectorizer/MapColor.cpp
+    libvectorizer/Morphology.cpp
+    libvectorizer/PatternGetter.cpp
+    libvectorizer/Vectorizer.cpp
+    libvectorizer/ParallelImageProcessing.h
+)
+target_include_directories(cove-vectorizer
+  PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/libvectorizer"
+  INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+target_link_libraries(cove-vectorizer PRIVATE cove-potrace)
+target_link_libraries(cove-vectorizer PUBLIC Qt5::Gui Qt5::Concurrent)
 
 set(Cove_SRCS
-    app/classificationconfigform.h
-    app/colorseditform.h
-    app/coverunner.h
-    app/FIRFilter.h
-    app/mainform.h
-    app/Polygons.h
-    app/QImageView.h
-    app/QPolygonsView.h
-    app/Settings.h
-    app/Thread.h
-    app/UIProgressDialog.h
-    app/vectorizationconfigform.h
-    libvectorizer/AlphaGetter.h
-    libvectorizer/KohonenMap.h
-    libvectorizer/MapColor.h
-    libvectorizer/Morphology.h
-    libvectorizer/PatternGetter.h
-    libvectorizer/ParallelImageProcessing.h
     app/classificationconfigform.cpp
     app/colorseditform.cpp
     app/coverunner.cpp
@@ -41,20 +44,22 @@ set(Cove_SRCS
     app/Thread.cpp
     app/UIProgressDialog.cpp
     app/vectorizationconfigform.cpp
-    libvectorizer/AlphaGetter.cpp
-    libvectorizer/KohonenMap.cpp
-    libvectorizer/MapColor.cpp
-    libvectorizer/Morphology.cpp
-    libvectorizer/PatternGetter.cpp
-    libvectorizer/Vectorizer.cpp
-    potrace/curve.c
-    potrace/potracelib.c
-    potrace/trace.c
 )
 
 add_library(cove STATIC ${Cove_SRCS})
 target_compile_definitions(cove INTERFACE WITH_COVE)
-target_include_directories(cove INTERFACE AFTER "${CMAKE_CURRENT_SOURCE_DIR}")
-target_link_libraries(cove Qt5::Widgets Qt5::Concurrent)
+target_include_directories(cove
+  PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/app"
+    "${Mapper_SOURCE_DIR}/src"
+  INTERFACE
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+)
+target_link_libraries(cove cove-vectorizer Qt5::Widgets Qt5::Concurrent)
+set_target_properties(cove
+  PROPERTIES
+    AUTOMOC ON
+    AUTOUIC ON
+)
 
 add_subdirectory("tests")
