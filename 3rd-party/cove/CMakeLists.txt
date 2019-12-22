@@ -15,6 +15,7 @@ target_include_directories(cove-potrace INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
 
 add_library(cove-vectorizer STATIC
     libvectorizer/AlphaGetter.cpp
+    libvectorizer/ClassificationThread.cpp
     libvectorizer/KohonenMap.cpp
     libvectorizer/MapColor.cpp
     libvectorizer/Morphology.cpp
@@ -41,7 +42,6 @@ set(Cove_SRCS
     app/QImageView.cpp
     app/QPolygonsView.cpp
     app/Settings.cpp
-    app/Thread.cpp
     app/UIProgressDialog.cpp
     app/vectorizationconfigform.cpp
 )
@@ -55,7 +55,7 @@ target_include_directories(cove
   INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
-target_link_libraries(cove cove-vectorizer Qt5::Widgets Qt5::Concurrent)
+target_link_libraries(cove cove-vectorizer Qt5::Widgets)
 set_target_properties(cove
   PROPERTIES
     AUTOMOC ON

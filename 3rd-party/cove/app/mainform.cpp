@@ -55,6 +55,7 @@
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
+#include "libvectorizer/ClassificationThread.h"
 #include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
@@ -62,7 +63,6 @@
 #include "QImageView.h"
 #include "QPolygonsView.h"
 #include "Settings.h"
-#include "Thread.h"
 #include "UIProgressDialog.h"
 #include "classificationconfigform.h"
 #include "colorseditform.h"
