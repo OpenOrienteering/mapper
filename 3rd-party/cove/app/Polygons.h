@@ -24,10 +24,7 @@
 #include <functional>
 #include <vector>
 
-extern "C" {
-#include "potrace/curve.h"
-#include "potrace/trace.h"
-}
+#include "app/cove-potrace.h"
 
 class QImage;
 class QRect;

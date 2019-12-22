@@ -26,6 +26,7 @@
 #include <QImage>
 #include <QRect>
 
+#include "app/cove-potrace.h"
 #include "app/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
@@ -39,13 +40,6 @@
 #else
 #define JOIN_DEBUG_PRINT(imp, args...)
 #endif
-
-extern "C" {
-#include "potrace/curve.h"
-#include "potrace/lists.h"
-#include "potrace/trace.h"
-#include <errno.h>
-}
 
 using namespace std;
 
