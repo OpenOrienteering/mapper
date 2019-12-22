@@ -25,18 +25,18 @@
 class QObject;
 
 namespace cove {
-class UIProgressDialog;
+class ProgressObserver;
 class Vectorizer;
 
 class ClassificationThread : public QThread
 {
 protected:
-	UIProgressDialog* const p;
 	Vectorizer& v;
+	ProgressObserver* const p;
 
 public:
 	ClassificationThread() = delete;
-	ClassificationThread(Vectorizer& v, UIProgressDialog* p, QObject* parent = nullptr);
+	ClassificationThread(Vectorizer& v, ProgressObserver* p = nullptr, QObject* parent = nullptr);
 	void run() override;
 };
 } // cove
