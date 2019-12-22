@@ -2546,7 +2546,7 @@ Rescale the imported data?</source>
         <location filename="../src/fileformats/file_import_export.cpp" line="242"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="244"/>
         <source>At least one template file could not be found.</source>
-        <translation>Ни один файл подложки не найден.</translation>
+        <translation>Один или более файлов подложкек не найдены.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="245"/>
