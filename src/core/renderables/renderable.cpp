@@ -355,7 +355,11 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 				//        if efficiently possible.
 				QImage copy = separation.convertToFormat(QImage::Format_ARGB32);
 				QRgb* dest = (QRgb*)copy.bits();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+				const QRgb* dest_end = dest + copy.sizeInBytes() / sizeof(QRgb);
+#else
 				const QRgb* dest_end = dest + copy.byteCount() / sizeof(QRgb);
+#endif
 				for (QRgb* px = dest; px < dest_end; ++px)
 				{
 					const unsigned int alpha = qAlpha(*px) * ((255-qGray(*px)) << 16) & 0xff000000;
@@ -380,7 +384,11 @@ void MapRenderables::drawOverprintingSimulation(QPainter* painter, const RenderC
 	draw(&p, config_copy);
 	p.end();
 	QRgb* dest = reinterpret_cast<QRgb*>(separation.bits());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+	const QRgb* dest_end = dest + separation.sizeInBytes() / sizeof(QRgb);
+#else
 	const QRgb* dest_end = dest + separation.byteCount() / sizeof(QRgb);
+#endif
 	for (QRgb* px = dest; px < dest_end; ++px)
 	{
 		/* Each pixel is a premultipled RGBA, so the alpha value is adjusted
