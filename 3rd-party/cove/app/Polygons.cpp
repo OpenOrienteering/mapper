@@ -143,7 +143,7 @@ bool Polygons::Path::isClosed() const
    \brief Represents polygon in an image.
 
    The polygon is a set of straight lines.  The first point represents the
-   beginning of the polygon, following points represent vertexes of the polygon
+   beginning of the polygon, following points represent vertices of the polygon
    and the last point is the end in case the polygon is not closed.
 
    The polygon is usually being built as a result of path decomposition into
@@ -567,7 +567,7 @@ Polygons::createPolygonsFromImage(const QImage& image,
  \param[in] distDirRatio Parameter controlling a not yet implemented feature. */
 
 //! Fast computation of distance square of two points.  It is used in
-// comparisions where the monotonic transformation makes no problem. It saves
+// comparisons where the monotonic transformation makes no problem. It saves
 // one call to sqrt(3).
 inline float Polygons::distSqr(const dpoint_t* a, const dpoint_t* b) const
 {

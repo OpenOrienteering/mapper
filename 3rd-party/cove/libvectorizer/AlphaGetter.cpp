@@ -35,7 +35,7 @@ namespace cove {
  * - Get E by calling getE.
  * - When alpha is nonzero use it E-times for learning.  Quit otherwise.
  *
- * Several contructors are available, also some setters may be handy.  */
+ * Several constructors are available, also some setters may be handy.  */
 
 //! Constructs ClassicAlphaGetter with defaults alpha(.1), minAlpha(1e-6),
 //! q(.5), E(100000) and no progressObserver.

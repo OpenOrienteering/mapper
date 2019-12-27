@@ -93,7 +93,7 @@ namespace cove {
 */
 
 /*! \var bool mainForm::rollbackHistory
-  Boolean indicating whether the history was commited.
+  Boolean indicating whether the history was committed.
   \sa prepareBWImageHistory, commitBWImageHistory
 */
 
@@ -116,7 +116,7 @@ namespace cove {
 */
 
 /*! \var Settings mainForm::settings
-  Current status data (configuraiton variables).
+  Current status data (configuration variables).
 */
 
 /*! \var QDoubleValidator mainForm::positiveDoubleValid
@@ -533,7 +533,7 @@ bool mainForm::performMorphologicalOperation(
 
 //! Inserts the current displayed image into the history queue.  Pops the last
 // image from the history queue in case \a rollbackHistory is set, what means
-// the last image was not commited into the queue.
+// the last image was not committed into the queue.
 void mainForm::prepareBWImageHistory()
 {
 	if (rollbackHistory)
