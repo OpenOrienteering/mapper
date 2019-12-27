@@ -124,7 +124,7 @@ Note that the temporary trace is not saved in the map.
 
 #### ![ ](../mapper-images/gps-temporary-clear.png) Clear temporary markers
 
-This removes the temporay traces and position markers. (They will also be discarded when closing the map file.)
+This removes the temporary traces and position markers. (They will also be discarded when closing the map file.)
 
 
 #### ![ ](../mapper-images/pencil.png) Paint on template
