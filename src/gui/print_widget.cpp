@@ -682,7 +682,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	for (auto const & size : qAsConst(size_list))
 	{
 		if (size.id() == QPageSize::Custom)
-			have_custom_size = true; // add it once after all other entires
+			have_custom_size = true; // add it once after all other entries
 		else
 			paper_size_combo->addItem(size.name(), size.id());
 	}
