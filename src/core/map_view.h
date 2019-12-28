@@ -234,7 +234,7 @@ public:
 	 */
 	double calculateFinalZoomFactor() const;
 	
-	/** Returns the raw zoom facor, see also calculateFinalZoomFactor(). */
+	/** Returns the raw zoom factor, see also calculateFinalZoomFactor(). */
 	double getZoom() const;
 	
 	/** Sets the zoom factor relative to the given point.*/

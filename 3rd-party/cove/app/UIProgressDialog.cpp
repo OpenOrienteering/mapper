@@ -33,7 +33,7 @@ namespace cove {
  * Vectorizer.
  */
 
-/*! Constructor, esentially the same as QProgressDialog's constructor. Sets
+/*! Constructor, essentially the same as QProgressDialog's constructor. Sets
  * progressbar range to 0-100.
  */
 UIProgressDialog::UIProgressDialog(const QString& labelText,

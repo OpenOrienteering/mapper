@@ -149,7 +149,7 @@ if(CMAKE_CROSSCOMPILING)
 endif()
 
 
-# Build definitons
+# Build definitions
 
 include(CTest)
 

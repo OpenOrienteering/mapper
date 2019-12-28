@@ -131,7 +131,7 @@ private:
 /**
  * Returns the file's geotransform via GDAL in a type suitable for TemplateImage.
  * 
- * This is a convienence function which can beforward-declared to avoid the
+ * This is a convenience function which can beforward-declared to avoid the
  * dependency on GDAL header files which results from including this header.
  * 
  * \see GdalImageReader::readGeoTransform()

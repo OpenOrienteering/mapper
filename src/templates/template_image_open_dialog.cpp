@@ -70,7 +70,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	Q_UNUSED(QT_TR_NOOP("World file"))
 	Q_UNUSED(QT_TR_NOOP("GeoTIFF"))
 	Q_UNUSED(QT_TR_NOOP("no georeferencing information"))
-	// GDAL's GeoTIFF driver reports itselfs as "GTiff".
+	// GDAL's GeoTIFF driver reports itself as "GTiff".
 	if (georef_source == "GTiff")
 		georef_source = "GeoTIFF";
 	

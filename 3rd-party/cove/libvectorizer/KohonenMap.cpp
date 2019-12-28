@@ -42,9 +42,9 @@ OrganizableElement::~OrganizableElement()
 		Used when computing Ward's criterion. */
 /*! \fn virtual void OrganizableElement::add(const OrganizableElement& y) = 0;
 		Adds another object to this. */
-/*! \fn virtual void OrganizableElement::substract(const OrganizableElement& y)
+/*! \fn virtual void OrganizableElement::subtract(const OrganizableElement& y)
    = 0;
-		Substracts another object from this. */
+		Subtracts another object from this. */
 /*! \fn virtual void OrganizableElement::multiply(const double y) = 0;
 		Multiplies this object by given double. */
 
@@ -148,7 +148,7 @@ void KohonenMap::learn(const OrganizableElement& v, double alfa)
 	double bd;
 	int learnMomentum = findClosest(v, bd);
 	OrganizableElement* adjustment = v.clone();
-	adjustment->substract(*classes[learnMomentum]);
+	adjustment->subtract(*classes[learnMomentum]);
 	adjustment->multiply(alfa);
 	classes[learnMomentum]->add(*adjustment);
 	delete adjustment;
