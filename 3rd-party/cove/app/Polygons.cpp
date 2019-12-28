@@ -997,7 +997,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 			else
 			{
 				JOIN_DEBUG_PRINT("  curve closed, jointype %s",
-								 jt2string(joinType));
+								 jt2string(currOp.joinType));
 				currOp.a->priv->curve.closed = 1;
 			}
 			continue;
