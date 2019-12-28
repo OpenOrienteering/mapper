@@ -61,7 +61,7 @@ public:
 	void setValues();
 
 public slots:
-	void on_learningMethodComboBox_activated(int);
+	void on_learningMethodComboBox_activated(int);  // clazy:exclude=connect-by-name
 };
 } // cove
 

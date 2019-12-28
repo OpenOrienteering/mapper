@@ -93,22 +93,22 @@ public slots:
 	void setInitialColors(bool on);
 	void colorButtonToggled(bool on);
 
-	void on_bwImageSaveButton_clicked();
-	void on_classificationOptionsButton_clicked();
-	void on_initialColorsButton_clicked();
-	void on_howManyColorsSpinBox_valueChanged(int n);
-	void on_mainTabWidget_currentChanged(int w);
-	void on_setVectorizationOptionsButton_clicked();
-	void on_createVectorsButton_clicked();
-	void on_saveVectorsButton_clicked();
-	void on_runClassificationButton_clicked();
-	void on_runErosionButton_clicked();
-	void on_runDilationButton_clicked();
-	void on_runThinningButton_clicked();
-	void on_runPruningButton_clicked();
-	void on_bwImageHistoryBack_clicked();
-	void on_bwImageHistoryForward_clicked();
-	void on_applyFIRFilterPushButton_clicked();
+	void on_bwImageSaveButton_clicked();        // clazy:exclude=connect-by-name
+	void on_classificationOptionsButton_clicked();  // clazy:exclude=connect-by-name
+	void on_initialColorsButton_clicked();      // clazy:exclude=connect-by-name
+	void on_howManyColorsSpinBox_valueChanged(int n);  // clazy:exclude=connect-by-name
+	void on_mainTabWidget_currentChanged(int w);  // clazy:exclude=connect-by-name
+	void on_setVectorizationOptionsButton_clicked();  // clazy:exclude=connect-by-name
+	void on_createVectorsButton_clicked();      // clazy:exclude=connect-by-name
+	void on_saveVectorsButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runClassificationButton_clicked();  // clazy:exclude=connect-by-name
+	void on_runErosionButton_clicked();         // clazy:exclude=connect-by-name
+	void on_runDilationButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runThinningButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runPruningButton_clicked();         // clazy:exclude=connect-by-name
+	void on_bwImageHistoryBack_clicked();       // clazy:exclude=connect-by-name
+	void on_bwImageHistoryForward_clicked();    // clazy:exclude=connect-by-name
+	void on_applyFIRFilterPushButton_clicked(); // clazy:exclude=connect-by-name
 };
 } // cove
 

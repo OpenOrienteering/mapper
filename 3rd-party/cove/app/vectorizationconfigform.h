@@ -41,8 +41,8 @@ public:
 
 public slots:
 	int exec();
-	void on_simpleConnectionsCheckBox_toggled(bool);
-	void on_doConnectionsCheckBox_toggled(bool);
+	void on_simpleConnectionsCheckBox_toggled(bool);  // clazy:exclude=connect-by-name
+	void on_doConnectionsCheckBox_toggled(bool);      // clazy:exclude=connect-by-name
 };
 } // cove
 

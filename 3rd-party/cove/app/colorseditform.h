@@ -82,7 +82,7 @@ public:
 	void setColorsSource(ColorsSource s);
 
 public slots:
-	void on_predefinedColorsButton_toggled(bool checked);
+	void on_predefinedColorsButton_toggled(bool checked);  // clazy:exclude=connect-by-name
 };
 } // cove
 
