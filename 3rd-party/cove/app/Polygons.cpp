@@ -31,15 +31,11 @@
 #include "libvectorizer/Vectorizer.h"
 
 #define JOIN_DEBUG 0
-#if JOIN_DEBUG == 1
-#define JOIN_DEBUG_PRINT(imp, args...) \
-	do                                 \
-	{                                  \
-		qDebug(imp, ##args);           \
-	} while (0)
-#else
-#define JOIN_DEBUG_PRINT(imp, args...)
-#endif
+#define JOIN_DEBUG_PRINT(...)            \
+do                                       \
+{                                        \
+	if (JOIN_DEBUG) qDebug(__VA_ARGS__); \
+} while (0)
 
 using namespace std;
 
