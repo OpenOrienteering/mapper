@@ -1011,7 +1011,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 		case FF: // reverse the segment prior to joining
 			for (int d = 0; d < b_curve->n; d++)
 				newcurve.vertex[d] = b_curve->vertex[b_curve->n - d - 1];
-			[[gnu::fallthrough]];
+			Q_FALLTHROUGH();
 		case FB:
 			if (currOp.joinType == FB)
 				for (int d = 0; d < b_curve->n; d++)
@@ -1023,7 +1023,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 			for (int d = 0; d < b_curve->n; d++)
 				newcurve.vertex[d + a_curve->n] =
 					b_curve->vertex[b_curve->n - d - 1];
-			[[gnu::fallthrough]];
+			Q_FALLTHROUGH();
 		case BF:
 			if (currOp.joinType == BF)
 				for (int d = 0; d < b_curve->n; d++)
