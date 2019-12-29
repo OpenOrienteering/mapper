@@ -89,9 +89,7 @@ ImageWidget::ImageWidget(QWidget* parent)
 }
 
 //! Destructor.
-ImageWidget::~ImageWidget()
-{
-}
+ImageWidget::~ImageWidget() = default;
 
 //! Painting event handler.
 void ImageWidget::paintEvent(QPaintEvent* pe)

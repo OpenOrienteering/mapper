@@ -113,9 +113,7 @@ class ColorsEditingDelegate : public QItemDelegate
 /*! \var ColorsListModel::comments Comments for those colors. */
 
 //! Default contructor, marked private.
-ColorsListModel::ColorsListModel()
-{
-}
+ColorsListModel::ColorsListModel() = default;
 
 //! Contructor creating dialog with colors and comments.
 ColorsListModel::ColorsListModel(const std::vector<QRgb>& colors,

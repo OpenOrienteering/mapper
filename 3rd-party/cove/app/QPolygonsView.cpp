@@ -48,9 +48,7 @@ namespace cove {
 /*! \class PaintablePolygonList
   \brief PolygonList holding the QPainterPaths with the polygons. */
 
-PaintablePolygonList::PaintablePolygonList()
-{
-}
+PaintablePolygonList::PaintablePolygonList() = default;
 
 PaintablePolygonList::PaintablePolygonList(const PolygonList& pl)
 {

@@ -80,9 +80,7 @@ RandomPatternGetter::RandomPatternGetter(const QImage& im, MapColor* mc)
 }
 
 /*! Destructor, does nothing.  Needed to avoid compiler warnings. */
-RandomPatternGetter::~RandomPatternGetter()
-{
-}
+RandomPatternGetter::~RandomPatternGetter() = default;
 
 /*! Get next pattern (pixel) in random order. */
 const OrganizableElement* RandomPatternGetter::getPattern()
@@ -134,9 +132,7 @@ SequentialPatternGetter::SequentialPatternGetter(
 }
 
 /*! Destructor, does nothing.  Needed to avoid compiler warnings. */
-SequentialPatternGetter::~SequentialPatternGetter()
-{
-}
+SequentialPatternGetter::~SequentialPatternGetter() = default;
 
 /*! Get next pattern (pixel) in sequential order. */
 const OrganizableElement* SequentialPatternGetter::getPattern()

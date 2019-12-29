@@ -50,9 +50,7 @@ MapColor::MapColor(double ip)
 }
 
 //! Virtual destructor
-MapColor::~MapColor()
-{
-}
+MapColor::~MapColor() = default;
 
 //! Constructor, ip is the value of Minkowski metrics, i1..3 are the initial
 //! values.

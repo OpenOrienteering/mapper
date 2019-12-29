@@ -29,9 +29,8 @@ namespace cove {
  * \brief Pure virtual class giving interface for organizable elements
  * represented by vectors.
  */
-OrganizableElement::~OrganizableElement()
-{
-}
+OrganizableElement::~OrganizableElement() = default;
+
 /*! \fn virtual OrganizableElement* OrganizableElement::clone() const = 0;
 		Creates a copy of this constant object. [Virtual Constructor] */
 /*! \fn virtual double OrganizableElement::distance(const OrganizableElement& y)
@@ -54,9 +53,8 @@ OrganizableElement::~OrganizableElement()
  * \brief Pure virtual class giving interface for concrete class
  * encapsulating learning speed strategy.
  */
-KohonenAlphaGetter::~KohonenAlphaGetter()
-{
-}
+KohonenAlphaGetter::~KohonenAlphaGetter() = default;
+
 /*! \fn virtual double KohonenAlphaGetter::getAlpha() = 0;
 		Gives alpha (learning speed). */
 /*! \fn virtual unsigned int KohonenAlphaGetter::getE() = 0;
@@ -65,9 +63,8 @@ KohonenAlphaGetter::~KohonenAlphaGetter()
 /*! \class KohonenPatternGetter
  * \brief Pure virtual class giving interface for concrete class
  * encapsulating pattern selection strategy. */
-KohonenPatternGetter::~KohonenPatternGetter()
-{
-}
+KohonenPatternGetter::~KohonenPatternGetter() = default;
+
 /*! \fn virtual const OrganizableElement* KohonenPatternGetter::getPattern() =
    0;
 		Return one pattern. */
@@ -82,9 +79,8 @@ KohonenPatternGetter::~KohonenPatternGetter()
  * last
  * one returned by \a getPattern().
  */
-BatchPatternGetter::~BatchPatternGetter()
-{
-}
+BatchPatternGetter::~BatchPatternGetter() = default;
+
 /*! \fn virtual const int BatchPatternGetter::getLastElementClass() const = 0;
   Returns last patterns' class. */
 /*! \fn virtual void BatchPatternGetter::setLastElementClass(int classNumber) =
