@@ -445,7 +445,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		 !cancel && pathsiterator != constpaths.end(); ++pathsiterator)
 	{
 		int len = pathsiterator->size();
-		point_t* pt = (point_t*)malloc(len * sizeof(point_t));
+		point_t* pt = reinterpret_cast<point_t*>(malloc(len * sizeof(point_t)));  // NOLINT
 		p = path_new();
 		if (!p || !pt)
 		{

@@ -132,7 +132,7 @@ void ImageWidget::paintEvent(QPaintEvent* pe)
 				if (copy.depth() == 32)
 				{
 					int p = copy.width() * copy.height();
-					QRgb* b = (QRgb*)copy.bits();
+					QRgb* b = reinterpret_cast<QRgb*>(copy.bits());
 					while (p--)
 					{
 						int I = qGray(*b);
