@@ -53,7 +53,7 @@ private:
 
 public:
 	PolyImageWidget(QWidget* parent = nullptr);
-	Polygons::PolygonList polygons() const;
+	const Polygons::PolygonList& polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
 	void paintEvent(QPaintEvent* pe) override;
 };
@@ -62,7 +62,7 @@ class QPolygonsView : public QImageView
 {
 public:
 	QPolygonsView(QWidget* parent = nullptr);
-	Polygons::PolygonList polygons() const;
+	const Polygons::PolygonList& polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
 };
 } // cove

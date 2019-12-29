@@ -90,7 +90,7 @@ PolyImageWidget::PolyImageWidget(QWidget* parent)
 
 /*! Return currently set PolygonList.  \sa setPolygons(Polygons::PolygonList& p)
   */
-Polygons::PolygonList PolyImageWidget::polygons() const
+const Polygons::PolygonList& PolyImageWidget::polygons() const
 {
 	return polygonsList;
 }
@@ -184,7 +184,7 @@ QPolygonsView::QPolygonsView(QWidget* parent)
 /*! Gets the polygonList that is drawn over the image.
  * \sa setPolygons(Polygons::PolygonList* p)
  */
-Polygons::PolygonList QPolygonsView::polygons() const
+const Polygons::PolygonList& QPolygonsView::polygons() const
 {
 	return static_cast<PolyImageWidget*>(iw.get())->polygons();
 }

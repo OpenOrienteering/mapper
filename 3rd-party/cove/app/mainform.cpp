@@ -815,7 +815,7 @@ void mainForm::on_createVectorsButton_clicked()
 //! Transfers traced polygons back to the map.
 void mainForm::on_saveVectorsButton_clicked()
 {
-	const Polygons::PolygonList polys = ui.bwImageView->polygons();
+	const Polygons::PolygonList& polys = ui.bwImageView->polygons();
 	if (polys.empty()) return;
 
 	float xOff = float(-ui.bwImageView->image()->width()) / 2;
