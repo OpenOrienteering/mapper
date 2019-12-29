@@ -35,8 +35,8 @@ namespace cove {
  * progressbar range to 0-100.
  */
 UIProgressDialog::UIProgressDialog(const QString& labelText,
-								   const QString& cancelButtonText,
-								   QWidget* creator, Qt::WindowFlags)
+                                   const QString& cancelButtonText,
+                                   QWidget* creator, Qt::WindowFlags /*unused*/)
 	: QObject(creator)
 	, canceled(false)
 	, pDialog(labelText, cancelButtonText, 0, 100, creator)

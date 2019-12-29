@@ -124,13 +124,13 @@ ColorsListModel::ColorsListModel(const std::vector<QRgb>& colors,
 }
 
 //! Reimplementation of QTableModel member.
-int ColorsListModel::rowCount(const QModelIndex&) const
+int ColorsListModel::rowCount(const QModelIndex& /*parent*/) const
 {
 	return colors.size();
 }
 
 //! Reimplementation of QTableModel member.
-int ColorsListModel::columnCount(const QModelIndex&) const
+int ColorsListModel::columnCount(const QModelIndex& /*parent*/) const
 {
 	return 3;
 }
