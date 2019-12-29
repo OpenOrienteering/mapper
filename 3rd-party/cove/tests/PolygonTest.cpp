@@ -19,11 +19,20 @@
 
 #include "PolygonTest.h"
 
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iterator>
+#include <limits>
+#include <numeric>
+
+#include <QByteArray>
 #include <QDataStream>
 #include <QFile>
 #include <QIODevice>
 #include <QImage>
 #include <QtGlobal>
+#include <QtMath>
 #include <QtTest>
 
 #include "libvectorizer/Polygons.h"
@@ -103,6 +112,15 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 	QVERIFY(file.open(QIODevice::ReadOnly));
 	QDataStream in(&file);
 
+	// Results may vary depending on CPU. To mitigate this issue, we count
+	// deviations by distance in five classes (<= 0.5, 1.5, 2.5, 3.5, or more),
+	// and compare the number of occurences against expected maximum values.
+	auto const max_errors = std::array<int, 5>{ std::numeric_limits<int>::max(), 20, 8, 4, 0 };
+	auto errors = std::array<int, max_errors.size()>{};
+	auto count_deviation = [&errors](double actual, double expected) {
+		++*(begin(errors) + qBound(0, qCeil(qAbs(actual - expected) - 0.5), int(errors.size()) - 1));
+	};
+	
 	for (auto const& poly : polys)
 	{
 		bool isClosed;
@@ -117,11 +135,22 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 		{
 			double x, y;
 			in >> x >> y;
-			if (!qIsNull(p.x) && !qIsNull(x))
-				QCOMPARE(p.x, x);
-			if (!qIsNull(p.y) && !qIsNull(y))
-				QCOMPARE(p.y, y);
+			count_deviation(p.x, x);
+			count_deviation(p.y, y);
 		}
+	}
+	
+	if (!std::equal(begin(errors), end(errors), begin(max_errors), std::less_equal<>()))
+	{
+		// Report error by displaying actual and expected distribution of deviations.
+		auto as_string = [](auto const& list) {
+			return std::accumulate(begin(list) + 1, end(list),
+			                       QByteArray::number(list.front()).rightJustified(10),
+			                       [](auto& accumulated, auto& current) {
+				return accumulated + ' ' + (QByteArray::number(current).rightJustified(5));
+			});
+		};
+		QCOMPARE(as_string(errors), as_string(max_errors));
 	}
 }
 
