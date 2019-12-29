@@ -246,12 +246,12 @@ void mainForm::aboutDialog()
  * makes an average color of its pixels. */
 QRgb mainForm::getColorFromImage(const QImage& image)
 {
-	srand(time(nullptr));
+	srand(time(nullptr));  // NOLINT
 	unsigned long r, g, b, divisor;
 	r = g = b = divisor = 0;
 	for (int a = 0; a < 5; a++)
 	{
-		int line = rand() % image.height();
+		int line = rand() % image.height();  // NOLINT
 		int w = image.width();
 		for (int x = 0; x < w; x++)
 		{

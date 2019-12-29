@@ -477,7 +477,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 
 // create polygons for all paths
 #define TRY(x) \
-	if (x) goto try_error
+	if (x) goto try_error // NOLINT
 	list_forall(p, plist)
 	{
 		TRY(calc_sums(p->priv));

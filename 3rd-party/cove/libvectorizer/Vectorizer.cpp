@@ -319,8 +319,9 @@ void Vectorizer::setInitColors(const std::vector<QRgb>& initColors)
 		{
 			// Random colors at beginning
 			sourceImageColors[i]->setRGBTriplet(
-				qRgb(rand() / (RAND_MAX / 255), rand() / (RAND_MAX / 255),
-					 rand() / (RAND_MAX / 255)));
+				qRgb(rand() / (RAND_MAX / 255),    // NOLINT
+				     rand() / (RAND_MAX / 255),    // NOLINT
+				     rand() / (RAND_MAX / 255)));  // NOLINT
 		}
 	}
 }

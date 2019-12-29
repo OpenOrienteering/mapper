@@ -63,7 +63,6 @@ public:
 
 class KohonenMap
 {
-protected:
 	std::vector<std::unique_ptr<OrganizableElement>> classes;
 
 public:

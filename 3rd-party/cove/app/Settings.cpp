@@ -43,8 +43,7 @@ namespace cove {
 /*! Constructor, creates root element and fills defaults from \a doubletab to
  * \a storage */
 Settings::Settings()
-{
-	doubleTab = {{"E", 100000},
+	: doubleTab {{"E", 100000},
 				 {"q", 0.5},
 				 {"initAlpha", 0.1},
 				 {"minAlpha", 1e-6},
@@ -59,7 +58,8 @@ Settings::Settings()
 				 {"doConnections", 1},
 				 {"joinDistance", 5},
 				 {"simpleConnectionsOnly", 1},
-				 {"distDirBalance", 0.5}};
+				 {"distDirBalance", 0.5}}
+{
 }
 
 /*! Returns double from storage.
