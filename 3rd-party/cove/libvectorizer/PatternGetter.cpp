@@ -166,10 +166,8 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 		retval->setRGBTriplet(image.pixel(x, y));
 		return retval;
 	}
-	else
-	{
-		return nullptr;
-	}
+
+	return nullptr;
 }
 
 /*! Get class of the last element got. \sa getPattern */

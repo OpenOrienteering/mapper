@@ -534,16 +534,12 @@ bool mainForm::performMorphologicalOperation(
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 
-	if (!transBitmap.isNull())
-	{
-		bwBitmap = transBitmap;
-		ui.bwImageView->setImage(&bwBitmap);
-		return true;
-	}
-	else
-	{
+	if (transBitmap.isNull())
 		return false;
-	}
+
+	bwBitmap = transBitmap;
+	ui.bwImageView->setImage(&bwBitmap);
+	return true;
 }
 
 //! Inserts the current displayed image into the history queue.  Pops the last
