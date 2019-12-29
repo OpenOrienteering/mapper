@@ -27,11 +27,8 @@
 #include <QPainter>
 #include <QPen>
 #include <QPoint>
-#include <QPointF>
 #include <QRect>
-#include <QRectF>
 #include <QSize>
-#include <QSizeF>
 #include <Qt>
 
 #include "libvectorizer/Polygons.h"
@@ -120,8 +117,6 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 
 	QPainter p(this);
 	QRect r = pe->rect();
-	QRectF rf(QPointF(r.topLeft()) / dispMagnification,
-			  QSizeF(r.size()) / dispMagnification);
 
 	for (Polygons::PolygonList::iterator i = polygonsList.begin();
 		 i != polygonsList.end(); i++)

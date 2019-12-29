@@ -516,7 +516,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
 			progressObserver->percentageChanged(90 + cntr * 10 / tpolys);
-			cancel = progressObserver->getCancelPressed();
+			// cancel = progressObserver->getCancelPressed();
 		}
 	}
 
