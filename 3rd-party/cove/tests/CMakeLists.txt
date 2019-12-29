@@ -18,3 +18,8 @@ target_link_libraries(cove-PolygonTest
     Qt5::Test
     Qt5::Gui
 )
+
+add_test(
+  NAME cove-PolygonTest
+  COMMAND cove-PolygonTest
+)

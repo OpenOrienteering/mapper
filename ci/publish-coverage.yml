@@ -37,6 +37,7 @@ steps:
       --xml \
       --output $(Build.SourcesDirectory)/coverage/coverage.xml \
       --root . \
+      --filter 3rd-party/cove/ \
       --filter src/ \
       --filter test/ \
       --object-directory $(Build.SourcesDirectory)/build/default/openorienteering-mapper-ci/Testing/CoverageInfo \
