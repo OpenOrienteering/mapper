@@ -79,7 +79,7 @@ ProgressObserver::~ProgressObserver()
  * \ingroup libvectorizer
  * \brief Facade for vectorization process.
  *
- * This class provides facade for underlaying classes MapColor (and its
+ * This class provides facade for underlying classes MapColor (and its
  * derivates),
  * KohonenMap, Morphology and several others. The usual way how to cope with
  * this class is

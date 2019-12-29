@@ -118,7 +118,7 @@ protected:
 	/** Deletes preview all objects and points. */
 	void deletePreviewObjects();
 	
-	/** Extends the rect to conver all preview objects. */
+	/** Extends the rect to cover all preview objects. */
 	void includePreviewRects(QRectF& rect);
 	
 	/** Draws the preview objects. */

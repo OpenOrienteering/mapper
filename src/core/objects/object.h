@@ -748,7 +748,7 @@ public:
 	
 	/**
 	 * Connects the given parts, optionally merging the end coordinates at the
-	 * center position, and copying over the coordindates from other.
+	 * center position, and copying over the coordinates from other.
 	 */
 	void connectPathParts(
 	        PathPartVector::size_type part_index,

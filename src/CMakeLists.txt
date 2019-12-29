@@ -35,7 +35,6 @@ execute_process(
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
-include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
   global.cpp

@@ -236,7 +236,7 @@ private:
 	
 	static void removeExtension(ExtensionList& list, const char* extension)
 	{
-		list.erase(std::find(begin(list), end(list), extension), end(list));
+		list.erase(std::remove(begin(list), end(list), extension), end(list));
 	}
 	
 	void updateExtensions(QSettings& settings)

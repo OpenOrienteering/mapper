@@ -261,7 +261,7 @@ public:
 	 *  3. The map directory, if valid, for the filename of the template.
 	 *     This is a fallback for use cases where a map and selected templates
 	 *     are moved to the same flat folder, e.g. when receiving them via
-	 *     individual e-mail attachements.
+	 *     individual e-mail attachments.
 	 * 
 	 * \param map_path  Either the full filepath of the map, or an arbitrary
 	 *                  directory which shall be regarded as the map directory.

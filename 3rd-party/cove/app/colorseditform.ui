@@ -13,7 +13,7 @@
    </rect>
   </property>
   <property name="windowTitle" >
-   <string>Intial colors</string>
+   <string>Initial colors</string>
   </property>
   <layout class="QVBoxLayout" >
    <property name="margin" >
@@ -33,7 +33,7 @@
      <item>
       <widget class="QRadioButton" name="randomColorsButton" >
        <property name="toolTip" >
-        <string>Intial colors are completely random. This usually causes some clusters to be empty.</string>
+        <string>Initial colors are completely random. This usually causes some clusters to be empty.</string>
        </property>
        <property name="text" >
         <string>Random</string>
@@ -90,7 +90,7 @@
       <item>
        <widget class="QLabel" name="label" >
         <property name="text" >
-         <string>Intial &amp;colors</string>
+         <string>Initial &amp;colors</string>
         </property>
         <property name="textFormat" >
          <enum>Qt::PlainText</enum>

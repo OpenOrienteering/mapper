@@ -228,7 +228,7 @@ private:
 	/**
 	 * Reconstructs one polygon coordinate and adds it to the object.
 	 * 
-	 * Uses the polymap to check whether the coorinate should be a dash point.
+	 * Uses the polymap to check whether the coordinate should be a dash point.
 	 */
 	static void rebuildCoordinate(
 	        ClipperLib::Path::size_type index,

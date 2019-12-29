@@ -46,7 +46,7 @@ public:
 	double distance(const OrganizableElement& y) const override;
 	double squares(const OrganizableElement& y) const override;
 	void add(const OrganizableElement& y) override;
-	void substract(const OrganizableElement& y) override;
+	void subtract(const OrganizableElement& y) override;
 	void multiply(double y) override;
 	virtual QRgb getRGBTriplet() const = 0;
 	virtual void setRGBTriplet(QRgb i) = 0;

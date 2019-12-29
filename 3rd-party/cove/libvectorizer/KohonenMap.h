@@ -32,7 +32,7 @@ public:
 	virtual double distance(const OrganizableElement& y) const = 0;
 	virtual double squares(const OrganizableElement& y) const = 0;
 	virtual void add(const OrganizableElement& y) = 0;
-	virtual void substract(const OrganizableElement& y) = 0;
+	virtual void subtract(const OrganizableElement& y) = 0;
 	virtual void multiply(double y) = 0;
 };
 

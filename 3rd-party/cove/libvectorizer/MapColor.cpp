@@ -159,8 +159,8 @@ void MapColor::add(const OrganizableElement& o)
 	x3 += y.x3;
 }
 
-//! \brief Substraction.
-void MapColor::substract(const OrganizableElement& o)
+//! \brief Subtraction.
+void MapColor::subtract(const OrganizableElement& o)
 {
 	const MapColor& y = static_cast<const MapColor&>(o);
 	x1 -= y.x1;
