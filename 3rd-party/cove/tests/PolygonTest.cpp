@@ -28,6 +28,15 @@
 
 #include "libvectorizer/Polygons.h"
 
+// Benchmarking adds significant overhead when enabled.
+// With the focus on (CI) testing, we default to disabling benchmarking
+// by defining COVE_BENCHMARK as an empty macro here, and let CMake set
+// it to QBENCHMARK when the user chooses to enable COVE_BENCHMARKING
+// at configuration time.
+#ifndef COVE_BENCHMARK
+#  define COVE_BENCHMARK
+#endif
+
 void PolygonTest::testJoins_data()
 {
 	QTest::addColumn<bool>("simpleOnly");
@@ -62,7 +71,7 @@ void PolygonTest::testJoins()
 	polyTracer.setDistDirRatio(distDirRatio);
 
 	cove::Polygons::PolygonList polys;
-	QBENCHMARK
+	COVE_BENCHMARK
 	{
 		polys = polyTracer.createPolygonsFromImage(sampleImage);
 	}
