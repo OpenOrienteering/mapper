@@ -125,4 +125,4 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 	}
 }
 
-QTEST_MAIN(PolygonTest)
+QTEST_GUILESS_MAIN(PolygonTest)
