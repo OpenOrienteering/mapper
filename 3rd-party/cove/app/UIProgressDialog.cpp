@@ -43,8 +43,9 @@ UIProgressDialog::UIProgressDialog(const QString& labelText,
 {
 	pDialog.setMinimumDuration(0);
 	pDialog.setWindowModality(Qt::WindowModal);
-	connect(this, SIGNAL(percentageUpdated(int)), &pDialog,
-			SLOT(setValue(int)));
+	connect(this, &UIProgressDialog::percentageUpdated,
+	        &pDialog, &QProgressDialog::setValue,
+	        Qt::QueuedConnection);
 }
 
 /*! Destructor. Sets progress bar dialog value to 100 to make it disappear.
