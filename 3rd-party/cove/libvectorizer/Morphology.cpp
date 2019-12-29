@@ -148,11 +148,8 @@ bool Morphology::rosenfeld(ProgressObserver* progressObserver)
 		pc++;
 		count = 0;
 
-		for (int i = 0; i < 4; i++)
+		for (auto const m : masks)
 		{
-
-			m = masks[i];
-
 			// Build initial previous scan buffer.
 			p = !!thinnedImage.pixelIndex(0, 0);
 			for (x = 0; x < xsize - 1; x++)

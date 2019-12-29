@@ -390,9 +390,9 @@ Polygons::Path Polygons::recordPath(const QImage& image, const int initX,
 /*! Draw into the image so that original path disappears. */
 void Polygons::removePathFromImage(QImage& image, const Path& path)
 {
-	for (Path::const_iterator i = path.begin(); i != path.end(); ++i)
+	for (auto const& i : path)
 	{
-		image.setPixel(i->x, i->y, 0); // delete the pixel
+		image.setPixel(i.x, i.y, 0); // delete the pixel
 	}
 }
 
@@ -459,11 +459,10 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		p->sign = '+';
 
 		len = 0;
-		for (Path::const_iterator i = pathsiterator->begin();
-			 i != pathsiterator->end(); ++i)
+		for (auto const& i : *pathsiterator)
 		{
-			pt[len].x = i->x;
-			pt[len].y = i->y;
+			pt[len].x = i.x;
+			pt[len].y = i.y;
 			len++;
 		}
 

@@ -142,11 +142,10 @@ void ImageWidget::paintEvent(QPaintEvent* pe)
 				else
 				{
 					QVector<QRgb> ct = copy.colorTable();
-					for (QVector<QRgb>::iterator i = ct.begin(); i != ct.end();
-						 ++i)
+					for (auto& color : ct)
 					{
-						int I = qGray(*i);
-						*i = qRgb(I, I, I);
+						auto const gray = qGray(color);
+						color = qRgb(gray, gray, gray);
 					}
 					copy.setColorTable(ct);
 				}
