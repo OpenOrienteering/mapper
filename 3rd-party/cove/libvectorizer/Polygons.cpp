@@ -345,8 +345,7 @@ void Polygons::followPath(const QImage& image, int& x, int& y, Path* path)
 
 		if (path)
 		{
-			PATH_POINT p = {x, y, newDirection};
-			path->push_back(p);
+			path->push_back({x, y});
 		}
 
 		// is the path closed?  (we are in the starting point)
