@@ -17,12 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __PATTERNGETTER_H__
-#define __PATTERNGETTER_H__
+#ifndef COVE_PATTERNGETTER_H
+#define COVE_PATTERNGETTER_H
 
 #include <QImage>
 
-#include "libvectorizer/KohonenMap.h"
+#include "KohonenMap.h"
 
 namespace cove {
 class MapColor;
@@ -39,19 +39,19 @@ protected:
 };
 
 class RandomPatternGetter : public KohonenPatternGetter,
-							protected PatternGetterDataMembers
+                            protected PatternGetterDataMembers
 {
 private:
 	RandomPatternGetter();
 
 public:
 	RandomPatternGetter(const QImage& im, MapColor* mc);
-	virtual ~RandomPatternGetter();
-	virtual const OrganizableElement* getPattern();
+	~RandomPatternGetter() override;
+	const OrganizableElement* getPattern() override;
 };
 
 class SequentialPatternGetter : public BatchPatternGetter,
-								protected PatternGetterDataMembers
+                                protected PatternGetterDataMembers
 {
 protected:
 	QImage classifiedImage;
@@ -63,13 +63,13 @@ private:
 
 public:
 	SequentialPatternGetter(const QImage& im, MapColor* mc,
-							ProgressObserver* progressObserver = 0);
-	virtual ~SequentialPatternGetter();
-	virtual const OrganizableElement* getPattern();
-	virtual int getLastElementClass() const;
-	virtual void setLastElementClass(int classNumber);
-	virtual void reset();
-	virtual int numberOfChanges();
+	                        ProgressObserver* progressObserver = nullptr);
+	~SequentialPatternGetter() override;
+	const OrganizableElement* getPattern() override;
+	int getLastElementClass() const override;
+	void setLastElementClass(int classNumber) override;
+	void reset() final;
+	int numberOfChanges() override;
 	virtual QImage* getClassifiedImage();
 };
 } // cove

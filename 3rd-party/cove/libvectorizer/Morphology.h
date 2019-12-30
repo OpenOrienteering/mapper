@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __THINNER_H__
-#define __THINNER_H__
+#ifndef COVE_THINNER_H
+#define COVE_THINNER_H
 
 #include <QImage>
 
@@ -35,16 +35,16 @@ protected:
 	static bool isPrunable[];
 	QImage image, thinnedImage;
 	bool runMorpholo(bool* table, bool insert,
-					 ProgressObserver* progressObserver = 0);
+	                 ProgressObserver* progressObserver = nullptr);
 	int modifyImage(bool* table, bool insert,
-					ProgressObserver* progressObserver = 0);
+	                ProgressObserver* progressObserver = nullptr);
 
 public:
 	Morphology(const QImage& img);
-	bool rosenfeld(ProgressObserver* progressObserver = 0);
-	bool erosion(ProgressObserver* progressObserver = 0);
-	bool dilation(ProgressObserver* progressObserver = 0);
-	bool pruning(ProgressObserver* progressObserver = 0);
+	bool rosenfeld(ProgressObserver* progressObserver = nullptr);
+	bool erosion(ProgressObserver* progressObserver = nullptr);
+	bool dilation(ProgressObserver* progressObserver = nullptr);
+	bool pruning(ProgressObserver* progressObserver = nullptr);
 	QImage getImage() const;
 };
 } // cove

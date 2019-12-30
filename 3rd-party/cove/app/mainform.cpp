@@ -17,41 +17,56 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdlib.h>
-#include <time.h>
+#include "mainform.h"
+#include "ui_mainform.h"
 
-#include <stdexcept>
+#include <cstdlib>
+#include <ctime>
+#include <iosfwd>
 
-#include <QEvent>
+#include <QByteArray>
+#include <QColor>
+#include <QComboBox>
+#include <QDir>
+#include <QFileInfo>
 #include <QFileDialog>
+#include <QGridLayout>
+#include <QGroupBox>
+#include <QIcon>
 #include <QImage>
 #include <QImageReader>
+#include <QLabel>
 #include <QList>
-#include <QListIterator>
-#include <QLocale>
-#include <QMenu>
-#include <QMenuBar>
 #include <QMessageBox>
-#include <QObjectList>
 #include <QPainter>
 #include <QPixmap>
+#include <QPoint>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTabWidget>
+#include <QtGlobal>
 
 #include "core/map.h"
+#include "core/map_coord.h"
+#include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+#include "templates/template.h"
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
-#include "app/FIRFilter.h"
-#include "app/Polygons.h"
-#include "app/Thread.h"
-#include "app/UIProgressDialog.h"
-#include "app/classificationconfigform.h"
-#include "app/colorseditform.h"
-#include "app/mainform.h"
-#include "app/vectorizationconfigform.h"
+#include "libvectorizer/ClassificationThread.h"
+#include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
-#include "ui_mainform.h"
+
+#include "FIRFilter.h"
+#include "QImageView.h"
+#include "QPolygonsView.h"
+#include "Settings.h"
+#include "UIProgressDialog.h"
+#include "classificationconfigform.h"
+#include "colorseditform.h"
+#include "vectorizationconfigform.h"
 
 using namespace std;
 namespace cove {
@@ -134,8 +149,8 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 {
 	ui.setupUi(this);
 
-	vectorizerApp = 0;
-	progressDialog = 0;
+	vectorizerApp = nullptr;
+	progressDialog = nullptr;
 
 	setTabEnabled(ui.imageTab, true);
 	setTabEnabled(ui.thinningTab, false);
@@ -160,7 +175,7 @@ void mainForm::clearBWImageTab()
 	bwImageClearHistory();
 	ui.bwImageView->setPolygons(Polygons::PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
-	ui.bwImageView->setImage(0);
+	ui.bwImageView->setImage(nullptr);
 }
 
 //! Clears the Colors tab, i.e. removes displayed image and color buttons
@@ -172,7 +187,7 @@ void mainForm::clearColorsTab()
 	}
 	else
 	{
-		ui.classifiedColorsView->setImage(0);
+		ui.classifiedColorsView->setImage(nullptr);
 	}
 	clearColorButtonsGroup();
 }
@@ -231,12 +246,12 @@ void mainForm::aboutDialog()
  * makes an average color of its pixels. */
 QRgb mainForm::getColorFromImage(const QImage& image)
 {
-	srand(time(NULL));
+	srand(time(nullptr));  // NOLINT
 	unsigned long r, g, b, divisor;
 	r = g = b = divisor = 0;
 	for (int a = 0; a < 5; a++)
 	{
-		int line = rand() % image.height();
+		int line = rand() % image.height();  // NOLINT
 		int w = image.width();
 		for (int x = 0; x < w; x++)
 		{
@@ -345,7 +360,7 @@ void mainForm::classificationFinished()
 			vectorizerApp->getClassifiedImage(&quality, progressDialog);
 		progressDialog->percentageChanged(100);
 		progressDialog->deleteLater();
-		progressDialog = 0;
+		progressDialog = nullptr;
 		if (!newClassifiedBitmap.isNull())
 		{
 			classifiedBitmap = newClassifiedBitmap;
@@ -478,7 +493,7 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		vectorizerApp->getBWImage(selectedColors, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (!newBWBitmap.isNull())
 	{
 		bwBitmap = newBWBitmap;
@@ -517,18 +532,14 @@ bool mainForm::performMorphologicalOperation(
 		Vectorizer::getTransformedImage(bwBitmap, mo, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 
-	if (!transBitmap.isNull())
-	{
-		bwBitmap = transBitmap;
-		ui.bwImageView->setImage(&bwBitmap);
-		return true;
-	}
-	else
-	{
+	if (transBitmap.isNull())
 		return false;
-	}
+
+	bwBitmap = transBitmap;
+	ui.bwImageView->setImage(&bwBitmap);
+	return true;
 }
 
 //! Inserts the current displayed image into the history queue.  Pops the last
@@ -789,7 +800,7 @@ void mainForm::on_createVectorsButton_clicked()
 	*q = p.createPolygonsFromImage(bwBitmap, progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (q->empty())
 	{
 		delete q;
@@ -804,7 +815,7 @@ void mainForm::on_createVectorsButton_clicked()
 //! Transfers traced polygons back to the map.
 void mainForm::on_saveVectorsButton_clicked()
 {
-	const Polygons::PolygonList polys = ui.bwImageView->polygons();
+	const Polygons::PolygonList& polys = ui.bwImageView->polygons();
 	if (polys.empty()) return;
 
 	float xOff = float(-ui.bwImageView->image()->width()) / 2;
@@ -915,7 +926,7 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 		f.apply(imageBitmap, qRgb(127, 127, 127), progressDialog);
 	progressDialog->percentageChanged(100);
 	progressDialog->deleteLater();
-	progressDialog = 0;
+	progressDialog = nullptr;
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;
 	ui.imageView->setImage(&imageBitmap);
 }

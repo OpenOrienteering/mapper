@@ -17,17 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __POLYGONS_H__
-#define __POLYGONS_H__
+#ifndef COVE_POLYGONS_H
+#define COVE_POLYGONS_H
 
-#include <deque>
+#include <algorithm>
 #include <functional>
 #include <vector>
 
-extern "C" {
-#include "potrace/curve.h"
-#include "potrace/trace.h"
-}
+#include "cove-potrace.h"
 
 class QImage;
 class QRect;
@@ -40,7 +37,7 @@ class Polygons
 protected:
 	bool simpleonly;
 	unsigned specklesize;
-	float maxdist, distdirratio;
+	double maxdist, distdirratio;
 	enum DIRECTION
 	{
 		NONE = 0,
@@ -156,35 +153,33 @@ private:
 	static const int NPOINTS_MAX;
 
 	bool compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops, const dpoint_t& min,
-				   const dpoint_t& max, bool vertical,
-				   ProgressObserver* progressObserver, const double pBase,
-				   const double piece) const;
+	               const dpoint_t& max, bool vertical,
+	               ProgressObserver* progressObserver, double pBase,
+	               double piece) const;
 	bool splitlist(JOINENDPOINTLIST& pl, JOINOPLIST& ops, const dpoint_t& min,
-				   const dpoint_t& max, bool vertical,
-				   ProgressObserver* progressObserver, const double pBase,
-				   const double piece) const;
-	inline float distSqr(const dpoint_t* a, const dpoint_t* b) const;
+	               const dpoint_t& max, bool vertical,
+	               ProgressObserver* progressObserver, double pBase,
+	               double piece) const;
+	inline double distSqr(const dpoint_t* a, const dpoint_t* b) const;
 	inline JOINEND joinEndA(JOINTYPE j) const;
 	inline JOINEND joinEndB(JOINTYPE j) const;
 	inline JOINEND oppositeEnd(JOINEND j) const;
 	inline JOINTYPE endsToType(JOINEND ea, JOINEND eb) const;
-	inline float dstfun(const dpoint_t* a, const dpoint_t* b, const dpoint_t* c,
-						const dpoint_t* d) const;
+	inline double dstfun(const dpoint_t* a, const dpoint_t* b, const dpoint_t* c,
+	                     const dpoint_t* d) const;
 	bool joinPolygons(path_t*& plist,
-					  ProgressObserver* progressObserver = 0) const;
+	                  ProgressObserver* progressObserver = nullptr) const;
 
 protected:
 	static bool findNextPixel(const QImage& image, int& xp, int& yp);
-	static void followPath(const QImage& image, int& x, int& y, Path* path = 0);
-	static Path recordPath(const QImage& image, const int initX,
-						   const int initY);
+	static void followPath(const QImage& image, int& x, int& y, Path* path = nullptr);
+	static Path recordPath(const QImage& image, int initX, int initY);
 	static void removePathFromImage(QImage& image, const Path& path);
-	PathList
-	decomposeImageIntoPaths(const QImage& sourceImage,
-							ProgressObserver* progressObserver = 0) const;
+	PathList decomposeImageIntoPaths(const QImage& sourceImage,
+	                                 ProgressObserver* progressObserver = nullptr) const;
 	PolygonList getPathPolygons(const PathList& constpaths,
-								ProgressObserver* progressObserver = 0) const;
-	static float distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
+	                            ProgressObserver* progressObserver = nullptr) const;
+	static double distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
 
 public:
 	Polygons();
@@ -198,9 +193,9 @@ public:
 	double distDirRatio() const;
 	PolygonList
 	createPolygonsFromImage(const QImage& image,
-							ProgressObserver* progressObserver = 0) const;
+	                        ProgressObserver* progressObserver = nullptr) const;
 	// search for best value of NPOINTS_MAX - optinpoints.cpp
-	friend void perfcheck(void);
+	friend void perfcheck();
 };
 } // cove
 

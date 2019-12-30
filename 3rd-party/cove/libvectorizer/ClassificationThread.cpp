@@ -17,29 +17,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "app/Thread.h"
-#include "app/UIProgressDialog.h"
+#include "ClassificationThread.h"
+
 #include "libvectorizer/Vectorizer.h"
+
+class QObject;
 
 namespace cove {
 //@{
-//! \ingroup gui
-
 /*! \class ClassificationThread
-  \brief Subclass of Thread, used for running classification process. */
-/*! \var UIProgressDialog* ClassificationThread::p
-  UIProgressDialog to be passed to performClassification. Can be 0. */
+  \brief Subclass of QThread, used for running classification process. */
 /*! \var Vectorizer* ClassificationThread::v
   Vectorizer on which to run performClassification. */
+/*! \var ProgressObserver* ClassificationThread::p
+  ProgressObserver, e.g. a UI dialog, to be passed to performClassification. */
 
 /*! Constructor.
   \param[in] v Vectorizer on which to run performClassification.
   \param[in] p UIProgressDialog to be passed to performClassification. Can be 0.
   */
-ClassificationThread::ClassificationThread(Vectorizer& v, UIProgressDialog* const p, QObject* parent)
-    : v(v)
+ClassificationThread::ClassificationThread(Vectorizer& v, ProgressObserver* const p, QObject* parent)
+    : QThread(parent)
+    , v(v)
     , p(p)
-    , QThread(parent)
 {
 }
 

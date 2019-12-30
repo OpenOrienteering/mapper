@@ -17,16 +17,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __QIMAGEVIEW_H__
-#define __QIMAGEVIEW_H__
+#ifndef COVE_QIMAGEVIEW_H
+#define COVE_QIMAGEVIEW_H
 
 #include <memory>
 
+#include <QObject>
+#include <QPoint>
+#include <QRect>
 #include <QScrollArea>
+#include <QString>
 #include <QWidget>
 
 class QImage;
+class QMouseEvent;
 class QPaintEvent;
+class QWheelEvent;
 
 namespace cove {
 class ImageWidget : public QWidget
@@ -37,11 +43,11 @@ protected:
 	bool scalingSmooth;
 	bool dispRealPaintEnabled;
 	QRect drect;
-	virtual void paintEvent(QPaintEvent* pe);
+	void paintEvent(QPaintEvent* pe) override;
 
 public:
-	ImageWidget(QWidget* parent = 0);
-	virtual ~ImageWidget();
+	ImageWidget(QWidget* parent = nullptr);
+	~ImageWidget() override;
 	const QImage* image() const;
 	void setImage(const QImage* im);
 	float magnification() const;
@@ -68,13 +74,13 @@ protected:
 		ZOOM_OUT
 	} opMode;
 	int lastSliderHPos, lastSliderVPos;
-	void wheelEvent(QWheelEvent* event);
-	void mousePressEvent(QMouseEvent* event);
-	void mouseMoveEvent(QMouseEvent* event);
-	void mouseReleaseEvent(QMouseEvent* event);
+	void wheelEvent(QWheelEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
-	QImageView(QWidget* parent = 0);
+	QImageView(QWidget* parent = nullptr);
 	void reset();
 	const QImage* image() const;
 	void setImage(const QImage* im);

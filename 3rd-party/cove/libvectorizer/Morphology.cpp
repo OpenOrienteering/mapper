@@ -17,10 +17,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmath>
+#include "Morphology.h"
 
-#include "libvectorizer/Morphology.h"
-#include "libvectorizer/Vectorizer.h"
+#include <algorithm>
+#include <cmath>  // IWYU pragma: keep
+#include <vector>
+
+#include <QtGlobal>
+
+#include "Vectorizer.h"
 
 namespace cove {
 //@{
@@ -43,7 +48,7 @@ namespace cove {
 //! Constructor
 Morphology::Morphology(const QImage& img)
 	: image(img)
-	, thinnedImage(0)
+	, thinnedImage(nullptr)
 {
 	if (image.depth() > 1) qWarning("Morphology:: can thin only 1bpp images");
 }
@@ -143,11 +148,8 @@ bool Morphology::rosenfeld(ProgressObserver* progressObserver)
 		pc++;
 		count = 0;
 
-		for (int i = 0; i < 4; i++)
+		for (auto const m : masks)
 		{
-
-			m = masks[i];
-
 			// Build initial previous scan buffer.
 			p = !!thinnedImage.pixelIndex(0, 0);
 			for (x = 0; x < xsize - 1; x++)

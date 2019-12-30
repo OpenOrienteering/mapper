@@ -20,9 +20,9 @@
 #ifndef COVERUNNER_H
 #define COVERUNNER_H
 
-#include "../src/gui/main_window.h"
-
 namespace OpenOrienteering {
+class MainWindow;
+class Map;
 class TemplateImage;
 } // namespace OpenOrienteering
 
@@ -31,7 +31,7 @@ class CoveRunner
 {
 public:
 	void run(OpenOrienteering::MainWindow* parent, OpenOrienteering::Map* map,
-			 OpenOrienteering::TemplateImage* templ);
+	         OpenOrienteering::TemplateImage* templ);
 };
 } // cove
 

@@ -17,15 +17,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTORIZER_H__
-#define __VECTORIZER_H__
+#ifndef COVE_VECTORIZER_H
+#define COVE_VECTORIZER_H
 
 #include <memory>
 #include <vector>
-#include <QColor>
-#include <QImage>
 
-#include "libvectorizer/MapColor.h"
+#include <QImage>
+#include <QRgb>
+
+#include "MapColor.h"
 
 namespace cove {
 class ProgressObserver
@@ -97,16 +98,16 @@ public:
 	virtual void setE(int E);
 	virtual void setNumberOfColors(int nColors);
 	virtual void setInitColors(const std::vector<QRgb>& initColors);
-	virtual bool performClassification(ProgressObserver* progressObserver = 0);
+	virtual bool performClassification(ProgressObserver* progressObserver = nullptr);
 	std::vector<QRgb> getClassifiedColors();
-	virtual QImage getClassifiedImage(double* qualityPtr = 0,
-									  ProgressObserver* progressObserver = 0);
+	virtual QImage getClassifiedImage(double* qualityPtr = nullptr,
+	                                  ProgressObserver* progressObserver = nullptr);
 	virtual QImage getBWImage(std::vector<bool> selectedColors,
-							  ProgressObserver* progressObserver = 0);
+	                          ProgressObserver* progressObserver = nullptr);
 	virtual QImage getTransformedImage(MorphologicalOperation mo,
-									   ProgressObserver* progressObserver = 0);
+	                                   ProgressObserver* progressObserver = nullptr);
 	static QImage getTransformedImage(QImage bwImage, MorphologicalOperation mo,
-									  ProgressObserver* progressObserver = 0);
+	                                  ProgressObserver* progressObserver = nullptr);
 };
 } // cove
 

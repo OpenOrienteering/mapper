@@ -17,25 +17,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __THREAD_H__
-#define __THREAD_H__
+#ifndef COVE_THREAD_H
+#define COVE_THREAD_H
 
 #include <QThread>
 
+class QObject;
+
 namespace cove {
-class UIProgressDialog;
+class ProgressObserver;
 class Vectorizer;
 
 class ClassificationThread : public QThread
 {
 protected:
-	UIProgressDialog* const p;
 	Vectorizer& v;
+	ProgressObserver* const p;
 
 public:
 	ClassificationThread() = delete;
-	ClassificationThread(Vectorizer& v, UIProgressDialog* const p, QObject* parent = nullptr);
-	virtual void run();
+	ClassificationThread(Vectorizer& v, ProgressObserver* p = nullptr, QObject* parent = nullptr);
+	void run() override;
 };
 } // cove
 

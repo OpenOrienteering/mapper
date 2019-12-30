@@ -17,11 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __SETTINGS_H__
-#define __SETTINGS_H__
+#ifndef COVE_SETTINGS_H
+#define COVE_SETTINGS_H
 
-#include <string>
 #include <vector>
+
 #include <QRgb>
 #include <QString>
 
@@ -50,7 +50,7 @@ public:
 	bool setDouble(const QString& attname, double attvalue);
 	bool setInt(const QString& attname, int attvalue);
 	bool setInitColors(const std::vector<QRgb>& clrs,
-					   const std::vector<QString>& comments);
+	                   const std::vector<QString>& comments);
 };
 } // cove
 

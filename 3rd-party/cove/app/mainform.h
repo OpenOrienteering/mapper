@@ -17,29 +17,37 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MAINFORM_H__
-#define __MAINFORM_H__
+#ifndef COVE_MAINFORM_H
+#define COVE_MAINFORM_H
+
+#include <memory>
+#include <vector>
 
 #include <QDialog>
 #include <QImage>
 #include <QList>
-#include <QTranslator>
+#include <QObject>
+#include <QRgb>
+#include <QString>
+#include <Qt>
+
+#include "libvectorizer/Vectorizer.h"
 
 #include "Settings.h"
-#include "Thread.h"
-#include "libvectorizer/Vectorizer.h"
-#include "templates/template.h"
 #include "ui_mainform.h"
+
+class QPushButton;
+class QWidget;
 
 namespace OpenOrienteering {
 class Map;
+class Template;
 class TemplateImage;
 } // namespace OpenOrienteering
 
 namespace cove {
-class ProgressObserver;
+class ClassificationThread;
 class UIProgressDialog;
-class Vectorizer;
 
 class mainForm : public QDialog
 {
@@ -77,8 +85,8 @@ protected:
 
 public:
 	mainForm(QWidget* parent, OpenOrienteering::Map* map,
-			 OpenOrienteering::TemplateImage* templ, Qt::WindowFlags flags = 0);
-	~mainForm();
+	         OpenOrienteering::TemplateImage* templ, Qt::WindowFlags flags = {});
+	~mainForm() override;
 	void loadImage(const QImage& imageToLoad, const QString& imageName);
 	void clearColorButtonsGroup();
 	void setColorButtonsGroup(std::vector<QRgb> colors);
@@ -93,22 +101,22 @@ public slots:
 	void setInitialColors(bool on);
 	void colorButtonToggled(bool on);
 
-	void on_bwImageSaveButton_clicked();
-	void on_classificationOptionsButton_clicked();
-	void on_initialColorsButton_clicked();
-	void on_howManyColorsSpinBox_valueChanged(int n);
-	void on_mainTabWidget_currentChanged(int w);
-	void on_setVectorizationOptionsButton_clicked();
-	void on_createVectorsButton_clicked();
-	void on_saveVectorsButton_clicked();
-	void on_runClassificationButton_clicked();
-	void on_runErosionButton_clicked();
-	void on_runDilationButton_clicked();
-	void on_runThinningButton_clicked();
-	void on_runPruningButton_clicked();
-	void on_bwImageHistoryBack_clicked();
-	void on_bwImageHistoryForward_clicked();
-	void on_applyFIRFilterPushButton_clicked();
+	void on_bwImageSaveButton_clicked();        // clazy:exclude=connect-by-name
+	void on_classificationOptionsButton_clicked();  // clazy:exclude=connect-by-name
+	void on_initialColorsButton_clicked();      // clazy:exclude=connect-by-name
+	void on_howManyColorsSpinBox_valueChanged(int n);  // clazy:exclude=connect-by-name
+	void on_mainTabWidget_currentChanged(int w);  // clazy:exclude=connect-by-name
+	void on_setVectorizationOptionsButton_clicked();  // clazy:exclude=connect-by-name
+	void on_createVectorsButton_clicked();      // clazy:exclude=connect-by-name
+	void on_saveVectorsButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runClassificationButton_clicked();  // clazy:exclude=connect-by-name
+	void on_runErosionButton_clicked();         // clazy:exclude=connect-by-name
+	void on_runDilationButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runThinningButton_clicked();        // clazy:exclude=connect-by-name
+	void on_runPruningButton_clicked();         // clazy:exclude=connect-by-name
+	void on_bwImageHistoryBack_clicked();       // clazy:exclude=connect-by-name
+	void on_bwImageHistoryForward_clicked();    // clazy:exclude=connect-by-name
+	void on_applyFIRFilterPushButton_clicked(); // clazy:exclude=connect-by-name
 };
 } // cove
 

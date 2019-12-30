@@ -17,11 +17,9 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include <QMainWindow>
-#include <QMenuBar>
+#include "UIProgressDialog.h"
 
-#include "app/UIProgressDialog.h"
+#include <QWidget>
 
 namespace cove {
 //@{
@@ -37,16 +35,17 @@ namespace cove {
  * progressbar range to 0-100.
  */
 UIProgressDialog::UIProgressDialog(const QString& labelText,
-								   const QString& cancelButtonText,
-								   QWidget* creator, Qt::WindowFlags)
+                                   const QString& cancelButtonText,
+                                   QWidget* creator, Qt::WindowFlags /*unused*/)
 	: QObject(creator)
 	, canceled(false)
 	, pDialog(labelText, cancelButtonText, 0, 100, creator)
 {
 	pDialog.setMinimumDuration(0);
 	pDialog.setWindowModality(Qt::WindowModal);
-	connect(this, SIGNAL(percentageUpdated(int)), &pDialog,
-			SLOT(setValue(int)));
+	connect(this, &UIProgressDialog::percentageUpdated,
+	        &pDialog, &QProgressDialog::setValue,
+	        Qt::QueuedConnection);
 }
 
 /*! Destructor. Sets progress bar dialog value to 100 to make it disappear.

@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __KOHONENMAP_H__
-#define __KOHONENMAP_H__
+#ifndef COVE_KOHONENMAP_H
+#define COVE_KOHONENMAP_H
 
 #include <memory>
 #include <vector>
@@ -33,7 +33,7 @@ public:
 	virtual double squares(const OrganizableElement& y) const = 0;
 	virtual void add(const OrganizableElement& y) = 0;
 	virtual void subtract(const OrganizableElement& y) = 0;
-	virtual void multiply(const double y) = 0;
+	virtual void multiply(double y) = 0;
 };
 
 class KohonenAlphaGetter
@@ -54,7 +54,7 @@ public:
 class BatchPatternGetter : public KohonenPatternGetter
 {
 public:
-	virtual ~BatchPatternGetter();
+	~BatchPatternGetter() override;
 	virtual int getLastElementClass() const = 0;
 	virtual void setLastElementClass(int classNumber) = 0;
 	virtual void reset() = 0;
@@ -63,7 +63,6 @@ public:
 
 class KohonenMap
 {
-protected:
 	std::vector<std::unique_ptr<OrganizableElement>> classes;
 
 public:
@@ -72,7 +71,7 @@ public:
 	int findClosest(const OrganizableElement& v, double& bestDistance) const;
 	void learn(const OrganizableElement& v, double alfa);
 	void performLearning(KohonenAlphaGetter& alphaGetter,
-						 KohonenPatternGetter& patternGetter);
+	                     KohonenPatternGetter& patternGetter);
 	double performBatchLearning(BatchPatternGetter& patternGetter);
 };
 } // cove

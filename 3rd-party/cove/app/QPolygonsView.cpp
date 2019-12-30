@@ -17,15 +17,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <memory>
+#include "QPolygonsView.h"
 
 #include <iterator>
+#include <memory>
+
 #include <QBrush>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPen>
+#include <QPoint>
+#include <QRect>
+#include <QSize>
+#include <Qt>
 
-#include "app/QPolygonsView.h"
+#include "libvectorizer/Polygons.h"
+
+#include "QImageView.h"
+
+class QPaintEvent;
+class QWidget;
 
 namespace cove {
 //@{
@@ -34,9 +45,7 @@ namespace cove {
 /*! \class PaintablePolygonList
   \brief PolygonList holding the QPainterPaths with the polygons. */
 
-PaintablePolygonList::PaintablePolygonList()
-{
-}
+PaintablePolygonList::PaintablePolygonList() = default;
 
 PaintablePolygonList::PaintablePolygonList(const PolygonList& pl)
 {
@@ -81,7 +90,7 @@ PolyImageWidget::PolyImageWidget(QWidget* parent)
 
 /*! Return currently set PolygonList.  \sa setPolygons(Polygons::PolygonList& p)
   */
-Polygons::PolygonList PolyImageWidget::polygons() const
+const Polygons::PolygonList& PolyImageWidget::polygons() const
 {
 	return polygonsList;
 }
@@ -108,8 +117,6 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 
 	QPainter p(this);
 	QRect r = pe->rect();
-	QRectF rf(QPointF(r.topLeft()) / dispMagnification,
-			  QSizeF(r.size()) / dispMagnification);
 
 	for (Polygons::PolygonList::iterator i = polygonsList.begin();
 		 i != polygonsList.end(); i++)
@@ -177,7 +184,7 @@ QPolygonsView::QPolygonsView(QWidget* parent)
 /*! Gets the polygonList that is drawn over the image.
  * \sa setPolygons(Polygons::PolygonList* p)
  */
-Polygons::PolygonList QPolygonsView::polygons() const
+const Polygons::PolygonList& QPolygonsView::polygons() const
 {
 	return static_cast<PolyImageWidget*>(iw.get())->polygons();
 }

@@ -17,15 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <cmath>
-#include <QDateTime>
-#include <QFile>
-#include <QObject>
-#include <QString>
-#include <QStringList>
-#include <QTextStream>
+#include "Settings.h"
 
-#include "app/Settings.h"
+#include <cmath>
+#include <memory>
+
+#include <QString>
 
 namespace cove {
 //@{
@@ -46,8 +43,7 @@ namespace cove {
 /*! Constructor, creates root element and fills defaults from \a doubletab to
  * \a storage */
 Settings::Settings()
-{
-	doubleTab = {{"E", 100000},
+	: doubleTab {{"E", 100000},
 				 {"q", 0.5},
 				 {"initAlpha", 0.1},
 				 {"minAlpha", 1e-6},
@@ -62,7 +58,8 @@ Settings::Settings()
 				 {"doConnections", 1},
 				 {"joinDistance", 5},
 				 {"simpleConnectionsOnly", 1},
-				 {"distDirBalance", 0.5}};
+				 {"distDirBalance", 0.5}}
+{
 }
 
 /*! Returns double from storage.

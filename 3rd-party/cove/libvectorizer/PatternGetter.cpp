@@ -17,13 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <time.h>
+#include "PatternGetter.h"
 
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
 
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/PatternGetter.h"
-#include "libvectorizer/Vectorizer.h"
+#include "MapColor.h"
+#include "Vectorizer.h"
 
 namespace cove {
 //@{
@@ -75,19 +76,17 @@ PatternGetterDataMembers::~PatternGetterDataMembers()
 RandomPatternGetter::RandomPatternGetter(const QImage& im, MapColor* mc)
 	: PatternGetterDataMembers(im, mc)
 {
-	srand(time(NULL));
+	srand(time(nullptr));  // NOLINT
 }
 
 /*! Destructor, does nothing.  Needed to avoid compiler warnings. */
-RandomPatternGetter::~RandomPatternGetter()
-{
-}
+RandomPatternGetter::~RandomPatternGetter() = default;
 
 /*! Get next pattern (pixel) in random order. */
 const OrganizableElement* RandomPatternGetter::getPattern()
 {
-	int rx = rand() / (RAND_MAX / (width - 1)),
-		ry = rand() / (RAND_MAX / (height - 1));
+	int rx = rand() / (RAND_MAX / (width - 1)),  // NOLINT
+	    ry = rand() / (RAND_MAX / (height - 1));  // NOLINT
 	// TODO find a better way to avoid rx & ry run out of bounds
 	if (rx >= width)
 	{
@@ -133,9 +132,7 @@ SequentialPatternGetter::SequentialPatternGetter(
 }
 
 /*! Destructor, does nothing.  Needed to avoid compiler warnings. */
-SequentialPatternGetter::~SequentialPatternGetter()
-{
-}
+SequentialPatternGetter::~SequentialPatternGetter() = default;
 
 /*! Get next pattern (pixel) in sequential order. */
 const OrganizableElement* SequentialPatternGetter::getPattern()
@@ -159,20 +156,18 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 												(width * height),
 											0.2)));
 
-				return 0;
+				return nullptr;
 			}
 
 			if (progressObserver && progressObserver->getCancelPressed())
-				return 0;
+				return nullptr;
 		}
 
 		retval->setRGBTriplet(image.pixel(x, y));
 		return retval;
 	}
-	else
-	{
-		return 0;
-	}
+
+	return nullptr;
 }
 
 /*! Get class of the last element got. \sa getPattern */

@@ -17,9 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QImage>
+#include <QObject>
+#include <QString>
 
-#include <Polygons.h>
+#include "libvectorizer/Polygons.h"
 
 class PolygonTest : public QObject
 {
@@ -30,7 +31,7 @@ private slots:
 
 private:
 	void saveResults(const cove::Polygons::PolygonList& polys,
-					 const QString& filename);
-	bool compareResults(const cove::Polygons::PolygonList& polys,
-						const QString& filename);
+	                 const QString& filename) const;
+	void compareResults(const cove::Polygons::PolygonList& polys,
+	                    const QString& filename) const;
 };

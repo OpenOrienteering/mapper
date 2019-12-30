@@ -17,35 +17,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <algorithm>
-#include <cmath>
-#include <iterator>
-#include <limits>
+#include "Polygons.h"
 
+#include <algorithm>
+#include <cerrno>
+#include <climits>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
+#include <iosfwd>
+#include <limits>
+#include <memory>
 #include <stdexcept>
+
+#include <QByteArray>
+#include <QString>
+#include <QtGlobal>
+
 #include <QImage>
 #include <QRect>
 
-#include "app/Polygons.h"
-#include "libvectorizer/Vectorizer.h"
+#include "Vectorizer.h"
 
 #define JOIN_DEBUG 0
-#if JOIN_DEBUG == 1
-#define JOIN_DEBUG_PRINT(imp, args...) \
-	do                                 \
-	{                                  \
-		qDebug(imp, ##args);           \
-	} while (0)
-#else
-#define JOIN_DEBUG_PRINT(imp, args...)
-#endif
-
-extern "C" {
-#include "potrace/curve.h"
-#include "potrace/lists.h"
-#include "potrace/trace.h"
-#include <errno.h>
-}
+#define JOIN_DEBUG_PRINT(...)            \
+do                                       \
+{                                        \
+	if (JOIN_DEBUG) qDebug(__VA_ARGS__); \
+} while (0)
 
 using namespace std;
 
@@ -298,7 +297,7 @@ bool Polygons::findNextPixel(const QImage& image, int& xp, int& yp)
   \param[in,out] x X-ccordinate of the first pixel of the path.
   \param[in,out] y Y-ccordinate of the first pixel of the path.
   \param[in,out] path Pointer to Polygons::Path where the pixel coordinates will
-  be stored. The variable can be NULL in which case no coordinates are recorded.
+  be stored. The variable can be nullptr in which case no coordinates are recorded.
  */
 void Polygons::followPath(const QImage& image, int& x, int& y, Path* path)
 {
@@ -391,9 +390,9 @@ Polygons::Path Polygons::recordPath(const QImage& image, const int initX,
 /*! Draw into the image so that original path disappears. */
 void Polygons::removePathFromImage(QImage& image, const Path& path)
 {
-	for (Path::const_iterator i = path.begin(); i != path.end(); ++i)
+	for (auto const& i : path)
 	{
-		image.setPixel(i->x, i->y, 0); // delete the pixel
+		image.setPixel(i.x, i.y, 0); // delete the pixel
 	}
 }
 
@@ -431,7 +430,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 						  ProgressObserver* progressObserver) const
 {
 	path_t* p;
-	path_t* plist = NULL;   /* linked list of path objects */
+	path_t* plist = nullptr;   /* linked list of path objects */
 	path_t** hook = &plist; /* used to speed up appending to linked list */
 
 	Polygon list;
@@ -446,7 +445,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		 !cancel && pathsiterator != constpaths.end(); ++pathsiterator)
 	{
 		int len = pathsiterator->size();
-		point_t* pt = (point_t*)malloc(len * sizeof(point_t));
+		point_t* pt = reinterpret_cast<point_t*>(malloc(len * sizeof(point_t)));  // NOLINT
 		p = path_new();
 		if (!p || !pt)
 		{
@@ -460,11 +459,10 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		p->sign = '+';
 
 		len = 0;
-		for (Path::const_iterator i = pathsiterator->begin();
-			 i != pathsiterator->end(); ++i)
+		for (auto const& i : *pathsiterator)
 		{
-			pt[len].x = i->x;
-			pt[len].y = i->y;
+			pt[len].x = i.x;
+			pt[len].y = i.y;
 			len++;
 		}
 
@@ -479,7 +477,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 
 // create polygons for all paths
 #define TRY(x) \
-	if (x) goto try_error
+	if (x) goto try_error // NOLINT
 	list_forall(p, plist)
 	{
 		TRY(calc_sums(p->priv));
@@ -489,7 +487,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	}
 
 	// do joining...
-	if (maxdist) joinPolygons(plist, progressObserver);
+	if (maxdist > 0) joinPolygons(plist, progressObserver);
 
 	// convert potrace line segments into CoVe Polygons
 	// working on p->priv->curve
@@ -518,7 +516,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
 			progressObserver->percentageChanged(90 + cntr * 10 / tpolys);
-			cancel = progressObserver->getCancelPressed();
+			// cancel = progressObserver->getCancelPressed();
 		}
 	}
 
@@ -536,7 +534,7 @@ try_error:
 }
 
 /*! Euclidean distance of two POLYGON_POINTs. */
-float Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
+double Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
 {
 	double x = a.x - b.x;
 	double y = a.y - b.y;
@@ -569,9 +567,9 @@ Polygons::createPolygonsFromImage(const QImage& image,
 //! Fast computation of distance square of two points.  It is used in
 // comparisons where the monotonic transformation makes no problem. It saves
 // one call to sqrt(3).
-inline float Polygons::distSqr(const dpoint_t* a, const dpoint_t* b) const
+inline double Polygons::distSqr(const dpoint_t* a, const dpoint_t* b) const
 {
-	float p = a->x - b->x, q = a->y - b->y;
+	auto p = a->x - b->x, q = a->y - b->y;
 	return p * p + q * q;
 }
 
@@ -625,8 +623,8 @@ inline Polygons::JOINTYPE Polygons::endsToType(Polygons::JOINEND ea,
 precondition: || v2 || < maxdist
 postcondition: return value is from <0,1>
  */
-inline float Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
-							  const dpoint_t* c, const dpoint_t* d) const
+inline double Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
+                               const dpoint_t* c, const dpoint_t* d) const
 {
 	dpoint_t v1, v2, v3;
 	v1.x = b->x - a->x;
@@ -635,15 +633,15 @@ inline float Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
 	v2.y = c->y - b->y;
 	v3.x = d->x - c->x;
 	v3.y = d->y - c->y;
-	float dotprod12 = v1.x * v2.x + v1.y * v2.y;
-	float dotprod23 = v2.x * v3.x + v2.y * v3.y;
-	float norm1 = sqrt(v1.x * v1.x + v1.y * v1.y);
-	float norm2 = sqrt(v2.x * v2.x + v2.y * v2.y);
-	float norm3 = sqrt(v3.x * v3.x + v3.y * v3.y);
+	auto dotprod12 = v1.x * v2.x + v1.y * v2.y;
+	auto dotprod23 = v2.x * v3.x + v2.y * v3.y;
+	auto norm1 = std::sqrt(v1.x * v1.x + v1.y * v1.y);
+	auto norm2 = std::sqrt(v2.x * v2.x + v2.y * v2.y);
+	auto norm3 = std::sqrt(v3.x * v3.x + v3.y * v3.y);
 	// direction cosine - 1 when the vectors have identical direction, -1 when
 	// opposite, 0 when orthogonal
-	float dircos12 = dotprod12 / (norm1 * norm2);
-	float dircos23 = dotprod23 / (norm2 * norm3);
+	auto dircos12 = dotprod12 / (norm1 * norm2);
+	auto dircos23 = dotprod23 / (norm2 * norm3);
 
 	return (1 - distdirratio) * (dircos12 + dircos23 + 2) / 4 +
 		   distdirratio * (1 - norm2 / maxdist);
@@ -798,11 +796,11 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 						throw logic_error("NOEND in JOINENDPOINT list");
 					}
 
-					ops.push_back(JOINOP(dstfun(a, b, c, d)
-											 // self-connection penalization
-											 - (i->path == j->path),
-										 endsToType(i->end, j->end), i->path,
-										 j->path));
+					ops.push_back(JOINOP(float(dstfun(a, b, c, d)
+					                           // self-connection penalization
+					                           - (i->path == j->path)),
+					                     endsToType(i->end, j->end), i->path,
+					                     j->path));
 					nJoins++;
 					*aj = true;
 				}
@@ -1003,7 +1001,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 			else
 			{
 				JOIN_DEBUG_PRINT("  curve closed, jointype %s",
-								 jt2string(joinType));
+								 jt2string(currOp.joinType));
 				currOp.a->priv->curve.closed = 1;
 			}
 			continue;
@@ -1021,7 +1019,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 		case FF: // reverse the segment prior to joining
 			for (int d = 0; d < b_curve->n; d++)
 				newcurve.vertex[d] = b_curve->vertex[b_curve->n - d - 1];
-			[[gnu::fallthrough]];
+			Q_FALLTHROUGH();
 		case FB:
 			if (currOp.joinType == FB)
 				for (int d = 0; d < b_curve->n; d++)
@@ -1033,7 +1031,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 			for (int d = 0; d < b_curve->n; d++)
 				newcurve.vertex[d + a_curve->n] =
 					b_curve->vertex[b_curve->n - d - 1];
-			[[gnu::fallthrough]];
+			Q_FALLTHROUGH();
 		case BF:
 			if (currOp.joinType == BF)
 				for (int d = 0; d < b_curve->n; d++)

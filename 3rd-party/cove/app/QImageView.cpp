@@ -17,20 +17,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "QImageView.h"
+
 #include <cmath>
 
 #include <QAction>
 #include <QBitmap>
 #include <QBrush>
+#include <QColor>
 #include <QCursor>
+#include <QFlags>
 #include <QGuiApplication>
 #include <QImage>
+#include <QMouseEvent>
 #include <QPaintEvent>
 #include <QPainter>
+#include <QRgb>
 #include <QScrollBar>
+#include <QSize>
+#include <QVector>
+#include <QWheelEvent>
 #include <QWidget>
+#include <Qt>
 
-#include "app/QImageView.h"
+class QMouseEvent;
+class QWheelEvent;
 
 namespace cove {
 //@{
@@ -69,7 +80,7 @@ namespace cove {
 //! Default constructor.
 ImageWidget::ImageWidget(QWidget* parent)
 	: QWidget(parent)
-	, dispImage(0)
+	, dispImage(nullptr)
 	, dispMagnification(1)
 	, scalingSmooth(false)
 	, dispRealPaintEnabled(true)
@@ -78,9 +89,7 @@ ImageWidget::ImageWidget(QWidget* parent)
 }
 
 //! Destructor.
-ImageWidget::~ImageWidget()
-{
-}
+ImageWidget::~ImageWidget() = default;
 
 //! Painting event handler.
 void ImageWidget::paintEvent(QPaintEvent* pe)
@@ -123,7 +132,7 @@ void ImageWidget::paintEvent(QPaintEvent* pe)
 				if (copy.depth() == 32)
 				{
 					int p = copy.width() * copy.height();
-					QRgb* b = (QRgb*)copy.bits();
+					QRgb* b = reinterpret_cast<QRgb*>(copy.bits());
 					while (p--)
 					{
 						int I = qGray(*b);
@@ -133,11 +142,10 @@ void ImageWidget::paintEvent(QPaintEvent* pe)
 				else
 				{
 					QVector<QRgb> ct = copy.colorTable();
-					for (QVector<QRgb>::iterator i = ct.begin(); i != ct.end();
-						 ++i)
+					for (auto& color : ct)
 					{
-						int I = qGray(*i);
-						*i = qRgb(I, I, I);
+						auto const gray = qGray(color);
+						color = qRgb(gray, gray, gray);
 					}
 					copy.setColorTable(ct);
 				}

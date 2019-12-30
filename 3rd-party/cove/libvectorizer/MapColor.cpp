@@ -17,11 +17,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "MapColor.h"
+
 #include <cmath>
 
 #include <QColor>
+#include <QtGlobal>
 
-#include "libvectorizer/MapColor.h"
+#include "KohonenMap.h"  // IWYU pragma: keep
 
 namespace cove {
 /*! \class MapColor
@@ -47,9 +50,7 @@ MapColor::MapColor(double ip)
 }
 
 //! Virtual destructor
-MapColor::~MapColor()
-{
-}
+MapColor::~MapColor() = default;
 
 //! Constructor, ip is the value of Minkowski metrics, i1..3 are the initial
 //! values.

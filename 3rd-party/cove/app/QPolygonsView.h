@@ -17,13 +17,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __QPOLYGONSVIEW_H__
-#define __QPOLYGONSVIEW_H__
+#ifndef COVE_QPOLYGONSVIEW_H
+#define COVE_QPOLYGONSVIEW_H
+
+#include <vector>
 
 #include <QPainterPath>
 
-#include "app/Polygons.h"
-#include "app/QImageView.h"
+#include "libvectorizer/Polygons.h"
+
+#include "QImageView.h"
+
+class QPaintEvent;
+class QWidget;
 
 namespace cove {
 class PaintablePolygonList : public Polygons::PolygonList
@@ -46,17 +52,17 @@ private:
 	PaintablePolygonList polygonsList;
 
 public:
-	PolyImageWidget(QWidget* parent = 0);
-	Polygons::PolygonList polygons() const;
+	PolyImageWidget(QWidget* parent = nullptr);
+	const Polygons::PolygonList& polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
-	virtual void paintEvent(QPaintEvent* pe);
+	void paintEvent(QPaintEvent* pe) override;
 };
 
 class QPolygonsView : public QImageView
 {
 public:
-	QPolygonsView(QWidget* parent = 0);
-	Polygons::PolygonList polygons() const;
+	QPolygonsView(QWidget* parent = nullptr);
+	const Polygons::PolygonList& polygons() const;
 	void setPolygons(const Polygons::PolygonList& p);
 };
 } // cove

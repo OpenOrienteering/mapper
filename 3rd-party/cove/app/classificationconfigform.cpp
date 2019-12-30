@@ -17,11 +17,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "classificationconfigform.h"
+#include "ui_classificationconfigform.h"
+
 #include <cmath>
+#include <climits>
+
+#include <QComboBox>
+#include <QGroupBox>
+#include <QLineEdit>
 #include <QValidator>
 
-#include "app/classificationconfigform.h"
-#include "ui_classificationconfigform.h"
+class QWidget;
 
 using cove::classificationconfigform_private::QDoubleInfValidator;
 

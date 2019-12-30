@@ -17,20 +17,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <functional>
+#include "Vectorizer.h"
 
+#include <cstdlib>
+#include <iosfwd>
+
+#include <QColor>
 #include <QImage>
-#include <QList>
-#include <QPainter>
-#include <QThread>
-#include <QtConcurrent>
+#include <QVector>
+#include <Qt>
+#include <QtGlobal>
 
-#include "libvectorizer/AlphaGetter.h"
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/Morphology.h"
-#include "libvectorizer/ParallelImageProcessing.h"
-#include "libvectorizer/PatternGetter.h"
-#include "libvectorizer/Vectorizer.h"
+#include "AlphaGetter.h"
+#include "KohonenMap.h"
+#include "MapColor.h"
+#include "Morphology.h"
+#include "ParallelImageProcessing.h"
+#include "PatternGetter.h"
 
 namespace cove {
 //@{
@@ -316,8 +319,9 @@ void Vectorizer::setInitColors(const std::vector<QRgb>& initColors)
 		{
 			// Random colors at beginning
 			sourceImageColors[i]->setRGBTriplet(
-				qRgb(rand() / (RAND_MAX / 255), rand() / (RAND_MAX / 255),
-					 rand() / (RAND_MAX / 255)));
+				qRgb(rand() / (RAND_MAX / 255),    // NOLINT
+				     rand() / (RAND_MAX / 255),    // NOLINT
+				     rand() / (RAND_MAX / 255)));  // NOLINT
 		}
 	}
 }
@@ -437,7 +441,7 @@ public:
 	{
 	}
 
-	virtual bool operator()(const ImagePart& p) override
+	bool operator()(const ImagePart& p) override
 	{
 		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
 		int width = outputImage.width();
@@ -540,7 +544,7 @@ public:
 	{
 	}
 
-	virtual bool operator()(const ImagePart& p) override
+	bool operator()(const ImagePart& p) override
 	{
 		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
 		int width = outputImage.width();

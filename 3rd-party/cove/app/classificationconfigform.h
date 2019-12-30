@@ -17,12 +17,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __CLASSIFICATIONCONFIGFORM_H__
-#define __CLASSIFICATIONCONFIGFORM_H__
+#ifndef COVE_CLASSIFICATIONCONFIGFORM_H
+#define COVE_CLASSIFICATIONCONFIGFORM_H
 
 #include <QDialog>
+#include <QDoubleValidator>
+#include <QIntValidator>
+#include <QObject>
+#include <QString>
+#include <QValidator>
 
 #include "ui_classificationconfigform.h"
+
+class QWidget;
 
 namespace cove {
 namespace classificationconfigform_private {
@@ -33,8 +40,8 @@ class QDoubleInfValidator : public QDoubleValidator
 public:
 	QDoubleInfValidator(QObject* parent);
 	QDoubleInfValidator(double bottom, double top, int decimals,
-						QObject* parent);
-	virtual QValidator::State validate(QString& input, int& pos) const;
+	                    QObject* parent);
+	QValidator::State validate(QString& input, int& pos) const override;
 };
 } // classificationconfigform_private
 
@@ -56,12 +63,12 @@ public:
 	int colorSpace;
 	double p;
 
-	ClassificationConfigForm(QWidget* parent = 0);
-	void accept();
+	ClassificationConfigForm(QWidget* parent = nullptr);
+	void accept() override;
 	void setValues();
 
 public slots:
-	void on_learningMethodComboBox_activated(int);
+	void on_learningMethodComboBox_activated(int);  // clazy:exclude=connect-by-name
 };
 } // cove
 

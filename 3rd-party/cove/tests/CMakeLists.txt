@@ -2,17 +2,32 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 # project(CoveTests)
 
-find_package(Qt5 COMPONENTS Core Gui Test REQUIRED)
+option(COVE_BENCHMARK "Enable benchmarking in CoVe tests" OFF)
+
+find_package(Qt5Core ${Qt5Core_VERSION} REQUIRED)
+find_package(Qt5Gui ${Qt5Core_VERSION} REQUIRED)
+find_package(Qt5Test ${Qt5Core_VERSION} REQUIRED)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories("../app")
-include_directories("..")
 
-add_executable("PolygonTest" "PolygonTest.cpp" "PolygonTest.h")
-target_link_libraries("PolygonTest"
-          cove
-          Qt5::Test
-          Qt5::Gui
-        )
+add_executable(cove-PolygonTest
+    PolygonTest.cpp
+)
+target_link_libraries(cove-PolygonTest
+  PRIVATE
+    cove-vectorizer
+    Qt5::Test
+    Qt5::Gui
+)
+if(COVE_BENCHMARK)
+	target_compile_definitions(cove-PolygonTest
+	  PRIVATE
+	    COVE_BENCHMARK=QBENCHMARK
+	)
+endif()
+
+add_test(
+  NAME cove-PolygonTest
+  COMMAND cove-PolygonTest
+)

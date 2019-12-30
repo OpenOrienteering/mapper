@@ -17,13 +17,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "colorseditform.h"
+#include "ui_colorseditform.h"
+
+#include <memory>
+
+#include <QAbstractItemModel>
+#include <QBrush>
+#include <QColor>
 #include <QColorDialog>
+#include <QEvent>
+#include <QFlags>
+#include <QFrame>
 #include <QItemDelegate>
 #include <QModelIndex>
-#include <QWidget>
+#include <QRadioButton>
+#include <QStyleOptionViewItem>
+#include <QTableView>
 
-#include "app/colorseditform.h"
-#include "ui_colorseditform.h"
+class QStyleOptionViewItem;
+class QWidget;
 
 namespace cove {
 /*! \ingroup gui */
@@ -39,13 +52,13 @@ class ColorsEditingDelegate : public QItemDelegate
 
 	//! Reimplemented QItemDelegate::createEditor returning 0 on the first two
 	// columns, calling QItemDelegate::createEditor otherwise.
-	virtual QWidget* createEditor(QWidget* parent,
-								  const QStyleOptionViewItem& option,
-								  const QModelIndex& index) const
+	QWidget* createEditor(QWidget* parent,
+	                      const QStyleOptionViewItem& option,
+	                      const QModelIndex& index) const override
 	{
 		if (index.column() <= 1)
 		{
-			return 0;
+			return nullptr;
 		}
 		else
 		{
@@ -56,9 +69,9 @@ class ColorsEditingDelegate : public QItemDelegate
 	//! Reimplemented QItemDelegate::editorEvent spawning QColorDialog and
 	// returning true on the first two columns, calling
 	// QItemDelegate::editorEvent otherwise.
-	virtual bool editorEvent(QEvent* event, QAbstractItemModel* model,
-							 const QStyleOptionViewItem& option,
-							 const QModelIndex& index)
+	bool editorEvent(QEvent* event, QAbstractItemModel* model,
+	                 const QStyleOptionViewItem& option,
+	                 const QModelIndex& index) override
 	{
 		if (event->type() == QEvent::MouseButtonDblClick && index.column() <= 1)
 		{
@@ -66,7 +79,7 @@ class ColorsEditingDelegate : public QItemDelegate
 									 Qt::BackgroundRole);
 			QColor c = v.value<QBrush>().color();
 			clr = QColorDialog::getRgba(c.rgb());
-			setModelData(0, model, index);
+			setModelData(nullptr, model, index);
 			event->accept();
 			return true;
 		}
@@ -77,7 +90,7 @@ class ColorsEditingDelegate : public QItemDelegate
 	//! to
 	// the model.
 	void setModelData(QWidget* editor, QAbstractItemModel* model,
-					  const QModelIndex& index) const
+	                  const QModelIndex& index) const override
 	{
 		if (index.column() <= 1)
 		{
@@ -100,9 +113,7 @@ class ColorsEditingDelegate : public QItemDelegate
 /*! \var ColorsListModel::comments Comments for those colors. */
 
 //! Default constructor, marked private.
-ColorsListModel::ColorsListModel()
-{
-}
+ColorsListModel::ColorsListModel() = default;
 
 //! Constructor creating dialog with colors and comments.
 ColorsListModel::ColorsListModel(const std::vector<QRgb>& colors,
@@ -113,13 +124,13 @@ ColorsListModel::ColorsListModel(const std::vector<QRgb>& colors,
 }
 
 //! Reimplementation of QTableModel member.
-int ColorsListModel::rowCount(const QModelIndex&) const
+int ColorsListModel::rowCount(const QModelIndex& /*parent*/) const
 {
 	return colors.size();
 }
 
 //! Reimplementation of QTableModel member.
-int ColorsListModel::columnCount(const QModelIndex&) const
+int ColorsListModel::columnCount(const QModelIndex& /*parent*/) const
 {
 	return 3;
 }
@@ -184,7 +195,7 @@ Qt::ItemFlags ColorsListModel::flags(const QModelIndex& index) const
 {
 	if (!index.isValid()) return Qt::ItemIsEnabled;
 
-	return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+	return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
 }
 
 //! Reimplementation of QTableModel member.
@@ -234,8 +245,8 @@ auto ColorsListModel::getComments()
 //! Form constructor, adds QitemDelegate to initialColorsListView.
 ColorsEditForm::ColorsEditForm(QWidget* parent)
 	: QDialog(parent)
-	, m(0)
-	, d(0)
+	, m(nullptr)
+	, d(nullptr)
 {
 	ui.setupUi(this);
 	ColorsEditingDelegate* d = new ColorsEditingDelegate();
@@ -247,12 +258,12 @@ ColorsEditForm::~ColorsEditForm()
 {
 	if (m)
 	{
-		ui.initialColorsListView->setModel(0);
+		ui.initialColorsListView->setModel(nullptr);
 		delete m;
 	}
 	if (d)
 	{
-		ui.initialColorsListView->setItemDelegate(0);
+		ui.initialColorsListView->setItemDelegate(nullptr);
 		delete d;
 	}
 }
@@ -273,9 +284,9 @@ void ColorsEditForm::setColors(const std::vector<QRgb>& colors,
 {
 	if (m)
 	{
-		ui.initialColorsListView->setModel(0);
+		ui.initialColorsListView->setModel(nullptr);
 		delete m;
-		m = 0;
+		m = nullptr;
 	}
 
 	if (!colors.empty())

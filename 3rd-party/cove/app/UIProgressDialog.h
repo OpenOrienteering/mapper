@@ -17,12 +17,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __PROGRESSDIALOG_H__
-#define __PROGRESSDIALOG_H__
+#ifndef COVE_PROGRESSDIALOG_H
+#define COVE_PROGRESSDIALOG_H
 
+#include <QObject>
 #include <QProgressDialog>
+#include <QString>
+#include <Qt>
 
 #include "libvectorizer/Vectorizer.h"
+
+class QWidget;
 
 namespace cove {
 class UIProgressDialog : public QObject, public ProgressObserver
@@ -34,10 +39,10 @@ protected:
 
 public:
 	UIProgressDialog(const QString& labelText, const QString& cancelButtonText,
-					 QWidget* creator = 0, Qt::WindowFlags f = 0);
-	virtual ~UIProgressDialog();
-	virtual void percentageChanged(int percentage) override;
-	virtual bool getCancelPressed() override;
+	                 QWidget* creator = nullptr, Qt::WindowFlags f = {});
+	~UIProgressDialog() override;
+	void percentageChanged(int percentage) override;
+	bool getCancelPressed() override;
 
 signals:
 	void percentageUpdated(int percentage);

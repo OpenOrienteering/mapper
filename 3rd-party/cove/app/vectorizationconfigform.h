@@ -17,12 +17,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __VECTORIZATIONCONFIGFORM_H__
-#define __VECTORIZATIONCONFIGFORM_H__
+#ifndef COVE_VECTORIZATIONCONFIGFORM_H
+#define COVE_VECTORIZATIONCONFIGFORM_H
 
 #include <QDialog>
+#include <QObject>
+#include <QString>
 
 #include "ui_vectorizationconfigform.h"
+
+class QWidget;
 
 namespace cove {
 class VectorizationConfigForm : public QDialog
@@ -35,14 +39,14 @@ public:
 	double speckleSize, joinDistance, distDirBalance, cornerMin, optTolerance;
 	bool doConnections, simpleConnectionsOnly;
 
-	VectorizationConfigForm(QWidget* parent = 0);
-	void accept();
+	VectorizationConfigForm(QWidget* parent = nullptr);
+	void accept() override;
 	void setValues();
 
 public slots:
-	int exec();
-	void on_simpleConnectionsCheckBox_toggled(bool);
-	void on_doConnectionsCheckBox_toggled(bool);
+	int exec() override;
+	void on_simpleConnectionsCheckBox_toggled(bool);  // clazy:exclude=connect-by-name
+	void on_doConnectionsCheckBox_toggled(bool);      // clazy:exclude=connect-by-name
 };
 } // cove
 

@@ -17,16 +17,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __COLORSEDITFORM_H__
-#define __COLORSEDITFORM_H__
-
-#include <QAbstractTableModel>
-#include <QDialog>
-#include <QVariant>
+#ifndef COVE_COLORSEDITFORM_H
+#define COVE_COLORSEDITFORM_H
 
 #include <vector>
 
+#include <QAbstractTableModel>
+#include <QDialog>
+#include <QObject>
+#include <QRgb>
+#include <QString>
+#include <QVariant>
+#include <Qt>
+
 #include "ui_colorseditform.h"
+
+class QModelIndex;
+class QWidget;
 
 namespace cove {
 class ColorsListModel : public QAbstractTableModel
@@ -40,15 +47,15 @@ private:
 
 public:
 	ColorsListModel(const std::vector<QRgb>& colors,
-					const std::vector<QString>& comments);
-	virtual int rowCount(const QModelIndex&) const;
-	virtual int columnCount(const QModelIndex&) const;
-	virtual QVariant data(const QModelIndex& index, int role) const;
-	virtual QVariant headerData(int section, Qt::Orientation orientation,
-								int role) const;
-	virtual Qt::ItemFlags flags(const QModelIndex& index) const;
-	virtual bool setData(const QModelIndex& index, const QVariant& value,
-						 int role);
+	                const std::vector<QString>& comments);
+	int rowCount(const QModelIndex&) const override;
+	int columnCount(const QModelIndex&) const override;
+	QVariant data(const QModelIndex& index, int role) const override;
+	QVariant headerData(int section, Qt::Orientation orientation,
+	                    int role) const override;
+	Qt::ItemFlags flags(const QModelIndex& index) const override;
+	bool setData(const QModelIndex& index, const QVariant& value,
+	             int role) override;
 
 	auto getColors();
 	auto getComments();
@@ -72,17 +79,17 @@ public:
 		RandomFromImage,
 		Predefined
 	};
-	ColorsEditForm(QWidget* parent = 0);
-	~ColorsEditForm();
+	ColorsEditForm(QWidget* parent = nullptr);
+	~ColorsEditForm() override;
 	std::vector<QRgb> getColors();
 	std::vector<QString> getComments();
 	void setColors(const std::vector<QRgb>& colors,
-				   const std::vector<QString>& comments);
+	               const std::vector<QString>& comments);
 	ColorsSource getColorsSource();
 	void setColorsSource(ColorsSource s);
 
 public slots:
-	void on_predefinedColorsButton_toggled(bool checked);
+	void on_predefinedColorsButton_toggled(bool checked);  // clazy:exclude=connect-by-name
 };
 } // cove
 

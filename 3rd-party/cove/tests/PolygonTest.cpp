@@ -17,12 +17,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#include "PolygonTest.h"
+
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iterator>
+#include <limits>
+#include <numeric>
+
+#include <QByteArray>
+#include <QDataStream>
+#include <QFile>
+#include <QIODevice>
+#include <QImage>
+#include <QtGlobal>
+#include <QtMath>
 #include <QtTest>
 
-#include <Polygons.h>
+#include "libvectorizer/Polygons.h"
 
-#include "PolygonTest.h"
+// Benchmarking adds significant overhead when enabled.
+// With the focus on (CI) testing, we default to disabling benchmarking
+// by defining COVE_BENCHMARK as an empty macro here, and let CMake set
+// it to QBENCHMARK when the user chooses to enable COVE_BENCHMARKING
+// at configuration time.
+#ifndef COVE_BENCHMARK
+#  define COVE_BENCHMARK
+#endif
 
 void PolygonTest::testJoins_data()
 {
@@ -58,59 +80,78 @@ void PolygonTest::testJoins()
 	polyTracer.setDistDirRatio(distDirRatio);
 
 	cove::Polygons::PolygonList polys;
-	QBENCHMARK
+	COVE_BENCHMARK
 	{
 		polys = polyTracer.createPolygonsFromImage(sampleImage);
 	}
 
 	//    saveResults(polys, QFINDTESTDATA(resultFile));
-	QVERIFY(compareResults(polys, QFINDTESTDATA(resultFile)));
+	compareResults(polys, QFINDTESTDATA(resultFile));
 }
 
 void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
-							  const QString& filename)
+							  const QString& filename) const
 {
 	QFile file(filename);
 	file.open(QIODevice::WriteOnly);
 	QDataStream out(&file);
 
-	foreach (auto poly, polys)
+	for (auto const& poly : polys)
 	{
 		out << poly.isClosed();
-		out << (quint32)poly.size();
-
-		std::for_each(poly.begin(), poly.end(),
-					  [&](const auto p) { out << (double)p.x << (double)p.y; });
+		out << quint32(poly.size());
+		for (auto const& p : poly)
+			out << double(p.x) << double(p.y);
 	}
 }
 
-bool PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
-								 const QString& filename)
+void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
+								 const QString& filename) const
 {
 	QFile file(filename);
-	file.open(QIODevice::ReadOnly);
+	QVERIFY(file.open(QIODevice::ReadOnly));
 	QDataStream in(&file);
 
-	foreach (auto poly, polys)
+	// Results may vary depending on CPU. To mitigate this issue, we count
+	// deviations by distance in five classes (<= 0.5, 1.5, 2.5, 3.5, or more),
+	// and compare the number of occurences against expected maximum values.
+	auto const max_errors = std::array<int, 5>{ std::numeric_limits<int>::max(), 20, 8, 4, 0 };
+	auto errors = std::array<int, max_errors.size()>{};
+	auto count_deviation = [&errors](double actual, double expected) {
+		++*(begin(errors) + qBound(0, qCeil(qAbs(actual - expected) - 0.5), int(errors.size()) - 1));
+	};
+	
+	for (auto const& poly : polys)
 	{
 		bool isClosed;
 		in >> isClosed;
-		if (poly.isClosed() != isClosed) return false;
+		QCOMPARE(poly.isClosed(), isClosed);
 
 		quint32 polyLength;
 		in >> polyLength;
-		if (polyLength != poly.size()) return false;
+		QCOMPARE(quint32(poly.size()), polyLength);
 
-		bool all_ok = true;
-		std::for_each(poly.begin(), poly.end(), [&](const auto p) {
+		for (auto const& p : poly)
+		{
 			double x, y;
 			in >> x >> y;
-			if (x != p.x || y != p.y) all_ok = false;
-		});
-		if (!all_ok) return false;
+			count_deviation(p.x, x);
+			count_deviation(p.y, y);
+		}
 	}
-
-	return true;
+	
+	if (!std::equal(begin(errors), end(errors), begin(max_errors), std::less_equal<>()))
+	{
+		// Report error by displaying actual and expected distribution of deviations.
+		auto as_string = [](auto const& list) {
+			return std::accumulate(begin(list) + 1, end(list),
+			                       QByteArray::number(list.front()).rightJustified(10),
+			                       [](auto& accumulated, auto& current) {
+				return accumulated + ' ' + (QByteArray::number(current).rightJustified(5));
+			});
+		};
+		QCOMPARE(as_string(errors), as_string(max_errors));
+	}
 }
 
-QTEST_MAIN(PolygonTest)
+QTEST_GUILESS_MAIN(PolygonTest)

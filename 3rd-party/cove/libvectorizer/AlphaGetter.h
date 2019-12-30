@@ -17,10 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __ALPHAGETTER_H__
-#define __ALPHAGETTER_H__
+#ifndef COVE_ALPHAGETTER_H
+#define COVE_ALPHAGETTER_H
 
-#include "libvectorizer/KohonenMap.h"
+#include "KohonenMap.h"
 
 namespace cove {
 class ProgressObserver;
@@ -36,9 +36,9 @@ public:
 	ClassicAlphaGetter(ProgressObserver* progressObserver);
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha);
 	ClassicAlphaGetter(double alpha, double q, unsigned int e, double minAlpha,
-					   ProgressObserver* progressObserver);
-	virtual double getAlpha();
-	virtual unsigned int getE();
+	                   ProgressObserver* progressObserver);
+	double getAlpha() override;
+	unsigned int getE() override;
 
 	virtual void setAlpha(double alpha);
 	virtual void setMinAlpha(double minAlpha);
