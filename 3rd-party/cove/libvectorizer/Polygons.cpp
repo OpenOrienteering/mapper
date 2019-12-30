@@ -487,7 +487,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	}
 
 	// do joining...
-	if (maxdist) joinPolygons(plist, progressObserver);
+	if (maxdist > 0) joinPolygons(plist, progressObserver);
 
 	// convert potrace line segments into CoVe Polygons
 	// working on p->priv->curve
@@ -534,7 +534,7 @@ try_error:
 }
 
 /*! Euclidean distance of two POLYGON_POINTs. */
-float Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
+double Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
 {
 	double x = a.x - b.x;
 	double y = a.y - b.y;
@@ -567,9 +567,9 @@ Polygons::createPolygonsFromImage(const QImage& image,
 //! Fast computation of distance square of two points.  It is used in
 // comparisons where the monotonic transformation makes no problem. It saves
 // one call to sqrt(3).
-inline float Polygons::distSqr(const dpoint_t* a, const dpoint_t* b) const
+inline double Polygons::distSqr(const dpoint_t* a, const dpoint_t* b) const
 {
-	float p = a->x - b->x, q = a->y - b->y;
+	auto p = a->x - b->x, q = a->y - b->y;
 	return p * p + q * q;
 }
 
@@ -623,8 +623,8 @@ inline Polygons::JOINTYPE Polygons::endsToType(Polygons::JOINEND ea,
 precondition: || v2 || < maxdist
 postcondition: return value is from <0,1>
  */
-inline float Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
-							  const dpoint_t* c, const dpoint_t* d) const
+inline double Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
+                               const dpoint_t* c, const dpoint_t* d) const
 {
 	dpoint_t v1, v2, v3;
 	v1.x = b->x - a->x;
@@ -633,15 +633,15 @@ inline float Polygons::dstfun(const dpoint_t* a, const dpoint_t* b,
 	v2.y = c->y - b->y;
 	v3.x = d->x - c->x;
 	v3.y = d->y - c->y;
-	float dotprod12 = v1.x * v2.x + v1.y * v2.y;
-	float dotprod23 = v2.x * v3.x + v2.y * v3.y;
-	float norm1 = sqrt(v1.x * v1.x + v1.y * v1.y);
-	float norm2 = sqrt(v2.x * v2.x + v2.y * v2.y);
-	float norm3 = sqrt(v3.x * v3.x + v3.y * v3.y);
+	auto dotprod12 = v1.x * v2.x + v1.y * v2.y;
+	auto dotprod23 = v2.x * v3.x + v2.y * v3.y;
+	auto norm1 = std::sqrt(v1.x * v1.x + v1.y * v1.y);
+	auto norm2 = std::sqrt(v2.x * v2.x + v2.y * v2.y);
+	auto norm3 = std::sqrt(v3.x * v3.x + v3.y * v3.y);
 	// direction cosine - 1 when the vectors have identical direction, -1 when
 	// opposite, 0 when orthogonal
-	float dircos12 = dotprod12 / (norm1 * norm2);
-	float dircos23 = dotprod23 / (norm2 * norm3);
+	auto dircos12 = dotprod12 / (norm1 * norm2);
+	auto dircos23 = dotprod23 / (norm2 * norm3);
 
 	return (1 - distdirratio) * (dircos12 + dircos23 + 2) / 4 +
 		   distdirratio * (1 - norm2 / maxdist);
@@ -796,11 +796,11 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 						throw logic_error("NOEND in JOINENDPOINT list");
 					}
 
-					ops.push_back(JOINOP(dstfun(a, b, c, d)
-											 // self-connection penalization
-											 - (i->path == j->path),
-										 endsToType(i->end, j->end), i->path,
-										 j->path));
+					ops.push_back(JOINOP(float(dstfun(a, b, c, d)
+					                           // self-connection penalization
+					                           - (i->path == j->path)),
+					                     endsToType(i->end, j->end), i->path,
+					                     j->path));
 					nJoins++;
 					*aj = true;
 				}

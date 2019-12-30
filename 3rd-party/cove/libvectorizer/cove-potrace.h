@@ -32,6 +32,7 @@
 extern "C" {
 
 // IWYU pragma: begin_exports
+#include "potrace/potracelib.h"
 #include "potrace/auxiliary.h"
 #include "potrace/curve.h"
 #include "potrace/lists.h"

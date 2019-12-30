@@ -37,7 +37,7 @@ class Polygons
 protected:
 	bool simpleonly;
 	unsigned specklesize;
-	float maxdist, distdirratio;
+	double maxdist, distdirratio;
 	enum DIRECTION
 	{
 		NONE = 0,
@@ -160,13 +160,13 @@ private:
 	               const dpoint_t& max, bool vertical,
 	               ProgressObserver* progressObserver, double pBase,
 	               double piece) const;
-	inline float distSqr(const dpoint_t* a, const dpoint_t* b) const;
+	inline double distSqr(const dpoint_t* a, const dpoint_t* b) const;
 	inline JOINEND joinEndA(JOINTYPE j) const;
 	inline JOINEND joinEndB(JOINTYPE j) const;
 	inline JOINEND oppositeEnd(JOINEND j) const;
 	inline JOINTYPE endsToType(JOINEND ea, JOINEND eb) const;
-	inline float dstfun(const dpoint_t* a, const dpoint_t* b, const dpoint_t* c,
-	                    const dpoint_t* d) const;
+	inline double dstfun(const dpoint_t* a, const dpoint_t* b, const dpoint_t* c,
+	                     const dpoint_t* d) const;
 	bool joinPolygons(path_t*& plist,
 	                  ProgressObserver* progressObserver = nullptr) const;
 
@@ -179,7 +179,7 @@ protected:
 	                                 ProgressObserver* progressObserver = nullptr) const;
 	PolygonList getPathPolygons(const PathList& constpaths,
 	                            ProgressObserver* progressObserver = nullptr) const;
-	static float distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
+	static double distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
 
 public:
 	Polygons();
