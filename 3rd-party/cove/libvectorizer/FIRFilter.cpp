@@ -23,12 +23,12 @@
 
 #include <QImage>
 
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/Vectorizer.h"
+#include "MapColor.h"
+#include "Vectorizer.h"
 
 namespace cove {
 //@{
-//! \ingroup gui
+//! \ingroup libvectorizer
 
 /*! \class FIRFilter
   \brief FIR (Finite Image Response) filter that can be applied onto QImage.

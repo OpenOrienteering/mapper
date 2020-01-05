@@ -56,10 +56,10 @@
 #include "undo/object_undo.h"
 
 #include "libvectorizer/ClassificationThread.h"
+#include "libvectorizer/FIRFilter.h"
 #include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
-#include "FIRFilter.h"
 #include "QImageView.h"
 #include "QPolygonsView.h"
 #include "Settings.h"

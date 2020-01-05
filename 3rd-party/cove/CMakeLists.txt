@@ -16,6 +16,7 @@ target_include_directories(cove-potrace INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}")
 add_library(cove-vectorizer STATIC
     libvectorizer/AlphaGetter.cpp
     libvectorizer/ClassificationThread.cpp
+    libvectorizer/FIRFilter.cpp
     libvectorizer/KohonenMap.cpp
     libvectorizer/MapColor.cpp
     libvectorizer/Morphology.cpp
@@ -37,7 +38,6 @@ set(Cove_SRCS
     app/classificationconfigform.cpp
     app/colorseditform.cpp
     app/coverunner.cpp
-    app/FIRFilter.cpp
     app/mainform.cpp
     app/QImageView.cpp
     app/QPolygonsView.cpp
