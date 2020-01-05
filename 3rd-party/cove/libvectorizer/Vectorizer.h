@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -75,6 +76,7 @@ protected:
 	QImage thinnedBWImage;
 	std::vector<std::shared_ptr<MapColor>> sourceImageColors;
 	std::unique_ptr<MapColor> mc;
+	std::vector<bool> selectedColors;  // companion to bwImage
 	int E;
 	double initAlpha, q, minAlpha, p, quality;
 	LearningMethod learnMethod;

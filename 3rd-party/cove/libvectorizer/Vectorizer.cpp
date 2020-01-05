@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -19,8 +20,10 @@
 
 #include "Vectorizer.h"
 
+#include <algorithm>
 #include <cstdlib>
 #include <iosfwd>
+#include <iterator>
 
 #include <QColor>
 #include <QImage>
@@ -571,10 +574,13 @@ public:
 };
 
 QImage Vectorizer::getBWImage(std::vector<bool> selectedColors,
-							  ProgressObserver* progressObserver)
+                              ProgressObserver* progressObserver)
 {
-	if (bwImage.isNull())
+	if (bwImage.isNull()
+	    || !std::equal(begin(selectedColors), end(selectedColors),
+	                   begin(this->selectedColors), end(this->selectedColors)))
 	{
+		this->selectedColors = selectedColors;
 		bwImage = QImage(sourceImage.size(), QImage::Format_Mono);
 		bwImage.setColorTable(
 			QVector<QRgb>{QColor(Qt::white).rgb(), QColor(Qt::black).rgb()});
