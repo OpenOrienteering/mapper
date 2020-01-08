@@ -540,33 +540,42 @@ QImage Vectorizer::getTransformedImage(MorphologicalOperation mo,
   \param[in] progressObserver Progress observer.
   \return Transformed BW image.
  \sa MorphologicalOperation */
-QImage Vectorizer::getTransformedImage(QImage bwImage,
-									   MorphologicalOperation mo,
-									   ProgressObserver* progressObserver)
+QImage Vectorizer::getTransformedImage(const QImage& bwImage,
+                                       MorphologicalOperation mo,
+                                       ProgressObserver* progressObserver)
 {
-	Morphology thinner(bwImage);
-	bool ok = false;
+	QImage outputImage;
+	bool (Morphology::*operation)(ProgressObserver*) = nullptr;
 	switch (mo)
 	{
 	case EROSION:
-		ok = thinner.erosion(progressObserver);
+		operation = &Morphology::erosion;
 		break;
 	case DILATION:
-		ok = thinner.dilation(progressObserver);
+		operation = &Morphology::dilation;
 		break;
 	case THINNING_ROSENFELD:
-		ok = thinner.rosenfeld(progressObserver);
+		operation = &Morphology::rosenfeld;
 		break;
 	case PRUNING:
-		ok = thinner.pruning(progressObserver);
+		operation = &Morphology::pruning;
 		break;
-	default:
-		qWarning("UNIMPLEMENTED morphological operation");
 	}
-	if (ok) bwImage = thinner.getImage();
+	if (operation)
+	{
+		auto functor = [operation](const QImage& source_image, ProgressObserver& progressObserver) -> QImage {
+			Morphology morphology(source_image);
+			auto ok = (morphology.*operation)(&progressObserver);
+			progressObserver.setPercentage(100);
+			return ok ? morphology.getImage() : QImage{};
+		};
+		outputImage = Concurrency::process<QImage>(progressObserver, functor, bwImage);
+	}
 
-	return ok ? bwImage : QImage();
+	return outputImage;
 }
+
+
 } // cove
 
 //@}

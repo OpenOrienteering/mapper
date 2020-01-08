@@ -102,7 +102,7 @@ public:
 	                          ProgressObserver* progressObserver = nullptr);
 	virtual QImage getTransformedImage(MorphologicalOperation mo,
 	                                   ProgressObserver* progressObserver = nullptr);
-	static QImage getTransformedImage(QImage bwImage, MorphologicalOperation mo,
+	static QImage getTransformedImage(const QImage& bwImage, MorphologicalOperation mo,
 	                                  ProgressObserver* progressObserver = nullptr);
 };
 } // cove
