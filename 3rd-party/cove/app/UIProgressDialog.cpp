@@ -58,7 +58,7 @@ UIProgressDialog::~UIProgressDialog()
 /*! Implementation of ProgressObserver abstract method, emits progressbar
  * update signals in a thread safe manner.
  */
-void UIProgressDialog::percentageChanged(int percentage)
+void UIProgressDialog::setPercentage(int percentage)
 {
 	// according to documentation QProgressDialog::setValue(int) will take
 	// care of calling QApplication::processEvents() when the dialog is modal
@@ -68,7 +68,7 @@ void UIProgressDialog::percentageChanged(int percentage)
 /*! Implementation of ProgressObserver abstract method, returns
  * value of the progress bar dialog cancel status.
  */
-bool UIProgressDialog::getCancelPressed()
+bool UIProgressDialog::isInterruptionRequested() const
 {
 	return pDialog.wasCanceled();
 }

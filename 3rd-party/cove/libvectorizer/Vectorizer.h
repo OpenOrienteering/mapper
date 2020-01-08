@@ -30,13 +30,7 @@
 #include "MapColor.h"
 
 namespace cove {
-class ProgressObserver
-{
-public:
-	virtual ~ProgressObserver();
-	virtual void percentageChanged(int percentage) = 0;
-	virtual bool getCancelPressed() = 0;
-};
+class ProgressObserver;
 
 class Vectorizer
 {

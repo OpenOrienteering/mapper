@@ -22,6 +22,7 @@ add_library(cove-vectorizer STATIC
     libvectorizer/Morphology.cpp
     libvectorizer/PatternGetter.cpp
     libvectorizer/Polygons.cpp
+    libvectorizer/ProgressObserver.h
     libvectorizer/Vectorizer.cpp
     libvectorizer/ParallelImageProcessing.h
 )

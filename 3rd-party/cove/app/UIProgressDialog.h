@@ -25,7 +25,7 @@
 #include <QString>
 #include <Qt>
 
-#include "libvectorizer/Vectorizer.h"
+#include "libvectorizer/ProgressObserver.h"
 
 class QWidget;
 
@@ -41,8 +41,8 @@ public:
 	UIProgressDialog(const QString& labelText, const QString& cancelButtonText,
 	                 QWidget* creator = nullptr, Qt::WindowFlags f = {});
 	~UIProgressDialog() override;
-	void percentageChanged(int percentage) override;
-	bool getCancelPressed() override;
+	void setPercentage(int percentage) override;
+	bool isInterruptionRequested() const override;
 
 signals:
 	void percentageUpdated(int percentage);

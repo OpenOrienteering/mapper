@@ -344,7 +344,7 @@ void mainForm::classificationFinished()
 {
 	auto colorsFound = vectorizerApp->getClassifiedColors();
 	setColorButtonsGroup(colorsFound);
-	progressDialog->percentageChanged(100);
+	progressDialog->setPercentage(100);
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 	ct->deleteLater();
@@ -358,7 +358,7 @@ void mainForm::classificationFinished()
 											  tr("Cancel"), this);
 		QImage newClassifiedBitmap =
 			vectorizerApp->getClassifiedImage(&quality, progressDialog);
-		progressDialog->percentageChanged(100);
+		progressDialog->setPercentage(100);
 		progressDialog->deleteLater();
 		progressDialog = nullptr;
 		if (!newClassifiedBitmap.isNull())
@@ -491,7 +491,7 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		new UIProgressDialog(tr("Creating B/W image"), tr("Cancel"), this);
 	QImage newBWBitmap =
 		vectorizerApp->getBWImage(selectedColors, progressDialog);
-	progressDialog->percentageChanged(100);
+	progressDialog->setPercentage(100);
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 	if (!newBWBitmap.isNull())
@@ -530,7 +530,7 @@ bool mainForm::performMorphologicalOperation(
 	progressDialog = new UIProgressDialog(text, tr("Cancel"), this);
 	QImage transBitmap =
 		Vectorizer::getTransformedImage(bwBitmap, mo, progressDialog);
-	progressDialog->percentageChanged(100);
+	progressDialog->setPercentage(100);
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 
@@ -798,7 +798,7 @@ void mainForm::on_createVectorsButton_clicked()
 	progressDialog =
 		new UIProgressDialog(tr("Vectorizing"), tr("Cancel"), this);
 	*q = p.createPolygonsFromImage(bwBitmap, progressDialog);
-	progressDialog->percentageChanged(100);
+	progressDialog->setPercentage(100);
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 	if (q->empty())
@@ -924,7 +924,7 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 										  tr("Cancel"), this);
 	QImage newImageBitmap =
 		f.apply(imageBitmap, qRgb(127, 127, 127), progressDialog);
-	progressDialog->percentageChanged(100);
+	progressDialog->setPercentage(100);
 	progressDialog->deleteLater();
 	progressDialog = nullptr;
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;

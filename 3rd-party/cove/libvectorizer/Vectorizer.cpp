@@ -32,6 +32,7 @@
 #include <QtGlobal>
 
 #include "AlphaGetter.h"
+#include "ProgressObserver.h"
 #include "KohonenMap.h"
 #include "MapColor.h"
 #include "Morphology.h"
@@ -51,20 +52,20 @@ namespace cove {
  * This class provides interface for classes that would like to monitor
  * progress of long lasting operations like
  * Vectorizer::performClassification(ProgressObserver*).  The \a
- * percentageChanged(int)
+ * setPercentage(int)
  * method is called occasionally thtough the progress of the work and \a
- * getCancelPressed() is called to obtain information whether the process
+ * isInterruptionRequested() is called to obtain information whether the process
  * should continue or not. The class implementing ProgressObserver will usually
  * be something like a progress dialog with progress bar and a cancel button.
  */
 
-/*! \fn virtual void ProgressObserver::percentageChanged(int percentage) = 0;
+/*! \fn virtual void ProgressObserver::setPercentage(int percentage) = 0;
  * This method is called occasionally with \a percentage equal toratio of work
  * done. The \a percentage is between 0 and 100 inclusive.
  * \param[in] percentage The amount of work done.
  */
 
-/*! \fn virtual bool ProgressObserver::getCancelPressed() = 0;
+/*! \fn virtual bool ProgressObserver::isInterruptionRequested() = 0;
  * Returns the boolean value indicating whether the work should progress or
  * finish as soon as possible. Once the ProgressObserver returns true it must
  * return true on all subsequent calls.
@@ -74,9 +75,8 @@ namespace cove {
 
 /*! Destroys ProgressObserver object.
  */
-ProgressObserver::~ProgressObserver()
-{
-}
+ProgressObserver::~ProgressObserver() = default;
+
 
 /*! \class Vectorizer
  * \ingroup libvectorizer
@@ -388,7 +388,7 @@ bool Vectorizer::performClassification(ProgressObserver* progressObserver)
 		qWarning("UNIMPLEMENTED classification method");
 	}
 
-	bool cancel = progressObserver && progressObserver->getCancelPressed();
+	bool cancel = progressObserver && progressObserver->isInterruptionRequested();
 	if (cancel)
 	{
 		deleteColorsTable();
@@ -469,8 +469,8 @@ public:
 			// assuming all threads run at equal speed
 			if (!p.start && progressObserver && !(y % progressHowOften))
 			{
-				progressObserver->percentageChanged(y * 100 / p.len);
-				cancel = progressObserver->getCancelPressed();
+				progressObserver->setPercentage(y * 100 / p.len);
+				cancel = progressObserver->isInterruptionRequested();
 			}
 		}
 
@@ -564,8 +564,8 @@ public:
 			// assuming all threads run at equal speed
 			if (!p.start && progressObserver && !(y % progressHowOften))
 			{
-				progressObserver->percentageChanged(y * 100 / p.len);
-				cancel = progressObserver->getCancelPressed();
+				progressObserver->setPercentage(y * 100 / p.len);
+				cancel = progressObserver->isInterruptionRequested();
 			}
 		}
 

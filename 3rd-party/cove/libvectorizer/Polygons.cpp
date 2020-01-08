@@ -37,7 +37,7 @@
 #include <QImage>
 #include <QRect>
 
-#include "Vectorizer.h"
+#include "ProgressObserver.h"
 
 #define JOIN_DEBUG 0
 #define JOIN_DEBUG_PRINT(...)            \
@@ -414,8 +414,8 @@ Polygons::decomposeImageIntoPaths(const QImage& sourceImage,
 		if (progressObserver && !(y % progressHowOften))
 		{
 			// FIXME hardcoded value 25!!!
-			progressObserver->percentageChanged(y * 25 / height);
-			cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(y * 25 / height);
+			cancel = progressObserver->isInterruptionRequested();
 		}
 	}
 
@@ -469,8 +469,8 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
-			progressObserver->percentageChanged(25 + cntr * 25 / tpolys);
-			cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(25 + cntr * 25 / tpolys);
+			cancel = progressObserver->isInterruptionRequested();
 		}
 	}
 
@@ -514,8 +514,8 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
-			progressObserver->percentageChanged(90 + cntr * 10 / tpolys);
-			// cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(90 + cntr * 10 / tpolys);
+			// cancel = progressObserver->isInterruptionRequested();
 		}
 	}
 
@@ -813,16 +813,16 @@ bool Polygons::compdists(JOINENDPOINTLIST& pl, JOINOPLIST& ops,
 
 			if (progressObserver && !(++cntr % progressHowOften))
 			{
-				progressObserver->percentageChanged(
+				progressObserver->setPercentage(
 					int(cntr * piece / npoints + pBase));
-				cancel = progressObserver->getCancelPressed();
+				cancel = progressObserver->isInterruptionRequested();
 			}
 			if (cancel) return false;
 		}
 	}
 	if (progressObserver)
 	{
-		progressObserver->percentageChanged(int(piece + pBase));
+		progressObserver->setPercentage(int(piece + pBase));
 	}
 	return true;
 }
@@ -871,8 +871,8 @@ bool Polygons::joinPolygons(path_t*& plist,
 
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
-			progressObserver->percentageChanged(cntr * 28 / nops + 62);
-			cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(cntr * 28 / nops + 62);
+			cancel = progressObserver->isInterruptionRequested();
 		}
 
 		if (simpleonly && !currOp.simple) continue;
