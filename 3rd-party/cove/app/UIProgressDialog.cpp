@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -19,16 +20,18 @@
 
 #include "UIProgressDialog.h"
 
-#include <QWidget>
+#include <QCoreApplication>
 
 namespace cove {
 //@{
 //! \ingroup gui
 
 /*! \class UIProgressDialog
- * \brief QProgressDialog that implements ProgressObserver and is always
- * modal. Instantiate UIProgressDialog and pass it as ProgressObserver to
- * Vectorizer.
+ * \brief A proxy for a QProgressDialog
+ * 
+ * This class implements ProgressObserver and connects it to a modal
+ * QProgressDialog. The dialog is closed when the proxy is destroyed
+ * (or when the user clicks Cancel).
  */
 
 /*! Constructor, essentially the same as QProgressDialog's constructor. Sets
@@ -37,32 +40,29 @@ namespace cove {
 UIProgressDialog::UIProgressDialog(const QString& labelText,
                                    const QString& cancelButtonText,
                                    QWidget* creator, Qt::WindowFlags /*unused*/)
-	: QObject(creator)
-	, canceled(false)
-	, pDialog(labelText, cancelButtonText, 0, 100, creator)
+	: pDialog(labelText, cancelButtonText, 0, 100, creator)
 {
+	pDialog.setAutoClose(false);  // avoid reopening on late setValue().
+	pDialog.setAutoReset(false);  // avoid jumping to zero when input is noisy.
 	pDialog.setMinimumDuration(0);
-	pDialog.setWindowModality(Qt::WindowModal);
-	connect(this, &UIProgressDialog::percentageUpdated,
-	        &pDialog, &QProgressDialog::setValue,
-	        Qt::QueuedConnection);
+	pDialog.setWindowModality(Qt::WindowModal); 
 }
 
-/*! Destructor. Sets progress bar dialog value to 100 to make it disappear.
+/*! Destructor.
  */
-UIProgressDialog::~UIProgressDialog()
-{
-	pDialog.setValue(100);
-}
+UIProgressDialog::~UIProgressDialog() = default;
 
-/*! Implementation of ProgressObserver abstract method, emits progressbar
- * update signals in a thread safe manner.
+/*! Implementation of ProgressObserver abstract method.
  */
 void UIProgressDialog::setPercentage(int percentage)
 {
-	// according to documentation QProgressDialog::setValue(int) will take
-	// care of calling QApplication::processEvents() when the dialog is modal
-	emit percentageUpdated(percentage);
+	// QProgressDialog::setValue(int) will take care of calling
+	// QApplication::processEvents() when the dialog is modal, but it
+	// would make the dialog reappear if was already canceled and hidden.
+	if (pDialog.wasCanceled())
+		QCoreApplication::processEvents();
+	else
+		pDialog.setValue(percentage);
 }
 
 /*! Implementation of ProgressObserver abstract method, returns
@@ -70,8 +70,11 @@ void UIProgressDialog::setPercentage(int percentage)
  */
 bool UIProgressDialog::isInterruptionRequested() const
 {
+	// Handle main thread events (such as UI input).
+	QCoreApplication::processEvents();
 	return pDialog.wasCanceled();
 }
+
 } // cove
 
 //@}

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -165,7 +166,7 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 
 mainForm::~mainForm()
 {
-	if (progressDialog) progressDialog->deleteLater();
+	delete progressDialog;
 	clearColorButtonsGroup();
 }
 
@@ -344,8 +345,7 @@ void mainForm::classificationFinished()
 {
 	auto colorsFound = vectorizerApp->getClassifiedColors();
 	setColorButtonsGroup(colorsFound);
-	progressDialog->setPercentage(100);
-	progressDialog->deleteLater();
+	delete progressDialog;
 	progressDialog = nullptr;
 	ct->deleteLater();
 	ct = nullptr;
@@ -358,8 +358,7 @@ void mainForm::classificationFinished()
 											  tr("Cancel"), this);
 		QImage newClassifiedBitmap =
 			vectorizerApp->getClassifiedImage(&quality, progressDialog);
-		progressDialog->setPercentage(100);
-		progressDialog->deleteLater();
+		delete progressDialog;
 		progressDialog = nullptr;
 		if (!newClassifiedBitmap.isNull())
 		{
@@ -491,8 +490,7 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		new UIProgressDialog(tr("Creating B/W image"), tr("Cancel"), this);
 	QImage newBWBitmap =
 		vectorizerApp->getBWImage(selectedColors, progressDialog);
-	progressDialog->setPercentage(100);
-	progressDialog->deleteLater();
+	delete progressDialog;
 	progressDialog = nullptr;
 	if (!newBWBitmap.isNull())
 	{
@@ -530,8 +528,7 @@ bool mainForm::performMorphologicalOperation(
 	progressDialog = new UIProgressDialog(text, tr("Cancel"), this);
 	QImage transBitmap =
 		Vectorizer::getTransformedImage(bwBitmap, mo, progressDialog);
-	progressDialog->setPercentage(100);
-	progressDialog->deleteLater();
+	delete progressDialog;
 	progressDialog = nullptr;
 
 	if (transBitmap.isNull())
@@ -798,8 +795,7 @@ void mainForm::on_createVectorsButton_clicked()
 	progressDialog =
 		new UIProgressDialog(tr("Vectorizing"), tr("Cancel"), this);
 	*q = p.createPolygonsFromImage(bwBitmap, progressDialog);
-	progressDialog->setPercentage(100);
-	progressDialog->deleteLater();
+	delete progressDialog;
 	progressDialog = nullptr;
 	if (q->empty())
 	{
@@ -924,8 +920,7 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 										  tr("Cancel"), this);
 	QImage newImageBitmap =
 		f.apply(imageBitmap, qRgb(127, 127, 127), progressDialog);
-	progressDialog->setPercentage(100);
-	progressDialog->deleteLater();
+	delete progressDialog;
 	progressDialog = nullptr;
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;
 	ui.imageView->setImage(&imageBitmap);
