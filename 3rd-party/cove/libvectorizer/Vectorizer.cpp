@@ -24,14 +24,19 @@
 #include <cstdlib>
 #include <iosfwd>
 #include <iterator>
+#include <numeric>
+#include <utility>
+#include <type_traits>
 
-#include <QColor>
-#include <QImage>
-#include <QVector>
 #include <Qt>
 #include <QtGlobal>
+#include <QColor>
+#include <QException>
+#include <QImage>
+#include <QVector>
 
 #include "AlphaGetter.h"
+#include "Concurrency.h"
 #include "ProgressObserver.h"
 #include "KohonenMap.h"
 #include "MapColor.h"
@@ -40,43 +45,6 @@
 #include "PatternGetter.h"
 
 namespace cove {
-//@{
-/*! \defgroup libvectorizer Library for color classification and BW morphology
- */
-
-/*! \class ProgressObserver
- * \ingroup libvectorizer
- * \brief Anyone who wants to monitor operation's progress must implement this
- * interface.
- *
- * This class provides interface for classes that would like to monitor
- * progress of long lasting operations like
- * Vectorizer::performClassification(ProgressObserver*).  The \a
- * setPercentage(int)
- * method is called occasionally thtough the progress of the work and \a
- * isInterruptionRequested() is called to obtain information whether the process
- * should continue or not. The class implementing ProgressObserver will usually
- * be something like a progress dialog with progress bar and a cancel button.
- */
-
-/*! \fn virtual void ProgressObserver::setPercentage(int percentage) = 0;
- * This method is called occasionally with \a percentage equal toratio of work
- * done. The \a percentage is between 0 and 100 inclusive.
- * \param[in] percentage The amount of work done.
- */
-
-/*! \fn virtual bool ProgressObserver::isInterruptionRequested() = 0;
- * Returns the boolean value indicating whether the work should progress or
- * finish as soon as possible. Once the ProgressObserver returns true it must
- * return true on all subsequent calls.
- * \return Value indicating whether the process should continue (false) or abort
- * (true).
- */
-
-/*! Destroys ProgressObserver object.
- */
-ProgressObserver::~ProgressObserver() = default;
-
 
 /*! \class Vectorizer
  * \ingroup libvectorizer
@@ -423,65 +391,45 @@ std::vector<QRgb> Vectorizer::getClassifiedColors()
  * \param progressObserver Optional progress observer.
  * \return New image. */
 
-class ClassificationMapper : public ParallelImageProcessing::Functor
+class ClassificationMapper
 {
 	const std::vector<std::shared_ptr<MapColor>>& sourceImageColors;
 	const KohonenMap& km;
-	double globalQuality;
-	bool& cancel;
-	ProgressObserver* const progressObserver;
 
 public:
-	ClassificationMapper(const QImage& si, QImage& oi,
-						 const std::vector<std::shared_ptr<MapColor>>& sic,
-						 KohonenMap& km, bool& ca, ProgressObserver* po)
-		: Functor(si, oi)
-		, sourceImageColors(sic)
+	ClassificationMapper(const std::vector<std::shared_ptr<MapColor>>& sic, KohonenMap& km)
+		: sourceImageColors(sic)
 		, km(km)
-		, globalQuality(0)
-		, cancel(ca)
-		, progressObserver(po)
-	{
-	}
+	{}
 
-	bool operator()(const ImagePart& p) override
+	double operator()(const QImage& sourceImage, QImage& outputImage, ProgressObserver& observer) const
 	{
-		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
-		int width = outputImage.width();
+		auto const width = outputImage.width();
+		auto const height = outputImage.height();
 
 		auto color = std::unique_ptr<MapColor>(
 			dynamic_cast<MapColor*>(sourceImageColors[0]->clone()));
 
-		for (int y = p.start; !cancel && y < p.start + p.len; y++)
+		double quality = 0;
+		for (int y = 0; y < height && !observer.isInterruptionRequested(); y++)
 		{
-			double rowquality = 0;
 			for (int x = 0; x < width; x++)
 			{
 				double distance;
 				color->setRGBTriplet(sourceImage.pixel(x, y));
 				int index = km.findClosest(*color, distance);
 				outputImage.setPixel(x, y, index);
-				rowquality += color->squares(*sourceImageColors[index]);
+				quality += color->squares(*sourceImageColors[index]);
 			}
-			globalQuality += rowquality;
-
-			// only one thread reports progress,
-			// assuming all threads run at equal speed
-			if (!p.start && progressObserver && !(y % progressHowOften))
-			{
-				progressObserver->setPercentage(y * 100 / p.len);
-				cancel = progressObserver->isInterruptionRequested();
-			}
+			observer.setPercentage((100*y) / height);
 		}
-
-		return false;
+		return quality;
 	}
 
-	double getQuality()
-	{
-		return globalQuality;
-	}
+	using concurrent_processing = HorizontalStripes;
 };
+Q_STATIC_ASSERT((Concurrency::supported<ClassificationMapper>::value));
+
 
 QImage Vectorizer::getClassifiedImage(double* qualityPtr,
 									  ProgressObserver* progressObserver)
@@ -502,21 +450,16 @@ QImage Vectorizer::getClassifiedImage(double* qualityPtr,
 		KohonenMap km;
 		km.setClasses(classes);
 
-		bool cancel = false;
-
-		auto mapFunctor = ClassificationMapper(sourceImage, classifiedImage,
-											   sourceImageColors, km, cancel,
-											   progressObserver);
-		ParallelImageProcessing::process(mapFunctor);
-
-		if (cancel)
+		auto mapFunctor = ClassificationMapper(sourceImageColors, km);
+		auto results = Concurrency::process<double>(progressObserver, mapFunctor, sourceImage, InplaceImage(classifiedImage));
+		if (progressObserver && progressObserver->isInterruptionRequested())
 		{
 			classifiedImage = QImage();
 			quality = 0;
 		}
 		else
 		{
-			quality = mapFunctor.getQuality();
+			quality = std::accumulate(begin(results), end(results), 0.0, [](auto a, auto& b) { return a + b.future.result(); });
 		}
 	}
 
@@ -531,47 +474,33 @@ QImage Vectorizer::getClassifiedImage(double* qualityPtr,
  pixels of that color will be set to 1 in output image.
  \param[in] progressObserver Progress observer.
  */
-class BWMapper : public ParallelImageProcessing::Functor
+class BWMapper
 {
-	const std::vector<bool> selectedColors;
-	bool& cancel;
-	ProgressObserver* const progressObserver;
+	const std::vector<bool>& selectedColors;
 
 public:
-	BWMapper(const QImage& si, QImage& oi, const std::vector<bool>& sc,
-			 bool& ca, ProgressObserver* po)
-		: Functor(si, oi)
-		, selectedColors(sc)
-		, cancel(ca)
-		, progressObserver(po)
-	{
-	}
+	explicit BWMapper(const std::vector<bool>& sc)
+	    : selectedColors(sc)
+	{}
 
-	bool operator()(const ImagePart& p) override
+	void operator()(const QImage& source_image, QImage& output_image, ProgressObserver& progressObserver) const
 	{
-		int progressHowOften = (p.len > 40) ? p.len / 30 : 1;
-		int width = outputImage.width();
-
-		for (int y = p.start; !cancel && y < p.start + p.len; y++)
+		auto const width = source_image.width();
+		auto const height = source_image.height();
+		for (int y = 0; y < height; y++)
 		{
 			for (int x = 0; x < width; x++)
 			{
-				int colorIndex = sourceImage.pixelIndex(x, y);
-				outputImage.setPixel(x, y, selectedColors[colorIndex]);
+				auto colorIndex = source_image.pixelIndex(x, y);
+				output_image.setPixel(x, y, selectedColors[colorIndex]);
 			}
-
-			// only one thread reports progress,
-			// assuming all threads run at equal speed
-			if (!p.start && progressObserver && !(y % progressHowOften))
-			{
-				progressObserver->setPercentage(y * 100 / p.len);
-				cancel = progressObserver->isInterruptionRequested();
-			}
+			progressObserver.setPercentage((100*y) / height);
 		}
-
-		return false;
 	}
+
+	using concurrent_processing = HorizontalStripes;
 };
+Q_STATIC_ASSERT((Concurrency::supported<BWMapper>::value));
 
 QImage Vectorizer::getBWImage(std::vector<bool> selectedColors,
                               ProgressObserver* progressObserver)
@@ -585,14 +514,10 @@ QImage Vectorizer::getBWImage(std::vector<bool> selectedColors,
 		bwImage.setColorTable(
 			QVector<QRgb>{QColor(Qt::white).rgb(), QColor(Qt::black).rgb()});
 
-		bool cancel = false;
-
-		auto mapFunctor = BWMapper(classifiedImage, bwImage, selectedColors,
-								   cancel, progressObserver);
-
-		ParallelImageProcessing::process(mapFunctor);
-
-		if (cancel) bwImage = QImage();
+		auto mapFunctor = BWMapper(std::move(selectedColors));
+		Concurrency::process(progressObserver, mapFunctor, classifiedImage, InplaceImage(bwImage));
+		if (progressObserver && progressObserver->isInterruptionRequested())
+			bwImage = {};
 	}
 
 	return bwImage;

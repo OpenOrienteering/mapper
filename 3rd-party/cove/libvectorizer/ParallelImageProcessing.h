@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -20,67 +21,66 @@
 #ifndef PARALLELIMAGEPROCESSING_H
 #define PARALLELIMAGEPROCESSING_H
 
+#include <algorithm>
+#include <iosfwd>
+
+#include <QtGlobal>
 #include <QImage>
-#include <QList>
-#include <QSize>
-#include <QThread>
-#include <QtConcurrent>
+#include <QThreadPool>
+
+#include "Concurrency.h"
 
 namespace cove {
-class ParallelImageProcessing
+
+/**
+ * A QImage that will always use the original image's bits, even if copied.
+ */
+class InplaceImage : public QImage
 {
 public:
-	class Functor
+	InplaceImage(const QImage& original, uchar* bits, int width, int height, int bytes_per_line, QImage::Format format);
+	explicit InplaceImage(QImage& source);
+	InplaceImage(QImage&& source) = delete;
+};
+
+
+/**
+ * Use concurrent image processing of horizontal stripes.
+ */
+struct HorizontalStripes
+{
+	/// Creates a QImage stripe, meant for read-only access.
+	static QImage makeStripe(const QImage& original, int scanline, int stripe_height);
+	
+	/// Creates am InplaceImage stripe, meant for modification of the original image.
+	static InplaceImage makeStripe(QImage& original, int scanline, int stripe_height);
+	
+	/// Creates concurrent jobs.
+	template <typename ResultType, typename Functor>
+	static Concurrency::JobList<ResultType> makeJobs(const Functor& functor, const QImage& source, InplaceImage target)
 	{
-		Functor() = delete;
-
-	protected:
-		const QImage& sourceImage;
-		QImage& outputImage;
-
-		Functor(const QImage& si, QImage& oi)
-			: sourceImage(si)
-			, outputImage(oi)
+		Concurrency::JobList<ResultType> jobs;
+		
+		auto const num_jobs = std::max(1, QThreadPool::globalInstance()->maxThreadCount());
+		jobs.reserve(std::size_t(num_jobs));
+		
+		auto const image_height = source.height();
+		auto const source_stripe_height = (image_height + num_jobs - 1) / num_jobs;
+		auto const output_stripe_height = (target.height() + num_jobs - 1) / num_jobs;
+		for (int i = 0, j = 0; i < image_height; i += source_stripe_height, j += output_stripe_height)
 		{
-			Q_ASSERT(sourceImage.size() == outputImage.size());
+			jobs.emplace_back(Concurrency::run<ResultType>(
+			                      functor,
+			                      HorizontalStripes::makeStripe(source, i, source_stripe_height),
+			                      HorizontalStripes::makeStripe(target, j, output_stripe_height)
+			));
 		}
-
-	public:
-		struct ImagePart
-		{
-			int start, len;
-		};
-
-		virtual bool operator()(const ImagePart&) = 0;
-		QSize imageSize()
-		{
-			return sourceImage.size();
-		}
-	};
-
-	template <typename FunctorType> static void process(FunctorType& functor)
-	{
-		// use filter's parallel job scheduling capabilities
-		QList<Functor::ImagePart> sequence;
-
-		int nCores =
-			QThread::idealThreadCount() > 1 ? QThread::idealThreadCount() : 1;
-
-		int imageHeight = functor.imageSize().height();
-		int stripeHeight = (imageHeight + nCores) / nCores;
-		for (int i = 0; i < nCores; i++)
-		{
-			Functor::ImagePart piece;
-			piece.start = i * stripeHeight;
-			piece.len = piece.start < imageHeight - stripeHeight
-							? stripeHeight
-							: imageHeight - piece.start;
-			sequence.append(piece);
-		}
-
-		QtConcurrent::blockingFilter(sequence, functor);
+		
+		return jobs;
 	}
 };
-} // cove
+
+
+}  // namespace cove
 
 #endif // PARALLELIMAGEPROCESSING_H

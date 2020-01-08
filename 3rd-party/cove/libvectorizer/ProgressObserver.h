@@ -50,7 +50,7 @@ protected:
 	ProgressObserver& operator=(ProgressObserver&&) = default;
 	
 public:
-	virtual ~ProgressObserver();  // Defined in Vectorizer.cpp.
+	virtual ~ProgressObserver();  // Defined in Concurrency.cpp.
 	
 	/** 
 	 * Signals the ratio of completed work as a \a percentage.
