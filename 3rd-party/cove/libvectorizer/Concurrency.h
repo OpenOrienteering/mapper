@@ -73,6 +73,31 @@ public:
 
 
 /**
+ * A lightweight adapter for transforming progress, e.g. when aggregating multiple jobs.
+ */
+struct TransformedProgress : public ProgressObserver
+{
+	ProgressObserver& observer;  // NOLINT
+	double factor = 1.0;  // NOLINT
+	double offset = 0.0;  // NOLINT
+	
+	TransformedProgress(
+	        ProgressObserver& observer,
+	        double factor = 1.0,
+	        double offset = 0.0)
+	    : observer(observer), factor(factor), offset(offset)
+	{}
+	
+	void setPercentage(int percentage) final;
+	
+	bool isInterruptionRequested() const final
+	{
+		return observer.isInterruptionRequested();
+	}
+};
+
+
+/**
  * A class representing a job handled by this framework.
  * 
  * It features the `QFuture` which signals the thread's total state and result,

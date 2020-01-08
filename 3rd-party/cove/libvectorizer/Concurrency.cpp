@@ -57,6 +57,14 @@ void Progress::requestInterruption() noexcept
 }
 
 
+// ### Concurrency::TransformedProgress ###
+
+void TransformedProgress::setPercentage(int percentage)
+{
+	observer.setPercentage(qBound(0, qRound(offset + factor * percentage), 100));
+}
+
+
 }  // namespace Concurrency
 
 }  // cove
