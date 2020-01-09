@@ -927,7 +927,7 @@ bool Polygons::joinPolygons(path_t*& plist,
 				}
 				// In case the curve is operation's curve B it becomes a part of
 				// curve A
-				// and it can be reversed (see bellow)
+				// and it can be reversed (see below)
 				else if (currOp.a == checkedOp.b)
 				{
 					// Curve B always becomes a part of curve A

@@ -29,7 +29,7 @@
 namespace cove {
 
 /**
- * An interface for exchaning progress with, and signaling cancelation to;
+ * An interface for exchanging progress with, and signaling cancellation to
  * long-running operations.
  *
  * This class provides an interface for classes that would like to monitor

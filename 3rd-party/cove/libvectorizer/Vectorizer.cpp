@@ -88,7 +88,7 @@ namespace cove {
  Possible alpha selection strategies for KOHONEN_CLASSIC learning. */
 /*! \var Vectorizer::AlphaStrategy Vectorizer::ALPHA_CLASSIC
  Alpha starts at initAlpha, does E cycles of learning, gets multiplied by q and
- does and returns to the previous step (E cycles) until it falls bellow
+ does and returns to the previous step (E cycles) until it falls below
  minAlpha. \sa ClassicAlphaGetter */
 /*! \var Vectorizer::AlphaStrategy Vectorizer::ALPHA_NEUQUANT
  Not implemented yet. */

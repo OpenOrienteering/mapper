@@ -142,7 +142,7 @@ Job<ResultType> run(const FunctorType& functor, Input ... args)
 /**
  * A utility to handle progress information for a single job.
  * 
- * This function does a single exchange of cancelation and progress information
+ * This function does a single exchange of cancellation and progress information
  * between the given observer and the job. It returns true as long as the job
  * is not in finished state.
  */
@@ -194,7 +194,7 @@ using JobList = std::vector<Job<ResultType>>;
 /**
  * A utility to handle progress information for a list of jobs.
  * 
- * This function does a single exchange of cancelation and progress information
+ * This function does a single exchange of cancellation and progress information
  * between the given observer and the jobs. It reports the average progress.
  * It returns true as long as not all jobs are in finished state.
  */

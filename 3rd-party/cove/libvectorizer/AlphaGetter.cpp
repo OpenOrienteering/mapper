@@ -109,7 +109,7 @@ void ClassicAlphaGetter::setAlpha(double alpha)
 	this->alpha = alpha;
 }
 
-/*! Sets minimum value of alpha.  getAlpha returns 0 when alpha is bellow this
+/*! Sets minimum value of alpha.  getAlpha returns 0 when alpha is below this
 value.
 \sa getAlpha */
 void ClassicAlphaGetter::setMinAlpha(double minAlpha)
