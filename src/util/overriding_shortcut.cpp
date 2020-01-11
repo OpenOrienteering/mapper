@@ -35,7 +35,6 @@ OverridingShortcut::OverridingShortcut(QWidget* parent)
 {
 	Q_ASSERT(parent);
 	updateToplevelWidget(parent);
-	timer.start();
 }
 
 OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member, const char* ambiguousMember, Qt::ShortcutContext context)
@@ -43,7 +42,6 @@ OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent,
 {
 	Q_ASSERT(parent);
 	updateToplevelWidget(parent);
-	timer.start();
 }
 
 
@@ -62,15 +60,8 @@ bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
 		if ((key_event->key() | int(key_event->modifiers())) == key()[0])
 		{
-			if (timer.elapsed() < 50) // milliseconds
-			{
-				event->accept();
-				return true;
-			}
-			
 			QShortcutEvent se(key(), id());
 			event->setAccepted(QShortcut::event(&se));
-			timer.restart();
 			return event->isAccepted();
 		}
 	}
