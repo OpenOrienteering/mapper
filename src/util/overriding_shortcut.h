@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,12 +23,13 @@
 #include <Qt>
 #include <QKeySequence>
 #include <QObject>
+#include <QPointer>
 #include <QShortcut>
 #include <QString>
+#include <QWidget>
 #include <QElapsedTimer>
 
 class QEvent;
-class QWidget;
 
 namespace OpenOrienteering {
 
@@ -75,8 +76,10 @@ public:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private:
-	QElapsedTimer timer;
+	void updateToplevelWidget(QWidget* parent_widget);
 	
+	QElapsedTimer timer;
+	QPointer<QWidget> toplevel_widget = nullptr;
 };
 
 
