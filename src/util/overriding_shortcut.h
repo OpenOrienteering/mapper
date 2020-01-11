@@ -58,9 +58,14 @@ public:
 	 * parent must not be nullptr.
 	 * @see QShortcut::QShortcut(const QKeySequence&, QWidget*, const char*, const char*, Qt::ShortcutContext)
 	 */
-	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = nullptr, const char* ambiguousMember = 0, Qt::ShortcutContext context = Qt::WindowShortcut);
+	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = nullptr, const char* ambiguousMember = nullptr, Qt::ShortcutContext context = Qt::WindowShortcut);
 	
-	~OverridingShortcut();
+	OverridingShortcut(const OverridingShortcut&) = delete;
+	OverridingShortcut(OverridingShortcut&&) = delete;
+	OverridingShortcut& operator=(const OverridingShortcut&) = delete;
+	OverridingShortcut& operator=(OverridingShortcut&&) = delete;
+	
+	~OverridingShortcut() override;
 	
 	/**
 	 * Filters events of type QEvent::ShortcutOverride which match this

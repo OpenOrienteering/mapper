@@ -57,7 +57,7 @@ bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 	}
 	else if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
 	{
-		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+		auto* key_event = static_cast<QKeyEvent*>(event);
 		if ((key_event->key() | int(key_event->modifiers())) == key()[0])
 		{
 			QShortcutEvent se(key(), id());
