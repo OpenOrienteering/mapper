@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,12 +23,12 @@
 #include <Qt>
 #include <QKeySequence>
 #include <QObject>
+#include <QPointer>
 #include <QShortcut>
 #include <QString>
-#include <QElapsedTimer>
+#include <QWidget>
 
 class QEvent;
-class QWidget;
 
 namespace OpenOrienteering {
 
@@ -41,11 +41,6 @@ namespace OpenOrienteering {
  * these events are of class QKeyEvent, the overriding works only for key
  * sequences consisting of a single key plus modifiers. For multi-key
  * sequences, the shortcut will work like a normal QShortcut.
- * 
- * OverridingShortcut now ignores a ShortcutOverride event if it occurs
- * immediately (within less than 50 milliseconds) after another. This works
- * around an issue which appeared in Qt 5.1.0 where the event filter receives
- * two ShortcutOverride events for a single shortcut key press.
  */
 class OverridingShortcut : public QShortcut
 {
@@ -63,9 +58,14 @@ public:
 	 * parent must not be nullptr.
 	 * @see QShortcut::QShortcut(const QKeySequence&, QWidget*, const char*, const char*, Qt::ShortcutContext)
 	 */
-	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = nullptr, const char* ambiguousMember = 0, Qt::ShortcutContext context = Qt::WindowShortcut);
+	OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member = nullptr, const char* ambiguousMember = nullptr, Qt::ShortcutContext context = Qt::WindowShortcut);
 	
-	~OverridingShortcut();
+	OverridingShortcut(const OverridingShortcut&) = delete;
+	OverridingShortcut(OverridingShortcut&&) = delete;
+	OverridingShortcut& operator=(const OverridingShortcut&) = delete;
+	OverridingShortcut& operator=(OverridingShortcut&&) = delete;
+	
+	~OverridingShortcut() override;
 	
 	/**
 	 * Filters events of type QEvent::ShortcutOverride which match this
@@ -75,8 +75,9 @@ public:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private:
-	QElapsedTimer timer;
+	void updateToplevelWidget(QWidget* parent_widget);
 	
+	QPointer<QWidget> toplevel_widget = nullptr;
 };
 
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013 Kai Pastor
+ *    Copyright 2013-2019 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -34,16 +34,14 @@ OverridingShortcut::OverridingShortcut(QWidget* parent)
  : QShortcut(parent)
 {
 	Q_ASSERT(parent);
-	parent->window()->installEventFilter(this);
-	timer.start();
+	updateToplevelWidget(parent);
 }
 
 OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member, const char* ambiguousMember, Qt::ShortcutContext context)
  : QShortcut(key, parent, member, ambiguousMember, context)
 {
 	Q_ASSERT(parent);
-	parent->window()->installEventFilter(this);
-	timer.start();
+	updateToplevelWidget(parent);
 }
 
 
@@ -53,25 +51,36 @@ OverridingShortcut::~OverridingShortcut() = default;
 
 bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 {
-	if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
+	if (event->type() == QEvent::ParentChange)
 	{
-		QKeyEvent* key_event = static_cast<QKeyEvent*>(event);
+		updateToplevelWidget(qobject_cast<QWidget*>(parent()));
+	}
+	else if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
+	{
+		auto* key_event = static_cast<QKeyEvent*>(event);
 		if ((key_event->key() | int(key_event->modifiers())) == key()[0])
 		{
-			if (timer.elapsed() < 50) // milliseconds
-			{
-				event->accept();
-				return true;
-			}
-			
 			QShortcutEvent se(key(), id());
 			event->setAccepted(QShortcut::event(&se));
-			timer.restart();
 			return event->isAccepted();
 		}
 	}
 	
 	return false;
+}
+
+
+void OverridingShortcut::updateToplevelWidget(QWidget* parent_widget)
+{
+	if (!parent_widget)
+		return;
+	
+	auto* new_toplevel_widget = parent_widget->topLevelWidget();
+	if (toplevel_widget && toplevel_widget != new_toplevel_widget)
+		toplevel_widget->removeEventFilter(this);
+	toplevel_widget = new_toplevel_widget;
+	if (toplevel_widget)
+		toplevel_widget->installEventFilter(this);
 }
 
 
