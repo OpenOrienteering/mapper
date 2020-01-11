@@ -24,19 +24,21 @@
 
 #include <QtMath>
 #include <QtTest>
-#include <QLatin1String>
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
 
+#include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj.h>
 #endif
 
 #include "core/crs_template.h"
+#include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map_coord.h"
 #include "fileformats/xml_file_format.h"
+
 
 using namespace OpenOrienteering;
 
@@ -50,10 +52,11 @@ int XMLFileFormat::active_version = 6;
 namespace
 {
 	// clazy:excludeall=non-pod-global-static
-	QString epsg5514_spec = QLatin1String("+init=epsg:5514");
-	QString gk2_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	QString gk3_spec   = QLatin1String("+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
-	QString utm32_spec = QLatin1String("+proj=utm +zone=32 +datum=WGS84");
+	auto const epsg3857_spec = QStringLiteral("+init=epsg:3857");
+	auto const epsg5514_spec = QStringLiteral("+init=epsg:5514");
+	auto const gk2_spec   = QStringLiteral("+proj=tmerc +lat_0=0 +lon_0=6 +k=1.000000 +x_0=2500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	auto const gk3_spec   = QStringLiteral("+proj=tmerc +lat_0=0 +lon_0=9 +k=1.000000 +x_0=3500000 +y_0=0 +ellps=bessel +datum=potsdam +units=m +no_defs");
+	auto const utm32_spec = QStringLiteral("+proj=utm +zone=32 +datum=WGS84");
 	
 	
 	/**
@@ -63,7 +66,44 @@ namespace
 	{
 		return d + m/60.0 + s/3600.0;
 	}
-}
+	
+	
+	/**
+	 * Returns the geodetic distance between the given geographic coordinates.
+	 * 
+	 * This function uses the WGS84 ellipsoid.
+	 */
+	double geodeticDistance(const LatLon& first, const LatLon& second)
+	{
+		auto distance = 0.0;
+		auto g = geod_geodesic{};
+		geod_init(&g, 6378137, 1/298.257223563);  // WGS84 ellipsoid
+		geod_inverse(&g, first.latitude(), first.longitude(), second.latitude(), second.longitude(),
+		             &distance, nullptr, nullptr);
+		return distance;
+	}
+	
+	/**
+	 * Returns the nominal east-west scale factor for "Web Mercator".
+	 */
+	double epsg3857ScaleX(double latitude)
+	{
+		constexpr auto e = 0.081819191; // WGS84 eccentricity
+		auto phi = qDegreesToRadians(latitude);
+		return pow(1.0 - e * e * sin(phi) * sin(phi), 0.5) / cos(phi);
+	}
+	
+	/**
+	 * Returns the nominal north-south scale factor for "Web Mercator".
+	 */
+	double epsg3857ScaleY(double latitude)
+	{
+		constexpr auto e = 0.081819191; // WGS84 eccentricity
+		auto phi = qDegreesToRadians(latitude);
+		return pow(1.0 - e * e * sin(phi) * sin(phi), 1.5) / (1.0 - e * e) / cos(phi);
+	}
+	
+}  // namespace
 
 
 void GeoreferencingTest::initTestCase()
@@ -88,55 +128,78 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 	QCOMPARE(new_georef.getProjectedRefPoint(), QPointF(0.0, 0.0));
 }
 
+void GeoreferencingTest::testGridScaleFactor_data()
+{
+	QTest::addColumn<QString>("spec");
+	QTest::addColumn<double>("lat");
+	QTest::addColumn<double>("lon");
+	QTest::addColumn<double>("scale_x");
+	QTest::addColumn<double>("scale_y");
+	
+	QTest::newRow("UTM 32 central meridian")    << utm32_spec     << 50.0 << 9.0  << 0.9996 << 0.9996;
+	QTest::newRow("UTM 32 180 km west of c.m.") << utm32_spec     << 50.0 << 6.48 << 1.0    << 1.0;
+	QTest::newRow("EPSG 3857")                  << epsg3857_spec  << 50.0 << 6.48 << epsg3857ScaleX(50.0) << epsg3857ScaleY(50.0);
+}
+
 void GeoreferencingTest::testGridScaleFactor()
 {
-	Georeferencing utm_georef;
-	utm_georef.setProjectedCRS(QString::fromLatin1("UTM"), utm32_spec);
-	QVERIFY(utm_georef.isValid());
+	QFETCH(QString, spec);
+	QFETCH(double, lat);
+	QFETCH(double, lon);
+	QFETCH(double, scale_x);
+	QFETCH(double, scale_y);
 	
-	Georeferencing mercator_georef;
-	mercator_georef.setProjectedCRS(QString::fromLatin1("EPSG:3857"), CRSTemplateRegistry().find(QString::fromLatin1("EPSG"))->specificationTemplate().arg(QString::fromLatin1("3857")), { QString::fromLatin1("3857") });
-	QVERIFY(mercator_georef.isValid());
+	Georeferencing georef;
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), spec);
+	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	
-	// Use UTM as a convenient approximation for the ground,
-	// having a scale factor close to 1.0.
-	auto point_a_utm = utm_georef.toProjectedCoords(LatLon{50.0, 8.0});
-	auto point_b_utm = point_a_utm - QPointF{ 1000.0, 0.0 };
+	auto const latlon = LatLon{lat, lon};
+	georef.setGeographicRefPoint(latlon);
+	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	
-	auto point_a_mercator = mercator_georef.toProjectedCoords(LatLon{50.0, 8.0});
-	auto point_b_mercator = mercator_georef.toProjectedCoords(utm_georef.toGeographicCoords(point_b_utm));
-	
-	// Standard Mercator scale factor is as simple as:
-	//
-	//   scale_factor = 1.0 / cos(degToRad(50.0));
-	//
-	// EPSG:3857 aka Web Mercator scale factor is more complicated, and
-	// different E/W vs. N/S. For our test, we need the east/west scale factor:
-	auto e = 0.081819191; // WGS84 eccentricity
-	auto phi = qDegreesToRadians(50.0); // Latitude as used for UTM above
-	auto scale_factor = std::pow(1.0 - e * e * std::sin(phi) * std::sin(phi), 0.5) / std::cos(phi);
-	QVERIFY(scale_factor != 1.0);
-	mercator_georef.setGridScaleFactor(scale_factor);
-	QCOMPARE(mercator_georef.getGridScaleFactor(), scale_factor);
-	
-	// With the scale factor applied, we should get the same ground distance.
-	auto ground_distance_utm  = QLineF(point_a_utm, point_b_utm).length();
-	auto ground_distance_mercator  = QLineF(point_a_mercator, point_b_mercator).length();
-	auto equal_ground_distance = (std::fabs(ground_distance_mercator / scale_factor - ground_distance_utm) < 1.0); // meter
-	if (!equal_ground_distance)
+	// Verify scale_x
+	auto const east = georef.getProjectedRefPoint() + QPointF{500.0, 0.0};
+	auto const west = georef.getProjectedRefPoint() - QPointF{500.0, 0.0};
+	auto const grid_distance_x = QLineF{east, west}.length();
+	auto const geod_distance_x = geodeticDistance(georef.toGeographicCoords(west), georef.toGeographicCoords(east));
+	if (std::fabs(grid_distance_x - geod_distance_x * scale_x) >= 0.001)
 	{
-		// Fail with clear output
-		QCOMPARE(ground_distance_mercator / scale_factor, ground_distance_utm);
+		QVERIFY(geod_distance_x > 0.0);
+		QCOMPARE(grid_distance_x / geod_distance_x, scale_x);
 	}
 	
-	// With the scale factor applied, we should get the same paper distance.
-	auto map_distance_utm = QLineF(utm_georef.toMapCoordF(point_a_utm), utm_georef.toMapCoordF(point_b_utm)).length();
-	auto map_distance_mercator  = QLineF(mercator_georef.toMapCoordF(point_a_mercator), mercator_georef.toMapCoordF(point_b_mercator)).length();
-	equal_ground_distance = (std::fabs(map_distance_mercator - map_distance_utm) < 1000.0); // millimeters, scale is 1:1
-	if (!equal_ground_distance)
+	// Verify scale_y
+	auto const north = georef.getProjectedRefPoint() - QPointF{0.0, 500.0};
+	auto const south = georef.getProjectedRefPoint() + QPointF{0.0, 500.0};
+	auto const grid_distance_y = QLineF{north, south}.length();
+	auto const geod_distance_y = geodeticDistance(georef.toGeographicCoords(north), georef.toGeographicCoords(south));
+	if (std::fabs(grid_distance_y - geod_distance_y * scale_y) >= 0.001)
 	{
-		// Fail with clear output
-		QCOMPARE(map_distance_mercator, map_distance_utm);
+		QVERIFY(geod_distance_y > 0.0);
+		QCOMPARE(grid_distance_y / geod_distance_y, scale_y);
+	}
+	
+	// Apply the average scale factor to the georeferencing, and
+	// compare geodetic distance against ground distance, based on length in map.
+	auto const sw = georef.getProjectedRefPoint() - QPointF{100.0, 100.0};
+	auto const ne = georef.getProjectedRefPoint() + QPointF{100.0, 100.0};
+	auto const geod_distance = geodeticDistance(georef.toGeographicCoords(sw), georef.toGeographicCoords(ne));
+	
+	georef.setGridScaleFactor((scale_x + scale_y) / 2);
+	auto map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	auto ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
+	}
+	
+	// And again, with significant declination
+	georef.setDeclination(20.0);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
 	}
 }
 
@@ -145,29 +208,31 @@ void GeoreferencingTest::testCRS_data()
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
 	
-	QTest::newRow("EPSG:4326") << QString::fromLatin1("EPSG:4326") << QString::fromLatin1("+init=epsg:4326");
-	QTest::newRow("UTM")       << QString::fromLatin1("UTM")       << utm32_spec;
+	QTest::newRow("EPSG:4326") << QStringLiteral("EPSG:4326") << QStringLiteral("+init=epsg:4326");
+	QTest::newRow("UTM")       << QStringLiteral("UTM")       << utm32_spec;
 }
 
 void GeoreferencingTest::testCRS()
 {
 	QFETCH(QString, id);
 	QFETCH(QString, spec);
+	Georeferencing georef;
 	QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
 }
 
 
 void GeoreferencingTest::testCRSTemplates()
 {
-	auto epsg_template = CRSTemplateRegistry().find(QString::fromLatin1("EPSG"));
-	QCOMPARE(epsg_template->parameters().size(), (std::size_t)1);
+	auto epsg_template = CRSTemplateRegistry().find(QStringLiteral("EPSG"));
+	QCOMPARE(epsg_template->parameters().size(), static_cast<std::size_t>(1));
 	
-	QCOMPARE(epsg_template->coordinatesName(), QString::fromLatin1("EPSG @code@ coordinates"));
-	QCOMPARE(epsg_template->coordinatesName({ QString::fromLatin1("4326") }), QString::fromLatin1("EPSG 4326 coordinates"));
+	QCOMPARE(epsg_template->coordinatesName(), QStringLiteral("EPSG @code@ coordinates"));
+	QCOMPARE(epsg_template->coordinatesName({ QStringLiteral("4326") }), QStringLiteral("EPSG 4326 coordinates"));
 	
-	georef.setProjectedCRS(QString::fromLatin1("EPSG"), epsg_template->specificationTemplate().arg(QString::fromLatin1("5514")), { QString::fromLatin1("5514") });
+	Georeferencing georef;
+	georef.setProjectedCRS(QStringLiteral("EPSG"), epsg_template->specificationTemplate().arg(QStringLiteral("5514")), { QStringLiteral("5514") });
 	QVERIFY(georef.isValid());
-	QCOMPARE(georef.getProjectedCoordinatesName(), QString::fromLatin1("EPSG 5514 coordinates"));
+	QCOMPARE(georef.getProjectedCoordinatesName(), QStringLiteral("EPSG 5514 coordinates"));
 }
 
 
@@ -208,6 +273,8 @@ void GeoreferencingTest::testProjection()
 	const double max_angl_error = 0.00005; // degrees
 	
 	QFETCH(QString, proj);
+	
+	Georeferencing georef;
 	QVERIFY2(georef.setProjectedCRS(proj, proj), proj.toLatin1());
 	QCOMPARE(georef.getErrorText(), QString{});
 	
@@ -242,7 +309,7 @@ void GeoreferencingTest::testProjection()
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 
 namespace {
-	static bool finder_called;
+	bool finder_called;
 
 	extern "C"
 	const char* projFinderTestFakeCRS(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
@@ -263,7 +330,7 @@ void GeoreferencingTest::testProjContextSetFileFinder()
 	QVERIFY(!finder_called);
 	
 	Georeferencing fake_georef;
-	fake_georef.setProjectedCRS(QStringLiteral("Fake CRS"), QString::fromLatin1("+init=fake_crs:123"));
+	fake_georef.setProjectedCRS(QStringLiteral("Fake CRS"), QStringLiteral("+init=fake_crs:123"));
 	QVERIFY(finder_called);
 }
 
