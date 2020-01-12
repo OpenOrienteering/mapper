@@ -290,7 +290,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
 	connect(georef.data(), &Georeferencing::projectionChanged, this, &GeoreferencingDialog::projectionChanged);
 	connect(georef.data(), &Georeferencing::declinationChanged, this, &GeoreferencingDialog::declinationChanged);
-	connect(georef.data(), &Georeferencing::gridScaleFactorChanged, this, &GeoreferencingDialog::gridScaleFactorChanged);
 	
 	transformationChanged();
 	georefStateChanged();
@@ -398,13 +397,6 @@ void GeoreferencingDialog::declinationChanged()
 {
 	const QSignalBlocker block(declination_edit);
 	setValueIfChanged(declination_edit, georef->getDeclination());
-}
-
-// slot
-void GeoreferencingDialog::gridScaleFactorChanged()
-{
-	const QSignalBlocker block(scale_factor_edit);
-	scale_factor_edit->setValue(georef->getGridScaleFactor());
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)

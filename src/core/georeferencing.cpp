@@ -426,7 +426,6 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	emit stateChanged();
 	emit transformationChanged();
 	emit declinationChanged();
-	emit gridScaleFactorChanged();
 	emit projectionChanged();
 	
 	return *this;
@@ -573,7 +572,6 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	emit stateChanged();
 	updateTransformation();
 	emit declinationChanged();
-	emit gridScaleFactorChanged();
 	if (!projected_crs_spec.isEmpty())
 	{
 		proj_transform = {projected_crs_spec};
@@ -706,7 +704,6 @@ void Georeferencing::setGridScaleFactor(double value)
 		if (!use_grid_compensation)
 		{
 			updateTransformation();
-			emit gridScaleFactorChanged();
 		}
 	}
 }
@@ -765,8 +762,6 @@ void Georeferencing::updateGridCompensation()
 	{
 		this->grid_compensation = grid_compensation;
 		
-		if (use_grid_compensation)
-			emit gridScaleFactorChanged();
 		updateTransformation();
 	}
 }

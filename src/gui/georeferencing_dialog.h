@@ -128,11 +128,6 @@ public:
 	void declinationChanged();
 	
 	/**
-	  * Updates the grid scale factor widget from the georeferencing.
-	  */
-	void gridScaleFactorChanged();
-	
-	/**
 	 * Triggers an online request for the magnetic declination.
 	 * 
 	 * @param no_confirm If true, the user will not be asked for confirmation.
