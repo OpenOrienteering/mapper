@@ -698,19 +698,12 @@ void Georeferencing::setGridScaleFactor(double value)
 {
 	Q_ASSERT(value > 0);
 	double grid_scale_factor = roundScaleFactor(value);
-	if (grid_scale_factor != this->grid_scale_factor)
+	if (use_grid_compensation || grid_scale_factor != this->grid_scale_factor)
 	{
+		this->use_grid_compensation = false;
 		this->grid_scale_factor = grid_scale_factor;
-		if (!use_grid_compensation)
-		{
-			updateTransformation();
-		}
+		updateTransformation();
 	}
-}
-
-void Georeferencing::updateGridScaleFactor()
-{
-	setGridScaleFactor(scaleFactorOfCompensation(grid_compensation));
 }
 
 void Georeferencing::useGridCompensation(bool use_grid_compensation)
@@ -795,11 +788,9 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
-				updateGridCompensation();
+				updateGridCompensation();  // prerequisite for updateGrivation()
 				if (update_grivation)
 					updateGrivation();
-				if (use_grid_compensation)
-					updateGridScaleFactor();
 				emit projectionChanged();
 			}
 		}
@@ -922,11 +913,9 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
-			updateGridCompensation();
+			updateGridCompensation();  // prerequisite for updateGrivation()
 			if (update_grivation)
 				updateGrivation();
-			if (use_grid_compensation)
-				updateGridScaleFactor();
 			updateTransformation();
 			emit projectionChanged();
 		}
@@ -951,6 +940,8 @@ void Georeferencing::updateTransformation()
 	{
 		transform = grid_compensation * projected_translation;  // includes convergence and grid scale factor
 		transform.rotate(-declination);
+		// Update "cached" grid scale factor for future use
+		grid_scale_factor = scaleFactorOfCompensation(grid_compensation);
 	}
 	else
 	{

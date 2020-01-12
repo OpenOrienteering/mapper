@@ -263,24 +263,21 @@ public:
 	 * 
 	 * The grid scale factor is applied as a factor to
 	 * ground distances in meters, to get grid plane distances.
+	 * It may be derived automatically when using grid compensation,
+	 * or set directly.
 	 */
 	double getGridScaleFactor() const;
 	
 	/**
-	 * Sets the grid scale factor.
+	 * Sets a custom grid scale factor.
 	 * 
-	 * \see getGridScaleFactor()
+	 * This disables the use of the grid compensation matrix to automatically
+	 * derive the grid scale factor.
+	 * 
+	 * \see getGridScaleFactor(), usingGridCompensation()
 	 */
 	void setGridScaleFactor(double value);
 	
-	
-	/**
-	 * Updates the grid scale factor. 
-	 * 
-	 * The new value is calculated fresh from the grid compensation,
-	 * overriding the present grid_scale_factor value.
-	 */
-	void updateGridScaleFactor();
 	
 	/**
 	 * Sets use of grid compensation matrix in map-to-projected transformations.

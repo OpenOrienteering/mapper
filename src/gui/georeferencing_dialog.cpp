@@ -603,14 +603,8 @@ void GeoreferencingDialog::scaleFactorEdited()
 
 void GeoreferencingDialog::autoGridScaleCheckToggled(bool checked)
 {
-	georef->useGridCompensation(checked);
-	if (checked)
-	{
-		// compatibility mode becoming automatic grid scale factor mode
-		georef->updateGridScaleFactor();
-	}
-	scale_factor_edit->setValue(georef->getGridScaleFactor());
 	scale_factor_edit->setEnabled(!checked);
+	georef->useGridCompensation(checked);  // No signals if disabled
 }
 
 void GeoreferencingDialog::selectMapRefPoint()
