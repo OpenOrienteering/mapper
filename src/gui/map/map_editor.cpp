@@ -514,7 +514,8 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 {
 	emit templatePositionDockWidgetClosed(temp);
 	
-	delete getTemplatePositionDockWidget(temp);
+	if (auto* w = getTemplatePositionDockWidget(temp))
+		w->deleteLater();
 	int num_deleted = template_position_widgets.remove(temp);
 	Q_ASSERT(num_deleted == 1);
 	Q_UNUSED(num_deleted);
