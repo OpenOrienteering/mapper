@@ -19,7 +19,6 @@
 
 #include "overriding_shortcut.h"
 
-#include <QtGlobal>
 #include <QEvent>
 #include <QKeyEvent>
 #include <QShortcutEvent>
@@ -31,31 +30,38 @@ namespace OpenOrienteering {
 // ### OverridingShortcut ###
 
 OverridingShortcut::OverridingShortcut(QWidget* parent)
- : QShortcut(parent)
-{
-	Q_ASSERT(parent);
-	updateToplevelWidget(parent);
-}
+ : OverridingShortcut(QKeySequence{}, parent, nullptr, nullptr, Qt::WindowShortcut)
+{}
 
 OverridingShortcut::OverridingShortcut(const QKeySequence& key, QWidget* parent, const char* member, const char* ambiguousMember, Qt::ShortcutContext context)
  : QShortcut(key, parent, member, ambiguousMember, context)
+ , parent_or_self(parent)
 {
-	Q_ASSERT(parent);
-	updateToplevelWidget(parent);
+	if (!parent_or_self)
+		parent_or_self = this;
+	parent_or_self->installEventFilter(this);
+	updateEventFilters();
 }
 
 
-OverridingShortcut::~OverridingShortcut() = default;
-
-
-
-bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
+OverridingShortcut::~OverridingShortcut()
 {
-	if (event->type() == QEvent::ParentChange)
+	parent_or_self->removeEventFilter(this);
+	if (window_)
+		window_->removeEventFilter(this);
+}
+
+
+
+bool OverridingShortcut::eventFilter(QObject* watched, QEvent* event)
+{
+	if (event->type() == QEvent::ParentChange
+	    && (watched == parent_or_self || watched == window_) )
 	{
-		updateToplevelWidget(qobject_cast<QWidget*>(parent()));
+		updateEventFilters();
 	}
-	else if (event->type() == QEvent::ShortcutOverride && key().count() == 1)
+	else if (event->type() == QEvent::ShortcutOverride
+	         && isEnabled() && key().count() == 1)
 	{
 		auto* key_event = static_cast<QKeyEvent*>(event);
 		if ((key_event->key() | int(key_event->modifiers())) == key()[0])
@@ -70,17 +76,26 @@ bool OverridingShortcut::eventFilter(QObject* /*watched*/, QEvent* event)
 }
 
 
-void OverridingShortcut::updateToplevelWidget(QWidget* parent_widget)
+void OverridingShortcut::updateEventFilters()
 {
-	if (!parent_widget)
-		return;
+	QObject* new_parent_or_self = parent() ? parent() : this; 
+	if (parent_or_self != new_parent_or_self)
+	{
+		parent_or_self->removeEventFilter(this);
+		parent_or_self = new_parent_or_self;
+		parent_or_self->installEventFilter(this);
+	}
 	
-	auto* new_toplevel_widget = parent_widget->topLevelWidget();
-	if (toplevel_widget && toplevel_widget != new_toplevel_widget)
-		toplevel_widget->removeEventFilter(this);
-	toplevel_widget = new_toplevel_widget;
-	if (toplevel_widget)
-		toplevel_widget->installEventFilter(this);
+	QWidget* parent_widget = qobject_cast<QWidget*>(parent());
+	QWidget* new_window = parent_widget ? parent_widget->window() : nullptr;
+	if (window_ != new_window)
+	{
+		if (window_)
+			window_->removeEventFilter(this);
+		window_ = new_window;
+		if (window_)
+			window_->installEventFilter(this);
+	}
 }
 
 

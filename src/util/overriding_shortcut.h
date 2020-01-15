@@ -75,9 +75,10 @@ public:
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
 private:
-	void updateToplevelWidget(QWidget* parent_widget);
+	void updateEventFilters();
 	
-	QPointer<QWidget> toplevel_widget = nullptr;
+	QObject* parent_or_self;
+	QPointer<QWidget> window_ = nullptr;
 };
 
 
