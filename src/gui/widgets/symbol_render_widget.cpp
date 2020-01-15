@@ -97,7 +97,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	
 	QShortcut* description_shortcut = new OverridingShortcut(
 	  QKeySequence(tr("F1", "Shortcut for displaying the symbol's description")),
-	  window()
+	  this
 	);
 	tooltip = new SymbolToolTip(this, description_shortcut);
 	// TODO: Use a placeholder in the literal and pass the actual shortcut's string representation.
