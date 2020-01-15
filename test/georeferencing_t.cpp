@@ -119,7 +119,8 @@ void GeoreferencingTest::testEmptyProjectedCRS()
 	QVERIFY(new_georef.isLocal());
 	QCOMPARE(new_georef.getState(), Georeferencing::Local);
 	QCOMPARE(new_georef.getScaleDenominator(), 1000u);
-	QCOMPARE(new_georef.getGridScaleFactor(), 1.0);
+	QCOMPARE(new_georef.getCombinedScaleFactor(), 1.0);
+	QCOMPARE(new_georef.getAuxiliaryScaleFactor(), 1.0);
 	QCOMPARE(new_georef.getDeclination(), 0.0);
 	QCOMPARE(new_georef.getGrivation(), 0.0);
 	QCOMPARE(new_georef.getGrivationError(), 0.0);
@@ -185,7 +186,7 @@ void GeoreferencingTest::testGridScaleFactor()
 	auto const ne = georef.getProjectedRefPoint() + QPointF{100.0, 100.0};
 	auto const geod_distance = geodeticDistance(georef.toGeographicCoords(sw), georef.toGeographicCoords(ne));
 	
-	georef.setGridScaleFactor((scale_x + scale_y) / 2);
+	georef.setCombinedScaleFactor((scale_x + scale_y) / 2);
 	auto map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	auto ground_distance = map_distance * georef.getScaleDenominator() / 1000;
 	if (std::fabs(geod_distance - ground_distance) >= 0.001)
@@ -195,6 +196,16 @@ void GeoreferencingTest::testGridScaleFactor()
 	
 	// And again, with significant declination
 	georef.setDeclination(20.0);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
+	}
+	
+	// Finally, try the georeferencing's internal grid scale factor, and
+	// compare geodetic distance against ground distance, based on length in map.
+	georef.setAuxiliaryScaleFactor(1.0);
 	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
 	if (std::fabs(geod_distance - ground_distance) >= 0.001)

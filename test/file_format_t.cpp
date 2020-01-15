@@ -152,6 +152,8 @@ namespace
 		const auto& expected_georef = expected.getGeoreferencing();
 		QCOMPARE(actual_georef.getScaleDenominator(), expected_georef.getScaleDenominator());
 		QCOMPARE(actual_georef.isLocal(), expected_georef.isLocal());
+		QCOMPARE(actual_georef.getCombinedScaleFactor(), expected_georef.getCombinedScaleFactor());
+		QCOMPARE(actual_georef.getAuxiliaryScaleFactor(), expected_georef.getAuxiliaryScaleFactor());
 		QCOMPARE(actual_georef.getDeclination(), expected_georef.getDeclination());
 		QCOMPARE(actual_georef.getGrivation(), expected_georef.getGrivation());
 		QCOMPARE(actual_georef.getMapRefPoint(), expected_georef.getMapRefPoint());

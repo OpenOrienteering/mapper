@@ -127,6 +127,11 @@ public:
 	void declinationChanged();
 	
 	/**
+	  * Updates the scale factor widget from the georeferencing.
+	  */
+	void auxiliaryFactorChanged();
+	
+	/**
 	 * Triggers an online request for the magnetic declination.
 	 * 
 	 * @param no_confirm If true, the user will not be asked for confirmation.
@@ -190,9 +195,14 @@ protected:
 	void crsEdited();
 	
 	/**
-	 * Notifies the dialog of a change in the grid scale factor.
+	 * Notifies the dialog of a change in the auxiliary scale factor.
 	 */
-	void scaleFactorEdited();
+	void auxiliaryFactorEdited(double value);
+	
+	/**
+	 * Updates the combined scale factor field from the underlying Georeferencing.
+	 */
+	void updateCombinedFactor();
 	
 	/**
 	 * Hides the dialog and activates a GeoreferencingTool for selecting
@@ -245,12 +255,12 @@ private:
 	bool tool_active;
 	bool declination_query_in_progress;
 	bool grivation_locked;
+	bool scale_factor_locked;
 	
 	/* GUI elements */
 	CRSSelector* crs_selector;
 	QLabel* status_label;
 	QLabel* status_field;
-	QDoubleSpinBox* scale_factor_edit;
 	
 	QDoubleSpinBox* map_x_edit;
 	QDoubleSpinBox* map_y_edit;
@@ -271,6 +281,9 @@ private:
 	QDoubleSpinBox* declination_edit;
 	QPushButton* declination_button;
 	QLabel* grivation_label;
+
+	QDoubleSpinBox* scale_factor_edit;
+	QLabel* combined_factor_label;
 	
 	QDialogButtonBox* buttons_box;
 	QPushButton* reset_button;

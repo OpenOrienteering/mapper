@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019, 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,7 +19,7 @@
  */
 
 
-#include "map_dialog_scale.h"
+#include "map_dialog_stretch.h"
 
 #include <QDoubleSpinBox>
 #include <QCheckBox>
@@ -38,30 +38,27 @@
 
 namespace OpenOrienteering {
 
-ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+StretchMapDialog::StretchMapDialog(QWidget* parent, Map* map, double stretch_factor) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), stretch_factor(stretch_factor), map(map)
 {
-	setWindowTitle(tr("Change map scale"));
+	setWindowTitle(tr("Change scale factor"));
 	
 	QFormLayout* layout = new QFormLayout();
 	
 	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
 	
-	scale_edit = Util::SpinBox::create(1, 9999999, {}, 500);
-	scale_edit->setPrefix(QStringLiteral("1 : "));
-	scale_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
-	scale_edit->setValue(static_cast<int>(map->getScaleDenominator()));
-	layout->addRow(tr("New scale:"), scale_edit);
-	
 	layout->addRow(new QLabel(tr("Scaling center:")));
 	
 	//: Scaling center point
 	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
-	center_origin_radio->setChecked(true);
+	if (!map->getGeoreferencing().isValid())
+		center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
 	//: Scaling center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (!map->getGeoreferencing().isValid())
+	if (map->getGeoreferencing().isValid())
+		center_georef_radio->setChecked(true);
+	else
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
@@ -79,20 +76,6 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	layout->addItem(Util::SpacerItem::create(this));
 	layout->addRow(Util::Headline::create(tr("Options")));
-	
-	adjust_symbols_check = new QCheckBox(tr("Scale symbol sizes"));
-	if (map->getNumSymbols() > 0)
-		adjust_symbols_check->setChecked(true);
-	else
-		adjust_symbols_check->setEnabled(false);
-	layout->addRow(adjust_symbols_check);
-	
-	adjust_objects_check = new QCheckBox(tr("Scale map object positions"));
-	if (map->getNumObjects() > 0)
-		adjust_objects_check->setChecked(true);
-	else
-		adjust_objects_check->setEnabled(false);
-	layout->addRow(adjust_objects_check);
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
 	if (map->getGeoreferencing().isValid())
@@ -125,32 +108,31 @@ ScaleMapDialog::ScaleMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::
 	
 	setLayout(box_layout);
 	
-	connect(center_origin_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
-	connect(center_georef_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
-	connect(center_other_radio, &QAbstractButton::clicked, this, &ScaleMapDialog::updateWidgets);
-	connect(button_box, &QDialogButtonBox::accepted, this, &ScaleMapDialog::okClicked);
+	connect(center_origin_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
+	connect(center_georef_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
+	connect(center_other_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
+	connect(button_box, &QDialogButtonBox::accepted, this, &StretchMapDialog::okClicked);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
 }
 
-void ScaleMapDialog::updateWidgets()
+void StretchMapDialog::updateWidgets()
 {
 	other_x_edit->setEnabled(center_other_radio->isChecked());
 	other_y_edit->setEnabled(center_other_radio->isChecked());
 	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
-void ScaleMapDialog::okClicked()
+void StretchMapDialog::okClicked()
 {
-	auto scale = static_cast<unsigned int>(scale_edit->value());
 	MapCoord center = MapCoord(0, 0);
 	if (center_georef_radio->isChecked())
 		center = map->getGeoreferencing().getMapRefPoint();
 	else if (center_other_radio->isChecked())
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 	
-	map->changeScale(scale, 1.0, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
+	map->changeScale(map->getScaleDenominator(), stretch_factor, center, false, true, adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
 

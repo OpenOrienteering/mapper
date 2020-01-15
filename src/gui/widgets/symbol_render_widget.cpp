@@ -945,7 +945,7 @@ void SymbolRenderWidget::pasteSymbols()
 		if (answer == QMessageBox::Cancel)
 			return;
 		
-		paste_map.changeScale(map->getScaleDenominator(), {0, 0}, answer == QMessageBox::Yes, false, false, false);
+		paste_map.changeScale(map->getScaleDenominator(), 1.0, {0, 0}, answer == QMessageBox::Yes, false, false, false);
 	}
 	
 	// Ensure that a change in selection is detected
