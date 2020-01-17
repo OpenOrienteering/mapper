@@ -23,8 +23,8 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "ProgressObserver.h"
 #include "MapColor.h"
-#include "Vectorizer.h"
 
 namespace cove {
 //@{
@@ -150,7 +150,7 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 			if (y >= height)
 			{
 				if (progressObserver)
-					progressObserver->percentageChanged(
+					progressObserver->setPercentage(
 						100 - static_cast<int>(
 								  100 * pow(static_cast<float>(nChanges) /
 												(width * height),
@@ -159,7 +159,7 @@ const OrganizableElement* SequentialPatternGetter::getPattern()
 				return nullptr;
 			}
 
-			if (progressObserver && progressObserver->getCancelPressed())
+			if (progressObserver && progressObserver->isInterruptionRequested())
 				return nullptr;
 		}
 
@@ -187,7 +187,7 @@ void SequentialPatternGetter::setLastElementClass(int classNumber)
 /*! Reset the pattern getter into initial state. */
 void SequentialPatternGetter::reset()
 {
-	if (progressObserver && progressObserver->getCancelPressed())
+	if (progressObserver && progressObserver->isInterruptionRequested())
 	{
 		y = height;					// do not allow to restart
 		classifiedImage = QImage(); // image is a null one

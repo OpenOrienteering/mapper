@@ -25,7 +25,7 @@
 
 #include <QtGlobal>
 
-#include "Vectorizer.h"
+#include "ProgressObserver.h"
 
 namespace cove {
 //@{
@@ -201,14 +201,14 @@ bool Morphology::rosenfeld(ProgressObserver* progressObserver)
 			}
 		}
 		if (progressObserver)
-			progressObserver->percentageChanged(
+			progressObserver->setPercentage(
 				100 -
 				static_cast<int>(
 					100 * std::pow(static_cast<float>(count) / (xsize * ysize),
 								   0.2)));
 	} while (
 		count &&
-		!(progressObserver && (cancel = progressObserver->getCancelPressed())));
+		!(progressObserver && (cancel = progressObserver->isInterruptionRequested())));
 
 	return !cancel;
 }
@@ -457,8 +457,8 @@ int Morphology::modifyImage(bool* table, bool insert,
 
 		if (progressObserver && !(y % progressHowOften))
 		{
-			progressObserver->percentageChanged(y * 100 / ySize);
-			cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(y * 100 / ySize);
+			cancel = progressObserver->isInterruptionRequested();
 		}
 	}
 

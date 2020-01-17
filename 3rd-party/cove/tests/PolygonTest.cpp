@@ -114,7 +114,7 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 
 	// Results may vary depending on CPU. To mitigate this issue, we count
 	// deviations by distance in five classes (<= 0.5, 1.5, 2.5, 3.5, or more),
-	// and compare the number of occurences against expected maximum values.
+	// and compare the number of occurrences against expected maximum values.
 	auto const max_errors = std::array<int, 5>{ std::numeric_limits<int>::max(), 20, 8, 4, 0 };
 	auto errors = std::array<int, max_errors.size()>{};
 	auto count_deviation = [&errors](double actual, double expected) {

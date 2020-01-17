@@ -46,8 +46,6 @@ class TemplateImage;
 } // namespace OpenOrienteering
 
 namespace cove {
-class ClassificationThread;
-class UIProgressDialog;
 
 class mainForm : public QDialog
 {
@@ -57,9 +55,7 @@ public:
 	Ui::mainForm ui;
 
 protected:
-	UIProgressDialog* progressDialog;
 	std::unique_ptr<Vectorizer> vectorizerApp;
-	ClassificationThread* ct;
 	OpenOrienteering::Map* ooMap;
 	OpenOrienteering::Template* ooTempl;
 	QString imageFileName;
@@ -97,7 +93,6 @@ public:
 
 public slots:
 	void aboutDialog();
-	void classificationFinished();
 	void setInitialColors(bool on);
 	void colorButtonToggled(bool on);
 

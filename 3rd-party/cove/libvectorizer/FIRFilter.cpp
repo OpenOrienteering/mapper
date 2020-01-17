@@ -23,12 +23,12 @@
 
 #include <QImage>
 
-#include "libvectorizer/MapColor.h"
-#include "libvectorizer/Vectorizer.h"
+#include "MapColor.h"
+#include "ProgressObserver.h"
 
 namespace cove {
 //@{
-//! \ingroup gui
+//! \ingroup libvectorizer
 
 /*! \class FIRFilter
   \brief FIR (Finite Image Response) filter that can be applied onto QImage.
@@ -148,8 +148,8 @@ QImage FIRFilter::apply(const QImage& source, QRgb outOfBoundsColor,
 		}
 		if (progressObserver && !(y % progressHowOften))
 		{
-			progressObserver->percentageChanged(y * 100 / imheight);
-			cancel = progressObserver->getCancelPressed();
+			progressObserver->setPercentage(y * 100 / imheight);
+			cancel = progressObserver->isInterruptionRequested();
 		}
 	}
 	return cancel ? QImage() : retimage;

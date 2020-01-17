@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -28,6 +29,7 @@
 #include <QColor>
 #include <QComboBox>
 #include <QDir>
+#include <QException>
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QGridLayout>
@@ -55,11 +57,11 @@
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
 
-#include "libvectorizer/ClassificationThread.h"
+#include "libvectorizer/Concurrency.h"
+#include "libvectorizer/FIRFilter.h"
 #include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
-#include "FIRFilter.h"
 #include "QImageView.h"
 #include "QPolygonsView.h"
 #include "Settings.h"
@@ -70,6 +72,9 @@
 
 using namespace std;
 namespace cove {
+
+class ProgressObserver;
+
 //@{
 /*! \defgroup gui GUI classes */
 
@@ -150,7 +155,6 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 	ui.setupUi(this);
 
 	vectorizerApp = nullptr;
-	progressDialog = nullptr;
 
 	setTabEnabled(ui.imageTab, true);
 	setTabEnabled(ui.thinningTab, false);
@@ -165,7 +169,6 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 
 mainForm::~mainForm()
 {
-	if (progressDialog) progressDialog->deleteLater();
 	clearColorButtonsGroup();
 }
 
@@ -271,9 +274,9 @@ void mainForm::on_runClassificationButton_clicked()
 {
 	ui.runClassificationButton->setEnabled(false);
 	vectorizerApp = std::make_unique<Vectorizer>(imageBitmap);
-	progressDialog = new UIProgressDialog(tr("Colors classification in "
-											 "progress"),
-										  tr("Cancel"), this);
+	UIProgressDialog progressDialog(tr("Colors classification in progress"),
+	                                tr("Cancel"), this);
+	auto totalProgress = Concurrency::TransformedProgress{progressDialog, 0.5};
 	switch (settings.getInt("learnMethod"))
 	{
 	case 0:
@@ -332,35 +335,21 @@ void mainForm::on_runClassificationButton_clicked()
 		break;
 	}
 	vectorizerApp->setInitColors(colors);
-	ct = new ClassificationThread(*vectorizerApp, progressDialog, this);
-	connect(ct, SIGNAL(finished()), this, SLOT(classificationFinished()));
-	ct->start();
-}
+	auto classification = [](Vectorizer* v, ProgressObserver& o) -> bool {
+		return v->performClassification(&o);
+	};
+	Concurrency::process<bool>(&totalProgress, classification, vectorizerApp.get());
 
-//! Second part of on_runClassificationButton_clicked(), performs actions after
-// the classification is done, i.e. creates classified image if necessary and
-// creates color buttons by calling \a setColorButtonsGroup.
-void mainForm::classificationFinished()
-{
 	auto colorsFound = vectorizerApp->getClassifiedColors();
 	setColorButtonsGroup(colorsFound);
-	progressDialog->percentageChanged(100);
-	progressDialog->deleteLater();
-	progressDialog = nullptr;
-	ct->deleteLater();
-	ct = nullptr;
-
+	
 	// in case there are some colors (learning was not aborted)
 	if (colorsFound.size())
 	{
 		double quality;
-		progressDialog = new UIProgressDialog(tr("Creating classified image"),
-											  tr("Cancel"), this);
+		totalProgress.offset = 50.0;
 		QImage newClassifiedBitmap =
-			vectorizerApp->getClassifiedImage(&quality, progressDialog);
-		progressDialog->percentageChanged(100);
-		progressDialog->deleteLater();
-		progressDialog = nullptr;
+			vectorizerApp->getClassifiedImage(&quality, &totalProgress);
 		if (!newClassifiedBitmap.isNull())
 		{
 			classifiedBitmap = newClassifiedBitmap;
@@ -487,13 +476,9 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		return;
 	}
 	auto selectedColors = getSelectedColors();
-	progressDialog =
-		new UIProgressDialog(tr("Creating B/W image"), tr("Cancel"), this);
+	UIProgressDialog progressDialog(tr("Creating B/W image"), tr("Cancel"), this);
 	QImage newBWBitmap =
-		vectorizerApp->getBWImage(selectedColors, progressDialog);
-	progressDialog->percentageChanged(100);
-	progressDialog->deleteLater();
-	progressDialog = nullptr;
+		vectorizerApp->getBWImage(selectedColors, &progressDialog);
 	if (!newBWBitmap.isNull())
 	{
 		bwBitmap = newBWBitmap;
@@ -527,12 +512,9 @@ bool mainForm::performMorphologicalOperation(
 		text = tr("Dilating B/W image");
 		break;
 	}
-	progressDialog = new UIProgressDialog(text, tr("Cancel"), this);
+	UIProgressDialog progressDialog(text, tr("Cancel"), this);
 	QImage transBitmap =
-		Vectorizer::getTransformedImage(bwBitmap, mo, progressDialog);
-	progressDialog->percentageChanged(100);
-	progressDialog->deleteLater();
-	progressDialog = nullptr;
+		Vectorizer::getTransformedImage(bwBitmap, mo, &progressDialog);
 
 	if (transBitmap.isNull())
 		return false;
@@ -795,12 +777,8 @@ void mainForm::on_createVectorsButton_clicked()
 						 : 0);
 	p.setSimpleOnly(settings.getInt("simpleConnectionsOnly"));
 	p.setDistDirRatio(settings.getDouble("distDirBalance"));
-	progressDialog =
-		new UIProgressDialog(tr("Vectorizing"), tr("Cancel"), this);
-	*q = p.createPolygonsFromImage(bwBitmap, progressDialog);
-	progressDialog->percentageChanged(100);
-	progressDialog->deleteLater();
-	progressDialog = nullptr;
+	UIProgressDialog progressDialog (tr("Vectorizing"), tr("Cancel"), this);
+	*q = p.createPolygonsFromImage(bwBitmap, &progressDialog);
 	if (q->empty())
 	{
 		delete q;
@@ -920,13 +898,12 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 		break;
 	}
 
-	progressDialog = new UIProgressDialog(tr("Applying FIR Filter on image"),
-										  tr("Cancel"), this);
-	QImage newImageBitmap =
-		f.apply(imageBitmap, qRgb(127, 127, 127), progressDialog);
-	progressDialog->percentageChanged(100);
-	progressDialog->deleteLater();
-	progressDialog = nullptr;
+	UIProgressDialog progressDialog(tr("Applying FIR Filter on image"),
+	                                tr("Cancel"), this);
+	auto functor = [&f](const QImage& source_image, ProgressObserver& progress_observer) -> QImage {
+		return f.apply(source_image, qRgb(127, 127, 127), &progress_observer);
+	};
+	QImage newImageBitmap = Concurrency::process<QImage>(&progressDialog, functor, imageBitmap);
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;
 	ui.imageView->setImage(&imageBitmap);
 }

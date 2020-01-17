@@ -53,7 +53,6 @@ protected:
 	struct PATH_POINT
 	{
 		int x, y;
-		DIRECTION d;
 	};
 
 	class Path : public std::vector<PATH_POINT>

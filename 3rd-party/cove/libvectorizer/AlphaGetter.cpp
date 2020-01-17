@@ -22,7 +22,7 @@
 #include <cmath>
 #include <new>
 
-#include "Vectorizer.h"
+#include "ProgressObserver.h"
 
 namespace cove {
 //{@
@@ -86,9 +86,9 @@ double ClassicAlphaGetter::getAlpha()
 	bool cancel = false;
 	if (progressObserver)
 	{
-		progressObserver->percentageChanged(
+		progressObserver->setPercentage(
 			static_cast<int>(100 * std::log(alpha) / std::log(minAlpha)));
-		cancel = progressObserver->getCancelPressed();
+		cancel = progressObserver->isInterruptionRequested();
 	}
 	double retalpha = (!cancel && alpha > minAlpha) ? alpha : 0;
 	alpha *= q;
@@ -109,7 +109,7 @@ void ClassicAlphaGetter::setAlpha(double alpha)
 	this->alpha = alpha;
 }
 
-/*! Sets minimum value of alpha.  getAlpha returns 0 when alpha is bellow this
+/*! Sets minimum value of alpha.  getAlpha returns 0 when alpha is below this
 value.
 \sa getAlpha */
 void ClassicAlphaGetter::setMinAlpha(double minAlpha)

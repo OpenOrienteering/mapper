@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -29,13 +30,7 @@
 #include "MapColor.h"
 
 namespace cove {
-class ProgressObserver
-{
-public:
-	virtual ~ProgressObserver();
-	virtual void percentageChanged(int percentage) = 0;
-	virtual bool getCancelPressed() = 0;
-};
+class ProgressObserver;
 
 class Vectorizer
 {
@@ -75,6 +70,7 @@ protected:
 	QImage thinnedBWImage;
 	std::vector<std::shared_ptr<MapColor>> sourceImageColors;
 	std::unique_ptr<MapColor> mc;
+	std::vector<bool> selectedColors;  // companion to bwImage
 	int E;
 	double initAlpha, q, minAlpha, p, quality;
 	LearningMethod learnMethod;
@@ -106,7 +102,7 @@ public:
 	                          ProgressObserver* progressObserver = nullptr);
 	virtual QImage getTransformedImage(MorphologicalOperation mo,
 	                                   ProgressObserver* progressObserver = nullptr);
-	static QImage getTransformedImage(QImage bwImage, MorphologicalOperation mo,
+	static QImage getTransformedImage(const QImage& bwImage, MorphologicalOperation mo,
 	                                  ProgressObserver* progressObserver = nullptr);
 };
 } // cove
