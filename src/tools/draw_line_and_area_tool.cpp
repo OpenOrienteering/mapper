@@ -31,6 +31,7 @@
 #include <QPoint>
 
 #include "core/map.h"
+#include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
 #include "core/objects/object.h"
@@ -238,40 +239,46 @@ void DrawLineAndAreaTool::finishDrawing()
 void DrawLineAndAreaTool::finishDrawing(PathObject* append_to_object)
 {
 	if (preview_path)
+	{
 		renderables->removeRenderablesOfObject(preview_path, false);
 	
-	if (preview_path && !is_helper_tool)
-	{
-		Q_ASSERT(drawing_symbol);
-		preview_path->setSymbol(drawing_symbol, true);
-
-		bool can_be_appended = false;
-		if (append_to_object)
-			can_be_appended = append_to_object->canBeConnected(preview_path, 0.01*0.01);
-		
-		if (can_be_appended)
+		if (preview_path->getRawCoordinateVector().empty())
 		{
-			auto undo_duplicate = append_to_object->duplicate();
-			append_to_object->connectIfClose(preview_path, 0.01*0.01);
-			delete preview_path;
-			
-			map()->clearObjectSelection(false);
-			map()->addObjectToSelection(append_to_object, true);
-			
-			auto cur_part = map()->getCurrentPart();
-			auto undo_step = new ReplaceObjectsUndoStep(map());
-			undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
-			map()->push(undo_step);
+			qDebug("DrawLineAndAreaTool::finishDrawing called with empty preview object");
 		}
-		else
+		else if (!is_helper_tool)
 		{
-			int index = map()->addObject(preview_path);
-			map()->clearObjectSelection(false);
-			map()->addObjectToSelection(preview_path, true);
+			Q_ASSERT(drawing_symbol);
+			preview_path->setSymbol(drawing_symbol, true);
 			
-			auto undo_step = new DeleteObjectsUndoStep(map());
-			undo_step->addObject(index);
-			map()->push(undo_step);
+			bool can_be_appended = false;
+			if (append_to_object)
+				can_be_appended = append_to_object->canBeConnected(preview_path, 0.01*0.01);
+			
+			if (can_be_appended)
+			{
+				auto undo_duplicate = append_to_object->duplicate();
+				append_to_object->connectIfClose(preview_path, 0.01*0.01);
+				delete preview_path;
+				
+				map()->clearObjectSelection(false);
+				map()->addObjectToSelection(append_to_object, true);
+				
+				auto cur_part = map()->getCurrentPart();
+				auto undo_step = new ReplaceObjectsUndoStep(map());
+				undo_step->addObject(cur_part->findObjectIndex(append_to_object), undo_duplicate);
+				map()->push(undo_step);
+			}
+			else
+			{
+				int index = map()->addObject(preview_path);
+				map()->clearObjectSelection(false);
+				map()->addObjectToSelection(preview_path, true);
+				
+				auto undo_step = new DeleteObjectsUndoStep(map());
+				undo_step->addObject(index);
+				map()->push(undo_step);
+			}
 		}
 	}
 	map()->clearDrawingBoundingBox();
