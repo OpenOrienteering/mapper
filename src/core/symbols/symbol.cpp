@@ -488,6 +488,9 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 	
 	// Create image
 	QImage image(side_length, side_length, QImage::Format_ARGB32_Premultiplied);
+	static auto const background = qPremultiply(qRgba(254, 254, 254, 255));
+	image.fill(background);
+	
 	QPainter painter(&image);
 	if (antialiasing)
 		painter.setRenderHint(QPainter::Antialiasing);
@@ -495,7 +498,6 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 	// Make background transparent
 	auto mode = painter.compositionMode();
 	painter.setCompositionMode(QPainter::CompositionMode_Clear);
-	painter.fillRect(image.rect(), Qt::transparent);
 	painter.setCompositionMode(mode);
 	painter.translate(0.5 * side_length, 0.5 * side_length);
 	
@@ -785,7 +787,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 		{
 			for (int x = image.width() - 1; x >= 0; --x)
 			{
-				if (qAlpha(image.pixel(x, y)) > 0)
+				if (image.pixel(x, y) != background)
 					continue;
 				
 				auto is_white = [](const QRgb& rgb) {
@@ -799,7 +801,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 					auto preceding = image.pixel(x-1, y);
 					if (is_white(preceding))
 					{
-						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+						image.setPixel(x, y, qPremultiply(qRgba(192, 192, 192, 255)));
 						continue;
 					}
 				}
@@ -808,7 +810,7 @@ QImage Symbol::createIcon(const Map& map, int side_length, bool antialiasing, qr
 					auto preceding = image.pixel(x, y-1);
 					if (is_white(preceding))
 					{
-						image.setPixel(x, y, qPremultiply(qRgba(0, 0, 0, 127)));
+						image.setPixel(x, y, qPremultiply(qRgba(192, 192, 192, 255)));
 					}
 				}
 			}
