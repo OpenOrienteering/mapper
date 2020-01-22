@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -217,7 +217,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			merge_list_item->src_color = src_color;
 			for (std::size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
 			{
-				if (colors[k]->equals(*src_color, false))
+				if (colors[k]->equals(*src_color))
 				{
 					merge_list_item->dest_color = colors[k];
 					merge_list_item->dest_index = k;

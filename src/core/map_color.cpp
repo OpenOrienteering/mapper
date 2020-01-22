@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -145,6 +145,11 @@ bool MapColor::componentsEqual(const MapColor& other, bool compare_priority) con
 		return left.spot_color->equals(*right.spot_color, compare_priority)
 		       && qAbs(left.factor - right.factor) < 1e-03;
 	});
+}
+
+bool MapColor::equals(const MapColor& other) const
+{
+	return equals(other, false);
 }
 
 bool MapColor::equals(const MapColor& other, bool compare_priority) const
