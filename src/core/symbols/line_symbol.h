@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -75,9 +75,13 @@ struct LineSymbolBorder
 	bool isVisible() const;
 	void setupSymbol(LineSymbol& out) const;
 	void scale(double factor);
+	
+	/// Compares without attention for color priority.
+	bool equals(const LineSymbolBorder& other) const;
 };
 
 
+/// Compares including color priority.
 bool operator==(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept;
 
 inline bool operator!=(const LineSymbolBorder &lhs, const LineSymbolBorder &rhs) noexcept
