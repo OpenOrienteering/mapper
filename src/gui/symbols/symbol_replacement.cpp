@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2019 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,8 @@
 
 #include "symbol_replacement.h"
 
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 #include <QDialog>
@@ -113,7 +115,7 @@ bool SymbolReplacement::withNewSymbolSet(QWidget* parent)
 	if (dialog.exec() != QDialog::Accepted)
 		return false;
 	
-	symbol_rules.squeezed().apply(object_map, symbol_set, dialog.replacementOptions());
+	std::move(symbol_rules).apply(object_map, symbol_set, dialog.replacementOptions());
 	object_map.setSymbolSetId(dialog.replacementId());
 	return true;
 }
@@ -149,7 +151,7 @@ bool SymbolReplacement::withAutoCrtFile(QWidget* parent, const QString& hint)
 	if (dialog.exec() != QDialog::Accepted)
 		return false;
 	
-	symbol_rules.squeezed().apply(object_map, {});
+	std::move(symbol_rules).apply(object_map, symbol_set);
 	return true;
 }
 
@@ -164,7 +166,7 @@ bool SymbolReplacement::withCrtFile(QWidget* parent, const QString& filepath)
 	if (dialog.exec() != QDialog::Accepted)
 		return false;
 	
-	symbol_rules.squeezed().apply(object_map, {});
+	std::move(symbol_rules).apply(object_map, symbol_set);
 	return true;
 }
 
