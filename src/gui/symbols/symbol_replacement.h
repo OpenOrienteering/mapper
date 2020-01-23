@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2019 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -103,6 +103,11 @@ public:
 	 * Tries to read a given CRT file and then perform symbol replacement.
 	 */
 	bool withCrtFile(QWidget* parent, const QString& crt_file);
+	
+	/**
+	 * Lets the user perform symbol replacement based on the provided rules.
+	 */
+	bool withRules(QWidget* parent, SymbolRuleSet symbol_rules);
 	
 	/**
 	 * Loads the given CRT file and returns the symbol rule set.
