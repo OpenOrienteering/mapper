@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya yazılamadı: %1</translation>
     </message>
 </context>
 <context>
@@ -16,7 +16,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya Açılamadı
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -27,12 +29,15 @@
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Dosya açılamadı:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="649"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçersiz dosya türü.</translation>
     </message>
 </context>
 <context>
@@ -40,14 +45,16 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished"></translation>
+        <translation>İçe aktarılan verilerin ölçeği, bu haritanın 1:% 2 ölçeğinden farklı olan 1:% 1&apos;dir.
+
+İçe aktarılan veriler yeniden ölçeklendirilsin mi?</translation>
     </message>
 </context>
 <context>
@@ -55,7 +62,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 sürümündeki OCD dosyaları desteklenmiyor!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
