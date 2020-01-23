@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -430,7 +430,7 @@ void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options option
 	// Import new symbols if needed
 	if (&object_map != &symbol_set)
 	{
-		if (!options.testFlag(KeepUnusedSymbols))
+		if (options.testFlag(RemoveUnusedSymbols))
 		{
 			for (int i = 0; i < object_map.getNumSymbols(); ++i)
 				old_symbols.insert(object_map.getSymbol(i));
@@ -493,7 +493,7 @@ void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options option
 	}
 	
 	// Delete unused colors
-	if (!options.testFlag(KeepUnusedColors))
+	if (options.testFlag(RemoveUnusedColors))
 	{
 		std::vector<bool> all_symbols;
 		all_symbols.assign(std::size_t(object_map.getNumSymbols()), true);

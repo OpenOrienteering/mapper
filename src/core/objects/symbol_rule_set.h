@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -218,13 +218,21 @@ public:
 	
 	/**
 	 * Options for importing of new colors and symbols in to a map.
+	 * 
+	 * The default value (no option selected) describes the minimal behaviour:
+	 * symbols are imported only as needed, in their present state, and
+	 * all existing symbols and colors are left untouched.
+	 * 
+	 * Note that if multiple sources symbols are mapped to the same replacement
+	 * symbol, the result of `PreserveSymbolState` is that the target symbol
+	 * gets the state of a random source symbol which is mapped to this target.
 	 */
 	enum Option
 	{
 		ImportAllSymbols    = 0x01,
 		PreserveSymbolState = 0x02,
-		KeepUnusedSymbols   = 0x04,
-		KeepUnusedColors    = 0x08,
+		RemoveUnusedSymbols = 0x04,
+		RemoveUnusedColors  = 0x08,
 	};
 	Q_DECLARE_FLAGS(Options, Option)
 	
@@ -234,7 +242,7 @@ public:
 	 * 
 	 * Note that for efficiency, this should be called on a squeezed() map.
 	 */
-	void apply(Map& object_map, const Map& symbol_set, Options options = 0);
+	void apply(Map& object_map, const Map& symbol_set, Options options = {});
 	
 };
 
