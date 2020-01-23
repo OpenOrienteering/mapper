@@ -11,7 +11,7 @@
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kartamerkit peittävä tausta valkoinen ratapainatuksille esim. rastimääritteiden tausta</translation>
     </message>
     <message>
         <source>Black 100%</source>
