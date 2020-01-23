@@ -6,12 +6,12 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için mor</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için beyaz</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -26,7 +26,7 @@
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Demiryolu için beyaz</translation>
     </message>
     <message>
         <source>Blue 100%</source>
@@ -41,12 +41,12 @@
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz sembolleri için mor</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz sembolleri için morun altında siyah</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -61,12 +61,12 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Üst kahverengi %50</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Üst kahverenginin altında siyah %50</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
