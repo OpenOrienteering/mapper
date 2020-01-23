@@ -147,12 +147,7 @@ bool SymbolReplacement::withAutoCrtFile(QWidget* parent, const QString& hint)
 	auto symbol_rules = SymbolRuleSet::forUsedSymbols(object_map);
 	symbol_rules.matchQuerySymbolName(symbol_set);
 	
-	SymbolReplacementDialog dialog(parent, object_map, symbol_set, symbol_rules, SymbolReplacementDialog::AssignByPattern);
-	if (dialog.exec() != QDialog::Accepted)
-		return false;
-	
-	std::move(symbol_rules).apply(object_map, symbol_set);
-	return true;
+	return withRules(parent, std::move(symbol_rules));
 }
 
 
@@ -162,11 +157,17 @@ bool SymbolReplacement::withCrtFile(QWidget* parent, const QString& filepath)
 	if (symbol_rules.empty())
 		return false;
 	
+	return withRules(parent, std::move(symbol_rules));
+}
+
+
+bool SymbolReplacement::withRules(QWidget* parent, SymbolRuleSet symbol_rules)
+{
 	SymbolReplacementDialog dialog(parent, object_map, symbol_set, symbol_rules, SymbolReplacementDialog::AssignByPattern);
 	if (dialog.exec() != QDialog::Accepted)
 		return false;
 	
-	std::move(symbol_rules).apply(object_map, symbol_set);
+	std::move(symbol_rules).apply(object_map, symbol_set, dialog.replacementOptions());
 	return true;
 }
 
