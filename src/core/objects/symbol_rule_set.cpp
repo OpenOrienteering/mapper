@@ -95,14 +95,19 @@ SymbolRuleSet SymbolRuleSet::forUsedSymbols(const Map& map)
 }
 
 
+SymbolRuleSet& SymbolRuleSet::squeeze()
+{
+	auto is_NoAssignment = [](auto const& item) {
+		return item.type == SymbolRule::NoAssignment;
+	};
+	erase(std::remove_if(begin(), end(), is_NoAssignment), end());
+	return *this;
+}
+
+
 SymbolRuleSet SymbolRuleSet::squeezed() const
 {
-	SymbolRuleSet list;
-	list.reserve(this->size());
-	std::copy_if(begin(), end(), std::back_inserter(list), [](auto item) {
-		return item.type != SymbolRule::NoAssignment;
-	});
-	return list;
+	return SymbolRuleSet(*this).squeeze();
 }
 
 
@@ -423,19 +428,25 @@ void SymbolRuleSet::operator()(Object* object) const
 }
 
 
-void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options options)
+void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options options) const &
 {
+	SymbolRuleSet(*this).apply(object_map, symbol_set, options);
+}
+
+void SymbolRuleSet::apply(Map& object_map, const Map& symbol_set, Options options) &&
+{
+	squeeze();
+	
 	std::unordered_set<const Symbol*> old_symbols;
+	if (options.testFlag(RemoveUnusedSymbols))
+	{
+		for (int i = 0; i < object_map.getNumSymbols(); ++i)
+			old_symbols.insert(object_map.getSymbol(i));
+	}
 	
 	// Import new symbols if needed
 	if (&object_map != &symbol_set)
 	{
-		if (options.testFlag(RemoveUnusedSymbols))
-		{
-			for (int i = 0; i < object_map.getNumSymbols(); ++i)
-				old_symbols.insert(object_map.getSymbol(i));
-		}
-		
 		auto symbol_filter = std::vector<bool>(std::size_t(symbol_set.getNumSymbols()), true);
 		if (!options.testFlag(ImportAllSymbols))
 		{

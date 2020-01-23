@@ -103,6 +103,11 @@ public:
 	static SymbolRuleSet forUsedSymbols(const Map& map);
 	
 	/**
+	 * Remove all NoAssignment items.
+	 */
+	SymbolRuleSet& squeeze();
+	
+	/**
 	 * Returns a copy which has all NoAssignment items removed.
 	 */
 	SymbolRuleSet squeezed() const;
@@ -238,11 +243,25 @@ public:
 	
 	/**
 	 * Adds colors and symbols from the symbol map to the object map,
-	 * and applies the rules.
+	 * and applies the rules and options.
 	 * 
-	 * Note that for efficiency, this should be called on a squeezed() map.
+	 * This function will create a copy of the rule set. When the rule set is no
+	 * longer needed after this call, the copy can be avoided by calling apply()
+	 * on an rvalue (e.g. the result of std::move()) instead.
 	 */
-	void apply(Map& object_map, const Map& symbol_set, Options options = {});
+	void apply(Map& object_map, const Map& symbol_set, Options options = {}) const &;
+	
+	/**
+	 * This deleted signature blocks accidental passing of default Options, {},
+	 * as second of two arguments.
+	 */
+	void apply(Map& object_map, Options options) const = delete;
+	
+	/**
+	 * Adds colors and symbols from the symbol map to the object map,
+	 * and applies the rules and options.
+	 */
+	void apply(Map& object_map, const Map& symbol_set, Options options) &&;
 	
 };
 
