@@ -451,7 +451,7 @@ QImage Vectorizer::getClassifiedImage(double* qualityPtr,
 		km.setClasses(classes);
 
 		auto mapFunctor = ClassificationMapper(sourceImageColors, km);
-		auto results = Concurrency::process<double>(progressObserver, mapFunctor, sourceImage, InplaceImage(classifiedImage));
+		auto results = Concurrency::process<double>(progressObserver, mapFunctor, sourceImage, classifiedImage);
 		if (progressObserver && progressObserver->isInterruptionRequested())
 		{
 			classifiedImage = QImage();
@@ -515,7 +515,7 @@ QImage Vectorizer::getBWImage(std::vector<bool> selectedColors,
 			QVector<QRgb>{QColor(Qt::white).rgb(), QColor(Qt::black).rgb()});
 
 		auto mapFunctor = BWMapper(std::move(selectedColors));
-		Concurrency::process(progressObserver, mapFunctor, classifiedImage, InplaceImage(bwImage));
+		Concurrency::process(progressObserver, mapFunctor, classifiedImage, bwImage);
 		if (progressObserver && progressObserver->isInterruptionRequested())
 			bwImage = {};
 	}

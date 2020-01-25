@@ -75,7 +75,7 @@ struct HorizontalStripes
 	
 	/// Creates concurrent jobs.
 	template <typename ResultType, typename Functor>
-	static Concurrency::JobList<ResultType> makeJobs(const Functor& functor, const QImage& source, InplaceImage target)
+	static Concurrency::JobList<ResultType> makeJobs(const Functor& functor, const QImage& source, QImage& target)
 	{
 		Concurrency::JobList<ResultType> jobs;
 		
