@@ -33,14 +33,32 @@
 namespace cove {
 
 /**
- * A QImage that will always use the original image's bits, even if copied.
+ * A QImage that will always use the original image's bits, even if copied
+ * from a const reference to another InplaceImage.
+ * 
+ * This class' copying and assignment behaviour (from const references to
+ * another InplaceImage) is unusual on purpose: the copies remain acting as a
+ * proxy to the original QImage's pixels. So, this class effectively turns
+ * QImage's implicit sharing into an explicit sharing. It is the caller's
+ * responsibility to ensure that the underlying QImage's data exists as long
+ * as InplaceImage instances are used to access it.
+ * 
+ * Note that it is still necessary to provide a non-const QImage reference
+ * when constructing an InplaceImage.
  */
 class InplaceImage : public QImage
 {
 public:
-	InplaceImage(const QImage& original, uchar* bits, int width, int height, int bytes_per_line, QImage::Format format);
+	InplaceImage() = default;
 	explicit InplaceImage(QImage& source);
-	InplaceImage(QImage&& source) = delete;
+	InplaceImage(const QImage& original, uchar* bits, int width, int height, int bytes_per_line, QImage::Format format);
+	InplaceImage(const InplaceImage& source);
+	InplaceImage(InplaceImage&& source) = default;
+	
+	InplaceImage& operator=(const InplaceImage& source);
+	InplaceImage& operator=(InplaceImage&& source) = default;
+	
+	~InplaceImage() override;
 };
 
 

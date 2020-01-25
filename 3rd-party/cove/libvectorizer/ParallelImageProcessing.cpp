@@ -29,6 +29,8 @@
 
 namespace cove {
 
+// ### InplaceImage ###
+
 InplaceImage::InplaceImage(const QImage& original, uchar* bits, int width, int height, int bytes_per_line, QImage::Format format)
     : QImage(bits, width, height, bytes_per_line, format)
 {
@@ -36,10 +38,25 @@ InplaceImage::InplaceImage(const QImage& original, uchar* bits, int width, int h
 		setColorTable(original.colorTable());
 }
 
+InplaceImage::InplaceImage(const InplaceImage& source)
+    : InplaceImage(source, const_cast<InplaceImage&>(source).bits(), source.width(), source.height(), source.bytesPerLine(), source.format())
+{}
+
 InplaceImage::InplaceImage(QImage& source)
     : InplaceImage(source, source.bits(), source.width(), source.height(), source.bytesPerLine(), source.format())
 {}
 
+InplaceImage& InplaceImage::operator=(const InplaceImage& source)
+{
+	*this = InplaceImage(source);
+	return *this;
+}
+
+InplaceImage::~InplaceImage() = default;
+
+
+
+// ### HorizontalStripes ###
 
 QImage HorizontalStripes::makeStripe(const QImage& original, int scanline, int stripe_height)
 {
