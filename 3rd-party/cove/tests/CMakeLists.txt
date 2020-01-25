@@ -9,6 +9,14 @@ find_package(Qt5Test ${Qt5Core_VERSION} REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_AUTOMOC ON)
 
+add_executable(cove-ParallelImageProcessingTest
+  ParallelImageProcessingTest.cpp
+)
+add_test(
+  NAME cove-ParallelImageProcessingTest
+  COMMAND cove-ParallelImageProcessingTest
+)
+
 add_executable(cove-PolygonTest
   PolygonTest.cpp
 )
@@ -26,6 +34,7 @@ target_compile_definitions(cove-PolygonBenchmark
 )
 
 foreach(target
+  cove-ParallelImageProcessingTest
   cove-PolygonTest
   cove-PolygonBenchmark
 )
