@@ -62,6 +62,7 @@
 #include <QNetworkRequest>
 #endif
 
+#include "settings.h"
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
@@ -212,7 +213,8 @@ GeoreferencingDialog::GeoreferencingDialog(
 	/*: The combined scale factor is the ratio between a length on the ground
 	    and the corresponding length on the curved earth model. It is applied
 	    as a factor to ground distances to get grid plane distances. */
-	combined_factor_label = new QLabel();
+	auto combined_factor_label = new QLabel(tr("Combined scale factor:"));
+	combined_factor_display = new QLabel();
 	
 	/*: The auxiliary scale factor is the ratio between a length in the curved
 	    earth model and the corresponding length on the ground. It is applied
@@ -248,11 +250,18 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(map_north_label);
 	edit_layout->addRow(tr("Declination:"), declination_layout);
 	edit_layout->addRow(tr("Grivation:"), grivation_label);
-	edit_layout->addItem(Util::SpacerItem::create(this));
 
+	bool control_scale_factor = Settings::getInstance().getSettingCached(Settings::MapGeoreferencing_ControlScaleFactor).toBool();
+	if (control_scale_factor)
+		edit_layout->addItem(Util::SpacerItem::create(this));
 	edit_layout->addRow(scale_compensation_label);
+	scale_compensation_label->setVisible(control_scale_factor);
 	edit_layout->addRow(auxiliary_factor_label, scale_factor_edit);
-	edit_layout->addRow(tr("Combined scale factor:"), combined_factor_label);
+	auxiliary_factor_label->setVisible(control_scale_factor);
+	scale_factor_edit->setVisible(control_scale_factor);
+	edit_layout->addRow(combined_factor_label, combined_factor_display);
+	combined_factor_label->setVisible(control_scale_factor);
+	combined_factor_display->setVisible(control_scale_factor);
 	
 	auto layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
@@ -321,7 +330,6 @@ void GeoreferencingDialog::georefStateChanged()
 	case Georeferencing::Normal:
 		projectionChanged();
 		keep_geographic_radio->setEnabled(true);
-		keep_projected_radio->setEnabled(true);
 	}
 	
 	updateWidgets();
@@ -590,7 +598,7 @@ void GeoreferencingDialog::updateCombinedFactor()
 	QString text = trUtf8("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
 	if (scale_factor_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
-	combined_factor_label->setText(text);
+	combined_factor_display->setText(text);
 }
 
 void GeoreferencingDialog::updateGrivation()

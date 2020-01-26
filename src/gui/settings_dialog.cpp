@@ -55,6 +55,7 @@
 #include "gui/util_gui.h"
 #include "gui/widgets/editor_settings_page.h"
 #include "gui/widgets/general_settings_page.h"
+#include "gui/widgets/georeferencing_settings_page.h"
 #include "gui/widgets/settings_page.h"
 #include "util/backports.h" // IWYU pragma: keep
 
@@ -221,6 +222,7 @@ void SettingsDialog::addPages()
 #ifdef MAPPER_USE_SENSORS
 	addPage(new SensorsSettingsPage(this));
 #endif
+	addPage(new GeoreferencingSettingsPage(this));
 }
 
 void SettingsDialog::addPage(SettingsPage* page)

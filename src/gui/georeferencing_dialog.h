@@ -283,7 +283,7 @@ private:
 	QLabel* grivation_label;
 
 	QDoubleSpinBox* scale_factor_edit;
-	QLabel* combined_factor_label;
+	QLabel* combined_factor_display;
 	
 	QDialogButtonBox* buttons_box;
 	QPushButton* reset_button;
