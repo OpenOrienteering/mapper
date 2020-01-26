@@ -124,6 +124,7 @@ steps:
     searchFolder: $(TEST_RESULTS)
     buildPlatform: $(IMAGE_NAME)$(OUTPUT_SUFFIX)
     testRunTitle: '$(Agent.JobName)'
+    publishRunAttachments: false
   condition: variables.TEST_RESULTS
   displayName: 'Publish test results'
 
