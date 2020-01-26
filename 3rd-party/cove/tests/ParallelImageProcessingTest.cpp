@@ -19,10 +19,8 @@
 
 #include <algorithm>
 #include <iterator>
-#include <type_traits>
 
 #include <Qt>
-#include <QtGlobal>
 #include <QtTest>
 #include <QColor>
 #include <QImage>
@@ -66,34 +64,6 @@ private slots:
 			QVERIFY(qimage_clone_clone.bits() != original.bits());     // detached!
 			QCOMPARE(original.pixel(32,32), QColor(Qt::black).rgb());  // unchanged!
 		}
-		
-		// InplaceImage: not detaching, even if copy-constructed from const ref.
-		{
-			original.fill(Qt::white);
-			QCOMPARE(original.pixel(32,32), QColor(Qt::white).rgb());
-			
-			auto inplace_clone = InplaceImage(original, original.bits(), original.width(), original.height(), original.bytesPerLine(), original.format());
-			inplace_clone.fill(Qt::red);
-			QCOMPARE(original.pixel(32,32), QColor(Qt::red).rgb());
-			
-			auto inplace_clone_clone = InplaceImage(inplace_clone, inplace_clone.bits(), inplace_clone.width(), inplace_clone.height(), inplace_clone.bytesPerLine(), inplace_clone.format());
-			inplace_clone_clone.fill(Qt::black);
-			QCOMPARE(original.pixel(32,32), QColor(Qt::black).rgb());
-			
-			// An InplaceImage which is copy-assigned from a const InplaceImage does not detach when modified.
-			inplace_clone_clone = static_cast<InplaceImage const>(inplace_clone);
-			QVERIFY(inplace_clone_clone.bits() == original.bits());    // not detached
-			inplace_clone_clone.fill(Qt::white);
-			QCOMPARE(inplace_clone_clone.bits(), original.bits());     // not detached!
-			QCOMPARE(original.pixel(32,32), QColor(Qt::white).rgb());  // changed!
-			
-			// An InplaceImage which is copy-constructed from a const InplaceImage does not detach when modified.
-			inplace_clone_clone = InplaceImage(static_cast<InplaceImage const>(inplace_clone));
-			QVERIFY(inplace_clone_clone.bits() == original.bits());    // not detached
-			inplace_clone_clone.fill(Qt::white);
-			QCOMPARE(inplace_clone_clone.bits(), original.bits());     // not detached!
-			QCOMPARE(original.pixel(32,32), QColor(Qt::white).rgb());  // changed!
-		}
 	}
 	
 	
@@ -127,7 +97,6 @@ private slots:
 		
 		{
 			auto stripe_from_const = HorizontalStripes::makeStripe(static_cast<const QImage&>(original), scanline, stripe_height);
-			Q_STATIC_ASSERT((std::is_same<decltype(stripe_from_const), QImage>::value));
 			QCOMPARE(stripe_from_const.format(), original.format());
 			QCOMPARE(stripe_from_const.constBits(), original.constScanLine(scanline));
 			QCOMPARE(stripe_from_const.bytesPerLine(), original.bytesPerLine());
@@ -144,7 +113,6 @@ private slots:
 		
 		{
 			auto stripe_from_nonconst = HorizontalStripes::makeStripe(original, scanline, stripe_height);
-			Q_STATIC_ASSERT((std::is_same<decltype(stripe_from_nonconst), InplaceImage>::value));
 			QCOMPARE(stripe_from_nonconst.format(), original.format());
 			QCOMPARE(stripe_from_nonconst.constBits(), original.constScanLine(scanline));
 			QCOMPARE(stripe_from_nonconst.bytesPerLine(), original.bytesPerLine());

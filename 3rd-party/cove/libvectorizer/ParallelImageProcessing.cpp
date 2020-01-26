@@ -29,33 +29,6 @@
 
 namespace cove {
 
-// ### InplaceImage ###
-
-InplaceImage::InplaceImage(const QImage& original, uchar* bits, int width, int height, int bytes_per_line, QImage::Format format)
-    : QImage(bits, width, height, bytes_per_line, format)
-{
-	if (original.colorCount() > 0)
-		setColorTable(original.colorTable());
-}
-
-InplaceImage::InplaceImage(const InplaceImage& source)
-    : InplaceImage(source, const_cast<InplaceImage&>(source).bits(), source.width(), source.height(), source.bytesPerLine(), source.format())
-{}
-
-InplaceImage::InplaceImage(QImage& source)
-    : InplaceImage(source, source.bits(), source.width(), source.height(), source.bytesPerLine(), source.format())
-{}
-
-InplaceImage& InplaceImage::operator=(const InplaceImage& source)
-{
-	*this = InplaceImage(source);
-	return *this;
-}
-
-InplaceImage::~InplaceImage() = default;
-
-
-
 // ### HorizontalStripes ###
 
 QImage HorizontalStripes::makeStripe(const QImage& original, int scanline, int stripe_height)
@@ -94,14 +67,15 @@ QImage HorizontalStripes::makeStripe(const QImage& original, int scanline, int s
 	return delegate(original, scanline, stripe_height);
 }
 
-InplaceImage HorizontalStripes::makeStripe(QImage& original, int scanline, int stripe_height)
+QImage HorizontalStripes::makeStripe(QImage& original, int scanline, int stripe_height)
 {
-	InplaceImage result(original,
-	                    original.scanLine(scanline),
-	                    original.width(),
-	                    std::min(scanline + stripe_height, original.height()) - scanline,
-	                    original.bytesPerLine(),
-	                    original.format() );
+	QImage result(original.scanLine(scanline),
+	              original.width(),
+	              std::min(scanline + stripe_height, original.height()) - scanline,
+	              original.bytesPerLine(),
+	              original.format() );
+	if (original.colorCount() > 0)
+		result.setColorTable(original.colorTable());
 	return result;
 }
 
