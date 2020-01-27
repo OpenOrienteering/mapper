@@ -186,9 +186,17 @@ void GeoreferencingTest::testGridScaleFactor()
 	auto const ne = georef.getProjectedRefPoint() + QPointF{100.0, 100.0};
 	auto const geod_distance = geodeticDistance(georef.toGeographicCoords(sw), georef.toGeographicCoords(ne));
 	
-	georef.setCombinedScaleFactor((scale_x + scale_y) / 2);
+	// Try the georeferencing's automatic scale factor.
 	auto map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	auto ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, ground_distance);
+	}
+	
+	georef.setCombinedScaleFactor((scale_x + scale_y) / 2);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
 	if (std::fabs(geod_distance - ground_distance) >= 0.001)
 	{
 		QCOMPARE(geod_distance, ground_distance);
@@ -203,14 +211,26 @@ void GeoreferencingTest::testGridScaleFactor()
 		QCOMPARE(geod_distance, ground_distance);
 	}
 	
-	// Finally, try the georeferencing's internal grid scale factor, and
-	// compare geodetic distance against ground distance, based on length in map.
-	georef.setAuxiliaryScaleFactor(1.0);
+	// Try setting the georeferencing's auxiliary scale factor.
+	const double elevation_scale_factor = 1.1;
+	georef.setAuxiliaryScaleFactor(elevation_scale_factor);
 	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
 	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
-	if (std::fabs(geod_distance - ground_distance) >= 0.001)
+	if (std::fabs(geod_distance - elevation_scale_factor * ground_distance) >= 0.001)
 	{
-		QCOMPARE(geod_distance, ground_distance);
+		QCOMPARE(geod_distance, elevation_scale_factor * ground_distance);
+	}
+
+	// Finally, see that the auxiliary scale factor is preserved when
+	// the CRS changes.
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), utm32_spec);
+	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
+	QCOMPARE(georef.getAuxiliaryScaleFactor(), elevation_scale_factor);
+	map_distance = QLineF{georef.toMapCoordF(sw), georef.toMapCoordF(ne)}.length();
+	ground_distance = map_distance * georef.getScaleDenominator() / 1000;
+	if (std::fabs(geod_distance - elevation_scale_factor * ground_distance) >= 0.001)
+	{
+		QCOMPARE(geod_distance, elevation_scale_factor * ground_distance);
 	}
 }
 
