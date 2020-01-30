@@ -25,6 +25,7 @@
 #include <ctime>
 #include <iosfwd>
 
+#include <QtGlobal>
 #include <QByteArray>
 #include <QColor>
 #include <QComboBox>
@@ -43,10 +44,10 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTabWidget>
-#include <QtGlobal>
 
 #include "core/map.h"
 #include "core/map_coord.h"
@@ -816,7 +817,7 @@ void mainForm::on_saveVectorsButton_clicked()
 		{
 			// transform from template coordinates to map coordinates
 			OpenOrienteering::MapCoordF templCoords =
-				ooTempl->templateToMap(QPoint(point.x + xOff, point.y + yOff));
+				ooTempl->templateToMap(QPoint(point.x() + xOff, point.y() + yOff));
 			OpenOrienteering::MapCoord c(templCoords.x(), templCoords.y());
 
 			newOOPolygon->addCoordinate(c);

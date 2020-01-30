@@ -26,14 +26,15 @@
 #include <limits>
 #include <numeric>
 
+#include <QtGlobal>
+#include <QtMath>
+#include <QtTest>
 #include <QByteArray>
 #include <QDataStream>
 #include <QFile>
 #include <QIODevice>
 #include <QImage>
-#include <QtGlobal>
-#include <QtMath>
-#include <QtTest>
+#include <QPointF>
 
 #include "libvectorizer/Polygons.h"
 
@@ -101,7 +102,7 @@ void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
 		out << poly.isClosed();
 		out << quint32(poly.size());
 		for (auto const& p : poly)
-			out << double(p.x) << double(p.y);
+			out << double(p.x()) << double(p.y());
 	}
 }
 
@@ -135,8 +136,8 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 		{
 			double x, y;
 			in >> x >> y;
-			count_deviation(p.x, x);
-			count_deviation(p.y, y);
+			count_deviation(p.x(), x);
+			count_deviation(p.y(), y);
 		}
 	}
 	

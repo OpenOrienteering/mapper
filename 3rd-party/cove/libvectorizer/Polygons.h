@@ -24,9 +24,12 @@
 #include <functional>
 #include <vector>
 
+#include <QPointF>
+
 #include "cove-potrace.h"
 
 class QImage;
+// IWYU pragma: no_forward_declare QPointF
 class QRect;
 
 namespace cove {
@@ -45,10 +48,6 @@ protected:
 		EAST,
 		SOUTH,
 		WEST
-	};
-	struct POLYGON_POINT
-	{
-		double x, y;
 	};
 	struct PATH_POINT
 	{
@@ -70,7 +69,7 @@ protected:
 	};
 
 public:
-	class Polygon : public std::vector<POLYGON_POINT>
+	class Polygon : public std::vector<QPointF>
 	{
 		bool polygonClosed;
 		double minX, minY, maxX, maxY;
@@ -178,7 +177,7 @@ protected:
 	                                 ProgressObserver* progressObserver = nullptr) const;
 	PolygonList getPathPolygons(const PathList& constpaths,
 	                            ProgressObserver* progressObserver = nullptr) const;
-	static double distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
+	static double distance(const QPointF& a, const QPointF& b);
 
 public:
 	Polygons();

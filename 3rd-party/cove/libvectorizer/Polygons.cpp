@@ -39,6 +39,8 @@
 
 #include "ProgressObserver.h"
 
+// IWYU pragma: no_forward_declare QPointF
+
 #define JOIN_DEBUG 0
 #define JOIN_DEBUG_PRINT(...)            \
 do                                       \
@@ -61,18 +63,6 @@ const int Polygons::NPOINTS_MAX = 350;
 /*! \enum Polygons::DIRECTION
   Internal enum for directions having values EAST, WEST, NORTH, SOUTH and NONE.
   */
-
-/*! \class Polygons::POLYGON_POINT
-   \brief One point of the polygon.
-
-   Just a coordinate pair.
-   */
-
-/*! \var int Polygons::POLYGON_POINT::x
-   \brief The x-coordinate. */
-
-/*! \var int Polygons::POLYGON_POINT::y
-   \brief The y-coordinate. */
 
 /*! \class Polygons::PATH_POINT
    \brief One point of the path.
@@ -162,11 +152,11 @@ Polygons::Polygon::Polygon()
   Reimplemented push_back updates min/max X/Y (bounding rectangle). */
 void Polygons::Polygon::push_back(const value_type& p)
 {
-	vector<POLYGON_POINT>::push_back(p);
-	if (p.x > maxX) maxX = p.x;
-	if (p.x < minX) minX = p.x;
-	if (p.y > maxY) maxY = p.y;
-	if (p.y < minY) minY = p.y;
+	vector<QPointF>::push_back(p);
+	if (p.x() > maxX) maxX = p.x();
+	if (p.x() < minX) minX = p.x();
+	if (p.y() > maxY) maxY = p.y();
+	if (p.y() < minY) minY = p.y();
 }
 
 /*! Returns bounding rectangle of the polygon. */
@@ -185,10 +175,10 @@ void Polygons::Polygon::recheckBounds()
 	maxY = INT_MIN;
 	for (const_iterator p = begin(); p != end(); ++p)
 	{
-		if (p->x > maxX) maxX = p->x;
-		if (p->x < minX) minX = p->x;
-		if (p->y > maxY) maxY = p->y;
-		if (p->y < minY) minY = p->y;
+		if (p->x() > maxX) maxX = p->x();
+		if (p->x() < minX) minX = p->x();
+		if (p->y() > maxY) maxY = p->y();
+		if (p->y() < minY) minY = p->y();
 	}
 }
 
@@ -494,7 +484,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	list_forall(p, plist)
 	{
 		privpath_t* pp = p->priv;
-		POLYGON_POINT p;
+		QPointF p;
 		int n = pp->curve.n;
 		bool curveclosed = pp->curve.closed;
 
@@ -502,8 +492,8 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 
 		for (int i = 0; i < n; i++)
 		{
-			p.x = pp->curve.vertex[i].x;
-			p.y = pp->curve.vertex[i].y;
+			p.rx() = pp->curve.vertex[i].x;
+			p.ry() = pp->curve.vertex[i].y;
 			list.push_back(p);
 		}
 
@@ -532,11 +522,11 @@ try_error:
 	return PolygonList();
 }
 
-/*! Euclidean distance of two POLYGON_POINTs. */
-double Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
+/*! Euclidean distance of two QPointFs. */
+double Polygons::distance(const QPointF& a, const QPointF& b)
 {
-	double x = a.x - b.x;
-	double y = a.y - b.y;
+	auto const x = a.x() - b.x();
+	auto const y = a.y() - b.y();
 	return std::sqrt(x * x + y * y);
 }
 

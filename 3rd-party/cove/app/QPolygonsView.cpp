@@ -22,14 +22,15 @@
 #include <iterator>
 #include <memory>
 
+#include <Qt>
 #include <QBrush>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPen>
 #include <QPoint>
+#include <QPointF>
 #include <QRect>
 #include <QSize>
-#include <Qt>
 
 #include "libvectorizer/Polygons.h"
 
@@ -136,10 +137,10 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 			QPainterPath newPP;
 
 			Polygons::Polygon::const_iterator j = i->begin();
-			newPP.moveTo(i->begin()->x + 0.5, i->begin()->y + 0.5);
+			newPP.moveTo(i->begin()->x() + 0.5, i->begin()->y() + 0.5);
 			for (; j != i->end(); ++j)
 			{
-				newPP.lineTo(j->x + 0.5, j->y + 0.5);
+				newPP.lineTo(j->x() + 0.5, j->y() + 0.5);
 			}
 
 			if (i->isClosed())
@@ -161,8 +162,8 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 		for (Polygons::Polygon::const_iterator j = i->begin(); j != i->end();
 			 ++j)
 		{
-			QPoint pt(int((j->x + 0.5) * dispMagnification),
-					  int((j->y + 0.5) * dispMagnification));
+			QPoint pt(int((j->x() + 0.5) * dispMagnification),
+			          int((j->y() + 0.5) * dispMagnification));
 			if (r.contains(pt)) p.fillRect(QRect(pt, QSize(3, 3)), brushNormal);
 		}
 	}
