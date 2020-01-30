@@ -177,7 +177,7 @@ mainForm::~mainForm()
 void mainForm::clearBWImageTab()
 {
 	bwImageClearHistory();
-	ui.bwImageView->setPolygons(Polygons::PolygonList());
+	ui.bwImageView->setPolygons(PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
 	ui.bwImageView->setImage(nullptr);
 }
@@ -769,7 +769,7 @@ void mainForm::on_setVectorizationOptionsButton_clicked()
 //! Creates polygons from current bwImage.
 void mainForm::on_createVectorsButton_clicked()
 {
-	Polygons::PolygonList* q = new Polygons::PolygonList;
+	PolygonList* q = new PolygonList;
 	Polygons p;
 
 	p.setSpeckleSize(settings.getInt("speckleSize"));
@@ -794,7 +794,7 @@ void mainForm::on_createVectorsButton_clicked()
 //! Transfers traced polygons back to the map.
 void mainForm::on_saveVectorsButton_clicked()
 {
-	const Polygons::PolygonList& polys = ui.bwImageView->polygons();
+	const PolygonList& polys = ui.bwImageView->polygons();
 	if (polys.empty()) return;
 
 	float xOff = float(-ui.bwImageView->image()->width()) / 2;

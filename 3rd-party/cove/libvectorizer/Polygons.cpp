@@ -84,7 +84,7 @@ const int Polygons::NPOINTS_MAX = 350;
    \brief The direction to the next point.  The last point has direction NONE.
    */
 
-/*! \class Polygons::PolygonList
+/*! \class PolygonList
    \brief List of polygons in an image.
 
  Instance of STL template vector.*/
@@ -396,7 +396,7 @@ Polygons::decomposeImageIntoPaths(const QImage& sourceImage,
 
 /*! Identifies straight segments of path and returns them as list of vertices
  * between them.  Prepares data for libpotrace, then calls its functions. */
-Polygons::PolygonList
+PolygonList
 Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 						  ProgressObserver* progressObserver) const
 {
@@ -496,7 +496,7 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 try_error:
 	qWarning("process_path failed with errno %d", errno);
 	path_free(p);
-	return PolygonList();
+	return {};
 }
 
 /*! Euclidean distance of two QPointFs. */
@@ -514,7 +514,7 @@ double Polygons::distance(const QPointF& a, const QPointF& b)
  getPathPolygon.
  \param[in] image Input image to be analyzed.
  \param[in] speckleSize Minimum length of path to be vectorized. */
-Polygons::PolygonList
+PolygonList
 Polygons::createPolygonsFromImage(const QImage& image,
 								  ProgressObserver* progressObserver) const
 {

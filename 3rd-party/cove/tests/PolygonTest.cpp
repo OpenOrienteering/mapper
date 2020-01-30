@@ -80,7 +80,7 @@ void PolygonTest::testJoins()
 	polyTracer.setSpeckleSize(speckleSize);
 	polyTracer.setDistDirRatio(distDirRatio);
 
-	cove::Polygons::PolygonList polys;
+	cove::PolygonList polys;
 	COVE_BENCHMARK
 	{
 		polys = polyTracer.createPolygonsFromImage(sampleImage);
@@ -90,8 +90,8 @@ void PolygonTest::testJoins()
 	compareResults(polys, QFINDTESTDATA(resultFile));
 }
 
-void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
-							  const QString& filename) const
+void PolygonTest::saveResults(const cove::PolygonList& polys,
+                              const QString& filename) const
 {
 	QFile file(filename);
 	file.open(QIODevice::WriteOnly);
@@ -106,8 +106,8 @@ void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
 	}
 }
 
-void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
-								 const QString& filename) const
+void PolygonTest::compareResults(const cove::PolygonList& polys,
+                                 const QString& filename) const
 {
 	QFile file(filename);
 	QVERIFY(file.open(QIODevice::ReadOnly));

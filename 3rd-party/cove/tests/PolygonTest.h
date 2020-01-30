@@ -30,8 +30,8 @@ private slots:
 	void testJoins();
 
 private:
-	void saveResults(const cove::Polygons::PolygonList& polys,
+	void saveResults(const cove::PolygonList& polys,
 	                 const QString& filename) const;
-	void compareResults(const cove::Polygons::PolygonList& polys,
+	void compareResults(const cove::PolygonList& polys,
 	                    const QString& filename) const;
 };

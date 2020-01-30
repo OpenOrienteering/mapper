@@ -32,7 +32,7 @@ class QPaintEvent;
 class QWidget;
 
 namespace cove {
-class PaintablePolygonList : public Polygons::PolygonList
+class PaintablePolygonList : public PolygonList
 {
 	std::vector<QPainterPath> painterPaths;
 
@@ -41,8 +41,8 @@ public:
 	PaintablePolygonList(const PolygonList& pl);
 	PaintablePolygonList& operator=(const PolygonList& pl);
 	const QPainterPath&
-	getConstPainterPath(const Polygons::PolygonList::iterator& it);
-	void setConstPainterPath(const Polygons::PolygonList::iterator& it,
+	getConstPainterPath(const PolygonList::iterator& it);
+	void setConstPainterPath(const PolygonList::iterator& it,
 							 const QPainterPath& pa);
 };
 
@@ -53,8 +53,8 @@ private:
 
 public:
 	PolyImageWidget(QWidget* parent = nullptr);
-	const Polygons::PolygonList& polygons() const;
-	void setPolygons(const Polygons::PolygonList& p);
+	const PolygonList& polygons() const;
+	void setPolygons(const PolygonList& p);
 	void paintEvent(QPaintEvent* pe) override;
 };
 
@@ -62,8 +62,8 @@ class QPolygonsView : public QImageView
 {
 public:
 	QPolygonsView(QWidget* parent = nullptr);
-	const Polygons::PolygonList& polygons() const;
-	void setPolygons(const Polygons::PolygonList& p);
+	const PolygonList& polygons() const;
+	void setPolygons(const PolygonList& p);
 };
 } // cove
 

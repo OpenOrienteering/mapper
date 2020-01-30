@@ -56,6 +56,9 @@ public:
 	bool isClosed() const;
 };
 
+using PolygonList = std::vector<Polygon>;
+
+
 class Polygons
 {
 protected:
@@ -86,11 +89,6 @@ protected:
 	};
 
 	class PathList : public std::vector<Path>
-	{
-	};
-
-public:
-	class PolygonList : public std::vector<Polygon>
 	{
 	};
 

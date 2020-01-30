@@ -65,21 +65,21 @@ PaintablePolygonList& PaintablePolygonList::operator=(const PolygonList& pl)
 }
 
 const QPainterPath& PaintablePolygonList::getConstPainterPath(
-	const Polygons::PolygonList::iterator& it)
+	const PolygonList::iterator& it)
 {
 	int d = distance(begin(), it);
 	return painterPaths[d];
 }
 
 void PaintablePolygonList::setConstPainterPath(
-	const Polygons::PolygonList::iterator& it, const QPainterPath& pa)
+	const PolygonList::iterator& it, const QPainterPath& pa)
 {
 	int d = distance(begin(), it);
 	painterPaths[d] = pa;
 }
 
 /*! \class PolyImageWidget
- * \brief ImageWidget drawing \a Polygons::PolygonList above the image.
+ * \brief ImageWidget drawing \a PolygonList above the image.
  *
  * Helper class for QPolygonsView.
  */
@@ -89,9 +89,9 @@ PolyImageWidget::PolyImageWidget(QWidget* parent)
 {
 }
 
-/*! Return currently set PolygonList.  \sa setPolygons(Polygons::PolygonList& p)
+/*! Return currently set PolygonList.  \sa setPolygons(PolygonList& p)
   */
-const Polygons::PolygonList& PolyImageWidget::polygons() const
+const PolygonList& PolyImageWidget::polygons() const
 {
 	return polygonsList;
 }
@@ -100,7 +100,7 @@ const Polygons::PolygonList& PolyImageWidget::polygons() const
   \bug Behaves differently from setImage().  Creates its own copy of
   PolygonList and polygons() then returns another copy.
   */
-void PolyImageWidget::setPolygons(const Polygons::PolygonList& p)
+void PolyImageWidget::setPolygons(const PolygonList& p)
 {
 	polygonsList = p;
 
@@ -119,7 +119,7 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 	QPainter p(this);
 	QRect r = pe->rect();
 
-	for (Polygons::PolygonList::iterator i = polygonsList.begin();
+	for (PolygonList::iterator i = polygonsList.begin();
 		 i != polygonsList.end(); i++)
 	{
 		// when polygon does not interfere with current repainted area, skip it
@@ -183,16 +183,16 @@ QPolygonsView::QPolygonsView(QWidget* parent)
 }
 
 /*! Gets the polygonList that is drawn over the image.
- * \sa setPolygons(Polygons::PolygonList* p)
+ * \sa setPolygons(PolygonList* p)
  */
-const Polygons::PolygonList& QPolygonsView::polygons() const
+const PolygonList& QPolygonsView::polygons() const
 {
 	return static_cast<PolyImageWidget*>(iw.get())->polygons();
 }
 
 /*! Sets the polygonList that is drawn over the image.
  */
-void QPolygonsView::setPolygons(const Polygons::PolygonList& p)
+void QPolygonsView::setPolygons(const PolygonList& p)
 {
 	static_cast<PolyImageWidget*>(iw.get())->setPolygons(p);
 }
