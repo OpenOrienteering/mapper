@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -21,7 +22,6 @@
 
 #include <algorithm>
 #include <cerrno>
-#include <climits>
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -29,10 +29,12 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+#include <utility>
 
-#include <QByteArray>
-#include <QString>
 #include <QtGlobal>
+#include <QByteArray>
+#include <QPointF>
+#include <QString>
 
 #include <QImage>
 #include <QRect>
@@ -128,7 +130,7 @@ bool Polygons::Path::isClosed() const
 }
 
 // -POLYGON--------------------
-/*! \class Polygons::Polygon
+/*! \class Polygon
    \brief Represents polygon in an image.
 
    The polygon is a set of straight lines.  The first point represents the
@@ -138,47 +140,27 @@ bool Polygons::Path::isClosed() const
    The polygon is usually being built as a result of path decomposition into
    straight segments.
    */
-Polygons::Polygon::Polygon()
-	: polygonClosed(false)
-	, minX(INT_MAX)
-	, minY(INT_MAX)
-	, maxX(INT_MIN)
-	, maxY(INT_MIN)
-{
-}
-
-/*! \brief Reimplemented push_back.
-
-  Reimplemented push_back updates min/max X/Y (bounding rectangle). */
-void Polygons::Polygon::push_back(const value_type& p)
-{
-	vector<QPointF>::push_back(p);
-	if (p.x() > maxX) maxX = p.x();
-	if (p.x() < minX) minX = p.x();
-	if (p.y() > maxY) maxY = p.y();
-	if (p.y() < minY) minY = p.y();
-}
 
 /*! Returns bounding rectangle of the polygon. */
-QRect Polygons::Polygon::boundingRect() const
+QRect Polygon::boundingRect() const
 {
 	return QRect(int(minX), int(minY), int(maxX - minX + 1),
 				 int(maxY - minY + 1));
 }
 
 /*! Updates bounding rectangle of the polygon. */
-void Polygons::Polygon::recheckBounds()
+void Polygon::recheckBounds()
 {
-	minX = INT_MAX;
-	minY = INT_MAX;
-	maxX = INT_MIN;
-	maxY = INT_MIN;
-	for (const_iterator p = begin(); p != end(); ++p)
+	minX = std::numeric_limits<qreal>::max();
+	minY = std::numeric_limits<qreal>::max();
+	maxX = std::numeric_limits<qreal>::min();
+	maxY = std::numeric_limits<qreal>::min();
+	for (auto const& p : *this)
 	{
-		if (p->x() > maxX) maxX = p->x();
-		if (p->x() < minX) minX = p->x();
-		if (p->y() > maxY) maxY = p->y();
-		if (p->y() < minY) minY = p->y();
+		if (p.x() > maxX) maxX = p.x();
+		if (p.x() < minX) minX = p.x();
+		if (p.y() > maxY) maxY = p.y();
+		if (p.y() < minY) minY = p.y();
 	}
 }
 
@@ -186,7 +168,7 @@ void Polygons::Polygon::recheckBounds()
  *
  * Polygon is closed when and only when its first point is identical with its
  * last point. */
-void Polygons::Polygon::setClosed(bool closed)
+void Polygon::setClosed(bool closed)
 {
 	polygonClosed = closed;
 }
@@ -195,7 +177,7 @@ void Polygons::Polygon::setClosed(bool closed)
 
   \see setClosed
 */
-bool Polygons::Polygon::isClosed() const
+bool Polygon::isClosed() const
 {
 	return polygonClosed;
 }
@@ -422,7 +404,6 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	path_t* plist = nullptr;   /* linked list of path objects */
 	path_t** hook = &plist; /* used to speed up appending to linked list */
 
-	Polygon list;
 	PolygonList polylist;
 	polylist.reserve(constpaths.size());
 
@@ -484,23 +465,19 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	list_forall(p, plist)
 	{
 		privpath_t* pp = p->priv;
-		QPointF p;
 		int n = pp->curve.n;
-		bool curveclosed = pp->curve.closed;
 
-		list.reserve(n);
+		Polygon polygon;
+		polygon.reserve(n);
 
-		for (int i = 0; i < n; i++)
+		for (auto vertex = pp->curve.vertex, last = pp->curve.vertex + n; vertex != last; ++vertex)
 		{
-			p.rx() = pp->curve.vertex[i].x;
-			p.ry() = pp->curve.vertex[i].y;
-			list.push_back(p);
+			polygon.emplace_back(vertex->x, vertex->y);
 		}
+		polygon.recheckBounds();
+		polygon.setClosed(pp->curve.closed);
 
-		list.setClosed(curveclosed);
-
-		polylist.push_back(list);
-		list.clear();
+		polylist.push_back(std::move(polygon));
 
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{

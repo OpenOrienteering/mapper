@@ -136,7 +136,7 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 		{
 			QPainterPath newPP;
 
-			Polygons::Polygon::const_iterator j = i->begin();
+			Polygon::const_iterator j = i->begin();
 			newPP.moveTo(i->begin()->x() + 0.5, i->begin()->y() + 0.5);
 			for (; j != i->end(); ++j)
 			{
@@ -159,7 +159,7 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 		p.restore();
 		// draw squares
 		QBrush brushNormal(Qt::red);
-		for (Polygons::Polygon::const_iterator j = i->begin(); j != i->end();
+		for (Polygon::const_iterator j = i->begin(); j != i->end();
 			 ++j)
 		{
 			QPoint pt(int((j->x() + 0.5) * dispMagnification),

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -22,8 +23,10 @@
 
 #include <algorithm>
 #include <functional>
+#include <limits>
 #include <vector>
 
+#include <QtGlobal>
 #include <QPointF>
 
 #include "cove-potrace.h"
@@ -34,6 +37,24 @@ class QRect;
 
 namespace cove {
 class ProgressObserver;
+
+class Polygon : public std::vector<QPointF>
+{
+	bool polygonClosed = false;
+	qreal minX = std::numeric_limits<qreal>::max();
+	qreal minY = std::numeric_limits<qreal>::max();
+	qreal maxX = std::numeric_limits<qreal>::min();
+	qreal maxY = std::numeric_limits<qreal>::min();
+
+public:
+	// default constructors are fine
+
+	QRect boundingRect() const;
+	void recheckBounds();
+
+	void setClosed(bool closed);
+	bool isClosed() const;
+};
 
 class Polygons
 {
@@ -69,20 +90,6 @@ protected:
 	};
 
 public:
-	class Polygon : public std::vector<QPointF>
-	{
-		bool polygonClosed;
-		double minX, minY, maxX, maxY;
-
-	public:
-		Polygon();
-		void push_back(const value_type& p);
-		QRect boundingRect() const;
-		void recheckBounds();
-		void setClosed(bool closed);
-		bool isClosed() const;
-	};
-
 	class PolygonList : public std::vector<Polygon>
 	{
 	};
