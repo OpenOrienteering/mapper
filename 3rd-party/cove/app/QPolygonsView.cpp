@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -19,7 +20,6 @@
 
 #include "QPolygonsView.h"
 
-#include <iterator>
 #include <memory>
 
 #include <Qt>
@@ -30,7 +30,9 @@
 #include <QPoint>
 #include <QPointF>
 #include <QRect>
+#include <QRectF>
 #include <QSize>
+#include <QSizeF>
 
 #include "libvectorizer/Polygons.h"
 
@@ -42,41 +44,6 @@ class QWidget;
 namespace cove {
 //@{
 //! \ingroup gui
-
-/*! \class PaintablePolygonList
-  \brief PolygonList holding the QPainterPaths with the polygons. */
-
-PaintablePolygonList::PaintablePolygonList() = default;
-
-PaintablePolygonList::PaintablePolygonList(const PolygonList& pl)
-{
-	*this = pl;
-}
-
-//! Assignment operator, resizes paths vector and assigns empty paths to the
-//! elements.
-PaintablePolygonList& PaintablePolygonList::operator=(const PolygonList& pl)
-{
-	*static_cast<PolygonList*>(this) = pl;
-	painterPaths.resize(pl.size());
-	for (auto& i : painterPaths)
-		i = QPainterPath();
-	return *this;
-}
-
-const QPainterPath& PaintablePolygonList::getConstPainterPath(
-	const PolygonList::iterator& it)
-{
-	int d = distance(begin(), it);
-	return painterPaths[d];
-}
-
-void PaintablePolygonList::setConstPainterPath(
-	const PolygonList::iterator& it, const QPainterPath& pa)
-{
-	int d = distance(begin(), it);
-	painterPaths[d] = pa;
-}
 
 /*! \class PolyImageWidget
  * \brief ImageWidget drawing \a PolygonList above the image.
@@ -116,55 +83,39 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 
 	if (polygonsList.empty()) return;
 
-	QPainter p(this);
 	QRect r = pe->rect();
 
-	for (PolygonList::iterator i = polygonsList.begin();
-		 i != polygonsList.end(); i++)
+	auto const pen = QPen(Qt::cyan);
+	auto const brush = QBrush(Qt::red);
+	auto const marker = QRectF(QPointF(-1.5, -1.5) / dispMagnification,
+	                           QSizeF(3.0, 3.0) / dispMagnification);
+
+	QPainter p(this);
+	p.translate(dispMagnification / 2, dispMagnification / 2);  // offset for aliased painting
+	p.scale(dispMagnification, dispMagnification);
+
+	for (auto const& polygon : polygonsList)
 	{
 		// when polygon does not interfere with current repainted area, skip it
 		QRect polyBoundRect =
-			QRect(i->boundingRect().topLeft() * dispMagnification,
-				  i->boundingRect().bottomRight() * dispMagnification);
+			QRect(polygon.boundingRect().topLeft() * dispMagnification,
+				  polygon.boundingRect().bottomRight() * dispMagnification);
 		if (!r.intersects(polyBoundRect)) continue;
 
-		p.save();
-		p.scale(dispMagnification, dispMagnification);
-		p.setPen(QPen(Qt::cyan));
-		const QPainterPath& pp = polygonsList.getConstPainterPath(i);
-		if (pp.isEmpty())
-		{
-			QPainterPath newPP;
-
-			Polygon::const_iterator j = i->begin();
-			newPP.moveTo(i->begin()->x() + 0.5, i->begin()->y() + 0.5);
-			for (; j != i->end(); ++j)
-			{
-				newPP.lineTo(j->x() + 0.5, j->y() + 0.5);
-			}
-
-			if (i->isClosed())
-			{
-				newPP.closeSubpath();
-			}
-
-			polygonsList.setConstPainterPath(i, newPP);
-			p.drawPath(newPP);
-		}
+		// draw line
+		p.setPen(pen);
+		p.setBrush(Qt::NoBrush);
+		if (polygon.isClosed())
+			p.drawPolygon(polygon.data(), int(polygon.size()));
 		else
-		{
-			p.drawPath(pp);
-		}
+			p.drawPolyline(polygon.data(), int(polygon.size()));
 
-		p.restore();
 		// draw squares
-		QBrush brushNormal(Qt::red);
-		for (Polygon::const_iterator j = i->begin(); j != i->end();
-			 ++j)
+		p.setPen(Qt::NoPen);
+		p.setBrush(brush);
+		for (auto pt : polygon)
 		{
-			QPoint pt(int((j->x() + 0.5) * dispMagnification),
-			          int((j->y() + 0.5) * dispMagnification));
-			if (r.contains(pt)) p.fillRect(QRect(pt, QSize(3, 3)), brushNormal);
+			if (r.contains((pt * dispMagnification).toPoint())) p.drawRect(QRectF(pt + marker.topLeft(), marker.size()));
 		}
 	}
 }

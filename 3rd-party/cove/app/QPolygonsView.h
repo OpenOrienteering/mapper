@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -20,10 +21,6 @@
 #ifndef COVE_QPOLYGONSVIEW_H
 #define COVE_QPOLYGONSVIEW_H
 
-#include <vector>
-
-#include <QPainterPath>
-
 #include "libvectorizer/Polygons.h"
 
 #include "QImageView.h"
@@ -32,24 +29,11 @@ class QPaintEvent;
 class QWidget;
 
 namespace cove {
-class PaintablePolygonList : public PolygonList
-{
-	std::vector<QPainterPath> painterPaths;
-
-public:
-	PaintablePolygonList();
-	PaintablePolygonList(const PolygonList& pl);
-	PaintablePolygonList& operator=(const PolygonList& pl);
-	const QPainterPath&
-	getConstPainterPath(const PolygonList::iterator& it);
-	void setConstPainterPath(const PolygonList::iterator& it,
-							 const QPainterPath& pa);
-};
 
 class PolyImageWidget : public ImageWidget
 {
 private:
-	PaintablePolygonList polygonsList;
+	PolygonList polygonsList;
 
 public:
 	PolyImageWidget(QWidget* parent = nullptr);
