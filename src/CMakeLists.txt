@@ -139,7 +139,6 @@ set(Mapper_Common_SRCS
   gui/widgets/crs_selector.cpp
   gui/widgets/editor_settings_page.cpp
   gui/widgets/general_settings_page.cpp
-  gui/widgets/georeferencing_settings_page.cpp
   gui/widgets/home_screen_widget.cpp
   gui/widgets/key_button_bar.cpp
   gui/widgets/mapper_proxystyle.cpp
