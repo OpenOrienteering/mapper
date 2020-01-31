@@ -26,6 +26,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QAbstractButton>
+#include <QCheckBox>
 #include <QCursor>
 #include <QDate>
 #include <QDebug>
@@ -208,6 +209,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	grivation_label = new QLabel();
 	
+	show_scale_check = new QCheckBox(tr("Show scale factors"));
 	auto scale_compensation_label = Util::Headline::create(tr("Scale compensation"));
 	
 	/*: The combined scale factor is the ratio between a length on the ground
@@ -221,6 +223,11 @@ GeoreferencingDialog::GeoreferencingDialog(
 	    as a factor to ground distances to get curved earth model distances. */
 	auto auxiliary_factor_label = new QLabel(tr("Auxiliary scale factor:"));
 	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	scale_widget_list = {
+		scale_compensation_label,
+		auxiliary_factor_label, scale_factor_edit,
+		combined_factor_label, combined_factor_display
+	};
 	
 	buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
@@ -251,17 +258,15 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("Declination:"), declination_layout);
 	edit_layout->addRow(tr("Grivation:"), grivation_label);
 
-	bool control_scale_factor = Settings::getInstance().getSettingCached(Settings::MapGeoreferencing_ControlScaleFactor).toBool();
-	if (control_scale_factor)
-		edit_layout->addItem(Util::SpacerItem::create(this));
+	bool control_scale_factor = Settings::getInstance().getSetting(Settings::MapGeoreferencing_ControlScaleFactor).toBool();
+	edit_layout->addItem(Util::SpacerItem::create(this));
+	edit_layout->addRow(show_scale_check);
 	edit_layout->addRow(scale_compensation_label);
-	scale_compensation_label->setVisible(control_scale_factor);
 	edit_layout->addRow(auxiliary_factor_label, scale_factor_edit);
-	auxiliary_factor_label->setVisible(control_scale_factor);
-	scale_factor_edit->setVisible(control_scale_factor);
 	edit_layout->addRow(combined_factor_label, combined_factor_display);
-	combined_factor_label->setVisible(control_scale_factor);
-	combined_factor_display->setVisible(control_scale_factor);
+	show_scale_check->setChecked(control_scale_factor);
+	for (auto scale_widget: scale_widget_list)
+		scale_widget->setVisible(control_scale_factor);
 	
 	auto layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
@@ -273,6 +278,7 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
+	connect(show_scale_check, &QAbstractButton::clicked, this, &GeoreferencingDialog::showScaleChanged);
 	connect(scale_factor_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::auxiliaryFactorEdited);
 	
 	connect(map_x_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
@@ -645,6 +651,13 @@ void GeoreferencingDialog::crsEdited()
 	// Apply all changes at once
 	*georef = georef_copy;
 	reset_button->setEnabled(true);
+}
+
+void GeoreferencingDialog::showScaleChanged(bool checked)
+{
+	Settings::getInstance().setSetting(Settings::MapGeoreferencing_ControlScaleFactor, checked);
+	for (auto scale_widget: scale_widget_list)
+		scale_widget->setVisible(checked);
 }
 
 void GeoreferencingDialog::auxiliaryFactorEdited(double value)

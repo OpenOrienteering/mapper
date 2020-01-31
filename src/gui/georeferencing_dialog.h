@@ -32,6 +32,7 @@
 
 class QAction;
 class QCursor;
+class QCheckBox;
 class QDialogButtonBox;
 class QDoubleSpinBox;
 class QLabel;
@@ -130,6 +131,11 @@ public:
 	  * Updates the scale factor widget from the georeferencing.
 	  */
 	void auxiliaryFactorChanged();
+	
+	/**
+	  * Sets visibility of scale compensation widgets.
+	  */
+	void showScaleChanged(bool checked);
 	
 	/**
 	 * Triggers an online request for the magnetic declination.
@@ -282,6 +288,8 @@ private:
 	QPushButton* declination_button;
 	QLabel* grivation_label;
 
+	QCheckBox* show_scale_check;
+	std::vector<QWidget*> scale_widget_list;
 	QDoubleSpinBox* scale_factor_edit;
 	QLabel* combined_factor_display;
 	
