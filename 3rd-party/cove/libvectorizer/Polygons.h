@@ -33,7 +33,7 @@
 
 class QImage;
 // IWYU pragma: no_forward_declare QPointF
-class QRect;
+class QRectF;
 
 namespace cove {
 class ProgressObserver;
@@ -49,7 +49,7 @@ class Polygon : public std::vector<QPointF>
 public:
 	// default constructors are fine
 
-	QRect boundingRect() const;
+	QRectF boundingRect() const;
 	void recheckBounds();
 
 	void setClosed(bool closed);

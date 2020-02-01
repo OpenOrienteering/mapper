@@ -37,7 +37,7 @@
 #include <QString>
 
 #include <QImage>
-#include <QRect>
+#include <QRectF>
 
 #include "ProgressObserver.h"
 
@@ -142,10 +142,9 @@ bool Polygons::Path::isClosed() const
    */
 
 /*! Returns bounding rectangle of the polygon. */
-QRect Polygon::boundingRect() const
+QRectF Polygon::boundingRect() const
 {
-	return QRect(int(minX), int(minY), int(maxX - minX + 1),
-				 int(maxY - minY + 1));
+	return { minX, minY, maxX - minX, maxY - minY };
 }
 
 /*! Updates bounding rectangle of the polygon. */

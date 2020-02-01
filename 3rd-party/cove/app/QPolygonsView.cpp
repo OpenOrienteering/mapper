@@ -83,12 +83,17 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 
 	if (polygonsList.empty()) return;
 
-	QRect r = pe->rect();
-
 	auto const pen = QPen(Qt::cyan);
 	auto const brush = QBrush(Qt::red);
 	auto const marker = QRectF(QPointF(-1.5, -1.5) / dispMagnification,
 	                           QSizeF(3.0, 3.0) / dispMagnification);
+
+	auto const event_rect = pe->rect();
+	auto const event_rectf = QRectF(
+	                             event_rect.left() / dispMagnification + marker.left(),
+	                             event_rect.top() / dispMagnification + marker.top(),
+	                             event_rect.width() / dispMagnification + marker.width(),
+	                             event_rect.height() / dispMagnification + marker.height());
 
 	QPainter p(this);
 	p.translate(dispMagnification / 2, dispMagnification / 2);  // offset for aliased painting
@@ -97,10 +102,8 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 	for (auto const& polygon : polygonsList)
 	{
 		// when polygon does not interfere with current repainted area, skip it
-		QRect polyBoundRect =
-			QRect(polygon.boundingRect().topLeft() * dispMagnification,
-				  polygon.boundingRect().bottomRight() * dispMagnification);
-		if (!r.intersects(polyBoundRect)) continue;
+		if (!event_rectf.intersects(polygon.boundingRect()))
+			continue;
 
 		// draw line
 		p.setPen(pen);
@@ -113,9 +116,10 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 		// draw squares
 		p.setPen(Qt::NoPen);
 		p.setBrush(brush);
-		for (auto pt : polygon)
+		for (auto const& pt : polygon)
 		{
-			if (r.contains((pt * dispMagnification).toPoint())) p.drawRect(QRectF(pt + marker.topLeft(), marker.size()));
+			if (event_rectf.contains(pt))
+				p.drawRect(QRectF(pt + marker.topLeft(), marker.size()));
 		}
 	}
 }
