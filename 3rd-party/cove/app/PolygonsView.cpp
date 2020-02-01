@@ -37,7 +37,7 @@
 
 #include "libvectorizer/Polygons.h"
 
-#include "QImageView.h"
+#include "ImageView.h"
 
 class QPaintEvent;
 class QWidget;
@@ -133,7 +133,7 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 /*! Default constructor.
  */
 PolygonsView::PolygonsView(QWidget* parent)
-	: QImageView(parent)
+	: ImageView(parent)
 {
 	iw = std::make_unique<PolyImageWidget>();
 	setWidget(iw.get());

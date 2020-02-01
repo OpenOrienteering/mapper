@@ -40,7 +40,7 @@ set(Cove_SRCS
     app/colorseditform.cpp
     app/coverunner.cpp
     app/mainform.cpp
-    app/QImageView.cpp
+    app/ImageView.cpp
     app/PolygonsView.cpp
     app/Settings.cpp
     app/UIProgressDialog.cpp

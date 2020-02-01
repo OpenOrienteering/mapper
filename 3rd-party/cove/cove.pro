@@ -11,7 +11,7 @@ HEADERS += \
     app/colorseditform.h \
     app/FIRFilter.h \
     app/mainform.h \
-    app/QImageView.h \
+    app/ImageView.h \
     app/PolygonsView.h \
     app/Settings.h \
     app/UIProgressDialog.h \
@@ -38,7 +38,7 @@ SOURCES += \
     app/colorseditform.cpp \
     app/FIRFilter.cpp \
     app/mainform.cpp \
-    app/QImageView.cpp \
+    app/ImageView.cpp \
     app/PolygonsView.cpp \
     app/Settings.cpp \
     app/UIProgressDialog.cpp \

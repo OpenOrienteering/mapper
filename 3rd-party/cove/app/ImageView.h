@@ -17,8 +17,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COVE_QIMAGEVIEW_H
-#define COVE_QIMAGEVIEW_H
+#ifndef COVE_IMAGEVIEW_H
+#define COVE_IMAGEVIEW_H
 
 #include <memory>
 
@@ -59,7 +59,7 @@ public:
 	void displayRect(const QRect& r);
 };
 
-class QImageView : public QScrollArea
+class ImageView : public QScrollArea
 {
 	Q_OBJECT
 
@@ -80,7 +80,7 @@ protected:
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
 public:
-	QImageView(QWidget* parent = nullptr);
+	ImageView(QWidget* parent = nullptr);
 	void reset();
 	const QImage* image() const;
 	void setImage(const QImage* im);

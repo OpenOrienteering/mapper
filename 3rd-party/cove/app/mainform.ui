@@ -43,7 +43,7 @@
         <number>8</number>
        </property>
        <item>
-        <widget class="cove::QImageView" name="imageView"/>
+        <widget class="cove::ImageView" name="imageView"/>
        </item>
        <item>
         <layout class="QHBoxLayout">
@@ -286,7 +286,7 @@
         </widget>
        </item>
        <item>
-        <widget class="cove::QImageView" name="classifiedColorsView"/>
+        <widget class="cove::ImageView" name="classifiedColorsView"/>
        </item>
       </layout>
      </widget>
@@ -516,9 +516,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>cove::QImageView</class>
+   <class>cove::ImageView</class>
    <extends>QScrollArea</extends>
-   <header>app/QImageView.h</header>
+   <header>app/ImageView.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

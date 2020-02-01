@@ -64,7 +64,7 @@
 #include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
-#include "QImageView.h"
+#include "ImageView.h"
 #include "PolygonsView.h"
 #include "Settings.h"
 #include "UIProgressDialog.h"

@@ -26,7 +26,7 @@
 
 #include "libvectorizer/Polygons.h"
 
-#include "QImageView.h"
+#include "ImageView.h"
 
 class QPaintEvent;
 class QWidget;
@@ -58,7 +58,7 @@ private:
 };
 
 
-class PolygonsView : public QImageView
+class PolygonsView : public ImageView
 {
 	Q_OBJECT
 
