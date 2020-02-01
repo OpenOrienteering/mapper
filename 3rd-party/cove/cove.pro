@@ -12,7 +12,7 @@ HEADERS += \
     app/FIRFilter.h \
     app/mainform.h \
     app/QImageView.h \
-    app/QPolygonsView.h \
+    app/PolygonsView.h \
     app/Settings.h \
     app/UIProgressDialog.h \
     app/vectorizationconfigform.h \
@@ -39,7 +39,7 @@ SOURCES += \
     app/FIRFilter.cpp \
     app/mainform.cpp \
     app/QImageView.cpp \
-    app/QPolygonsView.cpp \
+    app/PolygonsView.cpp \
     app/Settings.cpp \
     app/UIProgressDialog.cpp \
     app/vectorizationconfigform.cpp \

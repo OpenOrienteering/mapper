@@ -506,7 +506,7 @@
         </layout>
        </item>
        <item>
-        <widget class="cove::QPolygonsView" name="bwImageView"/>
+        <widget class="cove::PolygonsView" name="bwImageView"/>
        </item>
       </layout>
      </widget>
@@ -522,9 +522,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>cove::QPolygonsView</class>
+   <class>cove::PolygonsView</class>
    <extends>QScrollArea</extends>
-   <header>app/QPolygonsView.h</header>
+   <header>app/PolygonsView.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

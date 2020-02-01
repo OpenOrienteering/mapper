@@ -18,8 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef COVE_QPOLYGONSVIEW_H
-#define COVE_QPOLYGONSVIEW_H
+#ifndef COVE_POLYGONSVIEW_H
+#define COVE_POLYGONSVIEW_H
+
+#include <QObject>
+#include <QString>
 
 #include "libvectorizer/Polygons.h"
 
@@ -32,23 +35,48 @@ namespace cove {
 
 class PolyImageWidget : public ImageWidget
 {
-private:
-	PolygonList polygonsList;
+	Q_OBJECT
 
 public:
 	PolyImageWidget(QWidget* parent = nullptr);
+
+	PolyImageWidget(const PolyImageWidget&) = delete;
+	PolyImageWidget(PolyImageWidget&&) = delete;
+	~PolyImageWidget() override;
+
+	PolyImageWidget& operator=(const PolyImageWidget&) = delete;
+	PolyImageWidget& operator=(PolyImageWidget&&) = delete;
+
 	const PolygonList& polygons() const;
-	void setPolygons(const PolygonList& p);
+	void setPolygons(PolygonList p);
+
+protected:
 	void paintEvent(QPaintEvent* pe) override;
+
+private:
+	PolygonList polygonsList;
 };
 
-class QPolygonsView : public QImageView
+
+class PolygonsView : public QImageView
 {
+	Q_OBJECT
+
 public:
-	QPolygonsView(QWidget* parent = nullptr);
+	PolygonsView(QWidget* parent = nullptr);
+
+	PolygonsView(const PolygonsView&) = delete;
+	PolygonsView(PolygonsView&&) = delete;
+	~PolygonsView() override;
+
+	PolygonsView& operator=(const PolygonsView&) = delete;
+	PolygonsView& operator=(PolygonsView&&) = delete;
+
 	const PolygonList& polygons() const;
-	void setPolygons(const PolygonList& p);
+	void setPolygons(PolygonList p);
 };
-} // cove
+
+
+}  // namespace cove
 
 #endif

@@ -24,6 +24,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iosfwd>
+#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -64,7 +65,7 @@
 #include "libvectorizer/Vectorizer.h"
 
 #include "QImageView.h"
-#include "QPolygonsView.h"
+#include "PolygonsView.h"
 #include "Settings.h"
 #include "UIProgressDialog.h"
 #include "classificationconfigform.h"
@@ -769,9 +770,7 @@ void mainForm::on_setVectorizationOptionsButton_clicked()
 //! Creates polygons from current bwImage.
 void mainForm::on_createVectorsButton_clicked()
 {
-	PolygonList* q = new PolygonList;
 	Polygons p;
-
 	p.setSpeckleSize(settings.getInt("speckleSize"));
 	p.setMaxDistance(settings.getInt("doConnections")
 						 ? settings.getDouble("joinDistance")
@@ -779,16 +778,9 @@ void mainForm::on_createVectorsButton_clicked()
 	p.setSimpleOnly(settings.getInt("simpleConnectionsOnly"));
 	p.setDistDirRatio(settings.getDouble("distDirBalance"));
 	UIProgressDialog progressDialog (tr("Vectorizing"), tr("Cancel"), this);
-	*q = p.createPolygonsFromImage(bwBitmap, &progressDialog);
-	if (q->empty())
-	{
-		delete q;
-		return;
-	}
-
-	ui.bwImageView->setPolygons(*q);
-	ui.saveVectorsButton->setEnabled(true);
-	delete q;
+	auto q = p.createPolygonsFromImage(bwBitmap, &progressDialog);
+	ui.saveVectorsButton->setEnabled(!q.empty());
+	ui.bwImageView->setPolygons(std::move(q));
 }
 
 //! Transfers traced polygons back to the map.

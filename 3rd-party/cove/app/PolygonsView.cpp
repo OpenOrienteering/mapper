@@ -18,9 +18,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "QPolygonsView.h"
+#include "PolygonsView.h"
 
 #include <memory>
+#include <utility>
 
 #include <Qt>
 #include <QBrush>
@@ -48,13 +49,15 @@ namespace cove {
 /*! \class PolyImageWidget
  * \brief ImageWidget drawing \a PolygonList above the image.
  *
- * Helper class for QPolygonsView.
+ * Helper class for PolygonsView.
  */
 
 PolyImageWidget::PolyImageWidget(QWidget* parent)
 	: ImageWidget(parent)
 {
 }
+
+PolyImageWidget::~PolyImageWidget() = default;
 
 /*! Return currently set PolygonList.  \sa setPolygons(PolygonList& p)
   */
@@ -64,13 +67,12 @@ const PolygonList& PolyImageWidget::polygons() const
 }
 
 /*! What PolygonList to draw.
-  \bug Behaves differently from setImage().  Creates its own copy of
-  PolygonList and polygons() then returns another copy.
-  */
-void PolyImageWidget::setPolygons(const PolygonList& p)
+ * \bug Behaves differently from setImage().  Creates its own copy of
+ * PolygonList and polygons() then returns another copy.
+ */
+void PolyImageWidget::setPolygons(PolygonList p)
 {
-	polygonsList = p;
-
+	polygonsList = std::move(p);
 	update();
 }
 
@@ -124,33 +126,37 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 	}
 }
 
-/*! \class QPolygonsView
-		\brief Provides scrollable view of an QImage with vectors over it.
+/*! \class PolygonsView
+ * \brief Provides scrollable view of an QImage with vectors over it.
  */
 
 /*! Default constructor.
  */
-QPolygonsView::QPolygonsView(QWidget* parent)
+PolygonsView::PolygonsView(QWidget* parent)
 	: QImageView(parent)
 {
 	iw = std::make_unique<PolyImageWidget>();
 	setWidget(iw.get());
 }
 
+PolygonsView::~PolygonsView() = default;
+
 /*! Gets the polygonList that is drawn over the image.
  * \sa setPolygons(PolygonList* p)
  */
-const PolygonList& QPolygonsView::polygons() const
+const PolygonList& PolygonsView::polygons() const
 {
 	return static_cast<PolyImageWidget*>(iw.get())->polygons();
 }
 
 /*! Sets the polygonList that is drawn over the image.
  */
-void QPolygonsView::setPolygons(const PolygonList& p)
+void PolygonsView::setPolygons(PolygonList p)
 {
-	static_cast<PolyImageWidget*>(iw.get())->setPolygons(p);
+	static_cast<PolyImageWidget*>(iw.get())->setPolygons(std::move(p));
 }
-} // cove
+
+
+}  // namespace cove
 
 //@}

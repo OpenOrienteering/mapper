@@ -41,7 +41,7 @@ set(Cove_SRCS
     app/coverunner.cpp
     app/mainform.cpp
     app/QImageView.cpp
-    app/QPolygonsView.cpp
+    app/PolygonsView.cpp
     app/Settings.cpp
     app/UIProgressDialog.cpp
     app/vectorizationconfigform.cpp
