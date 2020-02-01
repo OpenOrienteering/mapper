@@ -81,25 +81,25 @@ void PolyImageWidget::setPolygons(PolygonList p)
 void PolyImageWidget::paintEvent(QPaintEvent* pe)
 {
 	ImageWidget::paintEvent(pe);
-	if (!dispRealPaintEnabled) return;
+	if (!realPaintEnabled()) return;
 
 	if (polygonsList.empty()) return;
 
 	auto const pen = QPen(Qt::cyan);
 	auto const brush = QBrush(Qt::red);
-	auto const marker = QRectF(QPointF(-1.5, -1.5) / dispMagnification,
-	                           QSizeF(3.0, 3.0) / dispMagnification);
+	auto const marker = QRectF(QPointF(-1.5, -1.5) / magnification(),
+	                           QSizeF(3.0, 3.0) / magnification());
 
 	auto const event_rect = pe->rect();
 	auto const event_rectf = QRectF(
-	                             event_rect.left() / dispMagnification + marker.left(),
-	                             event_rect.top() / dispMagnification + marker.top(),
-	                             event_rect.width() / dispMagnification + marker.width(),
-	                             event_rect.height() / dispMagnification + marker.height());
+	                             event_rect.left() / magnification() + marker.left(),
+	                             event_rect.top() / magnification() + marker.top(),
+	                             event_rect.width() / magnification() + marker.width(),
+	                             event_rect.height() / magnification() + marker.height());
 
 	QPainter p(this);
-	p.translate(dispMagnification / 2, dispMagnification / 2);  // offset for aliased painting
-	p.scale(dispMagnification, dispMagnification);
+	p.translate(magnification() / 2, magnification() / 2);  // offset for aliased painting
+	p.scale(magnification(), magnification());
 
 	for (auto const& polygon : polygonsList)
 	{

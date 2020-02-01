@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -80,13 +81,7 @@ namespace cove {
 //! Default constructor.
 ImageWidget::ImageWidget(QWidget* parent)
 	: QWidget(parent)
-	, dispImage(nullptr)
-	, dispMagnification(1)
-	, scalingSmooth(false)
-	, dispRealPaintEnabled(true)
-	, drect(0, 0, 0, 0)
-{
-}
+{}
 
 //! Destructor.
 ImageWidget::~ImageWidget() = default;
@@ -184,15 +179,14 @@ void ImageWidget::setImage(const QImage* im)
 	update();
 }
 
-//! Returns pointer to currently displayed bitmap.
-const QImage* ImageWidget::image() const
-{
-	return dispImage;
-}
+/*! \fn const QImage* ImageWidget::image() const
+ * Returns pointer to currently displayed bitmap.
+ */
+
 
 //! What dispMagnification should be used. 1 == no dispMagnification, < 1 size
 //! reduction.
-void ImageWidget::setMagnification(float mag)
+void ImageWidget::setMagnification(qreal mag)
 {
 	if (dispImage)
 	{
@@ -204,12 +198,11 @@ void ImageWidget::setMagnification(float mag)
 	dispMagnification = mag;
 }
 
-/*! Returns current magnification used.
-  \sa setMagnification */
-float ImageWidget::magnification() const
-{
-	return dispMagnification;
-}
+/*! \fn qreal ImageWidget::magnification() const
+ * Returns current magnification used.
+ * \sa setMagnification
+ */
+
 
 /*! Use smooth scaling (QImage::smoothScale).
  \sa scalingSmooth */
@@ -220,12 +213,11 @@ void ImageWidget::setSmoothScaling(bool ss)
 	if (doupdate) update();
 }
 
-/*! Returns value of the scalingSmooth flag.
-  \sa setSmoothScaling */
-bool ImageWidget::smoothScaling() const
-{
-	return scalingSmooth;
-}
+/*! \fn bool ImageWidget::smoothScaling() const
+ * Returns value of the scalingSmooth flag.
+ * \sa setSmoothScaling
+ */
+
 
 /*! Do or do not real do painting.  When set to false, paints only background.
  \sa dispRealPaintEnabled */
@@ -235,12 +227,11 @@ void ImageWidget::setRealPaintEnabled(bool ss)
 	if (dispRealPaintEnabled) update();
 }
 
-/*! Returns value of the scalingSmooth flag.
-  \sa setRealPaintEnabled */
-bool ImageWidget::realPaintEnabled() const
-{
-	return dispRealPaintEnabled;
-}
+/*! \fn bool ImageWidget::realPaintEnabled() const
+ * Returns value of the scalingSmooth flag.
+ * \sa setRealPaintEnabled
+ */
+
 
 /*! Sets displayed zoom-in rectangle.
   \sa drect */
@@ -500,7 +491,7 @@ const QImage* ImageView::image() const
 
 //! What dispMagnification should be used. 1 == no dispMagnification, < 1 size
 //! reduction.
-void ImageView::setMagnification(float mag)
+void ImageView::setMagnification(qreal mag)
 {
 	double oldmag = iw->magnification(), magratio = mag / oldmag,
 		   oneMmagratio = 1 - magratio;
@@ -514,7 +505,7 @@ void ImageView::setMagnification(float mag)
 }
 
 //! Current magnification used.
-float ImageView::magnification() const
+qreal ImageView::magnification() const
 {
 	return iw->magnification();
 }

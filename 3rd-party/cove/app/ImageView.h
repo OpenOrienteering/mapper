@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -22,6 +23,7 @@
 
 #include <memory>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QPoint>
 #include <QRect>
@@ -35,29 +37,45 @@ class QPaintEvent;
 class QWheelEvent;
 
 namespace cove {
+
 class ImageWidget : public QWidget
 {
-protected:
-	const QImage* dispImage;
-	float dispMagnification;
-	bool scalingSmooth;
-	bool dispRealPaintEnabled;
-	QRect drect;
-	void paintEvent(QPaintEvent* pe) override;
+	Q_OBJECT
 
 public:
 	ImageWidget(QWidget* parent = nullptr);
+	ImageWidget(const ImageWidget&) = delete;
+	ImageWidget(ImageWidget&&) = delete;
 	~ImageWidget() override;
-	const QImage* image() const;
+
+	ImageWidget& operator=(const ImageWidget&) = delete;
+	ImageWidget&& operator=(ImageWidget&&) = delete;
+
+	const QImage* image() const { return dispImage; }
 	void setImage(const QImage* im);
-	float magnification() const;
-	void setMagnification(float mag);
-	bool smoothScaling() const;
+
+	qreal magnification() const { return dispMagnification; }
+	void setMagnification(qreal mag);
+
+	bool smoothScaling() const { return scalingSmooth; }
 	void setSmoothScaling(bool ss);
-	bool realPaintEnabled() const;
+
+	bool realPaintEnabled() const { return dispRealPaintEnabled; }
 	void setRealPaintEnabled(bool ss);
+
 	void displayRect(const QRect& r);
+
+protected:
+	void paintEvent(QPaintEvent* pe) override;
+
+private:
+	const QImage* dispImage = nullptr;
+	QRect drect = {0, 0, 0, 0};
+	qreal dispMagnification = 1;
+	bool scalingSmooth = false;
+	bool dispRealPaintEnabled = true;
 };
+
 
 class ImageView : public QScrollArea
 {
@@ -84,8 +102,8 @@ public:
 	void reset();
 	const QImage* image() const;
 	void setImage(const QImage* im);
-	float magnification() const;
-	void setMagnification(float mag);
+	qreal magnification() const;
+	void setMagnification(qreal mag);
 	bool smoothScaling() const;
 public slots:
 	void setMoveMode();
@@ -94,7 +112,7 @@ public slots:
 	void setOrigSize();
 	void setSmoothScaling(bool ss);
 signals:
-	void magnificationChanged(float oldmag, float mag);
+	void magnificationChanged(qreal oldmag, qreal mag);
 };
 } // cove
 
