@@ -374,6 +374,7 @@ void mainForm::on_runClassificationButton_clicked()
   \sa setColorButtonsGroup(QRgb* colors, int nColors) */
 void mainForm::clearColorButtonsGroup()
 {
+	setTabEnabled(ui.thinningTab, false);
 	for (auto button : colorButtons)
 	{
 		disconnect(button);
