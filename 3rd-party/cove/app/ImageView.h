@@ -81,39 +81,58 @@ class ImageView : public QScrollArea
 {
 	Q_OBJECT
 
-protected:
-	std::unique_ptr<ImageWidget> iw;
-	QPoint dragStartPos, dragCurPos;
-	QRect zoomRect;
-	enum OperatingMode
-	{
-		MOVE,
-		ZOOM_IN,
-		ZOOM_OUT
-	} opMode;
-	int lastSliderHPos, lastSliderVPos;
-	void wheelEvent(QWheelEvent* event) override;
-	void mousePressEvent(QMouseEvent* event) override;
-	void mouseMoveEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* event) override;
-
 public:
 	ImageView(QWidget* parent = nullptr);
+	ImageView(const ImageView&) = delete;
+	ImageView(ImageView&&) = delete;
+	~ImageView() override;
+
+	ImageView& operator=(const ImageView&) = delete;
+	ImageView& operator=(ImageView&&) = delete;
+
 	void reset();
+
 	const QImage* image() const;
 	void setImage(const QImage* im);
+
 	qreal magnification() const;
 	void setMagnification(qreal mag);
+
 	bool smoothScaling() const;
+
 public slots:
 	void setMoveMode();
 	void setZoomInMode();
 	void setZoomOutMode();
 	void setOrigSize();
 	void setSmoothScaling(bool ss);
+
 signals:
 	void magnificationChanged(qreal oldmag, qreal mag);
+
+protected:
+	void wheelEvent(QWheelEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+
+	std::unique_ptr<ImageWidget> iw;
+
+private:
+	QPoint dragStartPos;
+	QPoint dragCurPos;
+	QRect zoomRect;
+	int lastSliderHPos = 0;
+	int lastSliderVPos = 0;
+	enum OperatingMode
+	{
+		MOVE,
+		ZOOM_IN,
+		ZOOM_OUT
+	} opMode = MOVE;
 };
+
+
 } // cove
 
 #endif

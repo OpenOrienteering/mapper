@@ -299,6 +299,8 @@ ImageView::ImageView(QWidget* parent)
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
+ImageView::~ImageView() = default;
+
 //! Resets QImaeView into its initial state.  I.e. move mode, magnification 1,
 //! scrollbars 0.
 void ImageView::reset()
