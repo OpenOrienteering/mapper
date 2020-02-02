@@ -20,7 +20,6 @@
 
 #include "PolygonsView.h"
 
-#include <memory>
 #include <utility>
 
 #include <Qt>
@@ -34,13 +33,13 @@
 #include <QRectF>
 #include <QSize>
 #include <QSizeF>
+#include <QWidget>
 
 #include "libvectorizer/Polygons.h"
 
 #include "ImageView.h"
 
 class QPaintEvent;
-class QWidget;
 
 namespace cove {
 //@{
@@ -133,11 +132,8 @@ void PolyImageWidget::paintEvent(QPaintEvent* pe)
 /*! Default constructor.
  */
 PolygonsView::PolygonsView(QWidget* parent)
-	: ImageView(parent)
-{
-	iw = std::make_unique<PolyImageWidget>();
-	setWidget(iw.get());
-}
+	: ImageView(new PolyImageWidget(), parent)
+{}
 
 PolygonsView::~PolygonsView() = default;
 
@@ -146,14 +142,14 @@ PolygonsView::~PolygonsView() = default;
  */
 const PolygonList& PolygonsView::polygons() const
 {
-	return static_cast<PolyImageWidget*>(iw.get())->polygons();
+	return qobject_cast<const PolyImageWidget*>(widget())->polygons();
 }
 
 /*! Sets the polygonList that is drawn over the image.
  */
 void PolygonsView::setPolygons(PolygonList p)
 {
-	static_cast<PolyImageWidget*>(iw.get())->setPolygons(std::move(p));
+	qobject_cast<PolyImageWidget*>(widget())->setPolygons(std::move(p));
 }
 
 

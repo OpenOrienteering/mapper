@@ -21,8 +21,6 @@
 #ifndef COVE_IMAGEVIEW_H
 #define COVE_IMAGEVIEW_H
 
-#include <memory>
-
 #include <QtGlobal>
 #include <QObject>
 #include <QPoint>
@@ -83,12 +81,16 @@ class ImageView : public QScrollArea
 
 public:
 	ImageView(QWidget* parent = nullptr);
+	ImageView(ImageWidget* image_widget, QWidget* parent = nullptr);
 	ImageView(const ImageView&) = delete;
 	ImageView(ImageView&&) = delete;
 	~ImageView() override;
 
 	ImageView& operator=(const ImageView&) = delete;
 	ImageView& operator=(ImageView&&) = delete;
+
+	ImageWidget* imageWidget() { return qobject_cast<ImageWidget*>(widget()); }
+	const ImageWidget* imageWidget() const { return qobject_cast<const ImageWidget*>(widget()); }
 
 	void reset();
 
@@ -115,8 +117,6 @@ protected:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
-
-	std::unique_ptr<ImageWidget> iw;
 
 private:
 	QPoint dragStartPos;

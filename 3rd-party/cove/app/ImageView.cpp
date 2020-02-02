@@ -246,11 +246,13 @@ void ImageWidget::displayRect(const QRect& r)
 }
 
 /*! \class ImageView
-		\brief Provides scrollable view of an QImage.
+ * \brief Provides scrollable view of an QImage.
+ * 
+ * Invariant: After construction and before destruction, the widget() is
+ * assumed to be an ImageWidget. Do not call setWidget() with another
+ * type.
  */
 
-/*! \var ImageWidget* ImageView::iw
- Pointer to currently viewed image. \sa setImage. */
 /*! \var QPoint ImageView::dragStartPos
  Point where dragging started when zooming in. */
 /*! \var QPoint ImageView::dragCurPos
@@ -277,10 +279,14 @@ void ImageWidget::displayRect(const QRect& r)
 
 //! Default constructor.
 ImageView::ImageView(QWidget* parent)
+    : ImageView(new ImageWidget(), parent)
+{}
+
+//! Constructs an image view for the given image_widget.
+ImageView::ImageView(ImageWidget* image_widget, QWidget* parent)
 	: QScrollArea(parent)
-	, iw(std::make_unique<ImageWidget>(this))
 {
-	setWidget(iw.get());
+	setWidget(image_widget);
 	reset();
 	QAction* a;
 	addAction(a = new QAction(tr("Move"), this));
@@ -332,6 +338,8 @@ void ImageView::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() != Qt::LeftButton) return;
 
+	auto* iw = imageWidget();
+
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
 		 QGuiApplication::keyboardModifiers() == Qt::ControlModifier))
@@ -359,6 +367,8 @@ void ImageView::mousePressEvent(QMouseEvent* event)
 void ImageView::mouseMoveEvent(QMouseEvent* event)
 {
 	if (!(event->buttons() & Qt::LeftButton)) return;
+
+	auto* iw = imageWidget();
 
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
@@ -438,6 +448,8 @@ void ImageView::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() != Qt::LeftButton) return;
 
+	auto* iw = imageWidget();
+
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
 		 QGuiApplication::keyboardModifiers() == Qt::ControlModifier))
@@ -482,19 +494,21 @@ void ImageView::mouseReleaseEvent(QMouseEvent* event)
 //! What dispImage should be viewed.
 void ImageView::setImage(const QImage* im)
 {
-	iw->setImage(im);
+	imageWidget()->setImage(im);
 }
 
 //! return pointer to currently displayed bitmap.
 const QImage* ImageView::image() const
 {
-	return iw->image();
+	return imageWidget()->image();
 }
 
 //! What dispMagnification should be used. 1 == no dispMagnification, < 1 size
 //! reduction.
 void ImageView::setMagnification(qreal mag)
 {
+	auto* iw = imageWidget();
+
 	double oldmag = iw->magnification(), magratio = mag / oldmag,
 		   oneMmagratio = 1 - magratio;
 	int w = viewport()->size().width(), h = viewport()->size().height();
@@ -509,25 +523,25 @@ void ImageView::setMagnification(qreal mag)
 //! Current magnification used.
 qreal ImageView::magnification() const
 {
-	return iw->magnification();
+	return imageWidget()->magnification();
 }
 
 //! Use smooth scaling (QImage::smoothScale).
 void ImageView::setSmoothScaling(bool ss)
 {
-	iw->setSmoothScaling(ss);
+	imageWidget()->setSmoothScaling(ss);
 }
 
 //! Returns true when smooth scaling is enabled.
 bool ImageView::smoothScaling() const
 {
-	return iw->smoothScaling();
+	return imageWidget()->smoothScaling();
 }
 
 //! Slot for context menu.
 void ImageView::setMoveMode()
 {
-	iw->setCursor(QCursor(Qt::SizeAllCursor));
+	widget()->setCursor(QCursor(Qt::SizeAllCursor));
 	opMode = MOVE;
 }
 
@@ -564,7 +578,7 @@ void ImageView::setZoomInMode()
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-	iw->setCursor(
+	widget()->setCursor(
 		QCursor(QBitmap::fromData(QSize(zoomin_width, zoomin_height),
 								  zoomin_bits, QImage::Format_MonoLSB),
 				QBitmap::fromData(QSize(zoomin_mask_width, zoomin_mask_height),
@@ -606,7 +620,7 @@ void ImageView::setZoomOutMode()
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-	iw->setCursor(QCursor(
+	widget()->setCursor(QCursor(
 		QBitmap::fromData(QSize(zoomout_width, zoomout_height), zoomout_bits,
 						  QImage::Format_MonoLSB),
 		QBitmap::fromData(QSize(zoomout_mask_width, zoomout_mask_height),
