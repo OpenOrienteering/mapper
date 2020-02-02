@@ -639,32 +639,6 @@ void mainForm::on_runDilationButton_clicked()
 		bwImageCommitHistory();
 }
 
-/*! Opens the image.
-  \sa performMorphologicalOperation */
-void mainForm::on_runOpeningButton_clicked()
-{
-	prepareBWImageHistory();
-	QImage savedimage = bwBitmap;
-	if (performMorphologicalOperation(Vectorizer::EROSION) &&
-		performMorphologicalOperation(Vectorizer::DILATION))
-		bwImageCommitHistory();
-	else
-		bwBitmap = savedimage;
-}
-
-/*! Closes the image.
-  \sa performMorphologicalOperation */
-void mainForm::on_runClosingButton_clicked()
-{
-	prepareBWImageHistory();
-	QImage savedimage = bwBitmap;
-	if (performMorphologicalOperation(Vectorizer::DILATION) &&
-		performMorphologicalOperation(Vectorizer::EROSION))
-		bwImageCommitHistory();
-	else
-		bwBitmap = savedimage;
-}
-
 /*! Spawns dialog on classification config options.
   \sa ClassificationConfigForm */
 void mainForm::on_classificationOptionsButton_clicked()
