@@ -467,31 +467,40 @@ std::vector<bool> mainForm::getSelectedColors()
 void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 {
 	if (ui.mainTabWidget->widget(tabindex) != ui.thinningTab) return;
-	clearBWImageTab();
+	
 	if ((imageBitmap.format() == QImage::Format_Mono ||
 		 imageBitmap.format() == QImage::Format_MonoLSB) &&
 		colorButtons.empty())
 	{
+		clearBWImageTab();
 		bwBitmap = imageBitmap;
 		ui.bwImageView->setImage(&bwBitmap);
 		ui.bwImageView->reset();
 		return;
 	}
+	
 	auto selectedColors = getSelectedColors();
 	UIProgressDialog progressDialog(tr("Creating B/W image"), tr("Cancel"), this);
 	QImage newBWBitmap =
 		vectorizerApp->getBWImage(selectedColors, &progressDialog);
-	if (!newBWBitmap.isNull())
+	if (newBWBitmap.isNull())
 	{
+		// no BW image
+		clearBWImageTab();
+		setTabEnabled(ui.thinningTab, false);
+		return;
+	}
+	
+	if (bwBitmapHistory.empty()
+	    || bwBitmapHistory.back().constBits() != newBWBitmap.constBits())
+	{
+		// new BW image
+		clearBWImageTab();
 		bwBitmap = newBWBitmap;
 		ui.bwImageView->setImage(&bwBitmap);
 		ui.bwImageView->reset();
-		setTabEnabled(ui.thinningTab, true);
 	}
-	else
-	{
-		setTabEnabled(ui.thinningTab, false);
-	}
+	setTabEnabled(ui.thinningTab, true);
 }
 
 //! Performs one morphological operation on the bwImage.
