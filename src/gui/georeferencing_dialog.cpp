@@ -21,6 +21,7 @@
 
 #include "georeferencing_dialog.h"
 
+#include <cmath>
 #include <vector>
 
 #include <Qt>
@@ -53,7 +54,9 @@
 #include <QTimer>
 #include <QUrl>
 #include <QUrlQuery>
+#include <QVariant>
 #include <QVBoxLayout>
+#include <QWidget>
 #include <QXmlStreamReader>
 // IWYU pragma: no_include <qxmlstream.h>
 
@@ -540,7 +543,7 @@ void GeoreferencingDialog::accept()
 	{
 		georef->updateCombinedScaleFactor();
 	}
-	else if (!qIsNull(log(scale_factor_change))
+	else if (!qIsNull(std::log(scale_factor_change))
 	         && (map->getNumObjects() > 0 || map->getNumTemplates() > 0))
 	{
 		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);

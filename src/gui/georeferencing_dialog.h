@@ -22,6 +22,8 @@
 #ifndef OPENORIENTEERING_GEOREFERENCING_DIALOG_H
 #define OPENORIENTEERING_GEOREFERENCING_DIALOG_H
 
+#include <vector>
+
 #include <QDialog>
 #include <QObject>
 #include <QScopedPointer>
