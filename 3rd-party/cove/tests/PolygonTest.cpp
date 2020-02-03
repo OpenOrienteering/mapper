@@ -40,8 +40,7 @@
 // Benchmarking adds significant overhead when enabled.
 // With the focus on (CI) testing, we default to disabling benchmarking
 // by defining COVE_BENCHMARK as an empty macro here, and let CMake set
-// it to QBENCHMARK when the user chooses to enable COVE_BENCHMARKING
-// at configuration time.
+// it to QBENCHMARK when compiling as a benchmark executable.
 #ifndef COVE_BENCHMARK
 #  define COVE_BENCHMARK
 #endif

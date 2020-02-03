@@ -131,7 +131,7 @@ struct Job
  * adds this object to the return value.
  */
 template <typename ResultType, typename FunctorType, typename ... Input>
-Job<ResultType> run(const FunctorType& functor, Input ... args)
+Job<ResultType> run(const FunctorType& functor, Input&& ... args)
 {
 	Progress progress;
 	auto future = QtConcurrent::run(functor, &FunctorType::operator(), std::forward<Input>(args)..., progress);
@@ -232,7 +232,7 @@ bool handleProgress(ProgressObserver* observer, JobList<ResultType>& jobs)
  *     }
  */
 template <typename ConcurrencyType, typename ResultType, typename FunctorType, typename ... Input>
-JobList<ResultType> processConcurrent(ProgressObserver* observer, const FunctorType& function, Input ... args)
+JobList<ResultType> processConcurrent(ProgressObserver* observer, const FunctorType& function, Input&& ... args)
 {
 	auto jobs = ConcurrencyType::template makeJobs<ResultType>(function, std::forward<Input>(args)...);
 	waitForFinished<JobList<ResultType>>(observer, jobs);
@@ -268,7 +268,7 @@ struct supported<Functor, typename std::enable_if<std::is_class<typename Functor
  */
 template <typename ResultType = void, typename FunctorType, typename ... Input>
 typename std::enable_if_t<supported<FunctorType>::value, JobList<ResultType>>
- process(ProgressObserver* observer, const FunctorType& function, Input ... args)
+ process(ProgressObserver* observer, const FunctorType& function, Input&& ... args)
 {
 	return processConcurrent<typename FunctorType::concurrent_processing, ResultType, FunctorType>(observer, function, std::forward<Input>(args)...);
 }
@@ -285,7 +285,7 @@ typename std::enable_if_t<supported<FunctorType>::value, JobList<ResultType>>
  */
 template <typename ResultType, typename FunctorType, typename ... Input>
 typename std::enable_if_t<!supported<FunctorType>::value, ResultType>
- process(ProgressObserver* observer, const FunctorType& functor, Input ... args)
+ process(ProgressObserver* observer, const FunctorType& functor, Input&& ... args)
 {
 	auto job = run<ResultType>(functor, std::forward<Input>(args)...);
 	waitForFinished(observer, job);
