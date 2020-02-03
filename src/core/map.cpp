@@ -517,12 +517,12 @@ unsigned int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, double additional_stretch, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
-	if (new_scale_denominator == getScaleDenominator())
+	if (new_scale_denominator == getScaleDenominator() && additional_stretch == 1.0)
 		return;
 	
-	double factor = getScaleDenominator() / (double)new_scale_denominator;
+	double factor = (getScaleDenominator() / (double)new_scale_denominator) * additional_stretch;
 	
 	if (scale_symbols)
 		scaleAllSymbols(factor);

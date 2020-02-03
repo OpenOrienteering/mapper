@@ -4227,7 +4227,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 		                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
 		{
-			other.changeScale(map->getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
+			other.changeScale(map->getScaleDenominator(), 1.0, MapCoord(0, 0), true, true, true, true);
 		}
 	}
 	

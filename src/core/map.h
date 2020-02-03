@@ -1144,13 +1144,14 @@ public:
 	 * Changes the map's scale.
 	 * 
 	 * @param new_scale_denominator The new scale denominator.
+	 * @param additional_stretch Additional stretch/shrink applied to the map.
 	 * @param scaling_center The coordinate to use as scaling center.
 	 * @param scale_symbols Whether to scale the map symbols.
 	 * @param scale_objects Whether to scale the map object coordinates.
 	 * @param scale_georeferencing Whether to adjust the map's georeferencing reference point.
 	 * @param scale_templates Whether to scale non-georeferenced templates.
 	 */
-	void changeScale(unsigned int new_scale_denominator,
+	void changeScale(unsigned int new_scale_denominator, double additional_stretch,
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
 	
