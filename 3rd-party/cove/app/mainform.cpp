@@ -24,7 +24,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iosfwd>
+#include <utility>
 
+#include <QtGlobal>
 #include <QByteArray>
 #include <QColor>
 #include <QComboBox>
@@ -43,10 +45,10 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTabWidget>
-#include <QtGlobal>
 
 #include "core/map.h"
 #include "core/map_coord.h"
@@ -62,8 +64,8 @@
 #include "libvectorizer/Polygons.h"
 #include "libvectorizer/Vectorizer.h"
 
-#include "QImageView.h"
-#include "QPolygonsView.h"
+#include "ImageView.h"
+#include "PolygonsView.h"
 #include "Settings.h"
 #include "UIProgressDialog.h"
 #include "classificationconfigform.h"
@@ -176,7 +178,7 @@ mainForm::~mainForm()
 void mainForm::clearBWImageTab()
 {
 	bwImageClearHistory();
-	ui.bwImageView->setPolygons(Polygons::PolygonList());
+	ui.bwImageView->setPolygons(PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
 	ui.bwImageView->setImage(nullptr);
 }
@@ -372,6 +374,7 @@ void mainForm::on_runClassificationButton_clicked()
   \sa setColorButtonsGroup(QRgb* colors, int nColors) */
 void mainForm::clearColorButtonsGroup()
 {
+	setTabEnabled(ui.thinningTab, false);
 	for (auto button : colorButtons)
 	{
 		disconnect(button);
@@ -465,31 +468,40 @@ std::vector<bool> mainForm::getSelectedColors()
 void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 {
 	if (ui.mainTabWidget->widget(tabindex) != ui.thinningTab) return;
-	clearBWImageTab();
+	
 	if ((imageBitmap.format() == QImage::Format_Mono ||
 		 imageBitmap.format() == QImage::Format_MonoLSB) &&
 		colorButtons.empty())
 	{
+		clearBWImageTab();
 		bwBitmap = imageBitmap;
 		ui.bwImageView->setImage(&bwBitmap);
 		ui.bwImageView->reset();
 		return;
 	}
+	
 	auto selectedColors = getSelectedColors();
 	UIProgressDialog progressDialog(tr("Creating B/W image"), tr("Cancel"), this);
 	QImage newBWBitmap =
 		vectorizerApp->getBWImage(selectedColors, &progressDialog);
-	if (!newBWBitmap.isNull())
+	if (newBWBitmap.isNull())
 	{
+		// no BW image
+		clearBWImageTab();
+		setTabEnabled(ui.thinningTab, false);
+		return;
+	}
+	
+	if (bwBitmapHistory.empty()
+	    || bwBitmapHistory.back().constBits() != newBWBitmap.constBits())
+	{
+		// new BW image
+		clearBWImageTab();
 		bwBitmap = newBWBitmap;
 		ui.bwImageView->setImage(&bwBitmap);
 		ui.bwImageView->reset();
-		setTabEnabled(ui.thinningTab, true);
 	}
-	else
-	{
-		setTabEnabled(ui.thinningTab, false);
-	}
+	setTabEnabled(ui.thinningTab, true);
 }
 
 //! Performs one morphological operation on the bwImage.
@@ -637,32 +649,6 @@ void mainForm::on_runDilationButton_clicked()
 		bwImageCommitHistory();
 }
 
-/*! Opens the image.
-  \sa performMorphologicalOperation */
-void mainForm::on_runOpeningButton_clicked()
-{
-	prepareBWImageHistory();
-	QImage savedimage = bwBitmap;
-	if (performMorphologicalOperation(Vectorizer::EROSION) &&
-		performMorphologicalOperation(Vectorizer::DILATION))
-		bwImageCommitHistory();
-	else
-		bwBitmap = savedimage;
-}
-
-/*! Closes the image.
-  \sa performMorphologicalOperation */
-void mainForm::on_runClosingButton_clicked()
-{
-	prepareBWImageHistory();
-	QImage savedimage = bwBitmap;
-	if (performMorphologicalOperation(Vectorizer::DILATION) &&
-		performMorphologicalOperation(Vectorizer::EROSION))
-		bwImageCommitHistory();
-	else
-		bwBitmap = savedimage;
-}
-
 /*! Spawns dialog on classification config options.
   \sa ClassificationConfigForm */
 void mainForm::on_classificationOptionsButton_clicked()
@@ -768,9 +754,7 @@ void mainForm::on_setVectorizationOptionsButton_clicked()
 //! Creates polygons from current bwImage.
 void mainForm::on_createVectorsButton_clicked()
 {
-	Polygons::PolygonList* q = new Polygons::PolygonList;
 	Polygons p;
-
 	p.setSpeckleSize(settings.getInt("speckleSize"));
 	p.setMaxDistance(settings.getInt("doConnections")
 						 ? settings.getDouble("joinDistance")
@@ -778,22 +762,15 @@ void mainForm::on_createVectorsButton_clicked()
 	p.setSimpleOnly(settings.getInt("simpleConnectionsOnly"));
 	p.setDistDirRatio(settings.getDouble("distDirBalance"));
 	UIProgressDialog progressDialog (tr("Vectorizing"), tr("Cancel"), this);
-	*q = p.createPolygonsFromImage(bwBitmap, &progressDialog);
-	if (q->empty())
-	{
-		delete q;
-		return;
-	}
-
-	ui.bwImageView->setPolygons(*q);
-	ui.saveVectorsButton->setEnabled(true);
-	delete q;
+	auto q = p.createPolygonsFromImage(bwBitmap, &progressDialog);
+	ui.saveVectorsButton->setEnabled(!q.empty());
+	ui.bwImageView->setPolygons(std::move(q));
 }
 
 //! Transfers traced polygons back to the map.
 void mainForm::on_saveVectorsButton_clicked()
 {
-	const Polygons::PolygonList& polys = ui.bwImageView->polygons();
+	const PolygonList& polys = ui.bwImageView->polygons();
 	if (polys.empty()) return;
 
 	float xOff = float(-ui.bwImageView->image()->width()) / 2;
@@ -816,7 +793,7 @@ void mainForm::on_saveVectorsButton_clicked()
 		{
 			// transform from template coordinates to map coordinates
 			OpenOrienteering::MapCoordF templCoords =
-				ooTempl->templateToMap(QPoint(point.x + xOff, point.y + yOff));
+				ooTempl->templateToMap(QPoint(point.x() + xOff, point.y() + yOff));
 			OpenOrienteering::MapCoord c(templCoords.x(), templCoords.y());
 
 			newOOPolygon->addCoordinate(c);

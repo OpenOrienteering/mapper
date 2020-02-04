@@ -26,14 +26,15 @@
 #include <limits>
 #include <numeric>
 
+#include <QtGlobal>
+#include <QtMath>
+#include <QtTest>
 #include <QByteArray>
 #include <QDataStream>
 #include <QFile>
 #include <QIODevice>
 #include <QImage>
-#include <QtGlobal>
-#include <QtMath>
-#include <QtTest>
+#include <QPointF>
 
 #include "libvectorizer/Polygons.h"
 
@@ -78,7 +79,7 @@ void PolygonTest::testJoins()
 	polyTracer.setSpeckleSize(speckleSize);
 	polyTracer.setDistDirRatio(distDirRatio);
 
-	cove::Polygons::PolygonList polys;
+	cove::PolygonList polys;
 	COVE_BENCHMARK
 	{
 		polys = polyTracer.createPolygonsFromImage(sampleImage);
@@ -88,8 +89,8 @@ void PolygonTest::testJoins()
 	compareResults(polys, QFINDTESTDATA(resultFile));
 }
 
-void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
-							  const QString& filename) const
+void PolygonTest::saveResults(const cove::PolygonList& polys,
+                              const QString& filename) const
 {
 	QFile file(filename);
 	file.open(QIODevice::WriteOnly);
@@ -100,12 +101,12 @@ void PolygonTest::saveResults(const cove::Polygons::PolygonList& polys,
 		out << poly.isClosed();
 		out << quint32(poly.size());
 		for (auto const& p : poly)
-			out << double(p.x) << double(p.y);
+			out << double(p.x()) << double(p.y());
 	}
 }
 
-void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
-								 const QString& filename) const
+void PolygonTest::compareResults(const cove::PolygonList& polys,
+                                 const QString& filename) const
 {
 	QFile file(filename);
 	QVERIFY(file.open(QIODevice::ReadOnly));
@@ -134,8 +135,8 @@ void PolygonTest::compareResults(const cove::Polygons::PolygonList& polys,
 		{
 			double x, y;
 			in >> x >> y;
-			count_deviation(p.x, x);
-			count_deviation(p.y, y);
+			count_deviation(p.x(), x);
+			count_deviation(p.y(), y);
 		}
 	}
 	

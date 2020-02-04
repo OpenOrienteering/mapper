@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -21,7 +22,6 @@
 
 #include <algorithm>
 #include <cerrno>
-#include <climits>
 #include <cmath>
 #include <cstdlib>
 #include <cstring>
@@ -29,15 +29,19 @@
 #include <limits>
 #include <memory>
 #include <stdexcept>
+#include <utility>
 
-#include <QByteArray>
-#include <QString>
 #include <QtGlobal>
+#include <QByteArray>
+#include <QPointF>
+#include <QString>
 
 #include <QImage>
-#include <QRect>
+#include <QRectF>
 
 #include "ProgressObserver.h"
+
+// IWYU pragma: no_forward_declare QPointF
 
 #define JOIN_DEBUG 0
 #define JOIN_DEBUG_PRINT(...)            \
@@ -62,18 +66,6 @@ const int Polygons::NPOINTS_MAX = 350;
   Internal enum for directions having values EAST, WEST, NORTH, SOUTH and NONE.
   */
 
-/*! \class Polygons::POLYGON_POINT
-   \brief One point of the polygon.
-
-   Just a coordinate pair.
-   */
-
-/*! \var int Polygons::POLYGON_POINT::x
-   \brief The x-coordinate. */
-
-/*! \var int Polygons::POLYGON_POINT::y
-   \brief The y-coordinate. */
-
 /*! \class Polygons::PATH_POINT
    \brief One point of the path.
 
@@ -92,7 +84,7 @@ const int Polygons::NPOINTS_MAX = 350;
    \brief The direction to the next point.  The last point has direction NONE.
    */
 
-/*! \class Polygons::PolygonList
+/*! \class PolygonList
    \brief List of polygons in an image.
 
  Instance of STL template vector.*/
@@ -138,7 +130,7 @@ bool Polygons::Path::isClosed() const
 }
 
 // -POLYGON--------------------
-/*! \class Polygons::Polygon
+/*! \class Polygon
    \brief Represents polygon in an image.
 
    The polygon is a set of straight lines.  The first point represents the
@@ -148,47 +140,26 @@ bool Polygons::Path::isClosed() const
    The polygon is usually being built as a result of path decomposition into
    straight segments.
    */
-Polygons::Polygon::Polygon()
-	: polygonClosed(false)
-	, minX(INT_MAX)
-	, minY(INT_MAX)
-	, maxX(INT_MIN)
-	, maxY(INT_MIN)
-{
-}
-
-/*! \brief Reimplemented push_back.
-
-  Reimplemented push_back updates min/max X/Y (bounding rectangle). */
-void Polygons::Polygon::push_back(const value_type& p)
-{
-	vector<POLYGON_POINT>::push_back(p);
-	if (p.x > maxX) maxX = p.x;
-	if (p.x < minX) minX = p.x;
-	if (p.y > maxY) maxY = p.y;
-	if (p.y < minY) minY = p.y;
-}
 
 /*! Returns bounding rectangle of the polygon. */
-QRect Polygons::Polygon::boundingRect() const
+QRectF Polygon::boundingRect() const
 {
-	return QRect(int(minX), int(minY), int(maxX - minX + 1),
-				 int(maxY - minY + 1));
+	return { minX, minY, maxX - minX, maxY - minY };
 }
 
 /*! Updates bounding rectangle of the polygon. */
-void Polygons::Polygon::recheckBounds()
+void Polygon::recheckBounds()
 {
-	minX = INT_MAX;
-	minY = INT_MAX;
-	maxX = INT_MIN;
-	maxY = INT_MIN;
-	for (const_iterator p = begin(); p != end(); ++p)
+	minX = std::numeric_limits<qreal>::max();
+	minY = std::numeric_limits<qreal>::max();
+	maxX = std::numeric_limits<qreal>::min();
+	maxY = std::numeric_limits<qreal>::min();
+	for (auto const& p : *this)
 	{
-		if (p->x > maxX) maxX = p->x;
-		if (p->x < minX) minX = p->x;
-		if (p->y > maxY) maxY = p->y;
-		if (p->y < minY) minY = p->y;
+		if (p.x() > maxX) maxX = p.x();
+		if (p.x() < minX) minX = p.x();
+		if (p.y() > maxY) maxY = p.y();
+		if (p.y() < minY) minY = p.y();
 	}
 }
 
@@ -196,7 +167,7 @@ void Polygons::Polygon::recheckBounds()
  *
  * Polygon is closed when and only when its first point is identical with its
  * last point. */
-void Polygons::Polygon::setClosed(bool closed)
+void Polygon::setClosed(bool closed)
 {
 	polygonClosed = closed;
 }
@@ -205,7 +176,7 @@ void Polygons::Polygon::setClosed(bool closed)
 
   \see setClosed
 */
-bool Polygons::Polygon::isClosed() const
+bool Polygon::isClosed() const
 {
 	return polygonClosed;
 }
@@ -424,7 +395,7 @@ Polygons::decomposeImageIntoPaths(const QImage& sourceImage,
 
 /*! Identifies straight segments of path and returns them as list of vertices
  * between them.  Prepares data for libpotrace, then calls its functions. */
-Polygons::PolygonList
+PolygonList
 Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 						  ProgressObserver* progressObserver) const
 {
@@ -432,7 +403,6 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	path_t* plist = nullptr;   /* linked list of path objects */
 	path_t** hook = &plist; /* used to speed up appending to linked list */
 
-	Polygon list;
 	PolygonList polylist;
 	polylist.reserve(constpaths.size());
 
@@ -494,23 +464,19 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 	list_forall(p, plist)
 	{
 		privpath_t* pp = p->priv;
-		POLYGON_POINT p;
 		int n = pp->curve.n;
-		bool curveclosed = pp->curve.closed;
 
-		list.reserve(n);
+		Polygon polygon;
+		polygon.reserve(n);
 
-		for (int i = 0; i < n; i++)
+		for (auto vertex = pp->curve.vertex, last = pp->curve.vertex + n; vertex != last; ++vertex)
 		{
-			p.x = pp->curve.vertex[i].x;
-			p.y = pp->curve.vertex[i].y;
-			list.push_back(p);
+			polygon.emplace_back(vertex->x, vertex->y);
 		}
+		polygon.recheckBounds();
+		polygon.setClosed(pp->curve.closed);
 
-		list.setClosed(curveclosed);
-
-		polylist.push_back(list);
-		list.clear();
+		polylist.push_back(std::move(polygon));
 
 		if (progressObserver && !((++cntr) % progressHowOften))
 		{
@@ -529,14 +495,14 @@ Polygons::getPathPolygons(const Polygons::PathList& constpaths,
 try_error:
 	qWarning("process_path failed with errno %d", errno);
 	path_free(p);
-	return PolygonList();
+	return {};
 }
 
-/*! Euclidean distance of two POLYGON_POINTs. */
-double Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
+/*! Euclidean distance of two QPointFs. */
+double Polygons::distance(const QPointF& a, const QPointF& b)
 {
-	double x = a.x - b.x;
-	double y = a.y - b.y;
+	auto const x = a.x() - b.x();
+	auto const y = a.y() - b.y();
 	return std::sqrt(x * x + y * y);
 }
 
@@ -547,7 +513,7 @@ double Polygons::distance(const POLYGON_POINT& a, const POLYGON_POINT& b)
  getPathPolygon.
  \param[in] image Input image to be analyzed.
  \param[in] speckleSize Minimum length of path to be vectorized. */
-Polygons::PolygonList
+PolygonList
 Polygons::createPolygonsFromImage(const QImage& image,
 								  ProgressObserver* progressObserver) const
 {

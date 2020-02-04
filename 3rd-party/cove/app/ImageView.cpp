@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -17,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "QImageView.h"
+#include "ImageView.h"
 
 #include <cmath>
 
@@ -80,13 +81,7 @@ namespace cove {
 //! Default constructor.
 ImageWidget::ImageWidget(QWidget* parent)
 	: QWidget(parent)
-	, dispImage(nullptr)
-	, dispMagnification(1)
-	, scalingSmooth(false)
-	, dispRealPaintEnabled(true)
-	, drect(0, 0, 0, 0)
-{
-}
+{}
 
 //! Destructor.
 ImageWidget::~ImageWidget() = default;
@@ -184,15 +179,14 @@ void ImageWidget::setImage(const QImage* im)
 	update();
 }
 
-//! Returns pointer to currently displayed bitmap.
-const QImage* ImageWidget::image() const
-{
-	return dispImage;
-}
+/*! \fn const QImage* ImageWidget::image() const
+ * Returns pointer to currently displayed bitmap.
+ */
+
 
 //! What dispMagnification should be used. 1 == no dispMagnification, < 1 size
 //! reduction.
-void ImageWidget::setMagnification(float mag)
+void ImageWidget::setMagnification(qreal mag)
 {
 	if (dispImage)
 	{
@@ -204,12 +198,11 @@ void ImageWidget::setMagnification(float mag)
 	dispMagnification = mag;
 }
 
-/*! Returns current magnification used.
-  \sa setMagnification */
-float ImageWidget::magnification() const
-{
-	return dispMagnification;
-}
+/*! \fn qreal ImageWidget::magnification() const
+ * Returns current magnification used.
+ * \sa setMagnification
+ */
+
 
 /*! Use smooth scaling (QImage::smoothScale).
  \sa scalingSmooth */
@@ -220,12 +213,11 @@ void ImageWidget::setSmoothScaling(bool ss)
 	if (doupdate) update();
 }
 
-/*! Returns value of the scalingSmooth flag.
-  \sa setSmoothScaling */
-bool ImageWidget::smoothScaling() const
-{
-	return scalingSmooth;
-}
+/*! \fn bool ImageWidget::smoothScaling() const
+ * Returns value of the scalingSmooth flag.
+ * \sa setSmoothScaling
+ */
+
 
 /*! Do or do not real do painting.  When set to false, paints only background.
  \sa dispRealPaintEnabled */
@@ -235,12 +227,11 @@ void ImageWidget::setRealPaintEnabled(bool ss)
 	if (dispRealPaintEnabled) update();
 }
 
-/*! Returns value of the scalingSmooth flag.
-  \sa setRealPaintEnabled */
-bool ImageWidget::realPaintEnabled() const
-{
-	return dispRealPaintEnabled;
-}
+/*! \fn bool ImageWidget::realPaintEnabled() const
+ * Returns value of the scalingSmooth flag.
+ * \sa setRealPaintEnabled
+ */
+
 
 /*! Sets displayed zoom-in rectangle.
   \sa drect */
@@ -254,42 +245,48 @@ void ImageWidget::displayRect(const QRect& r)
 	update(updreg);
 }
 
-/*! \class QImageView
-		\brief Provides scrollable view of an QImage.
+/*! \class ImageView
+ * \brief Provides scrollable view of an QImage.
+ * 
+ * Invariant: After construction and before destruction, the widget() is
+ * assumed to be an ImageWidget. Do not call setWidget() with another
+ * type.
  */
 
-/*! \var ImageWidget* QImageView::iw
- Pointer to currently viewed image. \sa setImage. */
-/*! \var QPoint QImageView::dragStartPos
+/*! \var QPoint ImageView::dragStartPos
  Point where dragging started when zooming in. */
-/*! \var QPoint QImageView::dragCurPos
+/*! \var QPoint ImageView::dragCurPos
  Current point where dragging is when zooming in. */
-/*! \var QRect QImageView::zoomRect
+/*! \var QRect ImageView::zoomRect
  THe light magenta semitransparent rectangle used when zoming in. */
-/*! \var OperatingMode QImageView::opMode
+/*! \var OperatingMode ImageView::opMode
  Current operation mode as selected in context menu. */
-/*! \var int QImageView::lastSliderHPos
+/*! \var int ImageView::lastSliderHPos
  Value of horizontal slider used when moving image. */
-/*! \var int QImageView::lastSliderVPos
+/*! \var int ImageView::lastSliderVPos
  Value of vertical slider used when moving image. */
-/*! \enum QImageView::OperatingMode
+/*! \enum ImageView::OperatingMode
   Operation mode as selected in context menu.
   \sa opMode */
-/*! \var QImageView::OperatingMode QImageView::MOVE
+/*! \var ImageView::OperatingMode ImageView::MOVE
  Move mode. */
-/*! \var QImageView::OperatingMode QImageView::ZOOM_IN
+/*! \var ImageView::OperatingMode ImageView::ZOOM_IN
  Zoom in mode. */
-/*! \var QImageView::OperatingMode QImageView::ZOOM_OUT
+/*! \var ImageView::OperatingMode ImageView::ZOOM_OUT
  Zoom out mode. */
-/*! \fn void QImageView::magnificationChanged(float oldmag, float mag)
+/*! \fn void ImageView::magnificationChanged(float oldmag, float mag)
   Signal emitted when zoom ratio changes. */
 
 //! Default constructor.
-QImageView::QImageView(QWidget* parent)
+ImageView::ImageView(QWidget* parent)
+    : ImageView(new ImageWidget(), parent)
+{}
+
+//! Constructs an image view for the given image_widget.
+ImageView::ImageView(ImageWidget* image_widget, QWidget* parent)
 	: QScrollArea(parent)
-	, iw(std::make_unique<ImageWidget>(this))
 {
-	setWidget(iw.get());
+	setWidget(image_widget);
 	reset();
 	QAction* a;
 	addAction(a = new QAction(tr("Move"), this));
@@ -308,9 +305,11 @@ QImageView::QImageView(QWidget* parent)
 	setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
+ImageView::~ImageView() = default;
+
 //! Resets QImaeView into its initial state.  I.e. move mode, magnification 1,
 //! scrollbars 0.
-void QImageView::reset()
+void ImageView::reset()
 {
 	setMoveMode();
 	setMagnification(1);
@@ -319,7 +318,7 @@ void QImageView::reset()
 }
 
 //! Mouse wheel based zooming.
-void QImageView::wheelEvent(QWheelEvent* event)
+void ImageView::wheelEvent(QWheelEvent* event)
 {
 	static QPoint accumulator;
 	static int stepsize = 8 * 15 * 2;
@@ -335,9 +334,11 @@ void QImageView::wheelEvent(QWheelEvent* event)
 }
 
 //! Handles mouse click.
-void QImageView::mousePressEvent(QMouseEvent* event)
+void ImageView::mousePressEvent(QMouseEvent* event)
 {
 	if (event->button() != Qt::LeftButton) return;
+
+	auto* iw = imageWidget();
 
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
@@ -363,9 +364,11 @@ void QImageView::mousePressEvent(QMouseEvent* event)
 }
 
 //! Handles mouse drag when moving image or zooming in.
-void QImageView::mouseMoveEvent(QMouseEvent* event)
+void ImageView::mouseMoveEvent(QMouseEvent* event)
 {
 	if (!(event->buttons() & Qt::LeftButton)) return;
+
+	auto* iw = imageWidget();
 
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
@@ -441,9 +444,11 @@ void QImageView::mouseMoveEvent(QMouseEvent* event)
 }
 
 //! Handles end-of-drag.
-void QImageView::mouseReleaseEvent(QMouseEvent* event)
+void ImageView::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (event->button() != Qt::LeftButton) return;
+
+	auto* iw = imageWidget();
 
 	if (opMode == ZOOM_IN ||
 		(opMode == MOVE &&
@@ -487,21 +492,23 @@ void QImageView::mouseReleaseEvent(QMouseEvent* event)
 }
 
 //! What dispImage should be viewed.
-void QImageView::setImage(const QImage* im)
+void ImageView::setImage(const QImage* im)
 {
-	iw->setImage(im);
+	imageWidget()->setImage(im);
 }
 
 //! return pointer to currently displayed bitmap.
-const QImage* QImageView::image() const
+const QImage* ImageView::image() const
 {
-	return iw->image();
+	return imageWidget()->image();
 }
 
 //! What dispMagnification should be used. 1 == no dispMagnification, < 1 size
 //! reduction.
-void QImageView::setMagnification(float mag)
+void ImageView::setMagnification(qreal mag)
 {
+	auto* iw = imageWidget();
+
 	double oldmag = iw->magnification(), magratio = mag / oldmag,
 		   oneMmagratio = 1 - magratio;
 	int w = viewport()->size().width(), h = viewport()->size().height();
@@ -514,32 +521,32 @@ void QImageView::setMagnification(float mag)
 }
 
 //! Current magnification used.
-float QImageView::magnification() const
+qreal ImageView::magnification() const
 {
-	return iw->magnification();
+	return imageWidget()->magnification();
 }
 
 //! Use smooth scaling (QImage::smoothScale).
-void QImageView::setSmoothScaling(bool ss)
+void ImageView::setSmoothScaling(bool ss)
 {
-	iw->setSmoothScaling(ss);
+	imageWidget()->setSmoothScaling(ss);
 }
 
 //! Returns true when smooth scaling is enabled.
-bool QImageView::smoothScaling() const
+bool ImageView::smoothScaling() const
 {
-	return iw->smoothScaling();
+	return imageWidget()->smoothScaling();
 }
 
 //! Slot for context menu.
-void QImageView::setMoveMode()
+void ImageView::setMoveMode()
 {
-	iw->setCursor(QCursor(Qt::SizeAllCursor));
+	widget()->setCursor(QCursor(Qt::SizeAllCursor));
 	opMode = MOVE;
 }
 
 //! Slot for context menu.
-void QImageView::setZoomInMode()
+void ImageView::setZoomInMode()
 {
 #define zoomin_width 32
 #define zoomin_height 32
@@ -571,7 +578,7 @@ void QImageView::setZoomInMode()
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-	iw->setCursor(
+	widget()->setCursor(
 		QCursor(QBitmap::fromData(QSize(zoomin_width, zoomin_height),
 								  zoomin_bits, QImage::Format_MonoLSB),
 				QBitmap::fromData(QSize(zoomin_mask_width, zoomin_mask_height),
@@ -581,7 +588,7 @@ void QImageView::setZoomInMode()
 }
 
 //! Slot for context menu.
-void QImageView::setZoomOutMode()
+void ImageView::setZoomOutMode()
 {
 #define zoomout_width 32
 #define zoomout_height 32
@@ -613,7 +620,7 @@ void QImageView::setZoomOutMode()
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-	iw->setCursor(QCursor(
+	widget()->setCursor(QCursor(
 		QBitmap::fromData(QSize(zoomout_width, zoomout_height), zoomout_bits,
 						  QImage::Format_MonoLSB),
 		QBitmap::fromData(QSize(zoomout_mask_width, zoomout_mask_height),
@@ -623,7 +630,7 @@ void QImageView::setZoomOutMode()
 }
 
 //! Slot for context menu. Sets magnification to 1.
-void QImageView::setOrigSize()
+void ImageView::setOrigSize()
 {
 	setMagnification(1);
 }

@@ -87,9 +87,6 @@ public:
 	void clearColorButtonsGroup();
 	void setColorButtonsGroup(std::vector<QRgb> colors);
 	std::vector<bool> getSelectedColors();
-	// unused slots
-	void on_runOpeningButton_clicked();
-	void on_runClosingButton_clicked();
 
 public slots:
 	void aboutDialog();

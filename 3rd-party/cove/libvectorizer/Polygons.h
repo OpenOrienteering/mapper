@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2005-2019 Libor Pecháček.
+ * Copyright 2020 Kai Pastor
  *
  * This file is part of CoVe 
  *
@@ -22,15 +23,41 @@
 
 #include <algorithm>
 #include <functional>
+#include <limits>
 #include <vector>
+
+#include <QtGlobal>
+#include <QPointF>
 
 #include "cove-potrace.h"
 
 class QImage;
-class QRect;
+// IWYU pragma: no_forward_declare QPointF
+class QRectF;
 
 namespace cove {
 class ProgressObserver;
+
+class Polygon : public std::vector<QPointF>
+{
+	bool polygonClosed = false;
+	qreal minX = std::numeric_limits<qreal>::max();
+	qreal minY = std::numeric_limits<qreal>::max();
+	qreal maxX = std::numeric_limits<qreal>::min();
+	qreal maxY = std::numeric_limits<qreal>::min();
+
+public:
+	// default constructors are fine
+
+	QRectF boundingRect() const;
+	void recheckBounds();
+
+	void setClosed(bool closed);
+	bool isClosed() const;
+};
+
+using PolygonList = std::vector<Polygon>;
+
 
 class Polygons
 {
@@ -45,10 +72,6 @@ protected:
 		EAST,
 		SOUTH,
 		WEST
-	};
-	struct POLYGON_POINT
-	{
-		double x, y;
 	};
 	struct PATH_POINT
 	{
@@ -66,25 +89,6 @@ protected:
 	};
 
 	class PathList : public std::vector<Path>
-	{
-	};
-
-public:
-	class Polygon : public std::vector<POLYGON_POINT>
-	{
-		bool polygonClosed;
-		double minX, minY, maxX, maxY;
-
-	public:
-		Polygon();
-		void push_back(const value_type& p);
-		QRect boundingRect() const;
-		void recheckBounds();
-		void setClosed(bool closed);
-		bool isClosed() const;
-	};
-
-	class PolygonList : public std::vector<Polygon>
 	{
 	};
 
@@ -178,7 +182,7 @@ protected:
 	                                 ProgressObserver* progressObserver = nullptr) const;
 	PolygonList getPathPolygons(const PathList& constpaths,
 	                            ProgressObserver* progressObserver = nullptr) const;
-	static double distance(const POLYGON_POINT& a, const POLYGON_POINT& b);
+	static double distance(const QPointF& a, const QPointF& b);
 
 public:
 	Polygons();

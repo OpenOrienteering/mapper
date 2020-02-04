@@ -11,8 +11,8 @@ HEADERS += \
     app/colorseditform.h \
     app/FIRFilter.h \
     app/mainform.h \
-    app/QImageView.h \
-    app/QPolygonsView.h \
+    app/ImageView.h \
+    app/PolygonsView.h \
     app/Settings.h \
     app/UIProgressDialog.h \
     app/vectorizationconfigform.h \
@@ -38,8 +38,8 @@ SOURCES += \
     app/colorseditform.cpp \
     app/FIRFilter.cpp \
     app/mainform.cpp \
-    app/QImageView.cpp \
-    app/QPolygonsView.cpp \
+    app/ImageView.cpp \
+    app/PolygonsView.cpp \
     app/Settings.cpp \
     app/UIProgressDialog.cpp \
     app/vectorizationconfigform.cpp \
