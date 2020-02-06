@@ -612,8 +612,6 @@ void setupFileHeaderGeneric(quint16 actual_version, Ocd::FileHeaderGeneric& head
 template<class Format>
 bool OcdFileExport::exportImplementation()
 {
-	addWarning(QLatin1String("OcdFileExport: WORK IN PROGRESS, FILE INCOMPLETE"));
-	
 	OcdFile<Format> file;
 	
 	custom_8bit_encoding = determineEncoding<typename Format::Encoding>();
