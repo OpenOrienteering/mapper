@@ -391,7 +391,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		{
 			is_georeferenced = false;
 		}
-		setHasUnsavedChanges(true);
+		map->setTemplatesDirty();
 	}
 	return is_georeferenced;
 }
