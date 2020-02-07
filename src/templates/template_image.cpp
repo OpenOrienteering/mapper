@@ -258,7 +258,6 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_ce
 			SelectCRSDialog dialog(
 			            map->getGeoreferencing(),
 			            dialog_parent,
-			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
 			            tr("Select the coordinate reference system of the coordinates in the world file") );
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
@@ -375,7 +374,6 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 				SelectCRSDialog dialog(
 				            map->getGeoreferencing(),
 				            dialog_parent,
-				            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
 				            tr("Select the coordinate reference system of the coordinates in the world file") );
 				if (dialog.exec() == QDialog::Rejected)
 					return is_georeferenced;

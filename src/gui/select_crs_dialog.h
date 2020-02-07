@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,19 +42,6 @@ class SelectCRSDialog : public QDialog
 {
 Q_OBJECT
 public:
-	
-	/**
-	 * Georeferencing alternatives
-	 */
-	enum GeorefAlternative
-	{
-		TakeFromMap = 1 << 0,
-		Local       = 1 << 1,
-		Geographic  = 1 << 2,
-		None        = 0
-	};
-	Q_DECLARE_FLAGS(GeorefAlternatives, GeorefAlternative)
-	
 	/**
 	 * Creates a SelectCRSDialog.
 	 * 
@@ -67,7 +54,6 @@ public:
 	SelectCRSDialog(
 	        const Georeferencing& georef,
 	        QWidget* parent,
-	        GeorefAlternatives alternatives,
 	        const QString& description = QString()
 	);
 	
@@ -91,9 +77,5 @@ private:
 
 
 }  // namespace OpenOrienteering
-
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::SelectCRSDialog::GeorefAlternatives)
-
 
 #endif

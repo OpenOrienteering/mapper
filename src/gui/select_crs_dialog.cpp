@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,7 +54,6 @@ enum SpecialCRS {
 SelectCRSDialog::SelectCRSDialog(
         const Georeferencing& georef,
         QWidget* parent,
-        GeorefAlternatives alternatives,
         const QString& description )
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
  , georef(georef)
@@ -64,22 +63,16 @@ SelectCRSDialog::SelectCRSDialog(
 	
 	crs_selector = new CRSSelector(georef, nullptr);
 	if (georef.isLocal())
+	{
 		crs_selector->clear();
-	
-	if (alternatives.testFlag(TakeFromMap) && !georef.isLocal())
+		crs_selector->addCustomItem(tr("Local"), SpecialCRS::Local);
+	}
+	else
 	{
 		crs_selector->addCustomItem(tr("Same as map"), SpecialCRS::SameAsMap);
-		crs_selector->setCurrentIndex(0); // TakeFromMap
-	}
-	
-	if (alternatives.testFlag(Local) || georef.isLocal())
-	{
-		crs_selector->addCustomItem(tr("Local"), SpecialCRS::Local);
-		crs_selector->setCurrentIndex(0); // TakeFromMap or Local, both is fine.
-	}
-	
-	if (alternatives.testFlag(Geographic) && !georef.isLocal())
 		crs_selector->addCustomItem(tr("Geographic coordinates (WGS84)"), SpecialCRS::Geographic);
+	}
+	crs_selector->setCurrentIndex(0);
 	
 	status_label = new QLabel();
 	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
