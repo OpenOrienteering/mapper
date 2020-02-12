@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019, 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -85,7 +85,7 @@ bool GdalTemplate::loadTemplateFileImpl(bool configuring)
 	available_georef = findAvailableGeoreferencing(reader.readGeoTransform());
 	if (!configuring && is_georeferenced)
 	{
-		if (available_georef.front().type == Georeferencing_None)
+		if (!isGeoreferencingUsable())
 		{
 			// Image was georeferenced, but georeferencing info is gone -> deny to load template
 			setErrorString(::OpenOrienteering::TemplateImage::tr("Georeferencing not found"));

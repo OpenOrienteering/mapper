@@ -1105,7 +1105,7 @@ void TemplateListWidget::changeGeorefClicked()
 		if (templ->trySetTemplateGeoreferenced(new_value, this) != new_value)
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Cannot change the georeferencing state."));
-			georef_action->setChecked(false);
+			georef_action->setChecked(templ->isTemplateGeoreferenced());
 		}
 		updateButtons();
 	}

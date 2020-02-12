@@ -27,6 +27,8 @@
 #include <QObject>
 #include <QString>
 
+#include "templates/template_image.h"
+
 class QDialogButtonBox;
 class QLabel;
 class QWidget;
@@ -52,6 +54,7 @@ public:
 	 *                     Should explain what the selected CRS will be used for.
 	 */
 	SelectCRSDialog(
+	        const TemplateImage::GeoreferencingOptions& options,
 	        const Georeferencing& georef,
 	        QWidget* parent,
 	        const QString& description = QString()
@@ -69,6 +72,7 @@ protected:
 	void updateWidgets();
 	
 private:
+	const TemplateImage::GeoreferencingOptions& options;
 	const Georeferencing& georef;
 	CRSSelector* crs_selector;
 	QLabel* status_label;
