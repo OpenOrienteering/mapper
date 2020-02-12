@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -676,9 +676,9 @@ bool Template::canChangeTemplateGeoreferenced()
 }
 
 // virtual
-bool Template::trySetTemplateGeoreferenced(bool /*value*/, QWidget* /*dialog_parent*/)
+bool Template::trySetTemplateGeoreferenced(bool value, QWidget* /*dialog_parent*/)
 {
-	return is_georeferenced;
+	return isTemplateGeoreferenced() == value;
 }
 
 

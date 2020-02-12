@@ -385,7 +385,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 			            dialog_parent,
 			            tr("Select the coordinate reference system of the coordinates in the world file") );
 			if (dialog.exec() == QDialog::Rejected)
-				return isTemplateGeoreferenced();
+				return true;  // not failed!
 			
 			setTemplateAreaDirty();
 			available_georef.effective.crs_spec = dialog.currentCRSSpec();
@@ -404,7 +404,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		}
 		map->setTemplatesDirty();
 	}
-	return isTemplateGeoreferenced();
+	return isTemplateGeoreferenced() == value;
 }
 
 void TemplateImage::updateGeoreferencing()
