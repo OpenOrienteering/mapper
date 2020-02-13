@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -518,12 +518,11 @@ public:
 	 * Tries to change the usage of georeferencing data.
 	 * 
 	 * If supported by the actual template, this function tries to switch the
-	 * state between non-georeferenced and georeferenced. It returns the final
-	 * state which may be the same as before if the change is not implemented
-	 * or fails for other reasons.
+	 * state between non-georeferenced and georeferenced. It returns false when
+	 * an error occurred, and true if the change was successful or if it was
+	 * explicitly cancelled by the user.
 	 * 
-	 * The default implementation changes nothing, and it just returns the
-	 * current state.
+	 * The default implementation returns true iff the state matches the value.
 	 */
 	virtual bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent);
 	

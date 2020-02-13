@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1102,10 +1102,10 @@ void TemplateListWidget::changeGeorefClicked()
 			if (position_action->isChecked())
 				position_action->trigger();
 		}
-		if (templ->trySetTemplateGeoreferenced(new_value, this) != new_value)
+		if (!templ->trySetTemplateGeoreferenced(new_value, this))
 		{
 			QMessageBox::warning(this, tr("Error"), tr("Cannot change the georeferencing state."));
-			georef_action->setChecked(false);
+			georef_action->setChecked(templ->isTemplateGeoreferenced());
 		}
 		updateButtons();
 	}

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -89,8 +89,6 @@ TemplateImage::TemplateImage(const QString& path, Map* map)
 : Template(path, map)
 , georef(std::make_unique<Georeferencing>())
 {
-	available_georef.push_back({Georeferencing_None, "no georeferencing information", {}, {}});
-	
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
 	connect(&georef, &Georeferencing::transformationChanged, this, &TemplateImage::updateGeoreferencing);
@@ -103,7 +101,6 @@ TemplateImage::TemplateImage(const TemplateImage& proto)
 // not copied: undo_index
 , available_georef(proto.available_georef)
 , georef(new Georeferencing(*proto.georef))
-, temp_crs_spec(proto.temp_crs_spec)
 {
 	const Georeferencing& georef = map->getGeoreferencing();
 	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateImage::updateGeoreferencing);
@@ -141,8 +138,8 @@ void TemplateImage::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml)
 	{
 		// Follow map georeferencing XML structure
 		xml.writeStartElement(QString::fromLatin1("crs_spec"));
-// TODO: xml.writeAttribute(QString::fromLatin1("language"), "PROJ.4");
-		xml.writeCharacters(temp_crs_spec);
+		/// \todo xml.writeAttribute(QString::fromLatin1("language"), "PROJ.4");
+		xml.writeCharacters(available_georef.effective.crs_spec);
 		xml.writeEndElement(/*crs_spec*/);
 	}
 }
@@ -151,8 +148,8 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 {
 	if (is_georeferenced && xml.name() == QLatin1String("crs_spec"))
 	{
-		// TODO: check specification language
-		temp_crs_spec = xml.readElementText();
+		/// \todo check specification language
+		available_georef.effective.crs_spec = xml.readElementText();
 	}
 	else
 		xml.skipCurrentElement(); // unsupported
@@ -196,11 +193,12 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 #ifdef MAPPER_USE_GDAL
 	available_georef = findAvailableGeoreferencing(readGdalGeoTransform(template_path));
 #else
-	available_georef = findAvailableGeoreferencing();
+	available_georef = findAvailableGeoreferencing({});
 #endif
+	
 	if (!configuring && is_georeferenced)
 	{
-		if (available_georef.front().type == Georeferencing_None)
+		if (!isGeoreferencingUsable())
 		{
 			// Image was georeferenced, but georeferencing info is gone -> deny to load template
 			setErrorString(tr("Georeferencing not found"));
@@ -213,7 +211,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
+bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
@@ -225,15 +223,11 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_ce
 		if (!open_dialog.isGeorefRadioChecked())
 			break;
 		
-		Q_ASSERT(!available_georef.empty());  // implied by open_dialog.isGeorefRadioChecked()
-		temp_crs_spec = available_georef.front().crs_spec;
 		if (map->getGeoreferencing().isLocal())
 		{
 			// Make sure that the map is georeferenced.
 			Georeferencing initial_georef(map->getGeoreferencing());
-			if (!initial_georef.setProjectedCRS({}, temp_crs_spec) || initial_georef.isLocal())
-				temp_crs_spec.clear();
-			
+			initial_georef.setProjectedCRS({}, available_georef.effective.crs_spec);
 			if (initial_georef.getMapRefPoint() == MapCoord{}
 			    && initial_georef.getProjectedRefPoint() == QPointF{})
 			{
@@ -252,34 +246,47 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_ce
 				continue;
 		}
 		
-		if (temp_crs_spec.isEmpty())
+		if (map->getGeoreferencing().getProjectedCRSSpec() == available_georef.effective.crs_spec)
 		{
-			// Let the user select the coordinate reference system.
-			SelectCRSDialog dialog(
-			            map->getGeoreferencing(),
-			            dialog_parent,
-			            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
-			            tr("Select the coordinate reference system of the coordinates in the world file") );
-			if (dialog.exec() == QDialog::Rejected)
-				continue;
-			temp_crs_spec = dialog.currentCRSSpec();
+			// For convenience, skip CRS selection.
+			break;
 		}
 		
-		break;
+		if (!map->getGeoreferencing().isLocal())
+		{
+			// Let user select the coordinate reference system.
+			// \todo Change description text below (no longer just for world files.)
+			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
+			SelectCRSDialog dialog(
+			            available_georef,
+			            map->getGeoreferencing(),
+			            dialog_parent,
+			            tr("Select the coordinate reference system of the coordinates in the world file") );
+			if (dialog.exec() == QDialog::Accepted)
+			{
+				available_georef.effective.crs_spec = dialog.currentCRSSpec();
+				break;
+			}
+		}
 	}
 	
-	is_georeferenced = open_dialog.isGeorefRadioChecked();	
-	if (is_georeferenced)
+	if (open_dialog.isGeorefRadioChecked())
+	{
 		calculateGeoreferencing();
+		// If not both the template and the map are fully georeferenced,
+		// we use the transform, but don't claim the georeferenced state.
+		is_georeferenced = georef->isValid()
+		                   && !georef->isLocal()
+		                   && map->getGeoreferencing().isValid()
+		                   && !map->getGeoreferencing().isLocal();
+		out_center_in_view = false;
+	}
 	else
 	{
+		is_georeferenced = false;
 		transform.template_scale_x = open_dialog.getMpp() * 1000.0 / map->getScaleDenominator();
 		transform.template_scale_y = transform.template_scale_x;
 		transform.template_shear = 0.0;
-		
-		//transform.template_x = main_view->getPositionX();
-		//transform.template_y = main_view->getPositionY();
-		
 		updateTransformationMatrices();
 	}
 	
@@ -354,7 +361,8 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 
 bool TemplateImage::canChangeTemplateGeoreferenced()
 {
-	return available_georef.front().type != Georeferencing_None;
+	// No need to care for CRS here and now: This is handled by the dialog ATM.
+	return !available_georef.effective.transform.source.isEmpty();
 }
 
 bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent)
@@ -368,23 +376,26 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		if (value)
 		{
 			// Cf. postLoadConfiguration
-			if (available_georef.front().type == Georeferencing_WorldFile
-			    && temp_crs_spec.isEmpty())
-			{
-				// Let user select the coordinate reference system, as this is not specified in world files
-				SelectCRSDialog dialog(
-				            map->getGeoreferencing(),
-				            dialog_parent,
-				            SelectCRSDialog::TakeFromMap | SelectCRSDialog::Geographic,
-				            tr("Select the coordinate reference system of the coordinates in the world file") );
-				if (dialog.exec() == QDialog::Rejected)
-					return is_georeferenced;
-				temp_crs_spec = dialog.currentCRSSpec();
-			}
+			// Let user select the coordinate reference system.
+			// \todo Change description text below (no longer just for world files.)
+			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
+			SelectCRSDialog dialog(
+			            available_georef,
+			            map->getGeoreferencing(),
+			            dialog_parent,
+			            tr("Select the coordinate reference system of the coordinates in the world file") );
+			if (dialog.exec() == QDialog::Rejected)
+				return true;  // not failed!
 			
 			setTemplateAreaDirty();
-			is_georeferenced = true;
+			available_georef.effective.crs_spec = dialog.currentCRSSpec();
 			calculateGeoreferencing();
+			// If not both the template and the map are fully georeferenced,
+			// we use the transform, but don't claim the georeferenced state.
+			is_georeferenced = georef->isValid()
+			                   && !georef->isLocal()
+			                   && map->getGeoreferencing().isValid()
+			                   && !map->getGeoreferencing().isLocal();
 			setTemplateAreaDirty();
 		}
 		else
@@ -393,7 +404,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		}
 		map->setTemplatesDirty();
 	}
-	return is_georeferenced;
+	return isTemplateGeoreferenced() == value;
 }
 
 void TemplateImage::updateGeoreferencing()
@@ -402,42 +413,83 @@ void TemplateImage::updateGeoreferencing()
 		updatePosFromGeoreferencing();
 }
 
-TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(TemplateImage::GeoreferencingOption&& hint) const
+
+namespace {
+
+TemplateImage::GeoreferencingOption worldFileOption(const QString& template_path)
 {
-	GeoreferencingOptions result;
-	
-	auto crs_spec = temp_crs_spec; // loaded or empty
-	if (crs_spec.isEmpty())
-		crs_spec = hint.crs_spec; // loaded or empty
-	
+	auto option = TemplateImage::GeoreferencingOption {};
 	WorldFile world_file;
 	if (world_file.tryToLoadForImage(template_path))
 	{
-		auto pixel_to_world = QTransform(world_file);
-		if (!crs_spec.isEmpty())
-		{
-			Georeferencing tmp_georef;
-			tmp_georef.setProjectedCRS(QString{}, crs_spec);
-			if (tmp_georef.isGeographic())
-			{
-				constexpr auto factor = qDegreesToRadians(1.0);
-				pixel_to_world = {
-				    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
-				    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
-				    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
-				};
-			}
-		}
-		result.push_back({Georeferencing_WorldFile, "World file", crs_spec, pixel_to_world});
+		option.transform.source = "World file";
+		option.transform.pixel_to_world = QTransform(world_file);
+	}
+	return option;
+}
+
+}  // namespace
+
+
+TemplateImage::GeoreferencingOptions TemplateImage::findAvailableGeoreferencing(GeoreferencingOption template_file_option) const
+{
+	auto options = GeoreferencingOptions {
+		{},
+		worldFileOption(template_path),
+		std::move(template_file_option),
+	};
+	
+	// Try to select the effective CRS from:
+	// (1) current effective CRS, (2) template file, (3) map
+	if (!available_georef.effective.crs_spec.isEmpty())
+	{
+		options.effective.crs_spec = available_georef.effective.crs_spec;
+	}
+	else if (!options.template_file.crs_spec.isEmpty())
+	{
+		options.effective.crs_spec = options.template_file.crs_spec;
+	}
+	else if (!map->getGeoreferencing().getProjectedCRSSpec().isEmpty())
+	{
+		options.effective.crs_spec = map->getGeoreferencing().getProjectedCRSSpec();
 	}
 	
-	if (hint.type != Georeferencing_None)
-		result.push_back(std::move(hint));
+	// Try to select the effective transform from:
+	// (1) world file, (2) template file
+	if (!options.world_file.transform.source.isEmpty())
+	{
+		options.effective.transform = options.world_file.transform;
+	}
+	else if (!options.template_file.transform.source.isEmpty())
+	{
+		options.effective.transform = options.template_file.transform;
+	}
 	
-	Q_ASSERT(available_georef.back().type == Georeferencing_None);
-	result.push_back(available_georef.back());
+	// Modify transform from geographic CRS
+	if (!options.effective.crs_spec.isEmpty() && !options.effective.transform.source.isEmpty())
+	{
+		Georeferencing tmp_georef;
+		tmp_georef.setProjectedCRS(QString{}, options.effective.crs_spec);
+		if (tmp_georef.isGeographic())
+		{
+			constexpr auto factor = qDegreesToRadians(1.0);
+			auto& pixel_to_world = options.effective.transform.pixel_to_world;
+			pixel_to_world = {
+			    pixel_to_world.m11() * factor, pixel_to_world.m12() * factor, 0,
+			    pixel_to_world.m21() * factor, pixel_to_world.m22() * factor, 0,
+			    pixel_to_world.m31() * factor, pixel_to_world.m32() * factor, 1
+			};
+		}
+	}
 	
-	return result;
+	return options;
+}
+
+bool TemplateImage::isGeoreferencingUsable() const
+{
+	return !available_georef.effective.transform.source.isEmpty()
+	       && (!available_georef.effective.crs_spec.isEmpty()
+	           || map->getGeoreferencing().getProjectedCRSSpec().isEmpty());
 }
 
 
@@ -582,36 +634,18 @@ void TemplateImage::addUndoStep(const TemplateImage::DrawOnImageUndoStep& new_st
 
 void TemplateImage::calculateGeoreferencing()
 {
-	// Calculate georeferencing of image coordinates where the coordinate (0, 0)
-	// is mapped to the world position of the top-left corner of the top-left pixel
-	applyGeoreferencingOption(available_georef.front());
-}
-
-void TemplateImage::applyGeoreferencingOption(const GeoreferencingOption& option)
-{
-	if (option.type == Georeferencing_None)
+	if (!isGeoreferencingUsable())
 	{
-		qWarning("%s shall not be called for Georeferencing_None", Q_FUNC_INFO);
+		qWarning("%s must not be called with incomplete georeferencing", Q_FUNC_INFO);
 		georef->setTransformationDirectly({});
 		return;
 	}
 	
-	georef.reset(new Georeferencing());
-	switch (option.type)
-	{
-	case Georeferencing_WorldFile:
-		if (!temp_crs_spec.isEmpty())
-			georef->setProjectedCRS(QString::fromUtf8(option.source), temp_crs_spec);
-		break;
-	case Georeferencing_GDAL:
-#ifdef MAPPER_USE_GDAL
-		georef->setProjectedCRS(QString::fromUtf8(option.source), option.crs_spec);
-#endif		
-		break;
-	case Georeferencing_None:
-		break;
-	}
-	georef->setTransformationDirectly(option.pixel_to_world);
+	// Calculate georeferencing of image coordinates where the coordinate (0, 0)
+	// is mapped to the world position of the top-left corner of the top-left pixel
+	georef = std::make_unique<Georeferencing>();
+	georef->setProjectedCRS(QString{}, available_georef.effective.crs_spec);
+	georef->setTransformationDirectly(available_georef.effective.transform.pixel_to_world);
 	if (map->getGeoreferencing().isValid())
 		updatePosFromGeoreferencing();
 }

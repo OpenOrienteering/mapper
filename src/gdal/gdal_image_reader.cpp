@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019, 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -284,12 +284,11 @@ TemplateImage::GeoreferencingOption GdalImageReader::readGeoTransform()
 		auto const result = GDALGetGeoTransform(dataset, geo_transform.data());
 		if (result == CE_None)
 		{
-			georef.type = TemplateImage::Georeferencing_GDAL;
-			georef.source = GDALGetDriverShortName(GDALGetDatasetDriver(dataset));
 			georef.crs_spec = toProjSpec(GDALGetProjectionRef(dataset));
-			georef.pixel_to_world = { geo_transform[1], geo_transform[2],
-			                          geo_transform[4], geo_transform[5],
-			                          geo_transform[0], geo_transform[3] };
+			georef.transform.source = GDALGetDriverShortName(GDALGetDatasetDriver(dataset));
+			georef.transform.pixel_to_world = { geo_transform[1], geo_transform[2],
+			                                    geo_transform[4], geo_transform[5],
+			                                    geo_transform[0], geo_transform[3] };
 		}
 	}
 	return georef;
