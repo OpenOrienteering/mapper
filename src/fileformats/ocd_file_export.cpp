@@ -1368,12 +1368,43 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				// NOTE: This is only a heuristic which works for the
 				// orienteering symbol sets, not a general conversion.
 				// (Conversion is not generally possible.)
-				// No further checks are done to find out if the conversion
-				// is applicable because with these checks. Already a tiny
-				// (not noticeable) error in the symbol definition would make
-				// it take the wrong choice.
-				addWarning(tr("In area symbol \"%1\", assuming a \"shifted rows\" point pattern. This might be correct as well as incorrect.")
-				           .arg(area_symbol->getPlainTextName()));
+				// The below check silences the warning in cases an OCD file
+				// is being saved again. In other cases, tiny (not noticeable)
+				// differences in the symbol definition make the warning trigger
+				// and inform the user that the exported file will necessarily
+				// look slightly different than the Mapper original.
+				{
+					bool all_fine = false;
+					// storing the individual test bits in an integer 
+					// makes diagnostics easier
+					quint32 conditions = (i == 1);
+					conditions |= (area_symbol->getNumFillPatterns() == 2) << 1;
+					
+					if (conditions == (1<<2) - 1)
+					{
+						const auto& first_pattern = area_symbol->getFillPattern(0);
+						auto tolerant_eq = [](const auto a, const auto b) -> bool {
+							// "less than 1% difference"
+							return double(qAbs(b - a)) / a < .01;
+						};
+						
+						conditions |= (first_pattern.flags == pattern.flags) << 2;
+						conditions |= (first_pattern.angle == pattern.angle) << 3;
+						conditions |= (first_pattern.line_spacing == pattern.line_spacing) << 4;
+						conditions |= (first_pattern.line_offset == 0) << 5;
+						conditions |= (pattern.line_offset == pattern.line_spacing/2) << 6;
+						conditions |= (first_pattern.line_width == pattern.line_width) << 7;
+						conditions |= (first_pattern.offset_along_line == 0) << 8;
+						conditions |= tolerant_eq(pattern.offset_along_line, pattern.point_distance/2) << 9;
+						conditions |= pattern.point->equals(pattern_symbol) << 10;
+						
+						all_fine = (conditions == (1<<11) - 1);
+					}
+					
+					if (!all_fine)
+						addWarning(tr("In area symbol \"%1\", assuming a \"shifted rows\" point pattern. This is likely incorrect.")
+						           .arg(area_symbol->getPlainTextName()));
+				}
 				
 				if (pattern.line_offset != 0)
 					ocd_area_common.structure_height /= 2;
