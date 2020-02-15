@@ -47,7 +47,7 @@
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">导入的数据规模 1:%1 是从 1:%2 本地图规模不同。
+        <translation>导入的数据比例为 1:%1, 与本地图比例 1:%2 不同。
 
 重新缩放导入的数据吗？</translation>
     </message>
@@ -57,13 +57,13 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">不支持的版本 %1 的强迫症文件 ！</translation>
+        <translation>未支持版本 %1 的 OCD 文件 ！</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation>已调整座标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
@@ -147,7 +147,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/about_dialog.cpp" line="105"/>
         <location filename="../src/gui/about_dialog.cpp" line="175"/>
         <source>About %1</source>
-        <translation>About %1</translation>
+        <translation>关于 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
@@ -157,7 +157,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>按字母顺序排列的 OpenOrienteering 开发人员</translation>
+        <translation>按字母顺序排列的 OpenOrienteering 开发人员：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
@@ -218,7 +218,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
         <source>Minimum size:</source>
-        <translation>最小尺寸</translation>
+        <translation>最小尺寸：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="94"/>
@@ -257,7 +257,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
         <source>Line spacing:</source>
-        <translation>行间距</translation>
+        <translation>行间距：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
@@ -267,17 +267,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation>模式间隔</translation>
+        <translation>模式间隔：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation>模式偏移量</translation>
+        <translation>模式偏移量：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
         <source>Row offset:</source>
-        <translation>行偏移量</translation>
+        <translation>行偏移量：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="194"/>
@@ -287,7 +287,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="196"/>
         <source>Row spacing:</source>
-        <translation>行间距</translation>
+        <translation>行间距：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="202"/>
@@ -301,7 +301,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="207"/>
         <source>Angle:</source>
-        <translation>角度</translation>
+        <translation>角度：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="209"/>
@@ -356,22 +356,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="84"/>
         <source>Area color:</source>
-        <translation>区域颜色</translation>
+        <translation>区域颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation>行偏移量</translation>
+        <translation type="unfinished">线条偏移量：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
         <source>Line color:</source>
-        <translation>线条颜色</translation>
+        <translation>线条颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="163"/>
         <source>Line width:</source>
-        <translation>线宽</translation>
+        <translation>线宽：</translation>
     </message>
 </context>
 <context>
@@ -402,7 +402,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>文件 %1 不正确地关闭。目前，有两个版本</translation>
+        <translation>文件 %1 不正确地关闭。目前，有两个版本：</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
