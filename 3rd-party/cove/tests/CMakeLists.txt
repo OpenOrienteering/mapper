@@ -16,6 +16,9 @@ add_test(
   NAME cove-ParallelImageProcessingTest
   COMMAND cove-ParallelImageProcessingTest
 )
+if(${CMAKE_VERSION} VERSION_LESS 3.8)
+	target_include_directories(cove-ParallelImageProcessingTest PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
 
 add_executable(cove-PolygonTest
   PolygonTest.cpp

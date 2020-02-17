@@ -56,6 +56,9 @@ target_include_directories(cove
   INTERFACE
     "${CMAKE_CURRENT_SOURCE_DIR}"
 )
+if(${CMAKE_VERSION} VERSION_LESS 3.8)
+	target_include_directories(cove PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+endif()
 target_link_libraries(cove cove-vectorizer Qt5::Widgets)
 set_target_properties(cove
   PROPERTIES
