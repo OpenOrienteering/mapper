@@ -312,7 +312,7 @@ void GeneralSettingsPage::encodingChanged(const QString& input)
 	}
 	else
 	{
-		// Inline completition, in addition to UnfilteredPopupCompletition
+		// Inline completion, in addition to UnfilteredPopupCompletition
 		// Don't complete after pressing Backspace or Del
 		if (!last_encoding_input.startsWith(input))
 		{

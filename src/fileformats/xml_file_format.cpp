@@ -36,6 +36,7 @@
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1String>
+#include <QLocale>
 #include <QObject>
 #include <QRectF>
 #include <QScopedValueRollback>
@@ -706,6 +707,31 @@ void XMLFileImporter::importGeoreferencing()
 	else if (check_for_offset)
 		// Georeferencing was adjusted on import, before other coordinates.
 		georef_offset_adjusted = true;
+	
+	validateGeoreferencing();
+}
+
+void XMLFileImporter::validateGeoreferencing()
+{
+	auto const& loaded_georef = map->getGeoreferencing();
+	if (!loaded_georef.isValid() || loaded_georef.isLocal())
+		return;
+	
+	// Check for georeferencings with inconsistent declination/grivation,
+	// e.g. from GH-1206 (georef setup bug)
+	auto valid_georef = Georeferencing(loaded_georef);
+	// Keep grivation, force calculation of declination
+	valid_georef.setGrivation(loaded_georef.getGrivation());
+	if (!qFuzzyCompare(loaded_georef.getDeclination(), valid_georef.getDeclination()))
+	{
+		auto const loaded_declination = loaded_georef.getDeclination();
+		map->setGeoreferencing(valid_georef);
+		QLocale locale;
+		addWarning(tr("Inconsistent declination/grivation detected. "
+		              "Declination adjusted from %1° to %2°.")
+		           .arg(locale.toString(loaded_declination),
+		                locale.toString(valid_georef.getDeclination()) ) );
+	}
 }
 
 
@@ -900,8 +926,8 @@ void XMLFileImporter::importSymbols()
 	auto num_symbols = symbols_element.attribute<std::size_t>(literal::count);
 	map->symbols.reserve(qMin(num_symbols, std::size_t(1000))); // 1000 is not a limit
 	
-	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedPoint()))] = map->getUndefinedPoint();
-	symbol_dict[QString::number(map->findSymbolIndex(map->getUndefinedLine()))] = map->getUndefinedLine();
+	symbol_dict[map->findSymbolIndex(map->getUndefinedPoint())] = map->getUndefinedPoint();
+	symbol_dict[map->findSymbolIndex(map->getUndefinedLine())] = map->getUndefinedLine();
 	
 	while (xml.readNextStartElement())
 	{

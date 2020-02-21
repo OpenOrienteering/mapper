@@ -130,10 +130,38 @@ OgrTemplate::OgrTemplate(const QString& path, Map* map)
 	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
 }
 
+OgrTemplate::OgrTemplate(const OgrTemplate& proto)
+: TemplateMap(proto)
+, track_crs_spec(proto.track_crs_spec)
+, projected_crs_spec(proto.projected_crs_spec)
+, template_track_compatibility(proto.template_track_compatibility)
+, use_real_coords(proto.use_real_coords)
+, center_in_view(proto.center_in_view)
+, reload_pending(proto.reload_pending)
+{
+	if (proto.explicit_georef)
+		explicit_georef = std::make_unique<Georeferencing>(*proto.explicit_georef);
+	
+	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
+	
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapTransformationChanged);
+	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
+}
+
 OgrTemplate::~OgrTemplate()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
+}
+
+
+OgrTemplate* OgrTemplate::duplicate() const
+{
+	auto* copy = new OgrTemplate(*this);
+	if (template_state == Loaded)
+		copy->loadTemplateFileImpl(false);
+	return copy;
 }
 
 
@@ -411,17 +439,25 @@ void OgrTemplate::mapTransformationChanged()
 		if (template_state != Template::Loaded)
 			return;
 		
-		if (templateMap()->getScaleDenominator() != map->getScaleDenominator())
+		auto const& templ_georef = templateMap()->getGeoreferencing();
+		auto const& map_georef = map->getGeoreferencing();
+		if (templateMap()->getScaleDenominator() == map->getScaleDenominator()
+		    && templ_georef.getProjectedCRSSpec() == map_georef.getProjectedCRSSpec())
 		{
-			// We can't know how to correctly scale symbol dimension.
-			reloadLater();
-			return;
+			auto const t = templ_georef.mapToProjected() * map_georef.projectedToMap();
+			templateMap()->applyOnAllObjects([&t](Object* o) { o->transform(t); });
+			templateMap()->setGeoreferencing(map_georef);
 		}
-		
-		QTransform t = templateMap()->getGeoreferencing().mapToProjected();
-		t *= map->getGeoreferencing().projectedToMap();
-		templateMap()->applyOnAllObjects([&t](Object* o) { o->transform(t); });
-		templateMap()->setGeoreferencing(map->getGeoreferencing());
+		else
+		{
+			// If the projected CRS changed: The necessary transformation
+			//   involves at least two CRS and might give imprecise results.
+			// If the scale changed: We can't know how to correctly scale
+			//   symbol dimensions.
+			// Reloading is a slow but safe way to get the same results as they
+			// will appear when opening the file the next time.
+			reloadLater();
+		}
 	}
 	else if (explicit_georef)
 	{
@@ -444,6 +480,7 @@ void OgrTemplate::reloadLater()
 {
 	if (reload_pending)
 		return;
+	setTemplateAreaDirty();
 	if (template_state == Loaded)
 		templateMap()->clear(); // no expensive operations before reloading
 	QTimer::singleShot(0, this, &OgrTemplate::reload);
@@ -456,6 +493,7 @@ void OgrTemplate::reload()
 		unloadTemplateFile();
 	loadTemplateFile(false);
 	reload_pending = false;
+	setTemplateAreaDirty();
 }
 
 
@@ -491,15 +529,6 @@ void OgrTemplate::updateView(Map& template_map)
 	}
 }
 
-
-
-OgrTemplate* OgrTemplate::duplicateImpl() const
-{
-	auto copy = new OgrTemplate(template_path, map);
-	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
-	return copy;
-}
 
 
 bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)

@@ -31,25 +31,13 @@ steps:
 - bash: |
     set -e
     sudo apt-get update
-    sudo apt-get install codespell
+    sudo apt-get install python-pip
+    sudo pip install codespell
   displayName: 'Setup codespell'
 - bash: |
     set -e
-    codespell -q 7 \
-      'CMakeLists.txt' \
-      'INSTALL.md' \
-      'README.md' \
-      'android' \
-      'doc/api' \
-      'doc/licensing' \
-      'doc/man' \
-      'doc/manual' \
-      'doc/tip-of-the-day/tips_en.txt' \
-      'examples/src' \
-      'packaging' \
-      'src' \
-      'symbol sets/src' \
-      'translations/future_translations.cpp' \
+    ./codespell.sh \
+      -L childs \
     | sed -e 's,^\([^:]*\):\([0-9]*\): *,##vso[task.LogIssue type=warning;sourcepath=\1;linenumber=\2;],'
   displayName: 'Run codespell'
 

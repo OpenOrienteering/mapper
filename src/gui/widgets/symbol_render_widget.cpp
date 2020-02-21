@@ -97,7 +97,7 @@ SymbolRenderWidget::SymbolRenderWidget(Map* map, bool mobile_mode, QWidget* pare
 	
 	QShortcut* description_shortcut = new OverridingShortcut(
 	  QKeySequence(tr("F1", "Shortcut for displaying the symbol's description")),
-	  window()
+	  this
 	);
 	tooltip = new SymbolToolTip(this, description_shortcut);
 	// TODO: Use a placeholder in the literal and pass the actual shortcut's string representation.
@@ -945,7 +945,7 @@ void SymbolRenderWidget::pasteSymbols()
 		if (answer == QMessageBox::Cancel)
 			return;
 		
-		paste_map.changeScale(map->getScaleDenominator(), {0, 0}, answer == QMessageBox::Yes, false, false, false);
+		paste_map.changeScale(map->getScaleDenominator(), 1.0, {0, 0}, answer == QMessageBox::Yes, false, false, false);
 	}
 	
 	// Ensure that a change in selection is detected

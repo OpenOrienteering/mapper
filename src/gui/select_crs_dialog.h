@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,8 @@
 #include <QObject>
 #include <QString>
 
+#include "templates/template_image.h"
+
 class QDialogButtonBox;
 class QLabel;
 class QWidget;
@@ -42,19 +44,6 @@ class SelectCRSDialog : public QDialog
 {
 Q_OBJECT
 public:
-	
-	/**
-	 * Georeferencing alternatives
-	 */
-	enum GeorefAlternative
-	{
-		TakeFromMap = 1 << 0,
-		Local       = 1 << 1,
-		Geographic  = 1 << 2,
-		None        = 0
-	};
-	Q_DECLARE_FLAGS(GeorefAlternatives, GeorefAlternative)
-	
 	/**
 	 * Creates a SelectCRSDialog.
 	 * 
@@ -65,9 +54,9 @@ public:
 	 *                     Should explain what the selected CRS will be used for.
 	 */
 	SelectCRSDialog(
+	        const TemplateImage::GeoreferencingOptions& options,
 	        const Georeferencing& georef,
 	        QWidget* parent,
-	        GeorefAlternatives alternatives,
 	        const QString& description = QString()
 	);
 	
@@ -83,6 +72,7 @@ protected:
 	void updateWidgets();
 	
 private:
+	const TemplateImage::GeoreferencingOptions& options;
 	const Georeferencing& georef;
 	CRSSelector* crs_selector;
 	QLabel* status_label;
@@ -91,9 +81,5 @@ private:
 
 
 }  // namespace OpenOrienteering
-
-
-Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::SelectCRSDialog::GeorefAlternatives)
-
 
 #endif

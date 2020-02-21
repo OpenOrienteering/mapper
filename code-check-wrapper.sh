@@ -45,7 +45,8 @@ shift
 ENABLE_CLANG_TIDY=true
 ENABLE_IWYU=true
 
-PATTERN=" \
+PATTERN=
+for I in \
   action_grid_bar.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
@@ -60,8 +61,6 @@ PATTERN=" \
   georeferencing.cpp \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
-  gdal_manager.cpp \
-  gdal_template.cpp \
   key_button_bar.cpp \
   line_symbol.cpp \
   main.cpp \
@@ -75,8 +74,6 @@ PATTERN=" \
   object_query.cpp \
   ocd_file_format.cpp \
   ocd_t.cpp \
-  ogr_file_format.cpp \
-  ogr_template.cpp \
   overriding_shortcut.cpp \
   point_symbol.cpp \
   print_widget.cpp \
@@ -108,14 +105,16 @@ PATTERN=" \
   xml_file_format.cpp \
   xml_stream_util.cpp \
   \
+  "3rd-party/cove/[^ ]*.cpp" \
+  gdal/ \
   ocd \
   src/sensors/ \
   src/tools/ \
   settings \
-  \
-"
-
-PATTERN=$(echo "${PATTERN}" | sed -e "s/^ *//;s/ *\$//;s/  */\\\\\\|/g")
+  # end of patterns
+do
+  PATTERN="${PATTERN:+$PATTERN\|}$I"
+done
 
 if echo "$@" | grep -q "${PATTERN}"; then
 	case "${PROGRAM}" in

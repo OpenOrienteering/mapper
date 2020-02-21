@@ -20,57 +20,39 @@
 #ifndef OPENORIENTEERING_GDAL_TEMPLATE_H
 #define OPENORIENTEERING_GDAL_TEMPLATE_H
 
-#include <array>
+#include <vector>
 
-#include <QByteArray>
 #include <QString>
-#include <QTransform>
 
-using GDALDatasetH = void*;
+#include "templates/template_image.h"
+
+class QByteArray;
 
 namespace OpenOrienteering {
+
+class Map;
 
 
 /**
  * Support for geospatial raster data.
  */
-class GdalTemplate
+class GdalTemplate : public TemplateImage
 {
 public:
-	/**
-	 * Raster data georeferencing information
-	 */
-	struct RasterGeoreferencing
-	{
-		QByteArray driver;                                             ///< @see GDALGetDriverShortName()
-		QByteArray spec;                                               ///< @see GDALGetProjectionRef()
-		std::array<double, 6> geo_transform = {{ 0, 1, 0, 0, 0, 1 }};  ///< @see GDALGetGeoTransform()
-		bool valid = false;
-		
-		/**
-		 * Returns RasterGeoreferencing for the data in the given dataset.
-		 */
-		static RasterGeoreferencing fromGDALDataset(GDALDatasetH dataset);
-		
-		/**
-		 * Returns a pixel-to-world transformation from GDAL's geo_transform.
-		 */
-		operator QTransform() const;
-		
-		/**
-		 * Return the given CRS specification converted to PROJ format, if possible.
-		 * 
-		 * @see OSRExportToProj4()
-		 */
-		static QByteArray toProjSpec(const QByteArray& gdal_spec);
-	};
+	static const std::vector<QByteArray>& supportedExtensions();
 	
-	/**
-	 * Returns raster georeferencing for the given file.
-	 * 
-	 * In case of errors, the data's `valid` member is set to false.
-	 */
-	static RasterGeoreferencing tryReadProjection(const QString& filepath);
+	GdalTemplate(const QString& path, Map* map);
+	~GdalTemplate() override;
+	
+protected:
+	GdalTemplate(const GdalTemplate& proto);
+	GdalTemplate* duplicate() const override;
+	
+public:
+	const char* getTemplateType() const override;
+	
+protected:
+	bool loadTemplateFileImpl(bool configuring) override;
 	
 };
 

@@ -109,7 +109,7 @@ namespace ObjectOp
 		void operator()(Object* object, MapPart* part, int object_index) const
 		{
 			if (!object->setSymbol(new_symbol, false))
-				part->deleteObject(object_index, false);
+				part->deleteObject(object_index);
 			else
 				object->update();
 		}
@@ -120,7 +120,7 @@ namespace ObjectOp
 	{
 		void operator()(const Object*, MapPart* part, int object_index) const
 		{
-			part->deleteObject(object_index, false);
+			part->deleteObject(object_index);
 		}
 	};
 }

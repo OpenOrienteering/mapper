@@ -59,7 +59,7 @@ class SymbolSettingDialog;
 class TextSymbol;
 class VirtualCoordVector;
 
-typedef QHash<QString, Symbol*> SymbolDictionary;
+typedef QHash<qint32, Symbol*> SymbolDictionary;
 
 
 /**
@@ -137,6 +137,8 @@ public:
 	 * 
 	 * This function does not check the equality of the state
 	 * (protected/hidden). Use stateEquals(Symbol*) for this comparison.
+	 * 
+	 * It also does not compare color priorities.
 	 * 
 	 * @param other The symbol to compare with.
 	 * @param case_sensitivity Comparison mode for strings, e.g. symbol names.

@@ -827,12 +827,18 @@ public:
 	
 	/**
 	 * Deletes the given object from the map.
-	 * remove_only will remove the object from the map, but not call "delete object";
-	 * be sure to call removeObjectFromSelection() if necessary.
 	 * 
-	 * TODO: make a separate method "removeObject()", remove_only is misleading!
+	 * Be sure to call removeObjectFromSelection() if necessary.
 	 */
-	void deleteObject(Object* object, bool remove_only);
+	void deleteObject(Object* object);
+
+	/**
+	 * Relinquish object ownership.
+	 *
+	 * Searches map parts and returns pointer if the object was found.
+	 * Otherwise nullptr is returned.
+	 */
+	Object* releaseObject(Object* object);
 	
 	/**
 	 * Marks the objects as "dirty", i.e. as having unsaved changes.
@@ -1138,13 +1144,14 @@ public:
 	 * Changes the map's scale.
 	 * 
 	 * @param new_scale_denominator The new scale denominator.
+	 * @param additional_stretch Additional stretch/shrink applied to the map.
 	 * @param scaling_center The coordinate to use as scaling center.
 	 * @param scale_symbols Whether to scale the map symbols.
 	 * @param scale_objects Whether to scale the map object coordinates.
 	 * @param scale_georeferencing Whether to adjust the map's georeferencing reference point.
 	 * @param scale_templates Whether to scale non-georeferenced templates.
 	 */
-	void changeScale(unsigned int new_scale_denominator,
+	void changeScale(unsigned int new_scale_denominator, double additional_stretch,
 		const MapCoord& scaling_center, bool scale_symbols, bool scale_objects,
 		bool scale_georeferencing, bool scale_templates);
 	

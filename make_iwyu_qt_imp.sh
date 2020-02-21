@@ -49,6 +49,7 @@ cat << END_EXTRA
 # --- Manual additions ---
 
     # convenience
+    { include: [ "<qbasicatomic.h>", "public", "<QAtomicInteger>", "public" ] },
     { include: [ "<QFlag>", "public", "<QFlags>", "public" ] },
     { include: [ "<QNoDebug>", "public", "<QDebug>", "public" ] },
     { include: [ "<QStaticByteArrayData>", "public", "<QByteArray>", "public" ] },
@@ -72,6 +73,10 @@ cat << END_EXTRA
     { include: [ "<qobjectdefs.h>", "private", "<QObject>", "public" ] },
     # http://doc.qt.io/qt-5/qstring.html
     { include: [ "<qstringliteral.h>", "private", "<QString>", "public" ] },
+    # http://doc.qt.io/qt-5/qtconcurrent.html
+    { include: [ "<qtconcurrentfilter.h>", "private", "<QtConcurrent>", "public" ] },
+    { include: [ "<qtconcurrentmap.h>", "private", "<QtConcurrent>", "public" ] },
+    { include: [ "<qtconcurrentrun.h>", "private", "<QtConcurrent>", "public" ] },
 
 END_EXTRA
 

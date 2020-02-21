@@ -150,7 +150,7 @@ void ScaleMapDialog::okClicked()
 	else if (center_other_radio->isChecked())
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 	
-	map->changeScale(scale, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
+	map->changeScale(scale, 1.0, center, adjust_symbols_check->isChecked(), adjust_objects_check->isChecked(), adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
 

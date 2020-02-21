@@ -95,7 +95,7 @@ public:
 	explicit Object(Type type, const Symbol* symbol = nullptr);
 	
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
-	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
 protected:
 	/**
@@ -485,7 +485,7 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit PathObject(const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
 	/**
 	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
@@ -748,7 +748,7 @@ public:
 	
 	/**
 	 * Connects the given parts, optionally merging the end coordinates at the
-	 * center position, and copying over the coordindates from other.
+	 * center position, and copying over the coordinates from other.
 	 */
 	void connectPathParts(
 	        PathPartVector::size_type part_index,

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -101,6 +101,11 @@ public:
 	 * \see SymbolRuleSet::forMatchingSymbols
 	 */
 	static SymbolRuleSet forUsedSymbols(const Map& map);
+	
+	/**
+	 * Remove all NoAssignment items.
+	 */
+	SymbolRuleSet& squeeze();
 	
 	/**
 	 * Returns a copy which has all NoAssignment items removed.
@@ -218,23 +223,45 @@ public:
 	
 	/**
 	 * Options for importing of new colors and symbols in to a map.
+	 * 
+	 * The default value (no option selected) describes the minimal behaviour:
+	 * symbols are imported only as needed, in their present state, and
+	 * all existing symbols and colors are left untouched.
+	 * 
+	 * Note that if multiple sources symbols are mapped to the same replacement
+	 * symbol, the result of `PreserveSymbolState` is that the target symbol
+	 * gets the state of a random source symbol which is mapped to this target.
 	 */
 	enum Option
 	{
 		ImportAllSymbols    = 0x01,
 		PreserveSymbolState = 0x02,
-		KeepUnusedSymbols   = 0x04,
-		KeepUnusedColors    = 0x08,
+		RemoveUnusedSymbols = 0x04,
+		RemoveUnusedColors  = 0x08,
 	};
 	Q_DECLARE_FLAGS(Options, Option)
 	
 	/**
 	 * Adds colors and symbols from the symbol map to the object map,
-	 * and applies the rules.
+	 * and applies the rules and options.
 	 * 
-	 * Note that for efficiency, this should be called on a squeezed() map.
+	 * This function will create a copy of the rule set. When the rule set is no
+	 * longer needed after this call, the copy can be avoided by calling apply()
+	 * on an rvalue (e.g. the result of std::move()) instead.
 	 */
-	void apply(Map& object_map, const Map& symbol_set, Options options = 0);
+	void apply(Map& object_map, const Map& symbol_set, Options options = {}) const &;
+	
+	/**
+	 * This deleted signature blocks accidental passing of default Options, {},
+	 * as second of two arguments.
+	 */
+	void apply(Map& object_map, Options options) const = delete;
+	
+	/**
+	 * Adds colors and symbols from the symbol map to the object map,
+	 * and applies the rules and options.
+	 */
+	void apply(Map& object_map, const Map& symbol_set, Options options) &&;
 	
 };
 

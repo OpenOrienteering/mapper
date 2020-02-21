@@ -27,8 +27,7 @@ set(Mapper_SYMBOL_SETS
   "10000/ISOM 2017-2_10000.omap"
   "15000/ISOM 2017-2_15000.omap"
   
-  4000/ISSOM_4000.omap
-  5000/ISSOM_5000.omap
+  "4000/ISSprOM 2019_4000.omap"
   
   5000/ISMTBOM_5000.omap
   7500/ISMTBOM_7500.omap
@@ -50,11 +49,12 @@ set(Mapper_SYMBOL_SETS
 
 set(Mapper_CRT_FILES
   "./ISOM 2017-2-ISSkiOM 2019.crt"
+  "./ISOM 2017-2-ISSprOM 2019.crt"
   "./ISOM2000-ISOM 2017-2.crt"
-  ./ISOM2000-ISSOM.crt
+  "./ISSOM-ISSprOM 2019.crt"
   "./OSM-ISOM 2017-2.crt"
   "./OSM-ISSkiOM 2019.crt"
-  ./OSM-ISSOM.crt
+  "./OSM-ISSprOM 2019.crt"
 )
 
 set(symbol_sets)

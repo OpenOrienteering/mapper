@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2019 Kai Pastor
+#    Copyright 2012-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -30,7 +30,7 @@ endif()
 # Project declaration
 
 project(Mapper VERSION 0.9.2 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2019 The OpenOrienteering developers")
+set(Mapper_COPYRIGHT "(C) 2020 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -67,6 +67,13 @@ option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" OFF)
 
 option(Mapper_USE_GDAL   "Use the GDAL library" ON)
+
+if(ANDROID)
+	set(Mapper_WITH_COVE_DEFAULT OFF)
+else()
+	set(Mapper_WITH_COVE_DEFAULT ON)
+endif()
+option(Mapper_WITH_COVE "Build and include contour line vectorization" ${Mapper_WITH_COVE_DEFAULT})
 
 if(CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel|RelWithDebInfo)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT OFF)
@@ -142,7 +149,7 @@ if(CMAKE_CROSSCOMPILING)
 endif()
 
 
-# Build definitons
+# Build definitions
 
 include(CTest)
 
@@ -251,7 +258,10 @@ add_subdirectory("doc/manual")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("translations")
-add_subdirectory("3rd-party/qbezier")
+if(Mapper_WITH_COVE)
+	add_feature_info(Mapper_WITH_COVE "${Mapper_WITH_COVE}" "Contour line vectorization")
+	add_subdirectory("3rd-party/cove")
+endif()
 if(NOT ANDROID)
 	add_subdirectory("3rd-party/qtsingleapplication")
 endif()

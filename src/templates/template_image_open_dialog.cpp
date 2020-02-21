@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -60,9 +60,8 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	double scale;
 	templ->getMap()->getImageTemplateDefaults(use_meters_per_pixel, meters_per_pixel, dpi, scale);
 	
-	auto const & georeferencing_option = templ->availableGeoreferencing().front();
-	auto georef_source = georeferencing_option.source;
-	auto const georef_radio_enabled = georeferencing_option.type != TemplateImage::Georeferencing_None;
+	auto georef_source = templ->availableGeoreferencing().effective.transform.source;
+	auto const georef_radio_enabled = !georef_source.isEmpty();
 	
 	// Georeferencing source translations which already existed in this context
 	// and need to be preserved here, until moved to a different file.
@@ -70,7 +69,7 @@ TemplateImageOpenDialog::TemplateImageOpenDialog(TemplateImage* templ, QWidget* 
 	Q_UNUSED(QT_TR_NOOP("World file"))
 	Q_UNUSED(QT_TR_NOOP("GeoTIFF"))
 	Q_UNUSED(QT_TR_NOOP("no georeferencing information"))
-	// GDAL's GeoTIFF driver reports itselfs as "GTiff".
+	// GDAL's GeoTIFF driver reports itself as "GTiff".
 	if (georef_source == "GTiff")
 		georef_source = "GeoTIFF";
 	

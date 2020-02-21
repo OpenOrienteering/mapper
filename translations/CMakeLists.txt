@@ -83,6 +83,7 @@ set(map_symbols_translations_template
   map_symbols_nl.ts
   map_symbols_pl.ts
   map_symbols_tr.ts
+  map_symbols_zh_Hans.ts
   map_symbols_template.ts
 )
 # Make translation list available for SymbolSetTool

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
     <notes></notes>
-    <georeferencing scale="4000" declination="2.35" grivation="0.37">
+    <georeferencing scale="4000" auxiliary_scale_factor="0.999925" declination="2.35" grivation="0.37">
         <ref_point x="10" y="35"/>
         <projected_crs id="UTM">
             <spec language="PROJ.4">+proj=utm +datum=WGS84 +zone=32</spec>

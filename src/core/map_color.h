@@ -1,5 +1,6 @@
 /*
- *    Copyright 2012, 2013 Thomas Schöps, Kai Pastor
+ *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -411,20 +412,29 @@ public:
 	bool isWhite() const;
 	
 	
-	/** Compares this color and another. */
-	bool equals(const MapColor& other, bool compare_priority) const;
+	/** Compares this color and another, without looking at priorities. */
+	bool equals(const MapColor& other) const;
 	
-	/** Compares two colors given by pointers.
-	 *  Returns true if the colors are equal or if both pointers are nullptr. */
+	/**
+	 * Compares two colors given by pointers, without looking at priorities.
+	 * 
+	 * This functions adds handling of `nullptr`:
+	 * It returns true if the colors are equal or if both pointers are nullptr.
+	 */
 	static bool equal(const MapColor* color, const MapColor* other);
 	
 	/** Returns true if this color's priority is less than the other's. */
 	bool comparePriority(const MapColor& other) const;
 	
+protected:
+	friend bool operator==(const MapColor& lhs, const MapColor& rhs);
+	
+	/** Compares this color and another. */
+	bool equals(const MapColor& other, bool compare_priority) const;
+	
 	/** Compares this color's components and another. */
 	bool componentsEqual(const MapColor& other, bool compare_priority) const;
 	
-protected:
 	/**
 	 * Determines the composition name from the components.
 	 * 
@@ -793,7 +803,7 @@ bool operator==(const MapColor& lhs, const MapColor& rhs)
 inline
 bool operator!=(const MapColor& lhs, const MapColor& rhs)
 {
-	return !lhs.equals(rhs, true);
+	return !(lhs == rhs);
 }
 
 

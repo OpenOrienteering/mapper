@@ -69,13 +69,13 @@ public:
 	std::unique_ptr<Symbol> getNewSymbol() const;
 	
 	/**
-	 * Returns a pointer to the unmodifed symbol which is currently edited.
+	 * Returns a pointer to the unmodified symbol which is currently edited.
 	 * Use getUnmodifiedSymbolCopy() instead if you need to access the object!
 	 */
 	inline const Symbol* getUnmodifiedSymbol() const { return source_symbol; }
 	
 	/**
-	 * Returns a pointer to a copy of the unmodifed symbol which is currently edited.
+	 * Returns a pointer to a copy of the unmodified symbol which is currently edited.
 	 */
 	inline const Symbol* getUnmodifiedSymbolCopy() const { return &*source_symbol_copy; }
 	

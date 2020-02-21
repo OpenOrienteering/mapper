@@ -23,11 +23,6 @@
 #include <QObject>
 #include <QString>
 
-#include "core/georeferencing.h"
-#include "core/latlon.h"
-
-using namespace OpenOrienteering;
-
 
 /**
  * @test Tests the Georeferencing class.
@@ -51,6 +46,8 @@ private slots:
 	 * Tests the effect of a grid scale factor.
 	 */
 	void testGridScaleFactor();
+	
+	void testGridScaleFactor_data();
 	
 	/**
 	 * Tests whether Georeferencing supports particular projected CRS.
@@ -82,8 +79,6 @@ private slots:
 	void testProjContextSetFileFinder();
 #endif
 	
-private:
-	Georeferencing georef;
 };
 
 #endif

@@ -35,7 +35,6 @@ execute_process(
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
-include_directories(AFTER "../3rd-party/qbezier/src") # Always, last
 
 set(Mapper_Common_SRCS
   global.cpp
@@ -114,6 +113,7 @@ set(Mapper_Common_SRCS
   gui/map/new_map_dialog.cpp
   gui/map/map_dialog_rotate.cpp
   gui/map/map_dialog_scale.cpp
+  gui/map/map_dialog_stretch.cpp
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
   gui/map/map_find_feature.cpp
@@ -266,6 +266,7 @@ target_link_libraries(Mapper_Common
   Qt5::Widgets
 )
 foreach(lib
+  cove
   mapper-gdal
   mapper-sensors
   printsupport

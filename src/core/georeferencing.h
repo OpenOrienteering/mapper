@@ -84,8 +84,9 @@ private:
  *
  * Conversions between map coordinates and "projected coordinates" (flat metric
  * coordinates in a projected coordinate reference system) are made as affine 
- * transformation based on the map scale (principal scale), grid scale factor,
- * the grivation and a defined reference point.
+ * transformation based on the map scale (principal scale), a scale factor
+ * combining grid scale and elevation, the grivation and a defined reference
+ * point.
  * 
  * Conversions between projected coordinates and geographic coordinates (here:
  * latitude/longitude for the WGS84 datum) are made based on a specification
@@ -254,24 +255,46 @@ public:
 	
 	
 	/**
-	 * Returns the grid scale factor.
-	 * 
-	 * The grid scale factor is the ratio between a length in the grid and the
-	 * length on the earth model. It is applied as a factor to ground distances
-	 * to get grid plane distances.
-	 * 
-	 * Mapper doesn't explicitly deal with any other factors (elevation factor,
-	 * unit of measurement). Technically, this property can be used as a
-	 * combined factor.
+	 * Returns the combined scale factor.
+	 *
+	 * The combined factor is applied to ground distances to get grid plane
+	 * distances. The combined scale factor is the ratio between a length
+	 * in the grid and the length on the ground.
+	 *
+	 * The combined factor incoroprates the grid scale factor and the
+	 * auxiliary scale factor.
 	 */
-	double getGridScaleFactor() const;
+	double getCombinedScaleFactor() const;
 	
 	/**
-	 * Sets the grid scale factor.
-	 * 
-	 * \see getGridScaleFactor()
+	 * Sets the combined scale factor.
+	 *
+	 * \see getCombinedScaleFactor()
 	 */
-	void setGridScaleFactor(double value);
+	void setCombinedScaleFactor(double value);
+	
+	/**
+	 * Returns the auxiliary scale factor.
+	 * 
+	 * The auxiliary scale factor is typically the elevation factor,
+	 * i.e. the ratio between ground distance and distance on the ellipsoid.
+	 * If the combined scale factor was set using an earlier Mapper
+	 * that did not calculate the grid scale factor, then the auxiliary
+	 * factor deals with the discrepancy between the distance on the
+	 * map and distance on the ellipsoid.
+	 * 
+	 * Mapper doesn't explicitly deal with other factors (e.g. unit of
+	 * measurement). Technically, this property can be used for purposes
+	 * other than elevation.
+	 */
+	double getAuxiliaryScaleFactor() const;
+	
+	/**
+	 * Sets the auxiliary scale factor.
+	 * 
+	 * \see getAuxiliaryScaleFactor()
+	 */
+	void setAuxiliaryScaleFactor(double value);
 	
 	
 	/**
@@ -355,9 +378,10 @@ public:
 	 * Defines the projected coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the geographic coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and the
+	 * scale factors.
 	 */
-	void setProjectedRefPoint(const QPointF& point, bool update_grivation = true);
+	void setProjectedRefPoint(const QPointF& point, bool update_grivation = true, bool update_scale_factor = true);
 	
 	
 	/**
@@ -404,9 +428,10 @@ public:
 	bool setProjectedCRS(const QString& id, QString spec, std::vector< QString > params = std::vector<QString>());
 	
 	/**
-	 * Calculates the meridian convergence at the reference point.
+	 * Calculates the convergence at the reference point.
 	 * 
-	 * The meridian convergence is the angle between grid north and true north.
+	 * The convergence is the angle between grid north and true north.
+	 * In case of deformation, convergence varies with direction; this is an average.
 	 * 
 	 * @return zero for a local georeferencing, or a calculated approximation
 	 */
@@ -422,9 +447,10 @@ public:
 	 * Defines the geographic coordinates of the reference point.
 	 * 
 	 * This may trigger changes of the projected coordinates of the reference
-	 * point, the convergence, the grivation and the transformations.
+	 * point, the convergence, the grivation, the transformations, and the
+	 * scale factors.
 	 */
-	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true);
+	void setGeographicRefPoint(LatLon lat_lon, bool update_grivation = true, bool update_scale_factor = true);
 	
 	
 	/** 
@@ -504,10 +530,29 @@ public:
 	
 	/**
 	 * Updates the transformation parameters between map coordinates and 
-	 * projected coordinates from the current projected reference point 
-	 * coordinates, the grivation and the scale.
+	 * projected coordinates. This depends on the map and projected
+	 * reference point coordinates, the grivation, the scale, and the
+	 * combined scale factor.
 	 */
 	void updateTransformation();
+	
+	/**
+	 * Updates the combined scale factor.
+	 *
+	 * The new value is calculated from the grid scale factor and
+	 * auxiliary scale factor, overriding the present combined_scale_factor
+	 * value.
+	 */
+	void updateCombinedScaleFactor();
+	
+	/**
+	 * Initializes the auxiliary scale factor.
+	 *
+	 * The new value is calculated from the combined scale factor
+	 * and grid scale factor, overriding the present auxiliary_scale_factor
+	 * value.
+	 */
+	void initAuxiliaryScaleFactor();
 	
 	/**
 	 * Updates the grivation. 
@@ -526,6 +571,14 @@ public:
 	 * is set to the same value as grivation.
 	 */
 	void initDeclination();
+
+	/**
+	 * Updates convergence and grid scale factor.
+	 *
+	 * The new values are calculated from the CRS and the geographic reference
+	 * point.
+	 */
+	void updateGridCompensation();
 	
 	/**
 	 * Sets the transformation matrix from map coordinates to projected
@@ -565,17 +618,31 @@ signals:
 	 */
 	void declinationChanged();
 	
+	/**
+	 * Indicates a change of the "auxiliary scale factor", as presented in
+	 * the georeferencing dialog.
+	 *
+	 * The "auxiliary scale factor" has no direct influence on projection
+	 * or transformation. That's why there is an independent signal.
+	 */
+	void auxiliaryScaleFactorChanged();
+	
 	
 private:
+	void setScaleFactors(double combined_scale_factor, double auxiliary_scale_factor);
 	void setDeclinationAndGrivation(double declination, double grivation);
 	
 	State state;
 	
 	unsigned int scale_denominator;
+	double combined_scale_factor;
+	double auxiliary_scale_factor;
 	double grid_scale_factor;
+
 	double declination;
 	double grivation;
 	double grivation_error;
+	double convergence;
 	MapCoord map_ref_point;
 	
 	QPointF projected_ref_point;
@@ -658,9 +725,15 @@ unsigned int Georeferencing::getScaleDenominator() const
 }
 
 inline
-double Georeferencing::getGridScaleFactor() const
+double Georeferencing::getCombinedScaleFactor() const
 {
-	return grid_scale_factor;
+	return combined_scale_factor;
+}
+
+inline
+double Georeferencing::getAuxiliaryScaleFactor() const
+{
+	return auxiliary_scale_factor;
 }
 
 inline
