@@ -8,7 +8,7 @@ The general build process prerequisites are:
      Linux is also used to cross-compile for Android.
    - macOS: 10.13 is known to work.
    - Windows: MSYS2 (MinGW subsystem).
- - CMake >= 3.1.
+ - CMake >= 3.7.
    CMake is available from https://cmake.org/.
  - A supported C++ compiler toolchain. C++14 is mandatory.
 
