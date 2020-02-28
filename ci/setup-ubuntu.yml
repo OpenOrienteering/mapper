@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2019 Kai Pastor
+# Copyright 2019, 2020 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -41,6 +41,8 @@ steps:
     fi
     
     if [ -n "${CLAZY_VERSION}" ] ; then
+      # apt-cache policy clang-tidy-8
+      sudo apt-get remove -y libllvm8   # possibly incompatible
       sudo apt-get install clang-tidy-8 # for extra checks
       CLAZY_IMAGE=Clazy-x86_64-${CLAZY_VERSION}.AppImage
       curl https://downloads.kdab.com/clazy/${CLAZY_VERSION}/${CLAZY_IMAGE} -O
