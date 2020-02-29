@@ -21,6 +21,7 @@
 #include "mainform.h"
 #include "ui_mainform.h"
 
+// IWYU pragma: no_include <algorithm>
 #include <cstdlib>
 #include <ctime>
 #include <iosfwd>
