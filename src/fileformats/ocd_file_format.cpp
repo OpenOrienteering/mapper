@@ -22,6 +22,7 @@
 
 #include "ocd_file_format.h"
 
+// IWYU pragma: no_include <algorithm>
 #include <memory>
 
 #include <QtGlobal>
