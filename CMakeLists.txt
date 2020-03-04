@@ -190,7 +190,8 @@ endif()
 if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
-	add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 endif()
 
 if(Mapper_USE_GDAL)
