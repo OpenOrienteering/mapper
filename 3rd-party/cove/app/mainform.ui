@@ -493,10 +493,10 @@
             <bool>false</bool>
            </property>
            <property name="toolTip">
-            <string>Save current polygons into an .OCD file.</string>
+            <string>Add the current vector lines to the map.</string>
            </property>
            <property name="text">
-            <string>Save vectors</string>
+            <string>Add to map</string>
            </property>
            <property name="flat">
             <bool>false</bool>
