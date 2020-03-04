@@ -449,17 +449,17 @@
           <number>0</number>
          </property>
          <item>
-          <spacer>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QPushButton" name="setVectorizationOptionsButton">
+           <property name="toolTip">
+            <string>Set joining and speckle size options.</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
+           <property name="text">
+            <string>Vectorization options</string>
            </property>
-          </spacer>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="createVectorsButton">
@@ -475,17 +475,20 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="setVectorizationOptionsButton">
-           <property name="toolTip">
-            <string>Set joining and speckle size options.</string>
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>Set vectorization options</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
+          </spacer>
+         </item>
+         <item>
+          <widget class="OpenOrienteering::SymbolDropDown" name="symbolComboBox"/>
          </item>
          <item>
           <widget class="QPushButton" name="saveVectorsButton">
@@ -526,6 +529,11 @@
    <extends>QScrollArea</extends>
    <header>app/PolygonsView.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OpenOrienteering::SymbolDropDown</class>
+   <extends>QComboBox</extends>
+   <header>gui/widgets/symbol_dropdown.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

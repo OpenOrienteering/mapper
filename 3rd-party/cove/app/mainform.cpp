@@ -57,6 +57,8 @@
 #include "core/map_part.h"
 #include "core/objects/object.h"
 #include "core/symbols/line_symbol.h"
+#include "core/symbols/symbol.h"
+#include "gui/widgets/symbol_dropdown.h"
 #include "templates/template.h"
 #include "templates/template_image.h"
 #include "undo/object_undo.h"
@@ -169,6 +171,9 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 	bwBitmapHistoryIterator = bwBitmapHistory.begin();
 
 	loadImage(templ->getImage(), templ->getTemplateFilename());
+
+	ui.symbolComboBox->init(map, OpenOrienteering::Symbol::Line);
+	ui.symbolComboBox->setCurrentIndex(std::min(ui.symbolComboBox->count() - 1, 1));
 }
 
 mainForm::~mainForm()
@@ -778,6 +783,10 @@ void mainForm::on_saveVectorsButton_clicked()
 
 	ooMap->clearObjectSelection(false);
 
+	auto* symbol = ui.symbolComboBox->symbol();
+	if (!symbol)
+		symbol = ooMap->getUndefinedLine();
+
 	// transform from template coordinates to map coordinates
 	auto const offset = QPointF { -0.5 * (ui.bwImageView->image()->width() - 1),
 	                              -0.5 * (ui.bwImageView->image()->height() - 1) };
@@ -800,7 +809,6 @@ void mainForm::on_saveVectorsButton_clicked()
 			coords.back().setClosePoint(true);
 		}
 
-		auto* symbol = ooMap->getUndefinedLine();
 		auto* newOOPolygon = new OpenOrienteering::PathObject(symbol, std::move(coords));
 		newOOPolygon->setTag(QStringLiteral("generator"), QStringLiteral("cove")); /// \todo Configuration of tag
 		ooMap->addObject(newOOPolygon);
