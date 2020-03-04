@@ -25,6 +25,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iosfwd>
+#include <iterator>
 #include <utility>
 
 #include <QtGlobal>
@@ -772,43 +773,45 @@ void mainForm::on_createVectorsButton_clicked()
 void mainForm::on_saveVectorsButton_clicked()
 {
 	const PolygonList& polys = ui.bwImageView->polygons();
-	if (polys.empty()) return;
-
-	float xOff = float(-ui.bwImageView->image()->width()) / 2;
-	float yOff = float(-ui.bwImageView->image()->height()) / 2;
-	OpenOrienteering::DeleteObjectsUndoStep* undo_step =
-		new OpenOrienteering::DeleteObjectsUndoStep(ooMap);
-	OpenOrienteering::MapPart* part = ooMap->getCurrentPart();
-	std::vector<OpenOrienteering::Object*> result;
+	if (polys.empty())
+		return;
 
 	ooMap->clearObjectSelection(false);
 
+	// transform from template coordinates to map coordinates
+	auto const offset = QPointF { -0.5 * (ui.bwImageView->image()->width() - 1),
+	                              -0.5 * (ui.bwImageView->image()->height() - 1) };
+	auto const transform = [this, offset](const QPointF& point) -> OpenOrienteering::MapCoord {
+		return OpenOrienteering::MapCoord(ooTempl->templateToMap(point + offset));
+	};
+
+	std::vector<OpenOrienteering::Object*> result;
+	result.reserve(polys.size());
+
 	for (const auto& polygon : polys)
 	{
-		OpenOrienteering::PathObject* newOOPolygon =
-			new OpenOrienteering::PathObject();
-		newOOPolygon->setSymbol(ooMap->getUndefinedLine(), true);
-		newOOPolygon->setTag(QStringLiteral("name"), QStringLiteral("cove"));
-
-		for (const auto& point : polygon)
+		auto coords = OpenOrienteering::MapCoordVector {};
+		coords.reserve(polygon.size() + 1);
+		std::transform(begin(polygon), end(polygon), std::back_inserter(coords), transform);
+		if (polygon.isClosed())
 		{
-			// transform from template coordinates to map coordinates
-			OpenOrienteering::MapCoordF templCoords =
-				ooTempl->templateToMap(QPoint(point.x() + xOff, point.y() + yOff));
-			OpenOrienteering::MapCoord c(templCoords.x(), templCoords.y());
-
-			newOOPolygon->addCoordinate(c);
+			if (!coords.back().isPositionEqualTo(coords.front()))
+				coords.push_back(coords.front());
+			coords.back().setClosePoint(true);
 		}
 
-		if (polygon.isClosed()) newOOPolygon->closeAllParts();
-
+		auto* symbol = ooMap->getUndefinedLine();
+		auto* newOOPolygon = new OpenOrienteering::PathObject(symbol, std::move(coords));
+		newOOPolygon->setTag(QStringLiteral("generator"), QStringLiteral("cove")); /// \todo Configuration of tag
 		ooMap->addObject(newOOPolygon);
 		ooMap->addObjectToSelection(newOOPolygon, false);
 		result.push_back(newOOPolygon);
 	}
 
-	for (auto i : result)
-		undo_step->addObject(part->findObjectIndex(i));
+	auto const* part = ooMap->getCurrentPart();
+	auto* undo_step = new OpenOrienteering::DeleteObjectsUndoStep(ooMap);
+	for (auto const* object : result)
+		undo_step->addObject(part->findObjectIndex(object));
 	ooMap->push(undo_step);
 
 	ooMap->setObjectsDirty();
