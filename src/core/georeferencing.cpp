@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,8 +35,8 @@
 #include <QLocale>
 #include <QPoint>
 #include <QSignalBlocker>
+#include <QStandardPaths> // IWYU pragma: keep
 #include <QStringRef>
-#include <QTemporaryDir> // IWYU pragma: keep
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -92,38 +92,49 @@ namespace
 {
 #ifdef Q_OS_ANDROID
 	/**
-	 * @brief Provides required files for RROJ library.
+	 * Provides a cache directory for RROJ resource files.
+	 */
+	const QDir& projCacheDirectory()
+	{
+		static auto const dir = []() -> QDir {
+			auto cache = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+			auto proj = QStringLiteral("proj");
+			if (!cache.exists(proj))
+				cache.mkpath(proj);
+			if (!cache.exists(proj))
+				qDebug("Could not create a cache directory for PROJ resource files");
+			cache.cd(proj);
+			return cache;
+		}();
+		return dir;
+	}
+	
+	/**
+	 * Ensures PROJ resource file availability in the cache directory.
 	 * 
 	 * This function implements the interface required by
 	 * proj_context_set_file_finder().
 	 * 
-	 * This functions checks if the requested file name is available in a
-	 * temporary directory. If not, it tries to copy the file from the proj
+	 * This functions checks if the requested file name is available in the
+	 * cache directory. If not, it tries to copy the file from the proj
 	 * subfolder of the assets folder to this temporary directory.
 	 * 
-	 * If the file exists in the temporary folder (or copying was successful)
-	 * this function returns the full path of this file as a C string.
-	 * This string becomes invalid the next time this function is called.
-	 * Otherwise it returns nullptr.
+	 * It always returns nullptr, letting PROJ find the file in the cache
+	 * directory via the configured search path.
 	 */
 	extern "C"
 	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
 	{
-		static QTemporaryDir temp_dir;
-		if (temp_dir.isValid())
+		auto const& cache = projCacheDirectory();
+		if (cache.exists())
 		{
-			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
-			QFile file(path);
-			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
+			auto const name_string = QString::fromUtf8(name);
+			auto const path = cache.filePath(name_string);
+			if (!QFile::exists(path)
+			    && !QFile::copy(QLatin1String("assets:/proj/") + name_string, path))
 			{
-				static auto c_string = path.toLocal8Bit();
-				return c_string.constData();
+				qDebug("Could not provide projection data file '%s'", name);
 			}
-			qDebug("Could not provide projection data file '%s'", name);
-		}
-		else
-		{
-			qDebug("Could not create a temporary directory for projection data");
 		}
 		return nullptr;
 	}
@@ -152,18 +163,19 @@ namespace
 #else
 			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
 
+#if defined(Q_OS_ANDROID)
+			// Register file finder function needed by Proj.4
+			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
+			auto proj_data = QFileInfo(projCacheDirectory().path());
+#else
 			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
+#endif  // defined(Q_OS_ANDROID)
 			if (proj_data.exists())
 			{
 				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
 				static auto* const data = location.constData();
 				proj_context_set_search_paths(nullptr, 1, &data);
 			}
-
-#if defined(Q_OS_ANDROID)
-			// Register file finder function needed by Proj.4
-			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
-#endif  // defined(Q_OS_ANDROID)
 #endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		}
 	};
