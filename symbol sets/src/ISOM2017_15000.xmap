@@ -2607,7 +2607,7 @@ May be combined with symbol 407 (vegetation, slow running, good visibility) or 4
                 <description>A distinct forest edge or vegetation boundary within the forest.
 Very distinct forest edges and vegetation boundaries may be represented using the cultivation boundary symbol. Only one of the vegetation boundary symbols (black dotted line or dashed green line) can be used on a map.
 Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</description>
-                <line_symbol color="-1" line_width="2500" minimum_length="220" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="5" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="0" minimum_length="220" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="450" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="5" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="110" inner_color="1" outer_width="0" outer_color="-1" elements="0"/>
