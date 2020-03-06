@@ -193,7 +193,7 @@ public:
 	/**
 	 * @see Map::findObjectsAt().
 	 */
-	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	

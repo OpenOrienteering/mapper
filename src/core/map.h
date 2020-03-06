@@ -876,7 +876,7 @@ public:
 	 *     important for combined symbols, which can be found from a line or
 	 *     an area.
 	 */
-	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	
@@ -885,7 +885,7 @@ public:
 	 * 
 	 * @see Map::findObjectsAt
 	 */
-	void findAllObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
+	void findAllObjectsAt(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	

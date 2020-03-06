@@ -2147,7 +2147,7 @@ void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 
 void Map::findObjectsAt(
         const MapCoordF& coord,
-        float tolerance,
+        qreal tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
         bool include_hidden_objects,
@@ -2159,7 +2159,7 @@ void Map::findObjectsAt(
 
 void Map::findAllObjectsAt(
         const MapCoordF& coord,
-        float tolerance,
+        qreal tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
         bool include_hidden_objects,
