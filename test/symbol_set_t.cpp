@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -59,6 +59,7 @@
 #include "core/map_view.h"
 #include "core/objects/symbol_rule_set.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
@@ -281,6 +282,21 @@ void deleteMarkedSymbols(Map& map)
 		if (isMarked(*symbol))
 			map.deleteSymbol(index);
 	}
+}
+
+
+bool validLineWidth(const LineSymbol& symbol)
+{
+	auto border_visible = [&]() -> bool {
+		return symbol.hasBorder()
+		       && (symbol.getBorder().isVisible() || symbol.getRightBorder().isVisible());
+	};
+	
+	if (symbol.getColor())
+		return symbol.getLineWidth() > 0;
+	if (border_visible())
+		return symbol.getLineWidth() >= 0;
+	return symbol.getLineWidth() == 0;
 }
 
 
@@ -798,6 +814,8 @@ void SymbolSetTool::processSymbolSet()
 		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
 		previous_numbers.append(number);
 		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
+		if (symbol->getType() == Symbol::Line)
+			 QVERIFY2(validLineWidth(static_cast<const LineSymbol&>(*symbol)),  qPrintable(number_and_name + QLatin1String(": Invalid line width")));
 	}
 	
 	if (std::none_of(begin(translation_entries), end(translation_entries),
