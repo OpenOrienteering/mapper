@@ -599,7 +599,7 @@ void Object::rotate(qreal angle)
 }
 
 
-int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int Object::isPointOnObject(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
 	auto contained_types = symbol->getContainedTypes();
@@ -614,7 +614,7 @@ int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_
 	}
 	
 	// First check using extent
-	float extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
+	auto extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
 	if (coord.x() < extent.left() - extent_extension) return Symbol::NoSymbol;
 	if (coord.y() < extent.top() - extent_extension) return Symbol::NoSymbol;
 	if (coord.x() > extent.right() + extent_extension) return Symbol::NoSymbol;
@@ -2347,13 +2347,13 @@ bool PathObject::simplify(PathObject** undo_duplicate, double threshold)
 	return removed_a_point;
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int PathObject::isPointOnPath(MapCoordF coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
-	float side_tolerance = tolerance;
+	auto side_tolerance = tolerance;
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
 	{
 		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
-		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
+		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent());
 	}
 	
 	auto contained_types = symbol->getContainedTypes();
@@ -2375,14 +2375,14 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				MapCoordF tangent = to_next;
 				tangent.normalize();
 				
-				float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
+				auto dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 				if (dist_along_line < -tolerance)
 					continue;
 				
 				if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
 					return Symbol::Line;
 				
-				float line_length = path_coords[i+1].clen - path_coords[i].clen;
+				auto line_length = qreal(path_coords[i+1].clen) - qreal(path_coords[i].clen);
 				if (line_length < 1e-7)
 					continue;
 				
@@ -2394,7 +2394,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				
 				auto right = tangent.perpRight();
 				
-				float dist_from_line = qAbs(MapCoordF::dotProduct(right, to_coord));
+				auto dist_from_line = qAbs(MapCoordF::dotProduct(right, to_coord));
 				if (dist_from_line <= side_tolerance)
 					return Symbol::Line;
 			}
