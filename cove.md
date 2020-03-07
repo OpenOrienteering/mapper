@@ -62,7 +62,7 @@ diagonally but not horizontally or vertically.
 
 #### Thin lines
 
-This tool is used to reduce thick shapes to mimimal skeletons. You will always
+This tool is used to reduce thick shapes to minimal skeletons. You will always
 use this tool just before creating the vectors. 
 
 Note that this tool may take some time to complete its task, and it is not
