@@ -42,7 +42,7 @@ Example from OSM-ISOM2017.crt:
 
  - 406    natural = wood
  - 408    natural = wood AND (wood:age = young OR wood:age = very_young)
- - 404    natural = wood AND wood:density = sparce
+ - 404    natural = wood AND wood:density = sparse
  - 408    natural = wood AND wood:density = dense
 
 Example from ISOM2000-ISOM2017.crt:

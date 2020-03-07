@@ -72,11 +72,11 @@ At the foot of the dialog is a box which when checked hides the symbol when the 
 <!-- NOTE: as name, use symbol-type-x where x is the number in the Symbol::Type enum. -->
 
 #### Line settings
-**Line width** and **colour** define the basic line characteristics. Minimum line length function is not yet implemented. **Line cap** permits the shape of the end of the line to be specified. **Line join** refers to the rendering of vertices where line sections of different orientations join each other.
+**Line width** and **color** define the basic line characteristics. Minimum line length function is not yet implemented. **Line cap** permits the shape of the end of the line to be specified. **Line join** refers to the rendering of vertices where line sections of different orientations join each other.
 
 **Dashed lines** are created by a tick in the dash box, which shows the dash dialog settings. Typical length of dash and gap may be specified &#8212; these will be rendered with gaps of the specified size and dashes as close as practicable to the specified length (so that there is no fractional dash at the end). The appearance of lines with regular symbols or breaks may be improved by making the end dash a half length &#8212; a check box provides for this. Dashes may be grouped together with a specified gap within the groups which is different from the between-group gap length.
 
-Many symbols (e.g. 520 Stone wall) have a **repeated feature** along the line. This line feature is invoked by setting a non-zero integer number in the mid-symbol count. The mid-symbol distance sets the spacing between symbol centres. The distance between spots refers to the distance between symbol groups; if the mid-symbol distance is too large then the groups may overlap. The distance from the end is an approximate length of line projecting beyond the last group. A check box to require at least one mid-symbol ensures that the line has at least one symbol but may give confusing results if the line is too short for meaningful rendering. Setting a minimum mid-symbol count is not yet implemented. A different mid-symbol minimum may be specified for the boundary line of a closed symbol.
+Many symbols (e.g. 520 Stone wall) have a **repeated feature** along the line. This line feature is invoked by setting a non-zero integer number in the mid-symbol count. The mid-symbol distance sets the spacing between symbol centers. The distance between spots refers to the distance between symbol groups; if the mid-symbol distance is too large then the groups may overlap. The distance from the end is an approximate length of line projecting beyond the last group. A check box to require at least one mid-symbol ensures that the line has at least one symbol but may give confusing results if the line is too short for meaningful rendering. Setting a minimum mid-symbol count is not yet implemented. A different mid-symbol minimum may be specified for the boundary line of a closed symbol.
 
 Some line symbols require an **outline** which is enabled by selecting the border check box. Border width is the width (thickness) of the border lines. Shift moves the border lines further apart &#8212; shift equal to half the border width will place the line just outside the edge of the main line. A dash feature with characteristics which do not have to match the main line is enabled by the corresponding check box.
 
@@ -84,12 +84,12 @@ Some line symbols require an **outline** which is enabled by selecting the borde
 
 The start symbol will appear only at the first-fixed end of the line. This can be changed for a particular line with the [switch dashes / reversing tool](toolbars.md#switch_dashes). The start is the left end of the horizontal sample lines in the illustrative graphic to the right of the symbol editor. The start symbol may be made of several elements. To add an element click the + button at the bottom of the elements list. To delete one click the - button. An element may be a point (a circular element), a line or an area element.
 
-The default feature is a point element (line or area elements must be added). **Point elements** have inner diameter and outer width which may be different colours, and will be centred on the beginning of the main line.
+The default feature is a point element (line or area elements must be added). **Point elements** have inner diameter and outer width which may be different colors, and will be centered on the beginning of the main line.
 
-A **line element** has width, colour, end-shape and join characteristics specified in the current element dialog. The line may have any shape defined by successive pairs of coordinates, add more coordinate pairs with the + button at the bottom of the coordinates window and delete them with the - button. Another way to add a coordinate is to left click the desired position in the preview at the right. A right click repositions the currently selected coordinate.
+A **line element** has width, color, end-shape and join characteristics specified in the current element dialog. The line may have any shape defined by successive pairs of coordinates, add more coordinate pairs with the + button at the bottom of the coordinates window and delete them with the - button. Another way to add a coordinate is to left click the desired position in the preview at the right. A right click repositions the currently selected coordinate.
 The coordinate system origin is the beginning point of the symbol line, the X axis is positive in the direction of the main symbol line, and the Y axis is up the screen. Curved lines are created by constructing a shape with straights first and then clicking the "Curve start" check boxes to make some parts curves. Better results may be obtained with curves which do not bend more than 90 degrees.
 
-An **area element** has a colour and a shape specified in the current element dialog. The shape of the area is defined just as for lines, see above.
+An **area element** has a color and a shape specified in the current element dialog. The shape of the area is defined just as for lines, see above.
 
 #### Mid symbol
 
@@ -100,7 +100,7 @@ These symbols appear along the line at the spacing set for mid-symbols in the 'l
 This symbol appears only at the last-fixed end of the symbol line. This can be changed for a particular line with the [switch dashes / reversing tool](toolbars.md#switch_dashes). The end symbol will appear at the right end of the of the horizontal sample lines in the illustrative graphic to the right of the symbol editor. End symbols are edited like start symbols (see above).
 
 #### Dash symbol
-This symbol will appear at dash points along a line; drawing these can be toggled by pressing the spacebar while the drawing tool is active. The symbol will appear at each node drawn while the helpful tip at the bottom edge shows "**Dash points on.**" This switch may vary from point to point along the line. Dash symbols are edited like start symbols (see above).
+This symbol will appear at dash points along a line; drawing these can be toggled by pressing the space-bar while the drawing tool is active. The symbol will appear at each node drawn while the helpful tip at the bottom edge shows "**Dash points on.**" This switch may vary from point to point along the line. Dash symbols are edited like start symbols (see above).
 
 
 <!-- TODO: add description of area settings. -->
