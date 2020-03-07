@@ -51,6 +51,9 @@ Finding objects based on textual properties.
 [CRT files](crt_files.md){: .subpage}
 Providing rules for assigning symbols.
 
+[CoVe, the Contour Vectorizer](cove.md){: .subpage}
+Vectorizing line features in raster graphics templates.
+
 [Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
 
