@@ -800,16 +800,12 @@ void mainForm::on_saveVectorsButton_clicked()
 	for (const auto& polygon : polys)
 	{
 		auto coords = OpenOrienteering::MapCoordVector {};
-		coords.reserve(polygon.size() + 1);
+		coords.reserve(polygon.size() + 1);  // One extra slot, for some closed paths.
 		std::transform(begin(polygon), end(polygon), std::back_inserter(coords), transform);
-		if (polygon.isClosed())
-		{
-			if (!coords.back().isPositionEqualTo(coords.front()))
-				coords.push_back(coords.front());
-			coords.back().setClosePoint(true);
-		}
 
 		auto* newOOPolygon = new OpenOrienteering::PathObject(symbol, std::move(coords));
+		if (polygon.isClosed())
+			newOOPolygon->closeAllParts();
 		newOOPolygon->setTag(QStringLiteral("generator"), QStringLiteral("cove")); /// \todo Configuration of tag
 		ooMap->addObject(newOOPolygon);
 		ooMap->addObjectToSelection(newOOPolygon, false);
