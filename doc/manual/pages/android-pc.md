@@ -22,4 +22,4 @@ In this case, the easiest way is to first create a new map with the same symbol 
 
 After that, load the existing map as template in the new map. Then use the alignment tools for templates to move the existing map to match with the new georeferenced template. When you are finished, import the existing map template into the new map file using the corresponding action in the template dock widget, and you should be done.
 
-Attention: especially for old maps, the whole existing map may be locally distorted. In this case it will not be possible to match the old map and the georeferenced template and the only way to georeference the map is to do a tedious undistortion. Mapper does not provide a tool for this.
+Attention: especially for old maps, the whole existing map may be locally distorted. In this case it will not be possible to match the old map and the georeferenced template, and the only way to georeference the map is to do a tedious manual correction for distortion. Mapper does not provide a tool for this.
