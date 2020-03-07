@@ -95,7 +95,7 @@ with reference point coordinates already pre-filled as the center of the loaded 
 
 This method of positioning should only be chosen if you have no georeferencing information available for the image. First, there are two possible options to specify the image scale:
 
- - **Meters per pixel**: this is primarily useful for base maps from a digital source, where you may know this value directly. Alternatively you can also calculate it yourself: if your fieldwork image covers 500m width on the ground and the image is 1200 pixels wide then the scale will be 500 / 1200 = 0.625 metres per pixel. (Take care that the number of metres corresponds exactly the width of the image file.)
+ - **Meters per pixel**: this is primarily useful for base maps from a digital source, where you may know this value directly. Alternatively you can also calculate it yourself: if your fieldwork image covers 500m width on the ground and the image is 1200 pixels wide then the scale will be 500 / 1200 = 0.625 meters per pixel. (Take care that the number of meters corresponds exactly the width of the image file.)
  - **Scanned**: if your fieldwork is at a known scale (it should be &#8212; say 1:5000), and the scan is at a chosen resolution (say 200dpi) then these parameters may be entered to scale the fieldwork image. This assumes that printer and scanner work accurately.
 
 Note that if you do not know the image scale and / or if you are going to adjust the template position to the existing map anyway using the [adjust feature](#adjust), you can just enter any value here as the scaling will be changed again later.

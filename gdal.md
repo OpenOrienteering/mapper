@@ -118,6 +118,7 @@ depending on the configuration of the distribution's GDAL package.
 | XPM | [X11 PixMap Format](https://gdal.org/frmt_various.html#XPM) | xpm |
 | XYZ | [ASCII Gridded XYZ](https://gdal.org/frmt_xyz.html) | xyz |
 | ZMap | [ZMap Plus Grid](https://gdal.org/frmt_various.html#ZMap) | raster.dat |
+{: .no_spell_check }
 
 ### Vector import drivers
 
@@ -164,6 +165,7 @@ depending on the configuration of the distribution's GDAL package.
 | WAsP | [WAsP .map format](https://gdal.org/drv_wasp.html) | map |
 | XLSX | [MS Office Open XML spreadsheet](https://gdal.org/drv_xlsx.html) | xlsx xlsm |
 | XPlane | [X-Plane/Flightgear aeronautical data](https://gdal.org/drv_xplane.html) | dat |
+{: .no_spell_check }
 
 ### Vector export drivers
 
@@ -196,4 +198,5 @@ depending on the configuration of the distribution's GDAL package.
 | VDV | [VDV-451/VDV-452/INTREST Data Format](https://gdal.org/drv_vdv.html) | txt x10 |
 | WAsP | [WAsP .map format](https://gdal.org/drv_wasp.html) | map |
 | XLSX | [MS Office Open XML spreadsheet](https://gdal.org/drv_xlsx.html) | xlsx xlsm |
+{: .no_spell_check }
 

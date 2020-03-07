@@ -57,7 +57,7 @@ When this is activated, right clicking while drawing an object will set the last
 
 When active, the settings of templates (like their positions) will be kept in the map file when they are closed, so they can be reopened later while restoring their settings. In essence, "closing" templates does not really close them this way. When the setting is off, closed templates cannot be restored later.
 
-#### Edit tool: actions on deleting bezier spline points
+#### Edit tool: actions on deleting Bézier spline points
 
 These settings control what happens when a node between two curves in a path is deleted. The first is used when a node is deleted normally by Ctrl+clicking it, the second is used when a node is deleted by Ctrl+Shift+clicking it.
 
@@ -71,5 +71,5 @@ This controls the radius of the helper cross which is shown when using the recta
 
 #### Rectangle tool: preview the width of lines with the helper cross
 
-When this is checked, the helper cross adapts to the selected symbol: for each direction, two lines are drawn which show the radius of the used (line) symbol. This allows for better judgement of the result while drawing, but leads to more cluttering on the screen.
+When this is checked, the helper cross adapts to the selected symbol: for each direction, two lines are drawn which show the radius of the used (line) symbol. This allows for better judgment of the result while drawing, but leads to more cluttering on the screen.
 

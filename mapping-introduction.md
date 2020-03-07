@@ -40,7 +40,7 @@ Depending on the method you want to use for surveying terrain, you will need mat
 
 ### Fieldwork
 
-Accurate mapping depends on high quality fieldwork. Ordinarily, fieldwork will usually produce a paper sketch with all the detail required to produce the map but often marked up with shorthand codes which are meaningful to the mapper but which will not appear on the finished map. Instead of paper the mapper may use mylar or other robust drafting film. Fieldworking on transparent film also permits the use of an underlay which may have a coordinate grid or an old map visible underneath (at an appropriate scale).
+Accurate mapping depends on high quality fieldwork. Ordinarily, fieldwork will usually produce a paper sketch with all the detail required to produce the map but often marked up with shorthand codes which are meaningful to the mapper but which will not appear on the finished map. Instead of paper the mapper may use Mylar or other robust drafting film. Working on transparent film also permits the use of an underlay which may have a coordinate grid or an old map visible underneath (at an appropriate scale).
 
 The fieldwork will usually be done at a larger scale than the final map. With convenient rescaling of computer graphic images it is now possible for fieldwork to be undertaken at any convenient scale such as 1:5000 or even larger. This demands less skill in field penmanship than the traditional fieldwork scale of 1:7500.
 
@@ -87,7 +87,7 @@ The Print Tech Test Sheet is designed to demonstrate beneficial over-printing ef
 
 ## Map scales
 
-Map scales are set in accordance with the Internationsl Standard for Orienteering Maps (ISOM). The traditional competition format is at 1:15000. More recently maps may be printed at 1:10000 for shorter courses. Maps at 1:10k are visually identical to those at 1:15k. The ISOM emphatically requires that a larger scale 1:10k shall not be used in order to fit more detail onto the map but simply permits the map to be more easily read by older competitors who will generally have shorter courses and not require large maps. Sprint maps made to the ISSOM standard may be at either 1:5000 or 1:4000 and use a different symbol set appropriate to that scale.
+Map scales are set in accordance with the International Standard for Orienteering Maps (ISOM). The traditional competition format is at 1:15000. More recently maps may be printed at 1:10000 for shorter courses. Maps at 1:10k are visually identical to those at 1:15k. The ISOM emphatically requires that a larger scale 1:10k shall not be used in order to fit more detail onto the map but simply permits the map to be more easily read by older competitors who will generally have shorter courses and not require large maps. Sprint maps made to the ISSOM standard may be at either 1:5000 or 1:4000 and use a different symbol set appropriate to that scale.
 
 Printing of a map prepared at 1:15000 may be at either scale (and conversely a map prepared at 1:10k can be printed at 1:15k) with no loss of accuracy or information. Most course planning software provides for this re-scaling at the point of printing.
 

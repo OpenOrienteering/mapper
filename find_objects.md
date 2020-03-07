@@ -51,7 +51,7 @@ Inside double quotes, the backslash character is used to escape the special mean
 
 The button "Find next" will select the next object matching the query.
 The button "Find all will select all matching objects.
-The main windows's status line will temporarily display the number of selected objects.
+The main window's status line will temporarily display the number of selected objects.
 (It may also indicate that the query is invalid.)
 
 The "Query editor" button will replace the input field with a table for entering object tag queries.
