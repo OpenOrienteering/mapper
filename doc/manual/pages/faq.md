@@ -86,6 +86,6 @@ Tap-and-hold on the Symbol selector button. Context menu with hide and protect o
 * [Another tool](toolbars.md#tool_draw_circle) combines circle and ellipse drawing.
 * Addition and removal of path points (vertices) can be achieved via [**Edit objects** tool](toolbars.md#tool_edit_point) using various combinations of keyboard modifiers. See the status line at the bottom edge of the window for dynamically updated help. See also [Drawing](#drawing).
 * Dash points can be added and removed using the [**Edit objects** tool](toolbars.md#tool_edit_point) after pressing **Ctrl-Space** on keyboard.
-* Corner points do not exist per se. Move the Bézier curve handles independently while holding keyboard **Shift** key.
+* There are no explicit corner points. Move the Bézier curve handles independently while holding keyboard **Shift** key.
 * Edge lines of double line symbols (roads et al) are inactive and cannot be snapped on. Mapper does not support cutting out parts of the side lines.
 * Partial map export is done via a tool. See [Advanced editing](#advanced-editing).
