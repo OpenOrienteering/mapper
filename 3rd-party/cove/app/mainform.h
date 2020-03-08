@@ -55,12 +55,13 @@ class mainForm : public QDialog
 
 	struct BwBitmapUndoStep : public QUndoCommand
 	{
-		BwBitmapUndoStep(mainForm& form, QImage image);
+		BwBitmapUndoStep(mainForm& form, QImage image, bool vectorizable);
 		void redo() override;
 		void undo() override;
 
 		mainForm& form;
 		QImage image;
+		bool suitableForVectorization;
 	};
 
 public:
@@ -74,6 +75,7 @@ protected:
 	QImage imageBitmap;
 	QImage classifiedBitmap;
 	QImage bwBitmap;
+	bool bwBitmapVectorizable {};
 	QUndoStack* bwBitmapUndo {};
 	std::vector<QPushButton*> colorButtons;
 	Settings settings;

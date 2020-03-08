@@ -187,6 +187,7 @@ mainForm::~mainForm()
 void mainForm::clearBWImageTab()
 {
 	bwBitmapUndo->clear();
+	bwBitmapVectorizable = false;
 	ui.bwImageView->setPolygons(PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
 	ui.bwImageView->setImage(nullptr);
@@ -520,19 +521,25 @@ bool mainForm::performMorphologicalOperation(
 	Vectorizer::MorphologicalOperation mo)
 {
 	QString text;
+	bool transVectorizable = false;
+
 	switch (mo)
 	{
 	case Vectorizer::THINNING_ROSENFELD:
 		text = tr("Thinning B/W image");
+		transVectorizable = true;
 		break;
 	case Vectorizer::PRUNING:
 		text = tr("Pruning B/W image");
+		transVectorizable = bwBitmapVectorizable;
 		break;
 	case Vectorizer::EROSION:
 		text = tr("Eroding B/W image");
+		transVectorizable = bwBitmapVectorizable; // formally, does not change the status
 		break;
 	case Vectorizer::DILATION:
 		text = tr("Dilating B/W image");
+		transVectorizable = false;
 		break;
 	}
 	UIProgressDialog progressDialog(text, tr("Cancel"), this);
@@ -543,10 +550,11 @@ bool mainForm::performMorphologicalOperation(
 		return false;
 
 	// store the current image onto undo stack
-	auto* command = new BwBitmapUndoStep(*this, bwBitmap);
+	auto* command = new BwBitmapUndoStep(*this, bwBitmap, bwBitmapVectorizable);
 	bwBitmapUndo->push(command);
 
 	bwBitmap = transBitmap;
+	bwBitmapVectorizable = transVectorizable;
 	ui.bwImageView->setImage(&bwBitmap);
 	return true;
 }
@@ -696,6 +704,13 @@ void mainForm::on_setVectorizationOptionsButton_clicked()
 //! Creates polygons from current bwImage.
 void mainForm::on_createVectorsButton_clicked()
 {
+	if (!bwBitmapVectorizable)
+		QMessageBox::warning(this, tr("Perform thinning before vectorization"),
+		                     tr("It seems that thinning was not performed on"
+		                       " this B/W image. Vectorization can process"
+		                       " only one-pixel wide lines. Thicker lines"
+		                       " will not be converted to vectors."));
+
 	Polygons p;
 	p.setSpeckleSize(settings.getInt("speckleSize"));
 	p.setMaxDistance(settings.getInt("doConnections")
@@ -832,9 +847,10 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
  * \brief Embedded struct holding undo data.
  */
 
-mainForm::BwBitmapUndoStep::BwBitmapUndoStep(mainForm& form, QImage image)
+mainForm::BwBitmapUndoStep::BwBitmapUndoStep(mainForm& form, QImage image, bool vectorizable)
     : form { form }
     , image { image }
+    , suitableForVectorization { vectorizable }
 {
 	// nothing
 }
@@ -848,6 +864,7 @@ void mainForm::BwBitmapUndoStep::undo()
 {
 	using std::swap;
 	swap(form.bwBitmap, image);
+	swap(form.bwBitmapVectorizable, suitableForVectorization);
 	form.ui.bwImageView->setImage(&form.bwBitmap);
 }
 } // cove
