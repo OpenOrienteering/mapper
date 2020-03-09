@@ -167,8 +167,10 @@ mainForm::mainForm(QWidget* parent, OpenOrienteering::Map* map,
 	setTabEnabled(ui.colorsTab, false);
 
 	ui.howManyColorsSpinBox->setValue(settings.getInt("nColors"));
-	rollbackHistory = false;
-	bwBitmapHistoryIterator = bwBitmapHistory.begin();
+
+	bwBitmapUndo = new QUndoStack(this);
+	connect(bwBitmapUndo, SIGNAL(canUndoChanged(bool)), ui.bwImageHistoryBack, SLOT(setEnabled(bool)));
+	connect(bwBitmapUndo, SIGNAL(canRedoChanged(bool)), ui.bwImageHistoryForward, SLOT(setEnabled(bool)));
 
 	loadImage(templ->getImage(), templ->getTemplateFilename());
 
@@ -184,7 +186,8 @@ mainForm::~mainForm()
 //! Clears the Thinning tab, i.e. removes displayed image and polygons
 void mainForm::clearBWImageTab()
 {
-	bwImageClearHistory();
+	bwBitmapUndo->clear();
+	bwBitmapVectorizable = false;
 	ui.bwImageView->setPolygons(PolygonList());
 	ui.saveVectorsButton->setEnabled(false);
 	ui.bwImageView->setImage(nullptr);
@@ -499,8 +502,10 @@ void mainForm::on_mainTabWidget_currentChanged(int tabindex)
 		return;
 	}
 	
-	if (bwBitmapHistory.empty()
-	    || bwBitmapHistory.back().constBits() != newBWBitmap.constBits())
+	const auto* undoCommand = static_cast<const BwBitmapUndoStep*>
+	                      (bwBitmapUndo->command(0));
+	if (!undoCommand
+	    || undoCommand->image.constBits() != newBWBitmap.constBits())
 	{
 		// new BW image
 		clearBWImageTab();
@@ -516,19 +521,25 @@ bool mainForm::performMorphologicalOperation(
 	Vectorizer::MorphologicalOperation mo)
 {
 	QString text;
+	bool transVectorizable = false;
+
 	switch (mo)
 	{
 	case Vectorizer::THINNING_ROSENFELD:
 		text = tr("Thinning B/W image");
+		transVectorizable = true;
 		break;
 	case Vectorizer::PRUNING:
 		text = tr("Pruning B/W image");
+		transVectorizable = bwBitmapVectorizable;
 		break;
 	case Vectorizer::EROSION:
 		text = tr("Eroding B/W image");
+		transVectorizable = bwBitmapVectorizable; // formally, does not change the status
 		break;
 	case Vectorizer::DILATION:
 		text = tr("Dilating B/W image");
+		transVectorizable = false;
 		break;
 	}
 	UIProgressDialog progressDialog(text, tr("Cancel"), this);
@@ -538,122 +549,54 @@ bool mainForm::performMorphologicalOperation(
 	if (transBitmap.isNull())
 		return false;
 
+	// store the current image onto undo stack
+	auto* command = new BwBitmapUndoStep(*this, bwBitmap, bwBitmapVectorizable);
+	bwBitmapUndo->push(command);
+
 	bwBitmap = transBitmap;
+	bwBitmapVectorizable = transVectorizable;
 	ui.bwImageView->setImage(&bwBitmap);
 	return true;
-}
-
-//! Inserts the current displayed image into the history queue.  Pops the last
-// image from the history queue in case \a rollbackHistory is set, what means
-// the last image was not committed into the queue.
-void mainForm::prepareBWImageHistory()
-{
-	if (rollbackHistory)
-	{
-		if (!bwBitmapHistory.empty()) bwBitmapHistory.pop_front();
-	}
-	else if (bwBitmapHistoryIterator != bwBitmapHistory.begin())
-	{
-		bwBitmapHistory.erase(bwBitmapHistory.begin(), bwBitmapHistoryIterator);
-		bwBitmapHistory.pop_front();
-	}
-	bwBitmapHistory.push_front(bwBitmap);
-	bwBitmapHistoryIterator = bwBitmapHistory.begin();
-	ui.bwImageView->setImage(&bwBitmap);
-	rollbackHistory = true;
-}
-
-//! Completely clears the history.
-void mainForm::bwImageClearHistory()
-{
-	ui.bwImageHistoryBack->setEnabled(false);
-	ui.bwImageHistoryForward->setEnabled(false);
-	bwBitmapHistory.clear();
-	bwBitmapHistoryIterator = bwBitmapHistory.begin();
-	rollbackHistory = false;
-}
-
-//! Commits the image into the history queue.
-void mainForm::bwImageCommitHistory()
-{
-	ui.bwImageHistoryBack->setEnabled(true);
-	ui.bwImageHistoryForward->setEnabled(false);
-	rollbackHistory = false;
 }
 
 //! Returns one image back in the history.
 void mainForm::on_bwImageHistoryBack_clicked()
 {
-	// safety check
-	if (bwBitmapHistoryIterator == bwBitmapHistory.end()) return;
-	if (bwBitmapHistoryIterator == bwBitmapHistory.begin())
-	{
-		bwBitmapHistory.push_front(bwBitmap);
-		bwBitmapHistoryIterator = bwBitmapHistory.begin();
-	}
-	if (++bwBitmapHistoryIterator != bwBitmapHistory.end())
-	{
-		bwBitmap = *bwBitmapHistoryIterator;
-		ui.bwImageView->setImage(&bwBitmap);
-		if (bwBitmapHistoryIterator + 1 == bwBitmapHistory.end())
-		{
-			ui.bwImageHistoryBack->setEnabled(false);
-		}
-		ui.bwImageHistoryForward->setEnabled(true);
-	}
+	bwBitmapUndo->undo();
 }
 
 //! Advances one image forward in the history.
 void mainForm::on_bwImageHistoryForward_clicked()
 {
-	if (bwBitmapHistoryIterator != bwBitmapHistory.begin())
-	{
-		bwBitmap = *(--bwBitmapHistoryIterator);
-		ui.bwImageView->setImage(&bwBitmap);
-		ui.bwImageHistoryBack->setEnabled(true);
-		if (bwBitmapHistoryIterator == bwBitmapHistory.begin())
-		{
-			ui.bwImageHistoryForward->setEnabled(false);
-			bwBitmapHistory.pop_front();
-			bwBitmapHistoryIterator = bwBitmapHistory.begin();
-		}
-	}
+	bwBitmapUndo->redo();
 }
 
 /*! Runs the thinning.
   \sa performMorphologicalOperation */
 void mainForm::on_runThinningButton_clicked()
 {
-	prepareBWImageHistory();
-	if (performMorphologicalOperation(Vectorizer::THINNING_ROSENFELD))
-		bwImageCommitHistory();
+	performMorphologicalOperation(Vectorizer::THINNING_ROSENFELD);
 }
 
 /*! Runs the pruning.
   \sa performMorphologicalOperation */
 void mainForm::on_runPruningButton_clicked()
 {
-	prepareBWImageHistory();
-	if (performMorphologicalOperation(Vectorizer::PRUNING))
-		bwImageCommitHistory();
+	performMorphologicalOperation(Vectorizer::PRUNING);
 }
 
 /*! Erodes the image.
   \sa performMorphologicalOperation */
 void mainForm::on_runErosionButton_clicked()
 {
-	prepareBWImageHistory();
-	if (performMorphologicalOperation(Vectorizer::EROSION))
-		bwImageCommitHistory();
+	performMorphologicalOperation(Vectorizer::EROSION);
 }
 
 /*! Dilates the image.
   \sa performMorphologicalOperation */
 void mainForm::on_runDilationButton_clicked()
 {
-	prepareBWImageHistory();
-	if (performMorphologicalOperation(Vectorizer::DILATION))
-		bwImageCommitHistory();
+	performMorphologicalOperation(Vectorizer::DILATION);
 }
 
 /*! Spawns dialog on classification config options.
@@ -761,6 +704,13 @@ void mainForm::on_setVectorizationOptionsButton_clicked()
 //! Creates polygons from current bwImage.
 void mainForm::on_createVectorsButton_clicked()
 {
+	if (!bwBitmapVectorizable)
+		QMessageBox::warning(this, tr("Perform thinning before vectorization"),
+		                     tr("It seems that thinning was not performed on"
+		                       " this B/W image. Vectorization can process"
+		                       " only one-pixel wide lines. Thicker lines"
+		                       " will not be converted to vectors."));
+
 	Polygons p;
 	p.setSpeckleSize(settings.getInt("speckleSize"));
 	p.setMaxDistance(settings.getInt("doConnections")
@@ -891,6 +841,31 @@ void mainForm::on_applyFIRFilterPushButton_clicked()
 	QImage newImageBitmap = Concurrency::process<QImage>(&progressDialog, functor, imageBitmap);
 	if (!newImageBitmap.isNull()) imageBitmap = newImageBitmap;
 	ui.imageView->setImage(&imageBitmap);
+}
+
+/* \class mainForm::BwBitmapUndoStep
+ * \brief Embedded struct holding undo data.
+ */
+
+mainForm::BwBitmapUndoStep::BwBitmapUndoStep(mainForm& form, QImage image, bool vectorizable)
+    : form { form }
+    , image { image }
+    , suitableForVectorization { vectorizable }
+{
+	// nothing
+}
+
+void mainForm::BwBitmapUndoStep::redo()
+{
+	undo(); // the same data swap
+}
+
+void mainForm::BwBitmapUndoStep::undo()
+{
+	using std::swap;
+	swap(form.bwBitmap, image);
+	swap(form.bwBitmapVectorizable, suitableForVectorization);
+	form.ui.bwImageView->setImage(&form.bwBitmap);
 }
 } // cove
 

@@ -401,6 +401,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="bwImageHistoryBack">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="toolTip">
             <string>Undo last operation.</string>
            </property>
@@ -411,6 +414,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="bwImageHistoryForward">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="toolTip">
             <string>Redo last operation.</string>
            </property>

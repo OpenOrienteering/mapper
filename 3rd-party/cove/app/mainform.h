@@ -30,6 +30,7 @@
 #include <QRgb>
 #include <QString>
 #include <Qt>
+#include <QUndoCommand>
 
 #include "libvectorizer/Vectorizer.h"
 
@@ -38,6 +39,7 @@
 
 class QPushButton;
 class QWidget;
+class QUndoStack;
 
 namespace OpenOrienteering {
 class Map;
@@ -51,6 +53,17 @@ class mainForm : public QDialog
 {
 	Q_OBJECT
 
+	struct BwBitmapUndoStep : public QUndoCommand
+	{
+		BwBitmapUndoStep(mainForm& form, QImage image, bool vectorizable);
+		void redo() override;
+		void undo() override;
+
+		mainForm& form;
+		QImage image;
+		bool suitableForVectorization;
+	};
+
 public:
 	Ui::mainForm ui;
 
@@ -62,17 +75,13 @@ protected:
 	QImage imageBitmap;
 	QImage classifiedBitmap;
 	QImage bwBitmap;
-	bool rollbackHistory;
-	QList<QImage> bwBitmapHistory;
-	QList<QImage>::iterator bwBitmapHistoryIterator;
+	bool bwBitmapVectorizable {};
+	QUndoStack* bwBitmapUndo {};
 	std::vector<QPushButton*> colorButtons;
 	Settings settings;
 	static const int MESSAGESHOWDELAY;
 
 	bool performMorphologicalOperation(Vectorizer::MorphologicalOperation mo);
-	void prepareBWImageHistory();
-	void bwImageCommitHistory();
-	void bwImageClearHistory();
 	void clearColorsTab();
 	void clearBWImageTab();
 	void setTabEnabled(QWidget* tab, bool state);
