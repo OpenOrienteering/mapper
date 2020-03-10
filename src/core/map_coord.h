@@ -543,7 +543,7 @@ public:
 	
 	
 	/** Returns a vector with the given length and angle. */
-	static const MapCoordF fromPolar(qreal length, qreal angle);
+	static MapCoordF fromPolar(qreal length, qreal angle);
 	
 	
 	/** Assignment operator. */
@@ -620,7 +620,7 @@ public:
 	 * The argument is to be given in radians.
 	 * Positive arguments result in a counter-clockwise rotation.
 	 */
-	const MapCoordF rotated(qreal angle) const;
+	MapCoordF rotated(qreal angle) const;
 	
 	/**
 	 * Returns a vector with the same length that is perpendicular to this vector.
@@ -630,18 +630,18 @@ public:
 	 * 
 	 * \todo Replace with normalVector(), similar to QLineF API.
 	 */
-	constexpr const MapCoordF perpRight() const;
+	constexpr MapCoordF perpRight() const;
 	
 	/**
 	 * Returns a vector with the same length that is perpendicular to this vector.
 	 * 
 	 * \see QLineF::normalVector()
 	 */
-	constexpr const MapCoordF normalVector() const;
+	constexpr MapCoordF normalVector() const;
 	
 	
 	/** Additive inverse */
-	constexpr const MapCoordF operator-() const;
+	constexpr MapCoordF operator-() const;
 	
 	/** Component-wise addition */
 	MapCoordF& operator+= (const MapCoordF& rhs);
@@ -658,14 +658,14 @@ public:
 	using QPointF::dotProduct;
 };
 
-constexpr const MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs);
+constexpr MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs);
 
-constexpr const MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs);
+constexpr MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs);
 
-constexpr const MapCoordF operator*(const MapCoordF& lhs, qreal factor);
-constexpr const MapCoordF operator*(qreal factor, const MapCoordF& rhs);
+constexpr MapCoordF operator*(const MapCoordF& lhs, qreal factor);
+constexpr MapCoordF operator*(qreal factor, const MapCoordF& rhs);
 
-constexpr const MapCoordF operator/(const MapCoordF& lhs, qreal divisor);
+constexpr MapCoordF operator/(const MapCoordF& lhs, qreal divisor);
 
 
 
@@ -1057,7 +1057,7 @@ constexpr MapCoordF::MapCoordF(const QPointF& point) noexcept
 
 // static
 inline
-const MapCoordF MapCoordF::fromPolar(qreal length, qreal angle)
+MapCoordF MapCoordF::fromPolar(qreal length, qreal angle)
 {
 	return MapCoordF(cos(angle) * length, sin(angle) * length);
 }
@@ -1124,22 +1124,22 @@ void MapCoordF::rotate(qreal angle)
 }
 
 inline
-const MapCoordF MapCoordF::rotated(qreal angle) const
+MapCoordF MapCoordF::rotated(qreal angle) const
 {
 	return MapCoordF::fromPolar(length(), angle + this->angle());
 }
 
-constexpr const MapCoordF MapCoordF::perpRight() const
+constexpr MapCoordF MapCoordF::perpRight() const
 {
 	return MapCoordF { -y(), x() };
 }
 
-constexpr const MapCoordF MapCoordF::normalVector() const
+constexpr MapCoordF MapCoordF::normalVector() const
 {
 	return MapCoordF { y(), -x() };
 }
 
-constexpr const MapCoordF MapCoordF::operator-() const
+constexpr MapCoordF MapCoordF::operator-() const
 {
 	return static_cast<const MapCoordF>(-static_cast<const QPointF&>(*this));
 }
@@ -1170,27 +1170,27 @@ MapCoordF& MapCoordF::operator/=(qreal divisor)
 
 
 
-constexpr const MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs)
+constexpr MapCoordF operator+(const MapCoordF& lhs, const MapCoordF& rhs)
 {
 	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) + static_cast<const QPointF&>(rhs));
 }
 
-constexpr const MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs)
+constexpr MapCoordF operator-(const MapCoordF& lhs, const MapCoordF& rhs)
 {
 	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) - static_cast<const QPointF&>(rhs));
 }
 
-constexpr const MapCoordF operator*(const MapCoordF& lhs, qreal factor)
+constexpr MapCoordF operator*(const MapCoordF& lhs, qreal factor)
 {
 	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) * factor);
 }
 
-constexpr const MapCoordF operator*(qreal factor, const MapCoordF& rhs)
+constexpr MapCoordF operator*(qreal factor, const MapCoordF& rhs)
 {
 	return static_cast<const MapCoordF>(factor * static_cast<const QPointF&>(rhs));
 }
 
-constexpr const MapCoordF operator/(const MapCoordF& lhs, qreal divisor)
+constexpr MapCoordF operator/(const MapCoordF& lhs, qreal divisor)
 {
 	return static_cast<const MapCoordF>(static_cast<const QPointF&>(lhs) / divisor);
 }
