@@ -2,13 +2,22 @@
 title: CoVe, the Contour Vectorizer
 authors:
   - Kai Pastor
+  - Libor Pecháček
 keywords: Templates
-edited: 4 March 2020
+edited: 9 March 2020
 ---
 
 CoVe (for Contour Vectorizer) is the name of a tool which lets users generate
 vector line objects from visual lines in raster graphics templates. Despite of
 its original name, it is not limited to contour lines.
+
+The basic line vectorization in a bitmap image always follows the below steps:
+1) Choose bitmap image to work on.
+2) Classify colors in the image into groups and produce color-reduced image.
+   Choose which colors correspond to the lines of interest.
+3) Perform **line thinning** and run vectorization. Store the resulting lines into the map.
+
+The tool offers a number of tuning options. They are, however, not required on good quality images.
 
 ## Starting CoVe
 
@@ -39,6 +48,12 @@ analyzes the image for a small set of key colors. After classification, the
 user must select the color (or maybe multiple colors) which shall be subject
 to vectorization.
 
+The most important control on this tab is the number of colors to be identified
+in the image. For simple two-color images where there only the objects of
+interest, the default setting of "2" is sufficient. However, for real scanned
+maps the number will typically be in the range of 15-20. The reason is that
+overprinting and color bleeding will create new color combinations which
+must be identified by the tool.
 
 ## The "Thinning" tab
 
@@ -52,7 +67,8 @@ operations, there are also undo and redo actions.
 
 #### Erode
 
-This tool removes a small margin from every shape in the image.
+This tool removes a small margin from every shape in the image. Individual pixels
+and thin lines will disappear after this operation.
 
 #### Dilate
 
@@ -62,8 +78,8 @@ diagonally but not horizontally or vertically.
 
 #### Thin lines
 
-This tool is used to reduce thick shapes to minimal skeletons. You will always
-use this tool just before creating the vectors. 
+This tool is used to reduce thick shapes to minimal skeletons suitable for the
+vectorizer. You will always use this tool just before creating the vectors. 
 
 Note that this tool may take some time to complete its task, and it is not
 possible to report progress accurately.
@@ -95,6 +111,19 @@ Image after "Thin lines" step. Note the small fork at the top-left end:
 Image after "Prune" step:
 
 ![ ](images/cove-img-3.png)
+
+#### Combinations of tools
+##### Dilate-erode
+
+This combination fills small gaps and missing pixels in lines and smooths
+the lines by removing small turns. However, it will also meld closely
+spaced lines.
+
+##### Erode-dilate
+
+This combination makes all single-pixel objects disappear. This
+is useful for removing noise from the picture when the main objects
+in the are thick enough to survive the erosion.
 
 #### Vectorization and adding to the map
 
