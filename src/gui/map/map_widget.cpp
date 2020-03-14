@@ -618,7 +618,7 @@ void MapWidget::updateCursorposLabel(const MapCoordF& pos)
 		if (coords_type == PROJECTED_COORDS)
 		{
 			const QPointF projected_point(georef.toProjectedCoords(pos));
-			if (qAbs(georef.getGridScaleFactor() - 1.0) < 0.02)
+			if (qAbs(georef.getCombinedScaleFactor() - 1.0) < 0.02)
 			{
 				// Grid unit differs less than 2% from meter.
 				cursorpos_label->setText(

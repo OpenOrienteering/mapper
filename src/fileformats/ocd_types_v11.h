@@ -46,7 +46,7 @@ namespace Ocd
 		qint32  extent;
 		quint32 file_pos;
 		quint8  RESERVED_MEMBER[2];
-		quint16 num_colors;
+		qint16  num_colors;
 		quint16 colors[14];
 		Utf16PascalString<64> description;
 		IconV9  icon;

@@ -66,7 +66,11 @@ public:
 		if (image)
 		{
 			dest = (QRgb*)image->bits();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+			dest_end = dest + image->sizeInBytes() / sizeof(QRgb);
+#else
 			dest_end = dest + image->byteCount() / sizeof(QRgb);
+#endif
 		}
 	}
 	

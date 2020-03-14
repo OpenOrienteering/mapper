@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -217,7 +217,7 @@ MapColorMap Map::MapColorSet::importSet(const Map::MapColorSet& other, std::vect
 			merge_list_item->src_color = src_color;
 			for (std::size_t k = 0, colors_size = colors.size(); k < colors_size; ++k)
 			{
-				if (colors[k]->equals(*src_color, false))
+				if (colors[k]->equals(*src_color))
 				{
 					merge_list_item->dest_color = colors[k];
 					merge_list_item->dest_index = k;
@@ -517,12 +517,12 @@ unsigned int Map::getScaleDenominator() const
 	return georeferencing->getScaleDenominator();
 }
 
-void Map::changeScale(unsigned int new_scale_denominator, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
+void Map::changeScale(unsigned int new_scale_denominator, double additional_stretch, const MapCoord& scaling_center, bool scale_symbols, bool scale_objects, bool scale_georeferencing, bool scale_templates)
 {
-	if (new_scale_denominator == getScaleDenominator())
+	if (new_scale_denominator == getScaleDenominator() && additional_stretch == 1.0)
 		return;
 	
-	double factor = getScaleDenominator() / (double)new_scale_denominator;
+	double factor = (getScaleDenominator() / (double)new_scale_denominator) * additional_stretch;
 	
 	if (scale_symbols)
 		scaleAllSymbols(factor);
@@ -892,7 +892,7 @@ std::size_t Map::deleteIrregularObjects()
 	{
 		for (auto part : parts)
 		{
-			if (part->deleteObject(object, false))
+			if (part->deleteObject(object))
 			{
 				++result;
 				goto next_object;
@@ -945,7 +945,7 @@ void Map::deleteSelectedObjects()
 			if (index >= 0)
 			{
 				undo_step->addObject(index, *obj);
-				part->deleteObject(index, true);
+				part->releaseObject(index);
 			}
 			else
 			{
@@ -1969,7 +1969,7 @@ void Map::removePart(std::size_t index)
 	
 	// FIXME: This loop should move to MapPart.
 	while(part->getNumObjects())
-		part->deleteObject(0, false);
+		part->deleteObject(0);
 	
 	parts.erase(parts.begin() + index);
 	if (current_part_index >= index)
@@ -2031,7 +2031,7 @@ int Map::reassignObjectsToMapPart(std::vector<int>::const_iterator first, std::v
 		if (current_part_index == source && isObjectSelected(object))
 			removeObjectFromSelection(object, false);
 		
-		source_part->deleteObject(object, true);
+		source_part->releaseObject(object);
 		target_part->addObject(object);
 	}
 	
@@ -2055,7 +2055,7 @@ int Map::mergeParts(std::size_t source, std::size_t destination)
 	for (auto i = source_part->getNumObjects(); i > 0 ; --i)
 	{
 		Object* object = source_part->getObject(0);
-		source_part->deleteObject(0, true);
+		source_part->releaseObject(0);
 		
 		int index = target_part->getNumObjects();
 		target_part->addObject(object, index);
@@ -2090,17 +2090,22 @@ int Map::addObject(Object* object, int part_index)
 	return object_index;
 }
 
-void Map::deleteObject(Object* object, bool remove_only)
+void Map::deleteObject(Object* object)
+{
+	delete releaseObject(object);
+}
+
+Object* Map::releaseObject(Object* object)
 {
 	for (MapPart* part : parts)
 	{
-		if (part->deleteObject(object, remove_only))
-			return;
+		if (auto object_found = part->releaseObject(object))
+			return object_found;
 	}
 	
-	qCritical().nospace() << this << "::deleteObject(" << object << "," << remove_only << "): Object not found. This is a bug.";
-	if (!remove_only)
-		delete object;
+	qCritical().nospace() << this << "::deleteObject(" << object << "): Object not found. This is a bug.";
+
+	return nullptr;
 }
 
 void Map::setObjectsDirty()
@@ -2142,7 +2147,7 @@ void Map::setObjectAreaDirty(const QRectF& map_coords_rect)
 
 void Map::findObjectsAt(
         const MapCoordF& coord,
-        float tolerance,
+        qreal tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
         bool include_hidden_objects,
@@ -2154,7 +2159,7 @@ void Map::findObjectsAt(
 
 void Map::findAllObjectsAt(
         const MapCoordF& coord,
-        float tolerance,
+        qreal tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
         bool include_hidden_objects,

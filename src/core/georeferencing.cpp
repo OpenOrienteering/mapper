@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,8 +35,8 @@
 #include <QLocale>
 #include <QPoint>
 #include <QSignalBlocker>
+#include <QStandardPaths> // IWYU pragma: keep
 #include <QStringRef>
-#include <QTemporaryDir> // IWYU pragma: keep
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -60,6 +60,7 @@ namespace literal
 	
 	static const QLatin1String scale("scale");
 	static const QLatin1String grid_scale_factor{"grid_scale_factor"};
+	static const QLatin1String auxiliary_scale_factor{"auxiliary_scale_factor"};
 	static const QLatin1String declination("declination");
 	static const QLatin1String grivation("grivation");
 	
@@ -91,38 +92,49 @@ namespace
 {
 #ifdef Q_OS_ANDROID
 	/**
-	 * @brief Provides required files for RROJ library.
+	 * Provides a cache directory for RROJ resource files.
+	 */
+	const QDir& projCacheDirectory()
+	{
+		static auto const dir = []() -> QDir {
+			auto cache = QDir(QStandardPaths::writableLocation(QStandardPaths::CacheLocation));
+			auto proj = QStringLiteral("proj");
+			if (!cache.exists(proj))
+				cache.mkpath(proj);
+			if (!cache.exists(proj))
+				qDebug("Could not create a cache directory for PROJ resource files");
+			cache.cd(proj);
+			return cache;
+		}();
+		return dir;
+	}
+	
+	/**
+	 * Ensures PROJ resource file availability in the cache directory.
 	 * 
 	 * This function implements the interface required by
 	 * proj_context_set_file_finder().
 	 * 
-	 * This functions checks if the requested file name is available in a
-	 * temporary directory. If not, it tries to copy the file from the proj
+	 * This functions checks if the requested file name is available in the
+	 * cache directory. If not, it tries to copy the file from the proj
 	 * subfolder of the assets folder to this temporary directory.
 	 * 
-	 * If the file exists in the temporary folder (or copying was successful)
-	 * this function returns the full path of this file as a C string.
-	 * This string becomes invalid the next time this function is called.
-	 * Otherwise it returns nullptr.
+	 * It always returns nullptr, letting PROJ find the file in the cache
+	 * directory via the configured search path.
 	 */
 	extern "C"
 	const char* projFileHelperAndroid(PJ_CONTEXT* /*ctx*/, const char* name, void* /*user_data*/)
 	{
-		static QTemporaryDir temp_dir;
-		if (temp_dir.isValid())
+		auto const& cache = projCacheDirectory();
+		if (cache.exists())
 		{
-			QString path = QDir(temp_dir.path()).filePath(QString::fromUtf8(name));
-			QFile file(path);
-			if (file.exists() || QFile::copy(QLatin1String("assets:/proj/") + QLatin1String(name), path))
+			auto const name_string = QString::fromUtf8(name);
+			auto const path = cache.filePath(name_string);
+			if (!QFile::exists(path)
+			    && !QFile::copy(QLatin1String("assets:/proj/") + name_string, path))
 			{
-				static auto c_string = path.toLocal8Bit();
-				return c_string.constData();
+				qDebug("Could not provide projection data file '%s'", name);
 			}
-			qDebug("Could not provide projection data file '%s'", name);
-		}
-		else
-		{
-			qDebug("Could not create a temporary directory for projection data");
 		}
 		return nullptr;
 	}
@@ -151,18 +163,19 @@ namespace
 #else
 			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
 
+#if defined(Q_OS_ANDROID)
+			// Register file finder function needed by Proj.4
+			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
+			auto proj_data = QFileInfo(projCacheDirectory().path());
+#else
 			auto proj_data = QFileInfo(QLatin1String("data:/proj"));
+#endif  // defined(Q_OS_ANDROID)
 			if (proj_data.exists())
 			{
 				static auto const location = proj_data.absoluteFilePath().toLocal8Bit();
 				static auto* const data = location.constData();
 				proj_context_set_search_paths(nullptr, 1, &data);
 			}
-
-#if defined(Q_OS_ANDROID)
-			// Register file finder function needed by Proj.4
-			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
-#endif  // defined(Q_OS_ANDROID)
 #endif  // ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		}
 	};
@@ -290,9 +303,11 @@ ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 
 ProjTransform::ProjTransform(const QString& crs_spec)
 {
-	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	auto spec_latin1 = crs_spec.toLatin1();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	spec_latin1.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
 	pj = proj_create_crs_to_crs(PJ_DEFAULT_CTX, Georeferencing::geographic_crs_spec.toLatin1(), spec_latin1, nullptr);
 	if (pj)
 		operator=({proj_normalize_for_visualization(PJ_DEFAULT_CTX, pj)});
@@ -356,10 +371,13 @@ const QString Georeferencing::geographic_crs_spec(QString::fromLatin1("+proj=lat
 Georeferencing::Georeferencing()
 : state(Local),
   scale_denominator{1000},
+  combined_scale_factor{1.0},
+  auxiliary_scale_factor{1.0},
   grid_scale_factor{1.0},
   declination(0.0),
   grivation(0.0),
   grivation_error(0.0),
+  convergence(0.0),
   map_ref_point(0, 0),
   projected_ref_point(0, 0)
 {
@@ -374,10 +392,13 @@ Georeferencing::Georeferencing(const Georeferencing& other)
 : QObject(),
   state(other.state),
   scale_denominator(other.scale_denominator),
-  grid_scale_factor{other.grid_scale_factor},
+  combined_scale_factor{other.combined_scale_factor},
+  auxiliary_scale_factor{other.auxiliary_scale_factor},
+  grid_scale_factor(other.grid_scale_factor),
   declination(other.declination),
   grivation(other.grivation),
   grivation_error(other.grivation_error),
+  convergence(other.convergence),
   map_ref_point(other.map_ref_point),
   projected_ref_point(other.projected_ref_point),
   projected_crs_id(other.projected_crs_id),
@@ -398,10 +419,13 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	
 	state                    = other.state;
 	scale_denominator        = other.scale_denominator;
+	combined_scale_factor    = other.combined_scale_factor;
+	auxiliary_scale_factor   = other.auxiliary_scale_factor;
 	grid_scale_factor        = other.grid_scale_factor;
 	declination              = other.declination;
 	grivation                = other.grivation;
 	grivation_error          = other.grivation_error;
+	convergence              = other.convergence;
 	map_ref_point            = other.map_ref_point;
 	projected_ref_point      = other.projected_ref_point;
 	from_projected           = other.from_projected;
@@ -416,6 +440,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 	emit stateChanged();
 	emit transformationChanged();
 	emit declinationChanged();
+	emit auxiliaryScaleFactorChanged();
 	emit projectionChanged();
 	
 	return *this;
@@ -447,11 +472,10 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	
 	if (georef_element.hasAttribute(literal::grid_scale_factor))
 	{
-		grid_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
-		if (grid_scale_factor <= 0.0)
-			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(grid_scale_factor)));
+		combined_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::grid_scale_factor));
+		if (combined_scale_factor <= 0.0)
+			throw FileFormatException(tr("Invalid grid scale factor: %1").arg(QString::number(combined_scale_factor)));
 	}
-	
 	state = Local;
 	if (load_scale_only)
 	{
@@ -459,6 +483,12 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 	}
 	else
 	{
+		if (georef_element.hasAttribute(literal::auxiliary_scale_factor))
+		{
+			auxiliary_scale_factor = roundScaleFactor(georef_element.attribute<double>(literal::auxiliary_scale_factor));
+			if (auxiliary_scale_factor <= 0.0)
+				throw FileFormatException(tr("Invalid auxiliary scale factor: %1").arg(QString::number(auxiliary_scale_factor)));
+		}
 		if (georef_element.hasAttribute(literal::declination))
 			declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 		if (georef_element.hasAttribute(literal::grivation))
@@ -554,6 +584,15 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 		if (proj_transform.isValid())
 		{
 			state = Normal;
+		}
+		updateGridCompensation();
+		if (!georef_element.hasAttribute(literal::auxiliary_scale_factor))
+		{
+			initAuxiliaryScaleFactor();
+		}
+		emit auxiliaryScaleFactorChanged();
+		if (proj_transform.isValid())
+		{
 			emit stateChanged();
 		}
 	}
@@ -564,8 +603,12 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 {
 	XmlElementWriter georef_element(xml, literal::georeferencing);
 	georef_element.writeAttribute(literal::scale, scale_denominator);
-	if (grid_scale_factor != 1.0)
-		georef_element.writeAttribute(literal::grid_scale_factor, grid_scale_factor, scaleFactorPrecision());
+	if (combined_scale_factor != 1.0 || auxiliary_scale_factor != 1.0)
+	{
+		if (combined_scale_factor != 1.0)
+			georef_element.writeAttribute(literal::grid_scale_factor, combined_scale_factor, scaleFactorPrecision());
+		georef_element.writeAttribute(literal::auxiliary_scale_factor, auxiliary_scale_factor, scaleFactorPrecision());
+	}
 	if (!qIsNull(declination))
 		georef_element.writeAttribute(literal::declination, declination, declinationPrecision());
 	if (!qIsNull(grivation))
@@ -641,7 +684,10 @@ void Georeferencing::setState(Georeferencing::State value)
 		updateTransformation();
 		
 		if (state != Normal)
+		{
 			setProjectedCRS(QStringLiteral("Local"), {});
+			updateGridCompensation();
+		}
 		
 		emit stateChanged();
 	}
@@ -657,39 +703,62 @@ void Georeferencing::setScaleDenominator(int value)
 	}
 }
 
-void Georeferencing::setGridScaleFactor(double value)
+void Georeferencing::setCombinedScaleFactor(double value)
 {
 	Q_ASSERT(value > 0);
-	if (grid_scale_factor != value)
+	double combined_scale_factor = roundScaleFactor(value);
+	double auxiliary_scale_factor = roundScaleFactor(value / grid_scale_factor);
+	setScaleFactors(combined_scale_factor, auxiliary_scale_factor);
+}
+
+void Georeferencing::setAuxiliaryScaleFactor(double value)
+{
+	Q_ASSERT(value > 0);
+	double auxiliary_scale_factor = roundScaleFactor(value);
+	double combined_scale_factor = roundScaleFactor(value * grid_scale_factor);
+	setScaleFactors(combined_scale_factor, auxiliary_scale_factor);
+}
+
+void Georeferencing::setScaleFactors(double combined_scale_factor, double auxiliary_scale_factor)
+{
+	bool combined_change = combined_scale_factor != this->combined_scale_factor;
+	bool auxiliary_change = auxiliary_scale_factor != this->auxiliary_scale_factor;
+	if (combined_change || auxiliary_change)
 	{
-		grid_scale_factor = value;
-		updateTransformation();
+		this->auxiliary_scale_factor = auxiliary_scale_factor;
+		this->combined_scale_factor = combined_scale_factor;
+		if (combined_change)
+			updateTransformation();
+		if (auxiliary_change)
+			emit auxiliaryScaleFactorChanged();
 	}
 }
 
 void Georeferencing::setDeclination(double value)
 {
 	double declination = roundDeclination(value);
-	double grivation = declination - getConvergence();
+	double grivation = roundDeclination(value - convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }
 
 void Georeferencing::setGrivation(double value)
 {
 	double grivation = roundDeclination(value);
-	double declination = grivation + getConvergence();
+	double declination = roundDeclination(value + convergence);
 	setDeclinationAndGrivation(declination, grivation);
 }
 
 void Georeferencing::setDeclinationAndGrivation(double declination, double grivation)
 {
 	bool declination_change = declination != this->declination;
-	if (declination_change || grivation != this->grivation)
+	bool grivation_change = grivation != this->grivation;
+	if (declination_change || grivation_change)
 	{
 		this->declination = declination;
 		this->grivation   = grivation;
 		this->grivation_error = 0.0;
-		updateTransformation();
+		if (grivation_change)
+			updateTransformation();
 		
 		if (declination_change)
 			emit declinationChanged();
@@ -705,7 +774,7 @@ void Georeferencing::setMapRefPoint(const MapCoord& point)
 	}
 }
 
-void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_grivation)
+void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_grivation, bool update_scale_factor)
 {
 	if (projected_ref_point != point || state == Normal)
 	{
@@ -725,8 +794,11 @@ void Georeferencing::setProjectedRefPoint(const QPointF& point, bool update_griv
 			if (ok && new_geo_ref_point != geographic_ref_point)
 			{
 				geographic_ref_point = new_geo_ref_point;
+				updateGridCompensation();
 				if (update_grivation)
 					updateGrivation();
+				if (update_scale_factor)
+					updateCombinedScaleFactor();
 				emit projectionChanged();
 			}
 		}
@@ -754,24 +826,82 @@ QString Georeferencing::getProjectedCoordinatesName() const
 
 double Georeferencing::getConvergence() const
 {
-	if (state != Normal || !isValid())
-		return 0.0;
-	
-	// Second point on the same meridian
-	const double delta_phi = 360.0 / 40000.0;  // roughly 1 km
-	double other_latitude = geographic_ref_point.latitude();
-	other_latitude +=  (other_latitude < 0.0) ? delta_phi : -delta_phi;
-	const double same_longitude = geographic_ref_point.longitude();
-	QPointF projected_other = toProjectedCoords(LatLon(other_latitude, same_longitude));
-	
-	double denominator = projected_other.y() - projected_ref_point.y();
-	if (fabs(denominator) < 0.00000000001)
-		return 0.0;
-	
-	return roundDeclination(qRadiansToDegrees(atan((projected_ref_point.x() - projected_other.x()) / denominator)));
+	return convergence;
 }
 
-void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation)
+void Georeferencing::updateGridCompensation()
+{
+	convergence = 0.0;
+	grid_scale_factor = 1.0;
+
+	if (state != Normal || !isValid())
+		return;
+
+	const double delta = 1000.0; // meters
+
+	QString local_crs_spec = QString::fromLatin1("+proj=sterea +lat_0=%1 +lon_0=%2 +ellps=WGS84 +units=m")
+	        .arg(geographic_ref_point.latitude(), 0, 'f')
+	        .arg(geographic_ref_point.longitude(), 0, 'f');
+	ProjTransform local_proj_transform(local_crs_spec);
+	if (!local_proj_transform.isValid())
+		return;
+
+	// Determine 1 km baselines west-east and south-north on the ellipsoid.
+	bool ok_east_point = false;
+	const QPointF east_projected_coords {delta/2, 0};
+	const LatLon east_point = local_proj_transform.inverse(east_projected_coords, &ok_east_point);
+
+	bool ok_north_point = false;
+	const QPointF north_projected_coords {0, delta/2};
+	const LatLon north_point = local_proj_transform.inverse(north_projected_coords, &ok_north_point);
+
+	bool ok_west_point = false;
+	const QPointF west_projected_coords {-delta/2, 0};
+	const LatLon west_point = local_proj_transform.inverse(west_projected_coords, &ok_west_point);
+
+	bool ok_south_point = false;
+	const QPointF south_projected_coords {0, -delta/2};
+	const LatLon south_point = local_proj_transform.inverse(south_projected_coords, &ok_south_point);
+
+	if (!(ok_east_point && ok_north_point && ok_west_point && ok_south_point))
+		return;
+
+	// Get projected coordinates on same meridian and on same parallel around reference point.
+	bool ok_east = false;
+	QPointF projected_east  = toProjectedCoords(east_point,  &ok_east);
+	bool ok_north = false;
+	QPointF projected_north = toProjectedCoords(north_point, &ok_north);
+	bool ok_west = false;
+	QPointF projected_west  = toProjectedCoords(west_point,  &ok_west);
+	bool ok_south = false;
+	QPointF projected_south = toProjectedCoords(south_point, &ok_south);
+	if (!(ok_east && ok_north && ok_west && ok_south))
+		return;
+
+	// Points on the same meridian
+	const double d_northing_dy = (projected_north.y() - projected_south.y()) / delta;
+	const double d_easting_dy = (projected_north.x() - projected_south.x()) / delta;
+	// Points on the same parallel
+	const double d_northing_dx = (projected_east.y() - projected_west.y()) / delta;
+	const double d_easting_dx = (projected_east.x() - projected_west.x()) / delta;
+
+	// A transform with a tiny (or negative) determinant is nonsense for a map, and
+	// would cause blow-ups.
+	const double determinant = d_easting_dx*d_northing_dy - d_northing_dx*d_easting_dy;
+	if (determinant < 0.00000000001)
+		return;
+
+	// This is the angle between true azimuth and grid azimuth.
+	// In case of deformation, the convergence varies with direction and this is an average.
+	convergence = qRadiansToDegrees(atan2(d_northing_dx - d_easting_dy,
+	                                      d_easting_dx + d_northing_dy));
+
+	// This is the scale factor from true distance to grid distance.
+	// In case of deformation, the scale factor varies with direction and this is an average.
+	grid_scale_factor = sqrt(determinant);
+}
+
+void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation, bool update_scale_factor)
 {
 	bool geo_ref_point_changed = geographic_ref_point != lat_lon;
 	if (geo_ref_point_changed || state == Normal)
@@ -785,8 +915,11 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		if (ok && new_projected_ref != projected_ref_point)
 		{
 			projected_ref_point = new_projected_ref;
+			updateGridCompensation();
 			if (update_grivation)
 				updateGrivation();
+			if (update_scale_factor)
+				updateCombinedScaleFactor();
 			updateTransformation();
 			emit projectionChanged();
 		}
@@ -799,11 +932,11 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 
 void Georeferencing::updateTransformation()
 {
+	// Use the grivation and combined scale factor.
 	QTransform transform;
 	transform.translate(projected_ref_point.x(), projected_ref_point.y());
 	transform.rotate(-grivation);
-	
-	double scale = grid_scale_factor * scale_denominator / 1000.0; // to meters
+	double scale = combined_scale_factor * scale_denominator / 1000.0; // to meters
 	transform.scale(scale, -scale);
 	transform.translate(-map_ref_point.x(), -map_ref_point.y());
 	
@@ -813,6 +946,16 @@ void Georeferencing::updateTransformation()
 		from_projected = transform.inverted();
 		emit transformationChanged();
 	}
+}
+
+void Georeferencing::updateCombinedScaleFactor()
+{
+	setAuxiliaryScaleFactor(auxiliary_scale_factor);
+}
+
+void Georeferencing::initAuxiliaryScaleFactor()
+{
+	setCombinedScaleFactor(combined_scale_factor);
 }
 
 void Georeferencing::updateGrivation()
@@ -884,6 +1027,8 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 			if (ok && state != Normal)
 				setState(Normal);
 		}
+		if (!ok)
+			updateGridCompensation();
 		
 		emit projectionChanged();
 	}
@@ -997,7 +1142,7 @@ QDebug operator<<(QDebug dbg, const Georeferencing &georef)
 {
 	dbg.nospace() 
 	  << "Georeferencing(1:" << georef.scale_denominator
-	  << " " << georef.grid_scale_factor
+	  << " " << georef.combined_scale_factor
 	  << " " << georef.declination
 	  << " " << georef.grivation
 	  << "deg, " << georef.projected_crs_id

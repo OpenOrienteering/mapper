@@ -56,15 +56,26 @@ const std::vector<QByteArray>& TemplateMap::supportedExtensions()
 
 TemplateMap::TemplateMap(const QString& path, Map* map)
 : Template(path, map)
-{
-	// nothing
-}
+{}
+
+TemplateMap::TemplateMap(const TemplateMap& proto)
+: Template(proto)
+{}
 
 TemplateMap::~TemplateMap()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
 }
+
+TemplateMap* TemplateMap::duplicate() const
+{
+	auto* copy = new TemplateMap(*this);
+	if (template_state == Loaded)
+		copy->loadTemplateFileImpl(false);
+	return copy;
+}
+
 
 const char* TemplateMap::getTemplateType() const
 {
@@ -178,14 +189,6 @@ QRectF TemplateMap::getTemplateExtent() const
 	if (template_map)
 		extent = template_map->calculateExtent(false, false, nullptr);
 	return extent;
-}
-
-Template* TemplateMap::duplicateImpl() const
-{
-	auto copy = new TemplateMap(template_path, map);
-	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
-	return copy;
 }
 
 

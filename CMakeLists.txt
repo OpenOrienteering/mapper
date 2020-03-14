@@ -1,6 +1,6 @@
 #
 #    Copyright 2012, 2013, 2014 Thomas Schöps
-#    Copyright 2012-2019 Kai Pastor
+#    Copyright 2012-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -29,8 +29,8 @@ endif()
 
 # Project declaration
 
-project(Mapper VERSION 0.9.1 LANGUAGES CXX C)
-set(Mapper_COPYRIGHT "(C) 2019 The OpenOrienteering developers")
+project(Mapper VERSION 0.9.2 LANGUAGES CXX C)
+set(Mapper_COPYRIGHT "(C) 2020 The OpenOrienteering developers")
 
 math(EXPR Mapper_VERSION_CODE "${Mapper_VERSION_MAJOR} * 10000 + ${Mapper_VERSION_MINOR} * 100 + ${Mapper_VERSION_PATCH} * 2 + ${CMAKE_SIZEOF_VOID_P} / 4 - 1")
 
@@ -67,6 +67,13 @@ option(Mapper_DEBUG_TRANSLATIONS "Debug missing translations" OFF)
 option(Mapper_BUILD_CLIPPER "Build the Clipper package from source" OFF)
 
 option(Mapper_USE_GDAL   "Use the GDAL library" ON)
+
+if(ANDROID)
+	set(Mapper_WITH_COVE_DEFAULT OFF)
+else()
+	set(Mapper_WITH_COVE_DEFAULT ON)
+endif()
+option(Mapper_WITH_COVE "Build and include contour line vectorization" ${Mapper_WITH_COVE_DEFAULT})
 
 if(CMAKE_BUILD_TYPE MATCHES Release|MinSizeRel|RelWithDebInfo)
 	set(Mapper_DEVELOPMENT_BUILD_DEFAULT OFF)
@@ -142,7 +149,7 @@ if(CMAKE_CROSSCOMPILING)
 endif()
 
 
-# Build definitons
+# Build definitions
 
 include(CTest)
 
@@ -183,7 +190,13 @@ endif()
 if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
-	add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+endif()
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.2.1)
+	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
+	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
 endif()
 
 if(Mapper_USE_GDAL)
@@ -251,7 +264,10 @@ add_subdirectory("doc/manual")
 add_subdirectory("examples")
 add_subdirectory("symbol sets")
 add_subdirectory("translations")
-add_subdirectory("3rd-party/qbezier")
+if(Mapper_WITH_COVE)
+	add_feature_info(Mapper_WITH_COVE "${Mapper_WITH_COVE}" "Contour line vectorization")
+	add_subdirectory("3rd-party/cove")
+endif()
 if(NOT ANDROID)
 	add_subdirectory("3rd-party/qtsingleapplication")
 endif()

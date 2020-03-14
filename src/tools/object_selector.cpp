@@ -42,7 +42,7 @@ ObjectSelector::ObjectSelector(Map* map)
 
 
 
-bool ObjectSelector::selectAt(const MapCoordF& position, double tolerance, bool toggle)
+bool ObjectSelector::selectAt(const MapCoordF& position, qreal tolerance, bool toggle)
 {
 	bool selection_changed;
 	
@@ -53,9 +53,9 @@ bool ObjectSelector::selectAt(const MapCoordF& position, double tolerance, bool 
 	
 	// Clicked - get objects below cursor
 	SelectionInfoVector objects;
-	map->findObjectsAt(position, 0.001f * tolerance, false, false, false, false, objects);
+	map->findObjectsAt(position, 0.001 * tolerance, false, false, false, false, objects);
 	if (objects.empty())
-		map->findObjectsAt(position, 0.001f * 1.5f * tolerance, false, true, false, false, objects);
+		map->findObjectsAt(position, 0.0015 * tolerance, false, true, false, false, objects);
 	
 	// Selection logic, trying to select the most relevant object(s)
 	if (!toggle || map->getNumSelectedObjects() == 0)

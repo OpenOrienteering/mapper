@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017-2019 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -473,8 +473,8 @@ SymbolRuleSet::Options SymbolReplacementDialog::replacementOptions() const
 	{
 		options.setFlag(SymbolRuleSet::ImportAllSymbols, import_all_check->isChecked());
 		options.setFlag(SymbolRuleSet::PreserveSymbolState, preserve_symbol_states_check->isChecked());
-		options.setFlag(SymbolRuleSet::KeepUnusedSymbols, !delete_unused_symbols_check->isChecked());
-		options.setFlag(SymbolRuleSet::KeepUnusedColors, !delete_unused_colors_check->isChecked());
+		options.setFlag(SymbolRuleSet::RemoveUnusedSymbols, delete_unused_symbols_check->isChecked());
+		options.setFlag(SymbolRuleSet::RemoveUnusedColors, delete_unused_colors_check->isChecked());
 	}
 	return options;
 }

@@ -6,7 +6,7 @@ authors:
   - Thomas Schoeps
 keywords: Toolbars
 edited: 5 June 2018
-todo:
+to-do:
   - Split this page and update ALL context help in Mapper.
   - Update context help for zoom-in and -out in Mapper.
 ---
@@ -99,8 +99,8 @@ Using this tool, click on the map to select a single object. If the object you w
 If only a few objects are selected, the nodes defining these objects become visible. There are different types of nodes:
  - A square stands for a normal node.
  - A diamond depicts a [dash point (see below)](#dash-points).
- - A circle depicts a bezier curve handle, defining the tangent of a curve point.
-Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a bezier curve, click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
+ - A circle depicts a Bézier curve handle, defining the tangent of a curve point.
+Individual nodes can be dragged with the mouse to change their position. To change the tangent direction of a node on a Bézier curve, click the end of the handle and drag it. Longer handles have greater influence, while shorter handles have only local effect.
 
 To **add** an extra node to an existing line or curve, Ctrl-click on an empty spot of a path. By moving the mouse, the new node can be positioned in the same action. If a **dash point** is required, hold the space bar down while Ctrl-clicking. To **remove** a node, Ctrl-click an existing node.
 
@@ -134,9 +134,9 @@ The path tool draws line objects such as contour lines, watercourses and roads a
 
 To draw a path consisting of **straight segments**, like the shape of a house, proceed by clicking at the position of each corner on the map. At the last corner, right click or double click to finish the path. Area symbols will be closed automatically, so you do not need to click the first position again. In case you do not want right clicking to set the last path point in addition to finishing the path, you can change this behavior in the [program settings](settings.md).
 
-To create a **smooth path** (a cubic bezier spline), click and drag the mouse away in the continuing direction. This creates a node with control handles which may be subsequently used to refine the shape of the curve.
+To create a **smooth path** (a cubic Bézier spline), click and drag the mouse away in the continuing direction. This creates a node with control handles which may be subsequently used to refine the shape of the curve.
 
-*Note:* While this way of drawing curves may seem to be difficult at first, it is important to get used to it. Drawing "smooth" curves with many small straight segments instead is **not an alternative**, as these will look ugly when viewed closely. Just practice bezier curve drawing until you get used to it. Less nodes are often better than too many.
+*Note:* While this way of drawing curves may seem to be difficult at first, it is important to get used to it. Drawing "smooth" curves with many small straight segments instead is **not an alternative**, as these will look ugly when viewed closely. Just practice Bézier curve drawing until you get used to it. Less nodes are often better than too many.
 
 It is also possible to **mix straight and curved segments**: click once to create a corner point, click and drag to create a curve points. Segments between two curve points will be created as smooth curves, while all other segments will be straight.
 
@@ -170,7 +170,7 @@ To draw a circle, either click on one point on the circle and then on the opposi
 
 To draw an ellipse, click at one of the boundary points on the major or minor axis of the ellipse, then click and hold at the opposite point on the ellipse and define the extent by dragging the mouse away.
 
-Circles and ellipses are represented by four bezier curves and can be edited like any other path.
+Circles and ellipses are represented by four Bézier curves and can be edited like any other path.
 
 
 #### ![ ](../mapper-images/draw-rectangle.png) Draw rectangles {#tool_draw_rectangle}
@@ -329,7 +329,16 @@ This tool is useful for making training maps where certain symbols are missing i
 #### ![ ](../mapper-images/tool-convert-to-curves.png) Convert to curves {#convert_to_curves}
 N
 
-This tool changes the shape of selected polygonal objects to smooth. It can be used to "prettify" objects which have been drawn as polygonal objects but are curved in reality (however, it is usually less effort to draw these as curved objects from the start). Note that this tool is still experimental and might take some time to compute for a large number of objects.
+This tool changes the shape of selected polygonal objects to smooth.
+It can be used to smooth objects which have been drawn or imported as
+polygonal objects but are curved in reality. It is also useful for
+simplifying complex computer-generated objects, such as raw lidar
+contours.
+
+Note that this tool might take some time to complete for a large number
+of objects, and the results may not match expectations in some cases.
+So drawing curved objects manually can be a fair alternative with
+reasonable effort.
 
 
 #### ![ ](../mapper-images/tool-simplify-path.png) Simplify path {#simplify_path}

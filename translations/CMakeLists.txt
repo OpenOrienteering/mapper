@@ -31,6 +31,7 @@ set(Mapper_translations
   OpenOrienteering_es.ts
   OpenOrienteering_fi.ts
   OpenOrienteering_fr.ts
+  OpenOrienteering_hr.ts
   OpenOrienteering_hu.ts
   OpenOrienteering_id.ts
   OpenOrienteering_it.ts
@@ -40,6 +41,7 @@ set(Mapper_translations
   OpenOrienteering_nl.ts
   OpenOrienteering_pl.ts
   OpenOrienteering_pt_BR.ts
+  OpenOrienteering_pt_PT.ts
   OpenOrienteering_ru.ts
   OpenOrienteering_sv.ts
   OpenOrienteering_uk.ts
@@ -53,8 +55,7 @@ set(Mapper_translations_template
   OpenOrienteering_et.ts
   OpenOrienteering_eu.ts
   OpenOrienteering_he.ts
-  OpenOrienteering_hr.ts
-  OpenOrienteering_pt_PT.ts
+  OpenOrienteering_tr.ts
   OpenOrienteering_template.ts
 )
 
@@ -67,8 +68,10 @@ set(map_symbols_translations
   map_symbols_es.ts
   map_symbols_fi.ts
   map_symbols_fr.ts
+  map_symbols_hr.ts
   map_symbols_hu.ts
   map_symbols_it.ts
+  map_symbols_nb.ts
   map_symbols_ru.ts
   map_symbols_sv.ts
   map_symbols_uk.ts
@@ -78,11 +81,10 @@ set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
 
 # Translation files which are updated but not deployed.
 set(map_symbols_translations_template
-  map_symbols_hr.ts
-  map_symbols_nb.ts
   map_symbols_nl.ts
   map_symbols_pl.ts
   map_symbols_tr.ts
+  map_symbols_zh_Hans.ts
   map_symbols_template.ts
 )
 # Make translation list available for SymbolSetTool

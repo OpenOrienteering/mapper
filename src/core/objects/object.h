@@ -95,7 +95,7 @@ public:
 	explicit Object(Type type, const Symbol* symbol = nullptr);
 	
 	/** Creates an empty object with the given type, symbol, coords and (optional) map. */
-	explicit Object(Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit Object(Type type, const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
 protected:
 	/**
@@ -234,7 +234,7 @@ public:
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
 	 */
-	int isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
+	int isPointOnObject(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
@@ -485,7 +485,7 @@ public:
 	explicit PathObject(const Symbol* symbol = nullptr);
 	
 	/** Constructs a PathObject, assigning initial coords and optionally the map pointer. */
-	explicit PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map = nullptr);
+	explicit PathObject(const Symbol* symbol, MapCoordVector coords, Map* map = nullptr);
 	
 	/**
 	 * Constructs a PathObject, assigning initial coords from a single piece of a line.
@@ -748,7 +748,7 @@ public:
 	
 	/**
 	 * Connects the given parts, optionally merging the end coordinates at the
-	 * center position, and copying over the coordindates from other.
+	 * center position, and copying over the coordinates from other.
 	 */
 	void connectPathParts(
 	        PathPartVector::size_type part_index,
@@ -841,7 +841,7 @@ public:
 	/** See Object::isPointOnObject() */
 	int isPointOnPath(
 	        MapCoordF coord,
-	        float tolerance,
+	        qreal tolerance,
 	        bool treat_areas_as_paths,
 	        bool extended_selection
 	) const;

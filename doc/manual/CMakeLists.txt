@@ -165,7 +165,7 @@ if(Mapper_MANUAL_QTHELP)
 		set(Qt5Help_QCOLLECTIONGENERATOR_EXECUTABLE Qt5::${qcollectiongenerator_name})
 	endif()
 	
-	# Reproducible builds need a modifications to the help collection file.
+	# Reproducible builds need a modification to the help collection file.
 	set(source_date_commands )
 	find_program(SQLITE3_EXECUTABLE NAMES sqlite3
 	  DOC "The path of the sqlite3 executable"
@@ -245,11 +245,13 @@ if(Mapper_MANUAL_PDF)
 	configure_file(Doxyfile-pdflatex.in Doxyfile-pdflatex @ONLY)
 	configure_file(preprocess-markdown-pdflatex.cmake.in preprocess-markdown-pdflatex.cmake @ONLY)
 	configure_file(postprocess-pdflatex.cmake.in postprocess-pdflatex.cmake @ONLY)
-	add_custom_target(Mapper-manual-markdown-pdflatex
-	  COMMAND "${CMAKE_COMMAND}" -P preprocess-markdown-pdflatex.cmake
-	  BYPRODUCTS preprocess-markdown-pdflatex.stamp
-	             Doxyfile-pdflatex-input.txt
-	  SOURCES    preprocess-markdown-pdflatex.cmake.in
+	add_custom_command(
+	  OUTPUT    "preprocess-markdown-pdflatex.stamp"
+	            "Doxyfile-pdflatex-input.txt"
+	  COMMAND   "${CMAKE_COMMAND}" -P preprocess-markdown-pdflatex.cmake
+	  DEPENDS   "${CMAKE_CURRENT_BINARY_DIR}/preprocess-markdown-pdflatex.cmake"
+	            ${pages}
+	  COMMENT   "Preprocessing Markdown for pdflatex output"
 	)
 	add_custom_command( 
 	  OUTPUT    "${Mapper_PDF_manual}"
@@ -259,9 +261,7 @@ if(Mapper_MANUAL_PDF)
 	  COMMAND   "${CMAKE_COMMAND}" -E copy_if_different "pdflatex/refman.pdf" "${Mapper_PDF_manual}"
 	  COMMAND   "${CMAKE_COMMAND}" -E remove "pdflatex/refman.pdf"
 	  MAIN_DEPENDENCY preprocess-markdown-pdflatex.stamp
-	  DEPENDS   Doxyfile-pdflatex
-	            Doxyfile-pdflatex-input.txt
-	            postprocess-pdflatex.cmake
+	  DEPENDS   postprocess-pdflatex.cmake
 	  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 	  COMMENT   "Running pdflatex for PDF output"
 	)
@@ -270,7 +270,6 @@ if(Mapper_MANUAL_PDF)
 	  SOURCES   Doxyfile-pdflatex.in
 	            postprocess-pdflatex.cmake.in
 	)
-	add_dependencies(Mapper-manual-PDF Mapper-manual-markdown-pdflatex)
 	add_dependencies(Mapper-manual Mapper-manual-PDF)
 	
 	install(

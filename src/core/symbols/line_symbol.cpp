@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -117,16 +117,32 @@ void LineSymbolBorder::scale(double factor)
 }
 
 
+namespace {
+
+bool equalDimensions(const LineSymbolBorder& lhs, const LineSymbolBorder& rhs)
+{
+	return lhs.width == rhs.width
+	       && lhs.shift == rhs.shift
+	       && lhs.dashed == rhs.dashed
+	       && (!lhs.dashed
+	           || (lhs.dash_length == rhs.dash_length
+	               && lhs.break_length == rhs.break_length) );
+}
+
+}  // namespace
+
+bool LineSymbolBorder::equals(const LineSymbolBorder& other) const
+{
+	return (!isVisible() && !other.isVisible())
+	       || (equalDimensions(*this, other)
+	           && MapColor::equal(color, other.color) );
+}
+
 bool operator==(const LineSymbolBorder& lhs, const LineSymbolBorder& rhs) noexcept
 {
-	return  ((!lhs.color && !rhs.color)
-	         || (lhs.color && rhs.color && *lhs.color == *rhs.color))
-	        && lhs.width == rhs.width
-	        && lhs.shift == rhs.shift
-	        && lhs.dashed == rhs.dashed
-	        && (!lhs.dashed
-	            || (lhs.dash_length == rhs.dash_length
-	                && lhs.break_length == rhs.break_length));
+	return (!lhs.isVisible() && !rhs.isVisible())
+	       || (equalDimensions(lhs, rhs)
+	           && lhs.color && rhs.color && *lhs.color == *rhs.color);
 }
 
 
@@ -512,7 +528,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 	          tangent_in, tangent_out, 
 	          middle0, middle1;
 	auto last_i = path.last_index;
-	for (auto i = path.first_index; i < size; ++i)
+	for (auto i = path.first_index; i <= last_i; ++i)
 	{
 		auto coords_i = path.coords[i];
 		const auto& flags_i  = path.coords.flags[i];
@@ -2022,7 +2038,7 @@ bool LineSymbol::equalsImpl(const Symbol* other, Qt::CaseSensitivity case_sensit
 		return false;
 	if (have_border_lines)
 	{
-		if (border != line->border || right_border != line->right_border)
+		if (!border.equals(line->border) || !right_border.equals(line->right_border))
 			return false;
 	}
 	

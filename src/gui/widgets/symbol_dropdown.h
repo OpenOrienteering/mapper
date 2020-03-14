@@ -47,6 +47,11 @@ class SymbolDropDown : public QComboBox
 Q_OBJECT
 public:
 	/**
+	 * Creates an empty SymbolDropDown.
+	 */
+	SymbolDropDown(QWidget* parent = nullptr);
+	
+	/**
 	 * Creates a SymbolDropDown.
 	 * @param map Map in which to choose a symbol.
 	 * @param filter Bitwise-or combination of the allowed Symbol::Type types.
@@ -57,6 +62,16 @@ public:
 	SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol = nullptr, const Symbol* excluded_symbol = nullptr, QWidget* parent = nullptr);
 	
 	~SymbolDropDown() override;
+	
+	
+	/**
+	 * Initializes an empty SymbolDropDown.
+	 * @param map Map in which to choose a symbol.
+	 * @param filter Bitwise-or combination of the allowed Symbol::Type types.
+	 * @param initial_symbol Initial choice or nullptr for "- none -".
+	 * @param excluded_symbol Symbol to exclude from the list or nullptr.
+	 */
+	void init(const Map* map, int filter, const Symbol* initial_symbol = nullptr, const Symbol* excluded_symbol = nullptr);
 	
 	
 	/** Returns the selected symbol or nullptr if no symbol selected */
@@ -81,7 +96,7 @@ protected slots:
 	// happen as long as a SymbolDropDown is shown, which is the case currently)
 	
 private:
-	int num_custom_items;
+	int num_custom_items = 0;
 };
 
 

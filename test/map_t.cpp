@@ -358,7 +358,7 @@ void MapTest::matchQuerySymbolNumberTest_data()
 	
 	QTest::newRow("ISOM>ISSOM")
 	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("src/ISOM2000_15000.xmap"))
-	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("5000/ISSOM_5000.omap"))
+	        << symbol_set_dir.absoluteFilePath(QString::fromLatin1("src/ISSOM_5000.xmap"))
 	        << 104; // Many ISOM symbol do not have a same-number counterpart in ISSOM.
 	
 }

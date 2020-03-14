@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -59,6 +59,7 @@
 #include "core/map_view.h"
 #include "core/objects/symbol_rule_set.h"
 #include "core/symbols/area_symbol.h"
+#include "core/symbols/line_symbol.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/xml_file_format_p.h"
 #include "templates/template.h"
@@ -72,7 +73,7 @@ namespace
 {
 
 const auto legacy_symbol_sets =                              // clazy:exclude=non-pod-global-static
-  QString::fromLatin1("ISOM2000;ISOM2017;ISSkiOM")
+  QString::fromLatin1("ISOM2000;ISOM2017;ISSOM;ISSkiOM")
   .split(QLatin1Char(';'));
 
 const auto Vanished = QString::fromLatin1("vanished");       // clazy:exclude=non-pod-global-static
@@ -284,6 +285,21 @@ void deleteMarkedSymbols(Map& map)
 }
 
 
+bool validLineWidth(const LineSymbol& symbol)
+{
+	auto border_visible = [&]() -> bool {
+		return symbol.hasBorder()
+		       && (symbol.getBorder().isVisible() || symbol.getRightBorder().isVisible());
+	};
+	
+	if (symbol.getColor())
+		return symbol.getLineWidth() > 0;
+	if (border_visible())
+		return symbol.getLineWidth() >= 0;
+	return symbol.getLineWidth() == 0;
+}
+
+
 namespace ISOM_2017_2
 {
 
@@ -313,41 +329,6 @@ void scale(Map& map, unsigned int source_scale, unsigned int target_scale)
 }
 
 }  // namespace ISOM_2017_2
-
-
-namespace ISSOM
-{
-
-void scale(Map& map, unsigned int /*source_scale*/, unsigned int target_scale)
-{
-	map.setScaleDenominator(target_scale);
-	
-	int north_lines_changed = 0;
-	for (int i = 0; i < map.getNumSymbols(); ++i)
-	{
-		auto* symbol = map.getSymbol(i);
-		auto const code = symbol->getNumberComponent(0);
-		if (code == 601 && symbol->getType() == Symbol::Area)
-		{
-			AreaSymbol::FillPattern& pattern0 = symbol->asArea()->getFillPattern(0);
-			if (pattern0.type == AreaSymbol::FillPattern::LinePattern)
-			{
-				switch (target_scale)
-				{
-				case 4000u:
-					pattern0.line_spacing = 37500;
-					break;
-				default:
-					QFAIL("Undefined north line spacing for this scale");
-				}
-				++north_lines_changed;
-			}
-		}
-	}
-	QCOMPARE(north_lines_changed, 2);
-}
-
-}  // namespace ISSOM
 
 
 namespace ISMTBOM
@@ -752,8 +733,9 @@ void SymbolSetTool::processSymbolSet_data()
 	
 	QTest::newRow("ISOM2000 translation-only") << QString::fromLatin1("ISOM2000") << 15000u << 15000u;
 	
-	QTest::newRow("ISSOM 1:5000") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
-	QTest::newRow("ISSOM 1:4000") << QString::fromLatin1("ISSOM") <<  5000u <<  4000u;
+	QTest::newRow("ISSprOM 2019 1:4000") << QString::fromLatin1("ISSprOM 2019") <<  4000u <<  4000u;
+	
+	QTest::newRow("ISSOM translation-only") << QString::fromLatin1("ISSOM") <<  5000u <<  5000u;
 	
 	QTest::newRow("ISMTBOM 1:20000") << QString::fromLatin1("ISMTBOM") << 15000u << 20000u;
 	QTest::newRow("ISMTBOM 1:15000") << QString::fromLatin1("ISMTBOM") << 15000u << 15000u;
@@ -832,6 +814,8 @@ void SymbolSetTool::processSymbolSet()
 		QVERIFY2(!previous_numbers.contains(number), qPrintable(number_and_name + QLatin1String(": Number is not unique")));
 		previous_numbers.append(number);
 		QVERIFY2(symbol->validate(), qPrintable(number_and_name + QLatin1String(": Symbol validation failed")));
+		if (symbol->getType() == Symbol::Line)
+			 QVERIFY2(validLineWidth(static_cast<const LineSymbol&>(*symbol)),  qPrintable(number_and_name + QLatin1String(": Invalid line width")));
 	}
 	
 	if (std::none_of(begin(translation_entries), end(translation_entries),
@@ -845,10 +829,6 @@ void SymbolSetTool::processSymbolSet()
 		if (name == QStringLiteral("ISOM 2017-2"))
 		{
 			ISOM_2017_2::scale(map, source_scale, target_scale);
-		}
-		else if (name.startsWith(QLatin1String("ISSOM")))
-		{
-			ISSOM::scale(map, source_scale, target_scale);
 		}
 		else if (name.startsWith(QLatin1String("ISMTBOM")))
 		{
@@ -906,7 +886,7 @@ void SymbolSetTool::processSymbolSetTranslations() const
 	auto translation_filename = QString::fromLatin1(QTest::currentDataTag());
 	auto language = translation_filename.mid(int(qstrlen("map_symbols_")));
 	language.chop(int(qstrlen(".ts")));
-	if (language.length() > 2)
+	if (language == QLatin1String("template"))
 		language.clear();
 	
 	QByteArray new_data;

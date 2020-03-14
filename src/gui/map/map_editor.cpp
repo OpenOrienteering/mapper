@@ -514,7 +514,8 @@ void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
 {
 	emit templatePositionDockWidgetClosed(temp);
 	
-	delete getTemplatePositionDockWidget(temp);
+	if (auto* w = getTemplatePositionDockWidget(temp))
+		w->deleteLater();
 	int num_deleted = template_position_widgets.remove(temp);
 	Q_ASSERT(num_deleted == 1);
 	Q_UNUSED(num_deleted);
@@ -2767,7 +2768,7 @@ void MapEditorController::switchSymbolClicked()
 		map->clearObjectSelection(false);
 		for (auto* object : old_objects)
 		{
-			map->deleteObject(object, true);
+			map->releaseObject(object);
 		}
 		for (auto* object : new_objects)
 		{
@@ -3194,7 +3195,7 @@ void MapEditorController::connectPathsClicked()
 		for (auto* object : deleted_objects)
 		{
 			map->removeObjectFromSelection(object, false);
-			map->getCurrentPart()->deleteObject(object, false);
+			map->getCurrentPart()->deleteObject(object);
 		}
 	}
 	
@@ -3781,7 +3782,7 @@ void MapEditorController::removeMapPart()
 				--i;
 				auto* object = part->getObject(i);
 				add_step->addObject(i, object);
-				part->deleteObject(object, true);
+				part->releaseObject(object);
 			}
 			while (i > 0);
 			
@@ -4226,7 +4227,7 @@ QHash<const Symbol*, Symbol*> MapEditorController::importMap(
 		                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);
 		if (answer == QMessageBox::Yes)
 		{
-			other.changeScale(map->getScaleDenominator(), MapCoord(0, 0), true, true, true, true);
+			other.changeScale(map->getScaleDenominator(), 1.0, MapCoord(0, 0), true, true, true, true);
 		}
 	}
 	

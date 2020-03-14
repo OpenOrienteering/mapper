@@ -85,7 +85,7 @@ void CutoutTool::initImpl()
 	
 	cutout_object_index = map()->getCurrentPart()->findObjectIndex(cutout_object);
 	map()->removeObjectFromSelection(cutout_object, true);
-	map()->deleteObject(cutout_object, true);
+	map()->releaseObject(cutout_object);
 }
 
 void CutoutTool::drawImpl(QPainter* painter, MapWidget* widget)

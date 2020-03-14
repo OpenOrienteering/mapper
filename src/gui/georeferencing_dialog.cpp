@@ -21,11 +21,13 @@
 
 #include "georeferencing_dialog.h"
 
+#include <cmath>
 #include <vector>
 
 #include <Qt>
 #include <QtGlobal>
 #include <QAbstractButton>
+#include <QCheckBox>
 #include <QCursor>
 #include <QDate>
 #include <QDebug>
@@ -52,7 +54,9 @@
 #include <QTimer>
 #include <QUrl>
 #include <QUrlQuery>
+#include <QVariant>
 #include <QVBoxLayout>
+#include <QWidget>
 #include <QXmlStreamReader>
 // IWYU pragma: no_include <qxmlstream.h>
 
@@ -62,12 +66,14 @@
 #include <QNetworkRequest>
 #endif
 
+#include "settings.h"
 #include "core/crs_template.h"
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map.h"
 #include "gui/main_window.h"
 #include "gui/map/map_dialog_rotate.h"
+#include "gui/map/map_dialog_stretch.h"
 #include "gui/map/map_editor.h"
 #include "gui/widgets/crs_selector.h"
 #include "gui/util_gui.h"
@@ -125,6 +131,7 @@ GeoreferencingDialog::GeoreferencingDialog(
  , tool_active(false)
  , declination_query_in_progress(false)
  , grivation_locked(!initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal)
+ , scale_factor_locked(grivation_locked)
 {
 	setWindowTitle(tr("Map Georeferencing"));
 	setWindowModality(Qt::WindowModal);
@@ -137,12 +144,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	status_label = new QLabel(tr("Status:"));
 	status_field = new QLabel();
-	
-	/*: The grid scale factor is the ratio between a length in the grid plane
-	    and the corresponding length on the curved earth model. It is applied
-	    as a factor to ground distances to get grid plane distances. */
-	auto scale_factor_label = new QLabel(tr("Grid scale factor:"));
-	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
 	
 	auto reference_point_label = Util::Headline::create(tr("Reference point"));
 	
@@ -211,6 +212,26 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	grivation_label = new QLabel();
 	
+	show_scale_check = new QCheckBox(tr("Show scale factors"));
+	auto scale_compensation_label = Util::Headline::create(tr("Scale compensation"));
+	
+	/*: The combined scale factor is the ratio between a length on the ground
+	    and the corresponding length on the curved earth model. It is applied
+	    as a factor to ground distances to get grid plane distances. */
+	auto combined_factor_label = new QLabel(tr("Combined scale factor:"));
+	combined_factor_display = new QLabel();
+	
+	/*: The auxiliary scale factor is the ratio between a length in the curved
+	    earth model and the corresponding length on the ground. It is applied
+	    as a factor to ground distances to get curved earth model distances. */
+	auto auxiliary_factor_label = new QLabel(tr("Auxiliary scale factor:"));
+	scale_factor_edit = Util::SpinBox::create(Georeferencing::scaleFactorPrecision(), 0.001, 1000.0);
+	scale_widget_list = {
+		scale_compensation_label,
+		auxiliary_factor_label, scale_factor_edit,
+		combined_factor_label, combined_factor_display
+	};
+	
 	buttons_box = new QDialogButtonBox(
 	  QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Reset | QDialogButtonBox::Help,
 	  Qt::Horizontal);
@@ -224,7 +245,6 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(tr("&Coordinate reference system:"), crs_selector);
 	crs_selector->setDialogLayout(edit_layout);
 	edit_layout->addRow(status_label, status_field);
-	edit_layout->addRow(scale_factor_label, scale_factor_edit);
 	edit_layout->addItem(Util::SpacerItem::create(this));
 	
 	edit_layout->addRow(reference_point_label);
@@ -240,6 +260,16 @@ GeoreferencingDialog::GeoreferencingDialog(
 	edit_layout->addRow(map_north_label);
 	edit_layout->addRow(tr("Declination:"), declination_layout);
 	edit_layout->addRow(tr("Grivation:"), grivation_label);
+
+	bool control_scale_factor = Settings::getInstance().getSetting(Settings::MapGeoreferencing_ControlScaleFactor).toBool();
+	edit_layout->addItem(Util::SpacerItem::create(this));
+	edit_layout->addRow(show_scale_check);
+	edit_layout->addRow(scale_compensation_label);
+	edit_layout->addRow(auxiliary_factor_label, scale_factor_edit);
+	edit_layout->addRow(combined_factor_label, combined_factor_display);
+	show_scale_check->setChecked(control_scale_factor);
+	for (auto scale_widget: scale_widget_list)
+		scale_widget->setVisible(control_scale_factor);
 	
 	auto layout = new QVBoxLayout();
 	layout->addLayout(edit_layout);
@@ -251,7 +281,8 @@ GeoreferencingDialog::GeoreferencingDialog(
 	
 	connect(crs_selector, &CRSSelector::crsChanged, this, &GeoreferencingDialog::crsEdited);
 	
-	connect(scale_factor_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::scaleFactorEdited);
+	connect(show_scale_check, &QAbstractButton::clicked, this, &GeoreferencingDialog::showScaleChanged);
+	connect(scale_factor_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::auxiliaryFactorEdited);
 	
 	connect(map_x_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
 	connect(map_y_edit, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &GeoreferencingDialog::mapRefChanged);
@@ -276,10 +307,12 @@ GeoreferencingDialog::GeoreferencingDialog(
 	connect(georef.data(), &Georeferencing::transformationChanged, this, &GeoreferencingDialog::transformationChanged);
 	connect(georef.data(), &Georeferencing::projectionChanged, this, &GeoreferencingDialog::projectionChanged);
 	connect(georef.data(), &Georeferencing::declinationChanged, this, &GeoreferencingDialog::declinationChanged);
+	connect(georef.data(), &Georeferencing::auxiliaryScaleFactorChanged, this, &GeoreferencingDialog::auxiliaryFactorChanged);
 	
 	transformationChanged();
 	georefStateChanged();
 	declinationChanged();
+	auxiliaryFactorChanged();
 }
 
 GeoreferencingDialog::~GeoreferencingDialog()
@@ -326,9 +359,10 @@ void GeoreferencingDialog::transformationChanged()
 	setValueIfChanged(easting_edit, georef->getProjectedRefPoint().x());
 	setValueIfChanged(northing_edit, georef->getProjectedRefPoint().y());
 	
-	setValueIfChanged(scale_factor_edit, georef->getGridScaleFactor());
+	setValueIfChanged(scale_factor_edit, georef->getAuxiliaryScaleFactor());
 	
 	updateGrivation();
+	updateCombinedFactor();
 }
 
 // slot
@@ -383,6 +417,14 @@ void GeoreferencingDialog::declinationChanged()
 {
 	const QSignalBlocker block(declination_edit);
 	setValueIfChanged(declination_edit, georef->getDeclination());
+}
+
+// slot
+void GeoreferencingDialog::auxiliaryFactorChanged()
+{
+	const QSignalBlocker block(scale_factor_edit);
+	setValueIfChanged(scale_factor_edit, georef->getAuxiliaryScaleFactor());
+	updateCombinedFactor();
 }
 
 void GeoreferencingDialog::requestDeclination(bool no_confirm)
@@ -463,7 +505,7 @@ void GeoreferencingDialog::showHelp()
 
 void GeoreferencingDialog::reset()
 {
-	grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
+	scale_factor_locked = grivation_locked = ( !initial_georef->isValid() || initial_georef->getState() != Georeferencing::Normal );
 	*georef.data() = *initial_georef;
 	reset_button->setEnabled(false);
 }
@@ -471,6 +513,7 @@ void GeoreferencingDialog::reset()
 void GeoreferencingDialog::accept()
 {
 	auto const declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
+	auto const scale_factor_change = georef->getAuxiliaryScaleFactor() / initial_georef->getAuxiliaryScaleFactor();
 	if (grivation_locked)
 	{
 		georef->updateGrivation();
@@ -491,6 +534,27 @@ void GeoreferencingDialog::accept()
 			dialog.setRotateAroundGeorefRefPoint();
 			dialog.setAdjustDeclination(false);
 			dialog.showAdjustDeclination(false);
+			int result = dialog.exec();
+			if (result == QDialog::Rejected)
+				return;
+		}
+	}
+	if (scale_factor_locked)
+	{
+		georef->updateCombinedScaleFactor();
+	}
+	else if (!qIsNull(std::log(scale_factor_change))
+	         && (map->getNumObjects() > 0 || map->getNumTemplates() > 0))
+	{
+		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+		if (result == QMessageBox::Cancel)
+		{
+			return;
+		}
+		else if (result == QMessageBox::Yes)
+		{
+			StretchMapDialog dialog(this, map, 1.0/scale_factor_change);
+			dialog.setWindowModality(Qt::WindowModal);
 			int result = dialog.exec();
 			if (result == QDialog::Rejected)
 				return;
@@ -538,6 +602,14 @@ void GeoreferencingDialog::updateDeclinationButton()
 	declination_button->setText(declination_query_in_progress ? tr("Loading...") : tr("Lookup..."));
 }
 
+void GeoreferencingDialog::updateCombinedFactor()
+{
+	QString text = trUtf8("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
+	if (scale_factor_locked)
+		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
+	combined_factor_display->setText(text);
+}
+
 void GeoreferencingDialog::updateGrivation()
 {
 	QString text = trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
@@ -562,6 +634,10 @@ void GeoreferencingDialog::crsEdited()
 	case Georeferencing::Local:
 		// Local
 		georef_copy.setState(Georeferencing::Local);
+		grivation_locked = true;
+		updateGrivation();
+		scale_factor_locked = true;
+		updateCombinedFactor();
 		break;
 	case -1:
 		// CRS from list
@@ -569,9 +645,9 @@ void GeoreferencingDialog::crsEdited()
 		georef_copy.setProjectedCRS(crs_template->id(), spec, crs_selector->parameters());
 		georef_copy.setState(Georeferencing::Normal); // Allow invalid spec
 		if (keep_geographic_radio->isChecked())
-			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked);
+			georef_copy.setGeographicRefPoint(georef->getGeographicRefPoint(), !grivation_locked, !scale_factor_locked);
 		else
-			georef_copy.setProjectedRefPoint(georef->getProjectedRefPoint(), !grivation_locked);
+			georef_copy.setProjectedRefPoint(georef->getProjectedRefPoint(), !grivation_locked, !scale_factor_locked);
 		break;
 	}
 	
@@ -580,10 +656,21 @@ void GeoreferencingDialog::crsEdited()
 	reset_button->setEnabled(true);
 }
 
-void GeoreferencingDialog::scaleFactorEdited()
+void GeoreferencingDialog::showScaleChanged(bool checked)
 {
-	const QSignalBlocker block{scale_factor_edit};
-	georef->setGridScaleFactor(scale_factor_edit->value());
+	Settings::getInstance().setSetting(Settings::MapGeoreferencing_ControlScaleFactor, checked);
+	for (auto scale_widget: scale_widget_list)
+		scale_widget->setVisible(checked);
+}
+
+void GeoreferencingDialog::auxiliaryFactorEdited(double value)
+{
+	if (scale_factor_locked)
+	{
+		scale_factor_locked = false;
+		updateCombinedFactor();
+	}
+	georef->setAuxiliaryScaleFactor(value);
 	reset_button->setEnabled(true);
 }
 
@@ -608,7 +695,7 @@ void GeoreferencingDialog::eastingNorthingEdited()
 	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double easting   = easting_edit->value();
 	double northing  = northing_edit->value();
-	georef->setProjectedRefPoint(QPointF(easting, northing), !grivation_locked);
+	georef->setProjectedRefPoint(QPointF(easting, northing), !grivation_locked, !scale_factor_locked);
 	keep_projected_radio->setChecked(true);
 	reset_button->setEnabled(true);
 }
@@ -618,18 +705,27 @@ void GeoreferencingDialog::latLonEdited()
 	const QSignalBlocker block1(keep_geographic_radio), block2(keep_projected_radio);
 	double latitude  = lat_edit->value();
 	double longitude = lon_edit->value();
-	georef->setGeographicRefPoint(LatLon(latitude, longitude), !grivation_locked);
+	georef->setGeographicRefPoint(LatLon(latitude, longitude), !grivation_locked, !scale_factor_locked);
 	keep_geographic_radio->setChecked(true);
 	reset_button->setEnabled(true);
 }
 
 void GeoreferencingDialog::keepCoordsChanged()
 {
-	if (grivation_locked && keep_geographic_radio->isChecked())
+	if (keep_geographic_radio->isChecked())
 	{
-		grivation_locked = false;
-		updateGrivation();
-		georef->updateGrivation();
+		if (grivation_locked)
+		{
+			grivation_locked = false;
+			updateGrivation();
+			georef->updateGrivation();
+		}
+		if (scale_factor_locked)
+		{
+			scale_factor_locked = false;
+			updateCombinedFactor();
+			georef->updateCombinedScaleFactor();
+		}
 	}
 	reset_button->setEnabled(true);
 }

@@ -1,6 +1,6 @@
 ---
 title: User Manual
-edited: 3 June 2018
+edited: 21 December 2019
 redirect_from:
   - /
   - /Home
@@ -11,6 +11,9 @@ redirect_from:
 {% endif %}
 
 ## Contents
+
+[Installation](installation.md){: .subpage}
+Instructions to download and install OpenOrienteering.
 
 [Main window](main_window.md){: .subpage}
 Explanation of the main drawing window.
@@ -30,6 +33,9 @@ Showing a helper grid in the map view.
 [Templates](templates-index.md){: .subpage}
 Working with templates.
 
+[Geospatial data](gdal.md){: .subpage}
+Geospatial raster data and vector data support based on GDAL.
+
 [Colors and symbols](colors_symbols.md){: .subpage}
 Modifying map colors and symbols.
 
@@ -44,6 +50,9 @@ Finding objects based on textual properties.
 
 [CRT files](crt_files.md){: .subpage}
 Providing rules for assigning symbols.
+
+[CoVe, the Contour Vectorizer](cove.md){: .subpage}
+Vectorizing line features in raster graphics templates.
 
 [Settings](settings.md){: .subpage}
 Adjusting the program to your preferences.
@@ -68,4 +77,3 @@ Submit feedback, bug reports, feature requests, and contributions.
 
 [Releases](https://github.com/OpenOrienteering/mapper/releases)
 Releases, with links to change information and known issues.
-

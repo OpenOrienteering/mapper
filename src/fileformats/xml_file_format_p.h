@@ -90,6 +90,7 @@ protected:
 	void addWarningUnsupportedElement();
 	void importMapNotes();
 	void importGeoreferencing();
+	void validateGeoreferencing();
 	void importColors();
 	void importSymbols();
 	void importMapParts();

@@ -44,7 +44,7 @@ class Map;
 class MapCoordF;
 class Object;
 class Symbol;
-using SymbolDictionary = QHash<QString, Symbol*>; // from symbol.h
+using SymbolDictionary = QHash<qint32, Symbol*>; // from symbol.h
 class UndoStep;
 
 
@@ -144,7 +144,7 @@ public:
 	 * Adds the object as new object at the end.
 	 */
 	void addObject(Object* object);
-	
+
 	/**
 	 * Adds the object as new object at the given index.
 	 */
@@ -152,23 +152,32 @@ public:
 	
 	/**
 	 * Deleted the object from the given index.
-	 * 
-	 * If remove_only is set, does not call "delete object".
-	 * 
-	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
-	void deleteObject(int pos, bool remove_only);
+	void deleteObject(int pos);
 	
 	/**
 	 * Deleted the object from the given index.
 	 * 
-	 * If remove_only is set, does not call "delete object".
 	 * Returns if the object was found in this part.
-	 * 
-	 * @todo Make a separate method "removeObject()", this is misleading!
 	 */
-	bool deleteObject(Object* object, bool remove_only);
+	bool deleteObject(Object* object);
 	
+	/**
+	  * Relinquish object ownership.
+	  *
+	  * This method removes object references from MapPart's internal
+	  * structures. Object deletion is caller's responsibility.
+	  */
+	Object* releaseObject(int pos);
+
+	/**
+	  * Relinquish object ownership.
+	  *
+	  * This method removes object references from MapPart's internal
+	  * structures. Object deletion is caller's responsibility.
+	  */
+	Object* releaseObject(Object* object);
+
 	
 	/**
 	 * Imports the contents another part into this part.
@@ -184,7 +193,7 @@ public:
 	/**
 	 * @see Map::findObjectsAt().
 	 */
-	void findObjectsAt(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths,
+	void findObjectsAt(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths,
 		bool extended_selection, bool include_hidden_objects,
 		bool include_protected_objects, SelectionInfoVector& out) const;
 	

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_TEMPLATE_IMAGE_H
 #define OPENORIENTEERING_TEMPLATE_IMAGE_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
@@ -32,10 +33,8 @@
 #include <QPointF>
 #include <QRectF>
 #include <QRgb>
-#include <QScopedPointer>
 #include <QString>
 #include <QTransform>
-#include <QVarLengthArray>
 
 #include "templates/template.h"
 
@@ -61,22 +60,35 @@ class TemplateImage : public Template
 {
 Q_OBJECT
 public:
-	enum GeoreferencingType
-	{
-		Georeferencing_None = 0,
-		Georeferencing_WorldFile,
-		Georeferencing_GDAL
-	};
-	
+	/**
+	 * Information fragment about template image georeferencing.
+	 * 
+	 * A GeoreferencingOption may carry information about the CRS and/or the
+	 * pixel-to-world transform for a template image. The crs_spec is empty
+	 * if the CRS is unknown. The transform's source is empty if the
+	 * pixel-to-world transformation is unknown.
+	 */
 	struct GeoreferencingOption
 	{
-		GeoreferencingType type;
-		QByteArray source;
-		QString crs_spec;
-		QTransform pixel_to_world;
+		struct Transform
+		{
+			QTransform pixel_to_world = {};     ///< The transformation from pixel space to CRS space.
+			QByteArray source = {};             ///< The source of the pixel-to-world transform.
+		};
+
+		QString crs_spec = {};              ///< The specification of the CRS uses for georeferencing.
+		Transform transform = {};           ///< The transformation from pixel space to CRS space.
 	};
 	
-	using GeoreferencingOptions = QVarLengthArray<GeoreferencingOption, 3>;
+	/**
+	 * A collection of alternative and/or complementary georeferencing information fragments.
+	 */
+	struct GeoreferencingOptions
+	{
+		GeoreferencingOption effective;     ///< The effective option, if CRS and transform are defined.
+		GeoreferencingOption world_file;    ///< A pixel-to-world transform from a world file.
+		GeoreferencingOption template_file; ///< CRS and/or pixel-to-world transform from the template file.
+	};
 	
 	/**
 	 * Returns the filename extensions supported by this template class.
@@ -84,7 +96,13 @@ public:
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	TemplateImage(const QString& path, Map* map);
+protected:
+	TemplateImage(const TemplateImage& proto);
+public:
     ~TemplateImage() override;
+	
+	TemplateImage* duplicate() const override;
+	
 	const char* getTemplateType() const override {return "TemplateImage";}
 	bool isRasterGraphics() const override {return true;}
 
@@ -98,7 +116,7 @@ public:
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
-	bool canBeDrawnOnto() const override {return true;}
+	bool canBeDrawnOnto() const override { return drawable; }
 
 	/**
 	 * Calculates the image's center of gravity in template coordinates by
@@ -128,10 +146,26 @@ public slots:
 	
 protected:
 	/**
-	 * Searches for available georeferencing methods.
+	 * Collects available georeferencing information.
+	 * 
+	 * This function is meant to be used from loadTemplateFileImpl() to set the
+	 * available_georef member. The parameter template_file_option is used to
+	 * efficiently provide georeferencing information from the template file
+	 * itself.
 	 */
-	GeoreferencingOptions findAvailableGeoreferencing() const;
+	GeoreferencingOptions findAvailableGeoreferencing(GeoreferencingOption template_file_option) const;
 	
+	/**
+	 * Tests if the available georeferencing options can be used with the current map.
+	 * 
+	 * To be usable, the effective option must provide a transformation, and
+	 * if the map's CRS spec is not empty (local georeferencing), the effective
+	 * option's CRS spec must not be empty.
+	 * 
+	 * Note that changing the state to georeferenced may still fail for invalid
+	 * CRS specs.
+	 */
+	bool isGeoreferencingUsable() const;
 	
 	/** Information about an undo step for the paint-on-template functionality. */
 	struct DrawOnImageUndoStep
@@ -146,24 +180,22 @@ protected:
 		int y;
 	};
 	
-	Template* duplicateImpl() const override;
 	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
-	void applyGeoreferencingOption(const GeoreferencingOption& option);
 	void updatePosFromGeoreferencing();
 
 	QImage image;
 	
 	std::vector< DrawOnImageUndoStep > undo_steps;
 	/// Current index in undo_steps, where 0 means before the first item.
-	int undo_index;
+	int undo_index = 0;
+	/// A flag indicating that this template can be drawn onto.
+	bool drawable = false;
 	
 	GeoreferencingOptions available_georef;
-	QScopedPointer<Georeferencing> georef;
-	// Temporary storage for crs spec. Use georef instead.
-	QString temp_crs_spec;
+	std::unique_ptr<Georeferencing> georef;
 };
 
 

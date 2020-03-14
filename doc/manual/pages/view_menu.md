@@ -82,7 +82,7 @@ The coordinate system may also be selected by a right-click on the position box 
 #### Toggle fullscreen mode {#fullscreen}
 **F11**
 
-This toggle switches the display to full-screen mode and back.
+This toggle switches the display to full screen mode and back.
 
 
 ---

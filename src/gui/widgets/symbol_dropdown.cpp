@@ -49,10 +49,21 @@ namespace OpenOrienteering {
 // ### SymbolDropDown ###
 
 
-SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
+SymbolDropDown::SymbolDropDown(QWidget* parent)
  : QComboBox(parent)
+{}
+
+SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol, QWidget* parent)
+ : SymbolDropDown(parent)
 {
-	num_custom_items = 0;
+	init(map, filter, initial_symbol, excluded_symbol);
+}
+
+SymbolDropDown::~SymbolDropDown() = default;
+
+
+void SymbolDropDown::init(const Map* map, int filter, const Symbol* initial_symbol, const Symbol* excluded_symbol)
+{
 	addItem(tr("- none -"), QVariant::fromValue<const Symbol*>(nullptr));
 	
 	int size = map->getNumSymbols();
@@ -76,10 +87,6 @@ SymbolDropDown::SymbolDropDown(const Map* map, int filter, const Symbol* initial
 	}
 	setSymbol(initial_symbol);
 }
-
-
-SymbolDropDown::~SymbolDropDown() = default;
-
 
 
 const Symbol* SymbolDropDown::symbol() const

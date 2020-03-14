@@ -19,7 +19,9 @@
 
 #include "gdal_manager.h"
 
+#include <algorithm>
 #include <cstddef>
+#include <iterator>
 // IWYU pragma: no_include <type_traits>
 
 #include <cpl_conv.h>
@@ -36,6 +38,7 @@
 #include <QStringList>
 #include <QVariant>
 
+#include "gdal/gdal_extensions.h"
 #include "util/backports.h"  // IWYU pragma: keep
 
 
@@ -56,6 +59,10 @@ public:
 	
 	// Export options
 	const QString ogr_one_layer_per_symbol_key{ QStringLiteral("per_symbol_layer") };
+	
+	
+	using ExtensionList = std::vector<QByteArray>;
+	
 	
 	GdalManagerPrivate()
 	: dirty{ true }
@@ -151,21 +158,21 @@ public:
 		return settings.value(key, QVariant{ false }).toBool();
 	}
 	
-	const std::vector<QByteArray>& supportedRasterExtensions() const
+	const ExtensionList& supportedRasterExtensions() const
 	{
-		/// \todo
-		static std::vector<QByteArray> ret;
-		return ret; 
+		if (dirty)
+			const_cast<GdalManagerPrivate*>(this)->update();
+		return enabled_raster_import_extensions; 
 	}
 	
-	const std::vector<QByteArray>& supportedVectorImportExtensions() const
+	const ExtensionList& supportedVectorImportExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
 		return enabled_vector_import_extensions;
 	}
 
-	const std::vector<QByteArray>& supportedVectorExportExtensions() const
+	const ExtensionList& supportedVectorExportExtensions() const
 	{
 		if (dirty)
 			const_cast<GdalManagerPrivate*>(this)->update();
@@ -205,57 +212,98 @@ public:
 	}
 	
 private:
-	void update()
+	static void copyExtensions(QByteArray const& extension_cstring, ExtensionList& extension_list)
 	{
-		QSettings settings;
+		for (auto pos = 0; pos >= 0; )
+		{
+			auto start = pos ? pos + 1 : 0;
+			pos = extension_cstring.indexOf(' ', start);
+			auto extension = extension_cstring.mid(start, pos - start);
+			if (extension.isEmpty())
+				continue;
+			extension_list.emplace_back(extension);
+		}
+	}
+	
+	static void prefixDuplicates(ExtensionList const& primary_list, ExtensionList& secondary_list, char const* prefix)
+	{
+		for (auto& extension : secondary_list)
+		{
+			if (std::find(begin(primary_list), end(primary_list), extension) != end(primary_list))
+				extension.prepend(prefix);
+		}
+	}
+	
+	static void removeExtension(ExtensionList& list, const char* extension)
+	{
+		list.erase(std::remove(begin(list), end(list), extension), end(list));
+	}
+	
+	void updateExtensions(QSettings& settings)
+	{
+		static auto const qimagereader_extensions = gdal::qImageReaderExtensions<ExtensionList>();
+		static auto const secondary_vector_drivers = gdal::secondaryVectorDrivers<QByteArray>();
+		ExtensionList secondary_vector_extensions;
 		
-		settings.beginGroup(gdal_manager_group);
 		auto count = GDALGetDriverCount();
+		enabled_raster_import_extensions.clear();
+		enabled_raster_import_extensions.reserve(std::size_t(count));
 		enabled_vector_import_extensions.clear();
 		enabled_vector_import_extensions.reserve(std::size_t(count));
 		enabled_vector_export_extensions.clear();
 		enabled_vector_export_extensions.reserve(std::size_t(count));
+		
+		// Register extensions, either directly (enabled_*), or staged for ambiguity check (secondary_*)
 		for (auto i = 0; i < count; ++i)
 		{
 			auto driver_data = GDALGetDriver(i);
-			auto type = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
-			if (qstrcmp(type, "YES") != 0)
-				continue;
-
+			auto cap_raster = GDALGetMetadataItem(driver_data, GDAL_DCAP_RASTER, nullptr);
+			auto cap_vector = GDALGetMetadataItem(driver_data, GDAL_DCAP_VECTOR, nullptr);
+			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
+			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
 			auto extensions_raw = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
 			auto extensions = QByteArray::fromRawData(extensions_raw, int(qstrlen(extensions_raw)));
 
-			auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
-			if (qstrcmp(cap_create, "YES") == 0)
+			if (qstrcmp(cap_raster, "YES") == 0)
 			{
-				for (auto pos = 0; pos >= 0; )
-				{
-					auto start = pos ? pos + 1 : 0;
-					pos = extensions.indexOf(' ', start);
-					auto extension = extensions.mid(start, pos - start);
-					if (extension.isEmpty())
-						continue;
-					enabled_vector_export_extensions.emplace_back(extension);
-				}
+				if (qstrcmp(cap_open, "YES") == 0)
+					copyExtensions(extensions, enabled_raster_import_extensions);
 			}
 
-			auto cap_open = GDALGetMetadataItem(driver_data, GDAL_DCAP_OPEN, nullptr);
-			if (qstrcmp(cap_open, "YES") != 0)
-				continue;
-
-			for (auto pos = 0; pos >= 0; )
+			if (qstrcmp(cap_vector, "YES") == 0)
 			{
-				auto start = pos ? pos + 1 : 0;
-				pos = extensions.indexOf(' ', start);
-				auto extension = extensions.mid(start, pos - start);
-				if (extension.isEmpty())
-					continue;
-				if (extension == "gpx" && !settings.value(gdal_gpx_key, false).toBool())
-					continue;
-				enabled_vector_import_extensions.emplace_back(extension);
+				auto const driver_name = GDALGetDriverShortName(driver_data);
+				bool const is_secondary = secondary_vector_drivers.contains(driver_name);
+				auto &list = is_secondary ? secondary_vector_extensions : enabled_vector_import_extensions;
+				if (qstrcmp(cap_open, "YES") == 0)
+					copyExtensions(extensions, list);
+				
+				if (qstrcmp(cap_create, "YES") == 0)
+					copyExtensions(extensions, enabled_vector_export_extensions);
 			}
 		}
+		
+		// Handle GDAL/OGR activation settings, before checking ambiguity
+		settings.beginGroup(gdal_manager_group);
+		if (!settings.value(gdal_gpx_key, false).toBool())
+		{
+			removeExtension(enabled_vector_import_extensions, "gpx");
+			removeExtension(secondary_vector_extensions, "gpx");
+		}
 		settings.endGroup();
+		
+		// This block is duplicated in mapper_gdal_info.cpp dumpGdalDrivers().
+		// Prefix ambiguous extensions for known vector drivers
+		prefixDuplicates(enabled_raster_import_extensions, secondary_vector_extensions, "vector.");
+		enabled_vector_import_extensions.insert(end(enabled_vector_import_extensions), begin(secondary_vector_extensions), end(secondary_vector_extensions));
+		// Prefix ambiguous extensions for remaining raster drivers
+		prefixDuplicates(enabled_vector_import_extensions, enabled_raster_import_extensions, "raster.");
+		prefixDuplicates(qimagereader_extensions, enabled_raster_import_extensions, "raster.");
+	}
+	
+	void updateConfig(QSettings& settings)
+	{
+		settings.beginGroup(gdal_configuration_group);
 		
 		// Using osmconf.ini to detect a directory with data from gdal. The
 		// data:/gdal directory will always exist, due to mapper-osmconf.ini.
@@ -267,8 +315,6 @@ private:
 			// The user may overwrite this default in the settings.
 			CPLSetConfigOption("GDAL_DATA", QDir::toNativeSeparators(gdal_data).toLocal8Bit());
 		}
-		
-		settings.beginGroup(gdal_configuration_group);
 		
 		const char* defaults[][2] = {
 		    { "CPL_DEBUG",               "OFF" },
@@ -323,16 +369,25 @@ private:
 			}
 		}
 		applied_parameters.swap(new_parameters);
+		settings.endGroup();
+	}
 		
+	void update()
+	{
+		QSettings settings;
+		updateExtensions(settings);
+		updateConfig(settings);
 		CPLFinderClean(); // force re-initialization of file finding tools
 		dirty = false;
 	}
 	
 	mutable bool dirty;
 	
-	mutable std::vector<QByteArray> enabled_vector_import_extensions;
+	mutable ExtensionList enabled_raster_import_extensions;
 
-	mutable std::vector<QByteArray> enabled_vector_export_extensions;
+	mutable ExtensionList enabled_vector_import_extensions;
+
+	mutable ExtensionList enabled_vector_export_extensions;
 	
 	mutable QStringList applied_parameters;
 	

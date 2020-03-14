@@ -92,10 +92,10 @@ Object::Object(Object::Type type, const Symbol* symbol)
 	// nothing
 }
 
-Object::Object(Object::Type type, const Symbol* symbol, const MapCoordVector& coords, Map* map)
+Object::Object(Object::Type type, const Symbol* symbol, MapCoordVector coords, Map* map)
 : type(type)
 , symbol(symbol)
-, coords(coords)
+, coords(std::move(coords))
 , map(map)
 , output(*this)
 {
@@ -321,7 +321,13 @@ Object* Object::load(QXmlStreamReader& xml, Map* map, const SymbolDictionary& sy
 	else
 	{
 		QString symbol_id =  object_element.attribute<QString>(literal::symbol);
-		object->symbol = symbol_dict[symbol_id]; // FIXME: cannot work for forward references
+		bool conversion_ok;
+		const auto id_converted = symbol_id.toInt(&conversion_ok);
+		if (!symbol_id.isEmpty() && !conversion_ok)
+			throw FileFormatException(::OpenOrienteering::ImportExport::tr("Malformed symbol ID '%1' at line %2 column %3.")
+		                              .arg(symbol_id).arg(xml.lineNumber())
+		                              .arg(xml.columnNumber()));
+		object->symbol = symbol_dict[id_converted]; // FIXME: cannot work for forward references
 		// NOTE: object->symbol may be nullptr.
 	}
 	
@@ -581,8 +587,8 @@ void Object::rotate(qreal angle)
 	for (auto& coord : coords)
 	{
 		auto const old_coord = MapCoordF(coord);
-		coord.setX(cos_angle * old_coord.x() + sin_angle * old_coord.y());
-		coord.setY(sin_angle * old_coord.x() + cos_angle * old_coord.y());
+		coord.setX(+ cos_angle * old_coord.x() + sin_angle * old_coord.y());
+		coord.setY(- sin_angle * old_coord.x() + cos_angle * old_coord.y());
 	}
 	
 	if (symbol->isRotatable())
@@ -593,7 +599,7 @@ void Object::rotate(qreal angle)
 }
 
 
-int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int Object::isPointOnObject(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
 	Symbol::Type type = symbol->getType();
 	auto contained_types = symbol->getContainedTypes();
@@ -608,7 +614,7 @@ int Object::isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_
 	}
 	
 	// First check using extent
-	float extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
+	auto extent_extension = ((contained_types & Symbol::Line) || treat_areas_as_paths) ? tolerance : 0;
 	if (coord.x() < extent.left() - extent_extension) return Symbol::NoSymbol;
 	if (coord.y() < extent.top() - extent_extension) return Symbol::NoSymbol;
 	if (coord.x() > extent.right() + extent_extension) return Symbol::NoSymbol;
@@ -858,8 +864,8 @@ PathObject::PathObject(const Symbol* symbol)
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 }
 
-PathObject::PathObject(const Symbol* symbol, const MapCoordVector& coords, Map* map)
-: Object(Object::Path, symbol, coords, map)
+PathObject::PathObject(const Symbol* symbol, MapCoordVector coords, Map* map)
+: Object(Object::Path, symbol, std::move(coords), map)
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Area || symbol->getType() == Symbol::Combined));
 	recalculateParts();
@@ -2341,13 +2347,13 @@ bool PathObject::simplify(PathObject** undo_duplicate, double threshold)
 	return removed_a_point;
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int PathObject::isPointOnPath(MapCoordF coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const
 {
-	float side_tolerance = tolerance;
+	auto side_tolerance = tolerance;
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))
 	{
 		// TODO: precalculate largest line extent for all symbols to move it out of this time critical method?
-		side_tolerance = qMax(side_tolerance, float(symbol->calculateLargestLineExtent()));
+		side_tolerance = qMax(side_tolerance, symbol->calculateLargestLineExtent());
 	}
 	
 	auto contained_types = symbol->getContainedTypes();
@@ -2369,14 +2375,14 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				MapCoordF tangent = to_next;
 				tangent.normalize();
 				
-				float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
+				auto dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
 				if (dist_along_line < -tolerance)
 					continue;
 				
 				if (dist_along_line < 0 && to_coord.lengthSquared() <= tolerance*tolerance)
 					return Symbol::Line;
 				
-				float line_length = path_coords[i+1].clen - path_coords[i].clen;
+				auto line_length = qreal(path_coords[i+1].clen) - qreal(path_coords[i].clen);
 				if (line_length < 1e-7)
 					continue;
 				
@@ -2388,7 +2394,7 @@ int PathObject::isPointOnPath(MapCoordF coord, float tolerance, bool treat_areas
 				
 				auto right = tangent.perpRight();
 				
-				float dist_from_line = qAbs(MapCoordF::dotProduct(right, to_coord));
+				auto dist_from_line = qAbs(MapCoordF::dotProduct(right, to_coord));
 				if (dist_from_line <= side_tolerance)
 					return Symbol::Line;
 			}
@@ -3081,10 +3087,9 @@ void PathObject::createRenderables(ObjectRenderables& output, Symbol::Renderable
 // ### PointObject ###
 
 PointObject::PointObject(const Symbol* symbol)
- : Object(Object::Point, symbol)
+: Object(Object::Point, symbol, { MapCoord{0,0} })
 {
 	Q_ASSERT(!symbol || (symbol->getType() == Symbol::Point));
-	coords.push_back(MapCoord(0, 0));
 }
 
 PointObject::PointObject(const PointObject& /*proto*/) = default;

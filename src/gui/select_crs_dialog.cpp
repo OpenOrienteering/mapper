@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -41,9 +41,10 @@ namespace OpenOrienteering {
 namespace {
 
 enum SpecialCRS {
-	SameAsMap  = 1,
-	Local      = 2,
-	Geographic = 3
+	SameAsMap    = 1,
+	Local        = 2,
+	Geographic   = 3,
+	TemplateFile = 4,
 };
 
 
@@ -52,11 +53,12 @@ enum SpecialCRS {
 
 
 SelectCRSDialog::SelectCRSDialog(
+        const TemplateImage::GeoreferencingOptions& options,
         const Georeferencing& georef,
         QWidget* parent,
-        GeorefAlternatives alternatives,
         const QString& description )
  : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
+ , options(options)
  , georef(georef)
 {
 	setWindowModality(Qt::WindowModal);
@@ -64,22 +66,17 @@ SelectCRSDialog::SelectCRSDialog(
 	
 	crs_selector = new CRSSelector(georef, nullptr);
 	if (georef.isLocal())
+	{
 		crs_selector->clear();
-	
-	if (alternatives.testFlag(TakeFromMap) && !georef.isLocal())
-	{
-		crs_selector->addCustomItem(tr("Same as map"), SpecialCRS::SameAsMap);
-		crs_selector->setCurrentIndex(0); // TakeFromMap
-	}
-	
-	if (alternatives.testFlag(Local) || georef.isLocal())
-	{
 		crs_selector->addCustomItem(tr("Local"), SpecialCRS::Local);
-		crs_selector->setCurrentIndex(0); // TakeFromMap or Local, both is fine.
 	}
-	
-	if (alternatives.testFlag(Geographic) && !georef.isLocal())
+	else
+	{
+		if (!options.template_file.crs_spec.isEmpty())
+			crs_selector->addCustomItem(tr("From template file"), SpecialCRS::TemplateFile );
+		crs_selector->addCustomItem(tr("Same as map"), SpecialCRS::SameAsMap);
 		crs_selector->addCustomItem(tr("Geographic coordinates (WGS84)"), SpecialCRS::Geographic);
+	}
 	
 	status_label = new QLabel();
 	button_box = new QDialogButtonBox(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
@@ -94,6 +91,20 @@ SelectCRSDialog::SelectCRSDialog(
 	form_layout->addRow(tr("Status:"), status_label);
 	form_layout->addItem(Util::SpacerItem::create(this));
 	crs_selector->setDialogLayout(form_layout);
+	
+	auto const& crs_spec = options.effective.crs_spec;
+	if (georef.isLocal())
+	    crs_selector->setCurrentIndex(0);
+	else if (crs_spec.isEmpty())
+		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::SameAsMap));
+	else if (crs_spec == options.template_file.crs_spec)
+		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::TemplateFile));
+	else if (crs_spec == georef.getProjectedCRSSpec())
+		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::SameAsMap));
+	else if (crs_spec == Georeferencing::geographic_crs_spec)
+		crs_selector->setCurrentIndex(crs_selector->findData(SpecialCRS::Geographic));
+	else
+		crs_selector->setCurrentCRS(CRSTemplateRegistry().find(QString::fromLatin1("PROJ.4")), { crs_spec });
 	
 	auto layout = new QVBoxLayout();
 	layout->addLayout(form_layout, 1);
@@ -120,6 +131,9 @@ QString SelectCRSDialog::currentCRSSpec() const
 		break;
 	case SpecialCRS::Geographic:
 		spec = Georeferencing::geographic_crs_spec;
+		break;
+	case SpecialCRS::TemplateFile:
+		spec = options.template_file.crs_spec;
 		break;
 	default:
 		spec = crs_selector->currentCRSSpec();

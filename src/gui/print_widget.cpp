@@ -682,7 +682,7 @@ void PrintWidget::updatePaperSizes(const QPrinterInfo* target) const
 	for (auto const & size : qAsConst(size_list))
 	{
 		if (size.id() == QPageSize::Custom)
-			have_custom_size = true; // add it once after all other entires
+			have_custom_size = true; // add it once after all other entries
 		else
 			paper_size_combo->addItem(size.name(), size.id());
 	}
@@ -761,9 +761,12 @@ void PrintWidget::applyPrintAreaPolicy() const
 	{
 		setOverlapEditEnabled(false);
 		auto print_area = map_printer->getPrintArea();
+		const auto center = print_area.center();
 		print_area.setSize(map_printer->getPageRectPrintAreaSize());
 		if (center_check->isChecked())
 			centerOnMap(print_area);
+		else
+			print_area.moveCenter(center);
 		map_printer->setPrintArea(print_area);
 	}
 	else

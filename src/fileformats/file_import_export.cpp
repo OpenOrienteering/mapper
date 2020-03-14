@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
  *    Copyright 2013, 2014 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,14 +25,18 @@
 #include <memory>
 
 #include <QtGlobal>
+#include <QtMath>
+#include <QChar>
 #include <QFile>
 #include <QFileInfo>  // IWYU pragma: keep
 #include <QFlags>
 #include <QIODevice>
 #include <QLatin1Char>
+#include <QLineF>
 #include <QSaveFile>
 #include <QScopedValueRollback>
 
+#include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_part.h"
 #include "core/map_view.h"
@@ -143,6 +147,20 @@ void Importer::importFailed()
 
 void Importer::validate()
 {
+	auto const& georef = map->getGeoreferencing();
+	if (georef.isValid() && !georef.isLocal())
+	{
+		auto const expected = georef.getProjectedRefPoint();
+		auto const actual = georef.toProjectedCoords(georef.getGeographicRefPoint());
+		auto const offset = QLineF(actual, expected).length();
+		if (offset > 0.9)
+		{
+			addWarning(::OpenOrienteering::Importer::tr("Georeferencing mismatch:") + QChar::Space +
+			           ::OpenOrienteering::Importer::tr("Data may appear shifted by %1 m.").arg(qCeil(offset)) + QChar::Space +
+			           ::OpenOrienteering::Importer::tr("Check the reference point coordinates in the georeferencing dialog."));
+		}
+	}
+	
 	// Object post processing:
 	// - make sure that there is no object without symbol
 	// - make sure that all area-only path objects are closed
@@ -163,7 +181,7 @@ void Importer::validate()
 				else
 				{
 					// There is no undefined symbol for this type of object, delete the object
-					part->deleteObject(o, false);
+					part->deleteObject(o);
 					--o;
 					continue;
 				}

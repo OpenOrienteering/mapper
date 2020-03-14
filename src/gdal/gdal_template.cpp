@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019, 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,66 +19,83 @@
 
 #include "gdal_template.h"
 
-#include <cpl_conv.h>
-#include <gdal.h>
-#include <ogr_api.h>
-#include <ogr_srs_api.h>
-
+#include <QtGlobal>
+#include <QByteArray>
+#include <QImageReader>
 #include <QString>
 
+#include "gdal/gdal_image_reader.h"
+#include "gdal/gdal_manager.h"
 
 namespace OpenOrienteering {
 
-
-// ## GdalTemplate::RasterGeoreferencing
-
 // static
-GdalTemplate::RasterGeoreferencing GdalTemplate::RasterGeoreferencing::fromGDALDataset(GDALDatasetH dataset)
+const std::vector<QByteArray>& GdalTemplate::supportedExtensions()
 {
-	RasterGeoreferencing raster_georef;
-	if (dataset != nullptr)
+	return GdalManager().supportedRasterExtensions();
+}
+
+
+GdalTemplate::GdalTemplate(const QString& path, Map* map)
+: TemplateImage(path, map)
+{}
+
+GdalTemplate::GdalTemplate(const GdalTemplate& proto) = default;
+
+GdalTemplate::~GdalTemplate() = default;
+
+GdalTemplate* GdalTemplate::duplicate() const
+{
+	return new GdalTemplate(*this);
+}
+
+const char* GdalTemplate::getTemplateType() const
+{
+	return "GdalTemplate";
+}
+
+bool GdalTemplate::loadTemplateFileImpl(bool configuring)
+{
+	GdalImageReader reader(template_path);
+	if (!reader.canRead())
 	{
-		auto driver = GDALGetDatasetDriver(dataset);
-		raster_georef.driver = GDALGetDriverShortName(driver);
-		raster_georef.spec = GDALGetProjectionRef(dataset);
-		auto const result = GDALGetGeoTransform(dataset, raster_georef.geo_transform.data());
-		raster_georef.valid = result == CE_None;
+		setErrorString(reader.errorString());
+		return false;
 	}
-	return raster_georef;
-}
-
-GdalTemplate::RasterGeoreferencing::operator QTransform() const
-{
-	return { geo_transform[1], geo_transform[2], geo_transform[4], geo_transform[5], geo_transform[0], geo_transform[3] };
-}
-
-// static
-QByteArray GdalTemplate::RasterGeoreferencing::toProjSpec(const QByteArray& gdal_spec)
-{
-	auto const spatial_reference = OSRNewSpatialReference(gdal_spec);
-	char* proj_spec_cstring;
-	auto const ogr_error = OSRExportToProj4(spatial_reference, &proj_spec_cstring);
-	auto result = QByteArray(ogr_error == OGRERR_NONE ? proj_spec_cstring : nullptr);
-	CPLFree(proj_spec_cstring);
-	OSRDestroySpatialReference(spatial_reference);
-	result.replace("+k=0 ", "+k=1 ");  // https://github.com/OSGeo/PROJ/issues/1700
-	return result;
-}
-
-
-
-// ## GdalTemplate
-
-// static
-GdalTemplate::RasterGeoreferencing GdalTemplate::tryReadProjection(const QString& filepath)
-{
-	if (auto dataset = GDALOpen(filepath.toUtf8(), GA_ReadOnly))
+	
+	qDebug("GdalTemplate: Using GDAL driver '%s'", reader.format().constData());
+	
+	if (!reader.read(&image))
 	{
-		auto raster_georef = RasterGeoreferencing::fromGDALDataset(dataset);
-		GDALClose(dataset);
-		return raster_georef;
+		setErrorString(reader.errorString());
+		
+		QImageReader image_reader(template_path);
+		if (image_reader.canRead())
+		{
+			qDebug("GdalTemplate: Falling back to QImageReader, reason: %s", qPrintable(errorString()));
+			if (!image_reader.read(&image))
+			{
+				setErrorString(image_reader.errorString());
+				return false;
+			}
+		}
 	}
-	return {};
+	
+	// Duplicated from TemplateImage, for compatibility
+	available_georef = findAvailableGeoreferencing(reader.readGeoTransform());
+	if (!configuring && is_georeferenced)
+	{
+		if (!isGeoreferencingUsable())
+		{
+			// Image was georeferenced, but georeferencing info is gone -> deny to load template
+			setErrorString(::OpenOrienteering::TemplateImage::tr("Georeferencing not found"));
+			return false;
+		}
+		
+		calculateGeoreferencing();
+	}
+	
+	return true;
 }
 
 

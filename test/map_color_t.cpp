@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012, 2013 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -142,7 +142,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(duplicate_color->getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(duplicate_color->getPriority(),        7);
 	QCOMPARE(duplicate_color->getName(),            QString::fromLatin1("Name of the color"));
-	QVERIFY(duplicate_color->equals(named_color, true));
+	QVERIFY(*duplicate_color == named_color);
 	delete duplicate_color;
 	
 	// Test default copy constructor.
@@ -158,7 +158,7 @@ void MapColorTest::constructorTest()
 	QCOMPARE(duplicate_color->getRgbColorMethod(),  MapColor::CmykColor);
 	QCOMPARE(duplicate_color->getPriority(),        7);
 	QCOMPARE(duplicate_color->getName(),            QString::fromLatin1("Name of the color"));
-	QVERIFY(duplicate_color->equals(named_color, true));
+	QVERIFY(*duplicate_color == named_color);
 	duplicate_color = nullptr;
 }
 
@@ -168,44 +168,44 @@ void MapColorTest::equalsTest()
 	
 	// Difference in priority: equals' result depends on second attribute. 
 	MapColor black_1(QString::fromLatin1("Black"), 1);
-	QVERIFY(black_1.equals(black, false));
-	QVERIFY(black.equals(black_1, false));
-	QVERIFY(!black_1.equals(black, true));
-	QVERIFY(!black.equals(black_1, true));
+	QVERIFY(black_1.equals(black));
+	QVERIFY(black.equals(black_1));
+	QVERIFY(black_1 != black);
+	QVERIFY(black != black_1);
 	
 	// Difference in case of name: equals operates case-insensitive.
 	black_1.setName(QString::fromLatin1("BLACK"));
-	QVERIFY(black_1.equals(black, false));
-	QVERIFY(!black_1.equals(black, true));
+	QVERIFY(black_1.equals(black));
+	QVERIFY(black_1 != black);
 	
 	// Difference in knockout attribute, spot color method undefined
 	QVERIFY(black_1.getSpotColorMethod() == MapColor::UndefinedMethod);
 	black_1.setKnockout(!black.getKnockout());
 	QVERIFY(!black_1.getKnockout()); // must not be set
-	QVERIFY(black_1.equals(black, false));
-	QVERIFY(!black_1.equals(black, true));
+	QVERIFY(black_1.equals(black));
+	QVERIFY(black_1 != black);
 	
 	// Difference in knockout attribute, spot color method defined
 	black_1.setSpotColorName(QString::fromLatin1("BLACK"));
 	QVERIFY(black_1.getSpotColorMethod() == MapColor::SpotColor);
 	black_1.setKnockout(!black.getKnockout());
 	QVERIFY(black_1.getKnockout()); // must not be set
-	QVERIFY(!black_1.equals(black, false));
-	QVERIFY(!black_1.equals(black, true));
+	QVERIFY(!black_1.equals(black));
+	QVERIFY(black_1 != black);
 	
 	// Difference in name.
 	MapColor blue(QString::fromLatin1("Blue"), 0);
-	QVERIFY(!blue.equals(black, false));
-	QVERIFY(!black.equals(blue, false));
-	QVERIFY(!blue.equals(black, true));
-	QVERIFY(!black.equals(blue, true));
+	QVERIFY(!blue.equals(black));
+	QVERIFY(!black.equals(blue));
+	QVERIFY(blue != black);
+	QVERIFY(black != blue);
 	
 	// Equality after assignment (simple case).
 	black_1 = black;
-	QVERIFY(black_1.equals(black, false));
-	QVERIFY(black.equals(black_1, false));
-	QVERIFY(black_1.equals(black, true));
-	QVERIFY(black.equals(black_1, true));
+	QVERIFY(black_1.equals(black));
+	QVERIFY(black.equals(black_1));
+	QVERIFY(black_1 == black);
+	QVERIFY(black == black_1);
 }
 
 void MapColorTest::spotColorTest()
@@ -238,7 +238,7 @@ void MapColorTest::spotColorTest()
 	spot_cyan_copy.setSpotColorName(QString::fromLatin1("CYAN2"));
 	QCOMPARE(spot_cyan_copy.getSpotColorMethod(), MapColor::SpotColor);
 	QCOMPARE(spot_cyan_copy.getSpotColorName(), QString(QString::fromLatin1("CYAN2")));        // new
-	QVERIFY(!spot_cyan_copy.equals(spot_cyan, true));
+	QVERIFY(spot_cyan_copy != spot_cyan);
 	QCOMPARE(spot_cyan_copy.getCmykColorMethod(), MapColor::CustomColor); // unchanged
 	QCOMPARE(spot_cyan_copy.getCmyk(), spot_cyan.getCmyk());              // unchanged
 	
@@ -291,11 +291,11 @@ void MapColorTest::spotColorTest()
 	MapColor spot_yellow_copy(spot_yellow);
 	composition.front().spot_color = &spot_yellow_copy;
 	compo_copy.setSpotColorComposition(composition);
-	QVERIFY(compo_copy.equals(spot_cyan_copy, false));
-	QVERIFY(compo_copy.equals(spot_cyan_copy, true));
+	QVERIFY(compo_copy.equals(spot_cyan_copy));
+	QVERIFY(compo_copy == spot_cyan_copy);
 	spot_yellow_copy.setPriority(spot_yellow_copy.getPriority() + 1);
-	QVERIFY(compo_copy.equals(spot_cyan_copy, false));
-	QVERIFY(!compo_copy.equals(spot_cyan_copy, true));
+	QVERIFY(compo_copy.equals(spot_cyan_copy));
+	QVERIFY(compo_copy != spot_cyan_copy);
 	
 	duplicate.reset(spot_cyan_copy.duplicate());
 	QCOMPARE(*duplicate, spot_cyan_copy);

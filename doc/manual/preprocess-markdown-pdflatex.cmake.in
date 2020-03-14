@@ -232,7 +232,7 @@ if(EXISTS "@CMAKE_CURRENT_BINARY_DIR@/Doxyfile-pdflatex-input.txt")
 	file(MD5 "@CMAKE_CURRENT_BINARY_DIR@/Doxyfile-pdflatex-input.txt" file_md5)
 endif()
 if(NOT "${output_md5}" STREQUAL "${file_md5}")
-	file(WRITE "@CMAKE_CURRENT_BINARY_DIR@/Doxyfile-pdflatex-input.txt" "INPUT = ${page_list}")
+	file(WRITE "@CMAKE_CURRENT_BINARY_DIR@/Doxyfile-pdflatex-input.txt" "${doxygen-input}")
 endif()
 
 file(GLOB output_files RELATIVE "@CMAKE_CURRENT_BINARY_DIR@/markdown-pdflatex" "@CMAKE_CURRENT_BINARY_DIR@/markdown-pdflatex/*.md")

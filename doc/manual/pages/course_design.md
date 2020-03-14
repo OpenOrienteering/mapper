@@ -44,8 +44,8 @@ creating a new element, you may easily align all the parts of the description.
 
 The control description sheet starts with a heading which consists of blocks for
 the event title, classes (optional), and (in a single row) course code, course
-length and and height climb. The course length is given in kilometres rounded to
-the nearest 0.1 km. The height climb is given in metres rounded to the nearest
+length and and height climb. The course length is given in kilometers rounded to
+the nearest 0.1 km. The height climb is given in meters rounded to the nearest
 5 m.
 
 The heading is followed by lines describing the start location, the individual
@@ -57,9 +57,9 @@ uses eight columns which are referred to as A...H.
 | A      | Control number. Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition. |
 | B      | Control code. The control code should be a number greater than 30. |
 | C      | Which of any similar feature. This column is used when there is more than one similar feature within the control circle; e.g. south eastern. |
-| D      | Control feature. The feature, as shown on the map, at the centre of the circle deÞ ning the control site; e.g. clearing; boulder. The description of each control is based on the International Specification for Orienteering Maps (ISOM 2000). |
+| D      | Control feature. The feature, as shown on the map, at the center of the circle defining the control site; e.g. clearing; boulder. The description of each control is based on the International Specification for Orienteering Maps (ISOM 2000). |
 | E      | Appearance. Further information on the nature of the feature if it is required; e.g. overgrown; ruined. In certain circumstances also used for a second control feature where the description requires this. |
- | F      | Dimensions / Combinations. Dimensions of the feature should be given where the size of the control feature on the map is symbolic rather than to scale. Also used for the two combination symbols (crossing; junction). |
+| F      | Dimensions / Combinations. Dimensions of the feature should be given where the size of the control feature on the map is symbolic rather than to scale. Also used for the two combination symbols (crossing; junction). |
 | G       | Location of the control flag. Position of the control flag with respect to the feature; e.g. west corner (outside); south foot. |
 | H       | Other information. Other information that may be of importance to the competitor; e.g. radio control; refreshments. |
 

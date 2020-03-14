@@ -24,6 +24,8 @@
 #include <utility>
 #include <vector>
 
+#include <QtGlobal>
+
 namespace OpenOrienteering {
 
 class Map;
@@ -51,7 +53,7 @@ public:
 	 * @param toggle corresponds to the shift key modifier.
 	 * @return true if the selection has changed.
 	 */
-	bool selectAt(const MapCoordF& position, double tolerance, bool toggle);
+	bool selectAt(const MapCoordF& position, qreal tolerance, bool toggle);
 	
 	/**
 	 * Applies box selection.
