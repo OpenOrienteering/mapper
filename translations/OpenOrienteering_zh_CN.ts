@@ -10,6 +10,20 @@
     </message>
 </context>
 <context>
+    <name>GdalImageReader</name>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
+        <source>Failed to read image data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
+        <source>Unsupported raster data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="648"/>
@@ -92,17 +106,17 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished">无法导出模板:&quot;%1&quot;的文件类型尚不支持</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1604,7 +1618,7 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::Format</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2358,12 +2372,12 @@ Rescale the imported data?</source>
         <translation>加载在列行 %2%3 %1 类型的符号时的错误。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="304"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation>符号 ID &apos;%1&apos; 不是唯一的在行 %2 列 %3。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="376"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>加载类型 %1 在 %2 线列 %3 的象征时出现错误: %4</translation>
     </message>
@@ -2373,12 +2387,19 @@ Rescale the imported data?</source>
         <translation>加载类型 %1 的对象时出现错误。</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="383"/>
+        <location filename="../src/core/objects/object.cpp" line="327"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="318"/>
+        <location filename="../src/undo/object_undo.cpp" line="616"/>
+        <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object.cpp" line="389"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>加载类型 %1 在 %2 的对象时出现错误: %3: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="347"/>
+        <location filename="../src/core/objects/object.cpp" line="353"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>无法找到符号对象在 %1: %2。</translation>
     </message>
@@ -2475,7 +2496,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="739"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>未能加载模板&quot;%1&quot;，原因: %2</translation>
     </message>
@@ -2485,7 +2506,7 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">无法打开文件</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="234"/>
@@ -2939,7 +2960,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
@@ -3099,7 +3120,7 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="726"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
         <translation>打开 %1</translation>
     </message>
@@ -3108,7 +3129,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -3277,12 +3298,12 @@ Rescale the imported data?</source>
         <translation>新颜色</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
         <translation type="unfinished">导入...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation type="unfinished"></translation>
@@ -3580,13 +3601,14 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4055"/>
         <source>Import...</source>
         <translation>导入...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="264"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
         <translation>与编辑</translation>
     </message>
@@ -3668,7 +3690,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
         <translation>隐藏所有模板</translation>
     </message>
@@ -3828,7 +3850,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
@@ -3839,7 +3861,7 @@ because saving as %2 (.%3) is not supported.</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">导入映射生成警告。</translation>
     </message>
@@ -4009,17 +4031,17 @@ because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
         <translation type="unfinished">没有要导入。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
         <translation type="unfinished">问题</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4225"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4103,9 +4125,9 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3279"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3285"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3294"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4135"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -4400,11 +4422,6 @@ selected</source>
         <translation>你想要移动所有对象映射部分&quot;%1&quot;，并删除所有其他地图部分吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
-        <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation type="vanished">无法导入所选的映射文件，因为它不能被加载。</translation>
     </message>
@@ -4634,18 +4651,18 @@ selected</source>
         <translation type="vanished">%1，GPX，OSM 或 DXF 文件导入</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Importable files</source>
         <translation>可导入文件</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1719"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>All files</source>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>无法导入所选的文件，因为其文件格式不受支持。</translation>
     </message>
@@ -5125,7 +5142,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1947"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">已调整座标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1958"/>
@@ -5378,13 +5395,13 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdAreaSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished">在地区的符号&quot;%1&quot;，跳过填充图案。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished">在地区的符号&quot;%1&quot;，假设&quot;转移的行&quot;点模式。这可能是正确的以及不正确。</translation>
     </message>
@@ -5599,7 +5616,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbol</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">在行的符号&quot;%1&quot;，不能代表帽/联接组合。</translation>
     </message>
@@ -5607,22 +5624,22 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">在行的符号&quot;%1&quot;，不能代表帽/联接组合。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished">行中的符号&quot;%1&quot;，忽视了短跑分组。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished">线符号&quot;%1&quot;，在有了破折号在一群数目减少到 2。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished">在行的符号&quot;%1&quot;，不能正确导出边界。</translation>
     </message>
@@ -5630,17 +5647,17 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdTextSymbolBasic</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished">在文本中的符号 %1︰ 忽略下划线</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished">在文本中的符号 %1︰ 忽略字偶间距调整</translation>
     </message>
@@ -7407,22 +7424,22 @@ to jump over the lazy dog
         <translation>价值</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Add Row</source>
         <translation>添加行</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Remove Row</source>
         <translation>删除行</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="98"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
         <source>Move Up</source>
         <translation>向上移动</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation>向下移动</translation>
     </message>
@@ -7479,33 +7496,33 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="487"/>
+        <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
         <translation>找到移动的模板文件</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="489"/>
+        <location filename="../src/templates/template.cpp" line="476"/>
         <source>All files (*.*)</source>
         <translation>所有文件 (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="504"/>
+        <location filename="../src/templates/template.cpp" line="491"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="601"/>
-        <location filename="../src/templates/template.cpp" line="629"/>
+        <location filename="../src/templates/template.cpp" line="588"/>
+        <location filename="../src/templates/template.cpp" line="616"/>
         <source>No such file.</source>
         <translation>没有这样的文件。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="643"/>
+        <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>文件的格式是正确的这种模板类型的吗？</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="650"/>
+        <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7628,32 +7645,32 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="151"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
+        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>没有足够的可用内存 (图像大小: %1 %2 像素 x)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="171"/>
+        <location filename="../src/gdal/gdal_template.cpp" line="91"/>
+        <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>正在加载 GIF 图像模板。
+        <translation type="vanished">正在加载 GIF 图像模板。
 不支持保存 GIF 文件。这意味着不会保存在此模板上的图纸 ！
 如果你不打算然而在此模板上画画，那是没有问题。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="229"/>
-        <location filename="../src/templates/template_image.cpp" line="346"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="379"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>在世界文件中选择坐标系的坐标</translation>
     </message>
@@ -7729,39 +7746,39 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="172"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
         <source>Show</source>
         <translation>显示</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Opacity</source>
         <translation>不透明度</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Group</source>
         <translation>集团</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Filename</source>
         <translation>文件名</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="504"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
         <source>Sketch</source>
         <translation>素描</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="508"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
         <source>GPS</source>
         <translation>全球定位系统</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="216"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Open...</source>
         <translation>打开...</translation>
     </message>
@@ -7774,163 +7791,168 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation type="vanished">关闭</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="219"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
         <source>Duplicate</source>
         <translation>重复</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="227"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation>添加模板...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Remove</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
         <source>Move Up</source>
         <translation>向上移动</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="239"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Move Down</source>
         <translation>向下移动</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Import and remove</source>
         <translation>导入和删除</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <source>Move by hand</source>
         <translation>用手移动</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>打开图像、 GPS 跟踪或 DXF 文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="258"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Positioning...</source>
         <translation>定位...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
         <translation>模板文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>All files</source>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Adjust...</source>
         <translation>调整...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="454"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="999"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>请输入一个有效的整数数字来设置一组或将字段留空以取消组合模板 ！</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
         <translation>不能扩展</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>规模由名义地图规模比 （%1%）</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
         <translation type="unfinished">地理</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="453"/>
-        <location filename="../src/templates/template.cpp" line="500"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
+        <location filename="../src/templates/template.cpp" line="487"/>
         <source>Cannot open template
 %1:
 %2</source>
         <translation>无法打开模板 %1: %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="420"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
         <source>File format not recognized.</source>
         <translation>文件格式无法识别。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="433"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <source>Vectorize lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>加载模板失败。此文件存在，并且有效吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">无法加载地图文件，中止。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">导入映射生成警告。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>缩放当前模板缩放 （%1%）</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1022"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
         <translation>导入模板</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1023"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>应如何缩放的导入的模板地图符号？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1053"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>该模板将叠印模拟中不可见。切换到普通视图吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1210"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
         <source>- Map -</source>
         <translation>-地图-</translation>
     </message>
@@ -7938,7 +7960,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="107"/>
+        <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">无法加载地图文件，中止。</translation>
     </message>
@@ -8036,8 +8058,8 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="147"/>
-        <location filename="../src/templates/template_track.cpp" line="153"/>
+        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8046,67 +8068,67 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <translation type="vanished">选择轨道坐标的坐标参考系统</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="185"/>
+        <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
         <translation>开场曲目......</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="186"/>
+        <location filename="../src/templates/template_track.cpp" line="208"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>加载在地理或非地理模式跟踪记录吗？</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="188"/>
+        <location filename="../src/templates/template_track.cpp" line="210"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>根据地图的地理参考坐标系设置轨道的位置。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="190"/>
+        <location filename="../src/templates/template_track.cpp" line="212"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>这些是尚未配置，所以他们将显示为下一步。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="191"/>
+        <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
         <translation>地理</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
         <translation>非地理</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>项目跟踪与中心轨迹的坐标平均使用正交投影。允许调整转型和设置地图小基使用调整后的轨道位置。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>路径是空的没什么可导入 ！</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>应作为经历的所有点线导入路点吗？</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="470"/>
+        <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Import problems</source>
         <translation>导入问题</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="471"/>
+        <location filename="../src/templates/template_track.cpp" line="486"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n 路径对象可能不会导入 (原因︰ 缺少坐标)。</numerusform>

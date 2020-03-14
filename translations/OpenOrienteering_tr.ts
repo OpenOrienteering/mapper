@@ -10,6 +10,20 @@
     </message>
 </context>
 <context>
+    <name>GdalImageReader</name>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
+        <source>Failed to read image data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
+        <source>Unsupported raster data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="648"/>
@@ -97,17 +111,17 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1566,7 +1580,7 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::Format</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2293,7 +2307,10 @@ Rescale the imported data?</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dosya açılamadı:
+%1
+
+%2</translation>
     </message>
 </context>
 <context>
@@ -2304,12 +2321,12 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="304"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="376"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2319,12 +2336,19 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="383"/>
+        <location filename="../src/core/objects/object.cpp" line="327"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="318"/>
+        <location filename="../src/undo/object_undo.cpp" line="616"/>
+        <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object.cpp" line="389"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="347"/>
+        <location filename="../src/core/objects/object.cpp" line="353"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2417,7 +2441,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="739"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2427,7 +2451,9 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dosya Açılamadı
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="234"/>
@@ -2837,7 +2863,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2925,7 +2951,10 @@ Do you want to save your changes?</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dosya açılamadı:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
@@ -2950,7 +2979,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geçersiz dosya türü.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="868"/>
@@ -2994,7 +3023,7 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="726"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3003,7 +3032,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3106,12 +3135,12 @@ because saving as %2 (.%3) is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation type="unfinished"></translation>
@@ -3405,13 +3434,14 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4055"/>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="264"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3488,7 +3518,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3870,9 +3900,9 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3279"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3285"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3294"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4135"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3893,7 +3923,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3904,7 +3934,7 @@ because saving as %2 (.%3) is not supported.</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4188,26 +4218,23 @@ selected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
-        <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soru</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4225"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">İçe aktarılan verilerin ölçeği, bu haritanın 1:% 2 ölçeğinden farklı olan 1:% 1&apos;dir.
+
+İçe aktarılan veriler yeniden ölçeklendirilsin mi?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2390"/>
@@ -4376,18 +4403,18 @@ Rescale the imported data?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Importable files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1719"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>All files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5105,13 +5132,13 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdAreaSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5303,7 +5330,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2423"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 sürümündeki OCD dosyaları desteklenmiyor!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="235"/>
@@ -5314,7 +5341,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbol</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5322,22 +5349,22 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5345,17 +5372,17 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdTextSymbolBasic</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6875,7 +6902,10 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dosya açılamadı:
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="254"/>
@@ -7028,22 +7058,22 @@ to jump over the lazy dog
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Add Row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Remove Row</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="98"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
         <source>Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7092,33 +7122,33 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="487"/>
+        <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="489"/>
+        <location filename="../src/templates/template.cpp" line="476"/>
         <source>All files (*.*)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="504"/>
+        <location filename="../src/templates/template.cpp" line="491"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="601"/>
-        <location filename="../src/templates/template.cpp" line="629"/>
+        <location filename="../src/templates/template.cpp" line="588"/>
+        <location filename="../src/templates/template.cpp" line="616"/>
         <source>No such file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="643"/>
+        <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="650"/>
+        <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7241,30 +7271,20 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="151"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
+        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="171"/>
+        <location filename="../src/gdal/gdal_template.cpp" line="91"/>
+        <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
-        <source>Loading a GIF image template.
-Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
-If you do not intend to draw on this template however, that is no problem.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/templates/template_image.cpp" line="229"/>
-        <location filename="../src/templates/template_image.cpp" line="346"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="379"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7340,200 +7360,205 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="172"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
         <source>Show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Filename</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="504"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
         <source>Sketch</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="508"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
         <source>GPS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="216"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Open...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="219"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
         <source>Duplicate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="227"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
         <source>Move Up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="239"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Move Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Import and remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <source>Move by hand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="258"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Positioning...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>All files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Adjust...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="454"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="999"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="453"/>
-        <location filename="../src/templates/template.cpp" line="500"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
+        <location filename="../src/templates/template.cpp" line="487"/>
         <source>Cannot open template
 %1:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="420"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
         <source>File format not recognized.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="433"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <source>Vectorize lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1022"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1023"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1053"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1210"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
         <source>- Map -</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7541,7 +7566,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="107"/>
+        <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7639,73 +7664,73 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="147"/>
-        <location filename="../src/templates/template_track.cpp" line="153"/>
+        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="185"/>
+        <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="186"/>
+        <location filename="../src/templates/template_track.cpp" line="208"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="188"/>
+        <location filename="../src/templates/template_track.cpp" line="210"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="190"/>
+        <location filename="../src/templates/template_track.cpp" line="212"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="191"/>
+        <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Question</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Soru</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="470"/>
+        <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Import problems</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="471"/>
+        <location filename="../src/templates/template_track.cpp" line="486"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation type="unfinished">
             <numerusform></numerusform>

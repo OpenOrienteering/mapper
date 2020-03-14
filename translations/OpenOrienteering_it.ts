@@ -10,6 +10,20 @@
     </message>
 </context>
 <context>
+    <name>GdalImageReader</name>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
+        <source>Failed to read image data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
+        <source>Unsupported raster data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="648"/>
@@ -97,17 +111,17 @@ Adattare i dati importati?</translation>
         <translation>Tinta piatta non valida.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation type="unfinished">Impossibile salvare la posizione corretta del template mancante: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished">Impossibile esportare il template: i file di tipo &quot;%1&quot; non sono ancora supportati</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation>Testo troncato a &apos;|&apos;): %1</translation>
     </message>
@@ -1630,7 +1644,7 @@ Adattare i dati importati?</translation>
 <context>
     <name>OpenOrienteering::Format</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2438,12 +2452,12 @@ Adattare i dati importati?</translation>
         <translation>Errore durante il caricamento di un simbolo di tipo %1 alla linea %2 colonna %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="304"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation>Simbolo con ID &apos;%1&apos; non unico alla linea %2 colonna %3.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="376"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Errore durante il caricamento del simbolo di tipo %1 alla linea %2 colonna %3: %4</translation>
     </message>
@@ -2457,12 +2471,19 @@ Adattare i dati importati?</translation>
         <translation>Errore durante il caricamento di un oggetto di tipo %1.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="383"/>
+        <location filename="../src/core/objects/object.cpp" line="327"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="318"/>
+        <location filename="../src/undo/object_undo.cpp" line="616"/>
+        <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object.cpp" line="389"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>Errore durante il caricamento di un oggetto di tipo %1 a %2:%3: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="347"/>
+        <location filename="../src/core/objects/object.cpp" line="353"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Impossibile trovare il simbolo per l&apos;oggetto a %1:%2.</translation>
     </message>
@@ -2564,7 +2585,7 @@ Adattare i dati importati?</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="739"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Fallito a caricare il template &apos;%1&apos;, motivo: %2</translation>
     </message>
@@ -3033,7 +3054,7 @@ Adattare i dati importati?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
         <source>Close</source>
         <translation>Chiudi</translation>
     </message>
@@ -3196,7 +3217,7 @@ Vuoi scalare i simboli nella scala selezionata?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="726"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
         <translation>Apertura %1</translation>
     </message>
@@ -3205,7 +3226,7 @@ Vuoi scalare i simboli nella scala selezionata?</translation>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
@@ -3399,12 +3420,12 @@ Riscalare i dati importati?</translation>
         <translation>Nuovo colore</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
         <translation>Importa...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>La sostituzione dei simboli è stata cancellata.
@@ -3707,13 +3728,14 @@ Importare comunque i dati?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4055"/>
         <source>Import...</source>
         <translation>Importa...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="264"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
         <translation>&amp;Modifica</translation>
     </message>
@@ -3790,7 +3812,7 @@ Importare comunque i dati?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
         <translation>Nascondi tutti i Template</translation>
     </message>
@@ -3954,7 +3976,7 @@ perché il salvataggio come %2 (.%3) non è supportato.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
         <translation type="unfinished">Attenzione</translation>
     </message>
@@ -3965,7 +3987,7 @@ perché il salvataggio come %2 (.%3) non è supportato.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">La l&apos;importazione della mappa ha generato degli avvisi.</translation>
     </message>
@@ -4203,17 +4225,17 @@ perché il salvataggio come %2 (.%3) non è supportato.</translation>
         <translation>2x zoom</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
         <translation type="unfinished">Nulla da importare.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
         <translation type="unfinished">Domanda</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4225"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4236,9 +4258,9 @@ Riscalare i dati importati?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3279"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3285"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3294"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4135"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
@@ -4532,9 +4554,8 @@ selezion</translation>
         <translation>Vuoi spostare tutti gli oggetti nella parte di mappa &quot;%1&quot;, e rimuovere tutte le altre parti di mappa?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Import %1 or GPX file</source>
-        <translation>Importa %1 o file GPX</translation>
+        <translation type="vanished">Importa %1 o file GPX</translation>
     </message>
     <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
@@ -4761,18 +4782,18 @@ selezion</translation>
         <translation type="vanished">Importa %1, file GPX, OSM o DXF</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Importable files</source>
         <translation>File importabili</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1719"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>All files</source>
         <translation>Tutti i files</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Impossibile importare il file selezionato perché il suo formato non è supportato.</translation>
     </message>
@@ -5518,13 +5539,13 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
 <context>
     <name>OpenOrienteering::OcdAreaSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, motivo di riempimento saltato.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished">Nel simbolo area &quot;%1&quot;, assumiamo un &quot;shifted rows&quot;come motivo puntiforme. Questo può essere sia corretto che no.</translation>
     </message>
@@ -5743,7 +5764,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
 <context>
     <name>OpenOrienteering::OcdLineSymbol</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
     </message>
@@ -5751,22 +5772,22 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
 <context>
     <name>OpenOrienteering::OcdLineSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, impossibile rappresentare la combinazione di termini e giunzioni.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, viene ignorato il raggruppamento del tratteggio.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, il numero di tratteggi per gruppo è stato ridotto a 2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished">Nel simbolo linea &quot;%1&quot;, impossibile esportare i bordi correttamente.</translation>
     </message>
@@ -5774,17 +5795,17 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
 <context>
     <name>OpenOrienteering::OcdTextSymbolBasic</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished">Nel simbolo di testo %1: viene ignorata la sottolineatura</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished">Nel simbolo testo %1: crenatura ignorata</translation>
     </message>
@@ -7598,22 +7619,22 @@ e col mestolo ti fa a pezzi
         <translation>Valore</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Add Row</source>
         <translation>Aggiungi Riga</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Remove Row</source>
         <translation>Rimuovi Riga</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="98"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
         <source>Move Up</source>
         <translation>Muovi Su</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation>Muovi Giù</translation>
     </message>
@@ -7667,33 +7688,33 @@ e col mestolo ti fa a pezzi
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="487"/>
+        <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
         <translation>Trova il file template spostato</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="489"/>
+        <location filename="../src/templates/template.cpp" line="476"/>
         <source>All files (*.*)</source>
         <translation>Tutti i files (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="504"/>
+        <location filename="../src/templates/template.cpp" line="491"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="601"/>
-        <location filename="../src/templates/template.cpp" line="629"/>
+        <location filename="../src/templates/template.cpp" line="588"/>
+        <location filename="../src/templates/template.cpp" line="616"/>
         <source>No such file.</source>
         <translation>File non trovato.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="643"/>
+        <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>Il formato del file per questo template risulta corretto?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="650"/>
+        <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
         <translation>Memoria libera insufficiente.</translation>
     </message>
@@ -7820,32 +7841,32 @@ e col mestolo ti fa a pezzi
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="151"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
+        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Memoria libera insufficiente (immagine da %1x%2 pixels)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="171"/>
+        <location filename="../src/gdal/gdal_template.cpp" line="91"/>
+        <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Warning</source>
-        <translation>Attenzione</translation>
+        <translation type="vanished">Attenzione</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>Caricamento un immagine GIF come template.
+        <translation type="vanished">Caricamento un immagine GIF come template.
 Salvataggio in formato GIF non supportato. Questo vuole dire che i disegni su questo template non saranno salvati!
 In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="229"/>
-        <location filename="../src/templates/template_image.cpp" line="346"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="379"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Selezionare il sistema di riferimento delle coordinate nelle coordinate del file world</translation>
     </message>
@@ -7921,39 +7942,39 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="172"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
         <source>Show</source>
         <translation>Mostra</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Opacity</source>
         <translation>Opacità</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Group</source>
         <translation>Gruppo</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Filename</source>
         <translation>Nome file</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="504"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
         <source>Sketch</source>
         <translation>Disegnetto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="508"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="216"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Open...</source>
         <translation>Apri...</translation>
     </message>
@@ -7970,104 +7991,104 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
         <translation type="vanished">Chiudi</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="219"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
         <source>Duplicate</source>
         <translation>Duplica</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="227"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation>Aggiungi template...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Remove</source>
         <translation>Rimuovi</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
         <source>Move Up</source>
         <translation>Muovi Su</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="239"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Move Down</source>
         <translation>Muovi Giù</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Import and remove</source>
         <translation>Importa ed elimina</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
         <source>Help</source>
         <translation>Aiuto</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <source>Move by hand</source>
         <translation>Muovi manualmente</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>Apri immagine, traccia GPS o file DXF</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="258"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Positioning...</source>
         <translation>Posizionamento...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
         <translation>File templates</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>All files</source>
         <translation>Tutti i files</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Adjust...</source>
         <translation>Aggiusta...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="454"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="999"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>Inserire un numero intero per impostare un gruppo oppure lasciare vuoto il campo per togliere il template dal gruppo!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
         <translation>Non scalare</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Scala con il rapporto di scala della mappa (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
         <translation type="unfinished">Georeferenziata</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="453"/>
-        <location filename="../src/templates/template.cpp" line="500"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
+        <location filename="../src/templates/template.cpp" line="487"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -8076,59 +8097,64 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="420"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
         <source>File format not recognized.</source>
         <translation>Formato del file non riconosciuto.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="433"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <source>Vectorize lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>Caricamento del template fallito. Il file esiste ed è valido?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">Impossibile caricare il file della mappa, aborto.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
         <translation type="unfinished">Attenzione</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">La l&apos;importazione della mappa ha generato degli avvisi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Scala con il valore della scala del template (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1022"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
         <translation>Importa template</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1023"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Come devono essere scalati i simboli della mappa template importata?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1053"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Il template sarà invisibile nella simulazione di sovrastampa. Cambia a vista normale?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1210"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
         <source>- Map -</source>
         <translation>- Mappa -</translation>
     </message>
@@ -8136,7 +8162,7 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="107"/>
+        <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">Impossibile caricare il file della mappa, aborto.</translation>
     </message>
@@ -8234,8 +8260,8 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="147"/>
-        <location filename="../src/templates/template_track.cpp" line="153"/>
+        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation>Questo template deve essere caricato con GDAL/OGR.</translation>
     </message>
@@ -8244,67 +8270,67 @@ In ogni caso, se non intendi disegnare su questo template, non ci sono problemi.
         <translation type="vanished">Selezionare il sistema di riferimento delle coordinate delle coordinate delle tracce</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="185"/>
+        <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
         <translation>Apertura traccia ...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="186"/>
+        <location filename="../src/templates/template_track.cpp" line="208"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Caricamento delle tracce in modalità georeferenziata o non georeferenziata?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="188"/>
+        <location filename="../src/templates/template_track.cpp" line="210"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>Posiziona la traccia tenendo conto delle impostazioni di georeferenziazione della mappa.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="190"/>
+        <location filename="../src/templates/template_track.cpp" line="212"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>Queste non sono state ancora configurate, quindi verranno mostrate al prossimo passo.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="191"/>
+        <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
         <translation>Georeferenziata</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
         <translation>Non georeferenziata</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Proietta le tracce usando una proiezione ortografica con il centro posizionato nel punto medio di tutte le coordinate. Permette l&apos;aggiustamento della trasformazione ed l&apos;impostazione della georeferenziazione usando la posizione corretta della traccia.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>Il percorso è vuoto, non c&apos;è nulla da importare!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Question</source>
         <translation>Domanda</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>I waypoints debbono essere importati come una linea che collega tutti i punti?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="470"/>
+        <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Import problems</source>
         <translation>Problemi di importazione</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="471"/>
+        <location filename="../src/templates/template_track.cpp" line="486"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n oggetto percorso non può essere importato (motivo: coordinate mancanti).</numerusform>

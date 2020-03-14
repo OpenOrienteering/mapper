@@ -10,6 +10,20 @@
     </message>
 </context>
 <context>
+    <name>GdalImageReader</name>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
+        <source>Failed to read image data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
+        <source>Unsupported raster data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="648"/>
@@ -97,17 +111,17 @@ Rescale the imported data?</source>
         <translation>スポットカラーが無効です。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation>見つからないテンプレートの正しい位置を保存できません: &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation>テンプレートをエクスポートできません: ファイル形式 &quot;%1&quot; はまだサポートされていません</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation>テキストが &apos;|&apos;) で切り捨てられました: %1</translation>
     </message>
@@ -1793,7 +1807,7 @@ Rescale the imported data?</source>
 <context>
     <name>OpenOrienteering::Format</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation>結合シンボル %1: インデックス %2 にサポートされていないサブシンボル。</translation>
     </message>
@@ -2743,12 +2757,12 @@ Rescale the imported data?</source>
         <translation>%2 行目 %3 列目で、タイプ %1 の記号を読み込み中にエラー。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="304"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation>%2 行目 %3 列目で、記号 ID &apos;%1&apos; は一意ではありません。</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="376"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>%2 行目 %3 列目で、タイプ %1 の記号を読み込み中にエラー: %4</translation>
     </message>
@@ -2762,12 +2776,19 @@ Rescale the imported data?</source>
         <translation>タイプ %1 のオブジェクトを読み込み中にエラー。</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="383"/>
+        <location filename="../src/core/objects/object.cpp" line="327"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="318"/>
+        <location filename="../src/undo/object_undo.cpp" line="616"/>
+        <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object.cpp" line="389"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>%2:%3 で、タイプ %1 のオブジェクトを読み込み中にエラー: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="347"/>
+        <location filename="../src/core/objects/object.cpp" line="353"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>%1:%2 で、オブジェクトの記号を見つけることができません。</translation>
     </message>
@@ -2864,7 +2885,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="739"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>テンプレート &apos;%1&apos; の読み込みに失敗しました。理由: %2</translation>
     </message>
@@ -3339,7 +3360,7 @@ Rescale the imported data?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -3505,7 +3526,7 @@ Do you want to scale the symbols to the selected scale?</source>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="726"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
         <translation>%1 を開きます</translation>
     </message>
@@ -3514,7 +3535,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
@@ -3754,12 +3775,12 @@ Rescale the imported data?</source>
         <translation>新しい色</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
         <translation>インポート...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>記号の置換がキャンセルされました。
@@ -3916,7 +3937,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
         <translation>すべてのテンプレートを非表示</translation>
     </message>
@@ -4239,6 +4260,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4055"/>
         <source>Import...</source>
         <translation>インポート...</translation>
     </message>
@@ -4255,7 +4277,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="264"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
         <translation>編集(&amp;E)</translation>
     </message>
@@ -4452,9 +4474,9 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3279"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3285"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3294"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4135"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
@@ -4791,7 +4813,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -4802,7 +4824,7 @@ because saving as %2 (.%3) is not supported.</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
         <translation>地図のインポート時に警告が発生しました。</translation>
     </message>
@@ -4952,22 +4974,21 @@ because saving as %2 (.%3) is not supported.</source>
         <translation>相互参照テーブルで、新しい記号を割り当てる</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Import %1 or GPX file</source>
-        <translation>%1 または GPX ファイルのインポート</translation>
+        <translation type="vanished">%1 または GPX ファイルのインポート</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
         <translation>インポートするものがありません。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4225"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -5185,13 +5206,13 @@ Rescale the imported data?</source>
         <translation type="obsolete">DXFファイル、GBXファイルをインポート</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Importable files</source>
         <translation>インポート可能なファイル</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1719"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>All files</source>
         <translation>すべてのファイル</translation>
     </message>
@@ -5200,7 +5221,7 @@ Rescale the imported data?</source>
         <translation type="obsolete">OMAP, OCD, GPX, OSM or DXF ファイルをインポート</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>ファイルをインポートできません。このファイル形式はサポートされていません。</translation>
     </message>
@@ -5994,13 +6015,13 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdAreaSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation>エリア記号「%1」で、塗りつぶしパターンをスキップします。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation>エリア記号「%1」に「シフト行」ポイントパターンを想定します。これは正しくない可能性もあります。</translation>
     </message>
@@ -6215,7 +6236,7 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbol</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
     </message>
@@ -6223,22 +6244,22 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdLineSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation>線の記号「%1」で、キャップ/結合の組み合わせを表すことはできません。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation>線の記号「%1」で、破線グループを無視します。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation>線の記号「%1」で、グループの破線の数を 2 に減らしました。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation>線の記号「%1」で、境界線を正しくエクスポートできません。</translation>
     </message>
@@ -6246,17 +6267,17 @@ zoom using the mouse wheel, if available.</source>
 <context>
     <name>OpenOrienteering::OcdTextSymbolBasic</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation>テキスト記号 %1: カスタム文字間隔が設定され、その実装はまだ OCAD の動作と一致しません</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation>テキスト記号 %1 で: 下線を無視しています</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation>テキスト記号 %1 で: カーニングを無視しています</translation>
     </message>
@@ -8262,22 +8283,22 @@ to jump over the lazy dog
         <translation>値</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Add Row</source>
         <translation>行を追加</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Remove Row</source>
         <translation>行を削除</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="98"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
         <source>Move Up</source>
         <translation>上へ移動</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation>下へ移動</translation>
     </message>
@@ -8353,33 +8374,33 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="487"/>
+        <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
         <translation>移動されたテンプレートを探す</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="489"/>
+        <location filename="../src/templates/template.cpp" line="476"/>
         <source>All files (*.*)</source>
         <translation>すべてのファイル (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="504"/>
+        <location filename="../src/templates/template.cpp" line="491"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="601"/>
-        <location filename="../src/templates/template.cpp" line="629"/>
+        <location filename="../src/templates/template.cpp" line="588"/>
+        <location filename="../src/templates/template.cpp" line="616"/>
         <source>No such file.</source>
         <translation>そのようなファイルはありません。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="643"/>
+        <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>ファイルの形式は、このテンプレートの種類として正しいですか?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="650"/>
+        <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
         <translation>メモリが足りません。</translation>
     </message>
@@ -8541,32 +8562,32 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="151"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
+        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>十分な空きメモリがありません (画像サイズ: %1x%2 ピクセル)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="171"/>
+        <location filename="../src/gdal/gdal_template.cpp" line="91"/>
+        <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
         <translation>ジオリファレンスが見つかりません</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="vanished">警告</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>GIFイメージのテンプレートを読み込もうとしています。
+        <translation type="vanished">GIFイメージのテンプレートを読み込もうとしています。
 GIFファイルの保存はサポートされていません。
 テンプレート上へ書き込みを行った場合、保存されず終了時に破棄されることになります。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="229"/>
-        <location filename="../src/templates/template_image.cpp" line="346"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="379"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>ワールドファイル内の座標の座標参照系を選択してください</translation>
     </message>
@@ -8650,22 +8671,22 @@ GIFファイルの保存はサポートされていません。
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="172"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
         <source>Show</source>
         <translation>表示</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Opacity</source>
         <translation>不透明度</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Group</source>
         <translation>グループ</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Filename</source>
         <translation>ファイル名</translation>
     </message>
@@ -8674,19 +8695,19 @@ GIFファイルの保存はサポートされていません。
         <translation type="obsolete">作成...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="504"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
         <source>Sketch</source>
         <translation>スケッチ</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="508"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="216"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Open...</source>
         <translation>開く...</translation>
     </message>
@@ -8703,38 +8724,38 @@ GIFファイルの保存はサポートされていません。
         <translation type="vanished">閉じる</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="219"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
         <source>Duplicate</source>
         <translation>複製</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="227"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation>テンプレートを追加...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
         <source>Move Up</source>
         <translation>上へ移動</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="239"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Move Down</source>
         <translation>下へ移動</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Import and remove</source>
         <translation>インポートと削除</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
@@ -8743,12 +8764,12 @@ GIFファイルの保存はサポートされていません。
         <translation type="obsolete">選択中のテンプレート</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <source>Move by hand</source>
         <translation>ドラッグで移動</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>イメージ、GPSトラック、DXFファイルを開く</translation>
     </message>
@@ -8757,17 +8778,17 @@ GIFファイルの保存はサポートされていません。
         <translation type="obsolete">ジオリファレンス...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="258"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Positioning...</source>
         <translation>位置調整...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
         <translation>テンプレートファイル</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>All files</source>
         <translation>すべてのファイル</translation>
     </message>
@@ -8776,7 +8797,7 @@ GIFファイルの保存はサポートされていません。
         <translation type="obsolete">もっと表示...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Adjust...</source>
         <translation>調節...</translation>
     </message>
@@ -8797,12 +8818,12 @@ GIFファイルの保存はサポートされていません。
         <translation type="obsolete">画像を開く、またはGPSトラック...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="454"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="999"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
@@ -8831,28 +8852,28 @@ Failed to load template. Does the file exist and is it valid?</source>
         <translation type="obsolete">0 から 1 の有効な数字を入力してください。または 0 から 100 のパーセントで指定してください！</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>有効な整数値を入力してテンプレートのグループをセットするか、空白のままにしてテンプレートのグループを解除してください！</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
         <translation>縮尺を変えない</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>公称地図縮尺比 (%1 %) によって縮尺</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
         <translation>ジオリファレンス</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="453"/>
-        <location filename="../src/templates/template.cpp" line="500"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
+        <location filename="../src/templates/template.cpp" line="487"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -8861,59 +8882,64 @@ Failed to load template. Does the file exist and is it valid?</source>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="420"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
         <source>File format not recognized.</source>
         <translation>ファイル形式を認識できません。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="433"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <source>Vectorize lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>テンプレートを読み込めませんでした。ファイルが存在して、有効ですか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
         <translation>地図ファイルを読み込みできません、中断します。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
         <translation>地図のインポート時に警告が発生しました。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>現在テンプレートの縮尺 (%1 %) で縮尺</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1022"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
         <translation>テンプレートをインポート</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1023"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>インポートされたテンプレート地図の記号の縮尺方法は?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1053"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>テンプレートは、重ね印刷のシミュレーションでは表示されません。標準表示に切り替えますか?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
         <translation>ジオリファレンス状態を変更できません。</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1210"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
         <source>- Map -</source>
         <translation>- 地図 -</translation>
     </message>
@@ -8933,7 +8959,7 @@ Failed to load template. Does the file exist and is it valid?</source>
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="107"/>
+        <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
         <translation>地図ファイルを読み込みできません、中断します。</translation>
     </message>
@@ -9031,8 +9057,8 @@ Failed to load template. Does the file exist and is it valid?</source>
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="147"/>
-        <location filename="../src/templates/template_track.cpp" line="153"/>
+        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation>このテンプレートは GDAL/OGR で読み込む必要があります。</translation>
     </message>
@@ -9041,67 +9067,67 @@ Failed to load template. Does the file exist and is it valid?</source>
         <translation type="vanished">トラック座標の座標参照系を選択</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="185"/>
+        <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
         <translation>トラックを開いています ...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="186"/>
+        <location filename="../src/templates/template_track.cpp" line="208"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>ジオリファレンスまたは非ジオリファレンスモードでトラックを読み込みますか?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="188"/>
+        <location filename="../src/templates/template_track.cpp" line="210"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>地図のジオリファレンス設定に従ってトラックを配置します。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="190"/>
+        <location filename="../src/templates/template_track.cpp" line="212"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>これらはまだ構成されていません。次のステップとして表示されます。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="191"/>
+        <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
         <translation>ジオリファレンス</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
         <translation>非ジオリファレンス</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>トラックの座標の平均で中心とした正射影を使用してトラックを投影します。調整後のトラックの位置を使用して、変換の調整と地図ジオリファレンスの設定を可能にします。</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>Error</source>
         <translation>エラー</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>パスが空です、インポートするものが何もありません!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Question</source>
         <translation>質問</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>ウェイポイントを、すべてのポイントを通過しているラインとしてインポートしますか？</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="470"/>
+        <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Import problems</source>
         <translation>インポートの問題</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="471"/>
+        <location filename="../src/templates/template_track.cpp" line="486"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n コース オブジェクトをインポートできませんでした (理由: 座標が見つかりません)。</numerusform>
