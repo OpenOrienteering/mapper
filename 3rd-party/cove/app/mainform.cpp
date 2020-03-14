@@ -51,6 +51,7 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QTabWidget>
+#include <QUndoStack>
 
 #include "core/map.h"
 #include "core/map_coord.h"

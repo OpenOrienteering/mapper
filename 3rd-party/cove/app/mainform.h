@@ -25,7 +25,6 @@
 
 #include <QDialog>
 #include <QImage>
-#include <QList>
 #include <QObject>
 #include <QRgb>
 #include <QString>
