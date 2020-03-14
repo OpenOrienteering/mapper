@@ -14771,7 +14771,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Linie, die Punkte gleicher Höhe verbindet. Die normale Äquidistanz beträgt 5 m. Eine Äquidistanz von 2.5 m kann für flache Gebiete verwendet werden.
+Fallstriche können auf der abwärts gerichteten Seite einer Höhenkurve gezeichnet werden, damit die Richtung, in welche das Gelände abfällt, klarer wird. Die Fallstriche sollten in Mulden gezeichnet werden.
+Eine geschlossene Höhenkurve stellt einen Hügel oder eine Senke dar. Eine Senke muss mindestens einen Fallstrich enthalten. Minimale Höhe/Tiefe sollte 1 m sein.
+Die Beziehung zwischen benachbarten Höhenkurven ist wichtig. Benachbarte Höhenkurven bestimmen Form und Struktur. Kleine Details in den Höhenkurven sollten weggelassen werden, weil diese die Hauptformen des Geländes verbergen können.
+Markante Objekte wie Senken, Mulden, Nasen, Böschungen und Terrassen müssen möglicherweise vergrössert werden.
+Die absolute Höhe ist von geringerer Bedeutung, aber der relative Höhenunterschied benachbarter Objekte sollte auf der Karte so genau wie möglich wiedergegeben werden. Es ist gestattet, Höhenkurven leicht zu verändern, wenn dadurch ein Objekt besser dargestellt werden kann. Derartige Abweichungen sollten nicht mehr als 25% der Äquidistanz betragen, wobei benachbarte Objekte zu berücksichtigen sind.
+Die engste Biegung in einer Höhenkurve ist 0.25 mm (Wirklichkeit 4 m) von Linienmitte zu Linienmitte. Die Breite einer Mulde oder Nase muss grösser als 0.5 mm (Wirklichkeit 8 m) von Linienmitte zu Linienmitte sein.
+Die minimale Länge eines mit Höhenkurven dargestellten Hügels ist 0.9 mm (Wirklichkeit 13.5 m) und die minimale Breite beträgt 0.6 mm (Wirklichkeit 9 m), beides aussen gemessen. Kleinere, deutliche Hügel werden mit dem Symbol 109 (Kuppe) oder Symbol 110 (längliche Kuppe) dargestellt oder können vergrössert gezeichnet werden, damit die Minimaldimensionen eingehalten werden.
+Eine Senke muss wegen dem Fallstrich eine minimale Länge von 1.1 mm (Wirklichkeit 16.5 m) haben und eine minimale Breite von aussen gemessen 0.7 mm (Wirklichkeit 10.5 m). Kleinere, markante Senken können mit Symbol 111 (kleine Senke) dargestellt oder können vergrössert gezeichnet werden, damit die Minimaldimensionen eingehalten werden.
+Die Höhenkurven sollten beim Symbol 109 (Kuppe) oder Symbol 110 (längliche Kuppe) angepasst (nicht unterbrochen) werden.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -14782,7 +14791,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fallstriche können auf der abwärts gerichteten Seite einer Höhenkurve gezeichnet werden, damit die Richtung, in welche das Gelände abfällt, klarer wird.
+Eine Mulde muss mindestens einen Fallstrich besitzen.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -14794,7 +14804,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jede fünfte Höhenkurve wird als dickere Linie gezeichnet. Dies hilft, Höhenunterschiede und die grossen Geländeformen schnell zu erkennen.
+In einem Gebiet mit vielen Details kann eine Zählkurve als normale Höhenkurve gezeichnet werden. Ebenso werden kleine Hügel und Senken normalerweise nicht mit Zählkurven gezeichnet.
+In flachem Gelände muss die Höhe der Zählkurven sorgfältig ausgewählt werden. Die ideale Höhe für eine Zählkurve ist die mittlere Höhenkurve im markantesten Hang.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -14804,7 +14816,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Einer Zählkurve kann eine Höhenangabe zugeordnet werden. Die Zahl sollte so in der Zählkurve platziert werden, dass andere Objekte nicht verdeckt werden. Die Ziffern werden so ausgerichtet, dass ihre obere Kante hangaufwärts gerichtet ist. Die Zahl wird 1.5 mm hoch in einer Schrift ohne Serifen geschrieben.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -14816,7 +14828,9 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Formlinien werden verwendet, wo mehr Information über die Geländeform gegeben werden muss. Formlinien werden nur dort benutzt, wo eine Darstellung mit normalen Höhenkurven nicht möglich ist. Formlinien dürfen nicht als Zwischenkurven verwendet werden. Zwischen benachbarten Höhenkurven sollte nur eine Formlinie gezeichnet werden. Es ist wichtig, dass die Linie sich sauber in das Kurvenbild einfügt, d.h. Anfang und Ende sollten möglichst parallel zu den benachbarten Linien sein. Die Linienunterbrüche müssen in möglichst gerade Kurventeile platziert werden. Formlinien können verwendet werden um flachere Hügel und Senken von deutlicheren zu unterscheiden. Die minimale Höhe oder Tiefe beträgt 1m. Übermässige Anwendung von Formlinien muss vermieden werden, weil dadurch das dreidimensionale Geländebild gestört und das Kartenlesen schwierig wird.
+Minimale Länge einer nicht geschlossenen Formlinie: zwei Striche. 
+Minimale Ausdehnung für Hügel und Senken: aussen gemessen 1.1 mm (Wirklichkeit 16.5 m)</translation>
     </message>
     <message>
         <source>Slope line, formline</source>

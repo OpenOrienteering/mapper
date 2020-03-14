@@ -2978,12 +2978,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için mor</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için beyaz</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -2998,12 +2998,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Demiryolu için beyaz</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz sembolleri için mor</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -7440,12 +7440,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için mor</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kursun üst baskısı için beyaz</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -7465,7 +7465,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Demiryolu için beyaz</translation>
     </message>
     <message>
         <source>Blue 100%</source>
@@ -7480,12 +7480,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz sembolleri için mor</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>İz sembolleri için morun altında siyah</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -7500,12 +7500,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Üst kahverengi %50</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Üst kahverenginin altında siyah %50</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>

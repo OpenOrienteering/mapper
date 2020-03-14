@@ -2673,6 +2673,101 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <comment>Description of symbol 101</comment>
         <translation>Linija koja povezuje točke jednake visine. Uopičajeni vertikalni razmak među slojnicama je 5 metara. Razmak od 2,5 metara može se koristiti za ravne terene. Najmanji zavoj na slojnici je 0,25 mm od centra do sredine linije.</translation>
     </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 102.1</comment>
+        <translation>Vrijednost izohipse</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 102.1</comment>
+        <translation>Vrijednosti izohipsa mogu se uključiti kao pomoć u procjeni velikih visinskih razlika. Umeću se u indeks izohipsa na pozicijama gdje drugi detalj nije zatamnjen. Brojke se moraju usmjeriti tako da se vrh brojke nalazi na gornjoj strani izohipse.</translation>
+    </message>
+    <message>
+        <source>Cliff</source>
+        <comment>Name of symbol 202</comment>
+        <translation>Klipa</translation>
+    </message>
+    <message>
+        <source>Cliff, minimum size</source>
+        <comment>Name of symbol 202.1</comment>
+        <translation>Klipa, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags</source>
+        <comment>Name of symbol 202.2</comment>
+        <translation>Klipa, s oznakama</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags, minimum size</source>
+        <comment>Name of symbol 202.3</comment>
+        <translation>Klipa, s oznakama, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>Cliff, with tags, minimum size (from ISOM2000)</source>
+        <comment>Name of symbol 202.9</comment>
+        <translation>Klipa, s oznakama, najmanje veličine (po ISOM2000)</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 214</comment>
+        <translation>Stijena</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Bunar</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Otvoreno polje</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Otvoreno polje s razbacanim stablima</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 414</comment>
+        <translation>Vinograd</translation>
+    </message>
+    <message>
+        <source>Wide road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>Široka cesta, najmanja širina</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel</source>
+        <comment>Name of symbol 512</comment>
+        <translation>Most/tunel</translation>
+    </message>
+    <message>
+        <source>Bridge / tunnel, minimum size</source>
+        <comment>Name of symbol 512.1</comment>
+        <translation>Most/tunel, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>Wall</source>
+        <comment>Name of symbol 513</comment>
+        <translation>Zid</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 521</comment>
+        <translation>Zgrada</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 521.1</comment>
+        <translation>Zgrada, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering logotip</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
@@ -2722,6 +2817,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>OpenOrienteering narančasta</translation>
     </message>
     <message>
+        <source>Black 30%</source>
+        <comment>Color 9</comment>
+        <translation>Crna 30%</translation>
+    </message>
+    <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 10</comment>
         <translation>Zelena 50%, žuta</translation>
@@ -2742,6 +2842,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Zelena</translation>
     </message>
     <message>
+        <source>Green 30%</source>
+        <comment>Color 16</comment>
+        <translation>Zelena 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 17</comment>
         <translation>Zelena ispod svijetlo zelenih</translation>
@@ -2757,9 +2862,94 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Žuta 50%</translation>
     </message>
     <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 20</comment>
+        <translation>Bijela preko žute 70%</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 21</comment>
+        <translation>Žuta 70%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Izohipsa</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Vrijednost izohipse</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>Vrijednosti izohipsa mogu se uključiti kao pomoć u procjeni velikih visinskih razlika. Umeću se u indeks izohipsa na pozicijama gdje drugi detalj nije zatamnjen. Brojke se moraju usmjeriti tako da se vrh brojke nalazi na gornjoj strani izohipse.</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Špilja</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>Otvorena pješčana zemlja</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Stijena</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Bunar</translation>
+    </message>
+    <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>Zdenac</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Otvoreno polje</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Otvoreno polje s razbacanim stablima</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>Vinograd</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>Autoput</translation>
+    </message>
+    <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>Autoput, u izgradnji</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Zgrada</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Zgrada, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering logotip</translation>
     </message>
 </context>
 <context>
@@ -5135,6 +5325,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Neprozirna bijela ispod crne</translation>
     </message>
     <message>
+        <source>Black 50%</source>
+        <comment>Color 6</comment>
+        <translation>Crna 50%</translation>
+    </message>
+    <message>
+        <source>Black 30%</source>
+        <comment>Color 7</comment>
+        <translation>Crna 30%</translation>
+    </message>
+    <message>
         <source>Black 20%</source>
         <comment>Color 8</comment>
         <translation>Crna 20%</translation>
@@ -5153,6 +5353,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Blue</source>
         <comment>Color 17</comment>
         <translation>Plava</translation>
+    </message>
+    <message>
+        <source>Blue 30%</source>
+        <comment>Color 19</comment>
+        <translation>Plava 30%</translation>
     </message>
     <message>
         <source>Brown</source>
@@ -5185,6 +5390,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Zelena</translation>
     </message>
     <message>
+        <source>Green 30%</source>
+        <comment>Color 30</comment>
+        <translation>Zelena 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 31</comment>
         <translation>Zelena ispod svijetlo zelenih</translation>
@@ -5200,9 +5410,74 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Žuta 50%</translation>
     </message>
     <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 34</comment>
+        <translation>Bijela preko žute 70%</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 35</comment>
+        <translation>Žuta 70%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Izohipsa</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Vrijednost izohipse</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>Vrijednosti izohipsa mogu se uključiti kao pomoć u procjeni velikih visinskih razlika. Umeću se u indeks izohipsa na pozicijama gdje drugi detalj nije zatamnjen. Brojke se moraju usmjeriti tako da se vrh brojke nalazi na gornjoj strani izohipse.</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Špilja</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>Otvorena pješčana zemlja</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Stijena</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Bunar</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Otvoreno polje</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Otvoreno polje s razbacanim stablima</translation>
+    </message>
+    <message>
+        <source>Bridge, minimum width</source>
+        <comment>Name of symbol 512.1.1</comment>
+        <translation>Most, najmanje širine</translation>
+    </message>
+    <message>
+        <source>Bridge, one side</source>
+        <comment>Name of symbol 512.1.2</comment>
+        <translation>Most, jedna strana</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering logotip</translation>
     </message>
 </context>
 <context>
@@ -7044,6 +7319,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Plava 50%</translation>
     </message>
     <message>
+        <source>Black 30%</source>
+        <comment>Color 11</comment>
+        <translation>Crna 30%</translation>
+    </message>
+    <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
         <translation>Zelena 50%, žuta</translation>
@@ -7064,6 +7344,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Zelena</translation>
     </message>
     <message>
+        <source>Green 30%</source>
+        <comment>Color 18</comment>
+        <translation>Zelena 30%</translation>
+    </message>
+    <message>
         <source>Green below light greens</source>
         <comment>Color 19</comment>
         <translation>Zelena ispod svijetlo zelenih</translation>
@@ -7079,9 +7364,94 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>Žuta 50%</translation>
     </message>
     <message>
+        <source>White over Yellow 70%</source>
+        <comment>Color 22</comment>
+        <translation>Bijela preko žute 70%</translation>
+    </message>
+    <message>
+        <source>Yellow 70%</source>
+        <comment>Color 23</comment>
+        <translation>Žuta 70%</translation>
+    </message>
+    <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
         <translation>Izohipsa</translation>
+    </message>
+    <message>
+        <source>Contour value</source>
+        <comment>Name of symbol 105</comment>
+        <translation>Vrijednost izohipse</translation>
+    </message>
+    <message>
+        <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>Vrijednosti izohipsa mogu se uključiti kao pomoć u procjeni velikih visinskih razlika. Umeću se u indeks izohipsa na pozicijama gdje drugi detalj nije zatamnjen. Brojke se moraju usmjeriti tako da se vrh brojke nalazi na gornjoj strani izohipse.</translation>
+    </message>
+    <message>
+        <source>Open land</source>
+        <comment>Name of symbol 401</comment>
+        <translation>Otvoreno polje</translation>
+    </message>
+    <message>
+        <source>Open land with scattered trees</source>
+        <comment>Name of symbol 402</comment>
+        <translation>Otvoreno polje s razbacanim stablima</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>Vinograd</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>Autoput</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <comment>Name of symbol 526</comment>
+        <translation>Zgrada</translation>
+    </message>
+    <message>
+        <source>Building, minimum size</source>
+        <comment>Name of symbol 526.1</comment>
+        <translation>Zgrada, najmanje veličine</translation>
+    </message>
+    <message>
+        <source>OpenOrienteering Logo</source>
+        <comment>Name of symbol 999</comment>
+        <translation>OpenOrienteering logotip</translation>
+    </message>
+    <message>
+        <source>Cave</source>
+        <comment>Name of symbol 205</comment>
+        <translation>Špilja</translation>
+    </message>
+    <message>
+        <source>Open sandy ground</source>
+        <comment>Name of symbol 211</comment>
+        <translation>Otvorena pješčana zemlja</translation>
+    </message>
+    <message>
+        <source>Bare rock</source>
+        <comment>Name of symbol 212</comment>
+        <translation>Stijena</translation>
+    </message>
+    <message>
+        <source>Waterhole</source>
+        <comment>Name of symbol 303</comment>
+        <translation>Bunar</translation>
+    </message>
+    <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>Zdenac</translation>
+    </message>
+    <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>Autoput, u izgradnji</translation>
     </message>
 </context>
 <context>

@@ -8449,7 +8449,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>En höjdkurva sammanbinder två punkter på samma höjdnivå. Standardskillnaden i höjd mellan två höjdkurvor, ekvidistansen, är 5m. En stödkurva med ekvidistans 2,5m kan användas i flack terräng. 
+Lutningsstreck kan ritas på den nedre sidan av en höjdkurva för att förtydliga riktningen av lutningen. Vid användning måste lutningsstrecket placeras i inbuktningar, tex. sänkor.
+En stängd höjdkurva representerar en höjd eller grop. En grop måste ha minst ett lutningsstreck. Minsta höjd/djup bör vara 1m. 
+Förhållandet mellan två närliggande höjdkurvor är viktigt. Närliggande höjdkurvor visar form och konturer av terrängen. Små detaljer i kurvningen bör undvikas eftersom de tenderar att dölja större formationer i terrängen. 
+Framstående detaljer så som gropar, sänkor, åsar och terrasser kan behöva överdrivas.
+Exakt återgivelse i höjd för varje objekt är inte viktigt, däremot är höjdskillnaden mellan närliggande objekt viktigt att den anges så noggrant som möjligt. Det är tillåtet att överdriva ett objekts höjd något för att förtydliga ett objekt. Denna justering bör dock inte överstiga 25% av ekvidistansen, och man måste ha förhållandet med närliggande objekt i åtanke. 
+Den minsta tillåtna böjning av en höjdkurva är 0,25mm i radie (4m i terrängen). Längden på en sänka eller ås måste vara större än 0,5mm från mitten till mitten av kurvan (8m i terrängen). 
+Minimumlängd på en höjd är 0.9mm (13,5m i terrängen) och minimumbredd är 0,6mm (9m i terrängen). Mindre men tydliga höjder bör ritas med symbolen Liten höjd (109) eller Liten avlång höjd (110) eller så kan de överdrivas för att uppnå minimummåtten. 
+En grop måste ha minst ett lutningsstreck, så minimumlängden är 1,1mm (16,5m i terrängen) och minimumbredd 0,7mm (10,5 i terrängen). Mindre men tydliga gropar kan ritas med symbolen Liten grop (111) eller så kan de överdrivas för att uppfylla minimummåtten. 
+Konturer bör följas med höjdkurvan för att inte tangera objekt av symbolen Liten höjd (109) eller Liten avlång höjd (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -8460,7 +8469,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lutningsstreck bör ritas på nedåtsidan av höjdkurvan för att förtydliga lutningen. Lutningsstreck bör placeras i inbuktningar så som sänkor. 
+En grop måste innehålla minst ett lutningsstreck.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -8472,7 +8482,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Var femte höjdkurva bör ritas med en tjockare linje. Detta är en hjälp för att snabbt urskilja höjdskillnad och större konturer i terrängen.
+En stödkurva kan användas som en vanlig höjdkurva med mycket detaljer. Små höjdformationer och gropar är normalt inte redovisade med stödkurva. 
+Stödkurvans nivå måste väljas med försiktighet i flack terräng. Den optimala nivån för höjdkurvan är mitt i sluttningen för de mest tydliga och branta sluttningarna.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -8482,7 +8494,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En stödkurva kan tilldelas en höjdangivelse. En höjdangivelse bör bara placeras så att inga andra detaljer döljs. Den bör bli placerad så att den övre kanten av höjdangivelsen är på den högre sidan av höjdkurvan. Texten för höjdangivelsen skall vara 1,5mm hög och i typsnittet sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
