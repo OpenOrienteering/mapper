@@ -10,6 +10,20 @@
     </message>
 </context>
 <context>
+    <name>GdalImageReader</name>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
+        <source>Failed to read image data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
+        <source>Unsupported raster data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="648"/>
@@ -95,17 +109,17 @@ Mainīt importējamo datu mērogu?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2408"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2424"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
         <translation type="unfinished">Nav iespējams eksportēt šablonu: datnes tips &quot;%1&quot; pagaidām netiek atbalstīts</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2673"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1666,7 +1680,7 @@ Mainīt importējamo datu mērogu?</translation>
 <context>
     <name>OpenOrienteering::Format</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2013"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2532,12 +2546,12 @@ Mainīt importējamo datu mērogu?</translation>
         <translation>Kļūda, ielasot %1 tipa simbolu %2. rindā %3. ailē.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="304"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="312"/>
         <source>Symbol ID &apos;%1&apos; not unique at line %2 column %3.</source>
         <translation>Simbola ID &apos;%1&apos; nav unikāls %2.rindā %3.ailē.</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/symbol.cpp" line="376"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="392"/>
         <source>Error while loading a symbol of type %1 at line %2 column %3: %4</source>
         <translation>Kļūda, ielādējot %1 tipa simbolu %2 līnijā %3 kolonnā: %4</translation>
     </message>
@@ -2551,12 +2565,19 @@ Mainīt importējamo datu mērogu?</translation>
         <translation>Kļūda, ielasot %1 tipa objektu.</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="383"/>
+        <location filename="../src/core/objects/object.cpp" line="327"/>
+        <location filename="../src/core/symbols/symbol.cpp" line="318"/>
+        <location filename="../src/undo/object_undo.cpp" line="616"/>
+        <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/objects/object.cpp" line="389"/>
         <source>Error while loading an object of type %1 at %2:%3: %4</source>
         <translation>Kļūda, ielādējot %1 tipa objektu uz %2:%3: %4</translation>
     </message>
     <message>
-        <location filename="../src/core/objects/object.cpp" line="347"/>
+        <location filename="../src/core/objects/object.cpp" line="353"/>
         <source>Unable to find symbol for object at %1:%2.</source>
         <translation>Neizdevās atrast simbolu objektam pozīcijā %1:%2.</translation>
     </message>
@@ -2655,7 +2676,7 @@ Mainīt importējamo datu mērogu?</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="739"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>Neizdevās ielasīt veidni &apos;%1&apos;, iemesls: %2</translation>
     </message>
@@ -3128,7 +3149,7 @@ Mainīt importējamo datu mērogu?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="375"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="136"/>
         <source>Close</source>
         <translation>Aizvērt</translation>
     </message>
@@ -3291,7 +3312,7 @@ Vai vēlies mērogot simbolus līdz atlasītajam mērogam?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="844"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="726"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
         <translation>Atver %1</translation>
     </message>
@@ -3300,7 +3321,7 @@ Vai vēlies mērogot simbolus līdz atlasītajam mērogam?</translation>
         <location filename="../src/gui/main_window.cpp" line="857"/>
         <location filename="../src/gui/main_window.cpp" line="885"/>
         <location filename="../src/gui/main_window.cpp" line="1259"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="738"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="749"/>
         <source>Error</source>
         <translation>Kļūda</translation>
     </message>
@@ -3494,12 +3515,12 @@ Mainīt importējamo datu mērogu?</translation>
         <translation>Jauna krāsa</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4185"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
         <translation>Importēt...</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4186"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>Simbola aizvietošana tika atcelta.
@@ -3735,13 +3756,14 @@ Vai tomēr importēt datus?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4055"/>
         <source>Import...</source>
         <translation>Importēt...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1120"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="264"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
         <translation>R&amp;ediģēt</translation>
     </message>
@@ -3803,7 +3825,7 @@ Vai tomēr importēt datus?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="126"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
         <translation>Slēpt visus šablonus</translation>
     </message>
@@ -3944,9 +3966,9 @@ Vai tomēr importēt datus?</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="3279"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3285"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3294"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4135"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4131"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Error</source>
         <translation>Kļūda</translation>
     </message>
@@ -4161,11 +4183,6 @@ Vai tomēr importēt datus?</translation>
         <translation>Vai vēlies pārvietot visus objektus uz kartes daļu &quot;%1&quot;, un aizvākt visas citas kartes daļas?</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
-        <source>Import %1 or GPX file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
         <translation type="vanished">Nevar importēt atlasīto kartes datni, jo to nevar ielasīt.</translation>
     </message>
@@ -4275,7 +4292,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
         <translation type="unfinished">Brīdinājums</translation>
     </message>
@@ -4286,7 +4303,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4140"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">Kartes importā izveidotie brīdinājumi.</translation>
     </message>
@@ -4667,17 +4684,17 @@ atlasīti</translation>
         <translation>Atlasīt teksta simbolu, lai varētu lietot šo rīku.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4212"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
         <translation type="unfinished">Nav ko importēt.</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4224"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
         <translation type="unfinished">Jautājums</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4225"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4876,18 +4893,18 @@ Mainīt importējamo datu mērogu?</translation>
         <translation type="vanished">Importēt %1, GPX, OSM vai DXF datni</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>Importable files</source>
         <translation>Importējamās datnes</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1719"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4062"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4058"/>
         <source>All files</source>
         <translation>Visas datnes</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4104"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4100"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>Nevar importēt atlasīto datni, jo tās formāts netiek atbalstīts.</translation>
     </message>
@@ -5642,13 +5659,13 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
 <context>
     <name>OpenOrienteering::OcdAreaSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1300"/>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1335"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
         <translation type="unfinished">Laukuma simbolā &quot;%1&quot; izlaiž pildījuma paraugu.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1325"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
         <translation type="unfinished">Laukuma simbolā &quot;%1&quot; pieņem &quot;nobīdīto rindu&quot; punktveida paraugu. Tas var būt gan korekti, gan nekorekti.</translation>
     </message>
@@ -5863,7 +5880,7 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
 <context>
     <name>OpenOrienteering::OcdLineSymbol</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="2093"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
     </message>
@@ -5871,22 +5888,22 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
 <context>
     <name>OpenOrienteering::OcdLineSymbolCommon</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1457"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
         <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; nevar attēlot gala/savienojuma kombināciju.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1478"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
         <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; neņem vērā mezglu grupējumu.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1489"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
         <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; mezglu skaits grupā samazināts līdz 2.</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1583"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
         <translation type="unfinished">Līnijveida simbolā &quot;%1&quot; neizdevās korekti eksportēt robežas.</translation>
     </message>
@@ -5894,17 +5911,17 @@ tuvini, lietojot peles riteni, ja pieejams.</translation>
 <context>
     <name>OpenOrienteering::OcdTextSymbolBasic</name>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1774"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1790"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
         <translation type="unfinished">Teksta simbolā %1: ignorē pasvītrojumu</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/ocd_file_export.cpp" line="1792"/>
+        <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
         <translation type="unfinished">Teksta simbolā %1: ignorē simbola nobīdi</translation>
     </message>
@@ -7724,22 +7741,22 @@ to jump over the lazy dog
         <translation>Vērtība</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="91"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
         <source>Add Row</source>
         <translation>Pievienot rindu</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="92"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="93"/>
         <source>Remove Row</source>
         <translation>Aizvākt rindu</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="98"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
         <source>Move Up</source>
         <translation>Pārvietot augstāk</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="100"/>
+        <location filename="../src/gui/widgets/tag_select_widget.cpp" line="103"/>
         <source>Move Down</source>
         <translation>Pārvietot zemāk</translation>
     </message>
@@ -7805,33 +7822,33 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::Template</name>
     <message>
-        <location filename="../src/templates/template.cpp" line="487"/>
+        <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
         <translation>Atrast pārvietoto šablona datni</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="489"/>
+        <location filename="../src/templates/template.cpp" line="476"/>
         <source>All files (*.*)</source>
         <translation>Visas datnes (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="504"/>
+        <location filename="../src/templates/template.cpp" line="491"/>
         <source>Error</source>
         <translation>Kļūda</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="601"/>
-        <location filename="../src/templates/template.cpp" line="629"/>
+        <location filename="../src/templates/template.cpp" line="588"/>
+        <location filename="../src/templates/template.cpp" line="616"/>
         <source>No such file.</source>
         <translation>Šāda datne nepastāv.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="643"/>
+        <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
         <translation>Vai datnes formāts šim veidnes tipam ir korekts?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template.cpp" line="650"/>
+        <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
         <translation>Nav pietiekami daudz brīvas atmiņas.</translation>
     </message>
@@ -7958,32 +7975,32 @@ to jump over the lazy dog
 <context>
     <name>OpenOrienteering::TemplateImage</name>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="151"/>
+        <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
+        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
         <translation>Nav pietiekami daudz brīvas atmiņas (attēla izmērs: %1x%2 pikseļi)</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="171"/>
+        <location filename="../src/gdal/gdal_template.cpp" line="91"/>
+        <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Warning</source>
-        <translation>Brīdinājums</translation>
+        <translation type="vanished">Brīdinājums</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Loading a GIF image template.
 Saving GIF files is not supported. This means that drawings on this template won&apos;t be saved!
 If you do not intend to draw on this template however, that is no problem.</source>
-        <translation>Ielasām GIF zīmējuma šablonu.
+        <translation type="vanished">Ielasām GIF zīmējuma šablonu.
 GIF datņu saglabāšana nav atbalstīta. Tas nozīmē, ka zīmējumi uz šī šablona netiks saglabāti!
 Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_image.cpp" line="229"/>
-        <location filename="../src/templates/template_image.cpp" line="346"/>
+        <location filename="../src/templates/template_image.cpp" line="262"/>
+        <location filename="../src/templates/template_image.cpp" line="379"/>
         <source>Select the coordinate reference system of the coordinates in the world file</source>
         <translation>Izvēlēties koordinātu references sistēmu globālajā datnē</translation>
     </message>
@@ -8059,22 +8076,22 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
 <context>
     <name>OpenOrienteering::TemplateListWidget</name>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="172"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="177"/>
         <source>Show</source>
         <translation>Rādīt</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Opacity</source>
         <translation>Necaurspīdīgums</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Group</source>
         <translation>Grupa</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="171"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="176"/>
         <source>Filename</source>
         <translation>Datnes nosaukums</translation>
     </message>
@@ -8083,19 +8100,19 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <translation type="obsolete">Izveidot...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="504"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="226"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="515"/>
         <source>Sketch</source>
         <translation>Skice</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="223"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="508"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="228"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="519"/>
         <source>GPS</source>
         <translation>GPS</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="216"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="221"/>
         <source>Open...</source>
         <translation>Atvērt...</translation>
     </message>
@@ -8132,93 +8149,93 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <translation type="vanished">Aizvērt</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="219"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="224"/>
         <source>Duplicate</source>
         <translation>Dublicēt</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="227"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
         <translation>Pievienot veidni...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="231"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
         <source>Remove</source>
         <translation>Aizvākt</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="237"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="242"/>
         <source>Move Up</source>
         <translation>Pārvietot augstāk</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="239"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="244"/>
         <source>Move Down</source>
         <translation>Pārvietot zemāk</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
         <translation type="unfinished">Ģeoreferencēts</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="266"/>
         <source>Import and remove</source>
         <translation>Importēt un noņemt</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="294"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="305"/>
         <source>Help</source>
         <translation>Palīdzība</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="246"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
         <source>Move by hand</source>
         <translation>Pārvietot manuāli</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="400"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="411"/>
         <source>Open image, GPS track or DXF file</source>
         <translation>Atvērt zīmējumu, GPS ceļu vai DXF datni</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="258"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="263"/>
         <source>Positioning...</source>
         <translation>Pozicionēšana...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
         <translation>Šablonu datnes</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="403"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>All files</source>
         <translation>Visas datnes</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="251"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="256"/>
         <source>Adjust...</source>
         <translation>Pielāgot...</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="454"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="999"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="465"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Error</source>
         <translation>Kļūda</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="420"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
         <source>File format not recognized.</source>
         <translation>Datnes formāts nav atpazīts.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="433"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
         <translation>Neizdevās ielasīt šablonu. Vai datne eksistē un ir pieļaujama?</translation>
     </message>
@@ -8227,23 +8244,28 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <translation type="obsolete">Ievadiet pieļaujamu skaitli no 0 līdz 1 vai norādiet procentus no 0 līdz 100!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="776"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
         <translation>Ievadiet pieļaujamu veselu skaitli, lai norādītu grupu, vai atstājiet tukšu, lai atgrupētu šablonu!</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
         <translation>Nemērogot</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1015"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
         <translation>Mērogot pēc kartes nominālā mēroga attiecības (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="453"/>
-        <location filename="../src/templates/template.cpp" line="500"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
+        <source>Vectorize lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
+        <location filename="../src/templates/template.cpp" line="487"/>
         <source>Cannot open template
 %1:
 %2</source>
@@ -8252,49 +8274,49 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
 %2</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="994"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1040"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">Neizdevās ielasīt kartes datni, atceļ.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
         <translation type="unfinished">Brīdinājums</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1004"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
         <translation type="unfinished">Kartes importā izveidotie brīdinājumi.</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1017"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
         <translation>Mērogot pēc patreizējās veidnes mēroga (%1 %)</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1022"/>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1052"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
         <translation>Veidnes imports</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1023"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
         <translation>Kā mērogot importējamās veidnes kartes simbolus?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1053"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
         <translation>Veidne būs neredzama virsiespieduma imitācijā. Pārslēgt uz normālskatu?</translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1091"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1210"/>
+        <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
         <source>- Map -</source>
         <translation>- Karte -</translation>
     </message>
@@ -8302,7 +8324,7 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
 <context>
     <name>OpenOrienteering::TemplateMap</name>
     <message>
-        <location filename="../src/templates/template_map.cpp" line="107"/>
+        <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
         <translation type="unfinished">Neizdevās ielasīt kartes datni, atceļ.</translation>
     </message>
@@ -8400,8 +8422,8 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
 <context>
     <name>OpenOrienteering::TemplateTrack</name>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="147"/>
-        <location filename="../src/templates/template_track.cpp" line="153"/>
+        <location filename="../src/templates/template_track.cpp" line="169"/>
+        <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
         <translation>Šo veidni jāielasa ar GDAL/OGR.</translation>
     </message>
@@ -8410,67 +8432,67 @@ Ja uz šī šablona netiks zīmēts, tā nav problēma.</translation>
         <translation type="vanished">Izvēlēties koordinātu references sistēmu treka koordinātēm</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="185"/>
+        <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
         <translation>Atver treku...</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="186"/>
+        <location filename="../src/templates/template_track.cpp" line="208"/>
         <source>Load the track in georeferenced or non-georeferenced mode?</source>
         <translation>Ielasīt treku ģeoreferencētā vai neģeoreferencetā veidā?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="188"/>
+        <location filename="../src/templates/template_track.cpp" line="210"/>
         <source>Positions the track according to the map&apos;s georeferencing settings.</source>
         <translation>Novieto treku saskaņā ar kartes ģeoreferences iestatījumiem.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="190"/>
+        <location filename="../src/templates/template_track.cpp" line="212"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translation>Šie vēl nav konfigurēti, tiks parādīti kā nākošais solis.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="191"/>
+        <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
         <translation>Ģeoreferencēts</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
         <translation>Neģeoreferencēts</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="192"/>
+        <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
         <translation>Projicē treku, lietojot ortogrāfisko projekciju ar centru treka vidējotās koordinātēs. Pieļauj transformācijas pielāgojumu un kartes ģeoreferences iestatījumu, lietojot pielāgoto treka novietojumu.</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>Error</source>
         <translation>Kļūda</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="402"/>
+        <location filename="../src/templates/template_track.cpp" line="417"/>
         <source>The path is empty, there is nothing to import!</source>
         <translation>Vietne ir tukša, nav ko importēt!</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Question</source>
         <translation>Jautājums</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="415"/>
+        <location filename="../src/templates/template_track.cpp" line="430"/>
         <source>Should the waypoints be imported as a line going through all points?</source>
         <translation>Vai pieturpunkti ir importējami kā līnija, kas iet caur visiem punktiem?</translation>
     </message>
     <message>
-        <location filename="../src/templates/template_track.cpp" line="470"/>
+        <location filename="../src/templates/template_track.cpp" line="485"/>
         <source>Import problems</source>
         <translation>Importa problēmas</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/templates/template_track.cpp" line="471"/>
+        <location filename="../src/templates/template_track.cpp" line="486"/>
         <source>%n path object(s) could not be imported (reason: missing coordinates).</source>
         <translation>
             <numerusform>%n līnijveida objektus neizdevās importēt (cēlonis: trūkstošas koordinātes).</numerusform>
