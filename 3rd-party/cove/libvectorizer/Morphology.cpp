@@ -19,7 +19,6 @@
 
 #include "Morphology.h"
 
-#include <algorithm>
 #include <cmath>  // IWYU pragma: keep
 #include <vector>
 

@@ -17,7 +17,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with OpenOrienteering.  If not, see <http://www.gnu.org/licenses/>.
  
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.7 FATAL_ERROR)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -190,7 +190,13 @@ endif()
 if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.1)
 	# New PROJ API missing or incomplete.
 	# (proj_normalize_for_visualization() came in 6.1.)
-	add_definitions(-DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
+endif()
+if(NOT PROJ4_VERSION OR PROJ4_VERSION VERSION_LESS 6.2.1)
+	# Datum Potsdam issue, https://github.com/OSGeo/PROJ/pull/1573
+	set_property(TARGET PROJ4::proj APPEND PROPERTY
+	  INTERFACE_COMPILE_DEFINITIONS PROJ_ISSUE_1573)
 endif()
 
 if(Mapper_USE_GDAL)

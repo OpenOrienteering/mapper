@@ -40,7 +40,7 @@ Depending on the method you want to use for surveying terrain, you will need mat
 
 ### Fieldwork
 
-Accurate mapping depends on high quality fieldwork. Ordinarily, fieldwork will usually produce a paper sketch with all the detail required to produce the map but often marked up with shorthand codes which are meaningful to the mapper but which will not appear on the finished map. Instead of paper the mapper may use mylar or other robust drafting film. Fieldworking on transparent film also permits the use of an underlay which may have a coordinate grid or an old map visible underneath (at an appropriate scale).
+Accurate mapping depends on high quality fieldwork. Ordinarily, fieldwork will usually produce a paper sketch with all the detail required to produce the map but often marked up with shorthand codes which are meaningful to the mapper but which will not appear on the finished map. Instead of paper the mapper may use Mylar or other robust drafting film. Working on transparent film also permits the use of an underlay which may have a coordinate grid or an old map visible underneath (at an appropriate scale).
 
 The fieldwork will usually be done at a larger scale than the final map. With convenient rescaling of computer graphic images it is now possible for fieldwork to be undertaken at any convenient scale such as 1:5000 or even larger. This demands less skill in field penmanship than the traditional fieldwork scale of 1:7500.
 
@@ -52,11 +52,11 @@ Symbols for orienteering maps are prescribed in the [IOF documents](http://orien
 
 It is very desirable that all orienteering maps should conform to the appropriate standard, and that includes conforming to the standard symbols for the discipline.
 
-A full set of symbols for each standard will be made available with OOMapper, and ideally all maps will be prepared using only the unmodified symbols described in the standards and provided in these symbol sets. This enables international competitors to receive a locally produced map and find it portrays the terrain in exactly the same way as in their home country. It also enables local orienteers to become familiar with the mapping conventions that are used for major events elsewhere. The use of local symbol variations defeats the purpose of mapping standards and confuses visiting competitors.
+A full set of symbols for each standard will be made available with OpenOrienteering Mapper, and ideally all maps will be prepared using only the unmodified symbols described in the standards and provided in these symbol sets. This enables international competitors to receive a locally produced map and find it portrays the terrain in exactly the same way as in their home country. It also enables local orienteers to become familiar with the mapping conventions that are used for major events elsewhere. The use of local symbol variations defeats the purpose of mapping standards and confuses visiting competitors.
 
 ### Symbols Window
 
-This area on the right hand side of the OOMapper screen shows all the available symbols in the loaded standard set. Use the scroll-bar to move the array up and down to reveal symbols not showing.
+This area on the right hand side of the OpenOrienteering Mapper screen shows all the available symbols in the loaded standard set. Use the scroll-bar to move the array up and down to reveal symbols not showing.
 
 Each symbol has a text (a part of the standard) describing where and how it may be used. That text can be made visible in the symbol window by pressing F1 while hovering over the symbol of interest.
 
@@ -75,8 +75,8 @@ The IOF Map Commission has prepared an offset printed paper test sheet (Print Te
 ### Color adjustment
 
 1. Scan the IOF offset printed Print Tech page in any scanner and use a color picker to get the CMYK values on screen for each color. By way of example this scan may yield CMYK values of 000, .800, .991, .569 respectively for 100% brown.
-2. Load the file printtech2006.ocd file into OOMapper and print the page on your printer. Take this freshly printed page and scan that print on the same scanner and use the same color picker to get the color values you have in the scan. An example of this scan for 100% brown may yield CMYK values of 000, .689, .942, .255 respectively.
-3. The difference between those two sets of values will indicate the adjustments required. Using the example values the Color Window line for 100% brown should have no adjustment to the cyan field, +.111 to magenta, +.049 to yellow, and +.314 to black. Those adjustments must be made in the OOMapper Color Window. Having made similar adjustments for all colors, then run the step 2 print trial again.
+2. Load the file printtech2006.ocd file into OpenOrienteering Mapper and print the page on your printer. Take this freshly printed page and scan that print on the same scanner and use the same color picker to get the color values you have in the scan. An example of this scan for 100% brown may yield CMYK values of 000, .689, .942, .255 respectively.
+3. The difference between those two sets of values will indicate the adjustments required. Using the example values the Color Window line for 100% brown should have no adjustment to the cyan field, +.111 to magenta, +.049 to yellow, and +.314 to black. Those adjustments must be made in the OpenOrienteering Mapper Color Window. Having made similar adjustments for all colors, then run the step 2 print trial again.
 4. In a perfect world the differences will all reduce to zero. In practice they may not because of non-linearities in the hardware and colors like brown are poorly defined on the color palette. Several iterations may be required to get a good match.
 
 The same general approach may be employed but using the RGB color space instead.
@@ -87,7 +87,7 @@ The Print Tech Test Sheet is designed to demonstrate beneficial over-printing ef
 
 ## Map scales
 
-Map scales are set in accordance with the Internationsl Standard for Orienteering Maps (ISOM). The traditional competition format is at 1:15000. More recently maps may be printed at 1:10000 for shorter courses. Maps at 1:10k are visually identical to those at 1:15k. The ISOM emphatically requires that a larger scale 1:10k shall not be used in order to fit more detail onto the map but simply permits the map to be more easily read by older competitors who will generally have shorter courses and not require large maps. Sprint maps made to the ISSOM standard may be at either 1:5000 or 1:4000 and use a different symbol set appropriate to that scale.
+Map scales are set in accordance with the International Standard for Orienteering Maps (ISOM). The traditional competition format is at 1:15000. More recently maps may be printed at 1:10000 for shorter courses. Maps at 1:10k are visually identical to those at 1:15k. The ISOM emphatically requires that a larger scale 1:10k shall not be used in order to fit more detail onto the map but simply permits the map to be more easily read by older competitors who will generally have shorter courses and not require large maps. Sprint maps made to the ISSOM standard may be at either 1:5000 or 1:4000 and use a different symbol set appropriate to that scale.
 
 Printing of a map prepared at 1:15000 may be at either scale (and conversely a map prepared at 1:10k can be printed at 1:15k) with no loss of accuracy or information. Most course planning software provides for this re-scaling at the point of printing.
 

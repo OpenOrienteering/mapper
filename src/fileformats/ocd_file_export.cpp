@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    Some parts taken from file_format_oc*d8{.h,_p.h,cpp} which are
  *    Copyright 2012 Pete Curtis
@@ -2255,11 +2255,18 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 	
 	bool need_split_lines = false;
 	auto symbol = path->getSymbol();
-	if (symbol &&  symbol->getContainedTypes() & Symbol::Area)
+	if (symbol && symbol->getContainedTypes() & Symbol::Area)
 	{
 		ocd_object.type = 3;  // Area symbol
 		// We we may get away with an object with holes,
 		// but need to check the breakdown.
+		if (symbol->getType() == Symbol::Area)
+		{
+			if (static_cast<const AreaSymbol*>(symbol)->hasRotatableFillPattern())
+				ocd_object.angle = decltype(ocd_object.angle)(convertRotation(path->getPatternRotation()));
+			if (path->getPatternOrigin() != MapCoord(0, 0))
+				addWarning(tr("Unable to export fill pattern shift for an area object"));
+		}
 	}
 	else
 	{

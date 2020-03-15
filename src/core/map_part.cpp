@@ -244,7 +244,7 @@ std::unique_ptr<UndoStep> MapPart::importPart(const MapPart* other, const QHash<
 
 void MapPart::findObjectsAt(
         const MapCoordF& coord,
-        float tolerance,
+        qreal tolerance,
         bool treat_areas_as_paths,
         bool extended_selection,
         bool include_hidden_objects,

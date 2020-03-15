@@ -43,9 +43,6 @@
         <number>8</number>
        </property>
        <item>
-        <widget class="cove::ImageView" name="imageView"/>
-       </item>
-       <item>
         <layout class="QHBoxLayout">
          <property name="spacing">
           <number>6</number>
@@ -114,6 +111,9 @@
           </spacer>
          </item>
         </layout>
+       </item>
+       <item>
+        <widget class="cove::ImageView" name="imageView"/>
        </item>
       </layout>
      </widget>
@@ -401,6 +401,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="bwImageHistoryBack">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="toolTip">
             <string>Undo last operation.</string>
            </property>
@@ -411,6 +414,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="bwImageHistoryForward">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="toolTip">
             <string>Redo last operation.</string>
            </property>
@@ -449,17 +455,17 @@
           <number>0</number>
          </property>
          <item>
-          <spacer>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+          <widget class="QPushButton" name="setVectorizationOptionsButton">
+           <property name="toolTip">
+            <string>Set joining and speckle size options.</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
+           <property name="text">
+            <string>Vectorization options</string>
            </property>
-          </spacer>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="createVectorsButton">
@@ -475,17 +481,20 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="setVectorizationOptionsButton">
-           <property name="toolTip">
-            <string>Set joining and speckle size options.</string>
+          <spacer>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
-           <property name="text">
-            <string>Set vectorization options</string>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
            </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
+          </spacer>
+         </item>
+         <item>
+          <widget class="OpenOrienteering::SymbolDropDown" name="symbolComboBox"/>
          </item>
          <item>
           <widget class="QPushButton" name="saveVectorsButton">
@@ -493,10 +502,10 @@
             <bool>false</bool>
            </property>
            <property name="toolTip">
-            <string>Save current polygons into an .OCD file.</string>
+            <string>Add the current vector lines to the map.</string>
            </property>
            <property name="text">
-            <string>Save vectors</string>
+            <string>Add to map</string>
            </property>
            <property name="flat">
             <bool>false</bool>
@@ -526,6 +535,11 @@
    <extends>QScrollArea</extends>
    <header>app/PolygonsView.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OpenOrienteering::SymbolDropDown</class>
+   <extends>QComboBox</extends>
+   <header>gui/widgets/symbol_dropdown.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

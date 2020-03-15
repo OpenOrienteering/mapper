@@ -381,7 +381,25 @@ void LineRenderable::extentIncludeJoin(quint32 i, qreal half_line_width, const L
 	
 	const auto scaling = to_coord.y() * to_next.x() - to_coord.x() * to_next.y();
 	if (qIsNull(scaling) || !qIsFinite(scaling))
-		return; // straight line, no impact on extent
+	{
+		// straight line or 180 degrees turn
+		if (to_coord == -to_next)
+		{
+			switch (symbol->getJoinStyle()) {
+			case LineSymbol::MiterJoin:
+				to_coord.setLength(2*half_line_width);
+				break;
+			case LineSymbol::RoundJoin:
+				to_coord.setLength(half_line_width);
+				break;
+			case LineSymbol::BevelJoin:
+				to_coord.setLength(0);
+				break;
+			}
+			rectInclude(extent, coord + to_coord);
+		}
+		return;
+	}
 	
 	// rhs boundary
 	auto p = to_coord_rhs - to_next_rhs;

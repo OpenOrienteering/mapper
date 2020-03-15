@@ -21,6 +21,7 @@
 
 #include "cutout_operation.h"
 
+// IWYU pragma: no_include <algorithm>
 #include <iterator>
 #include <vector>
 

@@ -11,7 +11,7 @@
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kartamerkit peittävä tausta valkoinen ratapainatuksille esim. rastimääritteiden tausta</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -5449,7 +5449,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kartamerkit peittävä tausta valkoinen ratapainatuksille esim. rastimääritteiden tausta</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -13681,7 +13681,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kartamerkit peittävä tausta valkoinen ratapainatuksille esim. rastimääritteiden tausta</translation>
     </message>
     <message>
         <source>Green for SkiO</source>

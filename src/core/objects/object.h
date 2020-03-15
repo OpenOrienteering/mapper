@@ -234,7 +234,7 @@ public:
 	 * symbol type the coord is
 	 * (important for combined symbols which can have areas and lines).
 	 */
-	int isPointOnObject(const MapCoordF& coord, float tolerance, bool treat_areas_as_paths, bool extended_selection) const;
+	int isPointOnObject(const MapCoordF& coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const;
 	
 	/**
 	 * Checks if a path point (excluding curve control points) is included in the given box.
@@ -841,7 +841,7 @@ public:
 	/** See Object::isPointOnObject() */
 	int isPointOnPath(
 	        MapCoordF coord,
-	        float tolerance,
+	        qreal tolerance,
 	        bool treat_areas_as_paths,
 	        bool extended_selection
 	) const;

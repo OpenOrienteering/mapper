@@ -1219,14 +1219,16 @@ Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Járhatatlan mocsár, körvonallal</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Olyan mocsár, amely nem átjárható vagy veszélyes a versenyző számára. A fekete körvonal hangsúlyozza, hogy a terepelem nem átjárható. A fekete körvonalat elhagyják a járható mocsaras és a nem átjárható víztest szimbólum (301) közötti határokon. A szimbólum kombinálható egy durva nyílt terület szimbólummal (403, 404) a nyitottság megjelenítéséhez.
+A szimbólum északi irányba mutat.
+Minimális szélesség: 0,3 mm (belül). Minimális terület: 0,5 mm² (belül).</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -1238,12 +1240,14 @@ Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Olyan mocsár, amely nem átjárható vagy veszélyes a versenyző számára. A fekete körvonal hangsúlyozza, hogy a terepelem nem átjárható. A fekete körvonalat elhagyják a járható mocsaras és a nem átjárható víztest szimbólum (301) közötti határokon. A szimbólum kombinálható egy durva nyílt terület szimbólummal (403, 404) a nyitottság megjelenítéséhez.
+A szimbólum északi irányba mutat.
+Minimális szélesség: 0,3 mm (belül). Minimális terület: 0,5 mm² (belül).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Járhatatlan mocsár, körvonal</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>

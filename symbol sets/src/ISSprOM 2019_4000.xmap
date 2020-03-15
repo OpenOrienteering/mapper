@@ -393,7 +393,7 @@ Minimum length: 2.0 mm (footprint 8 m).</description>
 Contour lines should be broken around this symbol.
 Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</description>
-                <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="185" inner_color="8" outer_width="0" outer_color="-1" elements="0"/>
@@ -1875,7 +1875,7 @@ Minimum width: 2 lines.</description>
             <symbol type="2" id="69" code="309" name="Narrow marsh">
                 <description>A marsh or trickle of water which is too narrow to be shown with symbol Marsh (310).
 Minimum size (isolated): two dots (1 mm - footprint 4 m).</description>
-                <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="185" inner_color="7" outer_width="0" outer_color="-1" elements="0"/>
@@ -2417,7 +2417,7 @@ Minimum length: 1 mm (footprint 4 m).</description>
             <symbol type="2" id="100" code="416" name="Distinct vegetation boundary">
                 <description>A distinct forest edge or very distinct vegetation boundary within the forest. For indistinct boundaries, the area edges are shown only by the change in colour and / or dot screen.
 Minimum length (isolated): five dots (2,65 mm - footprint 10,6 m)</description>
-                <line_symbol color="2" line_width="0" minimum_length="220" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="0" minimum_length="220" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="600" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="5" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="125" inner_color="2" outer_width="0" outer_color="-1" elements="0"/>
@@ -2952,7 +2952,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</description>
-                <line_symbol color="2" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="0" dash_length="250" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
+                <line_symbol color="-1" line_width="0" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="500" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="2" minimum_mid_symbol_count_when_closed="0" dash_length="250" break_length="500" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0">
                     <mid_symbol>
                         <symbol type="1" code="" name="Mid symbol">
                             <point_symbol rotatable="true" inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="1">
