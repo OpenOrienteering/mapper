@@ -1068,7 +1068,7 @@ void DrawPathTool::updateFollowing()
 	const auto* followed_object = follow_helper->followedObject();
 	const auto& part = followed_object->parts()[follow_helper->partIndex()];
 	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
-	auto followed_path = follow_helper->updateFollowing(path_coord);
+	auto derived_path = follow_helper->updateFollowing(path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started
@@ -1081,10 +1081,10 @@ void DrawPathTool::updateFollowing()
 		preview_path->deleteCoordinate(i, false);
 	}
 	// 2. Merge segments at the point where following started.
-	if (followed_path)
+	if (derived_path)
 	{
 		preview_path->connectPathParts(preview_path->findPartIndexForIndex(follow_start_index),
-		                               followed_path.get(), 0, false, true);
+		                               derived_path.get(), 0, false, true);
 	}
 	updatePreviewPath();
 	hidePreviewPoints();
