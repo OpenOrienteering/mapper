@@ -326,7 +326,7 @@ public:
 	/**
 	 * Returns the object which is being followed.
 	 */
-	const PathObject* followed_object() const { return path; }
+	const PathObject* followedObject() const { return path; }
 	
 	/**
 	 * Returns the index of the path part which is being followed.
