@@ -488,7 +488,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -502,7 +502,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
@@ -526,7 +526,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -536,7 +536,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished">Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus. </translation>
+        <translation>Käytä tätä kuvaamaan jyrkänteiden todellinen korkeus.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
@@ -560,7 +560,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -574,7 +574,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -588,7 +588,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -602,7 +602,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -617,7 +617,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kallionkolo tai luola</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -626,12 +626,12 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kallionkolo, luola tai kaivoskuilu, joka voi olla vaarallinen suunnistajalle. Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen, paitsi luola, jossa merkin kärki osoittaa luolaan. Suurempi kallionkolo kuin 5 m halkaisijaltaan pitäisi esittää jyrkänteen symbolilla (201, 202). Minimisyvyys 1 m. Maastomitta 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kallionkolo tai luola</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -660,7 +660,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi maastossa havaittava kivi (korkeus yleensä yli 1 m). Kivien ryhmä esitetään symbolilla 207 tai symboleilla 208/209. Vierekkäisten kivien suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia suurentaa kokoon 0.5 mm joillain kivillä. Maastomitta 6 m halkaisijaltaan (7.5 m halkaisijaltaan).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -743,7 +743,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
@@ -6018,7 +6018,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kallionkolo tai luola</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -6129,7 +6129,7 @@ To be able to show obvious height differences within a boulder field, it is perm
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually is represented with randomly placed and orientated solid triangles. The runnability is reduced and is indicated by the density of the triangles.
@@ -14050,7 +14050,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -14064,7 +14064,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
@@ -14088,7 +14088,7 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkea jyrkänne, louhos tai irtomaarinne, jolle on mahdoton kiivetä tai siltä hypätä tai joka on vaarallinen. Tilanpuutteen takia viettosuuntaviivat voidaan jättää pois. Symboliviivan päät voivat olla pyöristetyt tai suorat. Selkäviivan minimileveys 0.35 mm. Lyhyempiä viettosuuntaviivoja voidaan käyttää symboliviivan päissä. Kahden ylipääsemättömän jyrkänteen tai ylipääsemättömän jyrkänteen ja toisen ylipääsemättömän symbolin välinen rako on oltava minimissään 0.25 mm. Kun jyrkänne on vesistön rannalla siten, että rantaa pitkin ei jyrkänteen alapuolelta voida kulkea, piirretään viettosuuntaviivat selvästi vesistön päälle. Rantaviiva on tältä kohtaa katkaistava. Ylipääsemätön jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -14122,7 +14122,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -14136,7 +14136,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -14150,7 +14150,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -14164,7 +14164,7 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylitettävissä oleva jyrkänne tai louhoksen seinämä. Minimikorkeus 1 m. Selkäviivan leveys 0.25 mm. Jyrkänteen molempiin päihin sijoitetaan viettosuuntaa osoittavat viivat, jos viettosuuntaa ei voi karttakuvasta muutoin päätellä. Jyrkänteissä, jotka eivät ole pystysuoria, on esitettävä viettosuuntaviivat koko ulottuvuudella. Symboliviivan päät ovat pyöristetyt, jos jyrkänteeseen ei piirretä väkäsiä. Kahden pienen jyrkänteen välinen rako on oltava minimissään 0.2 mm. Jyrkänne sijoitetaan korkeuskäyrälle. Minimipituus 0.6 mm (maastomitta 9 m). Jyrkänteen ylittäminen yleensä hidastaa juostavuutta.</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -14186,7 +14186,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi maastossa havaittava kivi (korkeus yleensä yli 1 m). Kivien ryhmä esitetään symbolilla 207 tai symboleilla 208/209. Vierekkäisten kivien suuruuseron osoittamiseksi (lähempänä kuin 30 m toisistaan) voidaan symbolia suurentaa kokoon 0.5 mm joillain kivillä. Maastomitta 6 m halkaisijaltaan (7.5 m halkaisijaltaan).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -14269,7 +14269,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Louhikko, yksi kolmio</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
