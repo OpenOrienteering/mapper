@@ -6,7 +6,7 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Violetti ratamerkinnöille</translation>
     </message>
     <message>
         <source>White for course overprint</source>
@@ -26,7 +26,7 @@
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Valkoinen rautateille</translation>
     </message>
     <message>
         <source>Blue 100%</source>
@@ -41,12 +41,12 @@
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Violetti ratamerkinnöille</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musta violetin alla ratamerkinnöissä</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -61,7 +61,7 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ylempi ruskea 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
@@ -71,7 +71,7 @@
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alempi ruskea 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
@@ -195,7 +195,8 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkeuskäyrä yhdistää samalla korkeustasolla olevat pisteet. Standardi käyräväli eri tason korkeuskäyrille on 5 metriä. Tasaisissa maastoissa voidaan käyttää käyräväliä 2.5 metriä. Maanpinnan muotojen kuvauksen selventämiseksi on piirrettävä maaston laskevan kaltevuuden suuntaa osoittavia rinneviivoja. Sulkeutuva käyrä on joko kumpare tai suppa. Supassa on oltava vähintään yksi rinneviiva. Kumpareen/supan minimikorkeus on 1 metri. Vierekkäisten korkeuskäyrien suhde on tärkeä, ne kertovat maaston muodon. Pieniä yksityiskohtia käyrissä pitäisi välttää, koska ne saattavat häiritä maaston pääpiirteiden tulkitsemista. Tärkeitä piirteitä kuten suppia, notkoja, neniä, maavalleja ja penkereitä voidaan tarpeen mukaan liioitella. Absoluuttisen oikea korkeustieto ei ole niin tärkeää kuin se, että vierekkäiset yksityiskohdat ovat suhteessa oikein esitettynä kartalla. Käyräväliä voidaan tarpeen mukaan hieman muuttaa/siirtää maksimissaan 25 %, että saadaan korostettua tarpeellisia yksityiskohtia. Pienin taitos korkeuskäyrällä on 0.25 mm keskeltä keskelle mitattuna (maastomitta 4 m). Notkon suuosan tai nenän pitää olla leveämpi kuin 0.5 mm keskeltä keskelle mitattuna (maastomitta 8 m). Käyräkumpareen minimipituus on 0.9 mm (maastomitta 13.5 m) ja minimileveys 0.6 mm (maastomitta 9 m) ulkomittoina. Pienemmät selkeästi erottuvat kumpareet voidaan esittää myös symbolilla 109 (pieni kumpare, pistekumpare) tai symbolilla 110 (pitkulainen pieni kumpare) tai mittoja voidaan suurentaa minimimittoihin kartalla. Suppaan on aina merkittävä rinneviivat. Supan minimipituus on 1.1 mm (maastomitta 16.5 m) ja minimileveys 0.7 mm (maastomitta 10.5 m) ulkomittoina. Pienemmät supat voidaan esittää symbolilla 111 (pieni suppa) tai mittoja voidaan suurentaa minimimittoihin kartalla. Pientä kumparetta (symboli 109) eikä pitkulaista pientä kumparetta (symboli 110) saa sijoittaa korkeuskäyrälle eikä käyrää saa katkaista niiden kohdalta.
+Väri: ruskea.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -206,7 +207,7 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maanpinnan muotojen kuvauksen selventämiseksi on piirrettävä maaston laskevan kaltevuuden suuntaa osoittavia rinneviivoja. Sulkeutuva käyrä on joko kumpare tai suppa. Supassa on oltava vähintään yksi rinneviiva.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +219,7 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Korkeuserojen nopeaa arviointia helpottamaan kuvataan joka viides käyrä johtokäyränä. Johtokäyrälle osuvat pienmuodot, kuten notkot ja nenät, sekä pienet kukkulat ja supat kuvataan korkeuskäyrällä (101). Tasaisissa maastoissa johtokäyrän taso pitää valita huolellisesti, ideaalitaso on merkittävimpien rinteiden keskitaso. Johtokäyrällä voi olla korkeuslukema, missä se ei häiritse muita yksityiskohtia. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan. Lukeman korkeus on 1.5 mm ja fontti sans-serif. Väri: ruskea.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -228,7 +229,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Johtokäyrällä voi olla korkeuslukema, missä se ei häiritse muita yksityiskohtia. Numeroiden yläreunojen on osoitettava nousevan rinteen suuntaan. Lukeman korkeus on 1.5 mm ja fontti sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -240,7 +241,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Apukäyriä (muotokäyriä) käytetään kohdissa, joissa pitää antaa enemmän tietoa maanpinnan muodoista. Apukäyriä lisätään vain sellaisiin kohtiin, joissa karttakuvaus olisi riittämätön käyttäen pelkkiä korkeuskäyriä. Apukäyrää ei saa käyttää korkeuskäyrien välissä kulkevana jatkuvana välikäyränä. Kahden korkeuskäyrän välissä pitäisi käyttää vain yhtä apukäyrää. On tärkeää, että apukäyrä asettuu johdonmukaisesti muiden korkeuskäyrien kokonaisuuteen. Apukäyrän alku- ja loppupäät piirretään mahdollisimman samansuuntaisiksi kuin viereiset korkeuskäyrät. Apukäyrien viivan katkot asetellaan viivan suorimmille osille. Apukäyriä voidaan käyttää erottamaan laakeampia kumpareita ja notkoja selkeämmistä. Minimipituus (avoin käyrä) kaksi viivan osaa. Apukäyräkumpareen tai supan minimipituus 1.1 mm (maastomitta 16.5 m) ulkomittoina.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -263,7 +264,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -276,7 +277,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -289,7 +290,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -320,7 +321,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi havaittava maavalli. Minimikorkeus 1 m.
+Minimipituus 1.4 mm (maastomitta 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -331,7 +333,7 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni, osittain sortunut tai epäselvä maavalli. Minimikorkeus 0.5 m. Minimipituus kaksi viivan osaa; 3.65 mm (maastomitta 55 m). Jos kohde on lyhyempi, niin symboli pitää suurentaa minimimittaan tai käyttää symbolia 105 (maavalli).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -343,7 +345,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jyrkkäreunainen kapea irtomaarinteinen uoma, jota ei mahdu kuvaamaan irtomaarinteenä (symboli 104). Minimisyvyys 1 m. Minimipituus 1.15 mm (maastomitta 17 m). Korkeuskäyriä ei pitäisi katkaista tämän symbolin kohdalla.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -355,7 +357,7 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni uurre, kuiva oja tai kaivanto. Minimisyvyys 0.5 m. Minimipituus kolme pistettä, 1.15 mm (maastomitta 17 m). Korkeuskäyrät pitäisi katkaista tämän symbolin kohdalla.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -368,7 +370,7 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni selvä kohouma, jota ei voida kuvata korkeuskäyrällä. Minimikorkeus 1 m. Maastomitta 7.5 m x 7.5 m. Pientä kumparetta ei saa sijoittaa korkeuskäyrälle eikä se saa koskettaa korkeuskäyrää.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -381,7 +383,7 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni pitkänomainen selvä kohouma, jota ei voida kuvata korkeuskäyrillä. Minimikorkeus 1 m. Maastomitta 12 m x 6 m. Pitkulaista pientä kumparetta ei saa sijoittaa korkeuskäyrälle eikä se saa koskettaa korkeuskäyrää. Pitkulainen pieni kumpare piirretään suuntaansa.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -395,7 +397,7 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrällä. Minimisyvyys 1 m ja minimileveys 2 m. Jyrkkäreunaiset pienet kuopat kuvataan symbolilla 112 (kuoppa). Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen. Symboli ei saa koskettaa muita ruskeita symboleita tai mennä niiden kanssa päällekkäin. Maastomitta 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -409,7 +411,7 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni kaivettu kuoppa, jota ei voida sen pienen koon vuoksi kuvata pohjapiirroksen mukaisesti. Minimisyvyys 1 m ja minimileveys 1 m. Suurempi kuoppa kuin 5 m x 5 m pitäisi suurentaa ja kuvata symbolilla 104 (irtomaarinne). Kuoppa, missä ei ole jyrkkiä reunoja, kuvataan symbolilla 111 (pieni suppa). Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen. Symboli ei saa koskettaa muita ruskeita symboleita tai mennä niiden kanssa päällekkäin. Maastomitta 10.5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -425,7 +427,7 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm2</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -442,7 +444,7 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on pieni vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 10 m x 10 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.6 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.5 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 3-4 pistettä / mm2</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -458,7 +460,7 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erittäin pienimuotoinen maasto, kuoppa- tai kumparekenttä, jota ei voida kuvata yksittäisillä symboleilla ja jolla on selkeä hidastava vaikutus juostavuuteen. Pisteet sijoitetaan satunnaisesti siten, etteivät ne peitä tärkeitä kartanlukukohteita. Minimimäärä pisteitä on 3 kpl (maastomitta 7 m x 7 m). Maksimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.38 mm. Minimimitta keskeltä keskelle vierekkäisillä pisteillä on 0.25 mm. Korkeuskäyriä ei katkaista pienimuotoisella alueella. Pisteistä ei saa muodostua viivamaista muotoa. Pistetiheys 7-9 pistettä / mm2.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -472,7 +474,7 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kohde pitää olla selkeästi erotettavissa ympäristöstään, esim. muurahaispesä. Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen. Symboli ei saa koskettaa muita ruskeita symboleita tai mennä niiden kanssa päällekkäin. Määritelmä annettava erikseen kartassa. Maastomitta 13.5 m x 11.5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -13938,7 +13940,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -13951,7 +13953,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -13964,7 +13966,7 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Minimikorkeus 1 m. Irtomaarinne saattaa vaikuttaa juostavuuteen. Poikkiviivat kuvastavat rinteen laajuutta. Pitkissä irtomaarinteissä voidaan käyttää lyhyempiä poikkiviivoja päissä. Jos kaksi irtomaarinnettä on hyvin lähellä toisiaan voidaan poikkiviivat jättää pois. Ylipääsemättömät rinteet kuvataan symbolilla 201 (ylipääsemätön jyrkänne). Minimipituus: 0.6 mm (maastomitta 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -14034,7 +14036,7 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pieni suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrällä. Minimisyvyys 1 m ja minimileveys 2 m. Jyrkkäreunaiset pienet kuopat kuvataan symbolilla 112 (kuoppa). Symbolin painopiste osoittaa kohteen sijainnin. Symboli avautuu pohjoiseen. Symboli ei saa koskettaa muita ruskeita symboleita tai mennä niiden kanssa päällekkäin. Maastomitta 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
