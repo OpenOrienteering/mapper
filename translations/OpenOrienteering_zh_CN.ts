@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation>无法写入文件</translation>
+        <translation>无法写入文件：％1</translation>
     </message>
 </context>
 <context>
@@ -15,12 +15,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法读取图像数据: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持的栅格数据: %1</translation>
     </message>
 </context>
 <context>
@@ -30,7 +30,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation>无法打开文件</translation>
+        <translation>不能打开文件
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -41,7 +43,10 @@
 %1
 
 %2</source>
-        <translation>无法打开文件</translation>
+        <translation>不能打开文件：
+％1
+
+％2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="649"/>
@@ -82,43 +87,43 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>一些坐标仍在OCAD8绘图区域之外。在OCAD中可能无法访问它们。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>地理参考不能保存在OCD版本8中。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图包含24种以上的专色，这是OCD版本8不支持的。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图包含超过256种颜色，这是OCD版本8不支持的。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的专色。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存丢失底图的正确位置: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">无法导出模板:&quot;%1&quot;的文件类型尚不支持</translation>
+        <translation>无法导出底图：文件类型“％1”尚不支持</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
         <source>Text truncated at &apos;|&apos;): %1</source>
-        <translation type="unfinished"></translation>
+        <translation>文本截短于 &apos;|&apos;): %1</translation>
     </message>
 </context>
 <context>
@@ -136,23 +141,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">编码 &apos;%1&apos; 不是可用的。请检查设置。</translation>
+        <translation>编码 &apos;%1&apos; 不是可用的，请检查设置。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2061"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2107"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法在层%1 中创建特征物</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2117"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法创建层 %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法创建名称字段: %1</translation>
     </message>
 </context>
 <context>
@@ -198,7 +203,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation>作出的贡献，感谢</translation>
+        <translation>感谢您的贡献：</translation>
     </message>
 </context>
 <context>
@@ -325,27 +330,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation>边界元素绘制</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>在边界处剪裁元素。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果中心在边界内，则绘制元素。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果任何点在边界内，则绘制元素。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果所有点都在边界内，则绘制元素。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -375,7 +380,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation type="unfinished">线条偏移量：</translation>
+        <translation>线条偏移量：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
@@ -439,22 +444,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>专色印刷</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
         <source>Defines a spot color:</source>
-        <translation>定义专色</translation>
+        <translation>定义专色：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕分辨率：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
@@ -464,7 +469,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕角度：</translation>
     </message>
     <message>
         <source>°</source>
@@ -473,7 +478,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="128"/>
         <source>Mixture of spot colors (screens and overprint):</source>
-        <translation>混合物的专色 （屏幕和叠印）</translation>
+        <translation>专色混合（丝网和叠印）：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="143"/>
@@ -509,7 +514,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
-        <translation>自定义过程颜色</translation>
+        <translation>自定义进程颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -544,7 +549,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
         <source>Custom RGB color:</source>
-        <translation>自定义 RGB 颜色</translation>
+        <translation>自定义RGB颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="239"/>
@@ -579,12 +584,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="292"/>
         <source>Name</source>
-        <translation type="unfinished">名称</translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
-        <translation type="unfinished">-未命名-</translation>
+        <translation>-未命名-</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="623"/>
@@ -682,7 +687,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1(重复)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="251"/>
@@ -703,7 +708,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
@@ -711,7 +716,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>与零件数目</translation>
+        <translation>部件的数量</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
@@ -741,12 +746,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Take the old symbol as template for the private symbol?</source>
-        <translation>把旧的符号作为私有符号模板吗？</translation>
+        <translation>以旧符号作为私有符号的模板？</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="92"/>
         <source>Symbol %1:</source>
-        <translation>%1 的符号</translation>
+        <translation>符号%1：</translation>
     </message>
 </context>
 <context>
@@ -809,7 +814,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>额外的旋转 （逆时针）</translation>
+        <translation>额外的旋转(逆时针):</translation>
     </message>
     <message>
         <source>°</source>
@@ -833,38 +838,38 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
         <source>Horizontal spacing:</source>
-        <translation>水平间距</translation>
+        <translation>水平间距：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="93"/>
         <source>Vertical spacing:</source>
-        <translation>垂直间距</translation>
+        <translation>垂直间距：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="97"/>
         <source>Horizontal offset:</source>
-        <translation>水平偏移量</translation>
+        <translation>水平偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="99"/>
         <source>Vertical offset:</source>
-        <translation>垂直偏移量</translation>
+        <translation>垂直偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation>单位</translation>
+        <translation>单元：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation>线条颜色</translation>
+        <translation>线条颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
         <source>Display:</source>
-        <translation>显示︰</translation>
+        <translation>显示：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="171"/>
@@ -989,7 +994,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="124"/>
         <source>Height:</source>
-        <translation>高度︰</translation>
+        <translation>高度：</translation>
     </message>
 </context>
 <context>
@@ -1002,7 +1007,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="134"/>
         <source>Number of points per path:</source>
-        <translation>每个路径点的数目︰</translation>
+        <translation>每条路径的点数：</translation>
     </message>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="136"/>
@@ -1027,7 +1032,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation>额外的旋转角度 （逆时针）︰</translation>
+        <translation>额外的旋转角度 （逆时针）:</translation>
     </message>
 </context>
 <context>
@@ -1095,7 +1100,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_path_tool.cpp" line="1177"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1204"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;：段的方位和长度。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1193"/>
@@ -1145,7 +1150,7 @@ Rescale the imported data?</source>
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation>信息</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
@@ -1461,7 +1466,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>动作按钮大小：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1481,7 +1486,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>符号图标尺寸：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
@@ -1620,7 +1625,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>在组合符号％1中：序号％2处不支持的子符号。</translation>
     </message>
 </context>
 <context>
@@ -1646,7 +1651,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>使用GDAL/OGR导入：</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="55"/>
@@ -1656,27 +1661,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
         <source>Templates</source>
-        <translation type="unfinished">模板</translation>
+        <translation>底图</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">剖面线区域</translation>
+        <translation>填充区域</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Baseline view</source>
-        <translation type="unfinished">基线视图</translation>
+        <translation>基线视图</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>导出选项</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="72"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation>为每个符号创建一个图层</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
@@ -1696,7 +1701,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="102"/>
         <source>GDAL/OGR</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL/OGR</translation>
     </message>
 </context>
 <context>
@@ -1771,7 +1776,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
         <source>Save undo/redo history</source>
-        <translation type="unfinished"></translation>
+        <translation>保存撤消/重做历史</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
@@ -2092,7 +2097,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="242"/>
         <source>Grivation:</source>
-        <translation>Grivation:</translation>
+        <translation>激励：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="401"/>
@@ -2183,7 +2188,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation>触控模式</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2280,22 +2285,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="49"/>
         <source>All files (*.*)</source>
-        <translation type="unfinished">所有文件 (*.*)</translation>
+        <translation>所有文件 (*.*)</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation>默认图标</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
         <source>px</source>
-        <translation type="unfinished"></translation>
+        <translation>px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation>预览宽度：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
@@ -2306,12 +2311,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>复制到自定义图标</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义图标</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
@@ -2326,17 +2331,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>保存符号图标...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2348,12 +2353,13 @@ Rescale the imported data?</source>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存图像：
+％1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载符号图标...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2361,7 +2367,10 @@ Rescale the imported data?</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件：
+%1
+
+%2</translation>
     </message>
 </context>
 <context>
@@ -2391,7 +2400,7 @@ Rescale the imported data?</source>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>第％2行第％3列的符号ID&apos;％1&apos;格式错误。</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2425,12 +2434,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD版本8，旧实现</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>OCAD版本％1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -2467,7 +2476,7 @@ Rescale the imported data?</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="504"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="523"/>
         <source>Geospatial vector data</source>
-        <translation type="unfinished"></translation>
+        <translation>地理空间矢量数据</translation>
     </message>
 </context>
 <context>
@@ -2492,13 +2501,13 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="226"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
-        <translation>模板&quot;%1&quot;已从地图的目录而不是相对位置加载到它那里以前的映射文件。</translation>
+        <translation>底图“%1”已从地图的目录加载，而不是从它以前所在的地图文件的相对位置加载。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="217"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
-        <translation>未能加载模板&quot;%1&quot;，原因: %2</translation>
+        <translation>未能加载底图&quot;%1&quot;，原因: %2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="104"/>
@@ -2506,24 +2515,27 @@ Rescale the imported data?</source>
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished">无法打开文件</translation>
+        <translation>不能打开文件
+%1:
+%2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="234"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
-        <translation>警告当加载模板 &apos;%1&apos;: %2</translation>
+        <translation>加载底图&apos;％1&apos;时的警告：
+％2</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="242"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="244"/>
         <source>At least one template file could not be found.</source>
-        <translation>找不到至少一个模板文件。</translation>
+        <translation>至少找不到一个底图文件。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="245"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>单击模板-模板安装窗口 &gt; 查找模板文件名称中的红色模板名称。</translation>
+        <translation>单击“底图-&gt;底图设置”窗口中的红色底图名称以找到底图文件名。</translation>
     </message>
     <message>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
@@ -2532,7 +2544,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="546"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>不支持的过时文件格式版本。请使用程序版本v％1或更早的版本来加载和更新文件。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="558"/>
@@ -2749,22 +2761,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="172"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation>中间符号位置：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation>虚线中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="175"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation>虚线组中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation>间隙中心</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
@@ -2804,22 +2816,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>开始时的覆盖长度：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>末端的覆盖长度：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>开始时的偏移量：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="683"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>末端偏移：</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1725"/>
@@ -2878,7 +2890,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="306"/>
         <source>Scale the dash symbol at corners</source>
-        <translation type="unfinished"></translation>
+        <translation>缩放拐角处的短划线符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="565"/>
@@ -2982,7 +2994,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="391"/>
         <source>&amp;File</source>
-        <translation>与文件</translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
@@ -3049,7 +3061,10 @@ Do you want to save your changes?</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法打开文件：
+%1
+
+%2</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
@@ -3062,7 +3077,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>符号集导入生成的警告。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="780"/>
@@ -3076,7 +3091,7 @@ Do you want to scale the symbols to the selected scale?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">无效的文件类型。</translation>
+        <translation>无效的文件类型。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="868"/>
@@ -3191,21 +3206,25 @@ Press No to choose a different format.</source>
         <location filename="../src/gui/main_window_controller.cpp" line="63"/>
         <location filename="../src/gui/main_window_controller.cpp" line="71"/>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="64"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because the format is unknown.</source>
-        <translation type="unfinished">不能导出该映射为&quot;%1&quot;，因为该格式是未知。</translation>
+        <translation>无法将地图导出为
+“％1”
+因为格式未知。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window_controller.cpp" line="72"/>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">不能导出该映射为&quot;%1&quot;，因为另存为 %2 (.%3) 不受支持。</translation>
+        <translation>无法将地图导出为
+“％1”
+因为不支持另存为％2（.％3）。</translation>
     </message>
 </context>
 <context>
@@ -3300,13 +3319,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Import...</source>
-        <translation type="unfinished">导入...</translation>
+        <translation>导入...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>符号代替被取消。
+还是要导入数据？</translation>
     </message>
 </context>
 <context>
@@ -3435,17 +3455,17 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Template setup window</source>
-        <translation>模板安装程序窗口</translation>
+        <translation>底图设置窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Show/Hide the template window</source>
-        <translation>显示/隐藏模板窗口</translation>
+        <translation>显示/隐藏底图窗口</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="986"/>
         <source>Open template...</source>
-        <translation>打开模板...</translation>
+        <translation>打开底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="961"/>
@@ -3529,7 +3549,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
         <source>Paint on template settings</source>
-        <translation>画上模板设置</translation>
+        <translation>在底图设置上绘画</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
@@ -3610,22 +3630,22 @@ Import the data anyway?</source>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="113"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="275"/>
         <source>&amp;Edit</source>
-        <translation>与编辑</translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1141"/>
         <source>&amp;View</source>
-        <translation>与视图</translation>
+        <translation>视图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1165"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>工具栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1172"/>
         <source>&amp;Tools</source>
-        <translation>与工具</translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1225"/>
@@ -3650,7 +3670,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1032"/>
         <source>Paint on template</source>
-        <translation>在模板上画</translation>
+        <translation>在底图上绘制</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="573"/>
@@ -3717,7 +3737,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="987"/>
         <source>Reopen template...</source>
-        <translation>重新打开模板...</translation>
+        <translation>重新打开底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="989"/>
@@ -3838,32 +3858,36 @@ Import the data anyway?</source>
         <source>Cannot export the map as
 &quot;%1&quot;
 because saving as %2 (.%3) is not supported.</source>
-        <translation type="unfinished">不能导出该映射为&quot;%1&quot;，因为另存为 %2 (.%3) 不受支持。</translation>
+        <translation>无法将地图导出为
+“％1”
+因为不支持另存为％2（.％3）。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="610"/>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">无法保存文件 %1: %2</translation>
+        <translation>无法保存文件
+％1：
+％2</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="619"/>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="620"/>
         <source>The map export generated warnings.</source>
-        <translation type="unfinished">地图出口将生成警告。</translation>
+        <translation>该地图导出产生的警告。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="667"/>
         <location filename="../src/gui/map/map_editor.cpp" line="4136"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">导入映射生成警告。</translation>
+        <translation>底图导入生成了警告。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="873"/>
@@ -4008,46 +4032,46 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="957"/>
         <source>Move to my location</source>
-        <translation type="unfinished"></translation>
+        <translation>移到我的位置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Symbol set ID...</source>
-        <translation type="unfinished"></translation>
+        <translation>符号集ID...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="972"/>
         <source>Edit the symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑符号集ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Load CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>加载CRT文件...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation type="unfinished"></translation>
+        <translation>按对照表指定新符号</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4208"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">没有要导入。</translation>
+        <translation>没有要导入的内容。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4220"/>
         <source>Question</source>
-        <translation type="unfinished">问题</translation>
+        <translation>问题</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">导入的数据规模 1:%1 是从 1:%2 本地图规模不同。
+        <translation>导入数据的比例为1：％1，这与该地图的比例为1：％2不同。
 
-重新缩放导入的数据吗？</translation>
+重新缩放导入的数据？</translation>
     </message>
     <message>
         <source>Tag Selection</source>
@@ -4083,7 +4107,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1311"/>
         <source>Select template...</source>
-        <translation>选择模板...</translation>
+        <translation>选择底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1317"/>
@@ -4188,12 +4212,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2058"/>
         <source>Symbol set ID</source>
-        <translation type="unfinished"></translation>
+        <translation>符号集ID</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2059"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑符号集ID:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2086"/>
@@ -4488,17 +4512,17 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1466"/>
         <source>1x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>1倍放大</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1470"/>
         <source>2x zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>2倍放大</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1714"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>导出</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
@@ -4784,32 +4808,32 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="53"/>
         <source>&amp;Find...</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;查找...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="61"/>
         <source>Find &amp;next</source>
-        <translation type="unfinished"></translation>
+        <translation>查找下一个</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="92"/>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>查找对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;查找下一个</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
         <source>Find &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>找到所有</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="105"/>
         <source>Query editor</source>
-        <translation type="unfinished"></translation>
+        <translation>查询编辑器</translation>
     </message>
 </context>
 <context>
@@ -4851,7 +4875,7 @@ selected</source>
         <location filename="../src/gui/color_dialog.cpp" line="288"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"/>
         <source>Text source:</source>
-        <translation type="unfinished"></translation>
+        <translation>文本源：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="540"/>
@@ -4865,25 +4889,25 @@ selected</source>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="322"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="335"/>
         <source>undefined language</source>
-        <translation type="unfinished"></translation>
+        <translation>未定义的语言</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="559"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="338"/>
         <source>Translation (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>翻译(%1)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="611"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="212"/>
         <source>Before editing, the stored text will be replaced with the current translation. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑之前，存储的文本将替换为当前翻译。你想继续吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="618"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="219"/>
         <source>After modifying the stored text, the translation may no longer be found. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>修改存储的文本后，可能再也找不到翻译。你想继续吗？</translation>
     </message>
 </context>
 <context>
@@ -4942,10 +4966,11 @@ to create one.</source>
 Start drawing or load a base map.
 To load a base map, click
 Templates -&gt; Open template...</source>
-        <translation>准备好画 ！
+        <translation>准备绘制！
 
 开始绘制或加载底图。
-若要加载底图，单击模板-&gt; 打开模板...</translation>
+要加载底图，请单击
+底图-&gt;打开底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="851"/>
@@ -5004,7 +5029,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"/>
         <source>mm²</source>
         <comment>square millimeters</comment>
-        <translation>mm²</translation>
+        <translation>平方毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
@@ -5025,7 +5050,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>mm²</source>
-        <translation>mm²</translation>
+        <translation>平方毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="132"/>
@@ -5131,23 +5156,23 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1872"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存丢失底图的正确位置：“%1”</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1912"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation>无法导出模板:&quot;%1&quot;的文件类型尚不支持</translation>
+        <translation>无法导出底图：文件类型“％1”尚不支持</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1947"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">已调整座标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
+        <translation>调整坐标以适应OCAD8绘图区域（-2 m。。。2米）。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1958"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished"></translation>
+        <translation>一些坐标仍在OCAD8绘图区域之外，在OCAD中可能无法访问它们。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2229"/>
@@ -5322,7 +5347,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1219"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1328"/>
         <source>Unable to import template: background &quot;%1&quot; doesn&apos;t seem to be a raster image</source>
-        <translation>无法导入模板︰ 背景&quot;%1&quot;似乎不是一个光栅图像</translation>
+        <translation>无法导入底图：背景“％1”似乎不是光栅图像</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1433"/>
@@ -5359,13 +5384,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="304"/>
         <source>Search</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="307"/>
         <source>Text</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished">文本</translation>
+        <translation>文本</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="311"/>
@@ -5383,7 +5408,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="318"/>
         <source>Symbol</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>符号</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="322"/>
@@ -5398,12 +5423,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1352"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">在地区的符号&quot;%1&quot;，跳过填充图案。</translation>
+        <translation>在区域符号%1中，跳过填充图案。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">在地区的符号&quot;%1&quot;，假设&quot;转移的行&quot;点模式。这可能是正确的以及不正确。</translation>
+        <translation>在区域符号%1中，假设“移位行”点模式。这可能是正确的，也可能是不正确的。</translation>
     </message>
 </context>
 <context>
@@ -5411,7 +5436,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_georef_fields.cpp" line="879"/>
         <source>Could not translate coordinate reference system &apos;%1:%2&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法转换坐标引用系统%1:%2。</translation>
     </message>
 </context>
 <context>
@@ -5448,7 +5473,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="913"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>无法导入模板:&quot;%1&quot;不是一种支持的模板类型。</translation>
+        <translation>无法导入底图：“％1”不是受支持的模板类型。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1231"/>
@@ -5549,27 +5574,27 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="522"/>
         <source>Color &quot;%1&quot; is imported as special color &quot;Registration black&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>颜色%1作为特殊颜色“注册黑色”导入。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1534"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> -主线</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1541"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> -双线</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1548"/>
         <source> - framing</source>
-        <translation type="unfinished"></translation>
+        <translation> -框架</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1586"/>
         <source>The border of this symbol could not be loaded.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载此符号的边框。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1902"/>
@@ -5600,7 +5625,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2417"/>
         <source>Support for OCD version %1 files is experimental.</source>
-        <translation type="unfinished"></translation>
+        <translation>对OCD版本%1文件的支持是实验性的。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2423"/>
@@ -5618,7 +5643,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2147"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">在行的符号&quot;%1&quot;，不能代表帽/联接组合。</translation>
+        <translation>在线符号“％1”中，不能表示覆盖/合并组合。</translation>
     </message>
 </context>
 <context>
@@ -5626,22 +5651,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1509"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">在行的符号&quot;%1&quot;，不能代表帽/联接组合。</translation>
+        <translation>在行符号&quot;%1&quot;，不能代表覆盖/合并组合。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1530"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">行中的符号&quot;%1&quot;，忽视了短跑分组。</translation>
+        <translation>在行符号%1中，忽略短划线分组。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1541"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">线符号&quot;%1&quot;，在有了破折号在一群数目减少到 2。</translation>
+        <translation>在行符号“％1”中，组中的短线已减少为2。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1635"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">在行的符号&quot;%1&quot;，不能正确导出边界。</translation>
+        <translation>在线符号“％1”中，无法正确导出边框。</translation>
     </message>
 </context>
 <context>
@@ -5649,17 +5674,17 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation>在文本符号%1中：设置了自定义字符间距，其实现与OCAD的方式还不匹配</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">在文本中的符号 %1︰ 忽略下划线</translation>
+        <translation>在文本符号%1中：忽略下划线</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1844"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">在文本中的符号 %1︰ 忽略字偶间距调整</translation>
+        <translation>在文本符号％1中：忽略字距调整</translation>
     </message>
 </context>
 <context>
@@ -5667,38 +5692,38 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1679"/>
         <source>Couldn&apos;t find a driver for file extension %1</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到文件扩展名%1的驱动程序</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1691"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法创建数据集：％1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1736"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法创建图层：％2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1874"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图没有地理参照，仅本地地理参考。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1887"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法正确导出地理参考信息，仅本地地理参考。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1897"/>
         <source>The %1 driver requires valid georefencing info.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1驱动程序需要有效的地理加密信息。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1972"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2021"/>
         <source>Failed to create feature in layer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法在图层：％1中创建要素</translation>
     </message>
 </context>
 <context>
@@ -5706,32 +5731,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="631"/>
         <source>Unable to setup &quot;%1&quot; SRS for GDAL: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法为GDAL%2设置%1 SRS</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="567"/>
         <source>Point</source>
-        <translation type="unfinished">点</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="574"/>
         <source>Line</source>
-        <translation type="unfinished">线</translation>
+        <translation>线</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="583"/>
         <source>Area</source>
-        <translation type="unfinished">地区</translation>
+        <translation>地区</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="589"/>
         <source>Text</source>
-        <translation type="unfinished">文本</translation>
+        <translation>文本</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="684"/>
         <source>Unable to load layer %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载图层％1。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gdal/ogr_file_format.cpp" line="732"/>
@@ -5740,45 +5765,46 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gdal/ogr_file_format.cpp" line="747"/>
         <location filename="../src/gdal/ogr_file_format.cpp" line="752"/>
         <source>Unable to load %n objects, reason: %1</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>无法加载％n个对象，原因：％1</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="733"/>
         <source>Empty geometry.</source>
-        <translation type="unfinished"></translation>
+        <translation>空的几何形状。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="738"/>
         <source>Can&apos;t determine the coordinate transformation: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法确定坐标变换：％1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="743"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法转换坐标。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="748"/>
         <source>Unknown or unsupported geometry type.</source>
-        <translation type="unfinished"></translation>
+        <translation>未知或不支持的几何体类型。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="753"/>
         <source>Not enough coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有足够的坐标。</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="798"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无法使用此空间参考：
+％1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="860"/>
         <source>The geospatial data has no suitable spatial reference.</source>
-        <translation type="unfinished"></translation>
+        <translation>地理空间数据没有合适的空间参考。</translation>
     </message>
 </context>
 <context>
@@ -5786,7 +5812,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="460"/>
         <source>Select template to draw onto</source>
-        <translation>选择要绘图模板</translation>
+        <translation>选择要绘制的底图</translation>
     </message>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="487"/>
@@ -5801,7 +5827,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/template_tool_paint.cpp" line="558"/>
         <source>Template file exists: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>底图文件存在：“%1”</translation>
     </message>
 </context>
 <context>
@@ -6182,7 +6208,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
-        <translation>模板的外观可能会有所不同。</translation>
+        <translation>底图外观可能有所不同。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
@@ -6192,7 +6218,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
-        <translation type="unfinished"></translation>
+        <translation>保存世界文件</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="238"/>
@@ -6245,7 +6271,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="959"/>
         <source>The map contains transparent elements which require the raster mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>地图包含需要光栅模式的透明元素。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1122"/>
@@ -6422,7 +6448,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="41"/>
         <source>Reopen template</source>
-        <translation>重新打开模板</translation>
+        <translation>重新打开底图</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
@@ -6509,29 +6535,29 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">地图坐标系的原点</translation>
+        <translation>地图坐标系的原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">加注地理数据的参考点</translation>
+        <translation>地理坐标参考点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation type="unfinished">另一点，</translation>
+        <translation>另一点，</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="82"/>
@@ -6648,35 +6674,35 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="53"/>
         <source>New scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>新比例尺：</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">地图坐标系的原点</translation>
+        <translation>地图坐标系原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">加注地理数据的参考点</translation>
+        <translation>地理坐标参考点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">另一点，</translation>
+        <translation>另一点，</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="78"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="81"/>
@@ -6719,7 +6745,7 @@ separations</source>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;：切换到单个对象缩放。 </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -6765,48 +6791,48 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="52"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>位置：</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="55"/>
         <source>Source:</source>
-        <translation type="unfinished"></translation>
+        <translation>来源：</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="61"/>
         <source>Serial port (NMEA):</source>
-        <translation type="unfinished"></translation>
+        <translation>串行端口（NMEA）：</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="80"/>
         <source>Sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>传感器</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="112"/>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="149"/>
         <source>Default</source>
-        <translation type="unfinished">默认</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="115"/>
         <source>Serial port (NMEA)</source>
-        <translation type="unfinished"></translation>
+        <translation>串行端口（NMEA）</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="118"/>
         <source>Windows</source>
-        <translation type="unfinished"></translation>
+        <translation>窗口</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="121"/>
         <source>GeoClue</source>
-        <translation type="unfinished"></translation>
+        <translation>GeoClue</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="124"/>
         <source>Core Location</source>
-        <translation type="unfinished"></translation>
+        <translation>核心位置</translation>
     </message>
 </context>
 <context>
@@ -6836,7 +6862,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
         <source>Extra permissions are required to access &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>访问%1需要额外的权限。</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
@@ -6870,7 +6896,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="75"/>
         <source>Edit</source>
-        <translation type="unfinished">编辑</translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="76"/>
@@ -6895,17 +6921,17 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
         <source>Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>图标</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="224"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1381"/>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>描述</translation>
     </message>
 </context>
 <context>
@@ -7081,7 +7107,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="138"/>
         <source>Show custom icons</source>
-        <translation type="unfinished"></translation>
+        <translation>显示自定义图标</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="142"/>
@@ -7200,7 +7226,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="130"/>
         <source>Edit the symbol set ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑符号集ID：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"/>
@@ -7211,52 +7237,52 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="137"/>
         <source>Match by symbol name</source>
-        <translation type="unfinished"></translation>
+        <translation>按符号名匹配</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="142"/>
         <source>Assign new symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>分配新符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="143"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>图案</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="155"/>
         <source>Clear replacements</source>
-        <translation type="unfinished"></translation>
+        <translation>清除替换</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="127"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="158"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="225"/>
         <source>Open CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开CRT文件...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="160"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="240"/>
         <source>Save CRT file...</source>
-        <translation type="unfinished"></translation>
+        <translation>保存CRT文件...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="165"/>
         <source>Symbol mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>符号映射</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="125"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="224"/>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="239"/>
         <source>CRT file</source>
-        <translation type="unfinished"></translation>
+        <translation>CRT文件</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="198"/>
         <source>There are multiple replacements for symbol %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>符号%1有多个替换项。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="201"/>
@@ -7275,13 +7301,17 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>无法保存文件：
+％1
+
+％2</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="270"/>
         <source>The cross reference table has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>对照表已修改。
+您要保存更改吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="430"/>
@@ -7309,7 +7339,7 @@ Do you want to save your changes?</source>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="248"/>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="257"/>
         <source>Cannot load symbol set, aborting.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法加载符号集，正在中止。</translation>
     </message>
     <message>
         <source>Cannot load map file, aborting.</source>
@@ -7324,7 +7354,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="265"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation>符号集导入生成的警告。</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="273"/>
@@ -7342,12 +7372,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="104"/>
         <source>Template:</source>
-        <translation>模板︰</translation>
+        <translation>底图：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="105"/>
         <source>&lt;b&gt;Template:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;模板︰&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;底图:&lt;/b&gt; </translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="106"/>
@@ -7362,7 +7392,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="110"/>
         <source>Center template...</source>
-        <translation>中心模板...</translation>
+        <translation>中心底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="115"/>
@@ -7498,7 +7528,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="474"/>
         <source>Find the moved template file</source>
-        <translation>找到移动的模板文件</translation>
+        <translation>查找移动的底图文件</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="476"/>
@@ -7519,12 +7549,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template.cpp" line="630"/>
         <source>Is the format of the file correct for this template type?</source>
-        <translation>文件的格式是正确的这种模板类型的吗？</translation>
+        <translation>该底图类型的文件格式是否正确？</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="637"/>
         <source>Not enough free memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>没有足够的可用内存。</translation>
     </message>
 </context>
 <context>
@@ -7532,7 +7562,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="69"/>
         <source>Template adjustment</source>
-        <translation>模板调整</translation>
+        <translation>底图调整</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="147"/>
@@ -7550,7 +7580,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="593"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set the template position of the pass point. </source>
-        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 设置通点的模板位置。 </translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;: 设置通过点的底图位置。 </translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="618"/>
@@ -7599,12 +7629,12 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Template X</source>
-        <translation>模板 X</translation>
+        <translation>底图 X</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
         <source>Template Y</source>
-        <translation>模板 Y</translation>
+        <translation>底图 Y</translation>
     </message>
     <message>
         <location filename="../src/templates/template_adjust.cpp" line="220"/>
@@ -7654,7 +7684,7 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_template.cpp" line="91"/>
         <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation>找不到地理参照</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -7730,7 +7760,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="89"/>
         <source>Template scale:  1 :</source>
-        <translation>模板规模︰ 1:</translation>
+        <translation>底图比例：1：</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="115"/>
@@ -7799,7 +7829,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="232"/>
         <location filename="../src/templates/template_tool_paint.cpp" line="465"/>
         <source>Add template...</source>
-        <translation>添加模板...</translation>
+        <translation>添加底图...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="236"/>
@@ -7844,7 +7874,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
-        <translation>模板文件</translation>
+        <translation>底图文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
@@ -7869,7 +7899,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="787"/>
         <source>Please enter a valid integer number to set a group or leave the field empty to ungroup the template!</source>
-        <translation>请输入一个有效的整数数字来设置一组或将字段留空以取消组合模板 ！</translation>
+        <translation>请输入一个有效的整数以设置组，或将该字段留空以取消对底图的分组！</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
@@ -7884,7 +7914,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
-        <translation type="unfinished">地理</translation>
+        <translation>地理参考</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
@@ -7892,7 +7922,9 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <source>Cannot open template
 %1:
 %2</source>
-        <translation>无法打开模板 %1: %2</translation>
+        <translation>无法打开底图
+％1：
+％2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="431"/>
@@ -7902,54 +7934,54 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>矢量线</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
         <source>Failed to load template. Does the file exist and is it valid?</source>
-        <translation>加载模板失败。此文件存在，并且有效吗？</translation>
+        <translation>未能加载底图。文件是否存在，是否有效？</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1010"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1056"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">无法加载地图文件，中止。</translation>
+        <translation>无法加载地图文件，正在中止。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>Warning</source>
-        <translation type="unfinished">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
-        <translation type="unfinished">导入映射生成警告。</translation>
+        <translation>地图导入生成了警告。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation>缩放当前模板缩放 （%1%）</translation>
+        <translation>按当前底图缩放比例%1%</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1068"/>
         <source>Template import</source>
-        <translation>导入模板</translation>
+        <translation>导入底图</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1039"/>
         <source>How shall the symbols of the imported template map be scaled?</source>
-        <translation>应如何缩放的导入的模板地图符号？</translation>
+        <translation>导入的底图符号应如何缩放？</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1069"/>
         <source>The template will be invisible in the overprinting simulation. Switch to normal view?</source>
-        <translation>该模板将叠印模拟中不可见。切换到普通视图吗？</translation>
+        <translation>底图将在套印模拟中不可见。切换到普通视图？</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation>无法更改地理参考状态。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
@@ -7962,7 +7994,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_map.cpp" line="118"/>
         <source>Cannot load map file, aborting.</source>
-        <translation type="unfinished">无法加载地图文件，中止。</translation>
+        <translation>无法加载地图文件，正在中止。</translation>
     </message>
 </context>
 <context>
@@ -7970,7 +8002,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_tool_move.cpp" line="48"/>
         <source>&lt;b&gt;Drag&lt;/b&gt; to move the current template</source>
-        <translation>&lt;b&gt;拖动&lt;/b&gt; 来移动当前模板</translation>
+        <translation>&lt;b&gt;拖动&lt;/b&gt; 来移动当前底图</translation>
     </message>
 </context>
 <context>
@@ -8008,7 +8040,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation>剪切：</translation>
     </message>
 </context>
 <context>
@@ -8061,7 +8093,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_track.cpp" line="169"/>
         <location filename="../src/templates/template_track.cpp" line="175"/>
         <source>This template must be loaded with GDAL/OGR.</source>
-        <translation type="unfinished"></translation>
+        <translation>此底图必须使用GDAL/OGR加载。</translation>
     </message>
     <message>
         <source>Select the coordinate reference system of the track coordinates</source>
@@ -8457,7 +8489,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="212"/>
         <source>°</source>
         <comment>degrees</comment>
-        <translation type="unfinished">°</translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../src/tools/tool_helpers.cpp" line="626"/>
@@ -8469,7 +8501,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/tools/tool_helpers.cpp" line="627"/>
         <source>%1 m</source>
         <comment>meter</comment>
-        <translation type="unfinished"></translation>
+        <translation>%1米</translation>
     </message>
 </context>
 <context>
