@@ -203,7 +203,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
         <source>For contributions, thanks to:</source>
-        <translation>感谢您的贡献：</translation>
+        <translation>贡献者：</translation>
     </message>
 </context>
 <context>
