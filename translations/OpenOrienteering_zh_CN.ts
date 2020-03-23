@@ -1384,17 +1384,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="759"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
-        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 点︰ 删除它;在路径上︰ 添加一个新的破折号点;&lt;b&gt;%2&lt;/b&gt;︰ 添加一个正常点。 </translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上︰ 删除它；在路径上︰ 添加一个新的实点；&lt;b&gt;%2&lt;/b&gt;︰ 添加一个普通点。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="762"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
-        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 点︰ 删除它;在路径上︰ 添加一个新的点;&lt;b&gt;%2&lt;/b&gt;︰ 添加一个破折号点。 </translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上︰ 删除它；在路径上︰ 添加一个新的普通点；&lt;b&gt;%2&lt;/b&gt;︰ 添加一个实点。 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="766"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
-        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 的点划线和正常点之间进行切换。 </translation>
+        <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上，可实现实点和普通点之间的进行切换。 </translation>
     </message>
 </context>
 <context>
