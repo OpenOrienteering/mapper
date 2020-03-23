@@ -252,24 +252,24 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished">在必须提供有关地面形状的更多信息的地方使用了成型线。仅在用普通轮廓表示不完整的地方添加表格线。它们不得用作中间轮廓。相邻轮廓之间只能使用一条造型线。形状线在逻辑上适合轮廓系统非常重要，因此形状线的起点和终点应与相邻轮廓平行。成型线虚线之间的间隙必须放置在成型线的合理直线部分上。模板线可用于区分平面山丘和凹陷与更明显的凹陷（最小高度/深度应为1 m）。必须避免过度使用模板线，因为这会干扰地面形状的三维图像，并使地图读取变得复杂。
-最小长度（非闭合）：两个破折号。
-模板线，小节或凹陷的最小长度：1.1毫米（占地面积16.5 m）</translation>
+        <translation>如果必须提供更多有关地面形状的信息，则使用辅助等高线。只有在普通等高线不能完整描述地形的情况下才会添加辅助等高线。它们不得用在等高线之间的中间位置。相邻等高线之间只应使用一条辅助等高线。辅助等高线逻辑上和等高线体系吻合非常重要，因此辅助等高线的起点和终点应与相邻等高线平行。辅助等高线虚线之间的间隙必须放在辅助等高线的合理直线部分上。辅助等高线线可用于区分扁平和明显的土丘、洼地（最小高度/深度应为1米）。必须避免过度使用辅助等高线，因为这会干扰地面形状的三维图像，并使地图阅读复杂化。
+最小长度（非闭合）：两段虚线。
+最小长度，小丘或凹地：1.1mm（实地长度16.5米）外部尺寸。颜色：棕色。</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>辅助等高线-示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>示坡线来表明下坡方向。使用时，应将它们放置在山凹谷处。</translation>
     </message>
     <message>
         <source>Earth bank</source>
         <comment>Name of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -277,12 +277,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
+最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
         <comment>Name of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖最小尺寸</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -290,12 +293,15 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
+最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
         <comment>Name of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖-主线</translation>
     </message>
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments.
@@ -303,78 +309,88 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
+最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
         <comment>Name of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖齿线</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of wide earth banks.</source>
         <comment>Description of symbol 104.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>用此符号表示土崖的整个延展范围。</translation>
     </message>
     <message>
         <source>Earth bank, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>土崖最小尺寸 (来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>提供从ISOM2000的迁移，不建议在新地图中使用此符号。</translation>
     </message>
     <message>
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>土墙</translation>
     </message>
     <message>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>清晰的土墙。最小高度：1米。
+最小长度：1.4mm（实地长度21米）。</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>破土墙</translation>
     </message>
     <message>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>塌毁或不太明显的土墙。 最小高度：0.5米。
+最小长度： 两段虚线（3.65mm - 实地长度 5 5 米）。如果更短， 则必须将符号夸大到最小长度或更改为符号 土墙（105） 。</translation>
     </message>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>冲沟或堑壕</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>侵蚀沟太小不能用符号土崖（104）显示，则通过冲沟单线表示。
+最小深度：1米。
+最小长度：1.15mm（实地长度17米）。
+此符号周围的等高线可以不剪断。</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小冲沟</translation>
     </message>
     <message>
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的侵蚀沟，干沟或沟。最小深度：0.5米。
+最小长度（ 单独）：3 个点（1.15mm - 占地面积17米)。
+此符号周围的等高线可以剪断。</translation>
     </message>
     <message>
         <source>Small knoll</source>
         <comment>Name of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>小土丘</translation>
     </message>
     <message>
         <source>An obvious mound or knoll which cannot be drawn to scale with a contour.
@@ -382,12 +398,15 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的土墩或小丘，无法用等高线按比例绘制。
+最小高度：1米。
+符号不得和等高线接触或重叠。
+符号占地面积：7.5米x7.5米。</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
         <comment>Name of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>狭长小土丘</translation>
     </message>
     <message>
         <source>An obvious elongated knoll which cannot be drawn to scale with a contour.
@@ -395,12 +414,15 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显细长的小土丘，无法用等高线按比例绘制。
+最小高度：1米。
+符号不得和等高线接触或重叠。
+符号占地面积：12米x6米。</translation>
     </message>
     <message>
         <source>Small depression</source>
         <comment>Name of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>小凹地</translation>
     </message>
     <message>
         <source>A small depression or hollow without steep sides that is too small to be shown by contours.
@@ -409,12 +431,16 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>小凹陷或没有陡边小洞，太小无法用等高线表示。
+最小深度：1米，最小宽度：2米。
+具有陡边的小凹地用符号 土坑（112）表示。
+符号不得与其他棕色符号接触或重叠。位置是符号的重心，符号朝向北方。
+符号占地面积： 12米 x 6米。</translation>
     </message>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>土坑或洞</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale using symbol Earth bank (104).
@@ -423,12 +449,16 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有明显陡边的土坑和洞，无法使用符号 土崖（104）进行缩放表示。
+最小深度：1米，最小宽度：1米。
+大于5米x5米的土坑通常应夸大使用 土崖（104）绘制。没有陡边的土坑用符号 小凹地（111）表示。
+符号不得与其他棕色符号接触或重叠。位置是符号的重心，符号朝向北方。
+符号占地面积：10.5米 x12米。</translation>
     </message>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>坑洼地面</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -439,12 +469,18 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>凹坑和/或者小土丘的区域，太复杂而不能详细标示，或其他类型的粗糙和不平坦的地面，这些区域明显可辨，但对可跑性影响很小。
+点应随机分布，但不得干扰重要地形特征和物体的表示。
+最小点数为3个（占地面积10米 x 10米）。
+相邻点之间的最大中心距离为0.6mm。
+相邻点之间的最小中心距离为0.5mm。
+坑洼地区域内的等高线不应剪断。
+点不能排列成单点宽线。</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>单点</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -456,12 +492,19 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>凹坑和/或者小土丘的区域，太复杂而不能详细标示，或其他类型的粗糙和不平坦的地面，这些区域明显可辨，但对可跑性影响很小。
+点应随机分布，但不得干扰重要地形特征和物体的表示。
+最小点数为3个（占地面积10米 x 10米）。
+相邻点之间的最大中心距离为0.6mm。
+相邻点之间的最小中心距离为0.5mm。
+坑洼地区域内的等高线不应剪断。
+点不能排列成单点宽线。
+密度：3-4点/mm²。</translation>
     </message>
     <message>
         <source>Very broken ground</source>
         <comment>Name of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常坑洼地面</translation>
     </message>
     <message>
         <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
@@ -472,12 +515,18 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>凹坑和/或者小土丘的区域，太复杂而不能详细标出，或者其他类型的粗糙和不平坦的地面，可清楚区分并且影响可跑性。
+点应随机分布，但不得干扰其他重要地形特征和物体的表示。
+最小点数为3个（占地面积7米x7米）。
+相邻点之间的最大中心距离为0.38mm。
+相邻点之间的最小中心距离为0.25mm。
+坑洼地区域内的等高线不应剪断。
+点不能排列成单点宽线。</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊地貌</translation>
     </message>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings.
@@ -486,12 +535,16 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>该特征物必须与周围环境非常清晰地区分开来。
+特征物位置是符号的重心，朝向北方。
+符号不得与其他棕色符号接触或重叠。
+必须在地图上给出符号的定义。
+符号占地面积：13.5米x11.5米。</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通过的陡崖</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -500,12 +553,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
+在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
+当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通过的陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -514,22 +571,26 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
+在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
+当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通过的陡崖，平面形状表示（来自 ISOM2000）</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于从ISOM2000迁移，新地图不鼓励使用此符号变体。</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>陡崖-主线</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -538,32 +599,36 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
+在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
+当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>陡崖-齿线</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>使用此符号可以显示宽悬崖的整个延展范围。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通过的陡崖最小尺寸 (来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于从ISOM2000迁移，新地图不鼓励使用此符号变体。</translation>
     </message>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>可通过的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -572,12 +637,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，通过这种陡崖地形时会降低行进的速度。
+最小高度： 1米。
+最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
         <comment>Name of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可通的过陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -586,12 +655,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，通过这种陡崖地形时会降低行进的速度。
+最小高度： 1米。
+最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可通过的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -600,12 +673,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，通过这种陡崖地形时会降低行进的速度。
+最小高度： 1米。
+最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>可通过陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -614,22 +691,26 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，通过这种陡崖地形时会降低行进的速度。
+最小高度： 1米。
+最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>可通过陡崖最小尺寸(来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于从ISOM2000迁移，新地图不鼓励使用此符号变体。</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>岩石坑（无明显入口）</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -638,46 +719,54 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可能对竞赛者构成危险的岩石坑、洞、洞穴或矿井。
+该符号的重心处表示出该地物的位置，符号朝北。
+岩石坑直径大于五米的可以夸大一些用符号陡崖（201、202） 来表示。
+最小深度：1米。
+符号占地尺寸：10.5米 x 12米。</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>山洞（入口明显）</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
         <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可能对竞赛者构成危险的岩石坑、洞、洞穴或矿井。最小深度：1米。
+该符号的重心处表示出该地物的位置，符号指向洞穴。
+岩石坑直径大于五米的可以夸大一些用符号陡崖（201、202） 来表示。</translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>入口明显的岩石坑或洞穴（来自 ISOM2000）</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>用于从ISOM2000迁移，新地图不鼓励使用此符号变体。</translation>
     </message>
     <message>
         <source>Boulder</source>
         <comment>Name of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>石块</translation>
     </message>
     <message>
         <source>A distinct boulder (should be higher than 1 m), which is immediately identifiable on the ground. Groups of boulders are represented using symbol Boulder cluster (207) or a boulder field symbol (208, 209).
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>非常明显的大石头（应高于1米），在地面上可以很容易看到。当有很多的大石头的时候，使用符号 石群（207）或石块地（208、209）来表示。
+为了能够显示相邻（距离小于30米）的大石头在尺寸大小上明显的区别，允许将某些大石头的符号放大到0.5mm。
+符号占地尺寸：直径6米（直径7.5米）。</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>巨石</translation>
     </message>
     <message>
         <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -687,24 +776,30 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
 of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
+
+为了能够显示相邻的（距离少于30米）大石（204）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号204的放大石头。
+
+为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205的缩小巨石。</translation>
     </message>
     <message>
         <source>Large boulder</source>
         <comment>Name of symbol 205</comment>
-        <translation type="unfinished">大石</translation>
+        <translation>超大巨石</translation>
     </message>
     <message>
         <source>A particularly large and distinct boulder. A large boulder should be more than 2 m high.
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别大而明显的大石头，应该超过2米高。
+为了能够显示相邻（ 相距不超过30米）大型巨石尺寸上明显的区别，允许将某些巨石的符号缩小到0.5mm。
+符号占地尺寸： 直径 9 米（ 直径7.5米） 。</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
         <comment>Name of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>大巨石或岩石柱</translation>
     </message>
     <message>
         <source>A gigantic boulder, rock pillar or massive cliff shall be represented in plan shape. The objects can vary in shape and width.
@@ -712,12 +807,15 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>超大的石头 、柱状岩石或巨大的悬崖应该用其平面外形表 示 ，以反映物体的形状和宽度的差异。
+在地图上，大巨石之间或大巨石与其他无法通行的特征物符号之间的距离必须超过0.15mm。
+最小宽度：0.25mm（ 实际宽度3.75米 ） 。
+最小面积：0.3mm² （ 实际面积67米² ） 。</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>石群</translation>
     </message>
     <message>
         <source>A distinct group of boulders so closely clustered together that they cannot be marked individually. The boulders in the cluster should be higher than 1 m.
@@ -726,22 +824,26 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>很多的大石头紧密聚集在一起，无法单独标记，这时候用石群符号表示。石群中的大石头应高于1米。
+石群必须易于识别为一组巨石。
+为了能够显示相邻（ 最大相距 30米）石群尺寸大小上明显的区别，允许将某些石群符号放大120％（ 边长0.96mm） 。
+符号指向北方。
+实际尺寸：12米 x 10米。</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>大的石群</translation>
     </message>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示相邻（ 最大相距 30米）石群尺寸大小上明显的区别，允许对一些石群使用此符号而不是常规石群（207）。</translation>
     </message>
     <message>
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>石块地</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
@@ -750,12 +852,16 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>一个区域有很多分散分布的大石头，无法对这些大石头单独标记，这种地形用随机放置边长比为8:6:5的实心三角形（内角92.9, 48.5,38.6）符号来表示。通常石块地这种地形的可跑性不会受影响，如果可跑性明显降低就应使用符号209（密集石块地）来表示，或者将石块地符号与碎石地符号组合在一起来使用。
+最小的石块地符号至少要包括两个三角形。如果它与其他岩石符号组合使用，（例如直接在陡崖符号（201,202）下方，与巨石符号（204-206）相邻或与碎石地符号（210-212）组合），则可以使用一个三角形。
+相邻三角形中心之间的最大距离为1.2mm，最小距离为0.75mm。
+密度：0.8-1个/mm²。在一个巨石场内为了能够表示不同巨石间 的明显的高度差异，允许将一些三角形放大到120％。
+单个三角形符号占地尺寸：12米 x 6米。</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>单点符号</translation>
     </message>
     <message>
         <source>An area which is covered with so many scattered blocks of stone that they cannot be marked individually, is shown with randomly placed and orientated solid triangles. A boulder field will generally not impact runnability. If the runnability of the boulder field is reduced, symbol 209 (dense boulder field) should be used or the symbol should be combined with a stony ground symbol.
@@ -764,22 +870,26 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>一个区域有很多分散分布的大石头，无法对这些大石头单独标记，这种地形用随机放置边长比为8:6:5的实心三角形（内角92.9, 48.5,38.6）符号来表示。通常石块地这种地形的可跑性不会受影响，如果可跑性明显降低就应使用符号209（密集石块地）来表示，或者将石块地符号与碎石地符号组合在一起来使用。
+最小的石块地符号至少要包括两个三角形。如果它与其他岩石符号组合使用，（例如直接在陡崖符号（201,202）下方，与巨石符号（204-206）相邻或与碎石地符号（210-212）组合），则可以使用一个三角形。
+相邻三角形中心之间的最大距离为1.2mm，最小距离为0.75mm。
+密度：0.8-1个/mm²。在一个巨石场内为了能够表示不同巨石间 的明显的高度差异，允许将一些三角形放大到120％。
+单个三角形符号占地尺寸：12米 x 6米。</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>大的单点符号</translation>
     </message>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>在一个巨石场内为了能够表示不同巨石间 的明显的高度差异，允许将一些三角形放大到120％。</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
         <comment>Name of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集石块地</translation>
     </message>
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually and the runnability is affected, is shown with randomly placed and orientated solid triangles. A minimum of two triangles must be used.
@@ -787,12 +897,15 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>一个区域有很多大石头，无法单独标记，且可跑性受到很大影响，这种地形用随机放置边长比为8:6:5的实心三角形（内角92.9, 48.5,38.6）的符号来表示。必须至少使用两个三角形。
+相邻三角形中心之间的最大距离为0.6mm。
+密度：2-3个/mm²。在一个密集石块地内为了能够表示不同巨石间的明显的高度差异，允许将一些三角形放大到120％。
+单个三角形符号占地尺寸：12米 x 6米。</translation>
     </message>
     <message>
         <source>Stony ground, slow running</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>碎石地（慢跑）</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -803,12 +916,18 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>布满了碎石的路面或岩石地面，可跑性降低到正常速度的60-80％。
+点应随机分布，但不得干扰其他地形特征物的表示。插图是密度的一个例子，点符号（单点）也可以用来绘制碎石地面。
+最小点数为3个（实际尺寸10米x10米）。
+相邻点之间的最大距离为0.6mm。
+相邻点之间的最小距离为0.45mm。
+黑点的密度：3-4个/mm²。
+为了避免与符号明显植被分界线（416）混淆，这些点不应该安排形成一条线。</translation>
     </message>
     <message>
         <source>Stony ground, individual dot</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>碎石地-单点符号</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces runnability to about 60-80% of normal speed.
@@ -819,12 +938,18 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>布满了碎石的路面或岩石地面，可跑性降低到正常速度的60-80％。
+点应随机分布，但不得干扰其他地形特征物的表示。插图是密度的一个例子，点符号（单点）也可以用来绘制碎石地面。
+最小点数为3个（实际尺寸10米x10米）。
+相邻点之间的最大距离为0.6mm。
+相邻点之间的最小距离为0.45mm。
+黑点的密度：3-4个/mm²。
+为了避免与符号明显植被分界线（416）混淆，这些点不应该安排形成一条线。</translation>
     </message>
     <message>
         <source>Stony ground, walk</source>
         <comment>Name of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>碎石地（步行）</translation>
     </message>
     <message>
         <source>Stony or rocky ground which reduces the runnability significantly (to about 20-60% of normal speed).
@@ -835,12 +960,18 @@ The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>布满了碎石的路面或岩石地面，可跑性降低到正常速度的20-60％。
+点应随机分布，但不得干扰其它地形特征物的表示。插图是密度的一个例子，点符号（单点）也可以用来绘制碎石地面。
+最小点数为3个（实际尺寸8米x8米）。
+相邻点之间的最大距离为0.4mm。
+相邻点之间的最小距离为0.32mm。
+黑点的密度：6-8个/mm²。
+为了避免与符号明显植被分界线（416）混淆，这些点不应该安排形成一条线。</translation>
     </message>
     <message>
         <source>Stony ground, fight</source>
         <comment>Name of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>碎石地（难通行）</translation>
     </message>
     <message>
         <source>Stony or rocky ground which is hardly passable (less than 20% of normal speed).
@@ -851,24 +982,32 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>布满了碎石的路面或岩石地面，可跑性低于正常速度的20％。
+点应随机分布，但不得干扰其它地形特征物的表示。插图是密度的一个例子，点符号（单点）也可以用来绘制碎石地面。
+最小点数为3个（实际尺寸7米 x 7米）。
+相邻点之间的最大距离为0.32mm。
+相邻点之间的最小距离为0.25mm。
+黑点的密度：10-12点/mm²。
+为了避免与符号明显植被分界线（416）混淆，这些点不应该安排形成一条线。</translation>
     </message>
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>沙地</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>柔软沙地，其可跑性低于正常速度的80％。
+符号向北。
+最小面积：1mm x 1mm（实际面积15米 x15米）。</translation>
     </message>
     <message>
         <source>Bare rock</source>
         <comment>Name of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>裸岩地</translation>
     </message>
     <message>
         <source>A runnable area of rock without earth or vegetation should be shown as bare rock.
@@ -876,12 +1015,15 @@ An area of rock covered with grass, moss or other low vegetation, shall not be s
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>没有泥土或植被的可跑的岩石区域应显示为裸岩地。
+覆盖着草， 苔藓或其他低矮植被的岩石区域不得使用裸岩地符号显示。
+可跑性低的裸岩地可以使用符号 碎石地（210 - 212）来表示。
+最小面积： 1mm x 1mm （占地面积15米 x 15米）。</translation>
     </message>
     <message>
         <source>Trench</source>
         <comment>Name of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>沟渠</translation>
     </message>
     <message>
         <source>Rocky or artificial trench. Minimum depth should be 1 m.
@@ -890,12 +1032,16 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol Impassable cliff (201).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>岩石或人工的沟渠，最小深度应为1米。
+最小长度：1mm（实际长度15米）。
+较短的沟渠可能被放大到最小图形尺寸。
+不可穿越的沟渠应使用符号不可通行的陡崖（201）来表示。
+坍塌和容易通过的沟渠可以用 冲沟 (107)来表示。</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通行水域（有边界）</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -903,19 +1049,24 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>黑色的水岸线强调了这个符号特征是不可通行的。
+大面积的水域可以用70%的蓝色表示。小面积的水域和较为狭窄的水体部分，应以100%的蓝色表示。
+最小宽度(内):0.3mm。
+最小面积(内部):0.55mm×0.55mm(实地面积8米×8米)。</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可通行水域</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>大面积的水域可以用70%的蓝色表示。小面积的水域和较为狭窄的水体部分，应以100%的蓝色表示。
+最小宽度(内):0.3mm。
+最小面积(内部):0.55mm×0.55mm(实地面积8米×8米)。</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
