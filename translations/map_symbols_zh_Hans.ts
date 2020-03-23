@@ -7283,7 +7283,9 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">在必须提供有关地面形状的更多信息的地方使用了成型线。仅在用普通轮廓表示不完整的地方添加表格线。它们不得用作中间轮廓。相邻轮廓之间只能使用一条造型线。形状线在逻辑上适合轮廓系统非常重要，因此形状线的起点和终点应与相邻轮廓平行。成型线虚线之间的间隙必须放置在成型线的合理直线部分上。模板线可用于区分平面山丘和凹陷与更明显的凹陷（最小高度/深度应为1 m）。必须避免过度使用模板线，因为这会干扰地面形状的三维图像，并使地图读取变得复杂。
+最小长度（非闭合）：两个破折号。
+模板线，小节或凹陷的最小长度：1.1毫米（占地面积16.5 m）</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
