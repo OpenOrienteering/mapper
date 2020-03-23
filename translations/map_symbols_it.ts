@@ -325,7 +325,7 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Ruined earth wall</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished">Piccolo muro di terra</translation>
+        <translation>Muro di terra diroccato</translation>
     </message>
     <message>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
@@ -844,7 +844,7 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Terreno aperto sabbioso</translation>
+        <translation>Terreno sabbioso</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.
@@ -2789,13 +2789,14 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Ruined earth wall</source>
         <comment>Name of symbol 106</comment>
-        <translation type="unfinished">Piccolo muro di terra</translation>
+        <translation>Muro di terra diroccato</translation>
     </message>
     <message>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished">Un muro di terra piccolo o rovinato dovrebbe essere segnato con una linea tratteggiata. L&apos;altezza minima è 0,5 m.</translation>
+        <translation>Un muro di terra diroccato o meno evidente. Altezza minima: 0.5 m.
+Lunghezza minima: due tratteggi (55 m reali). Se più corto, il simbolo deve essere esagerato fino a raggiungere la lunghezza minima o cambiato nel simbolo 105 (muro di terra).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -3310,7 +3311,7 @@ Per evitare confusione con il simbolo 416 (limite netti di vegetazione), i punti
     <message>
         <source>Sandy ground</source>
         <comment>Name of symbol 213</comment>
-        <translation type="unfinished">Terreno aperto sabbioso</translation>
+        <translation>Terreno sabbioso</translation>
     </message>
     <message>
         <source>An area of soft sandy ground where runnability is reduced to less than 80% of normal speed.</source>
@@ -3945,7 +3946,7 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished">Viola</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black</source>
@@ -3985,22 +3986,22 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 8</comment>
-        <translation type="unfinished">OpenOrienteering Arancione</translation>
+        <translation>OpenOrienteering Arancione</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 10</comment>
-        <translation type="unfinished">Verde  50%, Giallo</translation>
+        <translation>Verde 50%, Giallo</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 12</comment>
-        <translation type="unfinished">Bianco opaco sopra il verde</translation>
+        <translation>Bianco opaco sopra il verde</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 13</comment>
-        <translation type="unfinished">Verde opaco</translation>
+        <translation>Verde opaco</translation>
     </message>
     <message>
         <source>Green</source>
@@ -4030,7 +4031,7 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished">Curva di livello maestra</translation>
+        <translation>Curva maestra</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -6663,7 +6664,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished">Viola</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black</source>
@@ -6703,12 +6704,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 22</comment>
-        <translation type="unfinished">OpenOrienteering Arancione</translation>
+        <translation>OpenOrienteering Arancione</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 24</comment>
-        <translation type="unfinished">Verde  50%, Giallo</translation>
+        <translation>Verde 50%, Giallo</translation>
     </message>
     <message>
         <source>Green, Black 50%</source>
@@ -6718,7 +6719,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Green</source>
         <comment>Color 27</comment>
-        <translation type="unfinished">Verde opaco</translation>
+        <translation>Verde opaco</translation>
     </message>
     <message>
         <source>Green</source>
@@ -6748,7 +6749,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished">Curva di livello maestra</translation>
+        <translation>Curva maestra</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -6941,7 +6942,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished">Viola</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black</source>
@@ -6976,7 +6977,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished">OpenOrienteering Arancione</translation>
+        <translation>OpenOrienteering Arancione</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -7001,7 +7002,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished">Verde  50%, Giallo</translation>
+        <translation>Verde 50%, Giallo</translation>
     </message>
     <message>
         <source>Green over White over Green</source>
@@ -7011,7 +7012,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished">Bianco opaco sopra il verde</translation>
+        <translation>Bianco opaco sopra il verde</translation>
     </message>
     <message>
         <source>Yellow over Green</source>
@@ -7021,7 +7022,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Opaque Green</source>
         <comment>Color 16</comment>
-        <translation type="unfinished">Verde opaco</translation>
+        <translation>Verde opaco</translation>
     </message>
     <message>
         <source>Green</source>
@@ -7076,7 +7077,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished">Curva di livello maestra</translation>
+        <translation>Curva maestra</translation>
     </message>
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
@@ -8732,7 +8733,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Purple</source>
         <comment>Color 1</comment>
-        <translation type="unfinished">Viola</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black</source>
@@ -8757,7 +8758,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>OpenOrienteering Orange</source>
         <comment>Color 7</comment>
-        <translation type="unfinished">OpenOrienteering Arancione</translation>
+        <translation>OpenOrienteering Arancione</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -8777,17 +8778,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Green 50%, Yellow</source>
         <comment>Color 12</comment>
-        <translation type="unfinished">Verde  50%, Giallo</translation>
+        <translation>Verde 50%, Giallo</translation>
     </message>
     <message>
         <source>Opaque White over Green</source>
         <comment>Color 14</comment>
-        <translation type="unfinished">Bianco opaco sopra il verde</translation>
+        <translation>Bianco opaco sopra il verde</translation>
     </message>
     <message>
         <source>Opaque Green</source>
         <comment>Color 15</comment>
-        <translation type="unfinished">Verde opaco</translation>
+        <translation>Verde opaco</translation>
     </message>
     <message>
         <source>Green</source>
@@ -8817,7 +8818,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Index contour</source>
         <comment>Name of symbol 102</comment>
-        <translation type="unfinished">Curva di livello maestra</translation>
+        <translation>Curva maestra</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -10831,7 +10832,7 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>Purple</source>
         <comment>Color 0</comment>
-        <translation type="unfinished">Viola</translation>
+        <translation>Magenta</translation>
     </message>
     <message>
         <source>Black for control descriptions</source>
@@ -13143,7 +13144,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished">Lunghezza del percorso speciale</translation>
+        <translation>Lunghezza del percorso speciale</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
