@@ -6,37 +6,37 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fialová pro přetisk trati</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bílá pro přetisk trati</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Černá 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bílá pro železnici</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modrá 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hnědá 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
@@ -61,32 +61,32 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Horní hnědá 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Černá pod horní hnědou 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spodní hnědá 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Černá pod spodní hnědou 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modrá 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modrá 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žlutá 100% pro úzkou cestu</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 60% pro úzkou cestu</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 30% pro úzkou cestu</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bílá přes zelenou</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žlutá 100%/Zelená 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 100%/Černá 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zelená 100% pro podrost</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bílá přes žlutou</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Černá pro otevřenou krajinu</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Žlutá 100% pro plošné prvky</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -206,7 +206,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pro objasnění směru sklonu mohou být spádnice nakresleny na spodní straně vrstevnice. Pokud jsou použity, měly by být umístěny na opětovném vstupu.
+Prohlubeň musí mít alespoň jednu spádnici.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +219,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Každá pátá vrstevnice by měla být nakreslena silnější čarou. Toto je pomůcka pro rychlé posouzení výškových rozdílů a celkového tvaru povrchu terénu.
+Hlavní vrstevnice může být reprezentována v oblasti s podrobnějšími detaily jako obyčejná vrstevnicová linie. Malé vrstevnicové vrcholky a prohlubně se obvykle nezobrazují pomocí indexových kontur.
+Úroveň hlavní vrstevnice v rovném terénu musí být pečlivě vybrána. Ideální úroveň pro hlavní vrstevnici je centrální vsrtevnice v nejvýznamnějších spádech.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -228,7 +231,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hlavní vrstevnice může mít přiřazenou hodnotu výšky. Hodnota výšky by měla být vložena do hlavní vrstevnice pouze na místech, kde nejsou zakryty další detaily. Musí být orientována tak, aby horní část štítku byla na vyšší straně vrstevnice. Číselná hodnota (štítek) by měla být vysoká 1,5 mm a musí být uvedena bezpatkovým písmem.</translation>
     </message>
     <message>
         <source>Form line</source>
