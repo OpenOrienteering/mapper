@@ -43,7 +43,7 @@
 %1
 
 %2</source>
-        <translation>不能打开文件：
+        <translation>无法打开文件：
 ％1
 
 ％2</translation>
@@ -82,7 +82,7 @@ Rescale the imported data?</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>已调整座标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
+        <translation>已调整坐标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
@@ -136,7 +136,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>定向运动地图图绘制软件</translation>
+        <translation>定向运动地图绘制软件</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
@@ -176,7 +176,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>按字母顺序排列的 OpenOrienteering 开发人员：</translation>
+        <translation>按字母顺序排列的 OOM开发人员：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
