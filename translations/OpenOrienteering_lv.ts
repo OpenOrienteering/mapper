@@ -6,7 +6,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar rakstīt datnē: %1</translation>
     </message>
 </context>
 <context>
@@ -15,12 +15,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nespēj nolasīt attēla datus: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neatbalstīti rastra dati: %1</translation>
     </message>
 </context>
 <context>
@@ -30,7 +30,9 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nevar atvērt datni
+%1
+%2</translation>
     </message>
 </context>
 <context>
@@ -41,7 +43,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Nevar atvērt datni:
+        <translation>Nevar atvērt datni:
 %1
 
 %2</translation>
@@ -49,7 +51,7 @@
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="649"/>
         <source>Invalid file type.</source>
-        <translation type="unfinished">Nepieļaujams datnes tips.</translation>
+        <translation>Nepieļaujams datnes tips.</translation>
     </message>
 </context>
 <context>
@@ -57,14 +59,14 @@
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="938"/>
         <source>Question</source>
-        <translation type="unfinished">Jautājums</translation>
+        <translation>Jautājums</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="939"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">Importēto datu mērogs ir 1: %1, kas atškiras no kartes mēroga 1:%2
+        <translation>Importēto datu mērogs ir 1: %1, kas atškiras no kartes mēroga 1:%2
 
 Mainīt importējamo datu mērogu?</translation>
     </message>
@@ -74,39 +76,39 @@ Mainīt importējamo datu mērogu?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">Versijas %1 OCD faili netiek atbalstīti!</translation>
+        <translation>Versijas %1 OCD faili netiek atbalstīti!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinātas tiek pielāgotas, lai ietilptu OCAD 8 zīmēšanas laukumā (-2 m... 2 m).</translation>
+        <translation>Koordinātas tiek pielāgotas, lai ietilptu OCAD 8 zīmēšanas laukumā (-2 m... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Dažas koordinātes paliek ārpus OCAD 8 zīmēšanas laukuma. Tās varētu būt nesasniedzamas OCAD.</translation>
+        <translation>Dažas koordinātes paliek ārpus OCAD 8 zīmēšanas laukuma. Tās varētu būt nesasniedzamas OCAD.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ģeoreferencēšanu nav iespējams saglabāt OCD 8 versijā.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte satur vairāk kā 24 punktvieda krāsas, ko OCD 8 versija neatbalsta.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
         <source>The map contains more than 256 colors which is not supported by OCD version 8.</source>
-        <translation type="unfinished"></translation>
+        <translation>Karte satur vairāk kā 256 krāsas, ko OCD 8 versija neatbalsta.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nekorekta punktveida krāsa.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
@@ -116,7 +118,7 @@ Mainīt importējamo datu mērogu?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Nav iespējams eksportēt šablonu: datnes tips &quot;%1&quot; pagaidām netiek atbalstīts</translation>
+        <translation>Nav iespējams eksportēt šablonu: datnes tips &quot;%1&quot; pagaidām netiek atbalstīts</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
