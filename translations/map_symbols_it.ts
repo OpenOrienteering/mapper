@@ -348,7 +348,7 @@ Contour lines should not be broken around this symbol.</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
@@ -2811,13 +2811,14 @@ Contour lines shall not be broken around this symbol.</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Una piccola fossa, canaletta o trincea. Profondità minima: 0.5 m.</translation>
+        <translation>Una canaletta asciutta, piccola fossa o trincea. Profondità minima: 0.5 m.
+Le curve di livello devo essere interrotte intorno a questo simbolo.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -4094,7 +4095,7 @@ Il bordo esterno può essere sostituito da altri simboli con linea nera, come il
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -4597,7 +4598,7 @@ Minimum length: 2.0 mm (footprint 8 m).</source>
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 108</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>A small erosion gully or trench.
@@ -6787,7 +6788,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -8087,7 +8088,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
@@ -9001,7 +9002,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
-        <translation>Fossa piccola</translation>
+        <translation>Canaletta</translation>
     </message>
     <message>
         <source>Small knoll</source>
