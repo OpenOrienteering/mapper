@@ -4935,7 +4935,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Blue</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zils</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -4975,7 +4975,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zaļš</translation>
     </message>
     <message>
         <source>Green 60%</source>
