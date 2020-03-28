@@ -1,5 +1,5 @@
 #
-#    Copyright 2017-2019 Kai Pastor
+#    Copyright 2017-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -37,14 +37,16 @@ if(NOT LICENSING_COPYRIGHT_DIR OR NOT LICENSING_COMMON_DIR)
 endif()	
 
 
-# Based on OpenOrienteering superbuild as of 2019-12-15
+# Based on OpenOrienteering superbuild as of 2020-03-26
 list(APPEND third_party_components
+  giflib
   libjpeg-turbo
   liblzma
   libopenjp2
   libpcre3
   libpng
   libtiff
+  libwebp
 )
 find_package(Qt5Core REQUIRED QUIET)
 if(NOT ${Qt5Core_VERSION} VERSION_LESS 5.9)
