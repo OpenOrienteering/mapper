@@ -302,27 +302,14 @@ class FollowPathToolHelper
 {
 public:
 	/**
-	 * Constructs a new helper.
+	 * Returns true iff following can be started from the given snapping information.
 	 */
-	FollowPathToolHelper();
-	
-	
-	/**
-	 * Starts following the given object from a coordinate.
-	 */
-	void startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index);
+	bool canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept;
 	
 	/**
-	 * Starts following the given object from an arbitrary position indicated by the path coord.
-	 * 
-	 * The path coord does not need to be from the object's path coord vector.
+	 * Starts following from the given snapping information.
 	 */
-	void startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord);
-	
-	/**
-	 * Starts following the given border path from an arbitrary position indicated by the path coord.
-	 */
-	void startFollowingFromBorderCoord(std::shared_ptr<PathObject> path, const PathCoord& coord);
+	void startFollowing(const SnappingToolHelperSnapInfo& snap_info);
 	
 	/**
 	 * Updates the process and returns the followed part of the path.
