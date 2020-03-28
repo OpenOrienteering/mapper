@@ -232,7 +232,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>mm²</source>
-        <translation>mm²</translation>
+        <translation>平方毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
@@ -247,7 +247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"/>
         <source>Line fill</source>
-        <translation>线条与填充</translation>
+        <translation>线条填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"/>
@@ -271,7 +271,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
         <source>Parallel lines</source>
-        <translation>两条平行线</translation>
+        <translation>平行线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
@@ -281,17 +281,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Single row</source>
-        <translation>单排</translation>
+        <translation>单行</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation>模式间隔：</translation>
+        <translation>图形间隔：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation>模式偏移量：</translation>
+        <translation>图形偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
@@ -360,12 +360,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation>图案填充 %1</translation>
+        <translation>图形填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
-        <translation>线条与填充 %1</translation>
+        <translation>线条填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
@@ -380,7 +380,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation>线条偏移量：</translation>
+        <translation>线条偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
@@ -493,7 +493,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
-        <translation>挖空︰ 擦除低颜色</translation>
+        <translation>禁止叠加：自动擦除底层颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="161"/>
@@ -504,17 +504,17 @@ Rescale the imported data?</source>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Calculate from spot colors</source>
-        <translation>计算从专色</translation>
+        <translation>使用专色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from RGB color</source>
-        <translation>计算从 RGB 颜色</translation>
+        <translation>使用RGB颜色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
-        <translation>自定义进程颜色：</translation>
+        <translation>自定义颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -544,7 +544,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Calculate from CMYK color</source>
-        <translation>计算从 CMYK 颜色</translation>
+        <translation>使用CMYK颜色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
@@ -635,13 +635,13 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>K.o.</source>
-        <translation>棍</translation>
+        <translation>禁止叠加</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="89"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="94"/>
         <source>New</source>
-        <translation>新增功能</translation>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="97"/>
@@ -671,7 +671,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="137"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>双击要打开一个对话框的颜色值。</translation>
+        <translation>双击颜色值打开一个对话框。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
@@ -681,7 +681,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>映射包含这种颜色的符号。删除它将从这些对象中删除颜色 ！你真的想要这样做？</translation>
+        <translation>地图里包含这种颜色的符号。删除它将从这些对象中删除颜色 ！是否确认要这样做？</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
@@ -721,12 +721,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private line symbol -</source>
-        <translation>-私人线符号-</translation>
+        <translation>-私有线符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private area symbol -</source>
-        <translation>-私人领域符号-</translation>
+        <translation>-私有区域符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="99"/>
@@ -799,22 +799,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation>磁北与对齐</translation>
+        <translation>与磁北对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation>与北方的网格对齐</translation>
+        <translation>与网格的北对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation>真北路与对齐</translation>
+        <translation>与真北对齐</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>额外的旋转(逆时针):</translation>
+        <translation>添加额外的旋转(逆时针):</translation>
     </message>
     <message>
         <source>°</source>
@@ -828,12 +828,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation>在地形米</translation>
+        <translation>在实地的距离(米)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation>在地图上的毫米</translation>
+        <translation>在地图上的距离(毫米)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
@@ -1435,23 +1435,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
         <source>High quality map display (antialiasing)</source>
-        <translation>高质量地图显示 （抗锯齿）</translation>
+        <translation>高保真地图显示 （抗锯齿）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>抗锯齿功能使地图看起来好多了，但也会减慢地图显示</translation>
+        <translation>抗锯齿使地图看起来好多了，但也会减慢地图显示速度</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>高质量的文本显示在地图 （抗锯齿），缓慢</translation>
+        <translation>高保真文本显示 （抗锯齿）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
         <source>Click tolerance:</source>
-        <translation>点击宽容度：</translation>
+        <translation>点击容差：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
@@ -1486,17 +1486,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation>符号图标尺寸：</translation>
+        <translation>符号图标大小：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>当选择一个对象，自动选择它的符号太</translation>
+        <translation>选中一个对象时，同时选中该对象的符号</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation>从光标放大，放大了</translation>
+        <translation>缩小时以鼠标为基准（滚动鼠标中键）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
@@ -1506,7 +1506,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>模板︰ 保持封闭模板设置</translation>
+        <translation>底图︰ 保存被关闭底图的设置</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
@@ -4132,7 +4132,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1419"/>
         <source>Show top bar</source>
-        <translation>显示顶部栏</translation>
+        <translation>显示顶栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="604"/>
@@ -6107,32 +6107,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
-        <translation>肖像</translation>
+        <translation>纵向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
-        <translation>景观</translation>
+        <translation>横向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
-        <translation>页面格式：</translation>
+        <translation>页面纸张类型：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
-        <translation>副本：</translation>
+        <translation>份数：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
-        <translation>左：</translation>
+        <translation>左边距：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
-        <translation>返回页首：</translation>
+        <translation>上边距：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
@@ -6147,12 +6147,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
-        <translation>预览。。。</translation>
+        <translation>预览...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
-        <translation>单个页面</translation>
+        <translation>单页</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="189"/>
@@ -6167,7 +6167,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
-        <translation>中心打印区域</translation>
+        <translation>打印区域居中</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="160"/>
@@ -6266,7 +6266,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="942"/>
         <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>dpi</source>
-        <translation>新闻部</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="959"/>
@@ -6453,7 +6453,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation>将从左侧的列表中的项目拖到所需的点，在右侧的列表，以便重新加载它们。</translation>
+        <translation>将从左侧的列表中的项拖到右侧列表中的目标点，以便重新加载它们。</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"/>
@@ -7755,7 +7755,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="87"/>
         <source>dpi</source>
-        <translation>新闻部</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="89"/>
@@ -8239,7 +8239,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="51"/>
         <source>Top</source>
-        <translation>返回页首</translation>
+        <translation>顶部</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="53"/>
@@ -8563,7 +8563,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="663"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>此版本的映射器无法读取这个文件的部分。所需的最低版本: %1</translation>
+        <translation>此版本的地图无法读取这个文件的部分，所需的最低版本: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="644"/>
@@ -8590,7 +8590,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/fileformats/xml_file_format.cpp" line="835"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="888"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>无法设置颜色“％1”的淘汰赛财产。</translation>
+        <translation>无法设置颜色“％1”的遮盖属性。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="848"/>
