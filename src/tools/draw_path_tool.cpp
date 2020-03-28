@@ -176,8 +176,10 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 						picked_angle = true;
 				}
 				else if (editingInProgress() &&
-						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
-						 snap_info.object->getType() == Object::Path)
+				         (snap_info.type == SnappingToolHelper::ObjectCorners
+				          || snap_info.type == SnappingToolHelper::ObjectPaths
+				          || snap_info.type == SnappingToolHelper::LineBorders) &&
+				         snap_info.object->getType() == Object::Path)
 				{
 					// Start following another path
 					picked_angle = false;
@@ -1048,6 +1050,8 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 	
 	if (snap_info.type == SnappingToolHelper::ObjectCorners)
 		follow_helper->startFollowingFromCoord(followed_object, snap_info.coord_index);
+	else if (snap_info.type == SnappingToolHelper::LineBorders)
+		follow_helper->startFollowingFromBorderCoord(snap_info.border_path, snap_info.path_coord);
 	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
 		follow_helper->startFollowingFromPathCoord(followed_object, snap_info.path_coord);
 	

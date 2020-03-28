@@ -392,6 +392,21 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 							result_info.path_coord = path_coord;
 						}
 					}
+					
+					if (filter & LineBorders)
+					{
+						auto result = path->calcClosestPointOnBorder(position, path_coord, closest_distance_sq, distance_sq, path_coord);
+						if (result)
+						{
+							closest_distance_sq = distance_sq;
+							result_info.border_path = std::move(result);
+							result_info.type = LineBorders;
+							result_info.object = result_info.border_path.get();
+							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
+							result_info.path_coord = path_coord;
+							result_position = MapCoord(path_coord.pos);
+						}
+					}
 				}
 				else
 				{
@@ -550,6 +565,12 @@ void FollowPathToolHelper::startFollowingFromPathCoord(const PathObject* path, c
 	end_clen   = start_clen;
 	part_index = path->findPartIndexForIndex(coord.index);
 	drag_forward = true;
+}
+
+void FollowPathToolHelper::startFollowingFromBorderCoord(std::shared_ptr<PathObject> path, const PathCoord& coord)
+{
+	border_path = std::move(path);
+	startFollowingFromPathCoord(border_path.get(), coord);
 }
 
 std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoord& end_coord)

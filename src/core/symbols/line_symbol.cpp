@@ -495,7 +495,7 @@ void LineSymbol::createBorderLines(
 }
 
 
-void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, double u_border_shift, LineSymbol::JoinStyle join_style, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
@@ -510,7 +510,6 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 	
 	// sign of shift and main shift indicates left or right border
 	// but u_border_shift is unsigned
-	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
 	double shift = main_shift + ((main_shift > 0.0) ? u_border_shift : -u_border_shift);
 	
 	auto size = path.size();
@@ -773,6 +772,13 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			i += 2;
 		}
 	}
+}
+
+
+void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+{
+	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
+	shiftCoordinates(path, main_shift, u_border_shift, join_style, out_flags, out_coords);
 }
 
 void LineSymbol::processContinuousLine(

@@ -197,8 +197,9 @@ public:
 		ObjectCorners = 1 << 0,
 		ObjectPaths = 1 << 1,
 		GridCorners = 1 << 2,
+		LineBorders = 1 << 3,
 		
-		AllTypes = 1 + 2 + 4
+		AllTypes = 1 + 2 + 4 + 8
 	};
 	
 	/**
@@ -284,6 +285,11 @@ struct SnappingToolHelperSnapInfo
 	 *  in path_coord if type == ObjectPaths  */
 	PathCoord path_coord;
 	
+	/**
+	 * If snapping to a border line, this is a reference to the border's temporary path.
+	 */
+	std::shared_ptr<PathObject> border_path;
+	
 };
 
 
@@ -314,6 +320,11 @@ public:
 	void startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord);
 	
 	/**
+	 * Starts following the given border path from an arbitrary position indicated by the path coord.
+	 */
+	void startFollowingFromBorderCoord(std::shared_ptr<PathObject> path, const PathCoord& coord);
+	
+	/**
 	 * Updates the process and returns the followed part of the path.
 	 * 
 	 * Returns a pointer that owns nothing if the following failed, e.g.
@@ -334,6 +345,7 @@ public:
 	std::size_t partIndex() const { return part_index; }
 	
 private:
+	std::shared_ptr<PathObject> border_path;
 	const PathObject* path = nullptr;
 	
 	PathCoord::length_type start_clen;
