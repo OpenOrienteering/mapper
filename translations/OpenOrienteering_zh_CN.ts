@@ -716,7 +716,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>部件的数量:</translation>
+        <translation>地图块的数量:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
@@ -940,7 +940,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>在行上 &lt;b&gt;单击&lt;/b&gt;︰ 分成两个。沿着一条线 &lt;b&gt;拖&lt;/b&gt;︰ 删除此线部件。&lt;b&gt;单击或拖动&lt;/b&gt; 在区域边界︰ 开始拆分线。 </translation>
+        <translation>在行上 &lt;b&gt;单击&lt;/b&gt;︰ 分成两个。沿着一条线 &lt;b&gt;拖&lt;/b&gt;︰ 删除这条线的部分。&lt;b&gt;单击或拖动&lt;/b&gt; 在区域边界︰ 开始画一条拆分线。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
@@ -3308,7 +3308,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map.cpp" line="480"/>
         <source>default part</source>
-        <translation>默认部分</translation>
+        <translation>默认地图块</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="36"/>
@@ -3600,24 +3600,24 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1060"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3745"/>
         <source>Add new part...</source>
-        <translation>添加新的部分...</translation>
+        <translation>添加新的地图块...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3805"/>
         <source>Rename current part...</source>
-        <translation>重命名当前部分...</translation>
+        <translation>重命名当前地图块...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1062"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3766"/>
         <source>Remove current part</source>
-        <translation>删除当前部分</translation>
+        <translation>删除当前地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
         <source>Merge all parts</source>
-        <translation>合并所有部分</translation>
+        <translation>合并所有地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
@@ -4102,7 +4102,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1423"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3678"/>
         <source>Map parts</source>
-        <translation>地图部分</translation>
+        <translation>地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1311"/>
@@ -4345,17 +4345,17 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2532"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation>删除不是重叠与第一个选定对象的所有部分。</translation>
+        <translation>删除与第一个选定对象不重叠的所有部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2534"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation>删除第一个选定对象的重叠的部分。</translation>
+        <translation>删除第一个选定对象的重叠部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2536"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation>删除重叠的第一个选定的对象的所有部分。</translation>
+        <translation>删除与第一个选定对象重叠的所有部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2540"/>
@@ -4411,7 +4411,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3685"/>
         <source>Merge this part with</source>
-        <translation>与这部分合并</translation>
+        <translation>与这地图块合并</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3692"/>
@@ -4422,28 +4422,28 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="3746"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3806"/>
         <source>Enter the name of the map part:</source>
-        <translation>输入地图部分的名称:</translation>
+        <translation>输入地图块的名称:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3822"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>切换到地图部分 &apos;%1&apos;。</translation>
+        <translation>切换到地图块 &apos;%1&apos;。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3850"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3882"/>
         <source>Merge map parts</source>
-        <translation>合并地图部分</translation>
+        <translation>合并地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3851"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>你想要将所有对象从地图部分&quot;%1&quot;都移动到&quot;%2&quot;，并删除&quot;%1&quot;吗？</translation>
+        <translation>你想要将所有对象从地图块&quot;%1&quot;都移动到&quot;%2&quot;，并删除&quot;%1&quot;吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3883"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>你想要移动所有对象映射部分&quot;%1&quot;，并删除所有其他地图部分吗？</translation>
+        <translation>你想要移动所有对象到地图块&quot;%1&quot;，并删除其他所有地图块吗？</translation>
     </message>
     <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
@@ -4660,7 +4660,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3767"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>你想要删除地图部分&quot;%1&quot;及其所有对象吗？</translation>
+        <translation>你想要删除地图块&quot;%1&quot;及其所有对象吗？</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template</source>
@@ -4745,7 +4745,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2507"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation>切成更小的部分选定的对象。</translation>
+        <translation>将选定的对象切成较小的部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2561"/>
@@ -8540,7 +8540,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="243"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>旧版本的制图程序不支持多个地图部分。要以兼容模式保存地图，必须首先合并所有地图部分。</translation>
+        <translation>旧版本的制图程序不支持多个地图块。要以兼容模式保存地图，必须先合并所有地图块。</translation>
     </message>
 </context>
 <context>
@@ -8563,7 +8563,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="663"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>此版本的地图无法读取这个文件的部分，所需的最低版本: %1</translation>
+        <translation>此版本的软件无法读取这个文件的地图块，所需的最低版本: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="644"/>
@@ -8610,7 +8610,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="959"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>预计1％的部分地图，找到％2。</translation>
+        <translation>预计是 1％ 个地图块，但找到 ％2 个。</translation>
     </message>
 </context>
 </TS>
