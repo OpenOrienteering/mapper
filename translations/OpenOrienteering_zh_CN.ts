@@ -1856,53 +1856,53 @@ Rescale the imported data?</source>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>高斯-克鲁格、 基准︰ 波茨坦</translation>
+        <translation>Gauss-Krueger, 基准: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation>高斯-克鲁格坐标</translation>
+        <translation>Gauss-Krueger 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation>区数 (1 到 119)</translation>
+        <translation>区域编号（1至119）</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>通过对代码</translation>
+        <translation>通过EPSG码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>对 @code@ 坐标</translation>
+        <translation>EPSG @code@ 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <location filename="../src/core/georeferencing.cpp" line="748"/>
         <source>Local coordinates</source>
-        <translation>局部坐标</translation>
+        <translation>本地坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation>对代码</translation>
+        <translation>EPSG代码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation>自定义 PROJ.4</translation>
+        <translation>Custom PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation>规格</translation>
+        <translation>规范</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="446"/>
@@ -1923,7 +1923,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>不受支持的地理 CRS 规格: %1</translation>
+        <translation>不受支持的地理坐标参考系标准: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="739"/>
@@ -2092,7 +2092,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="236"/>
         <source>On CRS changes, keep:</source>
-        <translation>在CRS的变化，保留：</translation>
+        <translation>当坐标参考系变化时，保持：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="242"/>
@@ -6758,12 +6758,12 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="63"/>
         <source>Select coordinate reference system</source>
-        <translation>选择坐标参照系统</translation>
+        <translation>选择坐标参考系</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="71"/>
         <source>Same as map</source>
-        <translation>同样作为地图</translation>
+        <translation>与地图相同</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"/>
