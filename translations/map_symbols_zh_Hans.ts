@@ -2945,7 +2945,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -3944,7 +3944,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -4709,7 +4709,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -4817,7 +4817,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation>OOM蓝色</translation>
+        <translation type="unfinished">OOM蓝色</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -7411,12 +7411,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
         <comment>Description of symbol 999</comment>
-        <translation>OOM图标。</translation>
+        <translation type="unfinished">OOM图标。</translation>
     </message>
 </context>
 <context>
@@ -8033,7 +8033,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -9165,7 +9165,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -10446,7 +10446,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
@@ -12556,7 +12556,7 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>OpenOrienteering Logo</source>
         <comment>Name of symbol 999</comment>
-        <translation>OOM图标</translation>
+        <translation type="unfinished">OOM图标</translation>
     </message>
     <message>
         <source>The OpenOrienteering Logo.</source>
