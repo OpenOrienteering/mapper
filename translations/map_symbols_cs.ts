@@ -101,17 +101,17 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation>Žlutá 100% pro úzkou cestu</translation>
+        <translation>Žlutá 100% pro průsek</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation>Zelená 60% pro úzkou cestu</translation>
+        <translation>Zelená 60% pro průsek</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation>Zelená 30% pro úzkou cestu</translation>
+        <translation>Zelená 30% pro průsek</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -219,9 +219,9 @@ Prohlubeň musí mít alespoň jednu spádnici.</translation>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished">Každá pátá vrstevnice by měla být nakreslena silnější čarou. Toto je pomůcka pro rychlé posouzení výškových rozdílů a celkového tvaru povrchu terénu.
-Hlavní vrstevnice může být reprezentována v oblasti s podrobnějšími detaily jako obyčejná vrstevnicová linie. Malé vrstevnicové vrcholky a prohlubně se obvykle nezobrazují pomocí indexových kontur.
-Úroveň hlavní vrstevnice v rovném terénu musí být pečlivě vybrána. Ideální úroveň pro hlavní vrstevnici je centrální vsrtevnice v nejvýznamnějších spádech.</translation>
+        <translation>Každá pátá vrstevnice musí být kreslena silnější čarou. To napomáhá k rychlému odhadu výškového rozdílu a celkového tvaru terénu.
+V oblasti s mnoha detaily může být hlavní vrstevnice nakreslena jako normální vrstevnice. Malé vrstevnicové kupky a prohlubně se obvykle nezobrazují pomocí hlavní vrstevnice.
+Výšková hladina hlavní vrstevnice v rovném terénu musí být pečlivě vybrána. Ideální hladina pro hlavní vrstevnici je centrální vrstevnice v nejvýznamnějších spádech.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -1733,7 +1733,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, easy running</source>
         <comment>Name of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, snadný běh</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -1744,7 +1744,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, normal runnability</source>
         <comment>Name of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, normální průběžnost</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -1755,7 +1755,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, slow running</source>
         <comment>Name of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, pomalý běh</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -1766,7 +1766,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, walk</source>
         <comment>Name of symbol 508.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, chůze</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -2679,17 +2679,17 @@ Fialová čára se trochu rozšíří do symbolu pro cíl. To je nedostatek toho
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Čára spojující body stejné {nadmořské} výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2.5 metru může být použit v plochých terénech. Nejmenší ohyb vrstevnice je 0.25 mm od středu ke středu linie.</translation>
+        <translation>Čára spojující body stejné (nadmořské) výšky. Základní výškový interval mezi vrstevnicemi je 5 metrů. Interval vrstevnic 2,5 metru může být použit v plochých terénech. Nejmenší ohyb vrstevnice je 0,25 mm od středu ke středu linie.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
         <comment>Name of symbol 101.1</comment>
-        <translation>Spádnice</translation>
+        <translation>Spádovka</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Spádnice se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.</translation>
+        <translation>Spádovky se mohou kreslit na nižší straně vrstevnice k ujasnění směru spádu. Pokud jsou použity, měly by být umístěny v údolích.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -14791,17 +14791,17 @@ Poznámka: Je-li tok širší než 0.25 mm, upravte tuto značku tak, aby přesa
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation>Žlutá 100% pro úzkou cestu</translation>
+        <translation>Žlutá 100% pro průsek</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation>Zelená 60% pro úzkou cestu</translation>
+        <translation>Zelená 60% pro průsek</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation>Zelená 30% pro úzkou cestu</translation>
+        <translation>Zelená 30% pro průsek</translation>
     </message>
     <message>
         <source>White over green</source>
@@ -15707,7 +15707,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, easy running</source>
         <comment>Name of symbol 508.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, snadný běh</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -15718,7 +15718,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, normal runnability</source>
         <comment>Name of symbol 508.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, normální průběžnost</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
@@ -15729,7 +15729,7 @@ Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
     <message>
         <source>Narrow ride, slow running</source>
         <comment>Name of symbol 508.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Průsek, pomalý běh</translation>
     </message>
     <message>
         <source>A forest ride or a prominent trace (forestry extraction track, sandy track, ski track) through the terrain which does not have a distinct runnable path along it. Runnability is shown using a slightly thicker line of yellow, green or white as background.
