@@ -392,6 +392,21 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 							result_info.path_coord = path_coord;
 						}
 					}
+					
+					if (filter & LineBorders)
+					{
+						auto result = path->calcClosestPointOnBorder(position, path_coord, closest_distance_sq, distance_sq, path_coord);
+						if (result)
+						{
+							closest_distance_sq = distance_sq;
+							result_info.border_path = std::move(result);
+							result_info.type = LineBorders;
+							result_info.object = result_info.border_path.get();
+							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
+							result_info.path_coord = path_coord;
+							result_position = MapCoord(path_coord.pos);
+						}
+					}
 				}
 				else
 				{
@@ -529,26 +544,38 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 
 // ### FollowPathToolHelper ###
 
-FollowPathToolHelper::FollowPathToolHelper()
+bool FollowPathToolHelper::canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept
 {
-	// nothing else
+	return snap_info.object->getType() == Object::Path
+	       && (snap_info.type == SnappingToolHelper::ObjectCorners
+	           || snap_info.type == SnappingToolHelper::ObjectPaths
+	           || snap_info.type == SnappingToolHelper::LineBorders);
 }
 
-void FollowPathToolHelper::startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index)
+void FollowPathToolHelper::startFollowing(const SnappingToolHelperSnapInfo& snap_info)
 {
+	Q_ASSERT(snap_info.object->getType() == Object::Path);
+	path = static_cast<PathObject*>(snap_info.object);
 	path->update();
-	PathCoord coord = path->findPathCoordForIndex(coord_index);
-	startFollowingFromPathCoord(path, coord);
-}
-
-void FollowPathToolHelper::startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord)
-{
-	path->update();
-	this->path = path;
-	
-	start_clen = coord.clen;
-	end_clen   = start_clen;
-	part_index = path->findPartIndexForIndex(coord.index);
+	auto init = [this](const PathCoord& coord) {
+		start_clen = coord.clen;
+		part_index = path->findPartIndexForIndex(coord.index);
+	};
+	if (snap_info.type == SnappingToolHelper::ObjectCorners)
+	{
+		PathCoord coord = path->findPathCoordForIndex(snap_info.coord_index);
+		init(coord);
+	}
+	else if (snap_info.type == SnappingToolHelper::LineBorders)
+	{
+		border_path = snap_info.border_path;
+		init(snap_info.path_coord);
+	}
+	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
+	{
+		init(snap_info.path_coord);
+	}
+	end_clen = start_clen;
 	drag_forward = true;
 }
 

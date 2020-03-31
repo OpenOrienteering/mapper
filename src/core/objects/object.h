@@ -23,6 +23,7 @@
 #define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
+#include <memory>
 #include <vector>
 #include <utility>
 
@@ -698,6 +699,30 @@ public:
 	        MapCoordVector::size_type start_index = 0,
 	        MapCoordVector::size_type end_index = std::numeric_limits<PathPartVector::size_type>::max()
 	) const;
+	
+	/**
+	 * Calculates a border path with the closest point to the given coordinate
+	 * for path objects with a line symbol which has visible borders.
+	 * 
+	 * The offsets of the border paths are determined by the main line width.
+	 * If the border line is continuous (not dashed), border line width and
+	 * offset are added so that the returned path is at the center of the
+	 * border line.
+	 * 
+	 * In addition to the MapCoordF input parameter, this function takes a
+	 * PathCoord input parameter which serves a key to determining candidate
+	 * border path locations. This is PathCoord is meant to be looked up with
+	 * calcClosestPointOnPath() before calling this function.
+	 * 
+	 * \todo Convert in/out_distance_sq to qreal (so avoiding conversions).
+	 * \todo Get rid of output parameters.
+	 */
+	std::shared_ptr<PathObject> calcClosestPointOnBorder(
+	        MapCoordF coord,
+	        const PathCoord& path_coord,
+	        float in_distance_sq,
+	        float& out_distance_sq,
+	        PathCoord& out_path_coord) const;
 	
 	/**
 	 * Calculates the closest control point coordinate to the given coordinate,
