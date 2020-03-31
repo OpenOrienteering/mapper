@@ -21,6 +21,7 @@
 
 #include <QtGlobal>
 #include <QByteArray>
+#include <QChar>
 #include <QImageReader>
 #include <QString>
 
@@ -75,7 +76,7 @@ bool GdalTemplate::loadTemplateFileImpl(bool configuring)
 			qDebug("GdalTemplate: Falling back to QImageReader, reason: %s", qPrintable(errorString()));
 			if (!image_reader.read(&image))
 			{
-				setErrorString(image_reader.errorString());
+				setErrorString(errorString() + QChar::LineFeed + image_reader.errorString());
 				return false;
 			}
 		}
