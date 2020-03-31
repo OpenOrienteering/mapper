@@ -5668,7 +5668,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Púrpura para superposición del recorrido</translation>
     </message>
     <message>
         <source>White for course overprint</source>
@@ -11142,7 +11142,7 @@ La línea púrpura se introducirá un poco en el símbolo de meta. Es una defici
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Púrpura para superposición del recorrido</translation>
     </message>
     <message>
         <source>White for course overprint</source>
