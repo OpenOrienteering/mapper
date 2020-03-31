@@ -847,14 +847,13 @@ void OcdGeorefFields::setupGeoref(Georeferencing& georef,
 	if (m > 0)
 		georef.setScaleDenominator(m);
 
-	if (qIsFinite(a) && qAbs(a) >= 0.01)
-		georef.setGrivation(a);
-
 	if (r)
 		applyGridAndZone(georef, i, warning_handler);
 
 	QPointF proj_ref_point(x, y);
 	georef.setProjectedRefPoint(proj_ref_point, false);
+	
+	georef.setGrivation(qIsFinite(a) ? a : 0);
 }
 
 OcdGeorefFields OcdGeorefFields::fromGeoref(const Georeferencing& georef,
