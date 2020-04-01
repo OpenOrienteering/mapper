@@ -118,7 +118,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Impossible d&apos;exporter le modèle: le type du fichier (%1) n&apos;est pas encore supporté</translation>
+        <translation type="unfinished">Impossible d&apos;exporter le modèle : le type du fichier (%1) n&apos;est pas encore pris en charge</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
@@ -483,22 +483,22 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Résolution (lignes par pouce)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Non-défini</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Angle de trame :</translation>
     </message>
     <message>
         <source>°</source>
@@ -726,7 +726,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1527,7 +1527,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimension du bouton d&apos;action :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1694,7 +1694,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="164"/>
         <source>GPS is disabled in the device settings. Open settings now?</source>
-        <translation>GPS désactivé dans la configuratione de la tablette. Voulez-vous reconfigurer maintenant ?</translation>
+        <translation>GPS désactivé dans la configuration de la tablette. Voulez-vous reconfigurer maintenant ?</translation>
     </message>
     <message>
         <location filename="../src/sensors/gps_display.cpp" line="165"/>
@@ -1745,12 +1745,12 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Options d&apos;export</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="72"/>
         <source>Create a layer for each symbol</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Créer une couche par symbole</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
@@ -2358,7 +2358,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="157"/>
         <source>Touch mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mode touche</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
@@ -2460,7 +2460,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="67"/>
         <source>Default icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Icône par défaut</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="69"/>
@@ -2470,48 +2470,48 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="70"/>
         <source>Preview width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Largeur d&apos;aperçu :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="86"/>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="118"/>
         <source>Save...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="88"/>
         <source>Copy to custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Copier vers icône personnalisée</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="98"/>
         <source>Custom icon</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Icône personnalisée</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="102"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Largeur :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="120"/>
         <source>Load...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Charger ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="122"/>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Effacer</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="169"/>
         <source>%1 px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 px</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="203"/>
         <source>Save symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer l&apos;icône ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="217"/>
@@ -2523,12 +2523,13 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="218"/>
         <source>Failed to save the image:
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Echec lors de l&apos;enregistrement de l&apos;image :
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="226"/>
         <source>Load symbol icon ...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Charger l&apos;icône du symbole ...</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/icon_properties_widget.cpp" line="235"/>
@@ -2573,7 +2574,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Malformation du symbole ID &apos;%1&apos;, ligne %2 colonne %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2607,12 +2608,12 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="48"/>
         <source>OCAD version 8, old implementation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OCAD version 8, ancienne implémentation</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="50"/>
         <source>OCAD version %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OCAD version %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -2722,7 +2723,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="546"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Format du fichier obsolète, non pris en charge. Utilisez version v%1 ou antérieure du programme pour charger et mettre à jour le fichier.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="558"/>
@@ -2943,22 +2944,22 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="172"/>
         <source>Mid symbols placement:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Emplacement des symboles intérieurs :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="174"/>
         <source>Center of dashes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Centre des pointillés</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="175"/>
         <source>Center of dash groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Centre des pointillés groupés</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="176"/>
         <source>Center of gaps</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Centre des espaces</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="206"/>
@@ -3003,12 +3004,12 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Longueur de bout de ligne (début) :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Longueur de bout de ligne (fin) :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
@@ -3259,7 +3260,7 @@ Voulez-vous enregistrer vos modifications ?</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le jeu de symboles a généré des avertissements.</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="780"/>
@@ -4588,7 +4589,7 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1165"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barres d&apos;outils</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1279"/>
@@ -4626,7 +4627,7 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1714"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1755"/>
