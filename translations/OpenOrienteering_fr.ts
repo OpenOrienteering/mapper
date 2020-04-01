@@ -5396,7 +5396,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1872"/>
         <source>Unable to save correct position of missing template: &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;enregistrer la position correcte du modèle manquant: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1912"/>
