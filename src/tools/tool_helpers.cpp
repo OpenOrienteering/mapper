@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -373,7 +373,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
-					PathCoord path_coord;
+					auto path_coord = PathCoord {};
 					path->calcClosestPointOnPath(position, distance_sq, path_coord);
 					if (distance_sq < closest_distance_sq)
 					{
@@ -546,10 +546,10 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 
 bool FollowPathToolHelper::canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept
 {
-	return snap_info.object->getType() == Object::Path
-	       && (snap_info.type == SnappingToolHelper::ObjectCorners
-	           || snap_info.type == SnappingToolHelper::ObjectPaths
-	           || snap_info.type == SnappingToolHelper::LineBorders);
+	return (snap_info.type == SnappingToolHelper::ObjectCorners
+	        || snap_info.type == SnappingToolHelper::ObjectPaths
+	        || snap_info.type == SnappingToolHelper::LineBorders)
+	       && snap_info.object->getType() == Object::Path;  // type implies object != nullptr
 }
 
 void FollowPathToolHelper::startFollowing(const SnappingToolHelperSnapInfo& snap_info)

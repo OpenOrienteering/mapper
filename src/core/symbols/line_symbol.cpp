@@ -495,7 +495,7 @@ void LineSymbol::createBorderLines(
 }
 
 
-void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, double u_border_shift, LineSymbol::JoinStyle join_style, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
+void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, double border_shift, LineSymbol::JoinStyle join_style, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
@@ -509,8 +509,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, do
 		miter_reference = cos(atan(4.0 / miter_limit));
 	
 	// sign of shift and main shift indicates left or right border
-	// but u_border_shift is unsigned
-	double shift = main_shift + ((main_shift > 0.0) ? u_border_shift : -u_border_shift);
+	auto const shift = main_shift + border_shift;
 	
 	auto size = path.size();
 	out_flags.clear();
@@ -596,7 +595,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, do
 					middle1 = tangent_in + middle0;
 					middle1.normalize();
 					double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
-					offset = tan(phi1) * u_border_shift;
+					offset = tan(phi1) * std::abs(border_shift);
 					
 					if (i > 0 && !qIsNaN(offset))
 					{
@@ -625,7 +624,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, do
 						middle1 = tangent_in + middle0;
 						middle1.normalize();
 						double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
-						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
+						offset = miter_limit * fabs(main_shift) + tan(phi1) * std::abs(border_shift);
 						
 						if (i > 0 && !qIsNaN(offset))
 						{
@@ -777,8 +776,8 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, do
 
 void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
 {
-	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
-	shiftCoordinates(path, main_shift, u_border_shift, join_style, out_flags, out_coords);
+	auto border_shift = (main_shift > 0.0) ? (0.001 * right_border.shift) : (-0.001 * border.shift);
+	shiftCoordinates(path, main_shift, border_shift, join_style, out_flags, out_coords);
 }
 
 void LineSymbol::processContinuousLine(
@@ -1738,6 +1737,31 @@ qreal LineSymbol::calculateLargestLineExtent() const
 		result = qMax(result, line_extent_f + 0.001 * (getRightBorder().shift + getRightBorder().width)/2);
 	}
 	return result;
+}
+
+
+// virtual
+const Symbol::BorderHints* LineSymbol::borderHints() const
+{
+	if (!hasBorder())
+		return nullptr;
+	
+	auto const main_shift = 0.0005 * getLineWidth();
+	border_hints = {
+		{
+			getBorder().isVisible(),
+			getJoinStyle(),
+			-main_shift,
+			(getColor() && getBorder().dashed) ? 0 : -0.001 * getBorder().shift
+		},
+		{
+			getRightBorder().isVisible(),
+			getJoinStyle(),
+			+main_shift,
+			(getColor() && getRightBorder().dashed) ? 0 : 0.001 * getRightBorder().shift
+		},
+	};
+	return &border_hints;
 }
 
 
