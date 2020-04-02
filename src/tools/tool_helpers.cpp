@@ -546,10 +546,10 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 
 bool FollowPathToolHelper::canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept
 {
-	return snap_info.object->getType() == Object::Path
-	       && (snap_info.type == SnappingToolHelper::ObjectCorners
-	           || snap_info.type == SnappingToolHelper::ObjectPaths
-	           || snap_info.type == SnappingToolHelper::LineBorders);
+	return (snap_info.type == SnappingToolHelper::ObjectCorners
+	        || snap_info.type == SnappingToolHelper::ObjectPaths
+	        || snap_info.type == SnappingToolHelper::LineBorders)
+	       && snap_info.object->getType() == Object::Path;  // type implies object != nullptr
 }
 
 void FollowPathToolHelper::startFollowing(const SnappingToolHelperSnapInfo& snap_info)
