@@ -1136,32 +1136,12 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 {
 	Q_ASSERT(!isOutputDirty());  // implied by prerequisite to supply PathCoord
 	
-	if (!symbol || symbol->getType() != Symbol::Line)
+	if (!symbol)
 		return {};
 	
-	auto const& line_symbol = static_cast<LineSymbol const&>(*symbol);
-	if (!line_symbol.hasBorder())
+	auto* border_hints = symbol->borderHints();
+	if (!border_hints)
 		return {};
-	
-	struct EffectiveShifts
-	{
-		bool active;
-		double main_shift;
-		double border_shift;
-	};
-	
-	// When the main line is visible and the border is not a continuous line,
-	// we want to match the edge of the main line.
-	auto const left_side = EffectiveShifts {
-	                       line_symbol.getBorder().isVisible(),
-	                       -0.0005 * line_symbol.getLineWidth(), 
-	                       (line_symbol.getColor() && line_symbol.getBorder().dashed) ? 0 : -0.001 * line_symbol.getBorder().shift
-	};
-	auto const right_side = EffectiveShifts {
-	                        line_symbol.getRightBorder().isVisible(),
-	                        -left_side.main_shift, 
-	                        (line_symbol.getColor() && line_symbol.getRightBorder().dashed) ? 0 : 0.001 * line_symbol.getRightBorder().shift
-	};
 	
 	auto const part = findPartForIndex(path_coord.index);
 	auto const split = SplitPathCoord::at(part->path_coords, path_coord.clen);
@@ -1173,16 +1153,16 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 	auto const distance_squared = [&](auto const& side) {
 		if (!side.active)
 			return std::numeric_limits<qreal>::max();
-		return (path_coord.pos + (side.main_shift + side.border_shift) * offset_vector).distanceSquaredTo(coord);
+		return (path_coord.pos + (side.main_shift + side.extra_shift) * offset_vector).distanceSquaredTo(coord);
 	};
 	
-	auto distance_sq = distance_squared(left_side);
-	auto* selected_side = &left_side;
-	auto const right_distance_sq = distance_squared(right_side);
+	auto distance_sq = distance_squared(border_hints->left);
+	auto* selected_side = &border_hints->left;
+	auto const right_distance_sq = distance_squared(border_hints->right);
 	if (distance_sq > right_distance_sq)
 	{
 		distance_sq = right_distance_sq;
-		selected_side = &right_side;
+		selected_side = &border_hints->right;
 	}
 	if (distance_sq > qreal(in_distance_sq))
 		return {};
@@ -1192,7 +1172,7 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 	border_coords.reserve(part->size());
 	MapCoordVectorF border_coords_f;
 	border_coords_f.reserve(part->size());
-	LineSymbol::shiftCoordinates(*part, selected_side->main_shift, selected_side->border_shift, line_symbol.getJoinStyle(), border_coords, border_coords_f);
+	LineSymbol::shiftCoordinates(*part, selected_side->main_shift, selected_side->extra_shift, LineSymbol::JoinStyle(selected_side->join_style), border_coords, border_coords_f);
 	std::transform(begin(border_coords), end(border_coords), begin(border_coords_f), begin(border_coords),
 	               [](auto coord, auto const& coord_f){
 		coord.setX(coord_f.x());

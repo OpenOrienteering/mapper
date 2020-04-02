@@ -101,6 +101,23 @@ public:
 	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
 	
 	
+	/**
+	 * Hints for tools that operator on border lines.
+	 */
+	struct BorderHints
+	{
+		struct SingleSide
+		{
+			bool active;
+			int join_style;
+			double main_shift;
+			double extra_shift;
+		};
+		SingleSide left;
+		SingleSide right;
+	};
+	
+	
 	explicit Symbol(Type type) noexcept;
 	virtual ~Symbol();
 	
@@ -383,6 +400,13 @@ public:
 	 * Effectively, this is the half line width.
 	 */
 	virtual qreal calculateLargestLineExtent() const;
+	
+	/**
+	 * Determines the border hints for this symbol.
+	 * 
+	 * The default implementation returns nullptr.
+	 */
+	virtual const BorderHints* borderHints() const;
 	
 	
 	// Getters / Setters

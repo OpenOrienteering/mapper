@@ -195,6 +195,10 @@ public:
 	 */
 	qreal calculateLargestLineExtent() const override;
 	
+	/**
+	 * Determines the border hints for this line symbol.
+	 */
+	const BorderHints* borderHints() const override;
 	
 	
 	/**
@@ -427,6 +431,7 @@ protected:
 	// Border line details
 	LineSymbolBorder border;
 	LineSymbolBorder right_border;
+	mutable BorderHints border_hints;
 	
 	// Point symbols
 	PointSymbol* start_symbol;

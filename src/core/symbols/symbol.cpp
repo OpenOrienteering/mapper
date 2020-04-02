@@ -839,6 +839,11 @@ qreal Symbol::calculateLargestLineExtent() const
 	return 0;
 }
 
+const Symbol::BorderHints* Symbol::borderHints() const
+{
+	return nullptr;
+}
+
 
 
 QString Symbol::getPlainTextName() const

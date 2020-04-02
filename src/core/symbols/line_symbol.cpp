@@ -1740,6 +1740,31 @@ qreal LineSymbol::calculateLargestLineExtent() const
 }
 
 
+// virtual
+const Symbol::BorderHints* LineSymbol::borderHints() const
+{
+	if (!hasBorder())
+		return nullptr;
+	
+	auto const main_shift = 0.0005 * getLineWidth();
+	border_hints = {
+		{
+			getBorder().isVisible(),
+			getJoinStyle(),
+			-main_shift,
+			(getColor() && getBorder().dashed) ? 0 : -0.001 * getBorder().shift
+		},
+		{
+			getRightBorder().isVisible(),
+			getJoinStyle(),
+			+main_shift,
+			(getColor() && getRightBorder().dashed) ? 0 : 0.001 * getRightBorder().shift
+		},
+	};
+	return &border_hints;
+}
+
+
 
 void LineSymbol::setStartSymbol(PointSymbol* symbol)
 {
