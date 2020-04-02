@@ -1170,27 +1170,21 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 		return vector; 
 	}(split.tangentVector().perpRight());
 	
-	auto bound = qreal(in_distance_sq);
-	auto const distance_sq = [&](auto& side) {
+	auto const distance_squared = [&](auto const& side) {
 		if (!side.active)
-			return bound;
+			return std::numeric_limits<qreal>::max();
 		return (path_coord.pos + (side.main_shift + side.border_shift) * offset_vector).distanceSquaredTo(coord);
 	};
 	
-	auto const left_distance_sq = distance_sq(left_side);
-	auto const right_distance_sq = distance_sq(right_side);
-	EffectiveShifts const * selected_side = nullptr;
-	if (left_distance_sq < bound)
+	auto distance_sq = distance_squared(left_side);
+	auto* selected_side = &left_side;
+	auto const right_distance_sq = distance_squared(right_side);
+	if (distance_sq > right_distance_sq)
 	{
-		bound = left_distance_sq;
-		selected_side = &left_side;
-	}
-	if (right_distance_sq < bound)
-	{
-		bound = right_distance_sq;
+		distance_sq = right_distance_sq;
 		selected_side = &right_side;
 	}
-	if (!selected_side)
+	if (distance_sq > qreal(in_distance_sq))
 		return {};
 	
 	// Cf. LineSymbol::createBorderLines
