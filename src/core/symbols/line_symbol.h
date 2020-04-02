@@ -303,7 +303,7 @@ public:
 	static void shiftCoordinates(
 	        const VirtualPath& path,
 	        double main_shift,
-	        double u_border_shift,
+	        double border_shift,
 	        LineSymbol::JoinStyle join_style,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords

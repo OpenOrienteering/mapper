@@ -1155,7 +1155,7 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 	auto const left_side = EffectiveShifts {
 	                       line_symbol.getBorder().isVisible(),
 	                       -0.0005 * line_symbol.getLineWidth(), 
-	                       (line_symbol.getColor() && line_symbol.getBorder().dashed) ? 0 : 0.001 * line_symbol.getBorder().shift
+	                       (line_symbol.getColor() && line_symbol.getBorder().dashed) ? 0 : -0.001 * line_symbol.getBorder().shift
 	};
 	auto const right_side = EffectiveShifts {
 	                        line_symbol.getRightBorder().isVisible(),
@@ -1174,8 +1174,7 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 	auto const distance_sq = [&](auto& side) {
 		if (!side.active)
 			return bound;
-		auto shift = side.main_shift + ((side.main_shift > 0.0) ? side.border_shift : -side.border_shift);
-		return (path_coord.pos + shift * offset_vector).distanceSquaredTo(coord);
+		return (path_coord.pos + (side.main_shift + side.border_shift) * offset_vector).distanceSquaredTo(coord);
 	};
 	
 	auto const left_distance_sq = distance_sq(left_side);
