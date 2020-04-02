@@ -97,7 +97,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>La carte contient plus de 24 couleurs spot, ce qui n&apos;est pas supporté par OCD version 8.</translation>
+        <translation>La carte contient plus de 24 couleurs PMS, ce qui n&apos;est pas supporté par OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
@@ -108,7 +108,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation>Couleur de spot invalide.</translation>
+        <translation>Couleur PMS invalide.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
@@ -118,7 +118,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2478"/>
         <source>Unable to export template: file type of &quot;%1&quot; is not supported yet</source>
-        <translation type="unfinished">Impossible d&apos;exporter le modèle : le type du fichier (%1) n&apos;est pas encore pris en charge</translation>
+        <translation>Impossible d&apos;exporter le modèle : le type du fichier (%1) n&apos;est pas encore pris en charge</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2727"/>
@@ -473,7 +473,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation>Impression en ton direct</translation>
+        <translation>Impression en ton direct (PMS)</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -483,17 +483,17 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished">Résolution (lignes par pouce)</translation>
+        <translation>Résolution (lignes par pouce) :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished">lpi</translation>
+        <translation>lpi</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished">Non-défini</translation>
+        <translation>Non-défini</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
@@ -522,7 +522,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
-        <translation>Knockout : efface les couleurs les plus basses</translation>
+        <translation>Knockout : efface les couleurs plus basses dans la table</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="161"/>
@@ -726,7 +726,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1547,7 +1547,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation>Taille icône de symbole:</translation>
+        <translation>Taille icône de symbole :</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
@@ -1636,7 +1636,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Impossible de sauvegarder le fichier
+        <translation>Impossible de sauvegarder le fichier
 %1 :
 %2</translation>
     </message>
@@ -1686,7 +1686,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2065"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dans symbole composé %1 : sous-symbole non pris en charge à index %2.</translation>
     </message>
 </context>
 <context>
@@ -1735,7 +1735,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Hatch areas</source>
-        <translation type="unfinished">Hachurer les surfaces</translation>
+        <translation>Hachurer les surfaces</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -2117,7 +2117,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
         <source>(Datum: WGS84)</source>
-        <translation>(Datum: WGS84)</translation>
+        <translation>(Datum : WGS84)</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="154"/>
@@ -2194,7 +2194,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="242"/>
         <source>Grivation:</source>
-        <translation>Déclinaison magnétique :</translation>
+        <translation type="unfinished">Déclinaison du quadrillage :</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="401"/>
@@ -3014,12 +3014,12 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
         <source>Offset at start:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ecart de début :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="683"/>
         <source>Offset at end:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ecart de fin :</translation>
     </message>
     <message>
         <location filename="../src/core/symbols/line_symbol.cpp" line="1725"/>
@@ -4456,12 +4456,12 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Load CRT file...</source>
-        <translation>Charge le fichier de correspondance des symboles...</translation>
+        <translation>Charger le fichier de correspondance des symboles (CRT) ...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Assign new symbols by cross-reference table</source>
-        <translation>Assigne les nouveaux symboles avec la table de correspondance des symboles</translation>
+        <translation>Assigner les nouveaux symboles avec la table de correspondance des symboles</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
@@ -4642,7 +4642,7 @@ car enregistrer en %2 (.%3) n&apos;est pas supporté.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2059"/>
         <source>Edit the symbol set ID:</source>
-        <translation>Editer l&apos;ID du symbole:</translation>
+        <translation>Editer l&apos;identifiant de la table de symboles :</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2218"/>
@@ -5107,7 +5107,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/gui/color_dialog.cpp" line="288"/>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="73"/>
         <source>Text source:</source>
-        <translation type="unfinished">Text source:</translation>
+        <translation type="unfinished">Source du texte :</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="540"/>
@@ -5486,8 +5486,8 @@ utiliser la molette de la souris pour zoomer.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="165"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
-            <numerusform>%n la séparation des couleurs n&apos;a pas eu lieu, raison: Import désactivé.</numerusform>
-            <numerusform>%n la séparations des couleurs n&apos;a pas eu lieu, raison: Import désactivé.</numerusform>
+            <numerusform>%n séparation de couleur non pris en compte : import désactivé.</numerusform>
+            <numerusform>%n séparations de couleur non pris en compte : import désactivé.</numerusform>
         </translation>
     </message>
     <message>
@@ -5924,7 +5924,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1826"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Dans symbole texte %1 : l&apos;espacement personnalisé de caractère est activé, l&apos;implémentation ne correspond pas encore au comportement d&apos;OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1842"/>
@@ -5947,22 +5947,22 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1691"/>
         <source>Failed to create dataset: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Echec lors de la création du jeu de données : %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1736"/>
         <source>Failed to create layer: %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Echec lors de la création de la couche : %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1874"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">La carte n&apos;est pas géoréférencée. Système local de référence seulement.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1887"/>
         <source>Failed to properly export the georeferencing info. Local georeferencing only.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Echec lors de l&apos;export du géoréférencement. Système local de référence seulement.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1897"/>
@@ -6669,7 +6669,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>La sauvegarde de l&apos;image a échoué. Le chemin est il valide ? Avez vous les droits suffisants ?</translation>
+        <translation type="unfinished">La sauvegarde de l&apos;image a échoué. Vérifier le chemin d&apos;accès et vos autorisations.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
@@ -7018,7 +7018,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="77"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Switch to individual object scaling. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;b&gt;%1&lt;/b&gt; : Basculer vers redimensionner des objets individuels. </translation>
     </message>
     <message>
         <location filename="../src/tools/scale_tool.cpp" line="73"/>
@@ -7523,7 +7523,7 @@ des couleurs</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="130"/>
         <source>Edit the symbol set ID:</source>
-        <translation>Editer ID du symbole:</translation>
+        <translation>Editer l&apos;identifiant de la table de symboles :</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="133"/>
@@ -7598,7 +7598,7 @@ des couleurs</translation>
 %1
 
 %2</source>
-        <translation>Impossible de sauvegarder le fichier:
+        <translation>Impossible de sauvegarder le fichier :
 %1
 
 %2</translation>
@@ -7996,7 +7996,7 @@ traverser les jattes de kiwis
         <location filename="../src/gdal/gdal_template.cpp" line="91"/>
         <location filename="../src/templates/template_image.cpp" line="206"/>
         <source>Georeferencing not found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Géoréférencement non trouvé</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -8273,7 +8273,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vectoriser les lignes</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
@@ -8325,7 +8325,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1107"/>
         <source>Cannot change the georeferencing state.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Impossible de modifier l&apos;état du géoréférencement.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1235"/>
@@ -8384,7 +8384,7 @@ Si vous ne souhaitez pas dessiner sur le modèle, cela ne pose alors aucun probl
     <message>
         <location filename="../src/templates/template_position_dock_widget.cpp" line="58"/>
         <source>Shear:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Transvection :</translation>
     </message>
 </context>
 <context>
@@ -8923,7 +8923,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="663"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>Les différentes parties du fichier ne peut pas être lu par cette version de Mapper. Ma version minimale requise est : %1</translation>
+        <translation>Certaines parties du fichier ne peuvent pas être lues par cette version de Mapper. Version minimale requise : %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="644"/>
@@ -8939,7 +8939,7 @@ La version maximale supportée est la version %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="698"/>
         <source>Unknown error</source>
-        <translation>Erreur inconnu</translation>
+        <translation>Erreur inconnue</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="699"/>
