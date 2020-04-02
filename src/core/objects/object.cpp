@@ -1104,7 +1104,7 @@ void PathObject::setPatternOrigin(const MapCoord& origin)
 }
 
 void PathObject::calcClosestPointOnPath(
-        MapCoordF coord,
+        const MapCoordF& coord,
         float& out_distance_sq,
         PathCoord& out_path_coord,
         MapCoordVector::size_type start_index,
@@ -1128,7 +1128,7 @@ void PathObject::calcClosestPointOnPath(
 }
 
 std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
-        MapCoordF coord,
+        const MapCoordF& coord,
         const PathCoord& path_coord,
         float const in_distance_sq,
         float& out_distance_sq,
@@ -1212,7 +1212,10 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 	return result;
 }
 
-void PathObject::calcClosestCoordinate(MapCoordF coord, float& out_distance_sq, MapCoordVector::size_type& out_index) const
+void PathObject::calcClosestCoordinate(
+        const MapCoordF& coord,
+        float& out_distance_sq,
+        MapCoordVector::size_type& out_index) const
 {
 	update();
 	
@@ -2432,7 +2435,11 @@ bool PathObject::simplify(PathObject** undo_duplicate, double threshold)
 	return removed_a_point;
 }
 
-int PathObject::isPointOnPath(MapCoordF coord, qreal tolerance, bool treat_areas_as_paths, bool extended_selection) const
+int PathObject::isPointOnPath(
+        const MapCoordF& coord,
+        qreal tolerance,
+        bool treat_areas_as_paths,
+        bool extended_selection) const
 {
 	auto side_tolerance = tolerance;
 	if (extended_selection && map && (symbol->getType() == Symbol::Line || symbol->getType() == Symbol::Combined))

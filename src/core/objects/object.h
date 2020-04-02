@@ -693,7 +693,7 @@ public:
 	 * \todo Return PathCoord rather than writing to the provided reference.
 	 */
 	void calcClosestPointOnPath(
-	        MapCoordF coord,
+	        const MapCoordF& coord,
 	        float& out_distance_sq,
 	        PathCoord& out_path_coord,
 	        MapCoordVector::size_type start_index = 0,
@@ -718,7 +718,7 @@ public:
 	 * \todo Get rid of output parameters.
 	 */
 	std::shared_ptr<PathObject> calcClosestPointOnBorder(
-	        MapCoordF coord,
+	        const MapCoordF& coord,
 	        const PathCoord& path_coord,
 	        float in_distance_sq,
 	        float& out_distance_sq,
@@ -732,7 +732,7 @@ public:
 	 * \todo Return index rather than writing to the provided reference.
 	 */
 	void calcClosestCoordinate(
-	        MapCoordF coord,
+	        const MapCoordF& coord,
 	        float& out_distance_sq,
 	        MapCoordVector::size_type& out_index) const;
 	
@@ -865,7 +865,7 @@ public:
 	
 	/** See Object::isPointOnObject() */
 	int isPointOnPath(
-	        MapCoordF coord,
+	        const MapCoordF& coord,
 	        qreal tolerance,
 	        bool treat_areas_as_paths,
 	        bool extended_selection
