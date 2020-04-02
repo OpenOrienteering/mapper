@@ -6,47 +6,47 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symbole de surimpression</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour symbole de surimpression</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour voie ferrée</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symboles de circuit</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir en dessous du pourpre pour circuits</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -61,32 +61,32 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun supérieur 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun supérieur 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun inférieur 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun inférieur 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100% pour surfaces</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 60% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 30% pour layon étroit</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur vert</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100%/Vert 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%/Noir 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour surfaces</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour végétation basse</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur jaune</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir pour terrain ouvert</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour surfaces</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -195,7 +195,19 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ligne qui relie les points de même altitude. L&apos;équidistance standard entre deux courbes est de 5 mètres. Un intervalle de 2,5m peut être utilisé
+en cas de terrain plat.
+Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une courbe de niveau fermée sur elle-même représente une colline ou une dépression. Une dépression doit comprendre au moins un tiret de pente. La hauteur (colline) ou la profondeur (dépression) minimale devrait être de 1 m.
+Le rapport entre des courbes de niveau adjacentes est important. Ce rapport permet de représenter le relief et la structure du terrain. Il faudrait éviter de dessiner des petits détails dans des courbes de niveau pour ne pas masquer les formes principales du relief.
+Pour assurer une bonne lisibilité, il y a parfois besoin d&apos;exagérer dans leur dessin des éléments significatifs comme les dépressions, les rentrants, les éperons, les abrupts de terre et les terrasses.
+La précision absolue des altitudes n&apos;a que peu d&apos;importance, mais les différences d&apos;altitude relative entre éléments voisins devraient être représentées sur la carte le plus précisément possible. Il est autorisé de modifier légèrement l&apos;altitude d&apos;une courbe de niveau si cela améliore la représentation d&apos;un élément. L&apos;écart ne doit pas dépasser 25% de l&apos;équidistance et une attention particulière doit être
+portée aux éléments proches.
+La courbure minimale d&apos;une courbe de niveau est de 0,25 mm de centre à centre de la ligne (emprise au sol de 4m). L&apos;entrée d&apos;un rentrant ou d&apos;un
+éperon doit mesurer au moins 0,5 mm de centre à centre de la ligne (emprise au sol 8 m).
+La longueur minimum d&apos;une colline est de 0,9 mm (emprise au sol de 13,5 m) et la largeur minimale de 0,6 mm (emprise au sol de 9 m) mesurée depuis les bords extérieurs des lignes. Des buttes remarquables plus petites peuvent être représentées par le symbole Petite butte (109) ou Petite butte allongée (110) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
+Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum. 
+Les courbes de niveau devraient être déplacées (plutôt que coupées) quand il est nécessaire d&apos;éviter de toucher des symboles Petite butte (109) ou Petite butte allongée (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -206,7 +218,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une dépression doit comporter au moins un tiret de pente.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +231,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les 5 courbes, une courbe de niveau maîtresse doit être dessinée en utilisant un trait plus épais. C&apos;est une aide pour appréhender rapidement les dénivelées et la forme globale du relief.
+Lorsqu&apos;une courbe maîtresse passe dans une zone où figurent de nombreux détails, elle peut être dessinée comme une courbe de niveau ordinaire. Normalement, les petites collines ou les petites dépressions ne sont pas dessinées avec une courbe maîtresse.
+Dans un terrain plat, il faut être attentif au choix de laquelle des courbes de niveau est dessinée en courbe maitresse. Le niveau idéal pour le choix de la courbe maîtresse est le niveau médian des pentes les plus remarquables.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -228,7 +243,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Il est possible d&apos;associer une cote d&apos;altitude à une courbe maîtresse. Une cote ne peut être insérée sur une courbe maîtresse que dans les zones où elle ne cachera pas d&apos;autres détails. Les chiffres sont orientés avec leur sommet en amont de la pente. Le texte doit avoir une hauteur de 1,5 mm en police sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -240,7 +255,10 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Les courbes de forme (ou courbes intermédiaires) sont utilisées quand il est nécessaire de donner plus d&apos;information sur la forme du terrain. Elles ne seront utilisées que si les courbes de niveau seules ne peuvent pas donner une bonne représentation du terrain. Une seule courbe de forme peut être dessinée entre deux courbes de niveau adjacentes. Il est très important que les courbes de forme complètent de manière logique le schéma des courbes de niveau : de ce fait le début et
+la fin d&apos;une courbe de forme devraient être parallèles avec les courbes de niveau adjacentes. Les espaces entre les tirets doivent être placés sur des sections relativement rectilignes de la courbe de forme. Les courbes de forme peuvent être utilisées pour le dessin des collines ou dépressions plus évasées que d&apos;autres dans le secteur (hauteur/profondeur minimale 1 m). Une utilisation excessive des courbes de forme doit être évitée car cela nuit à la perception en 3 dimensions du relief et complique la lecture de la carte.
+Longueur minimale (courbe non refermée sur elle-même) : 2 tirets
+Longueur minimale pour une courbe refermée sur elle-même (colline ou dépression) : 1,1 mm (16,5 m au sol).</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -251,10 +269,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
-Ils doivent être positionnés au niveau des rentrants.
-Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
-ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. Ils doivent être positionnés au niveau des rentrants.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -267,7 +282,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -280,7 +298,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -293,7 +314,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -313,7 +337,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -324,7 +348,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Levée ou mur de terre distinct. Hauteur minimum 1 m.
+Longueur minimum : 1,4 mm (emprise au sol 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -335,7 +360,8 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une levée de terre en ruine ou moins facile à distinguer. Hauteur minimum 0,5 m.
+Longueur minimum : 2 tirets (3,65 mm - emprise au sol 55 m). Si la levée de terre est plus courte le dessin doit l&apos;exagérer pour atteindre la longueur minimum ou bien il faut utiliser le symbole Levée de terre (105).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -347,7 +373,9 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ravine qui est trop petite pour être dessinée à l&apos;aide du symbole Abrupt de terre (104), est dessinée en utilisant un simple trait. Profondeur minimum : 1 m.
+Longueur minimum 1,15 mm (emprise au sol 17 m).
+Les courbes de niveau ne devraient pas être interrompues autour de ce symbole.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -359,7 +387,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite ravine, un fossé sec ou une tranchée. Profondeur minimum : 0,5 m.
+Longueur minimum (sauf si elle est relié à une autre petite ravine) : 3 points (1,15 mm, emprise au sol 17 m).
+Les courbes de niveau devraient être interrompues autour de ce symbole.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -372,7 +402,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite butte ou un monticule évident qui ne peut pas être dessiné en utilisant une courbe de niveau.
+Hauteur minimum : 1 m.
+Le symbole ne doit pas toucher ou se superposer avec des courbes de niveau.
+Emprise au sol 7,5 m x 7,5 m.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -385,7 +418,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite butte allongée évidente qui ne peut pas être dessinée en utilisant une courbe de niveau.
+Hauteur minimum : 1 m.
+Le symbole ne doit pas toucher ou se superposer avec des courbes de niveau.
+Emprise au sol 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -399,7 +435,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite dépression sans bords raides qui est trop petite pour être représentée par une courbe de niveau.
+Profondeur minimum : 1 m. Largeur minimum : 2 m.
+Les petites dépressions dont les bords sont raides sont représentées par le symbole Trou (112).
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune. Le positionnement est le centre de gravité du symbole et le symbole est orienté au Nord.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -413,7 +453,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou aux bords raides nets qui ne peut pas être dessiné en utilisant le symbole 104 (abrupt de terre).
+Profondeur minimum : 1 m. Largeur minimum : 1 m.
+Un trou plus grand que 5 m par 5 m devrait normalement être exagéré et représenté en utilisant le symbole Abrupt de terre (104). Des trous dont les bords ne sont pas raides sont représentés par le symbole Petite dépression (111).
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune. Le positionnement est le centre de gravité du symbole et le symbole est orienté au Nord.
+Emprise au sol : 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
