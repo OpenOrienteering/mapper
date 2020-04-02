@@ -373,7 +373,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
-					PathCoord path_coord;
+					auto path_coord = PathCoord {};
 					path->calcClosestPointOnPath(position, distance_sq, path_coord);
 					if (distance_sq < closest_distance_sq)
 					{
