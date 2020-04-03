@@ -97,7 +97,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>La carte contient plus de 24 couleurs PMS, ce qui n&apos;est pas supporté par OCD version 8.</translation>
+        <translation>La carte contient plus de 24 couleurs tons directs, ce qui n&apos;est pas pris en charge par OCD version 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="773"/>
@@ -108,7 +108,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="817"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="829"/>
         <source>Invalid spot color.</source>
-        <translation>Couleur PMS invalide.</translation>
+        <translation>Couleur ton direct invalide.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2462"/>
@@ -473,7 +473,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation>Impression en ton direct (PMS)</translation>
+        <translation>Impression en ton direct</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
