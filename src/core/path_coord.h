@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_PATH_COORD_H
 #define OPENORIENTEERING_PATH_COORD_H
 
+#include <memory>
 #include <vector>
 
 #include <QtGlobal>
@@ -31,6 +32,7 @@
 namespace OpenOrienteering {
 
 class PathCoordVector;
+class PathObject;
 
 
 /**
@@ -151,6 +153,28 @@ public:
 	 * be considered for determining path tangents.
 	 */
 	static constexpr qreal tangentEpsilonSquared();
+};
+
+
+
+/**
+ * The structure returned when looking for closest coordinates on a path.
+ */
+struct ClosestPathCoord
+{
+	PathCoord path_coord;
+	double distance_squared;
+};
+
+
+
+/**
+ * The structure returned when looking for closest coordinates on the border of a path.
+ */
+struct ClosestBorderPathCoord
+{
+	std::shared_ptr<PathObject> border;
+	ClosestPathCoord closest;
 };
 
 

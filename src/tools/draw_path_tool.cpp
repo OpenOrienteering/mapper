@@ -1055,12 +1055,10 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 
 void DrawPathTool::updateFollowing()
 {
-	PathCoord path_coord;
-	float distance_sq;
 	const auto* followed_object = follow_helper->followedObject();
 	const auto& part = followed_object->parts()[follow_helper->partIndex()];
-	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
-	auto derived_path = follow_helper->updateFollowing(path_coord);
+	auto closest = followed_object->findClosestPointTo(cur_pos_map, part.first_index, part.last_index);
+	auto derived_path = follow_helper->updateFollowing(closest.path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started

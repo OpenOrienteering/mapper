@@ -461,8 +461,6 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 			continue;
 		
 		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(point)));
-		PathCoord path_coord;
-		float distance_sq;
 		
 		if (pixel != last_pixel)
 		{
@@ -470,44 +468,44 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 			append_section(section);
 			
 			section.object = map()->getCurrentPart()->getObject(int(pixel & RGB_MASK))->asPath();
-			section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-			section.part = section.object->findPartIndexForIndex(path_coord.index);
-			section.start_clen = path_coord.clen;
-			section.end_clen = path_coord.clen;
+			auto closest = section.object->findClosestPointTo(map_pos);
+			section.part = section.object->findPartIndexForIndex(closest.path_coord.index);
+			section.start_clen = closest.path_coord.clen;
+			section.end_clen = closest.path_coord.clen;
 			last_pixel = pixel;
 			threshold = section.object->parts()[section.part].length() - 5*pixel_length;
 			continue;
 		}
 		
-		section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-		auto part = section.object->findPartIndexForIndex(path_coord.index);
+		auto closest = section.object->findClosestPointTo(map_pos);
+		auto part = section.object->findPartIndexForIndex(closest.path_coord.index);
 		if (Q_UNLIKELY(part != section.part))
 		{
 			// Change of path part
 			append_section(section);
 			
 			section.part = part;
-			section.start_clen = path_coord.clen;
-			section.end_clen = path_coord.clen;
+			section.start_clen = closest.path_coord.clen;
+			section.end_clen = closest.path_coord.clen;
 			threshold = section.object->parts()[section.part].length() - 4*pixel_length;
 			continue;
 		}
 		
-		if (section.end_clen - path_coord.clen >= threshold)
+		if (section.end_clen - closest.path_coord.clen >= threshold)
 		{
 			// Forward over closing point
 			section.end_clen = section.object->parts()[section.part].length();
 			append_section(section);
 			section.start_clen = 0;
 		}
-		else if (path_coord.clen - section.end_clen >= threshold)
+		else if (closest.path_coord.clen - section.end_clen >= threshold)
 		{
 			// Backward over closing point
 			section.end_clen = 0;
 			append_section(section);
 			section.start_clen = section.object->parts()[section.part].length();
 		}
-		section.end_clen = path_coord.clen;
+		section.end_clen = closest.path_coord.clen;
 	}
 	// Final section
 	append_section(section);

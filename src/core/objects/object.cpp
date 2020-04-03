@@ -26,6 +26,7 @@
 #include <cstddef>
 #include <iterator>
 #include <memory>
+#include <numeric>
 #include <stdexcept>
 #include <type_traits>
 
@@ -1103,36 +1104,35 @@ void PathObject::setPatternOrigin(const MapCoord& origin)
 	setOutputDirty();
 }
 
-void PathObject::calcClosestPointOnPath(
+ClosestPathCoord PathObject::findClosestPointTo(
         const MapCoordF& coord,
-        float& out_distance_sq,
-        PathCoord& out_path_coord,
-        MapCoordVector::size_type start_index,
-        MapCoordVector::size_type end_index) const
+        MapCoordVector::size_type const start_index,
+        MapCoordVector::size_type const end_index) const
 {
 	update();
 	
-	auto bound = std::numeric_limits<float>::max();
-	for (const auto& part : path_parts)
-	{
+	auto const op = [&](auto acc, auto const& part) {
 		if (part.first_index <= end_index && part.last_index >= start_index) /// \todo Legacy compatibility, review/remove
 		{
-			auto path_coord = part.findClosestPointTo(coord, out_distance_sq, bound, start_index, end_index);
-			if (out_distance_sq < bound)
+			auto closest = part.findClosestPointTo(coord, acc.distance_squared, start_index, end_index);
+			if (closest.distance_squared < acc.distance_squared)
 			{
-				bound = out_distance_sq;
-				out_path_coord = path_coord;
+				return closest;
 			}
 		}
-	}
+		return acc;
+	};
+	
+	using distance_type = decltype(ClosestPathCoord::distance_squared);
+	return std::accumulate(begin(path_parts), end(path_parts),
+	                       ClosestPathCoord { {}, std::numeric_limits<distance_type>::max() },
+	                       op);
 }
 
-std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
+ClosestBorderPathCoord PathObject::findClosestPointOnBorder(
         const MapCoordF& coord,
         const PathCoord& path_coord,
-        float const in_distance_sq,
-        float& out_distance_sq,
-        PathCoord& out_path_coord) const
+        double const distance_bound_squared) const
 {
 	Q_ASSERT(!isOutputDirty());  // implied by prerequisite to supply PathCoord
 	
@@ -1164,7 +1164,7 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 		distance_sq = right_distance_sq;
 		selected_side = &border_hints->right;
 	}
-	if (distance_sq > qreal(in_distance_sq))
+	if (distance_sq > distance_bound_squared)
 		return {};
 	
 	// Cf. LineSymbol::createBorderLines
@@ -1180,41 +1180,35 @@ std::shared_ptr<PathObject> PathObject::calcClosestPointOnBorder(
 		return coord;
 	});
 	
-	auto result = std::make_shared<PathObject>(Map::getUndefinedLine(), std::move(border_coords));
-	result->calcClosestPointOnPath(coord, out_distance_sq, out_path_coord);
+	auto result = ClosestBorderPathCoord { std::make_shared<PathObject>(Map::getUndefinedLine(), std::move(border_coords)), {} };
+	result.closest = result.border->findClosestPointTo(coord);
 	return result;
 }
 
-void PathObject::calcClosestCoordinate(
-        const MapCoordF& coord,
-        float& out_distance_sq,
-        MapCoordVector::size_type& out_index) const
+MapCoordVector::size_type PathObject::findClosestCoordinate(const MapCoordF& coord) const
 {
 	update();
 	
 	auto coords_size = coords.size();
 	if (coords_size == 0)
-	{
-		out_distance_sq = -1;
-		out_index = -1;
-		return;	
-	}
+		return std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	// NOTE: do not try to optimize this by starting with index 1, it will overlook curve starts this way
-	out_distance_sq = 999999;
-	out_index = 0;
+	auto min_distance_sq = 999999.9;
+	MapCoordVector::size_type out_index = 0;
 	for (MapCoordVector::size_type i = 0; i < coords_size; ++i)
 	{
 		double length_sq = (coord - MapCoordF(coords[i])).lengthSquared();
-		if (length_sq < out_distance_sq)
+		if (length_sq < min_distance_sq)
 		{
-			out_distance_sq = length_sq;
+			min_distance_sq = length_sq;
 			out_index = i;
 		}
 		
 		if (coords[i].isCurveStart())
 			i += 2;
 	}
+	return out_index;
 }
 
 MapCoordVector::size_type PathObject::subdivide(const PathCoord& path_coord)
@@ -1886,14 +1880,12 @@ float PathObject::calcBezierPointDeletionRetainingShapeCost(MapCoord p0, MapCoor
 	const int num_test_points = 20;
 	QBezier curve = QBezier::fromPoints(QPointF(p0), QPointF(p1), QPointF(p2), QPointF(p3));
 	
-	float cost = 0;
+	auto cost = 0.0;
 	for (int i = 0; i < num_test_points; ++i)
 	{
-		auto point = MapCoordF { curve.pointAt((i + 1) / (float)(num_test_points + 1)) };
-		float distance_sq;
-		PathCoord path_coord;
-		reference->calcClosestPointOnPath(MapCoordF(point), distance_sq, path_coord);
-		cost += distance_sq;
+		auto point = MapCoordF { curve.pointAt((i + 1) / double(num_test_points + 1)) };
+		auto closest = reference->findClosestPointTo(MapCoordF(point));
+		cost += closest.distance_squared;
 	}
 	// Just some random scaling to pretend that we have 50 sample points
 	return cost * (50 / 20.0f);
@@ -2513,7 +2505,7 @@ double PathObject::calcMaximumDistanceTo(
 	
 	const float test_points_per_mm = 2;
 	
-	float max_distance_sq = 0.0;
+	auto max_distance_sq = 0.0;
 	for (const auto& part : path_parts)
 	{
 		if (part.first_index <= end_index && part.last_index >= start_index )
@@ -2528,10 +2520,8 @@ double PathObject::calcMaximumDistanceTo(
 					--pc_end;
 			}
 			
-			PathCoord path_coord;
-			float distance_sq = 0.0;
-			other->calcClosestPointOnPath(pc_start->pos, distance_sq, path_coord, other_start_index, other_end_index);
-			max_distance_sq = qMax(max_distance_sq, distance_sq);
+			auto closest = other->findClosestPointTo(pc_start->pos, other_start_index, other_end_index);
+			max_distance_sq = qMax(max_distance_sq, closest.distance_squared);
 			
 			for (auto pc = pc_start; pc != pc_end; ++pc)
 			{
@@ -2542,9 +2532,9 @@ double PathObject::calcMaximumDistanceTo(
 				int num_test_points = qMax(1, qRound(len * test_points_per_mm));
 				for (int p = 1; p <= num_test_points; ++p)
 				{
-					MapCoordF point = pc->pos + direction * ((float)p / num_test_points);
-					other->calcClosestPointOnPath(point, distance_sq, path_coord, other_start_index, other_end_index);
-					max_distance_sq = qMax(max_distance_sq, distance_sq);
+					MapCoordF point = pc->pos + direction * (double(p) / num_test_points);
+					closest = other->findClosestPointTo(point, other_start_index, other_end_index);
+					max_distance_sq = qMax(max_distance_sq, closest.distance_squared);
 				}
 			}
 		}

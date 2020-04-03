@@ -330,7 +330,7 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
 	auto snap_distance = widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx() / 1000);
-	auto closest_distance_sq = float(snap_distance * snap_distance); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
+	auto closest_distance_sq = snap_distance * snap_distance;
 	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
@@ -354,11 +354,10 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 			if (object == exclude_object)
 				continue;
 			
-			auto distance_sq = float(-1); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
-				distance_sq = point->getCoordF().distanceSquaredTo(position);
+				auto distance_sq = point->getCoordF().distanceSquaredTo(position);
 				if (distance_sq < closest_distance_sq)
 				{
 					closest_distance_sq = distance_sq;
@@ -373,52 +372,54 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
-					auto path_coord = PathCoord {};
-					path->calcClosestPointOnPath(position, distance_sq, path_coord);
-					if (distance_sq < closest_distance_sq)
+					auto closest = path->findClosestPointTo(position);
+					if (closest.distance_squared < closest_distance_sq)
 					{
-						closest_distance_sq = distance_sq;
-						result_position = MapCoord(path_coord.pos);
+						closest_distance_sq = closest.distance_squared;
+						result_position = MapCoord(closest.path_coord.pos);
 						result_info.object = object;
-						if (path_coord.param == 0)
+						if (closest.path_coord.param == 0)
 						{
 							result_info.type = ObjectCorners;
-							result_info.coord_index = path_coord.index;
+							result_info.coord_index = closest.path_coord.index;
 						}
 						else
 						{
 							result_info.type = ObjectPaths;
 							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
-							result_info.path_coord = path_coord;
+							result_info.path_coord = closest.path_coord;
 						}
 					}
 					
 					if (filter & LineBorders)
 					{
-						auto result = path->calcClosestPointOnBorder(position, path_coord, closest_distance_sq, distance_sq, path_coord);
-						if (result)
+						auto result = path->findClosestPointOnBorder(position, closest.path_coord, closest_distance_sq);
+						if (result.border)
 						{
-							closest_distance_sq = distance_sq;
-							result_info.border_path = std::move(result);
+							closest_distance_sq = result.closest.distance_squared;
+							result_info.border_path = std::move(result.border);
 							result_info.type = LineBorders;
 							result_info.object = result_info.border_path.get();
 							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
-							result_info.path_coord = path_coord;
-							result_position = MapCoord(path_coord.pos);
+							result_info.path_coord = result.closest.path_coord;
+							result_position = MapCoord(result.closest.path_coord.pos);
 						}
 					}
 				}
 				else
 				{
-					MapCoordVector::size_type index;
-					path->calcClosestCoordinate(position, distance_sq, index);
-					if (distance_sq < closest_distance_sq)
+					auto const index = path->findClosestCoordinate(position);
+					if (index < std::numeric_limits<MapCoordVector::size_type>::max())
 					{
-						closest_distance_sq = distance_sq;
-						result_position = path->getCoordinate(index);
-						result_info.type = ObjectCorners;
-						result_info.object = object;
-						result_info.coord_index = index;
+						auto const distance_sq = position.distanceSquaredTo(MapCoordF(path->getCoordinate(index)));
+						if (distance_sq < closest_distance_sq)
+						{
+							closest_distance_sq = distance_sq;
+							result_position = path->getCoordinate(index);
+							result_info.type = ObjectCorners;
+							result_info.object = object;
+							result_info.coord_index = index;
+						}
 					}
 				}
 			}
@@ -435,7 +436,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
 		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
-		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
+		auto const distance_sq = closest_grid_point.distanceSquaredTo(position);
 		if (distance_sq < closest_distance_sq)
 		{
 			// unused: closest_distance_sq = distance_sq;

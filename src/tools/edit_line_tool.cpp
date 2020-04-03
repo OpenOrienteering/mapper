@@ -552,27 +552,25 @@ void EditLineTool::updateHoverState(const MapCoordF& cursor_pos)
 		// Check selected objects
 		if (map()->selectedObjects().size() <= max_objects_for_handle_display)
 		{
-			float click_tolerance_sq = qPow(0.001f * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
-			float best_distance_sq = std::numeric_limits<float>::max();
+			auto click_tolerance_sq = qPow(0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance()), 2);
+			auto best_distance_sq = std::numeric_limits<double>::max();
 			
 			for (auto object : map()->selectedObjects())
 			{
 				if (object->getType() == Object::Path)
 				{
 					PathObject* path = object->asPath();
-					float distance_sq;
-					PathCoord path_coord;
-					path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+					auto closest = path->findClosestPointTo(cursor_pos);
 					
-					if (distance_sq >= +0.0 &&
-					    distance_sq < best_distance_sq &&
-					    distance_sq < qMax(click_tolerance_sq, (float)qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
+					if (closest.distance_squared >= +0.0 &&
+					    closest.distance_squared < best_distance_sq &&
+					    closest.distance_squared < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
 					{
 						new_hover_state  = OverPathEdge;
 						new_hover_object = path;
-						new_hover_line   = path_coord.index;
-						best_distance_sq = distance_sq;
-						handle_offset    = path_coord.pos - cursor_pos;
+						new_hover_line   = closest.path_coord.index;
+						best_distance_sq = closest.distance_squared;
+						handle_offset    = closest.path_coord.pos - cursor_pos;
 						
 						const auto part = path->findPartForIndex(new_hover_line);
 						if (new_hover_line == part->last_index)

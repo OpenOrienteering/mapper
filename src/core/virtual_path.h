@@ -237,10 +237,9 @@ public:
 	
 	bool isPointInside(const MapCoordF& coord) const;
 	
-	PathCoord findClosestPointTo(
+	ClosestPathCoord findClosestPointTo(
 	        MapCoordF coord,
-	        float& distance_squared,
-	        float distance_bound_squared,
+	        double distance_bound_squared,
 	        size_type start_index,
 	        size_type end_index) const;
 	
