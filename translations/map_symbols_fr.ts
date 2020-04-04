@@ -1110,7 +1110,7 @@ Surface minimale (bords intérieurs) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8
     <message>
         <source>Shallow body of water, with solid outline</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue d’eau de faible profondeur, avec bordure continue</translation>
     </message>
     <message>
         <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
