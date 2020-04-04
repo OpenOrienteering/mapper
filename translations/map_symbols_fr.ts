@@ -1272,7 +1272,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais franchissable, habituellement avec un bord net.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 0,5 x 0,4 mm (emprise au sol 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -1285,7 +1288,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais franchissable, habituellement avec un bord net.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 0,5 x 0,4 mm (emprise au sol 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -1296,7 +1302,8 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais ou un filet d&apos;eau qui est trop étroit pour être représenté avec le symbole marais.
+Longueur minimum (isolé) : 2 points (0,7 mm, emprise au sol 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -1309,7 +1316,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais peu visible ou saisonnier ou une zone de transition progressive entre un marais et la terre ferme, qui est franchissable. Les bords sont en général peu visibles et la végétation similaire à celle environnante.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 2 mm x 0,7 mm (30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -1322,7 +1332,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais peu visible ou saisonnier ou une zone de transition progressive entre un marais et la terre ferme, qui est franchissable. Les bords sont en général peu visibles et la végétation similaire à celle environnante.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 2 mm x 0,7 mm (30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Well, fountain or water tank</source>
@@ -1333,7 +1346,8 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <source>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un puits visible, une fontaine, un réservoir d&apos;eau ou un captage.
+Emprise au sol : 12 m x 12 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -1346,7 +1360,10 @@ Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
 Footprint: 13.5 m x 7 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une source d&apos;eau.
+La position est le centre de gravité du symbole.
+Son ouverture est orientée vers l&apos;aval.
+Emprise au sol : 13,5 x 7 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -1358,7 +1375,9 @@ Footprint: 13.5 m x 7 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le symbole est orienté au Nord.
+La définition du symbole doit être donnée sur la carte.
+Emprise au sol : 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -1370,7 +1389,9 @@ Footprint: 13.5 m x 13.5 m.</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain découvert dont la couverture au sol (herbe, mousse ou similaire) offre une possibilité de courir plus vite que dans la forêt ouverte. Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame (75 % au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), Marais (308) ou Marais peu visible (310).
+Surface minimum : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -1385,12 +1406,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
+Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
+Surface minimum : 2 mm x 2 mm (emprise au sol 30 m x 30 m)
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
+Le symbole est orienté vers le Nord.</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain découvert avec buissons dispersés (points verts)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1400,7 +1426,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
+Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
+Surface minimum : 2 mm x 2 mm (emprise au sol 30 m x 30 m)
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
+Le symbole est orienté vers le Nord.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -1413,7 +1444,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Landes, abattis, zones récemment replantées (avec des arbres d&apos;une taille inférieure à environ 1m) ou tout autre terrain découvert avec une végétation au sol encombrante, de la bruyère ou des herbes hautes qui permet une vitesse de course similaire à celle de la forêt ouverte.
+Peut être associé avec le symbole Végétation, course lente, bonne visibilité (407) ou Végétation, marche, bonne visibilité (409) pour indiquer une courabilité réduite.
+Surface minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
