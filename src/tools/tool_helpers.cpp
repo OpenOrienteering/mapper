@@ -65,10 +65,7 @@ ConstrainAngleToolHelper::ConstrainAngleToolHelper()
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &ConstrainAngleToolHelper::settingsChanged);
 }
 
-ConstrainAngleToolHelper::~ConstrainAngleToolHelper()
-{
-	// nothing, not inlined!
-}
+ConstrainAngleToolHelper::~ConstrainAngleToolHelper() = default;
 
 
 void ConstrainAngleToolHelper::setCenter(const MapCoordF& center)
@@ -309,10 +306,7 @@ SnappingToolHelper::SnappingToolHelper(MapEditorTool* tool, SnapObjects filter)
 	point_handles.setScaleFactor(tool->scaleFactor());
 }
 
-SnappingToolHelper::~SnappingToolHelper()
-{
-	// nothing, not inlined
-}
+SnappingToolHelper::~SnappingToolHelper() = default;
 
 
 void SnappingToolHelper::setFilter(SnapObjects filter)
@@ -587,27 +581,27 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 	if (path && path->findPartIndexForIndex(end_coord.index) == part_index)
 	{
 		// Update end_clen
-		auto new_end_clen = end_coord.clen;
+		auto const new_end_clen = end_coord.clen;
 		const auto& part = path->parts()[part_index];
 		if (part.isClosed())
 		{
 			// Positive length to add to end_clen to get to new_end_clen with wrapping
-			auto path_length = qreal(part.length());
+			auto path_length = double(part.length());
 			auto half_path_length = path_length / 2;
-			auto forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
+			auto forward_diff = fmod_pos(double(new_end_clen - end_clen), path_length);
 			auto delta_forward = forward_diff >= 0 && forward_diff < half_path_length;
 			
 			if (delta_forward
 			    && !drag_forward
-			    && fmod_pos(end_clen - start_clen, path_length) > half_path_length
-			    && fmod_pos(new_end_clen - start_clen, path_length) <= half_path_length )
+			    && fmod_pos(double(end_clen - start_clen), path_length) > half_path_length
+			    && fmod_pos(double(new_end_clen - start_clen), path_length) <= half_path_length )
 			{
 				drag_forward = true;
 			}
 			else if (!delta_forward
 			         && drag_forward
-			         && fmod_pos(end_clen - start_clen, path_length) <= half_path_length
-			         && fmod_pos(new_end_clen - start_clen, path_length) > half_path_length)
+			         && fmod_pos(double(end_clen - start_clen), path_length) <= half_path_length
+			         && fmod_pos(double(new_end_clen - start_clen), path_length) > half_path_length)
 			{
 				drag_forward = false;
 			}
@@ -621,7 +615,7 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 		if (end_clen != start_clen)
 		{
 			// Create output path
-			result.reset(new PathObject { part });
+			result = std::make_unique<PathObject>(part);
 			if (drag_forward)
 			{
 				result->changePathBounds(0, start_clen, end_clen);

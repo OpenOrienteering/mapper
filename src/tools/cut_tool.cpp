@@ -63,12 +63,12 @@ namespace {
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
 	 */
-	static unsigned int max_objects_for_handle_display = 10;
+	unsigned int max_objects_for_handle_display = 10;
 	
 	/**
 	 * The value which indicates that no point of the current object is hovered.
 	 */
-	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	
 }  // namespace OpenOrienteering

@@ -947,7 +947,7 @@ protected:
 	 * to calculate the current cost. Evaluates the distance between p0 ... p3
 	 * and the reference path.
 	 */
-	static float calcBezierPointDeletionRetainingShapeCost(
+	static double calcBezierPointDeletionRetainingShapeCost(
 		MapCoord p0,
 		MapCoordF p1,
 		MapCoordF p2,

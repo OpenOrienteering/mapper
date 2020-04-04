@@ -72,12 +72,12 @@ namespace {
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
 	 */
-	static unsigned int max_objects_for_handle_display = 10;
+	unsigned int max_objects_for_handle_display = 10;
 	
 	/**
 	 * The value which indicates that no point of the current object is hovered.
 	 */
-	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	
 }
@@ -402,10 +402,8 @@ void EditPointTool::dragCanceled()
 	updateDirtyRect();
 }
 
-void EditPointTool::focusOutEvent(QFocusEvent* event)
+void EditPointTool::focusOutEvent(QFocusEvent* /*event*/)
 {
-	Q_UNUSED(event);
-	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
 	switch_dash_points = false;
@@ -667,7 +665,8 @@ void EditPointTool::finishEditing()
 			updateStatusText();
 			return;
 		}
-		else if (text_object->getText().isEmpty())
+		
+		if (text_object->getText().isEmpty())
 		{
 			abortEditing();
 			updateStatusText();

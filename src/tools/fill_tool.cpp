@@ -196,7 +196,8 @@ int FillTool::fill(const QRectF& extent)
 		int trace_result = traceBoundary(image, free_pixel, boundary_pixel, boundary);
 		if (trace_result == -1)
 			return 0;
-		else if (trace_result == 0)
+		
+		if (trace_result == 0)
 		{
 			// The outline does not contain start_pixel.
 			// Jump to the rightmost pixel of the boundary with same y as the start.
@@ -412,7 +413,7 @@ int FillTool::traceBoundary(const QImage& image, const QPoint& free_pixel, const
 		if ( ((out_boundary[i].y() > free_pixel.y()) != (out_boundary[j].y() > free_pixel.y()))
 		     &&	(free_pixel.x() < (out_boundary[j].x() - out_boundary[i].x())
 		                           * (free_pixel.y() - out_boundary[i].y())
-		                           / float(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
+		                           / double(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
 	return inside ? 1 : 0;

@@ -450,7 +450,7 @@ VirtualPath::size_type VirtualPath::prevCoordIndex(size_type base_index) const
 	else if (base_index > first_index)
 	{
 		result = base_index - 1;
-		for (auto i = 1; i <= 3; ++i)
+		for (auto i = 1u; i <= 3u; ++i)
 		{
 			auto alternative = base_index - i;
 			if (alternative < first_index || alternative > last_index)
@@ -554,10 +554,7 @@ MapCoordF VirtualPath::calculateTangent(
         bool backward,
         bool& ok) const
 {
-	if (backward)
-		return calculateIncomingTangent(i, ok);
-	else
-		return calculateOutgoingTangent(i, ok);
+	return backward ? calculateIncomingTangent(i, ok) : calculateOutgoingTangent(i, ok);
 }
 
 MapCoordF VirtualPath::calculateIncomingTangent(

@@ -66,7 +66,7 @@ namespace
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
 	 */
-	static unsigned int max_objects_for_handle_display = 10;
+	unsigned int max_objects_for_handle_display = 10;
 }
 
 
