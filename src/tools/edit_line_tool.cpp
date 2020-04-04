@@ -429,6 +429,11 @@ int EditLineTool::updateDirtyRectImpl(QRectF& rect)
 	
 	selection_extent = QRectF();
 	map()->includeSelectionRect(selection_extent);
+
+	const auto frame_extension = 0.001 * cur_map_widget->getMapView()
+	                             ->pixelToLength(clickTolerance()); // in mm
+	selection_extent.adjust(-frame_extension, -frame_extension,
+	                        frame_extension, frame_extension);
 	
 	rectInclude(rect, selection_extent);
 	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
@@ -620,6 +625,13 @@ void EditLineTool::updateHoverState(const MapCoordF& cursor_pos)
 		effective_start_drag_distance = (hover_state == OverNothing) ? startDragDistance() : 0;
 		updateDirtyRect();
 	}
+}
+
+
+void EditLineTool::applyViewChanges(MapView::ChangeFlags change)
+{
+	if (change == MapView::ZoomChange)
+		updateDirtyRect(); // the bounding rectangle extent changes
 }
 
 

@@ -39,6 +39,7 @@
 #include "core/virtual_path.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "tools/object_selector.h"
 #include "tools/tool_helpers.h"
@@ -52,7 +53,9 @@ EditTool::EditTool(MapEditorController* editor, MapEditorTool::Type type, QActio
  : MapEditorToolBase { QCursor(QPixmap(QString::fromLatin1(":/images/cursor-hollow.png")), 1, 1), type, editor, tool_action }
  , object_selector { new ObjectSelector(map()) }
 {
-	; // nothing
+	connect(editor->getMainWidget()->getMapView(),
+	        SIGNAL(viewChanged(OpenOrienteering::MapView::ChangeFlags)),
+	        this, SLOT(applyViewChanges(OpenOrienteering::MapView::ChangeFlags)));
 }
 
 
