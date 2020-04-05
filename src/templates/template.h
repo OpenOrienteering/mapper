@@ -42,6 +42,7 @@ class QFileInfo;
 class QPainter;
 class QPointF;
 class QRectF;
+class QStringRef;
 class QTransform;
 class QWidget;
 class QXmlStreamReader;
@@ -580,6 +581,16 @@ public:
 	 * extension.
 	 */
 	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
+	
+	/**
+	 * Creates a Template instance for the given type.
+	 * 
+	 * This function may return nullptr if the given type is unknown.
+	 * 
+	 * In addition, this function respects the user setting for assigning
+	 * some TemplateTrack extensions (GPX) explicitly to GDAL (OgrTemplate).
+	 */
+	static std::unique_ptr<Template> templateForType(const QStringRef& type, const QString& path, Map* map);
 	
 	/**
 	 * A flag which disables the writing of absolute paths for template files.
