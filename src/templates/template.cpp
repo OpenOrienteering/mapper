@@ -885,17 +885,21 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 		auto& image_extensions = TemplateImage::supportedExtensions();
 		auto& map_extensions   = TemplateMap::supportedExtensions();
 #ifdef MAPPER_USE_GDAL
+		auto& gdal_extensions  = GdalTemplate::supportedExtensions();
 		auto& ogr_extensions   = OgrTemplate::supportedExtensions();
 #else
-		auto ogr_extensions    = std::vector<QByteArray>{ };
+		auto const gdal_extensions = std::vector<QByteArray>{ };
+		auto const& ogr_extensions = gdal_extensions;
 #endif
 		auto& track_extensions = TemplateTrack::supportedExtensions();
 		extensions.reserve(image_extensions.size()
 		                   + map_extensions.size()
+		                   + gdal_extensions.size()
 		                   + ogr_extensions.size()
 		                   + track_extensions.size());
 		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
 		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(gdal_extensions), end(gdal_extensions));
 		extensions.insert(end(extensions), begin(ogr_extensions), end(ogr_extensions));
 		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
 	}
