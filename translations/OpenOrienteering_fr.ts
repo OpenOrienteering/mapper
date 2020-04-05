@@ -5562,7 +5562,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="798"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Lors de l&apos;importation du symbole texte %1: les identations personnalisés ont été ignorés (%2/%3)</translation>
+        <translation>Lors de l&apos;importation du symbole texte %1 : indentations personnalisées non prises en compte (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="819"/>
@@ -5795,7 +5795,7 @@ utiliser la molette de la souris pour zoomer.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2350"/>
         <source>Ignoring custom indents (%1/%2).</source>
-        <translation>L&apos;indentation personnalisée (%1/%2) est ignorée.</translation>
+        <translation>Indentations personnalisées non prises en compte (%1/%2).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2372"/>
