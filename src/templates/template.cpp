@@ -41,7 +41,6 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QRectF>
-#include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
@@ -57,6 +56,7 @@
 #include "gui/file_dialog.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
+#include "templates/template_placeholder.h"
 #include "templates/template_track.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
@@ -350,10 +350,10 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	auto const type = attributes.value(QLatin1String("type"));
 	QString path = attributes.value(QLatin1String("path")).toString();
 	auto temp = templateForType(type, path, &map);
-	if (!temp)
+	if (!temp && type.length() == 0)
 		temp = templateForFile(path, &map);
 	if (!temp)
-		temp = std::make_unique<TemplateImage>(path, &map); // fallback
+		temp = std::make_unique<TemplatePlaceholder>(type.toUtf8(), path, &map);
 	
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))

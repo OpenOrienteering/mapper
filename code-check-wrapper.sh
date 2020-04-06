@@ -92,6 +92,7 @@ for I in \
   template_image_open_dialog.cpp \
   template_list_widget.cpp \
   template_map.cpp \
+  template_placeholder.cpp \
   template_tool \
   template_track.cpp \
   text_brwoser_dialog \

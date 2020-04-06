@@ -69,9 +69,17 @@
                 </objects>
             </part>
         </parts>
-        <templates count="1" first_front_template="1">
+        <templates count="2" first_front_template="1">
             <template type="TemplateImage" open="true" name="world-file.png" path="world-file.png" relpath="world-file.png" georef="true">
                 <crs_spec>+init=epsg:2180</crs_spec>
+            </template>
+            <template type="UnknownType" open="false" name="unsupported.png" path="unsupported.png" relpath="unsupported.png" georef="true">
+                <crs_spec>+init=epsg:2180</crs_spec>
+                <param_0>
+                    <param_0_1>0_1</param_0_1>
+                </param_0>
+                <param_1>1</param_1>
+                <param_2 attribute="2"/>
             </template>
             <defaults meters_per_pixel="0" dpi="0" scale="0"/>
         </templates>

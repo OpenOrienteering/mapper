@@ -30,6 +30,7 @@
 #include <QObject>
 #include <QPointF>
 #include <QString>
+#include <QStringRef>
 
 #include "core/map_coord.h"
 #include "util/matrix.h"
@@ -42,7 +43,6 @@ class QFileInfo;
 class QPainter;
 class QPointF;
 class QRectF;
-class QStringRef;
 class QTransform;
 class QWidget;
 class QXmlStreamReader;
