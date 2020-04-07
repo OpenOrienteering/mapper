@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -536,6 +536,15 @@ std::unique_ptr<Exporter> OgrFileExportFormat::makeExporter(const QString& path,
 
 
 // ### OgrFileImport ###
+
+// static
+bool OgrFileImport::canRead(const QString& path)
+{
+	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
+	GdalManager();
+	return bool(ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr)));
+}
+
 
 OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
  : Importer(path, map, view)

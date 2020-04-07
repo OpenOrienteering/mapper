@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -39,6 +39,8 @@ class Map;
 class GdalTemplate : public TemplateImage
 {
 public:
+	static bool canRead(const QString& path);
+	
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	GdalTemplate(const QString& path, Map* map);

@@ -577,10 +577,10 @@ public:
 	 * Creates a Template instance for the given path.
 	 * 
 	 * This function tries to find a matching template subclass by looking at
-	 * the file extension. It may return nullptr if no subclass supports the
-	 * extension.
+	 * the file extension and/or the content available at the given path.
+	 * It may return nullptr if no subclass supports the extension or content.
 	 */
-	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
+	static std::unique_ptr<Template> templateForPath(const QString& path, Map* map);
 	
 	/**
 	 * Creates a Template instance for the given type.

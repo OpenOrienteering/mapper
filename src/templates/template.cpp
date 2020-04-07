@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QRectF>
+#include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamAttributes>
 #include <QXmlStreamReader>
@@ -351,7 +352,7 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	QString path = attributes.value(QLatin1String("path")).toString();
 	auto temp = templateForType(type, path, &map);
 	if (!temp && type.length() == 0)
-		temp = templateForFile(path, &map);
+		temp = templateForPath(path, &map);
 	if (!temp)
 		temp = std::make_unique<TemplatePlaceholder>(type.toUtf8(), path, &map);
 	
@@ -924,28 +925,31 @@ bool endsWithAnyOf(const QString& path, const std::vector<QByteArray>& list)
 
 }  // namespace
 
-std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* map)
+std::unique_ptr<Template> Template::templateForPath(const QString& path, Map* map)
 {
-	std::unique_ptr<Template> t;
-	// Start with placeholder 'if', for consistency in the following macro/if-else sequence
-	if (false)  // NOLINT
-		{} // nothing
 #ifdef MAPPER_USE_GDAL
-	else if (endsWithAnyOf(path, GdalTemplate::supportedExtensions()))
-		t = std::make_unique<GdalTemplate>(path, map);
-#endif 
-	else if (endsWithAnyOf(path, TemplateImage::supportedExtensions()))
+#  define HANDLED_BY_GDAL(expr) expr
+#else
+#  define HANDLED_BY_GDAL(expr) false
+#endif
+	
+	std::unique_ptr<Template> t;
+	if (endsWithAnyOf(path, TemplateImage::supportedExtensions())
+	    && !HANDLED_BY_GDAL(endsWithAnyOf(path, GdalTemplate::supportedExtensions())))
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (endsWithAnyOf(path, TemplateMap::supportedExtensions()))
 		t = std::make_unique<TemplateMap>(path, map);
-#ifdef MAPPER_USE_GDAL
-	else if (endsWithAnyOf(path, OgrTemplate::supportedExtensions()))
-		t = std::make_unique<OgrTemplate>(path, map);
-#endif
-	else if (endsWithAnyOf(path, TemplateTrack::supportedExtensions()))
+	else if (endsWithAnyOf(path, TemplateTrack::supportedExtensions())
+	         && !HANDLED_BY_GDAL(endsWithAnyOf(path, OgrTemplate::supportedExtensions())))
 		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
-	else
+	else if (GdalTemplate::canRead(path))
+		t = std::make_unique<GdalTemplate>(path, map);
+	else if (OgrTemplate::canRead(path))
+		t = std::make_unique<OgrTemplate>(path, map);
+	else if (endsWithAnyOf(path, GdalTemplate::supportedExtensions()))
+		t = std::make_unique<GdalTemplate>(path, map);
+	else if (endsWithAnyOf(path, OgrTemplate::supportedExtensions()))
 		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	

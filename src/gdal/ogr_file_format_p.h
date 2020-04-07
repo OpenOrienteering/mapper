@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -185,6 +185,9 @@ class OgrFileImport : public Importer
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OgrFileImport)
 	
 public:
+	static bool canRead(const QString& path);
+	
+	
 	/**
 	 * The unit type indicates the coordinate system the data units refers to.
 	 */

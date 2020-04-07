@@ -28,7 +28,15 @@
 #include "gdal/gdal_image_reader.h"
 #include "gdal/gdal_manager.h"
 
+
 namespace OpenOrienteering {
+
+// static
+bool GdalTemplate::canRead(const QString& path)
+{
+	return GdalImageReader(path).canRead();
+}
+
 
 // static
 const std::vector<QByteArray>& GdalTemplate::supportedExtensions()
