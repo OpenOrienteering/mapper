@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -99,8 +99,6 @@ void dumpGdalDrivers()
 		 qimagereader_extensions += " ";
 	}
 	qimagereader_extensions += "|";
-	auto const secondary_vector_drivers = OpenOrienteering::gdal::secondaryVectorDrivers<const char*>();
-	
 	
 	std::vector<std::string> raster_import_drivers;
 	std::vector<std::string> vector_import_drivers;
@@ -118,9 +116,6 @@ void dumpGdalDrivers()
 		auto cap_create = GDALGetMetadataItem(driver_data, GDAL_DCAP_CREATE, nullptr);
 		auto extensions = GDALGetMetadataItem(driver_data, GDAL_DMD_EXTENSIONS, nullptr);
 		auto help_topic = GDALGetMetadataItem(driver_data, GDAL_DMD_HELPTOPIC, nullptr);
-		
-		if (!extensions)
-			continue;  // Not supported at the moment
 		
 		auto driver_line = std::string("| ");
 		driver_line += driver_name;
@@ -149,21 +144,14 @@ void dumpGdalDrivers()
 		
 		if (cap_vector && CPLTestBoolean(cap_vector))
 		{
-			bool const is_secondary = (driver_name && strstr(secondary_vector_drivers, driver_name) != nullptr);
-			auto &list = is_secondary ? secondary_vector_import_drivers : vector_import_drivers;
 			if (cap_open && CPLTestBoolean(cap_open))
-				list.push_back(driver_line);
+				vector_import_drivers.push_back(driver_line);
 			if (cap_create && CPLTestBoolean(cap_create))
 				vector_export_drivers.push_back(driver_line);
 		}
 	}
 	
 	// This block duplicates code in GdalManagerPrivate::updateExtensions().
-	// Prefix ambiguous extensions for known vector drivers
-	prefixDuplicates(raster_import_drivers, secondary_vector_import_drivers, "vector.");
-	vector_import_drivers.insert(end(vector_import_drivers), begin(secondary_vector_import_drivers), end(secondary_vector_import_drivers));
-	// Prefix ambiguous extensions for remaining raster drivers
-	prefixDuplicates(vector_import_drivers, raster_import_drivers, "raster.");
 	prefixDuplicates(qimagereader_extensions, raster_import_drivers, "raster.");
 	
 	std::cout << "## GDAL/OGR driver list for OpenOrienteering Mapper" << std::endl << std::endl;

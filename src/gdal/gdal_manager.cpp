@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -242,8 +242,6 @@ private:
 	void updateExtensions(QSettings& settings)
 	{
 		static auto const qimagereader_extensions = gdal::qImageReaderExtensions<ExtensionList>();
-		static auto const secondary_vector_drivers = gdal::secondaryVectorDrivers<QByteArray>();
-		ExtensionList secondary_vector_extensions;
 		
 		auto count = GDALGetDriverCount();
 		enabled_raster_import_extensions.clear();
@@ -272,11 +270,8 @@ private:
 
 			if (qstrcmp(cap_vector, "YES") == 0)
 			{
-				auto const driver_name = GDALGetDriverShortName(driver_data);
-				bool const is_secondary = secondary_vector_drivers.contains(driver_name);
-				auto &list = is_secondary ? secondary_vector_extensions : enabled_vector_import_extensions;
 				if (qstrcmp(cap_open, "YES") == 0)
-					copyExtensions(extensions, list);
+					copyExtensions(extensions, enabled_vector_import_extensions);
 				
 				if (qstrcmp(cap_create, "YES") == 0)
 					copyExtensions(extensions, enabled_vector_export_extensions);
@@ -288,16 +283,10 @@ private:
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{
 			removeExtension(enabled_vector_import_extensions, "gpx");
-			removeExtension(secondary_vector_extensions, "gpx");
 		}
 		settings.endGroup();
 		
 		// This block is duplicated in mapper_gdal_info.cpp dumpGdalDrivers().
-		// Prefix ambiguous extensions for known vector drivers
-		prefixDuplicates(enabled_raster_import_extensions, secondary_vector_extensions, "vector.");
-		enabled_vector_import_extensions.insert(end(enabled_vector_import_extensions), begin(secondary_vector_extensions), end(secondary_vector_extensions));
-		// Prefix ambiguous extensions for remaining raster drivers
-		prefixDuplicates(enabled_vector_import_extensions, enabled_raster_import_extensions, "raster.");
 		prefixDuplicates(qimagereader_extensions, enabled_raster_import_extensions, "raster.");
 	}
 	
