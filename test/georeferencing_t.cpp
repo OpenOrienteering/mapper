@@ -295,6 +295,11 @@ void GeoreferencingTest::testProjection_data()
 	QTest::newRow("EPSG 2056 Bern") << epsg2056_spec << 2600000.0 << 1200000.0 << degFromDMS(46, 57, 03.898) << degFromDMS(7, 26, 19.077);
 	// Issue GH-1325
 	QTest::newRow("EPSG 2056 GH-1325") << epsg2056_spec << 2643092.73 << 1150008.01 << 46.5 << 8.0;
+	
+	// EPSG:27700, OSGB 36
+	auto epsg27700_spec = QStringLiteral("+init=epsg:27700");
+	QTest::newRow("EPSG 27700 NY 06071 11978") << epsg27700_spec << 306071.0  << 511978.0 << 54.494403  << -3.4517026;
+	QTest::newRow("EPSG 27700 Lake District")  << epsg27700_spec << 306074.66 << 511974.0 << 54.4943673 << -3.4516448;
 }
 
 
