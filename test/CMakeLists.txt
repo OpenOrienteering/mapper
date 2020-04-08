@@ -63,14 +63,14 @@ function(add_test_helper testname autorun)
 		endif()
 	endforeach()
 	add_executable(${testname} ${testname}.cpp ${TEST_${testname}_SRCS})
-	target_link_libraries(${testname}
+	target_link_libraries(${testname} PRIVATE
 	  PROJ4::proj
 	  Qt5::Test
 	  Qt5::Gui
 	  Polyclipping::Polyclipping
 	)
 	if("${ARGN}" MATCHES "crs_template_implementation")
-		target_link_libraries(${testname} Qt5::Widgets)
+		target_link_libraries(${testname} PRIVATE Qt5::Widgets)
 	endif()
 	if(NOT manual_test)
 		configure_file(TESTNAME-RUN.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/${testname}-RUN.cmake @ONLY)
@@ -123,7 +123,7 @@ endfunction()
 #
 function(add_system_test testname)
 	add_test_helper("${testname}" ${Mapper_AUTORUN_SYSTEM_TESTS} ${ARGN})
-	target_link_libraries(${testname}
+	target_link_libraries(${testname} PRIVATE
 	  Mapper_Common
 	  libocad
 	  Qt5::Widgets
@@ -195,7 +195,7 @@ add_system_test(undo_manager_t)
 
 if(TARGET Qt5::Positioning)
 	add_system_test(sensors_t)
-	target_link_libraries(sensors_t Qt5::Positioning mapper-sensors Mapper_Common)
+	target_link_libraries(sensors_t PRIVATE Qt5::Positioning mapper-sensors Mapper_Common)
 endif()
 
 # Collect the AUTORUN_TESTS
