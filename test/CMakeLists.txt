@@ -167,6 +167,13 @@ add_unit_test(georeferencing_t ../src/core/georeferencing
 	../src/util/xml_stream_util
 	../src/core/map_coord
 )
+if (TARGET mapper-gdal)
+	# cf. src/gdal/CMakeLists.txt
+	find_package(GDAL REQUIRED)
+	target_compile_definitions(georeferencing_t PRIVATE MAPPER_USE_GDAL)
+	target_include_directories(mapper-gdal SYSTEM PRIVATE "${GDAL_INCLUDE_DIR}")
+	target_link_libraries(georeferencing_t PRIVATE "${GDAL_LIBRARY}")
+endif()
 add_unit_test(grid_t ../src/util/util)
 add_unit_test(locale_t ../src/util/translation_util)
 add_unit_test(map_color_t ../src/core/map_color)

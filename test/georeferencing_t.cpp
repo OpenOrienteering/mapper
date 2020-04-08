@@ -24,6 +24,7 @@
 
 #include <QtMath>
 #include <QtTest>
+#include <QByteArray>
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
@@ -31,6 +32,13 @@
 #include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj.h>
+#endif
+
+#ifdef MAPPER_USE_GDAL
+#  include <gdal.h>
+#  include <ogr_api.h>
+#  include <ogr_srs_api.h>
+// IWYU pragma: no_include <gdal_version.h>
 #endif
 
 #include "core/crs_template.h"
@@ -338,6 +346,33 @@ void GeoreferencingTest::testProjection()
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
+	
+#ifdef MAPPER_USE_GDAL
+	// Cf. OgrFileExport::setupGeoreferencing
+	auto* map_srs = OSRNewSpatialReference(nullptr);
+	OSRSetProjCS(map_srs, "Projected map SRS");
+	OSRSetWellKnownGeogCS(map_srs, "WGS84");
+	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+	QCOMPARE(OSRImportFromProj4(map_srs, spec), OGRERR_NONE);
+	auto* geo_srs = OSRNewSpatialReference(nullptr);
+	OSRSetWellKnownGeogCS(geo_srs, "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+	OSRSetAxisMappingStrategy(geo_srs, OAMS_TRADITIONAL_GIS_ORDER);
+#endif
+	auto* transformation = OCTNewCoordinateTransformation(map_srs, geo_srs);
+	// Cf. OgrFileExport::addPointsToLayer
+	auto* pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, easting, northing);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetY(pt, 0) - latitude) > max_angl_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(latitude, 'f'));
+	if (std::fabs(OGR_G_GetX(pt, 0) - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(longitude, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	OSRDestroySpatialReference(geo_srs);
+	OSRDestroySpatialReference(map_srs);
+#endif  // MAPPPER_USE_GDAL
 }
 
 
