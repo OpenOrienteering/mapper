@@ -359,9 +359,23 @@ void GeoreferencingTest::testProjection()
 #if GDAL_VERSION_MAJOR >= 3
 	OSRSetAxisMappingStrategy(geo_srs, OAMS_TRADITIONAL_GIS_ORDER);
 #endif
-	auto* transformation = OCTNewCoordinateTransformation(map_srs, geo_srs);
-	// Cf. OgrFileExport::addPointsToLayer
+	
+	// geographic to projected
+	auto* transformation = OCTNewCoordinateTransformation(geo_srs, map_srs);
 	auto* pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, longitude, latitude);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetX(pt, 0) - easting) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(easting, 'f'));
+	if (std::fabs(OGR_G_GetY(pt, 0) - northing) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(northing, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	
+	// projected to geographic
+	transformation = OCTNewCoordinateTransformation(map_srs, geo_srs);
+	// Cf. OgrFileExport::addPointsToLayer
+	pt = OGR_G_CreateGeometry(wkbPoint);
 	OGR_G_SetPoint_2D(pt, 0, easting, northing);
 	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
 	if (std::fabs(OGR_G_GetY(pt, 0) - latitude) > max_angl_error)
@@ -370,6 +384,7 @@ void GeoreferencingTest::testProjection()
 		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(longitude, 'f'));
 	OGR_G_DestroyGeometry(pt);
 	OCTDestroyCoordinateTransformation(transformation);
+	
 	OSRDestroySpatialReference(geo_srs);
 	OSRDestroySpatialReference(map_srs);
 #endif  // MAPPPER_USE_GDAL
