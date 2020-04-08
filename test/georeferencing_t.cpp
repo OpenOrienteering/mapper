@@ -352,7 +352,7 @@ void GeoreferencingTest::testProjection()
 	auto* map_srs = OSRNewSpatialReference(nullptr);
 	OSRSetProjCS(map_srs, "Projected map SRS");
 	OSRSetWellKnownGeogCS(map_srs, "WGS84");
-	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
 	QCOMPARE(OSRImportFromProj4(map_srs, spec), OGRERR_NONE);
 	auto* geo_srs = OSRNewSpatialReference(nullptr);
 	OSRSetWellKnownGeogCS(geo_srs, "WGS84");

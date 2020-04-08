@@ -619,7 +619,7 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 	{
 		OSRSetProjCS(srs.get(), "Projected map SRS");
 		OSRSetWellKnownGeogCS(srs.get(), "WGS84");
-		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 		// Cf. https://github.com/OSGeo/PROJ/pull/1573
 		spec.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
@@ -1550,7 +1550,7 @@ bool OgrFileImport::checkGeoreferencing(const QString& path, const Georeferencin
 // static
 bool OgrFileImport::checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef)
 {
-	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
 	spec.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
@@ -1880,7 +1880,7 @@ void OgrFileExport::setupGeoreferencing(GDALDriverH po_driver)
 	{
 		OSRSetProjCS(map_srs.get(), "Projected map SRS");
 		OSRSetWellKnownGeogCS(map_srs.get(), "WGS84");
-		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1() + " +wktext");
+		auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
 		if (OSRImportFromProj4(map_srs.get(), spec) != OGRERR_NONE)
 		{
 			local_only = true;
