@@ -6,47 +6,47 @@
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symbole de surimpression</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour symbole de surimpression</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour voie ferrée</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symboles de circuit</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir en dessous du pourpre pour circuits</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -61,32 +61,32 @@
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun supérieur 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun supérieur 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun inférieur 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun inférieur 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100% pour surfaces</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -101,27 +101,27 @@
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 60% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 30% pour layon étroit</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur vert</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100%/Vert 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -131,12 +131,12 @@
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%/Noir 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour surfaces</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -151,17 +151,17 @@
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour végétation basse</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur jaune</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir pour terrain ouvert</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -171,7 +171,7 @@
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 33</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour surfaces</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -195,7 +195,16 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ligne qui relie les points de même altitude. L&apos;équidistance standard entre deux courbes est de 5 mètres. Un intervalle de 2,5m peut être utilisé en cas de terrain plat.
+Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une courbe de niveau fermée sur elle-même représente une colline ou une dépression. Une dépression doit comprendre au moins un tiret de pente. La hauteur (colline) ou la profondeur (dépression) minimale devrait être de 1 m.
+Le rapport entre des courbes de niveau adjacentes est important. Ce rapport permet de représenter le relief et la structure du terrain. Il faudrait éviter de dessiner des petits détails dans des courbes de niveau pour ne pas masquer les formes principales du relief.
+Pour assurer une bonne lisibilité, il y a parfois besoin d&apos;exagérer dans leur dessin des éléments significatifs comme les dépressions, les rentrants, les éperons, les abrupts de terre et les terrasses.
+La précision absolue des altitudes n&apos;a que peu d&apos;importance, mais les différences d&apos;altitude relative entre éléments voisins devraient être représentées sur la carte le plus précisément possible. Il est autorisé de modifier légèrement l&apos;altitude d&apos;une courbe de niveau si cela améliore la représentation d&apos;un élément. L&apos;écart ne doit pas dépasser 25% de l&apos;équidistance et une attention particulière doit être portée aux éléments proches.
+La courbure minimale d&apos;une courbe de niveau est de 0,25 mm de centre à centre de la ligne (emprise au sol de 4m). L&apos;entrée d&apos;un rentrant ou d&apos;un éperon doit mesurer au moins 0,5 mm de centre à centre de la ligne (emprise au sol 8 m).
+La longueur minimum d&apos;une colline est de 0,9 mm (emprise au sol de 13,5 m) et la largeur minimale de 0,6 mm (emprise au sol de 9 m) mesurée depuis les bords extérieurs des lignes. Des buttes remarquables plus petites peuvent être représentées par le symbole Petite butte (109) ou Petite butte allongée (110) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
+Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum. 
+Les courbes de niveau devraient être déplacées (plutôt que coupées) quand il est nécessaire d&apos;éviter de toucher des symboles Petite butte (109) ou Petite butte allongée (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -206,7 +215,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une dépression doit comporter au moins un tiret de pente.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -218,7 +228,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les 5 courbes, une courbe de niveau maîtresse doit être dessinée en utilisant un trait plus épais. C&apos;est une aide pour appréhender rapidement les dénivelées et la forme globale du relief.
+Lorsqu&apos;une courbe maîtresse passe dans une zone où figurent de nombreux détails, elle peut être dessinée comme une courbe de niveau ordinaire. Normalement, les petites collines ou les petites dépressions ne sont pas dessinées avec une courbe maîtresse.
+Dans un terrain plat, il faut être attentif au choix de laquelle des courbes de niveau est dessinée en courbe maitresse. Le niveau idéal pour le choix de la courbe maîtresse est le niveau médian des pentes les plus remarquables.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -228,7 +240,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Il est possible d&apos;associer une cote d&apos;altitude à une courbe maîtresse. Une cote ne peut être insérée sur une courbe maîtresse que dans les zones où elle ne cachera pas d&apos;autres détails. Les chiffres sont orientés avec leur sommet en amont de la pente. Le texte doit avoir une hauteur de 1,5 mm en police sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -240,7 +252,10 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Les courbes de forme (ou courbes intermédiaires) sont utilisées quand il est nécessaire de donner plus d&apos;information sur la forme du terrain. Elles ne seront utilisées que si les courbes de niveau seules ne peuvent pas donner une bonne représentation du terrain. Une seule courbe de forme peut être dessinée entre deux courbes de niveau adjacentes. Il est très important que les courbes de forme complètent de manière logique le schéma des courbes de niveau : de ce fait le début et
+la fin d&apos;une courbe de forme devraient être parallèles avec les courbes de niveau adjacentes. Les espaces entre les tirets doivent être placés sur des sections relativement rectilignes de la courbe de forme. Les courbes de forme peuvent être utilisées pour le dessin des collines ou dépressions plus évasées que d&apos;autres dans le secteur (hauteur/profondeur minimale 1 m). Une utilisation excessive des courbes de forme doit être évitée car cela nuit à la perception en 3 dimensions du relief et complique la lecture de la carte.
+Longueur minimale (courbe non refermée sur elle-même) : 2 tirets
+Longueur minimale pour une courbe refermée sur elle-même (colline ou dépression) : 1,1 mm (16,5 m au sol).</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -251,10 +266,7 @@ Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</s
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
         <translation>Ce symbole est un complément du symbole de courbe de niveau (101.0).
-Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. 
-Ils doivent être positionnés au niveau des rentrants.
-Une dépression doit comprendre un tiret de pente. Sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la
-ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole 111 (petite dépression) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.</translation>
+Les tirets de pentes peuvent être ajoutés du côté aval d&apos;une courbe de niveau, afin de clarifier le sens de la pente. Ils doivent être positionnés au niveau des rentrants.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -267,7 +279,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -280,7 +295,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -293,7 +311,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -313,7 +334,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -324,7 +345,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Levée ou mur de terre distinct. Hauteur minimum 1 m.
+Longueur minimum : 1,4 mm (emprise au sol 21 m).</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -335,7 +357,8 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object must be exaggerated to the minimum length or changed to symbol Earth wall (105).</source>
         <comment>Description of symbol 106</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une levée de terre en ruine ou moins facile à distinguer. Hauteur minimum 0,5 m.
+Longueur minimum : 2 tirets (3,65 mm - emprise au sol 55 m). Si la levée de terre est plus courte le dessin doit l&apos;exagérer pour atteindre la longueur minimum ou bien il faut utiliser le symbole Levée de terre (105).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -347,7 +370,9 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ravine qui est trop petite pour être dessinée à l&apos;aide du symbole Abrupt de terre (104), est dessinée en utilisant un simple trait. Profondeur minimum : 1 m.
+Longueur minimum 1,15 mm (emprise au sol 17 m).
+Les courbes de niveau ne devraient pas être interrompues autour de ce symbole.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -359,7 +384,9 @@ Contour lines should not be broken around this symbol.</source>
 Minimum length (isolated): three dots (1.15 mm - footprint 17 m).
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite ravine, un fossé sec ou une tranchée. Profondeur minimum : 0,5 m.
+Longueur minimum (sauf si elle est relié à une autre petite ravine) : 3 points (1,15 mm, emprise au sol 17 m).
+Les courbes de niveau devraient être interrompues autour de ce symbole.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -372,7 +399,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite butte ou un monticule évident qui ne peut pas être dessiné en utilisant une courbe de niveau.
+Hauteur minimum : 1 m.
+Le symbole ne doit pas toucher ou se superposer avec des courbes de niveau.
+Emprise au sol 7,5 m x 7,5 m.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -385,7 +415,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite butte allongée évidente qui ne peut pas être dessinée en utilisant une courbe de niveau.
+Hauteur minimum : 1 m.
+Le symbole ne doit pas toucher ou se superposer avec des courbes de niveau.
+Emprise au sol 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -399,7 +432,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite dépression sans bords raides qui est trop petite pour être représentée par une courbe de niveau.
+Profondeur minimum : 1 m. Largeur minimum : 2 m.
+Les petites dépressions dont les bords sont raides sont représentées par le symbole Trou (112).
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune. Le positionnement est le centre de gravité du symbole et le symbole est orienté au Nord.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Pit</source>
@@ -413,7 +450,11 @@ A pit larger than 5 m x 5 m should normally be exaggerated and drawn using Earth
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou aux bords raides nets qui ne peut pas être dessiné en utilisant le symbole 104 (abrupt de terre).
+Profondeur minimum : 1 m. Largeur minimum : 1 m.
+Un trou plus grand que 5 m par 5 m devrait normalement être exagéré et représenté en utilisant le symbole Abrupt de terre (104). Des trous dont les bords ne sont pas raides sont représentés par le symbole Petite dépression (111).
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune. Le positionnement est le centre de gravité du symbole et le symbole est orienté au Nord.
+Emprise au sol : 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -429,7 +470,13 @@ The minimum centre to centre distance between neighbouring dots is 0.5 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone de trous et/ou de buttes, trop complexe pour être représentée en détail, ou autre type de terrain inégal qui peut être clairement distingué mais qui a peu de conséquence sur la vitesse de course.
+Les points doivent être répartis aléatoirement mais ne doivent pas interférer avec la représentation d&apos;autres éléments importants du relief ou avec
+d&apos;autres objets.
+Le nombre minimum de points est 3 (emprise au sol 10 m x 10 m).
+La distance maximum entre les centres de points voisins est de 0,6 mm.
+La distance minimum entre les centres de points voisins est de 0,5 mm.
+Les courbes de niveau ne devraient pas être interrompues dans les zones de terrain accidenté. Les points ne doivent pas être disposés de façon à créer un élément linéaire.</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -446,7 +493,14 @@ Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.
 Density: 3-4 dots / mm².</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone de trous et/ou de buttes, trop complexe pour être représentée en détail, ou autre type de terrain inégal qui peut être clairement distingué mais qui a peu de conséquence sur la vitesse de course.
+Les points doivent être répartis aléatoirement mais ne doivent pas interférer avec la représentation d&apos;autres éléments importants du relief ou avec
+d&apos;autres objets.
+Le nombre minimum de points est 3 (emprise au sol 10 m x 10 m).
+La distance maximum entre les centres de points voisins est de 0,6 mm.
+La distance minimum entre les centres de points voisins est de 0,5 mm.
+Les courbes de niveau ne devraient pas être interrompues dans les zones de terrain accidenté. Les points ne doivent pas être disposés de façon à créer un élément linéaire.
+Densité : 3-4 points par mm².</translation>
     </message>
     <message>
         <source>Very broken ground</source>
@@ -462,7 +516,13 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Contours should not be cut in broken ground areas.
 The dots shall not be arranged to form a single point wide line.</source>
         <comment>Description of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone de trous et/ou de buttes, trop complexe pour être représentée en détail, ou autre type de terrain inégal qui peut être clairement distingué et qui limite la vitesse de course.
+Les points doivent être répartis aléatoirement mais ne doivent pas interférer avec la représentation d&apos;autres éléments importants du relief ou avec
+d&apos;autres objets.
+Le nombre minimum de points est 3 (emprise au sol 7 m x 7 m).
+La distance maximum entre les centres de points voisins est de 0,38 mm.
+La distance minimum entre les centres de points voisins est de 0,25 mm.
+Les courbes de niveau ne devraient pas être interrompues dans les zones de terrain accidenté. Les points ne doivent pas être disposés de façon à créer un élément linéaire.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -476,7 +536,11 @@ The symbol shall not touch or overlap other brown symbols.
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 11.5 m.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;élément doit être facile à distinguer sur le terrain.
+Le positionnement est le centre de gravité du symbole et il est orienté au Nord.
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune.
+La définition du symbole doit être donnée sur la carte.
+Emprise au sol : 13,5 m x 11,5 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -490,7 +554,11 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -504,17 +572,21 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Falaise infranchissable, forme en plan (d&apos;ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -528,7 +600,11 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -548,7 +624,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -562,7 +638,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -576,7 +656,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -590,7 +674,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -604,22 +692,26 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation>Falaise, avec tags, taille minimale (ISOM 2000)</translation>
+        <translation>Falaise, avec tags, taille minimale (ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou rocheux ou grotte (sans une direction d&apos;entrée évidente)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -628,32 +720,35 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
 Minimum depth: 1 m.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou rocheux, puits de mine ou une grotte (sans direction d&apos;entrée évidente) qui peut constituer un danger pour le coureur.
+La position est au centre de gravité du symbole, et le symbole doit être orienté vers le Nord.
+Les trous rocheux de plus de 5 m de diamètre doivent être exagérés et représentés en utilisant les symboles de falaises (201, 202).
+Profondeur minimum : 1 m.
+Emprise au sol : 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Cave or rocky pit (with a distinct entrance)</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou rocheux ou grotte (avec une entrée évidente)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
 Location is the centre of gravity of the symbol, and the symbol should point into the cave.
 Rocky pits larger than 5 m in diameter should be exaggerated and represented using cliff symbols (201, 202).</source>
         <comment>Description of symbol 203.2</comment>
-        <translation>Trou rocheux ou puits de mine ou caverne/grotte qui peuvent constituer un danger pour le coureur. Profondeur miminum : 1 m.
-La position est au centre de gravité du symbole, et le symbole doit être orienté vers le Nord, sauf pour les entrées de caverne ou de grotte, cas où le symbole doit pointer en direction de l’entrée.
-Les trous rocheux de plus de 5 m de diamètre doivent être exagérés et représentés en utilisant les symboles de falaises (201, 202).
-Emprise au sol : 10,5 m x 12 m.</translation>
+        <translation>Trou rocheux, puits de mine ou une grotte avec une entrée évidente qui peut constituer un danger pour le coureur. Profondeur minimum : 1 m.
+La position est au centre de gravité du symbole, et le symbole doit pointer en direction de l’entrée.
+Les trous rocheux de plus de 5 m de diamètre doivent être exagérés et représentés en utilisant les symboles de falaises (201, 202).</translation>
     </message>
     <message>
         <source>Rocky pit or cave with distinct entrance (from ISOM2000)</source>
         <comment>Name of symbol 203.9</comment>
-        <translation>Trou rocheux ou caverne avec entrée distinct (importé ISOM 200)</translation>
+        <translation>Trou rocheux ou grotte avec entrée distincte (d&apos;ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -665,7 +760,9 @@ Emprise au sol : 10,5 m x 12 m.</translation>
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux distinct (devrait avoir une hauteur supérieure à 1 m), qui est immédiatement identifiable sur le terrain. Les groupes de blocs sont représentés par le symbole Groupe de rochers (207) ou par un symbole Zone rocheuse (208, 209).
+Pour mettre en évidence les différences entre bloc voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;élargir la dimension du symbole à 0,5 mm pour certains d&apos;entre eux.
+Emprise au sol : 6 m de diamètre (7,5 m de diamètre).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -680,7 +777,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
 of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux qui est plus grand que d&apos;autres blocs (204) dans les environs, ou bien un grand bloc rocheux qui est plus petit que les autres grands blocs rocheux (205) dans les environs.
+Pour mettre en évidence la différence entre blocs rocheux (204) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version agrandie du symbole 204 pour certains d&apos;entre eux.
+Pour mettre en évidence la différence entre gros blocs rocheux (205) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version réduite du symbole 205 pour certains d&apos;entre eux.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -692,7 +791,9 @@ of the boulders.</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux particulièrement gros et visible. Un gros bloc rocheux devrait avoir une hauteur supérieure à 2 m.
+Pour mettre en évidence la différence entre gros blocs rocheux (205) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser une version réduite de ce symbole (0,5 mm) pour certains d&apos;entre eux.
+Emprise au sol : 9 m de diamètre (version réduite 7,5 m de diamètre).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -705,7 +806,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux gigantesque, un pilier rocheux ou une falaise massive doivent être représentés sur la carte en vue plane. Les objets peuvent varier en forme et largeur.
+L&apos;espace entre blocs rocheux gigantesques ou entre un bloc rocheux gigantesque et un autre élément infranchissable doit être d&apos;au moins 0,15 mm sur la carte.
+Largeur minimum : 0,25 mm (emprise au sol 3,75 m),
+Superficie minimale : 0,3 mm² (emprise au sol 67 m²).</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -719,7 +823,11 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un groupe visible de blocs rocheux trop proches les uns des autres pour être dessinés de façon individuelle. Les blocs rocheux dans le groupe devraient avoir une hauteur minimum de 1 m.
+Un groupe de blocs rocheux doit être facilement identifiable sur le terrain comme un ensemble de plusieurs blocs rocheux.
+Pour mettre en évidence les différences entre groupes de blocs rocheux voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;augmenter la dimension du symbole de 20 % (côté du triangle 0,96 mm) pour certains d&apos;entre eux.
+Le symbole est orienté vers le Nord.
+Emprise au sol : 12 m x 10 m.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -729,7 +837,7 @@ Footprint: 12 m x 10 m.</source>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pour mettre en évidence les différences entre groupes de blocs rocheux voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole agrandi au lieu du symbole Groupe de blocs rocheux (207) pour certains d&apos;entre eux.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -743,7 +851,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement est représentée par des triangles pleins, placés et orientés aléatoirement. Une zone de blocs rocheux ne ralentira généralement pas la vitesse de course. Si la vitesse de course est réduite, le symbole 209 (Zone de blocs rocheux dense) devrait être utilisé ou bien le symbole devrait être associé à un symbole de Terrain pierreux.
+Un minimum de deux triangles devrait être utilisé. Un seul triangle pourrait être utilisé s&apos;il est associé à d&apos;autres symboles de rochers (par exemple sous des symboles de falaise (201-202), à côté de symboles de blocs rocheux (204-206) ou associés à des symboles de sol pierreux (210-212)).
+La distance maximum centre à centre entre triangles voisins est de 1,2 mm. La distance minimum centre à centre entre triangles voisins est de 0,75 mm.
+Densité : 0,8 à 1 symbole/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -757,7 +869,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement est représentée par des triangles pleins, placés et orientés aléatoirement. Une zone de blocs rocheux ne ralentira généralement pas la vitesse de course. Si la vitesse de course est réduite, le symbole 209 (Zone de blocs rocheux dense) devrait être utilisé ou bien le symbole devrait être associé à un symbole de Terrain pierreux.
+Un minimum de deux triangles devrait être utilisé. Un seul triangle pourrait être utilisé s&apos;il est associé à d&apos;autres symboles de rochers (par exemple sous des symboles de falaise (201-202), à côté de symboles de blocs rocheux (204-206) ou associés à des symboles de sol pierreux (210-212)).
+La distance maximum centre à centre entre triangles voisins est de 1,2 mm. La distance minimum centre à centre entre triangles voisins est de 0,75 mm.
+Densité : 0,8 à 1 symbole/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -767,7 +883,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -780,7 +896,10 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé. 
+La distance maximum centre à centre entre triangles voisins est de 0,6 mm.
+Densité : 2 à 3 symboles/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur de zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol d&apos;un triangle individuel : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Stony ground, slow running</source>
@@ -796,7 +915,13 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sol pierreux ou rocailleux, qui réduit la vitesse de course à 60-80 % de la vitesse normale.
+Les points doivent être répartis aléatoirement mais ne doivent pas occulter la représentation d&apos;éléments ou d&apos;objets importants.
+Le nombre minimum de points est de trois (emprise au sol 10 m x 10 m).
+La distance maximum centre à centre entre points voisins est de 0,6 mm.
+La distance minimum centre à centre entre points voisins est de 0,45 mm.
+Densité : 3 à 4 points/mm².
+Pour éviter toute confusion avec le symbole Limite nette de végétation (416), les points ne doivent pas former une ligne.</translation>
     </message>
     <message>
         <source>Stony ground, individual dot</source>
@@ -812,7 +937,13 @@ The minimum centre to centre distance between neighbouring dots is 0.45 mm.
 Density: 3-4 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sol pierreux ou rocailleux, qui réduit la vitesse de course à 60-80 % de la vitesse normale.
+Les points doivent être répartis aléatoirement mais ne doivent pas occulter la représentation d&apos;éléments ou d&apos;objets importants. Des points individuels peuvent être utilisés pour le dessin.
+Le nombre minimum de points est de trois (emprise au sol 10 m x 10 m).
+La distance maximum centre à centre entre points voisins est de 0,6 mm.
+La distance minimum centre à centre entre points voisins est de 0,45 mm.
+Densité : 3 à 4 points/mm².
+Pour éviter toute confusion avec le symbole Limite nette de végétation (416), les points ne doivent pas former une ligne.</translation>
     </message>
     <message>
         <source>Stony ground, walk</source>
@@ -828,7 +959,13 @@ The minimum centre to centre distance between neighbouring dots is 0.32 mm.
 Density: 6-8 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sol pierreux ou rocailleux, qui réduit la vitesse de course de manière significative, à 20-60 % de la vitesse normale.
+Les points doivent être répartis aléatoirement mais ne doivent pas occulter la représentation d&apos;éléments importants. Des points individuels peuvent être utilisés pour le dessin.
+Le nombre minimum de points est de trois (emprise au sol 8 m x 8 m).
+La distance maximum centre à centre entre points voisins est de 0,4 mm.
+La distance minimum centre à centre entre points voisins est de 0,32 mm.
+Densité : 6 à 8 points/mm².
+Pour éviter toute confusion avec le symbole Limite nette de végétation (416), les points ne doivent pas former une ligne.</translation>
     </message>
     <message>
         <source>Stony ground, fight</source>
@@ -844,7 +981,13 @@ The minimum centre to centre distance between neighbouring dots is 0.25 mm.
 Density: 10-12 dots / mm².
 To avoid confusion with symbol Distinct vegetation boundary (416), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un sol pierreux ou rocailleux, qui est difficilement traversable (à moins de 20% de la vitesse normale). 
+Les points doivent être répartis aléatoirement mais ne doivent pas occulter la représentation d&apos;éléments importants. Des points individuels peuvent être utilisés pour le dessin.
+Le nombre minimum de points est de trois (emprise au sol 7 m x 7 m).
+La distance maximum centre à centre entre points voisins est de 0,32 mm.
+La distance minimum centre à centre entre points voisins est de 0,25 mm.
+Densité : 10 à 12 points/mm²
+Pour éviter toute confusion avec le symbole Limite nette de végétation (416),les points ne doivent pas former une ligne.</translation>
     </message>
     <message>
         <source>Sandy ground</source>
@@ -856,7 +999,9 @@ To avoid confusion with symbol Distinct vegetation boundary (416), the dots shou
 The symbol is orientated to north.
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 213</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone de sol sablonneux où la vitesse de course est inférieure à 80 % de la vitesse normale.
+Le symbole est orienté au Nord.
+Dimensions minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -869,7 +1014,10 @@ An area of rock covered with grass, moss or other low vegetation, shall not be s
 An area of less runnable bare rock should be shown using a stony ground symbol (210-212).
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
         <comment>Description of symbol 214</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone rocheuse sans terre ni végétation sur laquelle il est possible de courir devrait être dessinée en affleurement rocheux.
+Un affleurement rocheux couvert d&apos;herbe, de mousse ou de toute autre végétation basse ne doit pas être dessinée en utilisant ce symbole. 
+Un affleurement rocheux sur lequel il est plus difficile de courir devrait être représentée en utilisant un symbole Sol pierreux (210).
+Dimensions minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).</translation>
     </message>
     <message>
         <source>Trench</source>
@@ -883,12 +1031,16 @@ Shorter trenches may be exaggerated to the minimum graphical dimension.
 Impassable trenches shall be represented using symbol Impassable cliff (201).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une tranchée rocheuse ou artificielle. Sa profondeur minimale devrait être de 1 m. 
+Longueur minimum : 1 mm (emprise au sol 15 m).
+Des tranchées plus courtes peuvent être exagérées pour atteindre la dimension graphique minimum.
+Des tranchées infranchissables doivent être dessinées en utilisant le symbole Falaise infranchissable (201).
+Des tranchées éboulées et facilement traversables devraient être dessinées avec le symbole pour une ravine.</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour), with bank line</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (couleur pleine), avec ligne de rive</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -896,24 +1048,29 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>La ligne de rive en noir souligne la nature infranchissable de l&apos;élément.
+Des zones très larges d&apos;eau peuvent être représentées avec un bleu à 70%. Des petites étendues d&apos;eau ainsi que des étendues d&apos;eau dont certaines parties sont étroites doivent toujours être dessinées en couleur pleine.
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (couleur pleine)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Des zones très larges d&apos;eau peuvent être représentées avec un bleu à 70%. Des petites étendues d&apos;eau ainsi que des étendues d&apos;eau dont certaines parties sont étroites doivent toujours être dessinées en couleur pleine.
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant), with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (grande zone), avec ligne de rive</translation>
     </message>
     <message>
         <source>The black bank line emphasises that the feature is uncrossable.
@@ -921,19 +1078,24 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>La ligne de rive en noir souligne la nature infranchissable de l&apos;élément.
+Des zones très larges d&apos;eau peuvent être représentées avec un bleu à 70%. Des petites étendues d&apos;eau ainsi que des étendues d&apos;eau dont certaines parties sont étroites doivent toujours être dessinées en couleur pleine.
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (couleur pleine)</translation>
     </message>
     <message>
         <source>Dominant areas of water may be shown with 70% colour. Small areas of water and bodies of water that have narrow parts shall always be shown with full colour.
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Des zones très larges d&apos;eau peuvent être représentées avec un bleu à 70%. Des petites étendues d&apos;eau ainsi que des étendues d&apos;eau dont certaines parties sont étroites doivent toujours être dessinées en couleur pleine.
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
@@ -948,7 +1110,7 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Shallow body of water, with solid outline</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue d’eau de faible profondeur, avec bordure continue</translation>
     </message>
     <message>
         <source>A shallow seasonal or periodic body of water may be represented using a dashed outline. Small shallow water bodies may be represented as 100% blue (without an outline).
@@ -957,7 +1119,11 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une étendue d&apos;eau de faible profondeur saisonnière ou périodique peut être représentée en utilisant une bordure tiretée. Les étendues d&apos;eau peu profonde de petite dimension peuvent être représentées en 100 % bleu (sans bordure).
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,7 mm x 0,7 mm (emprise au sol 10,5 m x 10,5 m).
+Largeur minimum (couleur pleine) : 0,3 mm.
+Surface minimale (couleur pleine) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water</source>
@@ -971,7 +1137,11 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une étendue d&apos;eau de faible profondeur saisonnière ou périodique peut être représentée en utilisant une bordure tiretée. Les étendues d&apos;eau peu profonde de petite dimension peuvent être représentées en 100 % bleu (sans bordure).
+Largeur minimum (bords intérieurs) : 0,3 mm.
+Surface minimale (bords intérieurs) : 0,7 mm x 0,7 mm (emprise au sol 10,5 m x 10,5 m).
+Largeur minimum (couleur pleine) : 0,3 mm.
+Surface minimale (couleur pleine) : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Shallow body of water, solid outline</source>
@@ -981,7 +1151,7 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Use this symbol to represent the outline of a shallow body of water which is not seasonal or periodic.</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A utiliser pour la bordure d&apos;une étendue d&apos;eau peu profonde qui n&apos;est pas saisonnière ou périodique.</translation>
     </message>
     <message>
         <source>Shallow body of water, dashed outline</source>
@@ -991,19 +1161,21 @@ Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Use this symbol to represent the outline of a shallow seasonal or periodic body of water.</source>
         <comment>Description of symbol 302.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A utiliser pour la bordure d&apos;une étendue d&apos;eau peu profonde saisonnière ou périodique.</translation>
     </message>
     <message>
         <source>Small shallow body of water (full colour)</source>
         <comment>Name of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Petite étendu d&apos;eau peu profonde (couleur pleine)</translation>
     </message>
     <message>
         <source>Small shallow water bodies may be represented using this symbol (without an outline).
 Minimum width: 0.3 mm.
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Les étendues d&apos;eau peu profonde de petite dimension peuvent être représentées avec ce symbole (sans bordure).
+Largeur minimum : 0,3 mm.
+Surface minimale : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -1014,7 +1186,8 @@ Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 10.5 m x 12 m.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un trou rempli d&apos;eau ou une zone d&apos;eau trop petite pour être représentée à l&apos;échelle. La position est au centre de gravité du symbole, et le symbole doit être orienté vers le Nord.
+Emprise au sol : 10,5 m x 12 m.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -1025,7 +1198,8 @@ Footprint: 10.5 m x 12 m.</source>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sa largeur devrait être d&apos;au moins 2 m. 
+Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -1035,7 +1209,7 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
         <source>Minor/seasonal water channel</source>
@@ -1046,19 +1220,22 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <source>A natural or man-made minor water channel which may contain water only intermittently.
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un cours d&apos;eau naturel ou artificiel qui peut n&apos;être en eau que de façon intermittente.
+Longueur minimum (isolé) : 2 tirets (2,75 mm, 41 m au sol).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with outline</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marais infranchissable, avec bordure</translation>
     </message>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol Uncrossable body of water (301). The symbol may be combined with a rough open land symbol (403, 404) to show openness.
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais infranchissable ou dangereux pour le coureur. La ligne de rive en noir souligne le fait que l&apos;élément est infranchissable. La ligne noire est omise pour les limites entre un marais infranchissable et le symbole Etendue d’eau infranchissable (301). Le symbole peut être combiné avec un symbole terrain découvert brut (403,404) pour indiquer le découvert.
+Le symbole est orienté vers le Nord.
+Largeur minimum : 0,3 mm (bords intérieurs) Surface minimum : 0,5 mm² (bords intérieurs).</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -1070,17 +1247,19 @@ Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais infranchissable ou dangereux pour le coureur. La bordure en noir souligne le fait que l&apos;élément est infranchissable. La ligne noire est omise pour les limites entre un marais infranchissable et le symbole Etendue d’eau infranchissable (301). Le symbole peut être combiné avec un symbole terrain découvert brut (403,404) pour indiquer le découvert.
+Le symbole est orienté vers le Nord.
+Largeur minimum : 0,3 mm (bords intérieurs) Surface minimum : 0,5 mm² (bords intérieurs).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, outline</source>
         <comment>Name of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Marais infranchissable, bordure</translation>
     </message>
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>La bordure noire souligne le fait que l&apos;élément est infranchissable.</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -1093,7 +1272,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais franchissable, habituellement avec un bord net.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 0,5 x 0,4 mm (emprise au sol 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -1106,7 +1288,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais franchissable, habituellement avec un bord net.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 0,5 x 0,4 mm (emprise au sol 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -1117,7 +1302,8 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais ou un filet d&apos;eau qui est trop étroit pour être représenté avec le symbole marais.
+Longueur minimum (isolé) : 2 points (0,7 mm, emprise au sol 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -1130,7 +1316,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais peu visible ou saisonnier ou une zone de transition progressive entre un marais et la terre ferme, qui est franchissable. Les bords sont en général peu visibles et la végétation similaire à celle environnante.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 2 mm x 0,7 mm (30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -1143,7 +1332,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un marais peu visible ou saisonnier ou une zone de transition progressive entre un marais et la terre ferme, qui est franchissable. Les bords sont en général peu visibles et la végétation similaire à celle environnante.
+Le symbole doit être combiné avec d&apos;autres symboles pour montrer le découvert et la courabilité.
+Le symbole est orienté vers le Nord.
+Surface minimum : 2 mm x 0,7 mm (30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Well, fountain or water tank</source>
@@ -1154,7 +1346,8 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <source>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un puits visible, une fontaine, un réservoir d&apos;eau ou un captage.
+Emprise au sol : 12 m x 12 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -1167,7 +1360,10 @@ Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
 Footprint: 13.5 m x 7 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une source d&apos;eau.
+La position est le centre de gravité du symbole.
+Son ouverture est orientée vers l&apos;aval.
+Emprise au sol : 13,5 x 7 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -1179,7 +1375,9 @@ Footprint: 13.5 m x 7 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le symbole est orienté au Nord.
+La définition du symbole doit être donnée sur la carte.
+Emprise au sol : 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -1191,7 +1389,9 @@ Footprint: 13.5 m x 13.5 m.</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain découvert dont la couverture au sol (herbe, mousse ou similaire) offre une possibilité de courir plus vite que dans la forêt ouverte. Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame (75 % au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), Marais (308) ou Marais peu visible (310).
+Surface minimum : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -1206,12 +1406,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
+Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
+Surface minimum : 2 mm x 2 mm (emprise au sol 30 m x 30 m)
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
+Le symbole est orienté vers le Nord.</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain découvert avec buissons dispersés (points verts)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1221,7 +1426,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
+Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
+Surface minimum : 2 mm x 2 mm (emprise au sol 30 m x 30 m)
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
+Le symbole est orienté vers le Nord.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -1234,7 +1444,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Landes, abattis, zones récemment replantées (avec des arbres d&apos;une taille inférieure à environ 1m) ou tout autre terrain découvert avec une végétation au sol encombrante, de la bruyère ou des herbes hautes qui permet une vitesse de course similaire à celle de la forêt ouverte.
+Peut être associé avec le symbole Végétation, course lente, bonne visibilité (407) ou Végétation, marche, bonne visibilité (409) pour indiquer une courabilité réduite.
+Surface minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -1428,12 +1641,8 @@ Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation>Une zone avec une végétation dense (arbres ou végétation au sol) qui est réellement infranchissable.
-Surtout utile pour de petites zones ou des zones étroites.
-Surface minimum : 0,8 mm x 0,8 mm (12 m x 12 m au sol).
-Largeur minimum : 0, 35 mm (5 m au sol).
-Couleur: vert et noir 50% ou vert et trames de points noirs (50%).
-Points de 0.16 mm distance centre à centre 0.2 mm</translation>
+        <translation>Une zone avec une végétation dense (arbres ou végétation au sol) qui est très difficilement franchissable.
+Largeur minimum : 0, 35 mm.</translation>
     </message>
     <message>
         <source>Vegetation, impassable (from ISOM 2017, first edition)</source>
@@ -1593,7 +1802,9 @@ Footprint: 9.0 m x 9.0 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le symbole est orienté au Nord.
+La définition du symbole doit être donnée sur la carte.
+Emprise au sol : 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -1647,7 +1858,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -3031,10 +3242,9 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.1</comment>
         <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu’il n’est pas possible ou qu’il est dangereux de le franchir ou de le gravir.
-Pour les falaises présentant une face verticale, les tirets peuvent être omis s’il n’y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. La largeur minimale est de 0,35 mm. Des tirets d’extrémité moins longs peuvent être utilisés aux extrémités.
+Les extrémités du trait principal peuvent être rondes ou carrées. 
 L’espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d’élément infranchissable doit être supérieur à 0,3 mm sur la carte.
-Quand une falaise infranchissable plonge directement dans de l’eau rendant impossible le passage entre la falaise et l’eau soit le trait de rive de l’eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s’imbriquer avec les courbes de niveau.
-Longueur minimale : 0,6 mm (9 m au sol).</translation>
+Quand une falaise infranchissable plonge directement dans de l’eau rendant impossible le passage entre la falaise et l’eau soit le trait de rive de l’eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s’imbriquer avec les courbes de niveau.</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation</source>
@@ -6044,32 +6254,32 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symbole de surimpression</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour symbole de surimpression</translation>
     </message>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour voie ferrée</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symboles de circuit</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -6079,12 +6289,12 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -6109,7 +6319,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun inférieur 50%</translation>
     </message>
     <message>
         <source>Lower brown 30%</source>
@@ -6124,12 +6334,12 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100% pour surfaces</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 70%</translation>
     </message>
     <message>
         <source>Blue 30%</source>
@@ -6149,7 +6359,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>White over green</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur vert</translation>
     </message>
     <message>
         <source>Green 50%/Yellow 100%</source>
@@ -6164,7 +6374,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour surfaces</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -6179,17 +6389,17 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour végétation basse</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 28</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur jaune</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 29</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir pour terrain ouvert</translation>
     </message>
     <message>
         <source>Yellow 100%</source>
@@ -6628,7 +6838,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Trou rocheux ou grotte (sans une direction d&apos;entrée évidente)</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -6850,7 +7060,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (couleur pleine)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -6876,7 +7086,7 @@ Minimum area (inside): 0.5 mm² (footprint 8 m²)</source>
     <message>
         <source>Uncrossable body of water (dominant)</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Etendue infranchissable d&apos;eau (couleur pleine)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -13401,12 +13611,12 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Purple for course overprint</source>
         <comment>Color 0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symbole de surimpression</translation>
     </message>
     <message>
         <source>White for course overprint</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour symbole de surimpression</translation>
     </message>
     <message>
         <source>Green for SkiO</source>
@@ -13416,37 +13626,37 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc pour voie ferrée</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pourpre pour symboles de circuit</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir en dessous du pourpre pour circuits</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -13461,32 +13671,32 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Upper brown 50%</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun supérieur 50%</translation>
     </message>
     <message>
         <source>Black below upper brown 50%</source>
         <comment>Color 13</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun supérieur 50%</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun inférieur 50%</translation>
     </message>
     <message>
         <source>Black below lower brown 50%</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir sous brun inférieur 50%</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
         <comment>Color 16</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 100% pour surfaces</translation>
     </message>
     <message>
         <source>Blue 70%</source>
         <comment>Color 17</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu 70%</translation>
     </message>
     <message>
         <source>Blue 50%</source>
@@ -13501,27 +13711,27 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Yellow 100% for narrow ride</source>
         <comment>Color 20</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 60% for narrow ride</source>
         <comment>Color 21</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 60% pour layon étroit</translation>
     </message>
     <message>
         <source>Green 30% for narrow ride</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 30% pour layon étroit</translation>
     </message>
     <message>
         <source>White over green</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur vert</translation>
     </message>
     <message>
         <source>Yellow 100%/Green 50%</source>
         <comment>Color 24</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100%/Vert 50%</translation>
     </message>
     <message>
         <source>Black 25% (Grey)</source>
@@ -13531,12 +13741,12 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100%/Noir 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
         <comment>Color 27</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour surfaces</translation>
     </message>
     <message>
         <source>Green 60%</source>
@@ -13551,17 +13761,17 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Green 100% for undergrowth</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vert 100% pour végétation basse</translation>
     </message>
     <message>
         <source>White over yellow</source>
         <comment>Color 31</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blanc sur jaune</translation>
     </message>
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation type="unfinished"></translation>
+        <translation>Noir pour terrain ouvert</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -13571,7 +13781,7 @@ Largeur minimum : 0,4 mm (6 m au sol).</translation>
     <message>
         <source>Yellow 100% for area features</source>
         <comment>Color 34</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jaune 100% pour surfaces</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
@@ -13595,7 +13805,19 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ligne qui relie les points de même altitude. L&apos;équidistance standard entre deux courbes est de 5 mètres. Un intervalle de 2,5m peut être utilisé
+en cas de terrain plat.
+Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une courbe de niveau fermée sur elle-même représente une colline ou une dépression. Une dépression doit comprendre au moins un tiret de pente. La hauteur (colline) ou la profondeur (dépression) minimale devrait être de 1 m.
+Le rapport entre des courbes de niveau adjacentes est important. Ce rapport permet de représenter le relief et la structure du terrain. Il faudrait éviter de dessiner des petits détails dans des courbes de niveau pour ne pas masquer les formes principales du relief.
+Pour assurer une bonne lisibilité, il y a parfois besoin d&apos;exagérer dans leur dessin des éléments significatifs comme les dépressions, les rentrants, les éperons, les abrupts de terre et les terrasses.
+La précision absolue des altitudes n&apos;a que peu d&apos;importance, mais les différences d&apos;altitude relative entre éléments voisins devraient être représentées sur la carte le plus précisément possible. Il est autorisé de modifier légèrement l&apos;altitude d&apos;une courbe de niveau si cela améliore la représentation d&apos;un élément. L&apos;écart ne doit pas dépasser 25% de l&apos;équidistance et une attention particulière doit être
+portée aux éléments proches.
+La courbure minimale d&apos;une courbe de niveau est de 0,25 mm de centre à centre de la ligne (emprise au sol de 4m). L&apos;entrée d&apos;un rentrant ou d&apos;un
+éperon doit mesurer au moins 0,5 mm de centre à centre de la ligne (emprise au sol 8 m).
+La longueur minimum d&apos;une colline est de 0,9 mm (emprise au sol de 13,5 m) et la largeur minimale de 0,6 mm (emprise au sol de 9 m) mesurée depuis les bords extérieurs des lignes. Des buttes remarquables plus petites peuvent être représentées par le symbole Petite butte (109) ou Petite butte allongée (110) ou bien elles peuvent être exagérées pour respecter les dimensions minimum.
+Comme une dépression doit comprendre un tiret de pente, sa longueur minimale est de 1,1 mm (16,5 m au sol) et sa largeur minimale de 0,7 mm mesurée depuis les bords extérieurs de la ligne. Des dépressions remarquables plus petites peuvent être représentées par le symbole Petite dépression (111) ou bien elles peuvent être exagérées pour respecter les dimensions minimum. 
+Les courbes de niveau devraient être déplacées (plutôt que coupées) quand il est nécessaire d&apos;éviter de toucher des symboles Petite butte (109) ou Petite butte allongée (110).</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -13606,7 +13828,8 @@ Contours should be adapted (not broken) in order not to touch symbol Small knoll
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un tiret de pente peut être dessiné du côté aval d&apos;une courbe de niveau pour clarifier le sens de la pente. Quand ils sont utilisés, ils devraient être placés de préférence dans les rentrants.
+Une dépression doit comporter au moins un tiret de pente.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -13618,7 +13841,9 @@ A depression has to have at least one slope line.</source>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toutes les 5 courbes, une courbe de niveau maîtresse doit être dessinée en utilisant un trait plus épais. C&apos;est une aide pour appréhender rapidement les dénivelées et la forme globale du relief.
+Lorsqu&apos;une courbe maîtresse passe dans une zone où figurent de nombreux détails, elle peut être dessinée comme une courbe de niveau ordinaire. Normalement, les petites collines ou les petites dépressions ne sont pas dessinées avec une courbe maîtresse.
+Dans un terrain plat, il faut être attentif au choix de laquelle des courbes de niveau est dessinée en courbe maitresse. Le niveau idéal pour le choix de la courbe maîtresse est le niveau médian des pentes les plus remarquables.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -13628,7 +13853,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Il est possible d&apos;associer une cote d&apos;altitude à une courbe maîtresse. Une cote ne peut être insérée sur une courbe maîtresse que dans les zones où elle ne cachera pas d&apos;autres détails. Les chiffres sont orientés avec leur sommet en amont de la pente. Le texte doit avoir une hauteur de 1,5 mm en police sans-serif.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -13640,7 +13865,10 @@ The index contour level must be carefully selected in flat terrain. The ideal le
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Les courbes de forme (ou courbes intermédiaires) sont utilisées quand il est nécessaire de donner plus d&apos;information sur la forme du terrain. Elles ne seront utilisées que si les courbes de niveau seules ne peuvent pas donner une bonne représentation du terrain. Une seule courbe de forme peut être dessinée entre deux courbes de niveau adjacentes. Il est très important que les courbes de forme complètent de manière logique le schéma des courbes de niveau : de ce fait le début et
+la fin d&apos;une courbe de forme devraient être parallèles avec les courbes de niveau adjacentes. Les espaces entre les tirets doivent être placés sur des sections relativement rectilignes de la courbe de forme. Les courbes de forme peuvent être utilisées pour le dessin des collines ou dépressions plus évasées que d&apos;autres dans le secteur (hauteur/profondeur minimale 1 m). Une utilisation excessive des courbes de forme doit être évitée car cela nuit à la perception en 3 dimensions du relief et complique la lecture de la carte.
+Longueur minimale (courbe non refermée sur elle-même) : 2 tirets
+Longueur minimale pour une courbe refermée sur elle-même (colline ou dépression) : 1,1 mm (16,5 m au sol).</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -13667,7 +13895,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -13680,7 +13911,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -13693,7 +13927,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un abrupt de terre est un changement brutal dans le niveau du sol qui peut être clairement distingué sur le terrain, comme par exemple des carrières de sable ou de gravier, des remblais de route ou des talus de chemin de fer.
+Hauteur minimum : 1 m. Un abrupt de terre peut avoir une influence sur la vitesse de course. Les tirets montrent l&apos;emprise complète de l&apos;abrupt.
+Pour des abrupts longs, les tirets d&apos;extrémité peuvent être plus courts que la longueur minimum définie. Si deux abrupts de terre sont proches l&apos;un de l&apos;autre, les tirets peuvent être omis. Les abrupts de terre infranchissables doivent être représentés avec le symbole Falaise infranchissable (201).
+Longueur minimum : 0,6 mm (emprise 9 m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -13713,7 +13950,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -13724,7 +13961,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Levée ou mur de terre distinct. Hauteur minimum 1 m.
+Longueur minimum : 1,4 mm (emprise au sol 21 m).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -13736,7 +13974,9 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une ravine qui est trop petite pour être dessinée à l&apos;aide du symbole Abrupt de terre (104), est dessinée en utilisant un simple trait. Profondeur minimum : 1 m.
+Longueur minimum 1,15 mm (emprise au sol 17 m).
+Les courbes de niveau ne devraient pas être interrompues autour de ce symbole.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -13749,7 +13989,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite butte ou un monticule évident qui ne peut pas être dessiné en utilisant une courbe de niveau.
+Hauteur minimum : 1 m.
+Le symbole ne doit pas toucher ou se superposer avec des courbes de niveau.
+Emprise au sol 7,5 m x 7,5 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -13763,7 +14006,11 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une petite dépression sans bords raides qui est trop petite pour être représentée par une courbe de niveau.
+Profondeur minimum : 1 m. Largeur minimum : 2 m.
+Les petites dépressions dont les bords sont raides sont représentées par le symbole Trou (112).
+Le symbole ne doit pas toucher ou se superposer avec d&apos;autres symboles de couleur brune. Le positionnement est le centre de gravité du symbole et le symbole est orienté au Nord.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -13777,7 +14024,11 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -13791,17 +14042,21 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Falaise infranchissable, forme en plan (d&apos;ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -13815,7 +14070,11 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise, une carrière ou un abrupt de terrain si haut et si raide qu&apos;il est impossible ou dangereux de la franchir ou de la gravir.
+Pour les falaises présentant une face verticale, les tirets peuvent être omis s&apos;il n&apos;y a pas assez de place. Les extrémités du trait principal peuvent être rondes ou carrées. Des tirets moins longs peuvent être utilisés aux extrémités.
+L&apos;espace entre deux falaises infranchissables ou entre une falaise infranchissable et un autre symbole d&apos;élément infranchissable doit être supérieur à 0,25 mm sur la carte.
+Quand une falaise infranchissable plonge directement dans de l&apos;eau rendant impossible le passage entre la falaise et l&apos;eau soit le trait de rive de l&apos;eau est omis, soit les tirets doivent clairement le dépasser. Une falaise infranchissable devrait s&apos;imbriquer avec les courbes de niveau.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -13835,7 +14094,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -13849,7 +14108,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -13863,7 +14126,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
@@ -13877,7 +14144,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
@@ -13891,7 +14162,11 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une falaise ou une carrière franchissable. Si le sens de la pente n&apos;est pas évident d&apos;après les courbes de niveau ou pour améliorer la lisibilité, des tirets courts peuvent être dessinés dans le sens de la pente. 
+Pour des falaises non verticales, les tirets devraient être dessinés pour indiquer l&apos;étendue horizontale de la falaise. En l’absence de tirets, les extrémités du trait principal doivent être arrondies. Un passage entre deux falaises doit mesurer au moins 0,2 mm. Une falaise devrait s&apos;imbriquer avec les courbes de niveau.
+Franchir une falaise ralentira normalement la progression.
+Hauteur minimum : 1 m.
+Longueur minimale : 0,6 mm (emprise au sol 9 m).</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
@@ -13901,7 +14176,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -13913,7 +14188,9 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux distinct (devrait avoir une hauteur supérieure à 1 m), qui est immédiatement identifiable sur le terrain. Les groupes de blocs sont représentés par le symbole Groupe de rochers (207) ou par un symbole Zone rocheuse (208, 209).
+Pour mettre en évidence les différences entre bloc voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;élargir la dimension du symbole à 0,5 mm pour certains d&apos;entre eux.
+Emprise au sol : 6 m de diamètre (7,5 m de diamètre).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -13928,7 +14205,9 @@ To be able to show the distinction between neighbouring (closer than 30 metres a
 To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some 
 of the boulders.</source>
         <comment>Description of symbol 204.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux qui est plus grand que d&apos;autres blocs (204) dans les environs, ou bien un grand bloc rocheux qui est plus petit que les autres grands blocs rocheux (205) dans les environs.
+Pour mettre en évidence la différence entre blocs rocheux (204) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version agrandie du symbole 204 pour certains d&apos;entre eux.
+Pour mettre en évidence la différence entre gros blocs rocheux (205) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole (0,5 mm) comme une version réduite du symbole 205 pour certains d&apos;entre eux.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -13940,7 +14219,9 @@ of the boulders.</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux particulièrement gros et visible. Un gros bloc rocheux devrait avoir une hauteur supérieure à 2 m.
+Pour mettre en évidence la différence entre gros blocs rocheux (205) voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser une version réduite de ce symbole (0,5 mm) pour certains d&apos;entre eux.
+Emprise au sol : 9 m de diamètre (version réduite 7,5 m de diamètre).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -13953,7 +14234,10 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un bloc rocheux gigantesque, un pilier rocheux ou une falaise massive doivent être représentés sur la carte en vue plane. Les objets peuvent varier en forme et largeur.
+L&apos;espace entre blocs rocheux gigantesques ou entre un bloc rocheux gigantesque et un autre élément infranchissable doit être d&apos;au moins 0,15 mm sur la carte.
+Largeur minimum : 0,25 mm (emprise au sol 3,75 m),
+Superficie minimale : 0,3 mm² (emprise au sol 67 m²).</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -13967,7 +14251,11 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>Un groupe visible de blocs rocheux trop proches les uns des autres pour être dessinés de façon individuelle. Les blocs rocheux dans le groupe devraient avoir une hauteur minimum de 1 m.
+Un groupe de blocs rocheux doit être facilement identifiable sur le terrain comme un ensemble de plusieurs blocs rocheux.
+Pour mettre en évidence les différences entre groupes de blocs rocheux voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;augmenter la dimension du symbole de 20 % (côté du triangle 0,96 mm) pour certains d&apos;entre eux.
+Le symbole est orienté vers le Nord.
+Emprise au sol : 12 m x 10 m.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -13977,7 +14265,7 @@ Footprint: 12 m x 10 m.</source>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pour mettre en évidence les différences entre groupes de blocs rocheux voisins (à moins de 30 m de distance) de tailles différentes, il est autorisé d&apos;utiliser ce symbole agrandi au lieu du symbole Groupe de blocs rocheux (207) pour certains d&apos;entre eux.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -13991,7 +14279,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement est représentée par des triangles pleins, placés et orientés aléatoirement. Une zone de blocs rocheux ne ralentira généralement pas la vitesse de course. Si la vitesse de course est réduite, le symbole 209 (Zone de blocs rocheux dense) devrait être utilisé ou bien le symbole devrait être associé à un symbole de Terrain pierreux.
+Un minimum de deux triangles devrait être utilisé. Un seul triangle pourrait être utilisé s&apos;il est associé à d&apos;autres symboles de rochers (par exemple sous des symboles de falaise (201-202), à côté de symboles de blocs rocheux (204-206) ou associés à des symboles de sol pierreux (210-212)).
+La distance maximum centre à centre entre triangles voisins est de 1,2 mm. La distance minimum centre à centre entre triangles voisins est de 0,75 mm.
+Densité : 0,8 à 1 symbole/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -14005,7 +14297,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement est représentée par des triangles pleins, placés et orientés aléatoirement. Une zone de blocs rocheux ne ralentira généralement pas la vitesse de course. Si la vitesse de course est réduite, le symbole 209 (Zone de blocs rocheux dense) devrait être utilisé ou bien le symbole devrait être associé à un symbole de Terrain pierreux.
+Un minimum de deux triangles devrait être utilisé. Un seul triangle pourrait être utilisé s&apos;il est associé à d&apos;autres symboles de rochers (par exemple sous des symboles de falaise (201-202), à côté de symboles de blocs rocheux (204-206) ou associés à des symboles de sol pierreux (210-212)).
+La distance maximum centre à centre entre triangles voisins est de 1,2 mm. La distance minimum centre à centre entre triangles voisins est de 0,75 mm.
+Densité : 0,8 à 1 symbole/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -14015,7 +14311,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pour mettre en évidence les différences de hauteur à l&apos;intérieur d&apos;une zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -14028,7 +14324,10 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone qui est couverte de tellement de blocs rocheux dispersés qu&apos;ils ne peuvent pas être dessinés individuellement et qui ralentira la vitesse de course est représentée par des triangles pleins, placés et orientés aléatoirement. Un minimum de deux triangles doit être utilisé. 
+La distance maximum centre à centre entre triangles voisins est de 0,6 mm.
+Densité : 2 à 3 symboles/mm². Pour mettre en évidence les différences de hauteur à l&apos;intérieur de zone de blocs rocheux, il est autorisé d&apos;augmenter la dimension de certains triangles de 20%.
+Emprise au sol d&apos;un triangle individuel : 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
@@ -14099,7 +14398,8 @@ Footprint of individual triangle: 12 m x 6 m.</source>
         <source>Should be at least 2 m wide.
 Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 304</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sa largeur devrait être d&apos;au moins 2 m. 
+Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
         <source>Small crossable watercourse</source>
@@ -14109,7 +14409,7 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Minimum length (isolated): 1 mm (footprint 15 m).</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     </message>
     <message>
         <source>Marsh (in ski orienteering map)</source>
@@ -14131,7 +14431,9 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terrain découvert dont la couverture au sol (herbe, mousse ou similaire) offre une possibilité de courir plus vite que dans la forêt ouverte. Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame (75 % au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), Marais (308) ou Marais peu visible (310).
+Surface minimum : 0,55 mm x 0,55 mm (emprise au sol 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -14146,7 +14448,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Une zone d&apos;arbres ou de buissons dispersés dans un terrain découvert peut être généralisée en utilisant un motif régulier de gros points dans la trame jaune. Les points peuvent être blancs (arbres dispersés) ou verts (buissons dispersés). Les arbres remarquables individualisés peuvent être rajoutés en utilisant le symbole Gros arbre remarquable (417). Si ce type de surface jaune devient dominant il est possible d&apos;utiliser une trame au lieu du jaune plein).
+Ne doit pas être combiné avec d&apos;autres symboles de surface à l&apos;exception des symboles Terrain accidenté (113), Zone de blocs rocheux (208), ou des symboles de marais (308, 310).
+Largeur minimale : 1,5 mm (emprise au sol 22,5 m).
+Surface minimum : 2 mm x 2 mm (emprise au sol 30 m x 30 m)
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).
+Le symbole est orienté vers le Nord.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -14159,7 +14466,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>Landes, abattis, zones récemment replantées (avec des arbres d&apos;une taille inférieure à environ 1m) ou tout autre terrain découvert avec une végétation au sol encombrante, de la bruyère ou des herbes hautes qui permet une vitesse de course similaire à celle de la forêt ouverte.
+Peut être associé avec le symbole Végétation, course lente, bonne visibilité (407) ou Végétation, marche, bonne visibilité (409) pour indiquer une courabilité réduite.
+Surface minimum : 1 mm x 1 mm (emprise au sol 15 m x 15 m).
+Des surfaces plus petites doivent être omises, exagérées ou dessinées en utilisant le symbole Terrain découvert (401).</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -14309,7 +14619,9 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>Le symbole est orienté au Nord.
+La définition du symbole doit être donnée sur la carte.
+Emprise au sol : 13,5 x 13,5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -14363,7 +14675,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Symbole fourni pour aider à la conversion des cartes ISOM2000. L&apos;utilisation de ce symbole est déconseillée lors de la création d&apos;une nouvelle carte.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>

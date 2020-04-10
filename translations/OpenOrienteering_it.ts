@@ -3168,7 +3168,7 @@ Vuoi salvare le modifiche?</translation>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>La scala della mappa selezionata è 1:%1, ma i simboli scelti hanno una scala nominale di 1:%2.
+        <translation>La scala della mappa selezionata è 1:%1, ma la galleria di simboli è in scala 1:%2.
 
 Vuoi scalare i simboli nella scala selezionata?</translation>
     </message>
@@ -7312,7 +7312,7 @@ colori</translation>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>La mappa contiene oggetti con il simbolo &quot;%1&quot;. Cancellandolo verranno cancellati gli oggetti e la crfonologia dei ripristini (ctrl-Z)! Veramente si vuole fare questo?</translation>
+        <translation>La mappa contiene oggetti con il simbolo &quot;%1&quot;. Cancellandolo verranno cancellati gli oggetti e la cronologia dei ripristini (ctrl-Z)! Veramente si vuole fare questo?</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="949"/>
@@ -7341,7 +7341,7 @@ colori</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="104"/>
         <source>Replace symbol set</source>
-        <translation>Sostituisci l&apos;insieme dei simboli</translation>
+        <translation>Sostituisci la galleria di simboli</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="106"/>
@@ -7371,7 +7371,7 @@ colori</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>Mantieni lo stato di nascosto / protetto come nel vecchio insieme di simboli</translation>
+        <translation>Mantieni lo stato di nascosto / protetto come nella vecchia galleria di simboli</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"/>
@@ -7519,7 +7519,7 @@ Vuoi salvare i tuoi cambiamenti?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="273"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>L&apos;insieme dei simboli selezionato ha scala 1:%1, mentre la scala della mappa è 1:%2. Vuoi veramente sceglier questa galleria di simboli?</translation>
+        <translation>La galleria di simboli selezionata ha scala 1:%1, mentre la scala della mappa è 1:%2. Vuoi veramente sceglier questa galleria di simboli?</translation>
     </message>
     <message>
         <source>Cannot load CRT file, aborting.</source>
