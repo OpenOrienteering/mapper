@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -111,9 +111,9 @@ public:
 	 * @param out_objects           The resulting collection of objects.
 	 */
 	bool executeForObjects(
-	        PathObject* subject,
-	        PathObjects& in_objects,
-	        PathObjects& out_objects );
+	        const PathObject* subject,
+	        const PathObjects& in_objects,
+	        PathObjects& out_objects ) const;
 	
 	/**
 	 * Executes the Intersection and Difference operation on the given line object.
@@ -125,7 +125,7 @@ public:
 	void executeForLine(
 	        const PathObject* area,
 	        const PathObject* line,
-	        PathObjects& out_objects );
+	        PathObjects& out_objects ) const;
 	
 private:
 	typedef std::pair< const PathPart*, const PathCoord* > PathCoordInfo;
@@ -143,8 +143,8 @@ private:
 	 * @param undo_step             A combined undo step which will be filled with sub steps.
 	 */
 	bool executeForObjects(
-	        PathObject* subject,
-	        PathObjects& in_objects,
+	        const PathObject* subject,
+	        const PathObjects& in_objects,
 	        PathObjects& out_objects,
 	        CombinedUndoStep& undo_step );
 	
@@ -157,7 +157,7 @@ private:
 	        const ClipperLib::PolyTree& tree,
 	        PathObjects& out_objects,
 	        const PathObject* proto,
-	        const PolyMap& polymap );
+	        const PolyMap& polymap ) const;
 
 	/**
 	 * Converts a ClipperLib::PolyNode to PathObjects.
@@ -170,7 +170,7 @@ private:
 	        const ClipperLib::PolyNode& node,
 	        PathObjects& out_objects,
 	        const PathObject* proto,
-	        const PolyMap& polymap );
+	        const PolyMap& polymap ) const;
 	
 	/**
 	 * Constructs ClipperLib::Paths from a PathObject.
@@ -263,7 +263,7 @@ private:
 	        bool& out_coords_increasing,
 	        bool& out_is_curve );
 	
-	const Operation op;
+	Operation const op;
 	Map* const map;
 };
 

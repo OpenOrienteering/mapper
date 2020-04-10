@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -211,7 +211,7 @@ bool BooleanTool::executePerSymbol()
 	return have_changes;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+bool BooleanTool::executeForObjects(const PathObject* subject, const PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
 {
 	if (!executeForObjects(subject, in_objects, out_objects))
 	{
@@ -258,7 +258,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	return true;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(const PathObject* subject, const PathObjects& in_objects, PathObjects& out_objects) const
 {
 	// Convert the objects to Clipper polygons and
 	// create a hash map, mapping point positions to the PathCoords.
@@ -312,13 +312,13 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	return success;
 }
 
-void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
+void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap) const
 {
 	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
 		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, proto, polymap);
 }
 
-void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
+void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap) const
 {
 	auto object = std::unique_ptr<PathObject>{ proto->duplicate() };
 	object->clearCoordinates();
@@ -345,7 +345,7 @@ void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, P
 
 
 
-void BooleanTool::executeForLine(const PathObject* area, const PathObject* line, BooleanTool::PathObjects& out_objects)
+void BooleanTool::executeForLine(const PathObject* area, const PathObject* line, BooleanTool::PathObjects& out_objects) const
 {
 	if (op != BooleanTool::Intersection && op != BooleanTool::Difference)
 	{
