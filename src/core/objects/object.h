@@ -23,7 +23,6 @@
 #define OPENORIENTEERING_OBJECT_H
 
 #include <limits>
-#include <memory>
 #include <vector>
 #include <utility>
 
@@ -680,29 +679,25 @@ public:
 	// Operations
 	
 	/**
-	 * Calculates the closest point on the path to the given coordinate,
-	 * returns the squared distance of these points and PathCoord information
-	 * for the point on the path.
+	 * Calculates the closest point on the path to the given coordinate.
 	 * 
 	 * This does not need to be an existing path coordinate. This method is
 	 * usually called to find the position on the path the user clicked on.
-	 * part_index can be set to a valid part index to constrain searching
+	 * The parameters start_index and end_index can be set to constrain searching
 	 * to this specific path part.
-	 * 
-	 * \todo Convert out_distance_sq to double (so avoiding conversions).
-	 * \todo Return PathCoord rather than writing to the provided reference.
 	 */
-	void calcClosestPointOnPath(
+	ClosestPathCoord findClosestPointTo(
 	        const MapCoordF& coord,
-	        float& out_distance_sq,
-	        PathCoord& out_path_coord,
 	        MapCoordVector::size_type start_index = 0,
 	        MapCoordVector::size_type end_index = std::numeric_limits<PathPartVector::size_type>::max()
 	) const;
 	
 	/**
-	 * Calculates a border path with the closest point to the given coordinate
-	 * for path objects with a line symbol which has visible borders.
+	 * Calculates a border path with the closest point to the given coordinate.
+	 * 
+	 * This function operates on path objects with a line symbol which has
+	 * visible borders, or with a combined symbol which features such a line
+	 * symbol. For all other symbols, the return value has an empty border.
 	 * 
 	 * The offsets of the border paths are determined by the main line width.
 	 * If the border line is continuous (not dashed), border line width and
@@ -710,31 +705,24 @@ public:
 	 * border line.
 	 * 
 	 * In addition to the MapCoordF input parameter, this function takes a
-	 * PathCoord input parameter which serves a key to determining candidate
-	 * border path locations. This is PathCoord is meant to be looked up with
-	 * calcClosestPointOnPath() before calling this function.
+	 * PathCoord input parameter which serves as a key to determining candidate
+	 * border path locations. This PathCoord is meant to be looked up with
+	 * findClosestPointTo() before calling this function.
 	 * 
-	 * \todo Convert in/out_distance_sq to qreal (so avoiding conversions).
-	 * \todo Get rid of output parameters.
+	 * If no point closer than distance_bound_squared, the return value has an
+	 * empty border.
 	 */
-	std::shared_ptr<PathObject> calcClosestPointOnBorder(
+	ClosestBorderPathCoord findClosestPointOnBorder(
 	        const MapCoordF& coord,
 	        const PathCoord& path_coord,
-	        float in_distance_sq,
-	        float& out_distance_sq,
-	        PathCoord& out_path_coord) const;
+	        double distance_bound_squared
+	) const;
 	
 	/**
-	 * Calculates the closest control point coordinate to the given coordinate,
-	 * returns the squared distance of these points and the index of the control point.
-	 * 
-	 * \todo Convert out_distance_sq to double (so avoiding conversions).
-	 * \todo Return index rather than writing to the provided reference.
+	 * Finds the index of the closest control point coordinate to the given coordinate.
 	 */
-	void calcClosestCoordinate(
-	        const MapCoordF& coord,
-	        float& out_distance_sq,
-	        MapCoordVector::size_type& out_index) const;
+	MapCoordVector::size_type findClosestCoordinate(const MapCoordF& coord) const;
+	
 	
 	/**
 	 * Splits the path at the position given by path_coord.
@@ -959,7 +947,7 @@ protected:
 	 * to calculate the current cost. Evaluates the distance between p0 ... p3
 	 * and the reference path.
 	 */
-	static float calcBezierPointDeletionRetainingShapeCost(
+	static double calcBezierPointDeletionRetainingShapeCost(
 		MapCoord p0,
 		MapCoordF p1,
 		MapCoordF p2,
@@ -1103,9 +1091,9 @@ struct ObjectPathCoord : public PathCoord
 	 * 
 	 * \return The squared distance of these points.
 	 * 
-	 * \see PathObject::calcClosestPointOnPath
+	 * \see PathObject::findClosestPointTo
 	 */
-	float findClosestPointTo(const MapCoordF& map_coord);
+	double findClosestPointTo(const MapCoordF& map_coord);
 };
 
 
@@ -1289,11 +1277,11 @@ ObjectPathCoord::ObjectPathCoord(PathObject* object, MapCoordVector::size_type i
 
 
 inline
-float ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
+double ObjectPathCoord::findClosestPointTo(const MapCoordF& map_coord)
 {
-	float distance_sq;
-	object->calcClosestPointOnPath(map_coord, distance_sq, *this);
-	return distance_sq;
+	auto const closest = object->findClosestPointTo(map_coord);
+	static_cast<PathCoord&>(*this) = closest.path_coord;
+	return closest.distance_squared;
 	
 }
 

@@ -135,7 +135,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 		finishDrawing();
 		return true;
 	}
-	else if (editingInProgress() &&
+	
+	if (editingInProgress() &&
 		((event->button() == Qt::RightButton && event->buttons() & Qt::LeftButton) ||
 		 (event->button() == Qt::LeftButton && event->buttons() & Qt::RightButton)))
 	{
@@ -145,7 +146,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 			finishDrawing();
 		return true;
 	}
-	else if (isDrawingButton(event->button()))
+	
+	if (isDrawingButton(event->button()))
 	{
 		dragging = false;
 		bool start_appending = false;
@@ -340,7 +342,8 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_co
 		picked_angle = pickAngle(map_coord, widget);
 		return true;
 	}
-	else if (!editingInProgress())
+	
+	if (!editingInProgress())
 	{
 		return false;
 	}
@@ -1055,12 +1058,10 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 
 void DrawPathTool::updateFollowing()
 {
-	PathCoord path_coord;
-	float distance_sq;
 	const auto* followed_object = follow_helper->followedObject();
 	const auto& part = followed_object->parts()[follow_helper->partIndex()];
-	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
-	auto derived_path = follow_helper->updateFollowing(path_coord);
+	auto closest = followed_object->findClosestPointTo(cur_pos_map, part.first_index, part.last_index);
+	auto derived_path = follow_helper->updateFollowing(closest.path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started
@@ -1107,8 +1108,8 @@ qreal DrawPathTool::calculateRotation(const QPoint& mouse_pos, const MapCoordF& 
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());
-	else
-		return 0;
+	
+	return 0;
 }
 
 void DrawPathTool::updateDashPointDrawing()
@@ -1143,7 +1144,7 @@ void DrawPathTool::updateStatusText()
 	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//Q_ASSERT(!preview_path->isDirty());
-		float length = map()->getScaleDenominator() * preview_path->parts().front().path_coords.back().clen * 0.001f;
+		auto length = map()->getScaleDenominator() * double(preview_path->parts().front().path_coords.back().clen) * 0.001;
 		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1)) + QLatin1String("| ");
 	}
 	

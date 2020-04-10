@@ -341,16 +341,15 @@ bool VirtualPath::isClosed() const
 	return coords.flags[last_index].isClosePoint();
 }
 
-PathCoord VirtualPath::findClosestPointTo(
+ClosestPathCoord VirtualPath::findClosestPointTo(
         MapCoordF coord,
-        float& distance_squared,
-        float distance_bound_squared,
+        double distance_bound_squared,
         size_type start_index,
         size_type end_index ) const
 {
 	Q_ASSERT(!path_coords.empty());
 	
-	auto result = path_coords.front();
+	auto result = ClosestPathCoord { path_coords.front(), distance_bound_squared };
 	
 	// Find upper bound for distance.
 	for (const auto& path_coord : path_coords)
@@ -362,15 +361,14 @@ PathCoord VirtualPath::findClosestPointTo(
 		
 		auto to_coord = coord - path_coord.pos;
 		auto dist_sq = to_coord.lengthSquared();
-		if (dist_sq < distance_bound_squared)
+		if (dist_sq < result.distance_squared)
 		{
-			distance_bound_squared = dist_sq;
-			result = path_coord;
+			result.distance_squared = dist_sq;
+			result.path_coord = path_coord;
 		}
 	}
 	
 	// Check between this coord and the next one.
-	distance_squared = distance_bound_squared;
 	auto last = end(path_coords)-1;
 	for (auto pc = begin(path_coords); pc != last; ++pc)
 	{
@@ -387,53 +385,53 @@ PathCoord VirtualPath::findClosestPointTo(
 		tangent.normalize();
 		
 		auto to_coord = coord - pos;
-		float dist_along_line = MapCoordF::dotProduct(to_coord, tangent);
+		auto dist_along_line = float(MapCoordF::dotProduct(to_coord, tangent));
 		if (dist_along_line <= 0)
 		{
-			if (to_coord.lengthSquared() < distance_squared)
+			if (to_coord.lengthSquared() < result.distance_squared)
 			{
-				distance_squared = to_coord.lengthSquared();
-				result = *pc;
+				result.distance_squared = to_coord.lengthSquared();
+				result.path_coord = *pc;
 			}
 			continue;
 		}
 		
-		float line_length = next_pc->clen - pc->clen;
+		auto line_length = next_pc->clen - pc->clen;
 		if (dist_along_line >= line_length)
 		{
-			if (coord.distanceSquaredTo(next_pos) < distance_squared)
+			if (coord.distanceSquaredTo(next_pos) < result.distance_squared)
 			{
-				distance_squared = coord.distanceSquaredTo(next_pos);
-				result = *next_pc;
+				result.distance_squared = coord.distanceSquaredTo(next_pos);
+				result.path_coord = *next_pc;
 			}
 			continue;
 		}
 		
 		auto right = tangent.perpRight();
 		
-		float dist_from_line = MapCoordF::dotProduct(right, to_coord);
+		auto dist_from_line = MapCoordF::dotProduct(right, to_coord);
 		auto dist_from_line_sq = dist_from_line * dist_from_line;
-		if (dist_from_line_sq < distance_squared)
+		if (dist_from_line_sq < result.distance_squared)
 		{
-			distance_squared = dist_from_line_sq;
-			result.clen = pc->clen + dist_along_line;
-			result.index = pc->index;
+			result.distance_squared = dist_from_line_sq;
+			result.path_coord.clen = pc->clen + dist_along_line;
+			result.path_coord.index = pc->index;
 			auto factor = dist_along_line / line_length;
 			if (next_pc->index == pc->index)
-				result.param = pc->param + (next_pc->param - pc->param) * factor;
+				result.path_coord.param = pc->param + (next_pc->param - pc->param) * factor;
 			else
-				result.param = pc->param + (1.0 - pc->param) * factor; /// \todo verify
+				result.path_coord.param = pc->param + (1 - pc->param) * factor; /// \todo verify
 			
-			if (coords.flags[result.index].isCurveStart())
+			if (coords.flags[result.path_coord.index].isCurveStart())
 			{
 				MapCoordF unused;
-				PathCoord::splitBezierCurve(MapCoordF(coords.flags[result.index]), MapCoordF(coords.flags[result.index+1]),
-											MapCoordF(coords.flags[result.index+2]), MapCoordF(coords.flags[result.index+3]),
-											result.param, unused, unused, result.pos, unused, unused);
+				PathCoord::splitBezierCurve(MapCoordF(coords.flags[result.path_coord.index]), MapCoordF(coords.flags[result.path_coord.index+1]),
+											MapCoordF(coords.flags[result.path_coord.index+2]), MapCoordF(coords.flags[result.path_coord.index+3]),
+											result.path_coord.param, unused, unused, result.path_coord.pos, unused, unused);
 			}
 			else
 			{
-				result.pos = pos + (next_pos - pos) * factor;
+				result.path_coord.pos = pos + (next_pos - pos) * double(factor);
 			}
 		}
 	}
@@ -452,7 +450,7 @@ VirtualPath::size_type VirtualPath::prevCoordIndex(size_type base_index) const
 	else if (base_index > first_index)
 	{
 		result = base_index - 1;
-		for (auto i = 1; i <= 3; ++i)
+		for (auto i = 1u; i <= 3u; ++i)
 		{
 			auto alternative = base_index - i;
 			if (alternative < first_index || alternative > last_index)
@@ -556,10 +554,7 @@ MapCoordF VirtualPath::calculateTangent(
         bool backward,
         bool& ok) const
 {
-	if (backward)
-		return calculateIncomingTangent(i, ok);
-	else
-		return calculateOutgoingTangent(i, ok);
+	return backward ? calculateIncomingTangent(i, ok) : calculateOutgoingTangent(i, ok);
 }
 
 MapCoordF VirtualPath::calculateIncomingTangent(
