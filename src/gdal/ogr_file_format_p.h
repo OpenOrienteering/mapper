@@ -272,6 +272,9 @@ protected:
 	PathObject* importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	
+	bool setSRS(OGRSpatialReferenceH srs);
+	
+	
 	Symbol* getSymbol(Symbol::Type type, const char* raw_style_string);
 	
 	MapColor* makeColor(OGRStyleToolH tool, const char* color_string);

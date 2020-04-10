@@ -899,22 +899,9 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 
 void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry)
 {
-	to_map_coord = &OgrFileImport::fromProjected;
 	auto new_srs = OGR_G_GetSpatialReference(geometry);
-	if (new_srs && data_srs != new_srs)
-	{
-		// New SRS, indeed.
-		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(new_srs, map_srs.get()) };
-		if (!transformation)
-		{
-			++no_transformation;
-			return;
-		}
-		
-		// Commit change to data srs and coordinate transformation
-		data_srs = new_srs;
-		data_transform = std::move(transformation);
-	}
+	if (!setSRS(new_srs))
+		return;
 	
 	if (new_srs)
 	{
@@ -924,10 +911,6 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 			++failed_transformation;
 			return;
 		}
-	}
-	else if (unit_type == UnitOnPaper)
-	{
-		to_map_coord = &OgrFileImport::fromDrawing;
 	}
 	
 	auto objects = importGeometry(feature, geometry);
@@ -1127,6 +1110,33 @@ PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometr
 	object->closeAllParts();
 	return object;
 }
+
+
+bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
+{
+	to_map_coord = &OgrFileImport::fromProjected;
+	if (srs && data_srs != srs)
+	{
+		// New SRS, indeed.
+		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(srs, map_srs.get()) };
+		if (!transformation)
+		{
+			++no_transformation;
+			return false;
+		}
+		
+		// Commit change to data srs and coordinate transformation
+		data_srs = srs;
+		data_transform = std::move(transformation);
+	}
+	
+	if (!srs && unit_type == UnitOnPaper)
+	{
+		to_map_coord = &OgrFileImport::fromDrawing;
+	}
+	return true;
+}
+
 
 Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string)
 {
