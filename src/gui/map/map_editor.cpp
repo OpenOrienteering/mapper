@@ -4107,7 +4107,7 @@ bool MapEditorController::importGpxFile(const QString& filename)
 	imported_map.setGeoreferencing(map->getGeoreferencing());
 	
 	TemplateTrack temp(filename, &imported_map);
-	if (!temp.configureAndLoad(window, main_view))
+	if (!temp.configureAndLoad(window, main_view) || !temp.import(window))
 		return false;
 	
 	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
