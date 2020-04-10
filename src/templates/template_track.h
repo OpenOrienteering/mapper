@@ -44,9 +44,6 @@ namespace OpenOrienteering {
 
 class Georeferencing;
 class Map;
-class MapCoordF;
-class PathObject;
-class PointObject;
 
 
 /** A template consisting of a set of tracks (polylines) and waypoints */
@@ -117,10 +114,6 @@ protected:
 	QString calculateLocalGeoreferencing() const;
 	
 	void applyProjectedCrsSpec();
-	
-	PathObject* importPathStart();
-	void importPathEnd(PathObject* path);
-	PointObject* importWaypoint(const MapCoordF& position, const QString &name = QString());
 	
 private:
 	Track track;

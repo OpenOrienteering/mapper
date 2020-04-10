@@ -21,6 +21,8 @@
 
 #include "template_track.h"
 
+#include <utility>
+
 #include <Qt>
 #include <QBrush>
 #include <QByteArray>
@@ -44,6 +46,7 @@
 #include "core/georeferencing.h"
 #include "core/latlon.h"
 #include "core/map.h"
+#include "core/map_color.h"
 #include "core/map_coord.h"
 #include "core/map_part.h"
 #include "core/objects/object.h"
@@ -58,6 +61,85 @@ class QAbstractButton;
 
 
 namespace OpenOrienteering {
+
+class Symbol;
+
+namespace {
+
+const MapColor& makeTrackColor(Map& map)
+{
+	auto* track_color = new MapColor(QLatin1String{"Purple"}, 0); 
+	track_color->setSpotColorName(QLatin1String{"PURPLE"});
+	track_color->setCmyk({0.35f, 0.85f, 0.0, 0.0});
+	track_color->setRgbFromCmyk();
+	map.addColor(track_color, 0);
+	return *track_color;
+}
+
+const LineSymbol& makeTrackSymbol(Map& map, const MapColor& color)
+{
+	auto* track_symbol = new LineSymbol();
+	track_symbol->setName(TemplateTrack::tr("Track"));
+	track_symbol->setNumberComponent(0, 1);
+	track_symbol->setColor(&color);
+	track_symbol->setLineWidth(0.1); // mm, almost cosmetic
+	track_symbol->setCapStyle(LineSymbol::FlatCap);
+	track_symbol->setJoinStyle(LineSymbol::MiterJoin);
+	map.addSymbol(track_symbol, map.getNumSymbols());
+	return *track_symbol;
+}
+
+const LineSymbol& makeRouteSymbol(Map& map, const MapColor& color)
+{
+	auto* route_symbol = new LineSymbol();
+	route_symbol->setName(TemplateTrack::tr("Route"));
+	route_symbol->setNumberComponent(0, 2);
+	route_symbol->setColor(&color);
+	route_symbol->setLineWidth(0.5); // mm
+	route_symbol->setCapStyle(LineSymbol::FlatCap);
+	route_symbol->setJoinStyle(LineSymbol::MiterJoin);
+	map.addSymbol(route_symbol, map.getNumSymbols());
+	return *route_symbol;
+}
+
+const PointSymbol& makeWaypointSymbol(Map& map, const MapColor& color)
+{
+	auto* waypoint_symbol = new PointSymbol();
+	waypoint_symbol->setName(TemplateTrack::tr("Waypoint"));
+	waypoint_symbol->setNumberComponent(0, 3);
+	waypoint_symbol->setInnerColor(&color);
+	waypoint_symbol->setInnerRadius(500); // (um)
+	map.addSymbol(waypoint_symbol, map.getNumSymbols());
+	return *waypoint_symbol;
+}
+
+PathObject* importPath(Map& map, const Symbol& symbol, MapCoordVector coords)
+{
+	if (coords.empty())
+		return nullptr;
+	
+	if (coords.size() == 1)
+		coords.push_back(coords.front());
+	
+	auto* path = new PathObject(&symbol, std::move(coords));
+	map.addObject(path);
+	map.addObjectToSelection(path, false);
+	return path;
+}
+
+PointObject* importPoint(Map& map, const Symbol& symbol, const MapCoordF& position, const QString& name)
+{
+	auto* point = new PointObject(&symbol);
+	point->setPosition(position);
+	if (!name.isEmpty())
+		point->setTag(QStringLiteral("name"), name);
+	map.addObject(point);
+	map.addObjectToSelection(point, false);
+	return point;
+}
+
+}  // namespace
+
 
 const std::vector<QByteArray>& TemplateTrack::supportedExtensions()
 {
@@ -387,31 +469,13 @@ bool TemplateTrack::hasAlpha() const
 }
 
 
-PathObject* TemplateTrack::importPathStart()
-{
-	auto* path = new PathObject();
-	path->setSymbol(map->getUndefinedLine(), true);
-	return path;
-}
-
-void TemplateTrack::importPathEnd(PathObject* path)
-{
-	map->addObject(path);
-	map->addObjectToSelection(path, false);
-}
-
-PointObject* TemplateTrack::importWaypoint(const MapCoordF& position, const QString& name)
-{
-	auto* point = new PointObject(map->getUndefinedPoint());
-	point->setPosition(position);
-	point->setTag(QStringLiteral("name"), name);
-	map->addObject(point);
-	map->addObjectToSelection(point, false);
-	return point;
-}
-
 bool TemplateTrack::import(QWidget* dialog_parent)
 {
+	if (!map)
+	{
+		return false;
+	}
+	
 	if (track.getNumWaypoints() == 0 && track.getNumSegments() == 0)
 	{
 		QMessageBox::critical(dialog_parent, tr("Error"), tr("The path is empty, there is nothing to import!"));
@@ -425,51 +489,70 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 	
 	map->clearObjectSelection(false);
 	
-	if (track.getNumWaypoints() > 0)
+	auto& track_color = makeTrackColor(*map);
+	auto& track_symbol = makeTrackSymbol(*map, track_color);
+	
+	auto const num_waypoints = track.getNumWaypoints();
+	if (num_waypoints > 0)
 	{
-		int res = QMessageBox::question(dialog_parent, tr("Question"), tr("Should the waypoints be imported as a line going through all points?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+		auto res = QMessageBox::No;
+		if (num_waypoints > 1)
+		{
+			res = QMessageBox::question(
+			          dialog_parent,
+			          tr("Question"),
+			          tr("Should the waypoints be imported as a line going through all points?"),
+			          QMessageBox::Yes | QMessageBox::No,
+			          QMessageBox::No);
+		}
 		if (res == QMessageBox::No)
 		{
-			for (int i = 0; i < track.getNumWaypoints(); i++)
-				result.push_back(importWaypoint(templateToMap(track.getWaypoint(i).map_coord), track.getWaypointName(i)));
+			auto& waypoint_symbol = makeWaypointSymbol(*map, track_color);
+			for (int i = 0; i < num_waypoints; i++)
+			{
+				auto pos = templateToMap(track.getWaypoint(i).map_coord);
+				auto& name = track.getWaypointName(i);
+				if (auto* waypoint = importPoint(*map, waypoint_symbol, pos, name))
+					result.push_back(waypoint);
+			}
 		}
 		else
 		{
-			PathObject* path = importPathStart();
+			MapCoordVector coords;
+			coords.reserve(MapCoordVector::size_type(track.getNumWaypoints()));
 			for (int i = 0; i < track.getNumWaypoints(); i++)
-				path->addCoordinate(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
-			importPathEnd(path);
-			path->setTag(QStringLiteral("name"), QString{});
-			result.push_back(path);
+				coords.push_back(MapCoord(templateToMap(track.getWaypoint(i).map_coord)));
+			
+			auto& route_symbol = makeRouteSymbol(*map, track_color);
+			if (auto* path = importPath(*map, route_symbol, std::move(coords)))
+			    result.push_back(path);
 		}
 	}
 	
 	int skipped_paths = 0;
 	for (int i = 0; i < track.getNumSegments(); i++)
 	{
-		const int segment_size = track.getSegmentPointCount(i);
+		auto const segment_size = track.getSegmentPointCount(i);
 		if (segment_size == 0)
 		{
 			++skipped_paths;
 			continue; // Don't create path without objects.
 		}
 		
-		PathObject* path = importPathStart();
+		MapCoordVector coords;
+		coords.reserve(MapCoordVector::size_type(segment_size));
 		for (int j = 0; j < segment_size; j++)
+			coords.push_back(MapCoord(templateToMap(track.getSegmentPoint(i, j).map_coord)));
+		
+		if (auto* path = importPath(*map, track_symbol, std::move(coords)))
 		{
-			const TrackPoint& track_point = track.getSegmentPoint(i, j);
-			auto coord = MapCoord { templateToMap(track_point.map_coord) };
-			path->addCoordinate(coord);
+			if (track.getSegmentPoint(i, 0).latlon == track.getSegmentPoint(i, segment_size-1).latlon)
+				path->closeAllParts();
+			result.push_back(path);
 		}
-		if (track.getSegmentPoint(i, 0).latlon == track.getSegmentPoint(i, segment_size-1).latlon)
-		{
-			path->closeAllParts();
-		}
-		importPathEnd(path);
-		result.push_back(path);
 	}
 	
-	for (const auto& object : result) // keep as separate loop to get the correct (final) indices
+	for (const auto* object : result) // keep as separate loop to get the correct (final) indices
 		undo_step->addObject(part->findObjectIndex(object));
 	
 	map->setObjectsDirty();
