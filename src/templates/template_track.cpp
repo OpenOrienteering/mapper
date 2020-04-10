@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -145,7 +145,7 @@ bool TemplateTrack::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	else if (xml.name() == QLatin1String("georeferencing"))
 	{
 		// Preserve explicit georeferencing from OgrTemplate.
-		preserved_georef.reset(new Georeferencing());
+		preserved_georef = std::make_unique<Georeferencing>();
 		preserved_georef->load(xml, false);
 	}
 	else
@@ -329,8 +329,8 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		{
 			painter->setPen(qRgb(255, 0, 0));
 			int width = painter->fontMetrics().width(point_name);
-			painter->drawText(QRect(point.map_coord.x() - 0.5*width,
-			                        point.map_coord.y() - height,
+			painter->drawText(QRect(qRound(point.map_coord.x() - 0.5*width),
+			                        qRound(point.map_coord.y() - height),
 			                        width,
 			                        height),
 			                  Qt::AlignCenter,
@@ -389,7 +389,7 @@ bool TemplateTrack::hasAlpha() const
 
 PathObject* TemplateTrack::importPathStart()
 {
-	PathObject* path = new PathObject();
+	auto* path = new PathObject();
 	path->setSymbol(map->getUndefinedLine(), true);
 	return path;
 }
@@ -402,7 +402,7 @@ void TemplateTrack::importPathEnd(PathObject* path)
 
 PointObject* TemplateTrack::importWaypoint(const MapCoordF& position, const QString& name)
 {
-	PointObject* point = new PointObject(map->getUndefinedPoint());
+	auto* point = new PointObject(map->getUndefinedPoint());
 	point->setPosition(position);
 	point->setTag(QStringLiteral("name"), name);
 	map->addObject(point);
@@ -418,7 +418,7 @@ bool TemplateTrack::import(QWidget* dialog_parent)
 		return false;
 	}
 	
-	DeleteObjectsUndoStep* undo_step = new DeleteObjectsUndoStep(map);
+	auto* undo_step = new DeleteObjectsUndoStep(map);
 	MapPart* part = map->getCurrentPart();
 	std::vector< Object* > result;
 	// clazy:excludeall=reserve-candidates

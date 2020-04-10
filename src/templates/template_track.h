@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -63,7 +63,13 @@ public:
 protected:
 	TemplateTrack(const TemplateTrack& proto);
 public:
-    ~TemplateTrack() override;
+	TemplateTrack() = delete;
+	TemplateTrack(TemplateTrack&&) = delete;
+	
+	~TemplateTrack() override;
+	
+	TemplateTrack& operator=(const TemplateTrack&) = delete;
+	TemplateTrack& operator=(TemplateTrack&&) = delete;
 	
 	TemplateTrack* duplicate() const override;
 	
@@ -76,10 +82,10 @@ public:
 	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
 	QRectF getTemplateExtent() const override;
-    QRectF calculateTemplateBoundingBox() const override;
-    int getTemplateBoundingBoxPixelBorder() override;
+	QRectF calculateTemplateBoundingBox() const override;
+	int getTemplateBoundingBoxPixelBorder() override;
 	
 	bool hasAlpha() const override;
 	
@@ -104,8 +110,8 @@ public slots:
 	void updateGeoreferencing();
 	
 protected:
-    void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
-    bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
+	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	/// Projects the track in non-georeferenced mode
 	QString calculateLocalGeoreferencing() const;
@@ -116,7 +122,7 @@ protected:
 	void importPathEnd(PathObject* path);
 	PointObject* importWaypoint(const MapCoordF& position, const QString &name = QString());
 	
-	
+private:
 	Track track;
 	QString track_crs_spec;
 	QString projected_crs_spec;
