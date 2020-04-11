@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,6 +47,8 @@ class OgrTemplate : public TemplateMap
 {
 Q_OBJECT
 public:
+	static bool canRead(const QString& path);
+	
 	static const std::vector<QByteArray>& supportedExtensions();
 	
 	static std::unique_ptr<Georeferencing> getDataGeoreferencing(const QString& path, const Georeferencing& initial_georef);

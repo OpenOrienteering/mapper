@@ -48,6 +48,7 @@ ENABLE_IWYU=true
 PATTERN=
 for I in \
   action_grid_bar.cpp \
+  boolean_tool.cpp \
   combined_symbol.cpp \
   configure_grid_dialog.cpp \
   crs_param_widgets.cpp \
@@ -92,6 +93,7 @@ for I in \
   template_image_open_dialog.cpp \
   template_list_widget.cpp \
   template_map.cpp \
+  template_placeholder.cpp \
   template_tool \
   template_track.cpp \
   text_brwoser_dialog \

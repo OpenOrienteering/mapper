@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -46,6 +46,7 @@
 #include <QLatin1Char>
 #include <QLatin1String>
 #include <QPointF>
+#include <QRectF>
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 #include <QScopedValueRollback>
@@ -61,6 +62,7 @@
 #include "core/map_part.h"
 #include "core/path_coord.h"
 #include "core/virtual_path.h"
+#include "core/objects/boolean_tool.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/area_symbol.h"
@@ -493,6 +495,108 @@ namespace {
 	};
 	
 	
+	/**
+	 * A utility for clipping objects during import.
+	 * 
+	 * This class works similar to the Cutout tool.
+	 * 
+	 * \see CutoutOperation::operator()
+	 */
+	class ClippingImplementation : public OgrFileImport::Clipping
+	{
+	public:
+		~ClippingImplementation() final = default;
+		
+		explicit ClippingImplementation(MapCoordVector boundary)
+		: tool { BooleanTool::Intersection, nullptr }
+		, path { Map::getUndefinedLine(), std::move(boundary)}
+		{
+			path.update();
+		}
+		
+		ClippingImplementation() = delete;
+		ClippingImplementation(const ClippingImplementation&) = delete;
+		ClippingImplementation(ClippingImplementation&&) = delete;
+		ClippingImplementation& operator=(const ClippingImplementation&) = delete;
+		ClippingImplementation& operator=(ClippingImplementation&&) = delete;
+		
+		void process(const BooleanTool::PathObjects& in_objects, OgrFileImport::ObjectList& out_objects) const
+		{
+			for (auto* object : in_objects)
+			{
+				auto* symbol = object->getSymbol();
+				auto out_path_objects = BooleanTool::PathObjects {};
+				if (object->getSymbol()->getContainedTypes() & Symbol::Area)
+				{
+					object->closeAllParts();
+					// Use the Clipper library to clip the area
+					if (!tool.executeForObjects(&path, in_objects, out_path_objects))
+					{
+						out_path_objects.push_back(object);
+						object = nullptr;  // Ownership passed back to caller.
+					}
+				}
+				else
+				{
+					// Use some custom code to clip the line
+					tool.executeForLine(&path, object, out_path_objects);
+				}
+				for (auto* out_object: out_path_objects)
+				{
+					out_object->setSymbol(symbol, true);
+					out_objects.push_back(out_object);
+				}
+				delete object;  // Owned by us.
+			}
+		}
+		
+		OgrFileImport::ObjectList process(const OgrFileImport::ObjectList& objects) const override
+		{
+			auto result = OgrFileImport::ObjectList {};
+			auto path_object_list = BooleanTool::PathObjects(1);
+			for (auto* object : objects)
+			{
+				if (!object)
+					continue;
+				
+				object->update();
+				if (object->getExtent().intersects(path.getExtent()))
+				{
+					switch (object->getType())
+					{
+					case Object::Point:
+					case Object::Text:
+						// Simple check if the (first) point is inside the area
+						if (path.isPointInsideArea(MapCoordF(object->getRawCoordinateVector().at(0))))
+						{
+							result.push_back(object);
+							object = nullptr;  // Ownership passed back to caller.
+						}
+						break;
+						
+					case Object::Path:
+						path_object_list.front() = static_cast<PathObject*>(object);
+						process(path_object_list, result);
+						object = nullptr;  // Ownership given away in previous call.
+						break;
+						
+					default:
+						result.push_back(object);
+						object = nullptr;  // Ownership passed back to caller.
+						break;
+					}
+				}
+				delete object;  // Owned by us.
+			}
+			return result;
+		}
+		
+	private:
+		BooleanTool tool;
+		PathObject path;
+	};
+	
+	
 }  // namespace
 
 
@@ -537,12 +641,30 @@ std::unique_ptr<Exporter> OgrFileExportFormat::makeExporter(const QString& path,
 
 // ### OgrFileImport ###
 
+
+// not inline
+OgrFileImport::Clipping::~Clipping() = default;
+
+
+// static
+bool OgrFileImport::canRead(const QString& path)
+{
+	// GDAL 2.0: ... = GDALOpenEx(template_path.toLatin1(), GDAL_OF_VECTOR, nullptr, nullptr, nullptr);
+	GdalManager();
+	return bool(ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr)));
+}
+
+
 OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitType unit_type)
  : Importer(path, map, view)
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
 {
-	GdalManager().configure();
+	GdalManager manager;
+	manager.configure();
+	
+	clip_layers = manager.isImportOptionEnabled(GdalManager::ClipLayers);
+	setOption(QString::fromLatin1("Clip layers"), clip_layers);
 	
 	setOption(QLatin1String{ "Separate layers" }, QVariant{ false });
 	
@@ -638,6 +760,12 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 }
 
 
+
+void OgrFileImport::prepare()
+{
+	Importer::prepare();
+	clip_layers = option(QString::fromLatin1("Clip layers")).toBool();
+}
 
 bool OgrFileImport::importImplementation()
 {
@@ -874,6 +1002,12 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 	
 	auto feature_definition = OGR_L_GetLayerDefn(layer);
 	
+	std::unique_ptr<Clipping> clipping;
+	if (clip_layers && OGR_L_TestCapability(layer, OLCFastGetExtent))
+	{
+		clipping = getLayerClipping(layer);
+	}
+	
 	OGR_L_ResetReading(layer);
 	while (auto feature = ogr::unique_feature(OGR_L_GetNextFeature(layer)))
 	{
@@ -884,28 +1018,15 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 			continue;
 		}
 		
-		importFeature(map_part, feature_definition, feature.get(), geometry);
+		importFeature(map_part, feature_definition, feature.get(), geometry, clipping.get());
 	}
 }
 
-void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry)
+void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping)
 {
-	to_map_coord = &OgrFileImport::fromProjected;
 	auto new_srs = OGR_G_GetSpatialReference(geometry);
-	if (new_srs && data_srs != new_srs)
-	{
-		// New SRS, indeed.
-		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(new_srs, map_srs.get()) };
-		if (!transformation)
-		{
-			++no_transformation;
-			return;
-		}
-		
-		// Commit change to data srs and coordinate transformation
-		data_srs = new_srs;
-		data_transform = std::move(transformation);
-	}
+	if (!setSRS(new_srs))
+		return;
 	
 	if (new_srs)
 	{
@@ -916,13 +1037,15 @@ void OgrFileImport::importFeature(MapPart* map_part, OGRFeatureDefnH feature_def
 			return;
 		}
 	}
-	else if (unit_type == UnitOnPaper)
-	{
-		to_map_coord = &OgrFileImport::fromDrawing;
-	}
 	
 	auto objects = importGeometry(feature, geometry);
-	for (auto object : objects)
+	if (clipping)
+	{
+		auto clipped_objects = clipping->process(objects);
+		objects = std::move(clipped_objects);
+	}
+	
+	for (auto* object : objects)
 	{
 		map_part->addObject(object);
 		if (!feature_definition)
@@ -1118,6 +1241,70 @@ PathObject* OgrFileImport::importPolygonGeometry(OGRFeatureH feature, OGRGeometr
 	object->closeAllParts();
 	return object;
 }
+
+std::unique_ptr<OgrFileImport::Clipping> OgrFileImport::getLayerClipping(OGRLayerH layer)
+{
+	OGREnvelope envelope;
+	if (OGR_L_GetExtent(layer, &envelope, false) == OGRERR_NONE)
+	{
+		auto outline = ogr::unique_geometry(OGR_G_CreateGeometry(wkbLinearRing));
+		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MinY);
+		OGR_G_AddPoint_2D(outline.get(), envelope.MaxX, envelope.MaxY);
+		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MaxY);
+		OGR_G_AddPoint_2D(outline.get(), envelope.MinX, envelope.MinY);
+		OGR_G_CloseRings(outline.get());
+		
+		auto layer_srs = OGR_L_GetSpatialRef(layer);
+		if (setSRS(layer_srs))
+		{
+			if (layer_srs)
+			{
+				auto error = OGR_G_Transform(outline.get(), data_transform.get());
+				if (error)
+				{
+					++failed_transformation;
+					return {};
+				}
+			}
+		}
+		
+		MapCoordVector coords;
+		coords.reserve(5);
+		for (int i = 0; i < 5; ++i)
+			coords.emplace_back(toMapCoord(OGR_G_GetX(outline.get(), i), OGR_G_GetY(outline.get(), i)));
+		coords.back().setClosePoint(true);
+		return std::make_unique<ClippingImplementation>(std::move(coords));
+	}
+	return {};
+}
+
+
+bool OgrFileImport::setSRS(OGRSpatialReferenceH srs)
+{
+	to_map_coord = &OgrFileImport::fromProjected;
+	if (srs && data_srs != srs)
+	{
+		// New SRS, indeed.
+		auto transformation = ogr::unique_transformation{ OCTNewCoordinateTransformation(srs, map_srs.get()) };
+		if (!transformation)
+		{
+			++no_transformation;
+			return false;
+		}
+		
+		// Commit change to data srs and coordinate transformation
+		data_srs = srs;
+		data_transform = std::move(transformation);
+	}
+	
+	if (!srs && unit_type == UnitOnPaper)
+	{
+		to_map_coord = &OgrFileImport::fromDrawing;
+	}
+	return true;
+}
+
 
 Symbol* OgrFileImport::getSymbol(Symbol::Type type, const char* raw_style_string)
 {
