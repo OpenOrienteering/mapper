@@ -660,7 +660,11 @@ OgrFileImport::OgrFileImport(const QString& path, Map* map, MapView* view, UnitT
  , manager{ OGR_SM_Create(nullptr) }
  , unit_type{ unit_type }
 {
-	GdalManager().configure();
+	GdalManager manager;
+	manager.configure();
+	
+	clip_layers = manager.isImportOptionEnabled(GdalManager::ClipLayers);
+	setOption(QString::fromLatin1("Clip layers"), clip_layers);
 	
 	setOption(QLatin1String{ "Separate layers" }, QVariant{ false });
 	
@@ -756,6 +760,12 @@ ogr::unique_srs OgrFileImport::srsFromMap()
 }
 
 
+
+void OgrFileImport::prepare()
+{
+	Importer::prepare();
+	clip_layers = option(QString::fromLatin1("Clip layers")).toBool();
+}
 
 bool OgrFileImport::importImplementation()
 {
@@ -993,7 +1003,7 @@ void OgrFileImport::importLayer(MapPart* map_part, OGRLayerH layer)
 	auto feature_definition = OGR_L_GetLayerDefn(layer);
 	
 	std::unique_ptr<Clipping> clipping;
-	if (OGR_L_TestCapability(layer, OLCFastGetExtent))
+	if (clip_layers && OGR_L_TestCapability(layer, OLCFastGetExtent))
 	{
 		clipping = getLayerClipping(layer);
 	}

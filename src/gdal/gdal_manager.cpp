@@ -60,6 +60,9 @@ public:
 	// Export options
 	const QString ogr_one_layer_per_symbol_key{ QStringLiteral("per_symbol_layer") };
 	
+	// Import options
+	const QString gdal_import_clip_layers{ QStringLiteral("clip_layers") };
+	
 	
 	using ExtensionList = std::vector<QByteArray>;
 	
@@ -156,6 +159,37 @@ public:
 		QSettings settings;
 		settings.beginGroup(gdal_manager_group);
 		return settings.value(key, QVariant{ false }).toBool();
+	}
+	
+	void setImportOptionEnabled(GdalManager::ImportOption option, bool enabled)
+	{
+		QString key;
+		switch (option)
+		{
+		case GdalManager::ClipLayers:
+			key = gdal_import_clip_layers;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		settings.setValue(key, QVariant{ enabled });
+		dirty = true;
+	}
+
+	bool isImportOptionEnabled(GdalManager::ImportOption option) const
+	{
+		QString key;
+		auto default_value = QVariant { false };
+		switch (option)
+		{
+		case GdalManager::ClipLayers:
+			key = gdal_import_clip_layers;
+			default_value = true;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		return settings.value(key, default_value).toBool();
 	}
 	
 	const ExtensionList& supportedRasterExtensions() const
@@ -437,6 +471,16 @@ void GdalManager::setExportOptionEnabled(GdalManager::ExportOption option, bool 
 bool GdalManager::isExportOptionEnabled(GdalManager::ExportOption option) const
 {
 	return p->isExportOptionEnabled(option);
+}
+
+void GdalManager::setImportOptionEnabled(GdalManager::ImportOption option, bool enabled)
+{
+	return p->setImportOptionEnabled(option, enabled);
+}
+
+bool GdalManager::isImportOptionEnabled(GdalManager::ImportOption option) const
+{
+	return p->isImportOptionEnabled(option);
 }
 
 const std::vector<QByteArray>&GdalManager::supportedRasterExtensions() const

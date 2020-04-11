@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -51,6 +51,9 @@ GdalSettingsPage::GdalSettingsPage(QWidget* parent)
 	auto form_layout = new QFormLayout();
 	
 	form_layout->addRow(Util::Headline::create(tr("Import with GDAL/OGR:")));
+	
+	clip_layers = new QCheckBox(tr("Clip layers"));
+	form_layout->addRow(clip_layers);
 	
 	import_gpx = new QCheckBox(tr("GPX"));
 	form_layout->addRow(import_gpx);
@@ -115,6 +118,7 @@ void GdalSettingsPage::apply()
 	FileFormats.registerFormat(format);
 
 	manager.setExportOptionEnabled(GdalManager::OneLayerPerSymbol, export_one_layer_per_symbol->isChecked());
+	manager.setImportOptionEnabled(GdalManager::ClipLayers, clip_layers->isChecked());
 	
 	const auto old_parameters = manager.parameterKeys();
 	
@@ -149,6 +153,7 @@ void GdalSettingsPage::reset()
 void GdalSettingsPage::updateWidgets()
 {
 	GdalManager manager;
+	clip_layers->setChecked(manager.isImportOptionEnabled(GdalManager::ClipLayers));
 	import_gpx->setChecked(manager.isFormatEnabled(GdalManager::GPX));
 	view_hatch->setChecked(manager.isAreaHatchingEnabled());
 	view_baseline->setChecked(manager.isBaselineViewEnabled());

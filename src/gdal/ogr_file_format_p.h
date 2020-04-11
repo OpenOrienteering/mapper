@@ -268,6 +268,8 @@ protected:
 	 */
 	static bool checkGeoreferencing(OGRDataSourceH data_source, const Georeferencing& georef);
 	
+	void prepare() override;
+	
 	bool importImplementation() override;
 	
 	ogr::unique_srs importGeoreferencing(OGRDataSourceH data_source);
@@ -362,6 +364,7 @@ private:
 	UnitType unit_type;
 	
 	bool georeferencing_import_enabled = true;
+	bool clip_layers;
 };
 
 
