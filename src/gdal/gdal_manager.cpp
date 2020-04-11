@@ -312,7 +312,7 @@ private:
 			}
 		}
 		
-		// Handle GDAL/OGR activation settings, before checking ambiguity
+		// Handle GDAL activation settings, before checking ambiguity
 		settings.beginGroup(gdal_manager_group);
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{

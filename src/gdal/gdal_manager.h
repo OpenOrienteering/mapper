@@ -96,23 +96,23 @@ public:
 	
 	
 	/**
-	 * Enables or disables handling of a particular file format by GDAL/OGR.
+	 * Enables or disables handling of a particular file format by GDAL.
 	 */
 	void setFormatEnabled(FileFormat format, bool enabled);
 	
 	/**
-	 * Returns if GDAL/OGR will handle a particular file format.
+	 * Returns if GDAL will handle a particular file format.
 	 */
 	bool isFormatEnabled(FileFormat format) const;
 	
 
 	/**
-	 * Enables or disables an OGR export option
+	 * Enables or disables a GDAL export option
 	 */
 	void setExportOptionEnabled(ExportOption option, bool enabled);
 	
 	/**
-	 * Returns if an OGR export option is enabled
+	 * Returns if a GDAL export option is enabled
 	 */
 	bool isExportOptionEnabled(ExportOption option) const;
 

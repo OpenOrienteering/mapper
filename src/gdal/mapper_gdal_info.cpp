@@ -154,7 +154,7 @@ void dumpGdalDrivers()
 	// This block duplicates code in GdalManagerPrivate::updateExtensions().
 	prefixDuplicates(qimagereader_extensions, raster_import_drivers, "raster.");
 	
-	std::cout << "## GDAL/OGR driver list for OpenOrienteering Mapper" << std::endl << std::endl;
+	std::cout << "## GDAL driver list for OpenOrienteering Mapper" << std::endl << std::endl;
 	dumpDriverList("Raster import drivers", std::move(raster_import_drivers));
 	dumpDriverList("Vector import drivers", std::move(vector_import_drivers));
 	dumpDriverList("Vector export drivers", std::move(vector_export_drivers));
