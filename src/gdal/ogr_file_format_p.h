@@ -185,8 +185,27 @@ class OgrFileImport : public Importer
 	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::OgrFileImport)
 	
 public:
-	static bool canRead(const QString& path);
+	using ObjectList = std::vector<Object*>;
 	
+	/**
+	 * An interface for clipping objects during import.
+	 */
+	class Clipping
+	{
+	public:
+		virtual ~Clipping();
+		
+		/**
+		 * Applies clipping to the input objects.
+		 * 
+		 * This function takes ownership of the input objects, and
+		 * it passes ownership of the output objects to the caller.
+		 */
+		virtual ObjectList process(const ObjectList& objects) const = 0;
+	};
+	
+	
+	static bool canRead(const QString& path);
 	
 	/**
 	 * The unit type indicates the coordinate system the data units refers to.
@@ -257,9 +276,8 @@ protected:
 	
 	void importLayer(MapPart* map_part, OGRLayerH layer);
 	
-	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry);
+	void importFeature(MapPart* map_part, OGRFeatureDefnH feature_definition, OGRFeatureH feature, OGRGeometryH geometry, const Clipping* clipping);
 	
-	using ObjectList = std::vector<Object*>;
 	
 	ObjectList importGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
@@ -270,6 +288,8 @@ protected:
 	PathObject* importLineStringGeometry(OGRFeatureH feature, OGRGeometryH geometry);
 	
 	PathObject* importPolygonGeometry(OGRFeatureH feature, OGRGeometryH geometry);
+	
+	std::unique_ptr<Clipping> getLayerClipping(OGRLayerH layer);
 	
 	
 	bool setSRS(OGRSpatialReferenceH srs);
