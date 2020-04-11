@@ -47,6 +47,7 @@
 
 418    natural = bush
 403    natural = grassland
+403    natural = heath
 408    natural = scrub
 417    natural = tree
 406    natural = wood

@@ -41,6 +41,7 @@
 301.3  natural = wetland AND foot = impassable
 
 403    natural = grassland
+403    natural = heath
 406    natural = scrub
 406    natural = wood
 406    natural = wood AND (wood:age = young OR wood:age = very_young)
