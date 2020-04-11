@@ -1,5 +1,5 @@
 #
-# Copyright 2017, 2019 Kai Pastor
+# Copyright 2017-2020 Kai Pastor
 #
 # Based on ISOM_rules.yaml from https://github.com/sembruk/osm2xmap/ rev 3c6cdb5
 #
@@ -88,6 +88,9 @@
 
 526    highway = milestone
 
+501.19 highway = primary
+501.19 highway = secondary
+501.9  highway = tertiary
 
 506    highway = path
 505.1  highway = path AND (smoothness = good OR smoothness = intermediate)
