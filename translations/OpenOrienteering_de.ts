@@ -15,12 +15,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilddaten konnten nicht gelesen werden: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht unterstützte Rasterdaten: %1</translation>
     </message>
 </context>
 <context>
