@@ -122,7 +122,6 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 		if (source_name == QLatin1String("serialnmea") && !nmea_serialport.isEmpty())
 		{
 			qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
-			source_name += QLatin1String(" from ") + nmea_serialport;
 		}
 		source = QGeoPositionInfoSource::createSource(source_name, this);	
 	}
