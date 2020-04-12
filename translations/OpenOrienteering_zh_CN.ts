@@ -30,7 +30,7 @@
         <source>Cannot open file
 %1:
 %2</source>
-        <translation>不能打开文件
+        <translation>无法打开文件
 %1:
 %2</translation>
     </message>
@@ -43,7 +43,7 @@
 %1
 
 %2</source>
-        <translation>不能打开文件：
+        <translation>无法打开文件：
 ％1
 
 ％2</translation>
@@ -82,7 +82,7 @@ Rescale the imported data?</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="662"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="673"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>已调整座标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
+        <translation>已调整坐标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="683"/>
@@ -136,7 +136,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../packaging/translations.cpp" line="11"/>
         <source>Software for drawing orienteering maps</source>
-        <translation>定向运动地图图绘制软件</translation>
+        <translation>定向运动地图绘制软件</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
@@ -176,7 +176,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>按字母顺序排列的 OpenOrienteering 开发人员：</translation>
+        <translation>按字母顺序排列的 OOM开发人员：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
@@ -188,7 +188,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>用于绘制定向越野地图的免费开源软件</translation>
+        <translation>用于绘制定向运动地图的免费开源软件</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
@@ -211,12 +211,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="116"/>
         <source>Open most recently used file</source>
-        <translation>打开最近使用的文件</translation>
+        <translation>打开最近一次使用的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="119"/>
         <source>Show tip of the day</source>
-        <translation>显示每日提示</translation>
+        <translation>显示引导界面</translation>
     </message>
 </context>
 <context>
@@ -224,7 +224,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/action_grid_bar.cpp" line="59"/>
         <source>Show remaining items</source>
-        <translation>显示剩余项目</translation>
+        <translation>显示剩余项</translation>
     </message>
 </context>
 <context>
@@ -232,7 +232,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="86"/>
         <source>mm²</source>
-        <translation>mm²</translation>
+        <translation>平方毫米</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="87"/>
@@ -247,7 +247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="107"/>
         <source>Line fill</source>
-        <translation>线条与填充</translation>
+        <translation>线条填充</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="108"/>
@@ -271,7 +271,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="175"/>
         <source>Parallel lines</source>
-        <translation>两条平行线</translation>
+        <translation>平行线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="177"/>
@@ -281,17 +281,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="180"/>
         <source>Single row</source>
-        <translation>单排</translation>
+        <translation>单行</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="182"/>
         <source>Pattern interval:</source>
-        <translation>模式间隔：</translation>
+        <translation>图形间隔：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="187"/>
         <source>Pattern offset:</source>
-        <translation>模式偏移量：</translation>
+        <translation>图形偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="192"/>
@@ -360,12 +360,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation>图案填充 %1</translation>
+        <translation>图形填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
         <source>Line fill %1</source>
-        <translation>线条与填充 %1</translation>
+        <translation>线条填充 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="371"/>
@@ -380,7 +380,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="173"/>
         <source>Line offset:</source>
-        <translation>线条偏移量：</translation>
+        <translation>线条偏移：</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="168"/>
@@ -493,7 +493,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="148"/>
         <source>Knockout: erases lower colors</source>
-        <translation>挖空︰ 擦除低颜色</translation>
+        <translation>禁止叠加：自动擦除底层颜色</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="161"/>
@@ -504,17 +504,17 @@ Rescale the imported data?</source>
         <location filename="../src/gui/color_dialog.cpp" line="166"/>
         <location filename="../src/gui/color_dialog.cpp" line="223"/>
         <source>Calculate from spot colors</source>
-        <translation>计算从专色</translation>
+        <translation>使用专色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="171"/>
         <source>Calculate from RGB color</source>
-        <translation>计算从 RGB 颜色</translation>
+        <translation>使用RGB颜色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="176"/>
         <source>Custom process color:</source>
-        <translation>自定义进程颜色：</translation>
+        <translation>自定义印刷色：</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="182"/>
@@ -544,7 +544,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="228"/>
         <source>Calculate from CMYK color</source>
-        <translation>计算从 CMYK 颜色</translation>
+        <translation>使用CMYK颜色计算</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="233"/>
@@ -635,13 +635,13 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
         <source>K.o.</source>
-        <translation>棍</translation>
+        <translation>禁止叠加</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="89"/>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="94"/>
         <source>New</source>
-        <translation>新增功能</translation>
+        <translation>新增</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="97"/>
@@ -671,7 +671,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="137"/>
         <source>Double-click a color value to open a dialog.</source>
-        <translation>双击要打开一个对话框的颜色值。</translation>
+        <translation>双击颜色值打开一个对话框。</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
@@ -681,7 +681,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="232"/>
         <source>The map contains symbols with this color. Deleting it will remove the color from these objects! Do you really want to do that?</source>
-        <translation>映射包含这种颜色的符号。删除它将从这些对象中删除颜色 ！你真的想要这样做？</translation>
+        <translation>地图里包含这种颜色的符号。删除它将从这些对象中删除颜色 ！是否确认要这样做？</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
@@ -716,17 +716,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="87"/>
         <source>&amp;Number of parts:</source>
-        <translation>部件的数量:</translation>
+        <translation>地图块的数量:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="95"/>
         <source>- Private line symbol -</source>
-        <translation>-私人线符号-</translation>
+        <translation>-私有线符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="96"/>
         <source>- Private area symbol -</source>
-        <translation>-私人领域符号-</translation>
+        <translation>-私有区域符号-</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="99"/>
@@ -759,7 +759,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="67"/>
         <source>Configure grid</source>
-        <translation>配置网格</translation>
+        <translation>网格设置</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="69"/>
@@ -769,7 +769,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="70"/>
         <source>Snap to grid</source>
-        <translation>对齐网格</translation>
+        <translation>对齐到网格</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="71"/>
@@ -779,7 +779,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="74"/>
         <source>All lines</source>
-        <translation>所有行</translation>
+        <translation>所有线</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="75"/>
@@ -789,32 +789,32 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="76"/>
         <source>Vertical lines</source>
-        <translation>垂直线条</translation>
+        <translation>垂直线</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="128"/>
         <source>Alignment</source>
-        <translation>对齐方式</translation>
+        <translation>校准方式</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="78"/>
         <source>Align with magnetic north</source>
-        <translation>磁北与对齐</translation>
+        <translation>磁北校准</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="79"/>
         <source>Align with grid north</source>
-        <translation>与北方的网格对齐</translation>
+        <translation>坐标北校准</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="80"/>
         <source>Align with true north</source>
-        <translation>真北路与对齐</translation>
+        <translation>真北校准</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="82"/>
         <source>Additional rotation (counter-clockwise):</source>
-        <translation>额外的旋转(逆时针):</translation>
+        <translation>附加旋转角度(逆时针方向):</translation>
     </message>
     <message>
         <source>°</source>
@@ -823,17 +823,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="135"/>
         <source>Positioning</source>
-        <translation>定位</translation>
+        <translation>网格大小</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="88"/>
         <source>meters in terrain</source>
-        <translation>在地形米</translation>
+        <translation>在实地的距离(米)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation>在地图上的毫米</translation>
+        <translation>在地图上的距离(毫米)</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
@@ -859,12 +859,12 @@ Rescale the imported data?</source>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="136"/>
         <source>Unit:</source>
         <comment>measurement unit</comment>
-        <translation>单元：</translation>
+        <translation>单位：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="124"/>
         <source>Line color:</source>
-        <translation>线条颜色：</translation>
+        <translation>网格线颜色：</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="125"/>
@@ -880,7 +880,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="255"/>
@@ -896,7 +896,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="263"/>
         <source>paper coordinates origin</source>
-        <translation>本文坐标原点</translation>
+        <translation>纸张坐标原点</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="265"/>
@@ -940,7 +940,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="108"/>
         <source>&lt;b&gt;Click&lt;/b&gt; on a line: Split it into two. &lt;b&gt;Drag&lt;/b&gt; along a line: Remove this line part. &lt;b&gt;Click or Drag&lt;/b&gt; at an area boundary: Start a split line. </source>
-        <translation>在行上 &lt;b&gt;单击&lt;/b&gt;︰ 分成两个。沿着一条线 &lt;b&gt;拖&lt;/b&gt;︰ 删除此线部件。&lt;b&gt;单击或拖动&lt;/b&gt; 在区域边界︰ 开始拆分线。 </translation>
+        <translation>在行上 &lt;b&gt;单击&lt;/b&gt;︰ 分成两个。沿着一条线 &lt;b&gt;拖&lt;/b&gt;︰ 删除这条线的部分。&lt;b&gt;单击或拖动&lt;/b&gt; 在区域边界︰ 开始画一条拆分线。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cut_tool.cpp" line="373"/>
@@ -1032,7 +1032,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation>额外的旋转角度 （逆时针）:</translation>
+        <translation>附加旋转角度 （逆时针方向）:</translation>
     </message>
 </context>
 <context>
@@ -1056,7 +1056,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="311"/>
         <source>Hold %1 to start drawing from the center.</source>
-        <translation>持有 %1 从中心开始绘制。</translation>
+        <translation>按住 %1 从中心开始绘制。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="315"/>
@@ -1247,7 +1247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation>&lt;b&gt;0 %1&lt;/b&gt;︰ 重置旋转。</translation>
+        <translation>&lt;b&gt;%1,0&lt;/b&gt;：重置旋转。</translation>
     </message>
 </context>
 <context>
@@ -1435,23 +1435,23 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="56"/>
         <source>High quality map display (antialiasing)</source>
-        <translation>高质量地图显示 （抗锯齿）</translation>
+        <translation>高保真地图显示 （抗锯齿）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>抗锯齿功能使地图看起来好多了，但也会减慢地图显示</translation>
+        <translation>抗锯齿使地图看起来好多了，但也会减慢地图显示速度</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
         <source>High quality text display in map (antialiasing), slow</source>
-        <translation>高质量的文本显示在地图 （抗锯齿），缓慢</translation>
+        <translation>高保真文本显示 （抗锯齿）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="65"/>
         <source>Click tolerance:</source>
-        <translation>点击宽容度：</translation>
+        <translation>点击容差：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="49"/>
@@ -1471,12 +1471,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
         <source>Snap distance (%1):</source>
-        <translation>对齐距离 (%1):</translation>
+        <translation>位移距离 (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>固定角度模式的步进（%1）：</translation>
+        <translation>固定角度设置（%1）：</translation>
     </message>
     <message>
         <source>°</source>
@@ -1486,27 +1486,27 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation>符号图标尺寸：</translation>
+        <translation>符号图标大小：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
         <source>When selecting an object, automatically select its symbol, too</source>
-        <translation>当选择一个对象，自动选择它的符号太</translation>
+        <translation>选中一个对象时，同时选中该对象的符号</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="78"/>
         <source>Zoom away from cursor when zooming out</source>
-        <translation>从光标放大，放大了</translation>
+        <translation>以光标为中心缩小（滚动鼠标滚轮）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="81"/>
         <source>Drawing tools: set last point on finishing with right click</source>
-        <translation>绘图工具：单击鼠标右键设置完成时的最后一点</translation>
+        <translation>绘图工具：通过右键单击结束最后一个点的绘制</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="84"/>
         <source>Templates: keep settings of closed templates</source>
-        <translation>模板︰ 保持封闭模板设置</translation>
+        <translation>底图︰ 自动保留已关闭的底图设置</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="89"/>
@@ -1517,25 +1517,25 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="92"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="98"/>
         <source>Retain old shape</source>
-        <translation>保留旧的形状</translation>
+        <translation>维持原有形状</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="93"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="99"/>
         <source>Reset outer curve handles</source>
-        <translation>重置外曲线手柄</translation>
+        <translation>重置曲线控制柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="94"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="100"/>
         <source>Keep outer curve handles</source>
-        <translation>保持外曲线手柄</translation>
+        <translation>保持曲线控制柄</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="95"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="101"/>
         <source>Action on deleting a curve point with %1:</source>
-        <translation>删除具有%1的曲线点的操作：</translation>
+        <translation>按住%1删除曲线节点的效果：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="104"/>
@@ -1545,12 +1545,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="107"/>
         <source>Radius of helper cross:</source>
-        <translation>助手交叉半径：</translation>
+        <translation>辅助十字半径设置：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="109"/>
         <source>Preview the width of lines with helper cross</source>
-        <translation>预览与助手交叉线条的宽度</translation>
+        <translation>通过辅助十字显示线宽</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="125"/>
@@ -1651,7 +1651,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import with GDAL/OGR:</source>
-        <translation>使用GDAL/OGR导入：</translation>
+        <translation>通过GDAL/OGR导入：</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="55"/>
@@ -1666,7 +1666,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="62"/>
         <source>Hatch areas</source>
-        <translation>填充区域</translation>
+        <translation>半透明化</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1681,12 +1681,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="72"/>
         <source>Create a layer for each symbol</source>
-        <translation>为每个符号创建一个图层</translation>
+        <translation>为每个符号创建单独图层</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
         <source>Configuration</source>
-        <translation>組態</translation>
+        <translation>配置</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="85"/>
@@ -1696,7 +1696,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="85"/>
         <source>Value</source>
-        <translation>价值</translation>
+        <translation>值</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="102"/>
@@ -1709,7 +1709,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="77"/>
         <source>Appearance</source>
-        <translation>外观</translation>
+        <translation>界面</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="82"/>
@@ -1724,7 +1724,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="104"/>
         <source>Pixels per inch:</source>
-        <translation>每英寸像素数：</translation>
+        <translation>每英寸像素：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="114"/>
@@ -1734,22 +1734,22 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="123"/>
         <source>Saving files</source>
-        <translation>保存文件</translation>
+        <translation>文件存储</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="125"/>
         <source>Retain compatibility with Mapper %1</source>
-        <translation>保留与映射程序 %1 的兼容性</translation>
+        <translation>保留与制图软件 %1 的兼容性</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="136"/>
         <source>Save information for automatic recovery</source>
-        <translation>保存自动恢复信息</translation>
+        <translation>储存自动存储信息</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="140"/>
         <source>Recovery information saving interval:</source>
-        <translation>恢复信息保存间隔：</translation>
+        <translation>自动存储信息时间间隔：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="139"/>
@@ -1765,7 +1765,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="168"/>
         <source>8-bit encoding:</source>
-        <translation>8-bit编码：</translation>
+        <translation>8-Bit编码：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="161"/>
@@ -1776,7 +1776,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="133"/>
         <source>Save undo/redo history</source>
-        <translation>保存撤消/重做历史</translation>
+        <translation>储存历史操作步骤</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="146"/>
@@ -1790,7 +1790,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="186"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="210"/>
@@ -1821,7 +1821,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="385"/>
         <source>%1 x %2</source>
-        <translation>%1 %2 x</translation>
+        <translation>%1 x %2</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="386"/>
@@ -1856,53 +1856,53 @@ Rescale the imported data?</source>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>高斯-克鲁格、 基准︰ 波茨坦</translation>
+        <translation>Gauss-Krueger, 基准: Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
         <source>Gauss-Krueger coordinates</source>
-        <translation>高斯-克鲁格坐标</translation>
+        <translation>Gauss-Krueger 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="71"/>
         <source>Zone number (1 to 119)</source>
         <comment>Zone number for Gauss-Krueger coordinates</comment>
-        <translation>区数 (1 到 119)</translation>
+        <translation>区域编号（1至119）</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>通过对代码</translation>
+        <translation>通过EPSG码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
         <source>EPSG @code@ coordinates</source>
         <extracomment>Don&apos;t translate @code@. It is placeholder.</extracomment>
-        <translation>对 @code@ 坐标</translation>
+        <translation>EPSG @code@ 坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
         <location filename="../src/core/georeferencing.cpp" line="748"/>
         <source>Local coordinates</source>
-        <translation>局部坐标</translation>
+        <translation>本地坐标</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="84"/>
         <source>EPSG code</source>
-        <translation>对代码</translation>
+        <translation>EPSG代码</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="91"/>
         <source>Custom PROJ.4</source>
         <comment>PROJ.4 specification</comment>
-        <translation>自定义 PROJ.4</translation>
+        <translation>Custom PROJ.4</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="95"/>
         <source>Specification</source>
         <comment>PROJ.4 specification</comment>
-        <translation>规格</translation>
+        <translation>规范</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="446"/>
@@ -1912,18 +1912,18 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="452"/>
         <source>Invalid grid scale factor: %1</source>
-        <translation>无效的网格尺度因子: %1</translation>
+        <translation>无效的网格比例尺系数: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="489"/>
         <location filename="../src/core/georeferencing.cpp" line="516"/>
         <source>Unknown CRS specification language: %1</source>
-        <translation>未知的 CRS 规范语言: %1</translation>
+        <translation>未知的坐标参照系规范语言: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
         <source>Unsupported geographic CRS specification: %1</source>
-        <translation>不受支持的地理 CRS 规格: %1</translation>
+        <translation>不受支持的地理坐标参照系标准: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="739"/>
@@ -1936,7 +1936,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="129"/>
         <source>Map Georeferencing</source>
-        <translation>地图地理参考坐标系</translation>
+        <translation>地图地理坐标参照系</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="207"/>
@@ -1948,7 +1948,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="166"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="167"/>
         <source>m</source>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="241"/>
@@ -1958,7 +1958,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
         <source>Projected coordinates</source>
-        <translation>投影的坐标</translation>
+        <translation>投影坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="138"/>
@@ -1973,7 +1973,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="188"/>
         <source>Show reference point in:</source>
-        <translation>显示参考点：</translation>
+        <translation>参考点显示：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="376"/>
@@ -1983,7 +1983,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="370"/>
         <source>&lt;a href=&quot;%1&quot;&gt;OpenStreetMap&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;World of O Maps&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;%1&quot;&gt; 开放&lt;/a&gt; |&lt;a href=&quot;%2&quot;&gt; O 地图世界&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;%1&quot;&gt;开放街景图&lt;/a&gt; | &lt;a href=&quot;%2&quot;&gt;定向地图世界&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
@@ -1994,7 +1994,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
         <source>Map coordinate reference system</source>
-        <translation>地图坐标参考系统</translation>
+        <translation>地图坐标参照系统</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="136"/>
@@ -2005,7 +2005,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="144"/>
         <source>Grid scale factor:</source>
         <extracomment>The grid scale factor is the ratio between a length in the grid plane and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation>网格缩放比例:</translation>
+        <translation>网格比例尺系数:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="147"/>
@@ -2015,7 +2015,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="149"/>
         <source>&amp;Pick on map</source>
-        <translation>与在地图上选择</translation>
+        <translation>地图上拾取</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="151"/>
@@ -2071,7 +2071,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="204"/>
         <source>Map north</source>
-        <translation>向北地图</translation>
+        <translation>地图北</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="224"/>
@@ -2092,7 +2092,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="236"/>
         <source>On CRS changes, keep:</source>
-        <translation>在CRS的变化，保留：</translation>
+        <translation>坐标参照系变化时，保持：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="242"/>
@@ -2112,7 +2112,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="481"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>赤纬已被更改。你想要旋转地图内容因此，太吗？</translation>
+        <translation>磁偏角已经改变了，是否也要相应地旋转地图？</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="511"/>
@@ -2221,7 +2221,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="217"/>
         <source>Open most recently used file on start</source>
-        <translation>打开最近使用的文件启动</translation>
+        <translation>启动时打开最近使用的文件</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="220"/>
@@ -2236,7 +2236,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
         <source>Show tip of the day</source>
-        <translation>显示每日提示</translation>
+        <translation>显示引导界面</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
@@ -2535,7 +2535,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="245"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
-        <translation>单击“底图-&gt;底图设置”窗口中的红色底图名称以找到底图文件名。</translation>
+        <translation>单击底图-&gt;底图设置栏中的红色底图名称以找到底图文件名。</translation>
     </message>
     <message>
         <source>This file uses an obsolete format. Support for this format is to be removed from this program soon. To be able to open the file in the future, save it again.</source>
@@ -2938,7 +2938,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="336"/>
         <source>&amp;Open...</source>
-        <translation>打开......</translation>
+        <translation>打开...</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="339"/>
@@ -2999,12 +2999,12 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Open &amp;Manual</source>
-        <translation>打开帮助手册</translation>
+        <translation>打开手册</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="427"/>
@@ -3024,7 +3024,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/main_window.cpp" line="436"/>
         <source>About &amp;Qt</source>
-        <translation>关于 Qt</translation>
+        <translation>关于Qt</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="438"/>
@@ -3084,9 +3084,9 @@ Do you want to save your changes?</source>
         <source>The selected map scale is 1:%1, but the chosen symbol set has a nominal scale of 1:%2.
 
 Do you want to scale the symbols to the selected scale?</source>
-        <translation>选定的比例尺是 1:%1，但选的符号集只有 1:%2 名义尺度。
+        <translation>选定的地图比例尺是 1:%1，但选的符号集只有 1:%2 比例尺。
 
-你想要缩放到选定的比例符号吗？</translation>
+想要缩放符号到选定的比例尺吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="859"/>
@@ -3308,7 +3308,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/core/map.cpp" line="480"/>
         <source>default part</source>
-        <translation>默认部分</translation>
+        <translation>默认地图块</translation>
     </message>
     <message>
         <location filename="../src/core/map_color.cpp" line="36"/>
@@ -3342,7 +3342,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/core/map_coord.cpp" line="183"/>
         <source>Coordinates are out-of-bounds.</source>
-        <translation>坐标是出界。</translation>
+        <translation>坐标超出界限。</translation>
     </message>
 </context>
 <context>
@@ -3400,32 +3400,32 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="963"/>
         <source>Set custom zoom factor...</source>
-        <translation>设置自定义的缩放比例...</translation>
+        <translation>设置缩放系数...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="970"/>
         <source>Symbol window</source>
-        <translation>符号窗口</translation>
+        <translation>符号栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="970"/>
         <source>Show/Hide the symbol window</source>
-        <translation>显示/隐藏符号窗口</translation>
+        <translation>显示/隐藏符号栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="971"/>
         <source>Color window</source>
-        <translation>颜色窗口</translation>
+        <translation>色彩栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="971"/>
         <source>Show/Hide the color window</source>
-        <translation>显示/隐藏颜色窗口</translation>
+        <translation>显示/隐藏色彩栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="973"/>
         <source>Replace the symbols with those from another map file</source>
-        <translation>符号替换那些来自另一个映射文件</translation>
+        <translation>用其他地图文件中的符号替换这些符号</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="977"/>
@@ -3440,7 +3440,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="979"/>
         <source>Change map scale...</source>
-        <translation>更改地图比例尺...</translation>
+        <translation>地图比例尺设置...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="979"/>
@@ -3450,17 +3450,17 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="981"/>
         <source>Map notes...</source>
-        <translation>地图说明...</translation>
+        <translation>地图笔记...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Template setup window</source>
-        <translation>底图设置窗口</translation>
+        <translation>底图设置栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="983"/>
         <source>Show/Hide the template window</source>
-        <translation>显示/隐藏底图窗口</translation>
+        <translation>显示/隐藏底图设置栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="986"/>
@@ -3470,7 +3470,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="961"/>
         <source>Show whole map</source>
-        <translation>显示整个地图</translation>
+        <translation>显示全图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="991"/>
@@ -3480,52 +3480,52 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="993"/>
         <source>Set point objects</source>
-        <translation>绘制点对象</translation>
+        <translation>设置点对象</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <source>Draw paths</source>
-        <translation>绘制路径</translation>
+        <translation>绘制线段</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="995"/>
         <source>Draw circles and ellipses</source>
-        <translation>绘制圆和椭圆</translation>
+        <translation>圆与椭圆</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="999"/>
         <source>Write text</source>
-        <translation>写入文本</translation>
+        <translation>文本</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1000"/>
         <source>Duplicate</source>
-        <translation>重复</translation>
+        <translation>克隆</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1001"/>
         <source>Switch symbol</source>
-        <translation>开关符号</translation>
+        <translation>替换符号</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1002"/>
         <source>Fill / Create border</source>
-        <translation>填充/创建边框</translation>
+        <translation>填充/描边</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1003"/>
         <source>Switch dash direction</source>
-        <translation>符号方向切换</translation>
+        <translation>变向</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1004"/>
         <source>Connect paths</source>
-        <translation>连接路径</translation>
+        <translation>连接</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1006"/>
         <source>Cut object</source>
-        <translation>裁剪对象</translation>
+        <translation>剪开</translation>
     </message>
     <message>
         <source>Rotate object(s)</source>
@@ -3534,17 +3534,17 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1020"/>
         <source>Measure lengths and areas</source>
-        <translation>测量长度和面积</translation>
+        <translation>测量</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Cut away from area</source>
-        <translation>切离区域</translation>
+        <translation>减除</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
         <source>Merge area holes</source>
-        <translation>合并孔</translation>
+        <translation>开孔合并</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1038"/>
@@ -3554,7 +3554,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1043"/>
         <source>Enable touch cursor</source>
-        <translation>启用触摸光标</translation>
+        <translation>开启触摸屏模式</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
@@ -3600,24 +3600,24 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1060"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3745"/>
         <source>Add new part...</source>
-        <translation>添加新的部分...</translation>
+        <translation>添加新的地图块...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3805"/>
         <source>Rename current part...</source>
-        <translation>重命名当前部分...</translation>
+        <translation>重命名当前地图块...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1062"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3766"/>
         <source>Remove current part</source>
-        <translation>删除当前部分</translation>
+        <translation>删除当前地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
         <source>Merge all parts</source>
-        <translation>合并所有部分</translation>
+        <translation>合并所有地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1065"/>
@@ -3675,12 +3675,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="573"/>
         <source>Editing in progress</source>
-        <translation>在进展中编辑</translation>
+        <translation>正在编辑</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="574"/>
         <source>The map is currently being edited. Please finish the edit operation before saving.</source>
-        <translation>当前正在编辑的地图。请完成编辑操作然后再进行保存。</translation>
+        <translation>当前正在编辑地图，请完成编辑操作然后再进行保存。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="584"/>
@@ -3701,7 +3701,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="965"/>
         <source>Hatch areas</source>
-        <translation>剖面线区域</translation>
+        <translation>半透明化</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="966"/>
@@ -3712,7 +3712,7 @@ Import the data anyway?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="131"/>
         <source>Hide all templates</source>
-        <translation>隐藏所有模板</translation>
+        <translation>隐藏所有底图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="973"/>
@@ -3722,7 +3722,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="978"/>
         <source>Georeferencing...</source>
-        <translation>小基......</translation>
+        <translation>地理配准...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
@@ -3732,7 +3732,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Rotate the whole map</source>
-        <translation>旋转整个地图</translation>
+        <translation>旋转全图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="987"/>
@@ -3757,12 +3757,12 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="997"/>
         <source>Draw free-handedly</source>
-        <translation>自由绘制</translation>
+        <translation>自由手绘</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="998"/>
         <source>Fill bounded areas</source>
-        <translation>填充有界的区域</translation>
+        <translation>区域填充</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="945"/>
@@ -3772,22 +3772,22 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1007"/>
         <source>Cut free form hole</source>
-        <translation>挖了自由形式</translation>
+        <translation>自由开孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1008"/>
         <source>Cut round hole</source>
-        <translation>切圆孔</translation>
+        <translation>开圆孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1009"/>
         <source>Cut rectangular hole</source>
-        <translation>剪切矩形孔</translation>
+        <translation>开矩形孔</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1018"/>
         <source>Rotate pattern</source>
-        <translation>旋转模式</translation>
+        <translation>旋转符号</translation>
     </message>
     <message>
         <source>Scale object(s)</source>
@@ -3796,32 +3796,32 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1021"/>
         <source>Unify areas</source>
-        <translation>合并区域</translation>
+        <translation>合并</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
         <source>Intersect areas</source>
-        <translation>相交区域</translation>
+        <translation>相交</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1024"/>
         <source>Area XOr</source>
-        <translation>相离区域</translation>
+        <translation>差集</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1028"/>
         <source>Cutout</source>
-        <translation>剪影</translation>
+        <translation>剪下</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1029"/>
         <source>Cut away</source>
-        <translation>切掉</translation>
+        <translation>剪除</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1030"/>
         <source>Distribute points along path</source>
-        <translation>沿路径分布点</translation>
+        <translation>沿径布点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1067"/>
@@ -3831,22 +3831,22 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1069"/>
         <source>Projected coordinates</source>
-        <translation>投影的坐标</translation>
+        <translation>投影坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1071"/>
         <source>Latitude/Longitude (Dec)</source>
-        <translation>经纬度 （12 月）</translation>
+        <translation>Dec经纬度</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1073"/>
         <source>Latitude/Longitude (DMS)</source>
-        <translation>经纬度 (DMS)</translation>
+        <translation>DMS经纬度</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1155"/>
         <source>Display coordinates as...</source>
-        <translation>显示坐标作为...</translation>
+        <translation>显示坐标为...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1010"/>
@@ -4017,17 +4017,17 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="946"/>
         <source>Select all</source>
-        <translation>选择所有</translation>
+        <translation>全选</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="947"/>
         <source>Select nothing</source>
-        <translation>不选择任何内容</translation>
+        <translation>全不选</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="948"/>
         <source>Invert selection</source>
-        <translation>反向选择</translation>
+        <translation>反选</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="957"/>
@@ -4047,7 +4047,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
         <source>Load CRT file...</source>
-        <translation>加载CRT文件...</translation>
+        <translation>CRT文件载入...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="974"/>
@@ -4102,7 +4102,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1423"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3678"/>
         <source>Map parts</source>
-        <translation>地图部分</translation>
+        <translation>地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1311"/>
@@ -4132,7 +4132,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1419"/>
         <source>Show top bar</source>
-        <translation>显示顶部栏</translation>
+        <translation>显示顶栏</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="604"/>
@@ -4192,7 +4192,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1949"/>
         <source>Set custom zoom factor</source>
-        <translation>设置自定义的缩放因子</translation>
+        <translation>设置缩放系数</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1949"/>
@@ -4212,7 +4212,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2058"/>
         <source>Symbol set ID</source>
-        <translation>符号集ID</translation>
+        <translation>符号集ID设置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2059"/>
@@ -4232,7 +4232,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2110"/>
         <source>Map notes</source>
-        <translation>地图说明</translation>
+        <translation>地图笔记</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2115"/>
@@ -4247,7 +4247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2156"/>
         <source>Templates</source>
-        <translation>模板</translation>
+        <translation>底图</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2218"/>
@@ -4345,17 +4345,17 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2532"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
-        <translation>删除不是重叠与第一个选定对象的所有部分。</translation>
+        <translation>删除与第一个选定对象不重叠的所有部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2534"/>
         <source>Remove overlapped parts of the first selected object.</source>
-        <translation>删除第一个选定对象的重叠的部分。</translation>
+        <translation>删除第一个选定对象的重叠部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2536"/>
         <source>Remove all parts which overlap the first selected object.</source>
-        <translation>删除重叠的第一个选定的对象的所有部分。</translation>
+        <translation>删除与第一个选定对象重叠的所有部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2540"/>
@@ -4411,39 +4411,39 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3685"/>
         <source>Merge this part with</source>
-        <translation>与这部分合并</translation>
+        <translation>将此地图块合并入</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3692"/>
         <source>Move selected objects to</source>
-        <translation>移动到所选的对象</translation>
+        <translation>将选中对象移至</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3746"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3806"/>
         <source>Enter the name of the map part:</source>
-        <translation>输入地图部分的名称:</translation>
+        <translation>输入地图块的名称:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3822"/>
         <source>Switched to map part &apos;%1&apos;.</source>
-        <translation>切换到地图部分 &apos;%1&apos;。</translation>
+        <translation>切换到地图块 &apos;%1&apos;。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3850"/>
         <location filename="../src/gui/map/map_editor.cpp" line="3882"/>
         <source>Merge map parts</source>
-        <translation>合并地图部分</translation>
+        <translation>合并地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3851"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
-        <translation>你想要将所有对象从地图部分&quot;%1&quot;都移动到&quot;%2&quot;，并删除&quot;%1&quot;吗？</translation>
+        <translation>你想要将所有对象从地图块&quot;%1&quot;都移动到&quot;%2&quot;，并删除&quot;%1&quot;吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3883"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
-        <translation>你想要移动所有对象映射部分&quot;%1&quot;，并删除所有其他地图部分吗？</translation>
+        <translation>你想要移动所有对象到地图块&quot;%1&quot;，并删除其他所有地图块吗？</translation>
     </message>
     <message>
         <source>Cannot import the selected map file because it could not be loaded.</source>
@@ -4472,32 +4472,32 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Clear undo / redo history</source>
-        <translation>清除撤消/重做历史</translation>
+        <translation>清除步骤记录</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="952"/>
         <source>Clear the undo / redo history to reduce map file size.</source>
-        <translation>清楚的撤消/重做历史记录为了减少地图文件大小。</translation>
+        <translation>清除步骤记录来减少地图文件大小。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="956"/>
         <source>Pan</source>
-        <translation>拖动</translation>
+        <translation>平移</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="968"/>
         <source>Overprinting simulation</source>
-        <translation>叠印模拟</translation>
+        <translation>套印模拟</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="992"/>
         <source>Edit lines</source>
-        <translation>编辑线条</translation>
+        <translation>编辑线段</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1026"/>
         <source>Convert to curves</source>
-        <translation>转换为曲线</translation>
+        <translation>曲线化</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1027"/>
@@ -4592,7 +4592,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
-        <translation>轮到路径的直线段做成光滑贝塞尔样条。</translation>
+        <translation>将直线段构成的路径转换为平滑的贝塞尔曲线。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
@@ -4660,7 +4660,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3767"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
-        <translation>你想要删除地图部分&quot;%1&quot;及其所有对象吗？</translation>
+        <translation>你想要删除地图块&quot;%1&quot;及其所有对象吗？</translation>
     </message>
     <message>
         <source>Paint free-handedly on a template</source>
@@ -4693,12 +4693,12 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1017"/>
         <source>Rotate objects</source>
-        <translation>旋转对象</translation>
+        <translation>旋转</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1019"/>
         <source>Scale objects</source>
-        <translation>缩放对象</translation>
+        <translation>缩放</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="1789"/>
@@ -4745,7 +4745,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2507"/>
         <source>Cut the selected objects into smaller parts.</source>
-        <translation>切成更小的部分选定的对象。</translation>
+        <translation>将选定的对象切成较小的部分。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2561"/>
@@ -4755,7 +4755,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2563"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation>创建所选区域的边框或填充选定的行。</translation>
+        <translation>填充选定的线段或为选定区域创建边框。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2682"/>
@@ -4808,7 +4808,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="53"/>
         <source>&amp;Find...</source>
-        <translation>&amp;查找...</translation>
+        <translation>查找...</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="61"/>
@@ -4823,7 +4823,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="99"/>
         <source>&amp;Find next</source>
-        <translation>&amp;查找下一个</translation>
+        <translation>查找下一个</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_find_feature.cpp" line="102"/>
@@ -4945,7 +4945,10 @@ open the color dialog and
 define the colors there.</source>
         <translation>空的地图 ！
 
-首先定义一些颜色︰ 选择符号-&gt; 颜色窗口打开颜色对话框并定义那里的颜色。</translation>
+首先定义一些颜色︰ 
+选择符号-&gt; 色彩栏
+打开色彩对话框并
+定义那里的颜色。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="849"/>
@@ -5083,12 +5086,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="70"/>
         <source>Choose the scale and symbol set for the new map.</source>
-        <translation>选择的规模和符号集的新地图。</translation>
+        <translation>选择新地图的比例尺和符号集。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="77"/>
         <source>Scale:  1 : </source>
-        <translation>规模︰ 1: </translation>
+        <translation>比例尺:  1 : </translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="82"/>
@@ -5098,7 +5101,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="87"/>
         <source>Only show symbol sets matching the selected scale</source>
-        <translation>只显示符号集的选定的规模相匹配</translation>
+        <translation>仅显示与选定比例尺匹配的符号集</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5848,7 +5851,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/tools/pan_tool.cpp" line="80"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map. </source>
-        <translation>&lt;b&gt;拖&lt;/b&gt;︰ 移动地图。 </translation>
+        <translation>&lt;b&gt;拖动&lt;/ b&gt;：平移地图。 </translation>
     </message>
 </context>
 <context>
@@ -6097,7 +6100,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="180"/>
         <source>Page orientation:</source>
-        <translation>页面方向：</translation>
+        <translation>纸张方向：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="140"/>
@@ -6107,32 +6110,32 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="173"/>
         <source>Portrait</source>
-        <translation>肖像</translation>
+        <translation>纵向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="175"/>
         <source>Landscape</source>
-        <translation>景观</translation>
+        <translation>横向</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="154"/>
         <source>Page format:</source>
-        <translation>页面格式：</translation>
+        <translation>页面规格：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="183"/>
         <source>Copies:</source>
-        <translation>副本：</translation>
+        <translation>份数：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="196"/>
         <source>Left:</source>
-        <translation>左：</translation>
+        <translation>左边距：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="199"/>
         <source>Top:</source>
-        <translation>返回页首：</translation>
+        <translation>上边距：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="202"/>
@@ -6147,12 +6150,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="303"/>
         <source>Preview...</source>
-        <translation>预览。。。</translation>
+        <translation>预览...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="188"/>
         <source>Single page</source>
-        <translation>单个页面</translation>
+        <translation>单页</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="189"/>
@@ -6162,12 +6165,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
-        <translation>地图区域：</translation>
+        <translation>地图范围：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
-        <translation>中心打印区域</translation>
+        <translation>地图居中打印</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="160"/>
@@ -6188,7 +6191,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="208"/>
         <source>Page overlap:</source>
-        <translation>页面重叠：</translation>
+        <translation>页面重叠(出血)：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="212"/>
@@ -6203,22 +6206,22 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="248"/>
         <source>Print in different scale:</source>
-        <translation>按不同比例打印：</translation>
+        <translation>打印不同比例尺：</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="269"/>
         <source>Template appearance may differ.</source>
-        <translation>底图外观可能有所不同。</translation>
+        <translation>底图显示效果可能有所不同。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="276"/>
         <source>Simulate overprinting</source>
-        <translation>模拟叠印</translation>
+        <translation>模拟套印</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="279"/>
         <source>Save world file</source>
-        <translation>保存世界文件</translation>
+        <translation>保存world文件</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="238"/>
@@ -6228,7 +6231,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK</source>
-        <translation>设备 CMYK （实验）</translation>
+        <translation>设备 CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="240"/>
@@ -6244,7 +6247,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="309"/>
         <source>Export...</source>
-        <translation>出口...</translation>
+        <translation>导出...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="418"/>
@@ -6266,7 +6269,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="942"/>
         <location filename="../src/gui/print_widget.cpp" line="992"/>
         <source>dpi</source>
-        <translation>新闻部</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="959"/>
@@ -6296,7 +6299,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1159"/>
         <source>A non-standard view mode is activated. Are you sure to print / export the map like this?</source>
-        <translation>非标准视图模式被激活。是否确实要打印 / 导出映射像这样？</translation>
+        <translation>非标准视图模式，是否确认打印 / 导出这样的地图？</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1176"/>
@@ -6306,7 +6309,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1177"/>
         <source>BMP</source>
-        <translation>骨形态发生蛋白</translation>
+        <translation>BMP</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1178"/>
@@ -6339,7 +6342,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="1263"/>
         <location filename="../src/gui/print_widget.cpp" line="1275"/>
         <source>Export map ...</source>
-        <translation>导出映射...</translation>
+        <translation>导出地图...</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1180"/>
@@ -6376,13 +6379,13 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/print_widget.cpp" line="219"/>
         <source>Vector
 graphics</source>
-        <translation>矢量图形</translation>
+        <translation>矢量图</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="220"/>
         <source>Raster
 graphics</source>
-        <translation>光栅图形</translation>
+        <translation>栅格图</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="221"/>
@@ -6398,12 +6401,12 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1199"/>
         <source>Failed to prepare the image. Not enough memory.</source>
-        <translation>未能准备映像。没有足够的内存。</translation>
+        <translation>生成图像失败，没有足够的内存。</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>未能保存图像。路径存在吗？你有足够的权利吗？</translation>
+        <translation>保存图像失败，保存路径存在吗？是否有足够的权限？</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
@@ -6440,7 +6443,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1375"/>
         <source>The map area is empty. Output canceled.</source>
-        <translation>映射区为空。取消的输出。</translation>
+        <translation>地图区域是空的。输出已取消。</translation>
     </message>
 </context>
 <context>
@@ -6453,7 +6456,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="43"/>
         <source>Drag items from the left list to the desired spot in the right list to reload them.</source>
-        <translation>将从左侧的列表中的项目拖到所需的点，在右侧的列表，以便重新加载它们。</translation>
+        <translation>将从左侧的列表中的项拖到右侧列表中的目标点，以便重新加载它们。</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="45"/>
@@ -6486,7 +6489,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="53"/>
         <source>Angle (counter-clockwise):</source>
-        <translation>角度（逆时针）:</translation>
+        <translation>角度（逆时针方向）:</translation>
     </message>
     <message>
         <source>°</source>
@@ -6500,7 +6503,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="55"/>
         <source>Rotate around:</source>
-        <translation>旋转：</translation>
+        <translation>旋转基于：</translation>
     </message>
     <message>
         <source>Map coordinate system origin</source>
@@ -6535,19 +6538,19 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="58"/>
         <source>Map coordinate system origin</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>地图坐标系的原点</translation>
+        <translation>地图坐标系原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>地理坐标参考点</translation>
+        <translation>地理坐标参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Rotation center point</extracomment>
-        <translation>另一点，</translation>
+        <translation>其他坐标点，</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="74"/>
@@ -6567,17 +6570,17 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="84"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>调整加注地理数据的参考点</translation>
+        <translation>地理参照点配准</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="91"/>
         <source>Adjust georeferencing declination</source>
-        <translation>调整小基赤纬</translation>
+        <translation>地磁偏角调校</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_rotate.cpp" line="98"/>
         <source>Rotate non-georeferenced templates</source>
-        <translation>旋转的非地理参考模板</translation>
+        <translation>旋转未经地理配准校正的地图</translation>
     </message>
 </context>
 <context>
@@ -6626,12 +6629,12 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="43"/>
         <source>Change map scale</source>
-        <translation>更改地图比例尺</translation>
+        <translation>地图比例尺设置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation>标度参数</translation>
+        <translation>比例尺参数</translation>
     </message>
     <message>
         <source>New scale:  1 :</source>
@@ -6640,7 +6643,7 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="55"/>
         <source>Scaling center:</source>
-        <translation>缩放中心：</translation>
+        <translation>比例尺中心：</translation>
     </message>
     <message>
         <source>Map coordinate system origin</source>
@@ -6686,13 +6689,13 @@ separations</source>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="63"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation>地理坐标参考点</translation>
+        <translation>地理坐标参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="69"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation>另一点，</translation>
+        <translation>其他坐标点，</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="74"/>
@@ -6712,22 +6715,22 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="83"/>
         <source>Scale symbol sizes</source>
-        <translation>缩放符号尺寸</translation>
+        <translation>按比例调整符号大小</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="90"/>
         <source>Scale map object positions</source>
-        <translation>规模地图对象位置</translation>
+        <translation>按比例调整地图对象位置</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="97"/>
         <source>Adjust georeferencing reference point</source>
-        <translation>调整加注地理数据的参考点</translation>
+        <translation>地理参照点配准</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_scale.cpp" line="104"/>
         <source>Scale non-georeferenced templates</source>
-        <translation>规模非地理参考模板</translation>
+        <translation>按比例调整未经地理配准校正的底图</translation>
     </message>
 </context>
 <context>
@@ -6758,12 +6761,12 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="63"/>
         <source>Select coordinate reference system</source>
-        <translation>选择坐标参照系统</translation>
+        <translation>选择坐标参考系</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="71"/>
         <source>Same as map</source>
-        <translation>同样作为地图</translation>
+        <translation>与地图相同</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="77"/>
@@ -6773,7 +6776,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="82"/>
         <source>Geographic coordinates (WGS84)</source>
-        <translation>地理坐标 (WGS84)</translation>
+        <translation>WGS84地理坐标</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="94"/>
@@ -6801,7 +6804,7 @@ separations</source>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="61"/>
         <source>Serial port (NMEA):</source>
-        <translation>串行端口（NMEA）：</translation>
+        <translation>NMEA串口：</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="80"/>
@@ -6916,7 +6919,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="130"/>
         <source>General</source>
-        <translation>一般</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_properties_widget.cpp" line="133"/>
@@ -6939,7 +6942,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="104"/>
         <source>For symbols with description, press F1 while the tooltip is visible to show it</source>
-        <translation>与描述符号，请按 f1 键工具提示可见显示它时</translation>
+        <translation>对于带有说明的符号，在工具提示可见时按F1键将其显示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="108"/>
@@ -6994,7 +6997,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="120"/>
         <source>Scale...</source>
-        <translation>规模......</translation>
+        <translation>比例尺...</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="122"/>
@@ -7049,7 +7052,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1114"/>
         <source>Select all objects with this symbol</source>
-        <translation>选择此符号的所有对象</translation>
+        <translation>选择所有目标符号的对象</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1115"/>
@@ -7096,7 +7099,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="145"/>
         <source>Invert selection</source>
-        <translation>反向选择</translation>
+        <translation>反选</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="99"/>
@@ -7122,7 +7125,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="148"/>
         <source>Sort symbols</source>
-        <translation>排序符号</translation>
+        <translation>符号排序</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="149"/>
@@ -7142,7 +7145,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"/>
         <source>Scale to percentage:</source>
-        <translation>按比例缩放：</translation>
+        <translation>按百分比缩放：</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="840"/>
@@ -7152,7 +7155,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="841"/>
         <source>The map contains objects with the symbol &quot;%1&quot;. Deleting it will delete those objects and clear the undo history! Do you really want to do that?</source>
-        <translation>映射包含带有符号&quot;%1&quot;的对象。删除它将删除这些对象并清除撤消历史记录 ！你真的想要这样做？</translation>
+        <translation>地图包含带有符号&quot;%1&quot;的对象。删除它将删除这些对象并清除撤消历史记录 ！你真的想要这样做？</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="949"/>
@@ -7173,7 +7176,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="811"/>
         <source>Scale symbols</source>
-        <translation>规模符号</translation>
+        <translation>缩放符号</translation>
     </message>
 </context>
 <context>
@@ -7211,7 +7214,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>保持旧的符号集的符号隐藏 / 保护状态</translation>
+        <translation>保持旧符号集的符号隐藏 / 保护状态</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"/>
@@ -7359,7 +7362,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="273"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>空房的符号集具有规模的 1:%1，1:%2 地图规模时。你真的想要选择这一套？</translation>
+        <translation>所选符号集的比例尺为1:%1，而地图比例尺为1:%2。确定选这符号集吗？</translation>
     </message>
 </context>
 <context>
@@ -7755,12 +7758,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="87"/>
         <source>dpi</source>
-        <translation>新闻部</translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="89"/>
         <source>Template scale:  1 :</source>
-        <translation>底图比例：1：</translation>
+        <translation>底图比例尺：1：</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="115"/>
@@ -7904,12 +7907,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1036"/>
         <source>Don&apos;t scale</source>
-        <translation>不能扩展</translation>
+        <translation>不能缩放</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
         <source>Scale by nominal map scale ratio (%1 %)</source>
-        <translation>规模由名义地图规模比 （%1%）</translation>
+        <translation>按标称地图比例尺来缩放（％1％）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
@@ -7960,7 +7963,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1033"/>
         <source>Scale by current template scaling (%1 %)</source>
-        <translation>按当前底图缩放比例%1%</translation>
+        <translation>按当前底图缩放比例进行缩放（％1％）</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1038"/>
@@ -8132,7 +8135,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Projects the track using an orthographic projection with center at the track&apos;s coordinate average. Allows adjustment of the transformation and setting the map georeferencing using the adjusted track position.</source>
-        <translation>项目跟踪与中心轨迹的坐标平均使用正交投影。允许调整转型和设置地图小基使用调整后的轨道位置。</translation>
+        <translation>使用正交投影以轨道的坐标平均值为中心投影轨道，允许调整转换并使用调整后的轨迹位置设置地图地理配准。</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="417"/>
@@ -8239,7 +8242,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="51"/>
         <source>Top</source>
-        <translation>返回页首</translation>
+        <translation>顶部</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/text_alignment_widget.cpp" line="53"/>
@@ -8299,7 +8302,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="136"/>
         <source>bold</source>
-        <translation>大胆</translation>
+        <translation>粗体</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="138"/>
@@ -8309,7 +8312,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="140"/>
         <source>underlined</source>
-        <translation>强调</translation>
+        <translation>下划线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="143"/>
@@ -8340,7 +8343,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="156"/>
         <source>Kerning</source>
-        <translation>字偶间距调整</translation>
+        <translation>字间距调整</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/text_symbol_settings.cpp" line="163"/>
@@ -8540,7 +8543,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="243"/>
         <source>Older versions of Mapper do not support multiple map parts. To save the map in compatibility mode, you must first merge all map parts.</source>
-        <translation>旧版本的制图程序不支持多个地图部分。要以兼容模式保存地图，必须首先合并所有地图部分。</translation>
+        <translation>旧版本的制图程序不支持多个地图块。要以兼容模式保存地图，必须先合并所有地图块。</translation>
     </message>
 </context>
 <context>
@@ -8563,7 +8566,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="663"/>
         <source>Parts of this file cannot be read by this version of Mapper. Minimum required version: %1</source>
-        <translation>此版本的映射器无法读取这个文件的部分。所需的最低版本: %1</translation>
+        <translation>此版本的软件无法读取这个文件的地图块，所需的最低版本: %1</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="644"/>
@@ -8590,7 +8593,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/fileformats/xml_file_format.cpp" line="835"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="888"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>无法设置颜色“％1”的淘汰赛财产。</translation>
+        <translation>无法设置颜色“％1”的遮盖属性。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="848"/>
@@ -8610,7 +8613,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="959"/>
         <source>Expected %1 map parts, found %2.</source>
-        <translation>预计1％的部分地图，找到％2。</translation>
+        <translation>预计是 1％ 个地图块，但找到 ％2 个。</translation>
     </message>
 </context>
 </TS>

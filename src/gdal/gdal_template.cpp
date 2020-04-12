@@ -21,13 +21,22 @@
 
 #include <QtGlobal>
 #include <QByteArray>
+#include <QChar>
 #include <QImageReader>
 #include <QString>
 
 #include "gdal/gdal_image_reader.h"
 #include "gdal/gdal_manager.h"
 
+
 namespace OpenOrienteering {
+
+// static
+bool GdalTemplate::canRead(const QString& path)
+{
+	return GdalImageReader(path).canRead();
+}
+
 
 // static
 const std::vector<QByteArray>& GdalTemplate::supportedExtensions()
@@ -75,7 +84,7 @@ bool GdalTemplate::loadTemplateFileImpl(bool configuring)
 			qDebug("GdalTemplate: Falling back to QImageReader, reason: %s", qPrintable(errorString()));
 			if (!image_reader.read(&image))
 			{
-				setErrorString(image_reader.errorString());
+				setErrorString(errorString() + QChar::LineFeed + image_reader.errorString());
 				return false;
 			}
 		}

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -97,6 +97,12 @@ public:
 	
     qreal calculateLargestLineExtent() const override;
 	
+	/**
+	 * Determines the border hints for this line symbol.
+	 */
+	const BorderHints* borderHints() const override;
+	
+	
 	// Getters / Setter
 	inline int getNumParts() const {return (int)parts.size();}
 	inline void setNumParts(int num) {parts.resize(num, nullptr); private_parts.resize(num, false);}
@@ -117,6 +123,8 @@ protected:
 	std::vector<bool> private_parts;
 	std::vector<const Symbol*> parts;
 	std::vector<int> temp_part_indices;	// temporary vector of the indices of the 'parts' symbols, used just for loading
+	
+	mutable BorderHints border_hints;
 };
 
 

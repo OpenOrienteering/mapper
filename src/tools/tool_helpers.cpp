@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -65,10 +65,7 @@ ConstrainAngleToolHelper::ConstrainAngleToolHelper()
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &ConstrainAngleToolHelper::settingsChanged);
 }
 
-ConstrainAngleToolHelper::~ConstrainAngleToolHelper()
-{
-	// nothing, not inlined!
-}
+ConstrainAngleToolHelper::~ConstrainAngleToolHelper() = default;
 
 
 void ConstrainAngleToolHelper::setCenter(const MapCoordF& center)
@@ -309,10 +306,7 @@ SnappingToolHelper::SnappingToolHelper(MapEditorTool* tool, SnapObjects filter)
 	point_handles.setScaleFactor(tool->scaleFactor());
 }
 
-SnappingToolHelper::~SnappingToolHelper()
-{
-	// nothing, not inlined
-}
+SnappingToolHelper::~SnappingToolHelper() = default;
 
 
 void SnappingToolHelper::setFilter(SnapObjects filter)
@@ -330,7 +324,7 @@ SnappingToolHelper::SnapObjects SnappingToolHelper::getFilter() const
 MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* widget, SnappingToolHelperSnapInfo* info, Object* exclude_object)
 {
 	auto snap_distance = widget->getMapView()->pixelToLength(Settings::getInstance().getMapEditorSnapDistancePx() / 1000);
-	auto closest_distance_sq = float(snap_distance * snap_distance); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
+	auto closest_distance_sq = snap_distance * snap_distance;
 	auto result_position = MapCoord { position };
 	SnappingToolHelperSnapInfo result_info;
 	result_info.type = NoSnapping;
@@ -354,11 +348,10 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 			if (object == exclude_object)
 				continue;
 			
-			auto distance_sq = float(-1); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
 			if (object->getType() == Object::Point && filter & ObjectCorners)
 			{
 				PointObject* point = object->asPoint();
-				distance_sq = point->getCoordF().distanceSquaredTo(position);
+				auto distance_sq = point->getCoordF().distanceSquaredTo(position);
 				if (distance_sq < closest_distance_sq)
 				{
 					closest_distance_sq = distance_sq;
@@ -373,37 +366,54 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 				const PathObject* path = object->asPath();
 				if (filter & ObjectPaths)
 				{
-					PathCoord path_coord;
-					path->calcClosestPointOnPath(position, distance_sq, path_coord);
-					if (distance_sq < closest_distance_sq)
+					auto closest = path->findClosestPointTo(position);
+					if (closest.distance_squared < closest_distance_sq)
 					{
-						closest_distance_sq = distance_sq;
-						result_position = MapCoord(path_coord.pos);
+						closest_distance_sq = closest.distance_squared;
+						result_position = MapCoord(closest.path_coord.pos);
 						result_info.object = object;
-						if (path_coord.param == 0)
+						if (closest.path_coord.param == 0)
 						{
 							result_info.type = ObjectCorners;
-							result_info.coord_index = path_coord.index;
+							result_info.coord_index = closest.path_coord.index;
 						}
 						else
 						{
 							result_info.type = ObjectPaths;
 							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
-							result_info.path_coord = path_coord;
+							result_info.path_coord = closest.path_coord;
+						}
+					}
+					
+					if (filter & LineBorders)
+					{
+						auto result = path->findClosestPointOnBorder(position, closest.path_coord, closest_distance_sq);
+						if (result.border)
+						{
+							closest_distance_sq = result.closest.distance_squared;
+							result_info.border_path = std::move(result.border);
+							result_info.type = LineBorders;
+							result_info.object = result_info.border_path.get();
+							result_info.coord_index = std::numeric_limits<decltype(result_info.coord_index)>::max();
+							result_info.path_coord = result.closest.path_coord;
+							result_position = MapCoord(result.closest.path_coord.pos);
 						}
 					}
 				}
 				else
 				{
-					MapCoordVector::size_type index;
-					path->calcClosestCoordinate(position, distance_sq, index);
-					if (distance_sq < closest_distance_sq)
+					auto const index = path->findClosestCoordinate(position);
+					if (index < std::numeric_limits<MapCoordVector::size_type>::max())
 					{
-						closest_distance_sq = distance_sq;
-						result_position = path->getCoordinate(index);
-						result_info.type = ObjectCorners;
-						result_info.object = object;
-						result_info.coord_index = index;
+						auto const distance_sq = position.distanceSquaredTo(MapCoordF(path->getCoordinate(index)));
+						if (distance_sq < closest_distance_sq)
+						{
+							closest_distance_sq = distance_sq;
+							result_position = path->getCoordinate(index);
+							result_info.type = ObjectCorners;
+							result_info.object = object;
+							result_info.coord_index = index;
+						}
 					}
 				}
 			}
@@ -420,7 +430,7 @@ MapCoord SnappingToolHelper::snapToObject(const MapCoordF& position, MapWidget* 
 		map->getGrid().isSnappingEnabled() && map->getGrid().getDisplayMode() == MapGrid::AllLines)
 	{
 		MapCoordF closest_grid_point = map->getGrid().getClosestPointOnGrid(position, map);
-		auto distance_sq = float(closest_grid_point.distanceSquaredTo(position)); /// \todo Change to qreal when Path::calcClosestPointOnPath accepts that.
+		auto const distance_sq = closest_grid_point.distanceSquaredTo(position);
 		if (distance_sq < closest_distance_sq)
 		{
 			// unused: closest_distance_sq = distance_sq;
@@ -529,26 +539,38 @@ void SnappingToolHelper::includeDirtyRect(QRectF& rect)
 
 // ### FollowPathToolHelper ###
 
-FollowPathToolHelper::FollowPathToolHelper()
+bool FollowPathToolHelper::canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept
 {
-	// nothing else
+	return (snap_info.type == SnappingToolHelper::ObjectCorners
+	        || snap_info.type == SnappingToolHelper::ObjectPaths
+	        || snap_info.type == SnappingToolHelper::LineBorders)
+	       && snap_info.object->getType() == Object::Path;  // type implies object != nullptr
 }
 
-void FollowPathToolHelper::startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index)
+void FollowPathToolHelper::startFollowing(const SnappingToolHelperSnapInfo& snap_info)
 {
+	Q_ASSERT(snap_info.object->getType() == Object::Path);
+	path = static_cast<PathObject*>(snap_info.object);
 	path->update();
-	PathCoord coord = path->findPathCoordForIndex(coord_index);
-	startFollowingFromPathCoord(path, coord);
-}
-
-void FollowPathToolHelper::startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord)
-{
-	path->update();
-	this->path = path;
-	
-	start_clen = coord.clen;
-	end_clen   = start_clen;
-	part_index = path->findPartIndexForIndex(coord.index);
+	auto init = [this](const PathCoord& coord) {
+		start_clen = coord.clen;
+		part_index = path->findPartIndexForIndex(coord.index);
+	};
+	if (snap_info.type == SnappingToolHelper::ObjectCorners)
+	{
+		PathCoord coord = path->findPathCoordForIndex(snap_info.coord_index);
+		init(coord);
+	}
+	else if (snap_info.type == SnappingToolHelper::LineBorders)
+	{
+		border_path = snap_info.border_path;
+		init(snap_info.path_coord);
+	}
+	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
+	{
+		init(snap_info.path_coord);
+	}
+	end_clen = start_clen;
 	drag_forward = true;
 }
 
@@ -559,27 +581,27 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 	if (path && path->findPartIndexForIndex(end_coord.index) == part_index)
 	{
 		// Update end_clen
-		auto new_end_clen = end_coord.clen;
+		auto const new_end_clen = end_coord.clen;
 		const auto& part = path->parts()[part_index];
 		if (part.isClosed())
 		{
 			// Positive length to add to end_clen to get to new_end_clen with wrapping
-			auto path_length = qreal(part.length());
+			auto path_length = double(part.length());
 			auto half_path_length = path_length / 2;
-			auto forward_diff = fmod_pos(new_end_clen - end_clen, path_length);
+			auto forward_diff = fmod_pos(double(new_end_clen - end_clen), path_length);
 			auto delta_forward = forward_diff >= 0 && forward_diff < half_path_length;
 			
 			if (delta_forward
 			    && !drag_forward
-			    && fmod_pos(end_clen - start_clen, path_length) > half_path_length
-			    && fmod_pos(new_end_clen - start_clen, path_length) <= half_path_length )
+			    && fmod_pos(double(end_clen - start_clen), path_length) > half_path_length
+			    && fmod_pos(double(new_end_clen - start_clen), path_length) <= half_path_length )
 			{
 				drag_forward = true;
 			}
 			else if (!delta_forward
 			         && drag_forward
-			         && fmod_pos(end_clen - start_clen, path_length) <= half_path_length
-			         && fmod_pos(new_end_clen - start_clen, path_length) > half_path_length)
+			         && fmod_pos(double(end_clen - start_clen), path_length) <= half_path_length
+			         && fmod_pos(double(new_end_clen - start_clen), path_length) > half_path_length)
 			{
 				drag_forward = false;
 			}
@@ -593,7 +615,7 @@ std::unique_ptr<PathObject> FollowPathToolHelper::updateFollowing(const PathCoor
 		if (end_clen != start_clen)
 		{
 			// Create output path
-			result.reset(new PathObject { part });
+			result = std::make_unique<PathObject>(part);
 			if (drag_forward)
 			{
 				result->changePathBounds(0, start_clen, end_clen);
