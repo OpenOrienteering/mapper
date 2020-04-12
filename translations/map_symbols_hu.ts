@@ -215,7 +215,7 @@ A szintvonalakat úgy kell beállítani (nem törve), hogy ne érintse meg a Kis
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished">A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén az újbóli belépőkbe kell helyezni őket.
+        <translation>A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát.
 A mélyedéshez legalább egy lejtővonalat kell használni.</translation>
     </message>
     <message>
@@ -228,9 +228,9 @@ A mélyedéshez legalább egy lejtővonalat kell használni.</translation>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished">Minden ötödik szintvonalat vastagabb vonallal kell rajzolni. Ez segítséget nyújt a magasságkülönbség és a terepfelület általános alakjának gyors felmérésében.
-Az számláló szintvonalat rendes szintvonalként használhatjuk egy nagyon részletezett területen. A kis dombok és mélyedések általában nem ábrázolhatók a számláló szintvonallal.
-Az számláló szintvonal szintjét gondosan kell kiválasztani sík terepen. A számláló szintvonal ideális szintje a legfontosabb lejtőkön lévő központi szintvonal.</translation>
+        <translation>Minden ötödik szintvonalat vastagabb vonallal kell rajzolni. Ez segítséget nyújt a magasságkülönbség és a terepfelület általános alakjának gyors felmérésében.
+A számláló szintvonalat rendes szintvonalként használhatjuk egy nagyon részletezett területen. A kis dombok és mélyedések általában nem ábrázolhatók a számláló szintvonallal.
+A számláló szintvonal szintjét gondosan kell kiválasztani sík terepen. A számláló szintvonal ideális szintje a legfontosabb lejtőkön lévő központi szintvonal.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -1252,7 +1252,7 @@ Minimális szélesség: 0,3 mm (belül). Minimális terület: 0,5 mm² (belül).
     <message>
         <source>The black outline emphasises that the feature is uncrossable.</source>
         <comment>Description of symbol 307.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A fekete körvonal hangsúlyozza, hogy a terepelem nem átjárható.</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -1265,7 +1265,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átjárható mocsaras, általában határozott szélű.
+A szimbólumot más szimbólumokkal lehet kombinálni, hogy a futhatóságot és a nyitottságot megmutassák.
+A szimbólum északi irányba mutat.
+Minimális terület: 0,5 mm x 0,4 mm (lábnyom 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -1278,7 +1281,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <comment>Description of symbol 308.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átjárható mocsaras, általában határozott szélű.
+A szimbólumot más szimbólumokkal lehet kombinálni, hogy a futhatóságot és a nyitottságot megmutassák.
+A szimbólum északi irányba mutat.
+Minimális terület: 0,5 mm x 0,4 mm (lábnyom 7,5 m x 6 m).</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -1289,7 +1295,8 @@ Minimum area: 0.5 mm x 0.4 mm (footprint 7.5 m x 6 m).</source>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy mocsár vagy szivárgó vízfolyás, ami túlságosan keskeny (kevesebb, mint 5 m széles)  ahhoz, hogy a mocsár szimbólummal ábrázolni lehessen.
+Minimális hosszúság (elkülönült): két pont (0,7 mm - lábnyom 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
