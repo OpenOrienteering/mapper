@@ -15,12 +15,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült a %1 kép adatainak olvasása</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem támogatott raszter adatok: %1</translation>
     </message>
 </context>
 <context>
@@ -157,7 +157,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2124"/>
         <source>Failed to create name field: %1</source>
-        <translation>A név mező létrehozása nem sikerült:% 1</translation>
+        <translation>A név mező létrehozása nem sikerült: % 1</translation>
     </message>
 </context>
 <context>
@@ -2519,7 +2519,7 @@ Rescale the imported data?</source>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rosszul formázott ID &apos;% 1&apos; szimbólum a % 2 sor % 3 oszlopán.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -4869,7 +4869,7 @@ kiválasztva</translation>
         <source>Copied %n object(s)</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
-            <numerusform>Egy  objektum másolva</numerusform>
+            <numerusform>Egy objektum másolva</numerusform>
             <numerusform>%n objektum másolva</numerusform>
         </translation>
     </message>
@@ -5423,8 +5423,8 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <extracomment>The singular form will not be used!</extracomment>
         <translation>
-            <numerusform>Egy színkiszorítás kihagyva, ok: Import letiltott.</numerusform>
-            <numerusform>%n  szín(ek)kiszorítása kihagyva, ok: Import letiltott.</numerusform>
+            <numerusform>Egy színkiszorítás kihagyva, eredmény: Import letiltott.</numerusform>
+            <numerusform>%n szín(ek)kiszorítása kihagyva, eredmény: Import letiltott.</numerusform>
         </translation>
     </message>
     <message>
@@ -5893,7 +5893,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1874"/>
         <source>The map is not georeferenced. Local georeferencing only.</source>
-        <translation>A térkép nem georefererált. Csak helyi georeferencia.</translation>
+        <translation>A térkép nem georeferált. Csak helyi georeferencia.</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="1887"/>
@@ -6599,7 +6599,7 @@ separations</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1220"/>
         <source>Failed to save the image. Does the path exist? Do you have sufficient rights?</source>
-        <translation>A kép mentése sikertelen. Nem létezik az útvonal vagy nincs elegendő jogosultsága.</translation>
+        <translation>A kép mentése sikertelen. Létezik az útvonal? Van elegendő jogosultsága?</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1224"/>
@@ -8164,7 +8164,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Vektorizálja a vonalakat</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
