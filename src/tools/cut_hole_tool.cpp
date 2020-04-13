@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -47,10 +47,9 @@
 namespace OpenOrienteering {
 
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type)
- : MapEditorTool(editor, Other, tool_action), hole_type(hole_type)
-{
-	path_tool = nullptr;
-}
+: MapEditorTool(editor, Other, tool_action)
+, hole_type(hole_type)
+{}
 
 void CutHoleTool::init()
 {
@@ -89,8 +88,6 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord
 		return false;
 	
 	// Start a new hole
-	edit_widget = widget;
-	
 	switch (hole_type)
 	{
 	case CutHoleTool::Path:

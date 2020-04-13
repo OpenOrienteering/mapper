@@ -89,9 +89,9 @@ protected:
 	void updateStatusText();
 	void updateDirtyRect(const QRectF* path_rect = nullptr);
 	
+private:
+	DrawLineAndAreaTool* path_tool = nullptr;
 	CutHoleTool::HoleType hole_type;
-	DrawLineAndAreaTool* path_tool;
-	MapWidget* edit_widget;
 };
 
 
