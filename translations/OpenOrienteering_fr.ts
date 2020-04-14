@@ -1740,7 +1740,7 @@ Voulez-vous redimensionner le fichier importé ?</translation>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
         <source>Baseline view</source>
-        <translation type="unfinished">Afficher les lignes de bases</translation>
+        <translation>Vue en lignes de base</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
