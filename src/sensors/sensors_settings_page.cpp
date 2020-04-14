@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -87,7 +87,10 @@ void SensorsSettingsPage::apply()
 	
 	settings.setPositionSource(position_source_box->currentData().toString());
 	if (nmea_serialport_box)
-		settings.setNmeaSerialPort(nmea_serialport_box->currentText());
+	{
+		auto const port = nmea_serialport_box->currentText().trimmed();
+		settings.setNmeaSerialPort(port == tr("Default") ? QString{} : port);
+	}
 	
 	Settings::getInstance().applySettings();
 }
@@ -138,18 +141,24 @@ void SensorsSettingsPage::updateWidgets()
 	if (nmea_serialport_box)
 	{
 		nmea_serialport_box->clear();
+		nmea_serialport_box->addItem(tr("Default"));
+		nmea_serialport_box->setCurrentIndex(0);
+		
 		auto const current_port_name = Settings::getInstance().nmeaSerialPort();
-		auto add_serialport = [this, &current_port_name](const QString& display_name, bool is_default = false) {
+		auto add_serialport = [this, &current_port_name](const QString& display_name) {
 			nmea_serialport_box->addItem(display_name);
-			if (display_name == current_port_name || (is_default && display_name.isEmpty()))
+			if (display_name == current_port_name)
 				nmea_serialport_box->setCurrentIndex(nmea_serialport_box->count()-1);
 		};
 		
 		auto const ports = QSerialPortInfo::availablePorts();
-		add_serialport(tr("Default"), true);
 		for (auto const& port: ports)
 		{
 			add_serialport(port.portName());
+		}
+		if (nmea_serialport_box->currentIndex() == 0 && !current_port_name.isEmpty())
+		{
+			add_serialport(current_port_name);
 		}
 	}
 #endif  // QT_SERIALPORT_LIB
