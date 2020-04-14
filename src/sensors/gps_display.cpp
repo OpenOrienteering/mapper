@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014, 2016, 2018 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -110,6 +110,10 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 {
 #if defined(QT_POSITIONING_LIB)
 	auto const & settings = Settings::getInstance();
+	auto const nmea_serialport = settings.nmeaSerialPort();
+	if (!nmea_serialport.isEmpty())
+		qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
+	
 	auto source_name = settings.positionSource();
 	if (source_name.isEmpty())
 	{
@@ -118,12 +122,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 	}
 	else
 	{
-		auto const nmea_serialport = settings.nmeaSerialPort();
-		if (source_name == QLatin1String("serialnmea") && !nmea_serialport.isEmpty())
-		{
-			qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
-		}
-		source = QGeoPositionInfoSource::createSource(source_name, this);	
+		source = QGeoPositionInfoSource::createSource(source_name, this);
 	}
 	
 	if (!source)

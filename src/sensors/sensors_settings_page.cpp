@@ -59,10 +59,6 @@ SensorsSettingsPage::SensorsSettingsPage(QWidget* parent)
 	{
 		nmea_serialport_box = new QComboBox();
 		form_layout->addRow(tr("Serial port (NMEA):"), nmea_serialport_box);
-		
-		connect(position_source_box, &QComboBox::currentTextChanged, nmea_serialport_box, [this]() {
-			nmea_serialport_box->setEnabled(position_source_box->currentData() == QLatin1String("serialnmea"));
-		});
 	}
 #endif
 	
