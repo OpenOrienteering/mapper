@@ -209,14 +209,21 @@ void CutHoleTool::pathAborted()
 
 void CutHoleTool::pathFinished(PathObject* hole_path)
 {
-	if (map()->getNumSelectedObjects() == 0)
+	if (map()->getNumSelectedObjects() > 0)
 	{
-		pathAborted();
-		return;
+		auto* edited_object = *begin(map()->selectedObjects());
+		if (edited_object->getType() == Object::Path)
+		{
+			cutHole(static_cast<PathObject*>(edited_object), hole_path);
+			return;
+		}
 	}
+	pathAborted();
+}
 	
-	Object* edited_object = *map()->selectedObjectsBegin();
-	Object* undo_duplicate = edited_object->duplicate();
+void CutHoleTool::cutHole(PathObject* edited_path, PathObject* hole_path)
+{
+	auto* undo_duplicate = edited_path->duplicate();
 	
 	// Close the hole path
 	Q_ASSERT(hole_path->parts().size() == 1);
@@ -225,7 +232,6 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	BooleanTool::PathObjects in_objects, out_objects;
 	in_objects.push_back(hole_path);
 	
-	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
 	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, in_objects, out_objects);
 	
 	edited_path->clearCoordinates();
@@ -240,7 +246,7 @@ void CutHoleTool::pathFinished(PathObject* hole_path)
 	}
 	
 	auto undo_step = new ReplaceObjectsUndoStep(map());
-	undo_step->addObject(edited_object, undo_duplicate);
+	undo_step->addObject(edited_path, undo_duplicate);
 	map()->push(undo_step);
 	map()->setObjectsDirty();
 	map()->emitSelectionEdited();
