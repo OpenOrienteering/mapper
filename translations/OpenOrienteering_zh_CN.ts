@@ -1806,7 +1806,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="354"/>
         <source>Open translation</source>
-        <translation>开放式翻译</translation>
+        <translation>公开翻译</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
@@ -1953,7 +1953,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="241"/>
         <source>Declination:</source>
-        <translation>偏角：</translation>
+        <translation>磁偏角：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="192"/>
@@ -1989,7 +1989,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="400"/>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="713"/>
         <source>Online declination lookup</source>
-        <translation>在线的赤纬查找</translation>
+        <translation>在网上查找磁偏角</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="133"/>
@@ -2097,17 +2097,17 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="242"/>
         <source>Grivation:</source>
-        <translation>激励：</translation>
+        <translation>网格偏角：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="401"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>磁偏角为参考点 %1 %2 ° 现在将从 &lt;a href=&quot;%3&quot;&gt; %3&lt;/a&gt; 中检索。你想要继续吗？</translation>
+        <translation>现在将从&lt;a href=&quot;%3&quot;&gt;％3 &lt;/a&gt;中检索参考点％1°％2°的磁偏角。你想继续吗？</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="481"/>
         <source>Declination change</source>
-        <translation>赤纬变化</translation>
+        <translation>磁偏角变化</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="481"/>
@@ -2137,13 +2137,14 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="709"/>
         <source>Declination value not found.</source>
-        <translation>找不到的赤纬值。</translation>
+        <translation>找不到磁偏角值。</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="714"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>在线的赤纬查找失败: %1</translation>
+        <translation>在网上查找磁偏角失败: 
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="543"/>
@@ -2165,7 +2166,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/home_screen_controller.cpp" line="149"/>
         <source>Welcome to OpenOrienteering Mapper!</source>
-        <translation>欢迎来到 OpenOrienteering 映射器 ！</translation>
+        <translation>欢迎来到 OpenOrienteering Mapper（OOM）软件！</translation>
     </message>
 </context>
 <context>
@@ -2194,7 +2195,7 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="162"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="347"/>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="165"/>
@@ -2206,12 +2207,12 @@ Rescale the imported data?</source>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="168"/>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="349"/>
         <source>Help</source>
-        <translation>說明</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="171"/>
         <source>Exit</source>
-        <translation>結束</translation>
+        <translation>退出</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="192"/>
@@ -2236,7 +2237,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="244"/>
         <source>Show tip of the day</source>
-        <translation>显示引导界面</translation>
+        <translation>显示每日提示</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="248"/>
@@ -2246,7 +2247,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="250"/>
         <source>Next</source>
-        <translation>下一个</translation>
+        <translation>下一页</translation>
     </message>
 </context>
 <context>
@@ -2264,7 +2265,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
         <source>About Mapper</source>
-        <translation>关于映射器</translation>
+        <translation>关于OOM软件</translation>
     </message>
     <message>
         <source>File list</source>
@@ -3137,7 +3138,7 @@ Do you want to scale the symbols to the selected scale?</source>
         <location filename="../src/gui/main_window.cpp" line="844"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="737"/>
         <source>Opening %1</source>
-        <translation>打开 %1</translation>
+        <translation>正在打开 %1</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="769"/>
@@ -4376,7 +4377,7 @@ selected</source>
         <location filename="../src/gui/map/map_editor.cpp" line="2545"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
-        <translation>作为抠出形状来激活此工具选择一个封闭的路径对象。</translation>
+        <translation>选择一个闭合路径对象作为切口形状以激活此工具。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
@@ -4560,7 +4561,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2503"/>
         <source>Connect endpoints of paths which are close together.</source>
-        <translation>将终结点的路径，都是紧密连接。</translation>
+        <translation>将路径的端点连接在一起。</translation>
     </message>
     <message>
         <source>Cut the selected object(s) into smaller parts.</source>
@@ -5988,7 +5989,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="186"/>
         <source>Line closed</source>
-        <translation>封闭的线</translation>
+        <translation>闭合的线</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="206"/>
@@ -6090,7 +6091,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="262"/>
         <source>Show templates</source>
-        <translation>显示模板</translation>
+        <translation>显示底图</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="273"/>
@@ -6471,7 +6472,7 @@ separations</source>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="51"/>
         <source>Active templates:</source>
-        <translation>活动模板：</translation>
+        <translation>激活的底图：</translation>
     </message>
     <message>
         <location filename="../src/templates/template_dialog_reopen.cpp" line="60"/>
@@ -7681,7 +7682,7 @@ to jump over the lazy dog
         <location filename="../src/gdal/gdal_image_reader.cpp" line="124"/>
         <location filename="../src/templates/template_image.cpp" line="183"/>
         <source>Not enough free memory (image size: %1x%2 pixels)</source>
-        <translation>没有足够的可用内存 (图像大小: %1 %2 像素 x)</translation>
+        <translation>没有足够的可用内存 (图片规格: %1 %2 像素 x)</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_template.cpp" line="91"/>
@@ -7713,17 +7714,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="50"/>
         <source>Opening %1</source>
-        <translation>打开 %1</translation>
+        <translation>正在打开 %1</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="52"/>
         <source>Image size:</source>
-        <translation>图像大小：</translation>
+        <translation>图片规格：</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="55"/>
         <source>Specify how to position or scale the image:</source>
-        <translation>指定如何定位或缩放图像：</translation>
+        <translation>设置如何定位或缩放图片:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
@@ -7743,17 +7744,17 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="77"/>
         <source>Georeferenced (%1)</source>
-        <translation>地理  (%1)</translation>
+        <translation>地理配准 (%1)</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="80"/>
         <source>Meters per pixel:</source>
-        <translation>米 / 像素:</translation>
+        <translation>米/像素:</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="84"/>
         <source>Scanned with</source>
-        <translation>用扫描</translation>
+        <translation>扫描分辨率</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="87"/>
@@ -7773,7 +7774,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="116"/>
         <source>Open</source>
-        <translation>开放</translation>
+        <translation>打开</translation>
     </message>
 </context>
 <context>
@@ -7917,7 +7918,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="261"/>
         <source>Georeferenced</source>
-        <translation>地理参考</translation>
+        <translation>地理配准</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="464"/>
@@ -8105,7 +8106,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="207"/>
         <source>Opening track ...</source>
-        <translation>开场曲目......</translation>
+        <translation>正在打开轨迹......</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="208"/>
@@ -8125,12 +8126,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="213"/>
         <source>Georeferenced</source>
-        <translation>地理</translation>
+        <translation>地理配准</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="214"/>
         <source>Non-georeferenced</source>
-        <translation>非地理</translation>
+        <translation>非地理配准</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="214"/>
