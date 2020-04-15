@@ -92,7 +92,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="717"/>
         <source>The georeferencing cannot be saved in OCD version 8.</source>
-        <translation>Koordinatlar OCAD 8 versiyonunda  kaydedilemez.</translation>
+        <translation>Koordinatlar OCAD 8 versiyonunda kaydedilemez.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="767"/>
