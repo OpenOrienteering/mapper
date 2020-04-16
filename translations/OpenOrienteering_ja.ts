@@ -15,12 +15,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">画像データの読み取りに失敗しました：％1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">サポートされていないラスターデータ：％1</translation>
     </message>
 </context>
 <context>
@@ -2780,7 +2780,7 @@ Rescale the imported data?</source>
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">行％2、列％3に不正なシンボルID &apos;％1&apos;があります。</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -8889,7 +8889,7 @@ Failed to load template. Does the file exist and is it valid?</source>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ラインをベクトル化</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="444"/>
