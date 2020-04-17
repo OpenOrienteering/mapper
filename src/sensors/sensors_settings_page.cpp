@@ -111,7 +111,7 @@ void SensorsSettingsPage::updateWidgets()
 			display_name = tr("Default");
 		else if (display_name == QLatin1String("serialnmea"))
 			//: Position source
-			display_name = tr("Serial port (NMEA)");
+			display_name = tr("NMEA (Qt)");
 		else if (display_name == QLatin1String("Windows"))
 			//: Position source; product name, do not translate literally.
 			display_name = tr("Windows");
