@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -37,6 +37,7 @@
 #include <QPalette>
 #include <QPointer>
 #include <QSettings>
+#include <QStaticPlugin>  // IWYU pragma: keep
 #include <QString>
 #include <QStringList>
 #include <QTranslator>
@@ -63,6 +64,10 @@ using namespace OpenOrienteering;
 
 #if defined(Q_OS_WIN32) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
 Q_IMPORT_PLUGIN(PowershellPositionPlugin)
+#endif
+
+#if (defined(Q_OS_LINUX) || defined(Q_OS_MACOS)) && defined(MAPPER_USE_NMEA_POSITION_PLUGIN)
+Q_IMPORT_PLUGIN(NmeaPositionPlugin)
 #endif
 
 
