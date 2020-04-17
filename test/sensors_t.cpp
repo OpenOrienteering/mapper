@@ -18,13 +18,17 @@
  */
 
 #include <QtTest>
-#include <QGeoPositionInfoSource>
 #include <QObject>
-#include <QStandardPaths>
+#include <QStandardPaths> // IWYU pragma: keep
 
-#include "sensors/powershell_position_source.h"
-
+namespace OpenOrienteering {};
 using namespace OpenOrienteering;
+
+
+#ifdef MAPPER_USE_POWERSHELL_POSITION_PLUGIN
+#include <QGeoPositionInfoSource>  // IWYU pragma: keep
+#include "sensors/powershell_position_source.h"
+#endif
 
 
 class SensorsTest : public QObject
@@ -32,6 +36,8 @@ class SensorsTest : public QObject
 	Q_OBJECT
 	
 private slots:
+	
+#if defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
 #ifdef Q_OS_WIN
 	void powershellPositionSourceWindowsTest()
 	{
@@ -58,6 +64,8 @@ private slots:
 		QCOMPARE(source.error(), QGeoPositionInfoSource::UnknownSourceError);
 	}
 #endif
+#endif  // MAPPER_USE_POWERSHELL_POSITION_PLUGIN
+	
 };
 
 
