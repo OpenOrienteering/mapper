@@ -107,7 +107,7 @@ public:
 	
 	// Translation
 	
-	Q_DECLARE_TR_FUNCTIONS(GdalImageReader)
+	Q_DECLARE_TR_FUNCTIONS(OpenOrienteering::GdalImageReader)
 	
 	
 protected:

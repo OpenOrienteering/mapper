@@ -646,8 +646,8 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 	if (!importer)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"),
-		                     MainWindow::tr("Cannot open file:\n%1\n\n%2")
-		                     .arg(path, MainWindow::tr("Invalid file type.")));
+		                     ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(path, ::OpenOrienteering::MainWindow::tr("Invalid file type.")));
 		return false;
 	}
 	

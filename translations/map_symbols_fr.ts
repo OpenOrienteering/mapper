@@ -5429,7 +5429,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished">Une ligne passant par des points de même altitude. L&apos;équidistance habituelle entre deux courbes de niveau est 5 m (sur le terrain). L&apos;écart minimum entre deux courbes de niveau est 0,25 mm (sur la carte).</translation>
+        <translation>Une ligne passant par des points de même altitude. L&apos;équidistance habituelle entre deux courbes de niveau est 5 m (sur le terrain). La courbure minimale d&apos;une courbe de niveau est 0,25 mm entre les centres de la ligne de chaque côté.</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -5454,7 +5454,7 @@ Les lignes violettes sont légèrement prolongées dans le symbole d&apos;arriv�
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line, e.g. along the line of a re-entrant or in a depression. They are used only where it is necessary to clarify the direction of slope.</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished">Les tirets de pente peuvent être ajoutés sur le côté aval d&apos;une courbe de niveau, par exemple à l&apos;endroit d&apos;un rentrant ou d&apos;une dépression. Ils ne sont dessinés que si la compréhension de la carte nécessite de préciser le sens de la pente.</translation>
+        <translation>Les tirets de pente peuvent être ajoutés sur le côté aval d&apos;une courbe de niveau, par exemple à l&apos;endroit d&apos;un rentrant ou d&apos;une dépression. Ils ne sont dessinés que si la compréhension de la carte nécessite de préciser le sens de la pente.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -5755,7 +5755,7 @@ Longueur minimum (isolée) : 1 mm (15 m au sol).</translation>
     <message>
         <source>Indistinct marsh</source>
         <comment>Name of symbol 311</comment>
-        <translation type="unfinished">Marais peu visible</translation>
+        <translation>Marais peu visible</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>

@@ -2523,9 +2523,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISOM2017</name>
+    <message>
+        <source>Blue</source>
+        <comment>Color 8</comment>
+        <translation>Zils</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>Zaļš</translation>
+    </message>
 </context>
 <context>
     <name>ISOM2000</name>
+    <message>
+        <source>Blue</source>
+        <comment>Color 5</comment>
+        <translation>Zils</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 14</comment>
+        <translation>Zaļš</translation>
+    </message>
 </context>
 <context>
     <name>ISSprOM 2019</name>
@@ -4884,6 +4904,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
 </context>
 <context>
     <name>ISSOM</name>
+    <message>
+        <source>Blue</source>
+        <comment>Color 17</comment>
+        <translation>Zils</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 28</comment>
+        <translation>Zaļš</translation>
+    </message>
 </context>
 <context>
     <name>ISMTBOM</name>
@@ -6678,6 +6708,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
 </context>
 <context>
     <name>ISSkiOM</name>
+    <message>
+        <source>Blue</source>
+        <comment>Color 9</comment>
+        <translation>Zils</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <comment>Color 16</comment>
+        <translation>Zaļš</translation>
+    </message>
 </context>
 <context>
     <name>ISSkiOM 2019</name>
