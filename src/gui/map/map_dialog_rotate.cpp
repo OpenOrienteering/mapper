@@ -69,12 +69,12 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	center_other_radio = new QRadioButton(tr("Other point,"));
 	layout->addRow(center_other_radio);
 	
-	//: x coordinate
 	other_x_edit = Util::SpinBox::create<MapCoordF>();
+	//: x coordinate
 	layout->addRow(tr("X:"), other_x_edit);
 	
-	//: y coordinate
 	other_y_edit = Util::SpinBox::create<MapCoordF>();
+	//: y coordinate
 	layout->addRow(tr("Y:"), other_y_edit);
 	
 	

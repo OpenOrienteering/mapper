@@ -773,7 +773,7 @@ bool OgrFileImport::importImplementation()
 	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		addWarning(Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		addWarning(::OpenOrienteering::Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
 		return false;
 	}
 	
