@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_TEMPLATE_PLACEHOLDER_H
 #define OPENORIENTEERING_TEMPLATE_PLACEHOLDER_H
 
+#include <memory>
+
 #include <QtGlobal>
 #include <QByteArray>
 #include <QObject>
@@ -56,6 +58,9 @@ public:
 	TemplatePlaceholder* duplicate() const override;
 	
 	const char* getTemplateType() const override;
+	
+	
+	std::unique_ptr<Template> makeActualTemplate() const;
 	
 	
 	bool isRasterGraphics() const override;

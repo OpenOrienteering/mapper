@@ -947,9 +947,11 @@ std::unique_ptr<Template> Template::templateForPath(const QString& path, Map* ma
 		t = std::make_unique<GdalTemplate>(path, map);
 	else if (OgrTemplate::canRead(path))
 		t = std::make_unique<OgrTemplate>(path, map);
-	else if (endsWithAnyOf(path, GdalTemplate::supportedExtensions()))
+	else if (endsWithAnyOf(path, GdalTemplate::supportedExtensions())
+	         && !endsWithAnyOf(path, OgrTemplate::supportedExtensions()))
 		t = std::make_unique<GdalTemplate>(path, map);
-	else if (endsWithAnyOf(path, OgrTemplate::supportedExtensions()))
+	else if (endsWithAnyOf(path, OgrTemplate::supportedExtensions())
+	         && !endsWithAnyOf(path, GdalTemplate::supportedExtensions()))
 		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	
