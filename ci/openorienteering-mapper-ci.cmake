@@ -1,6 +1,6 @@
 # This file is part of OpenOrienteering.
 
-# Copyright 2016-2019 Kai Pastor
+# Copyright 2016-2020 Kai Pastor
 #
 # Redistribution and use is allowed according to the terms of the BSD license:
 #
@@ -34,7 +34,7 @@ set(Mapper_CI_LICENSING_PROVIDER "OFF" CACHE STRING "Mapper (CI): Provider for 3
 set(Mapper_CI_QT_VERSION "5.12" CACHE STRING "Mapper (CI): Qt version")
 option(Mapper_CI_ENABLE_COVERAGE "Mapper: Enable testing coverage analysis" OFF)
 option(Mapper_CI_ENABLE_GDAL "Mapper: Enable GDAL" ON)
-option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" OFF)
+option(Mapper_CI_ENABLE_POSITIONING "Mapper: Enable positioning" ON)
 option(Mapper_CI_MANUAL_PDF "Mapper (git): Provide the manual as PDF file (needs pdflatex)" OFF)
 set(Mapper_CI_GDAL_DATA_DIR "NOTFOUND" CACHE STRING "Mapper (CI): GDAL data directory")
 
@@ -80,6 +80,7 @@ superbuild_package(
   BUILD [[
     CMAKE_ARGS
       "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+      "-UCMAKE_DISABLE*"
       "-UCMAKE_STAGING_PREFIX"
       "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
       "-DBUILD_SHARED_LIBS=0"
@@ -102,7 +103,7 @@ superbuild_package(
         "-DCMAKE_CXX_COMPILER_FRONTEND_VARIANT=GNU"
       >
     >
-    $<$<NOT:$<OR:$<BOOL:@ANDROID@>,$<BOOL:@Mapper_CI_ENABLE_POSITIONING@>>>:
+    $<$<NOT:$<BOOL:@Mapper_CI_ENABLE_POSITIONING@>>:
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Positioning:BOOL=TRUE"
       "-UQt5Positioning_DIR"
       "-DCMAKE_DISABLE_FIND_PACKAGE_Qt5Sensors:BOOL=TRUE"
