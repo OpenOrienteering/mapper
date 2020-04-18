@@ -369,7 +369,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation>Úhel rastru:</translation>
+        <translation>Natočení rastru:</translation>
     </message>
     <message>
         <source>°</source>
