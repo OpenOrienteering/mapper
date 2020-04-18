@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -99,6 +99,23 @@ public:
 		RenderNormal       = 0         ///< Paint normally
 	};
 	Q_DECLARE_FLAGS(RenderableOptions, RenderableOption)
+	
+	
+	/**
+	 * Hints for tools that operator on border lines.
+	 */
+	struct BorderHints
+	{
+		struct SingleSide
+		{
+			bool active;
+			int join_style;
+			double main_shift;
+			double extra_shift;
+		};
+		SingleSide left;
+		SingleSide right;
+	};
 	
 	
 	explicit Symbol(Type type) noexcept;
@@ -383,6 +400,13 @@ public:
 	 * Effectively, this is the half line width.
 	 */
 	virtual qreal calculateLargestLineExtent() const;
+	
+	/**
+	 * Determines the border hints for this symbol.
+	 * 
+	 * The default implementation returns nullptr.
+	 */
+	virtual const BorderHints* borderHints() const;
 	
 	
 	// Getters / Setters

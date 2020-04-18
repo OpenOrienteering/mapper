@@ -32,7 +32,7 @@ steps:
 - bash: |
     set -x
     set -e
-    sudo xcode-select -s /Applications/Xcode_10.1.app/Contents/Developer
+    sudo xcode-select -s /Applications/Xcode_10.3.app/Contents/Developer
     xcode-select --print-path
     pip install lxml
   displayName: 'Prepare macOS build tools'

@@ -1,5 +1,5 @@
 #
-#    Copyright 2018-2019 Kai Pastor
+#    Copyright 2018-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -26,6 +26,44 @@ if(ANDROID)
 endif()
 
 set(CMAKE_AUTOMOC ON)
+
+
+# OpenOrienteeringNmeaPlugin
+#
+# For testing purposes, we build this plugin on all platforms,
+# but we register it in main.cpp on Linux only.
+
+set(NMEA_POSITION_DEFINITIONS
+  PRIVATE
+    QT_NO_CAST_FROM_ASCII
+    QT_NO_CAST_TO_ASCII
+    QT_USE_QSTRINGBUILDER
+    QT_STATICPLUGIN
+)
+set(NMEA_POSITION_SOURCES )
+set(NMEA_POSITION_LINK_LIBRARIES )
+if(TARGET Qt5::Positioning)
+	list(APPEND NMEA_POSITION_DEFINITIONS
+	  PUBLIC MAPPER_USE_NMEA_POSITION_PLUGIN
+	)
+	list(APPEND NMEA_POSITION_SOURCES
+	  nmea_position_plugin.cpp
+	  nmea_position_plugin.json
+	  #nmea_position_source.cpp
+	)
+	list(APPEND NMEA_POSITION_LINK_LIBRARIES
+	  PRIVATE Qt5::Positioning
+	)
+	if(TARGET Qt5::SerialPort)
+		list(APPEND NMEA_POSITION_LINK_LIBRARIES
+		  PRIVATE Qt5::SerialPort
+		)
+	endif()
+endif()
+
+add_library(nmea_position_source STATIC  ${NMEA_POSITION_SOURCES})
+target_compile_definitions(nmea_position_source  ${NMEA_POSITION_DEFINITIONS})
+target_link_libraries(nmea_position_source  ${NMEA_POSITION_LINK_LIBRARIES})
 
 
 # PowershellPositionPlugin
@@ -90,6 +128,7 @@ target_compile_definitions(mapper-sensors  ${MAPPER_SENSORS_DEFINITIONS})
 target_include_directories(mapper-sensors  PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(mapper-sensors
   PUBLIC
+    nmea_position_source
     powershell_position_source
     Qt5::Core
     Qt5::Gui
@@ -106,5 +145,6 @@ endforeach()
 
 mapper_translations_sources(
   ${MAPPER_SENSORS_SOURCES}
+  ${NMEA_POSITION_SOURCES}
   ${POWERSHELL_POSITION_SOURCES}
 )

@@ -114,31 +114,31 @@ void commonTestData()
 
 	QTest::newRow("Sibelius Monumentti - Finland, TM35FIN, ETRS89/ETRS-TM35FIN")
 	        << OcdGeorefFields { 10.7, 15000, 384268, 6673512, 6005, 1 }
-	        << GeorefCoreData { 15000, 10.7, 10.7, { 384268, 6673512 }, QStringLiteral("EPSG"), { QStringLiteral("3067") } }
+	        << GeorefCoreData { 15000, 8.89, 10.7, { 384268, 6673512 }, QStringLiteral("EPSG"), { QStringLiteral("3067") } }
 	        << 0U;
 	QTest::newRow("CERN - Switzerland, CH1903")
 	        << OcdGeorefFields { 2.72000000, 15000, 495133, 129609, 14001, 1 }
-	        << GeorefCoreData { 15000, 2.72, 2.72, { 495133, 129609 }, QStringLiteral("EPSG"), { QStringLiteral("21781") } }
+	        << GeorefCoreData { 15000, 1.72, 2.72, { 495133, 129609 }, QStringLiteral("EPSG"), { QStringLiteral("21781") } }
 	        << 0U;
 	QTest::newRow("Launch Pad 39A - USA, Florida, WGS 84/UTM zone 17")
 	        << OcdGeorefFields { -7.06000000, 15000, 538705, 3164567, 2017, 1 }
-	        << GeorefCoreData { 15000, -7.06, -7.06, { 538705, 3164567 }, QStringLiteral("UTM"), { QStringLiteral("17") } }
+	        << GeorefCoreData { 15000, -6.87, -7.06, { 538705, 3164567 }, QStringLiteral("UTM"), { QStringLiteral("17") } }
 	        << 0U;
 	QTest::newRow("Brandenburger Tor - Germany, DHDN/3-degree Gauss-Kruger zone 4")
 	        << OcdGeorefFields { 2.84, 15000, 4571442, 5807888, 8004, 1 }
-	        << GeorefCoreData { 15000, 2.84, 2.84, { 4571442, 5807888 }, QStringLiteral("Gauss-Krueger, datum: Potsdam"), { QStringLiteral("4") } }
+	        << GeorefCoreData { 15000, 3.67, 2.84, { 4571442, 5807888 }, QStringLiteral("Gauss-Krueger, datum: Potsdam"), { QStringLiteral("4") } }
 	        << 0U;
 	QTest::newRow("Brandenburger Tor - Germany, WGS 84/UTM zone 33N")
 	        << OcdGeorefFields { 5.22000000, 15000, 367205, 5807281, 2033, 1 }
-	        << GeorefCoreData { 15000, 5.22, 5.22, { 367205, 5807281 }, QStringLiteral("UTM"), { QStringLiteral("33") } }
+	        << GeorefCoreData { 15000, 3.67, 5.22, { 367205, 5807281 }, QStringLiteral("UTM"), { QStringLiteral("33") } }
 	        << 0U;
 	QTest::newRow("Nasca airport - Peru, WGS 84/UTM zone 18S")
 	        << OcdGeorefFields { -2.70000000, 15000, 504606, 8358028, -2018, 1 }
-	        << GeorefCoreData { 15000, -2.70, -2.70, { 504606, 8358028 }, QStringLiteral("UTM"), { QStringLiteral("18 S") } }
+	        << GeorefCoreData { 15000, -2.71, -2.70, { 504606, 8358028 }, QStringLiteral("UTM"), { QStringLiteral("18 S") } }
 	        << 0U;
 	QTest::newRow("Wellington airport - New Zealand, WGS 84/UTM zone 60S")
 	        << OcdGeorefFields { 21.14000000, 15000, 316493, 5423682, -2060, 1 }
-	        << GeorefCoreData { 15000, 21.14, 21.14, { 316493, 5423682 }, QStringLiteral("UTM"), { QStringLiteral("60 S") } }
+	        << GeorefCoreData { 15000, 22.59, 21.14, { 316493, 5423682 }, QStringLiteral("UTM"), { QStringLiteral("60 S") } }
 	        << 0U;
 }
 

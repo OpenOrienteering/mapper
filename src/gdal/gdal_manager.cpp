@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -59,6 +59,9 @@ public:
 	
 	// Export options
 	const QString ogr_one_layer_per_symbol_key{ QStringLiteral("per_symbol_layer") };
+	
+	// Import options
+	const QString gdal_import_clip_layers{ QStringLiteral("clip_layers") };
 	
 	
 	using ExtensionList = std::vector<QByteArray>;
@@ -158,6 +161,37 @@ public:
 		return settings.value(key, QVariant{ false }).toBool();
 	}
 	
+	void setImportOptionEnabled(GdalManager::ImportOption option, bool enabled)
+	{
+		QString key;
+		switch (option)
+		{
+		case GdalManager::ClipLayers:
+			key = gdal_import_clip_layers;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		settings.setValue(key, QVariant{ enabled });
+		dirty = true;
+	}
+
+	bool isImportOptionEnabled(GdalManager::ImportOption option) const
+	{
+		QString key;
+		auto default_value = QVariant { false };
+		switch (option)
+		{
+		case GdalManager::ClipLayers:
+			key = gdal_import_clip_layers;
+			default_value = true;
+			break;
+		}
+		QSettings settings;
+		settings.beginGroup(gdal_manager_group);
+		return settings.value(key, default_value).toBool();
+	}
+	
 	const ExtensionList& supportedRasterExtensions() const
 	{
 		if (dirty)
@@ -242,8 +276,6 @@ private:
 	void updateExtensions(QSettings& settings)
 	{
 		static auto const qimagereader_extensions = gdal::qImageReaderExtensions<ExtensionList>();
-		static auto const secondary_vector_drivers = gdal::secondaryVectorDrivers<QByteArray>();
-		ExtensionList secondary_vector_extensions;
 		
 		auto count = GDALGetDriverCount();
 		enabled_raster_import_extensions.clear();
@@ -272,32 +304,23 @@ private:
 
 			if (qstrcmp(cap_vector, "YES") == 0)
 			{
-				auto const driver_name = GDALGetDriverShortName(driver_data);
-				bool const is_secondary = secondary_vector_drivers.contains(driver_name);
-				auto &list = is_secondary ? secondary_vector_extensions : enabled_vector_import_extensions;
 				if (qstrcmp(cap_open, "YES") == 0)
-					copyExtensions(extensions, list);
+					copyExtensions(extensions, enabled_vector_import_extensions);
 				
 				if (qstrcmp(cap_create, "YES") == 0)
 					copyExtensions(extensions, enabled_vector_export_extensions);
 			}
 		}
 		
-		// Handle GDAL/OGR activation settings, before checking ambiguity
+		// Handle GDAL activation settings, before checking ambiguity
 		settings.beginGroup(gdal_manager_group);
 		if (!settings.value(gdal_gpx_key, false).toBool())
 		{
 			removeExtension(enabled_vector_import_extensions, "gpx");
-			removeExtension(secondary_vector_extensions, "gpx");
 		}
 		settings.endGroup();
 		
 		// This block is duplicated in mapper_gdal_info.cpp dumpGdalDrivers().
-		// Prefix ambiguous extensions for known vector drivers
-		prefixDuplicates(enabled_raster_import_extensions, secondary_vector_extensions, "vector.");
-		enabled_vector_import_extensions.insert(end(enabled_vector_import_extensions), begin(secondary_vector_extensions), end(secondary_vector_extensions));
-		// Prefix ambiguous extensions for remaining raster drivers
-		prefixDuplicates(enabled_vector_import_extensions, enabled_raster_import_extensions, "raster.");
 		prefixDuplicates(qimagereader_extensions, enabled_raster_import_extensions, "raster.");
 	}
 	
@@ -448,6 +471,16 @@ void GdalManager::setExportOptionEnabled(GdalManager::ExportOption option, bool 
 bool GdalManager::isExportOptionEnabled(GdalManager::ExportOption option) const
 {
 	return p->isExportOptionEnabled(option);
+}
+
+void GdalManager::setImportOptionEnabled(GdalManager::ImportOption option, bool enabled)
+{
+	return p->setImportOptionEnabled(option, enabled);
+}
+
+bool GdalManager::isImportOptionEnabled(GdalManager::ImportOption option) const
+{
+	return p->isImportOptionEnabled(option);
 }
 
 const std::vector<QByteArray>&GdalManager::supportedRasterExtensions() const

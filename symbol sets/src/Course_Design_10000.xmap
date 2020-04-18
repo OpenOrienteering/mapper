@@ -10354,7 +10354,7 @@ The orientation of the symbol indicates the direction in which the corner points
             </part>
         </parts>
         <templates count="1" first_front_template="1">
-            <template open="true" name="forest sample.omap" path="../../examples/forest sample.omap" relpath="../../examples/forest sample.omap">
+            <template type="TemplateMap" open="true" name="forest sample.omap" path="../../examples/forest sample.omap" relpath="../../examples/forest sample.omap">
                 <transformations adjustment_dirty="true" passpoints="0">
                     <transformation role="active" x="-131449" y="-52124" scale_x="1" scale_y="1" rotation="0"/>
                     <transformation role="other" x="0" y="0" scale_x="1" scale_y="1" rotation="0"/>

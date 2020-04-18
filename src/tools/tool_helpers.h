@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -197,8 +197,9 @@ public:
 		ObjectCorners = 1 << 0,
 		ObjectPaths = 1 << 1,
 		GridCorners = 1 << 2,
+		LineBorders = 1 << 3,
 		
-		AllTypes = 1 + 2 + 4
+		AllTypes = 1 + 2 + 4 + 8
 	};
 	
 	/**
@@ -284,6 +285,11 @@ struct SnappingToolHelperSnapInfo
 	 *  in path_coord if type == ObjectPaths  */
 	PathCoord path_coord;
 	
+	/**
+	 * If snapping to a border line, this is a reference to the border's temporary path.
+	 */
+	std::shared_ptr<PathObject> border_path;
+	
 };
 
 
@@ -296,22 +302,14 @@ class FollowPathToolHelper
 {
 public:
 	/**
-	 * Constructs a new helper.
+	 * Returns true iff following can be started from the given snapping information.
 	 */
-	FollowPathToolHelper();
-	
-	
-	/**
-	 * Starts following the given object from a coordinate.
-	 */
-	void startFollowingFromCoord(const PathObject* path, MapCoordVector::size_type coord_index);
+	bool canStartFollowing(const SnappingToolHelperSnapInfo& snap_info) const noexcept;
 	
 	/**
-	 * Starts following the given object from an arbitrary position indicated by the path coord.
-	 * 
-	 * The path coord does not need to be from the object's path coord vector.
+	 * Starts following from the given snapping information.
 	 */
-	void startFollowingFromPathCoord(const PathObject* path, const PathCoord& coord);
+	void startFollowing(const SnappingToolHelperSnapInfo& snap_info);
 	
 	/**
 	 * Updates the process and returns the followed part of the path.
@@ -326,7 +324,7 @@ public:
 	/**
 	 * Returns the object which is being followed.
 	 */
-	const PathObject* followed_object() const { return path; }
+	const PathObject* followedObject() const { return path; }
 	
 	/**
 	 * Returns the index of the path part which is being followed.
@@ -334,6 +332,7 @@ public:
 	std::size_t partIndex() const { return part_index; }
 	
 private:
+	std::shared_ptr<PathObject> border_path;
 	const PathObject* path = nullptr;
 	
 	PathCoord::length_type start_clen;

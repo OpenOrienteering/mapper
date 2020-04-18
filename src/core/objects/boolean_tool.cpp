@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014, 2015 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,10 +27,16 @@
 #include <memory>
 #include <stdexcept>
 #include <type_traits>
+#include <utility>
 
 #include <QtGlobal>
 #include <QDebug>
+#include <QFlags>
+#include <QHash>
+#include <QHashFunctions>
 #include <QScopedPointer>
+
+#include <clipper.hpp>
 
 #include "core/map.h"
 #include "core/map_coord.h"
@@ -72,6 +78,128 @@ uint qHash(const IntPoint& point, uint seed)
 
 namespace OpenOrienteering {
 
+namespace {
+
+using PathObjects = BooleanTool::PathObjects;
+
+using PathCoordInfo = std::pair<const PathPart*, const PathCoord*>;
+using PolyMap = QHash<ClipperLib::IntPoint, PathCoordInfo>;
+
+/**
+ * Converts a ClipperLib::PolyTree to PathObjects.
+ * 
+ * @see BooleanTool::outerPolyNodeToPathObjects()
+ */
+static void polyTreeToPathObjects(
+        const ClipperLib::PolyTree& tree,
+        PathObjects& out_objects,
+        const PathObject* proto,
+        const PolyMap& polymap );
+
+/**
+ * Converts a ClipperLib::PolyNode to PathObjects.
+ * 
+ * The given ClipperLib::PolyNode must represent an outer polygon, not a hole.
+ * 
+ * This method operates recursively on all outer children.
+ */
+static void outerPolyNodeToPathObjects(
+        const ClipperLib::PolyNode& node,
+        PathObjects& out_objects,
+        const PathObject* proto,
+        const PolyMap& polymap );
+
+/**
+ * Constructs ClipperLib::Paths from a PathObject.
+ */
+static void pathObjectToPolygons(
+        const PathObject* object,
+        ClipperLib::Paths& polygons,
+        PolyMap& polymap );
+
+/**
+ * Reconstructs a PathObject from a polygon given as ClipperLib::Path.
+ * 
+ * Curves are reconstructed with the help of the polymap, mapping locations
+ * to path coords of the original objects.
+ */
+static void polygonToPathPart(
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object );
+
+/**
+ * Tries to reconstruct a straight or curved segment with given start and
+ * end indices from the polygon.
+ * The first coordinate of the segment is assumed to be already added.
+ */
+static void rebuildSegment(
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
+        bool sequence_increasing,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object );
+
+/**
+ * Approximates a curved segment from the result polygon alone.
+ */
+static void rebuildSegmentFromPathOnly(
+        const ClipperLib::IntPoint& start_point,
+        const ClipperLib::IntPoint& second_point,
+        const ClipperLib::IntPoint& second_last_point,
+        const ClipperLib::IntPoint& end_point,
+        PathObject* object );
+
+/**
+ * Special case of rebuildSegment() for straight or very short lines.
+ */
+static void rebuildTwoIndexSegment(
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
+        bool sequence_increasing,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object );
+
+/**
+ * Reconstructs one polygon coordinate and adds it to the object.
+ * 
+ * Uses the polymap to check whether the coordinate should be a dash point.
+ */
+static void rebuildCoordinate(
+        ClipperLib::Path::size_type index,
+        const ClipperLib::Path& polygon,
+        const PolyMap& polymap,
+        PathObject* object,
+        bool start_new_part = false );
+
+/**
+ * Compares a PathObject segment to a ClipperLib::Path polygon segment.
+ * 
+ * Returns true if the segments match. In this case, the out_... parameters are set.
+ * 
+ * @param original      The original PathObject.
+ * @param coord_index   The index of the segment start at the original.
+ * @param polygon       The ClipperLib::Path polygon.
+ * @param start_index   The start of the segment at the polygon.
+ * @param end_index     The end of the segment at the polygon.
+ * @param out_coords_increasing If the segments match, will be set to
+ *                      either true if a matching segment's point at coord_index corresponds to the point at start_index,
+ *                      or false otherwise.
+ * @param out_is_curve  If the segments match, will be set to
+ *                      either true if the original segment is a curve,
+ *                      or false otherwise.
+ */
+static bool checkSegmentMatch(
+        const PathObject* original,
+        int coord_index,
+        const ClipperLib::Path& polygon,
+        ClipperLib::Path::size_type start_index,
+        ClipperLib::Path::size_type end_index,
+        bool& out_coords_increasing,
+        bool& out_is_curve );
+
 /**
  * Removes flags from the coordinate to be able to use it in the reconstruction.
  */
@@ -97,6 +225,8 @@ bool operator==(const ClipperLib::IntPoint& lhs, const MapCoord& rhs)
 	return rhs == lhs;
 }
 
+}  // namespace
+
 
 
 //### BooleanTool ###
@@ -111,7 +241,7 @@ BooleanTool::BooleanTool(Operation op, Map* map)
 bool BooleanTool::execute()
 {
 	// Check basic prerequisite
-	Object* const primary_object = map->getFirstSelectedObject();
+	const Object* const primary_object = map->getFirstSelectedObject();
 	if (primary_object->getType() != Object::Path)
 	{
 		qWarning("The first selected object must be a path.");
@@ -211,7 +341,7 @@ bool BooleanTool::executePerSymbol()
 	return have_changes;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
+bool BooleanTool::executeForObjects(const PathObject* subject, const PathObjects& in_objects, PathObjects& out_objects, CombinedUndoStep& undo_step)
 {
 	if (!executeForObjects(subject, in_objects, out_objects))
 	{
@@ -258,7 +388,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	return true;
 }
 
-bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects, PathObjects& out_objects)
+bool BooleanTool::executeForObjects(const PathObject* subject, const PathObjects& in_objects, PathObjects& out_objects) const
 {
 	// Convert the objects to Clipper polygons and
 	// create a hash map, mapping point positions to the PathCoords.
@@ -312,40 +442,7 @@ bool BooleanTool::executeForObjects(PathObject* subject, PathObjects& in_objects
 	return success;
 }
 
-void BooleanTool::polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
-{
-	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
-		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, proto, polymap);
-}
-
-void BooleanTool::outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
-{
-	auto object = std::unique_ptr<PathObject>{ proto->duplicate() };
-	object->clearCoordinates();
-	
-	try
-	{
-		polygonToPathPart(node.Contour, polymap, object.get());
-		for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
-		{
-			polygonToPathPart(node.Childs[i]->Contour, polymap, object.get());
-			
-			// Add outer polygons contained by (nested within) holes ...
-			for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
-				outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
-		}
-		
-		out_objects.push_back(object.release());
-	}
-	catch (std::range_error&)
-	{
-		// Do nothing
-	}
-}
-
-
-
-void BooleanTool::executeForLine(const PathObject* area, const PathObject* line, BooleanTool::PathObjects& out_objects)
+void BooleanTool::executeForLine(const PathObject* area, const PathObject* line, BooleanTool::PathObjects& out_objects) const
 {
 	if (op != BooleanTool::Intersection && op != BooleanTool::Difference)
 	{
@@ -428,7 +525,42 @@ void BooleanTool::executeForLine(const PathObject* area, const PathObject* line,
 	}
 }
 
-void BooleanTool::pathObjectToPolygons(
+
+
+namespace {
+
+void polyTreeToPathObjects(const ClipperLib::PolyTree& tree, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
+{
+	for (int i = 0, count = tree.ChildCount(); i < count; ++i)
+		outerPolyNodeToPathObjects(*tree.Childs[i], out_objects, proto, polymap);
+}
+
+void outerPolyNodeToPathObjects(const ClipperLib::PolyNode& node, PathObjects& out_objects, const PathObject* proto, const PolyMap& polymap)
+{
+	auto object = std::unique_ptr<PathObject>{ proto->duplicate() };
+	object->clearCoordinates();
+	
+	try
+	{
+		polygonToPathPart(node.Contour, polymap, object.get());
+		for (int i = 0, i_count = node.ChildCount(); i < i_count; ++i)
+		{
+			polygonToPathPart(node.Childs[i]->Contour, polymap, object.get());
+			
+			// Add outer polygons contained by (nested within) holes ...
+			for (int j = 0, j_count = node.Childs[i]->ChildCount(); j < j_count; ++j)
+				outerPolyNodeToPathObjects(*node.Childs[i]->Childs[j], out_objects, proto, polymap);
+		}
+		
+		out_objects.push_back(object.release());
+	}
+	catch (std::range_error&)
+	{
+		// Do nothing
+	}
+}
+
+void pathObjectToPolygons(
         const PathObject* object,
         ClipperLib::Paths& polygons,
         PolyMap& polymap)
@@ -475,7 +607,7 @@ void BooleanTool::pathObjectToPolygons(
 	}
 }
 
-void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
+void polygonToPathPart(const ClipperLib::Path& polygon, const PolyMap& polymap, PathObject* object)
 {
 	auto num_points = polygon.size();
 	if (num_points < 3)
@@ -538,7 +670,7 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 		if (cur_info.first && cur_info.first == new_info.first)
 		{
 			// Same original part
-			auto cur_coord_index = cur_info.second->index;
+			auto cur_coord_index = cur_info.second->index;  // NOLINT
 			const auto cur_coord = cur_info.first->path->getCoordinate(cur_coord_index);
 			
 			auto new_coord_index = new_info.second->index;
@@ -644,7 +776,7 @@ void BooleanTool::polygonToPathPart(const ClipperLib::Path& polygon, const PolyM
 	object->parts().back().connectEnds();
 }
 
-void BooleanTool::rebuildSegment(
+void rebuildSegment(
         ClipperLib::Path::size_type start_index,
         ClipperLib::Path::size_type end_index,
         bool sequence_increasing,
@@ -938,7 +1070,7 @@ void BooleanTool::rebuildSegment(
 	}
 }
 
-void BooleanTool::rebuildSegmentFromPathOnly(
+void rebuildSegmentFromPathOnly(
         const ClipperLib::IntPoint& start_point,
         const ClipperLib::IntPoint& second_point,
         const ClipperLib::IntPoint& second_last_point,
@@ -961,7 +1093,7 @@ void BooleanTool::rebuildSegmentFromPathOnly(
 	object->addCoordinate(end_point_c);
 }
 
-void BooleanTool::rebuildTwoIndexSegment(
+void rebuildTwoIndexSegment(
         ClipperLib::Path::size_type start_index,
         ClipperLib::Path::size_type end_index,
         bool sequence_increasing,
@@ -1030,7 +1162,7 @@ void BooleanTool::rebuildTwoIndexSegment(
 	}
 }
 
-void BooleanTool::rebuildCoordinate(
+void rebuildCoordinate(
         ClipperLib::Path::size_type index,
         const ClipperLib::Path& polygon,
         const PolyMap& polymap,
@@ -1049,7 +1181,7 @@ void BooleanTool::rebuildCoordinate(
 	object->addCoordinate(coord, start_new_part);
 }
 
-bool BooleanTool::checkSegmentMatch(
+bool checkSegmentMatch(
         const PathObject* original,
         int coord_index,
         const ClipperLib::Path& polygon,
@@ -1081,6 +1213,8 @@ bool BooleanTool::checkSegmentMatch(
 	
 	return found;
 }
+
+}  // namespace
 
 
 }  // namespace OpenOrienteering

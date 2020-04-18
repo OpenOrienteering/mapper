@@ -63,12 +63,12 @@ namespace {
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
 	 */
-	static unsigned int max_objects_for_handle_display = 10;
+	unsigned int max_objects_for_handle_display = 10;
 	
 	/**
 	 * The value which indicates that no point of the current object is hovered.
 	 */
-	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	
 }  // namespace OpenOrienteering
@@ -304,8 +304,8 @@ void CutTool::updateCuttingLine(const MapCoordF& cursor_pos)
 	PathCoord path_coord;
 	if (hover_state != EditTool::OverObjectNode)
 	{
-		float distance_sq;
-		edit_object->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+		auto result = edit_object->findClosestPointTo(cursor_pos);
+		path_coord = result.path_coord;
 	}
 	else
 	{
@@ -411,24 +411,24 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	const MapCoordVector& path_coords = split_path->getRawCoordinateVector();
 	MapCoord path_end = path_coords.at(path_coords.size() - 1);
 	
-	PathCoord end_path_coord;
-	float distance_sq;
-	edit_object->calcClosestPointOnPath(MapCoordF(path_end), distance_sq, end_path_coord);
+	auto last = edit_object->findClosestPointTo(MapCoordF(path_end));
 	
 	auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance());
-	if (double(distance_sq) > click_tolerance_map*click_tolerance_map)
+	if (last.distance_squared > click_tolerance_map*click_tolerance_map)
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("The split line must end on the area boundary!"));
 		abortCuttingArea();
 		return;
 	}
-	else if (drag_part_index != edit_object->findPartIndexForIndex(end_path_coord.index))
+	
+	if (drag_part_index != edit_object->findPartIndexForIndex(last.path_coord.index))
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("Start and end of the split line are at different parts of the object!"));
 		abortCuttingArea();
 		return;
 	}
-	else if (qAbs(drag_start_len - end_path_coord.clen) < 0.001f)
+	
+	if (qAbs(drag_start_len - last.path_coord.clen) < 0.001f)
 	{
 		QMessageBox::warning(window(), tr("Error"), tr("Start and end of the split line are at the same position!"));
 		abortCuttingArea();
@@ -437,7 +437,7 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	
 	Q_ASSERT(split_path->parts().size() == 1);
 	split_path->parts().front().setClosed(false);
-	split_path->setCoordinate(split_path->getCoordinateCount() - 1, MapCoord(end_path_coord.pos));
+	split_path->setCoordinate(split_path->getCoordinateCount() - 1, MapCoord(last.path_coord.pos));
 	
 	// Do the splitting
 	const double split_threshold = 0.01;
@@ -456,18 +456,18 @@ void CutTool::finishCuttingArea(PathObject* split_path)
 	{
 		out_paths[1] = out_paths[0]->duplicate();
 		
-		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, end_path_coord.clen);
+		out_paths[0]->changePathBounds(drag_part_index, drag_start_len, last.path_coord.clen);
 		ok &= out_paths[0]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 
-		out_paths[1]->changePathBounds(drag_part_index, end_path_coord.clen, drag_start_len);
+		out_paths[1]->changePathBounds(drag_part_index, last.path_coord.clen, drag_start_len);
 		ok &= out_paths[1]->connectIfClose(split_path, split_threshold);
 		Q_ASSERT(ok);
 	}
 	else
 	{
-		auto min_cut_pos = qMin(drag_start_len, end_path_coord.clen);
-		auto max_cut_pos = qMax(drag_start_len, end_path_coord.clen);
+		auto min_cut_pos = qMin(drag_start_len, last.path_coord.clen);
+		auto max_cut_pos = qMax(drag_start_len, last.path_coord.clen);
 		auto path_len = drag_part.path_coords.back().clen;
 		if (min_cut_pos <= 0 && max_cut_pos >= path_len)
 		{
@@ -710,7 +710,7 @@ ObjectPathCoord CutTool::findEditPoint(const MapCoordF& cursor_pos_map, int with
 	{
 		// Check if a line segment was clicked
 		const auto click_tolerance_map = 0.001 * cur_map_widget->getMapView()->pixelToLength(clickTolerance());
-		auto min_distance_sq = float(qMin(999999.9, click_tolerance_map * click_tolerance_map));
+		auto min_distance_sq = double(qMin(999999.9, click_tolerance_map * click_tolerance_map));
 		for (auto* object : map()->selectedObjects())
 		{
 			if (object->getType() != Object::Path

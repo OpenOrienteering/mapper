@@ -24,6 +24,7 @@
 
 #include <QtMath>
 #include <QtTest>
+#include <QByteArray>
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
@@ -31,6 +32,13 @@
 #include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj.h>
+#endif
+
+#ifdef MAPPER_USE_GDAL
+#  include <gdal.h>
+#  include <ogr_api.h>
+#  include <ogr_srs_api.h>
+// IWYU pragma: no_include <gdal_version.h>
 #endif
 
 #include "core/crs_template.h"
@@ -295,6 +303,11 @@ void GeoreferencingTest::testProjection_data()
 	QTest::newRow("EPSG 2056 Bern") << epsg2056_spec << 2600000.0 << 1200000.0 << degFromDMS(46, 57, 03.898) << degFromDMS(7, 26, 19.077);
 	// Issue GH-1325
 	QTest::newRow("EPSG 2056 GH-1325") << epsg2056_spec << 2643092.73 << 1150008.01 << 46.5 << 8.0;
+	
+	// EPSG:27700, OSGB 36
+	auto epsg27700_spec = QStringLiteral("+init=epsg:27700");
+	QTest::newRow("EPSG 27700 NY 06071 11978") << epsg27700_spec << 306071.0  << 511978.0 << 54.494403  << -3.4517026;
+	QTest::newRow("EPSG 27700 Lake District")  << epsg27700_spec << 306074.66 << 511974.0 << 54.4943673 << -3.4516448;
 }
 
 
@@ -333,6 +346,48 @@ void GeoreferencingTest::testProjection()
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
+	
+#ifdef MAPPER_USE_GDAL
+	// Cf. OgrFileExport::setupGeoreferencing
+	auto* map_srs = OSRNewSpatialReference(nullptr);
+	OSRSetProjCS(map_srs, "Projected map SRS");
+	OSRSetWellKnownGeogCS(map_srs, "WGS84");
+	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
+	QCOMPARE(OSRImportFromProj4(map_srs, spec), OGRERR_NONE);
+	auto* geo_srs = OSRNewSpatialReference(nullptr);
+	OSRSetWellKnownGeogCS(geo_srs, "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+	OSRSetAxisMappingStrategy(geo_srs, OAMS_TRADITIONAL_GIS_ORDER);
+#endif
+	
+	// geographic to projected
+	auto* transformation = OCTNewCoordinateTransformation(geo_srs, map_srs);
+	auto* pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, longitude, latitude);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetX(pt, 0) - easting) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(easting, 'f'));
+	if (std::fabs(OGR_G_GetY(pt, 0) - northing) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(northing, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	
+	// projected to geographic
+	transformation = OCTNewCoordinateTransformation(map_srs, geo_srs);
+	// Cf. OgrFileExport::addPointsToLayer
+	pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, easting, northing);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetY(pt, 0) - latitude) > max_angl_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(latitude, 'f'));
+	if (std::fabs(OGR_G_GetX(pt, 0) - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(longitude, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	
+	OSRDestroySpatialReference(geo_srs);
+	OSRDestroySpatialReference(map_srs);
+#endif  // MAPPPER_USE_GDAL
 }
 
 

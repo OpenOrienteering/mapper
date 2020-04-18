@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,24 +36,6 @@ T qImageReaderExtensions() {
 		"jpeg",
 		"jpg",
 		"png",
-	};
-}
-
-/**
- * Get a string of extensions to be used with GdalImageReader/GdalTemplate.
- * 
- * In case of extensions which are claimed by both vector (OGR) and raster
- * (GDAL) drivers, the raster driver will be regarded as secondary by default,
- * and get its ambiguous extensions prefixed with "raster.". However, by naming
- * a vector driver here, that driver will become secondary and get its ambiguous
- * extensions prefixed by "vector."
- */
-template <class T>
-T secondaryVectorDrivers() {
-	return {
-		"JP2OpenJPEG,"
-		"MBTiles,"
-		"PCIDSK,"
 	};
 }
 

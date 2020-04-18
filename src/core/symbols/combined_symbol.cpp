@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <limits>
 #include <memory>
 #include <numeric>
 
@@ -354,6 +355,42 @@ qreal CombinedSymbol::calculateLargestLineExtent() const
 	{
 		return subsymbol ? qMax(value, subsymbol->calculateLargestLineExtent()) : value;
 	});
+}
+
+
+const Symbol::BorderHints* CombinedSymbol::borderHints() const
+{
+	auto left_sum = std::numeric_limits<double>::max();
+	auto right_sum = std::numeric_limits<double>::min();
+	auto const useMax = [&](auto const& hints) {
+		if (hints.left.active)
+		{
+			auto const sum = hints.left.main_shift + hints.left.extra_shift;
+			if (!border_hints.left.active || sum < left_sum)
+			{
+				border_hints.left = hints.left;
+				left_sum = sum;
+			}
+		}
+		if (hints.right.active)
+		{
+			auto const sum = hints.right.main_shift + hints.right.extra_shift;
+			if (!border_hints.right.active || sum > right_sum)
+			{
+				border_hints.right = hints.right;
+				right_sum = sum;
+			}
+		}
+	};
+	border_hints = {};
+	for (auto const* part : parts)
+	{
+		if (!part)
+			continue;
+		if (auto const* hints = part->borderHints())
+			useMax(*hints);
+	}
+	return &border_hints;
 }
 
 
