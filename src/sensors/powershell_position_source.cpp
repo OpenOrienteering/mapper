@@ -37,7 +37,7 @@
 
 inline void initPowershellPositionResources()
 {
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
 	// This resource is to be linked under Windows only.
 	Q_INIT_RESOURCE(powershell_position_source);
 #endif
