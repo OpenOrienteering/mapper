@@ -18,7 +18,8 @@
  */
 
 #include <QtTest>
-#include <QFile>          // IWYU pragma: keep
+#include <QDir>           // IWYU pragma: keep
+#include <QFileInfo>      // IWYU pragma: keep
 #include <QObject>
 #include <QSignalSpy>     // IWYU pragma: keep
 #include <QStandardPaths> // IWYU pragma: keep
@@ -53,16 +54,27 @@ class SensorsTest : public QObject
 	Q_OBJECT
 	
 private slots:
+	void initTestCase()
+	{
+		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
+	}
 	
 #if defined(MAPPER_USE_NMEA_POSITION_PLUGIN)
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS)
-	void nmeaPositionSourceTest()
+	void nmeaPositionSourcePluginTest()
 	{
-		auto nmea_position_source = QString::fromLatin1("NMEA (OpenOrienteering)");
+		auto nmea_position_source = QStringLiteral("NMEA (OpenOrienteering)");
 		auto sources = QGeoPositionInfoSource::availableSources();
-		QVERIFY(sources.contains(nmea_position_source));  // JSON file properties
-		
+		QVERIFY(sources.contains(nmea_position_source));
+	}
+	
+	void nmeaPositionSourceSimulatedTest()
+	{
+		auto nmea_position_source = QStringLiteral("NMEA (OpenOrienteering)");
 		auto* source = QGeoPositionInfoSource::createSource(nmea_position_source, this);
+#if !defined(Q_OS_LINUX) && !defined(Q_OS_MACOS)
+		QVERIFY(!source || source->error() != QGeoPositionInfoSource::NoError);
+		QSKIP("\"unsupported platform");
+#endif
 		QVERIFY(source);
 		QVERIFY(qobject_cast<QNmeaPositionInfoSource*>(source));
 		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
@@ -70,9 +82,9 @@ private slots:
 		QSignalSpy source_spy(source, &QGeoPositionInfoSource::positionUpdated);
 		QVERIFY(source_spy.isValid());
 		
-		auto* test_file = MAPPER_TEST_SOURCE_DIR "/data/nmea.txt";
-		QVERIFY(QFile::exists(QString::fromUtf8(test_file)));
-		qputenv("QT_NMEA_SERIAL_PORT", test_file);
+		auto test_file = QFileInfo(QStringLiteral("testdata:sensors/nmea.txt"));
+		QVERIFY(test_file.exists());
+		qputenv("QT_NMEA_SERIAL_PORT", test_file.absoluteFilePath().toUtf8());
 		source->startUpdates();
 		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
 		QVERIFY(source_spy.wait());
@@ -94,17 +106,6 @@ private slots:
 		
 		delete source;
 	}
-
-#else
-	void nmeaPositionSourceUnsupportedTest()
-	{
-		auto sources = QGeoPositionInfoSource::availableSources();
-		QVERIFY(sources.contains(QStringLiteral("NMEA (OpenOrienteering)")));  // JSON file properties
-		
-		auto* source = QGeoPositionInfoSource::createSource(QStringLiteral("NMEA (OpenOrienteering)"), this);
-		QVERIFY(!source || source->error() == QGeoPositionInfoSource::UnknownSourceError);
-	}
-#endif
 #endif  // MAPPER_USE_NMEA_POSITION_PLUGIN
 	
 #if defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
