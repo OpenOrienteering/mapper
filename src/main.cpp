@@ -62,7 +62,7 @@
 using namespace OpenOrienteering;
 
 
-#if defined(Q_OS_WIN32) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
+#if defined(Q_OS_WIN) && defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
 Q_IMPORT_PLUGIN(PowershellPositionPlugin)
 #endif
 
