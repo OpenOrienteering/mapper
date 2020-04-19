@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,7 +21,6 @@
 
 #include <algorithm>
 #include <iterator>
-#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -101,35 +100,59 @@ public:
 	
 };
 
+
+/**
+ * Returns the main Powershell script.
+ */
+QByteArray startScript()
+{
+	QByteArray script;
+	initPowershellPositionResources();
+	QFile script_file(QStringLiteral(":/sensors/powershell_position_source.ps1"));
+	if (script_file.open(QIODevice::ReadOnly))
+		script = script_file.readAll();
+	if (script_file.error() != QFileDevice::NoError)
+		script.clear();
+	return script;
+}
+
+/**
+ * Configures the process for accessing the Windows Location API via powershell.
+ */
+QGeoPositionInfoSource::Error defaultSetup(QProcess& process, QByteArray& start_script, QByteArray& stop_script)
+{
+	start_script = startScript();
+	if (start_script.isEmpty())
+		return QGeoPositionInfoSource::UnknownSourceError;
+	
+	stop_script = QByteArrayLiteral("Exit 0 \r\n");
+	
+	auto const powershell_path = QStandardPaths::findExecutable(QStringLiteral("powershell.exe"));
+	if (powershell_path.isEmpty())
+		return QGeoPositionInfoSource::UnknownSourceError;
+	
+	process.setProgram(powershell_path);
+	process.setArguments(QStringLiteral("-NoLogo -NoProfile -NonInteractive -Command -").split(QChar::Space));
+	return QGeoPositionInfoSource::NoError;
+}
+
+
 }  // namespace
 
 
 PowershellPositionSource::PowershellPositionSource(QObject* parent)
-: PowershellPositionSource(defaultScript(), parent)
-{
-	// nothing else
-}
+: PowershellPositionSource(defaultSetup, parent)
+{}
 
-PowershellPositionSource::PowershellPositionSource(QByteArray&& script, QObject* parent)
+PowershellPositionSource::PowershellPositionSource(SetupFunction& setup, QObject* parent)
 : QGeoPositionInfoSource(parent)
-, powershell_script(std::move(script))
 {
-	if (powershell_script.isEmpty())
-	{
-		setError(QGeoPositionInfoSource::UnknownSourceError);
+	setError(setup(powershell, start_script, stop_script));
+	if (position_error != QGeoPositionInfoSource::NoError)
 		return;
-	}
 	
-	auto const powershell_path = QStandardPaths::findExecutable(QStringLiteral("powershell.exe"));
-	if (powershell_path.isEmpty())
-	{
-		setError(QGeoPositionInfoSource::UnknownSourceError);
-		return;
-	}
-	
-	powershell.setProgram(powershell_path);
-	powershell.setArguments(QStringLiteral("-NoLogo -NoProfile -NonInteractive -Command -").split(QChar::Space));
 	powershell.setReadChannel(QProcess::StandardOutput);
+	
 	connect(&powershell, &QProcess::stateChanged, this, &PowershellPositionSource::powershellStateChanged);
 	connect(&powershell, &QProcess::readyReadStandardOutput, this, &PowershellPositionSource::readStandardOutput);
 	connect(&powershell, &QProcess::readyReadStandardError, this, &PowershellPositionSource::readStandardError);
@@ -147,25 +170,6 @@ PowershellPositionSource::~PowershellPositionSource()
 	if (powershell.state() != QProcess::NotRunning)
 		powershell.kill();
 	powershell.waitForFinished(100);
-}
-
-
-// static
-QByteArray PowershellPositionSource::defaultScript()
-{
-	QByteArray script;
-	initPowershellPositionResources();
-	QFile script_file(QStringLiteral(":/sensors/powershell_position_source.ps1"));
-	if (script_file.open(QIODevice::ReadOnly))
-		script = script_file.readAll();
-	if (script_file.error() != QFileDevice::NoError)
-		script.clear();
-	return script;
-}
-
-const QByteArray& PowershellPositionSource::script() const
-{
-	return powershell_script;
 }
 
 
@@ -187,7 +191,7 @@ void PowershellPositionSource::setError(QGeoPositionInfoSource::Error value)
 	case AccessError:
 		emit this->QGeoPositionInfoSource::error(value);
 		// Exit gracefully
-		powershell.write("Exit 0 \r\n");
+		powershell.write(stop_script);
 		break;
 	default:
 		emit this->QGeoPositionInfoSource::error(value);
@@ -238,7 +242,7 @@ void PowershellPositionSource::stopUpdates()
 	updates_ongoing = false;
 	periodic_update_timer.stop();
 	// Exit gracefully
-	powershell.write("Exit 0 \r\n");
+	powershell.write(stop_script);
 }
 
 // slot
@@ -285,7 +289,7 @@ void PowershellPositionSource::powershellStateChanged(QProcess::ProcessState new
 		// nothing
 		break;
 	case QProcess::Running:
-		powershell.write(powershell_script);
+		powershell.write(start_script);
 		break;
 	case QProcess::NotRunning:
 		updates_ongoing = false;
@@ -310,7 +314,6 @@ void PowershellPositionSource::readStandardOutput()
 	while (powershell.canReadLine())
 	{
 		auto const line = powershell.readLine(100).trimmed();
-		qDebug("Received: '%s'", line.data());
 		if (line.startsWith("Position;"))
 			processPosition(line);
 		else if (line.startsWith("Status;"))

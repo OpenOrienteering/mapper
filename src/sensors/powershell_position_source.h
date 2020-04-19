@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -42,6 +42,13 @@ class PowershellPositionSource : public QGeoPositionInfoSource
 	
 public:
 	/**
+	 * A setup function configures the process which this source reads from,
+	 * the start script and the stop script.
+	 */
+	using SetupFunction = QGeoPositionInfoSource::Error (QProcess&, QByteArray&, QByteArray&);
+	
+	
+	/**
 	 * Constructs a source with the default Powershell script.
 	 */
 	PowershellPositionSource(QObject* parent = nullptr);
@@ -49,7 +56,7 @@ public:
 	/**
 	 * Constructs a source with the given Powershell script.
 	 */
-	PowershellPositionSource(QByteArray&& script, QObject* parent = nullptr);
+	PowershellPositionSource(SetupFunction& setup, QObject* parent = nullptr);
 	
 	PowershellPositionSource(const PowershellPositionSource&) = delete;
 	PowershellPositionSource(PowershellPositionSource&&) = delete;
@@ -58,18 +65,7 @@ public:
 	
 	~PowershellPositionSource() override;
 	
-
-	/**
-	 * Returns the default Powershell script.
-	 */
-	static QByteArray defaultScript();
 	
-	/**
-	 * Returns the instance's Powershell script.
-	 */
-	const QByteArray& script() const;
-	
-
 	QGeoPositionInfoSource::Error error() const override;
 	
 	using QGeoPositionInfoSource::error;  // the signal
@@ -119,7 +115,8 @@ private:
 	void singleUpdateTimeout();
 	
 	QProcess powershell;
-	QByteArray powershell_script;
+	QByteArray start_script;
+	QByteArray stop_script;
 	QGeoPositionInfo last_position;
 	QTimer periodic_update_timer;
 	QTimer single_update_timer;

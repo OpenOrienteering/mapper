@@ -5,5 +5,5 @@
     "Satellite": false,
     "Monitor":   false,
     "Priority":  1000,
-    "Testable":  false
+    "Testable":  true
 }
