@@ -1275,6 +1275,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
+	toolbar_view->addAction(template_window_act);
 	
 	// MapParts toolbar
 	toolbar_mapparts = window->addToolBar(tr("Map parts"));
