@@ -100,6 +100,7 @@ for I in \
   template_list_widget.cpp \
   template_map.cpp \
   template_placeholder.cpp \
+  template_positioning_dialog.cpp \
   template_table_model.cpp \
   template_t.cpp \
   template_tool \

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -25,7 +25,6 @@
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
-#include <QFlags>
 #include <QFormLayout>
 #include <QRadioButton>
 #include <QSpacerItem>
@@ -35,13 +34,16 @@
 
 namespace OpenOrienteering {
 
+// not inline
+TemplatePositioningDialog::~TemplatePositioningDialog() = default;
+
 TemplatePositioningDialog::TemplatePositioningDialog(QWidget* parent)
 : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
 {
 	setWindowModality(Qt::WindowModal);
 	setWindowTitle(tr("Track scaling and positioning"));
 	
-	QFormLayout* layout = new QFormLayout();
+	auto* layout = new QFormLayout();
 	
 	coord_system_box = new QComboBox();
 	layout->addRow(tr("Coordinate system"), coord_system_box);

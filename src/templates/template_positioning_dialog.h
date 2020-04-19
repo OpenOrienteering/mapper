@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012 Thomas Schöps
- *    Copyright 2013, 2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,9 +22,9 @@
 #ifndef OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 #define OPENORIENTEERING_TEMPLATE_POSITIIONING_DIALOG_H
 
-#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
 class QComboBox;
 class QDoubleSpinBox;
@@ -41,7 +41,12 @@ class TemplatePositioningDialog : public QDialog
 {
 Q_OBJECT
 public:
-	TemplatePositioningDialog(QWidget* parent = nullptr);
+	~TemplatePositioningDialog() override;
+	explicit TemplatePositioningDialog(QWidget* parent = nullptr);
+	TemplatePositioningDialog(const TemplatePositioningDialog&) = delete;
+	TemplatePositioningDialog(TemplatePositioningDialog&&) = delete;
+	TemplatePositioningDialog& operator=(const TemplatePositioningDialog&) = delete;
+	TemplatePositioningDialog& operator=(TemplatePositioningDialog&&) = delete;
 	
 	bool useRealCoords() const;
 	double getUnitScale() const;
@@ -52,8 +57,6 @@ private:
 	QDoubleSpinBox* unit_scale_edit;
 	QRadioButton* original_pos_radio;
 	QRadioButton* view_center_radio;
-	
-	Q_DISABLE_COPY(TemplatePositioningDialog)
 };
 
 
