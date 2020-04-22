@@ -1579,7 +1579,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры импорта</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
@@ -1589,7 +1589,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать GDAL для GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1634,7 +1634,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -1859,7 +1859,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="490"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный вспомогательный коэффициент масштабирования: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
@@ -2022,7 +2022,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать коэффициенты масштабирования</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
@@ -2033,13 +2033,13 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Комбинированный коэффициент масштабирования:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вспомогательный коэффициент масштабирования:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2085,7 +2085,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменение коэффициента масштабирования</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
@@ -2106,7 +2106,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -2511,7 +2511,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Несоответствие геопривязки:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
@@ -5478,7 +5478,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
+        <translation>Кодировка &apos;%1&apos; не доступна. Проверьте настройки.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -5521,58 +5521,58 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Для площадного символа &quot;%1&quot; пропущен заполняющий узор.</translation>
+        <translation>Для площадного символа &quot;%1&quot; пропущен заполняющий узор.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">Для площадного символа &quot;%1&quot; выявлено &quot;смещение рядов&quot; точечного рисунка. Это может быть как верным, так и нет.</translation>
+        <translation>Для площадного символа &quot;%1&quot; выявлено &quot;смещение рядов&quot; точечного рисунка. Это может быть как верным, так и нет.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Для линейного символа &quot;%1&quot; невозможно отразить комбинацию окончания / соединения.</translation>
+        <translation>Для линейного символа &quot;%1&quot; невозможно отразить комбинацию окончания / соединения.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">Для линейного символа &quot;%1&quot; не воспроизведена группировка штрихов.</translation>
+        <translation>Для линейного символа &quot;%1&quot; не воспроизведена группировка штрихов.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Для линейного символа &quot;%1&quot; количество штрихов в группе было уменьшено в 2 раза.</translation>
+        <translation>Для линейного символа &quot;%1&quot; количество штрихов в группе было уменьшено в 2 раза.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Для линейного символа &quot;%1&quot; невозможно верно экспортировать границы.</translation>
+        <translation>Для линейного символа &quot;%1&quot; невозможно верно экспортировать границы.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">В текстовом символе %1: установлен пользовательский межсимвольный интервал, эта реализация еще не соответствует поведению OCAD</translation>
+        <translation>В текстовом символе %1: установлен пользовательский межсимвольный интервал, эта реализация еще не соответствует поведению OCAD</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">В текстовом символе %1: проигнорировано подчёркивание</translation>
+        <translation>В текстовом символе %1: проигнорировано подчёркивание</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">В текстовом символе %1: проигнорирован кернинг</translation>
+        <translation>В текстовом символе %1: проигнорирован кернинг</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">В объединённом символе %1: Неподдерживаемый подсимвол в индексе %2.</translation>
+        <translation>В объединённом символе %1: неподдерживаемый подсимвол в индексе %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Невозможно экспортировать смещение заполняющего узора для площадного объекта</translation>
+        <translation>Невозможно экспортировать смещение заполняющего узора для площадного объекта</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -7077,62 +7077,62 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить коэффициент масштабирования</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Параметры масштабирования</translation>
+        <translation>Параметры масштабирования</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Центр масштабирования:</translation>
+        <translation>Центр масштабирования:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Начало системы координат карты</translation>
+        <translation>Начало системы координат карты</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Географическая опорная точка</translation>
+        <translation>Географическая опорная точка</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Другая точка,</translation>
+        <translation>Другая точка,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">Опции</translation>
+        <translation>Опции</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Отрегулировать опорную точку геопривязки</translation>
+        <translation>Отрегулировать опорную точку геопривязки</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Масштабировать подложки без геопривязки</translation>
+        <translation>Масштабировать подложки без геопривязки</translation>
     </message>
 </context>
 <context>
@@ -7977,7 +7977,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_image.cpp" line="259"/>
         <location filename="../src/templates/template_image.cpp" line="381"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите систему координат изображения с геопривязкой.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="264"/>
@@ -8292,7 +8292,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестный формат файла</translation>
     </message>
 </context>
 <context>
@@ -8397,12 +8397,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Маршрут</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
