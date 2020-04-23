@@ -276,7 +276,7 @@
         <source>%n bytes</source>
         <translation>
             <numerusform>%n byte</numerusform>
-            <numerusform>%n bytes</numerusform>
+            <numerusform>%n byte</numerusform>
         </translation>
     </message>
     <message>
