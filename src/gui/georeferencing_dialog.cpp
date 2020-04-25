@@ -72,9 +72,9 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "gui/main_window.h"
-#include "gui/map/map_dialog_stretch.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/rotate_map_dialog.h"
+#include "gui/map/stretch_map_dialog.h"
 #include "gui/widgets/crs_selector.h"
 #include "gui/util_gui.h"
 #include "util/backports.h"  // IWYU pragma: keep

@@ -19,7 +19,7 @@
  */
 
 
-#include "map_dialog_stretch.h"
+#include "stretch_map_dialog.h"
 
 #include <QDoubleSpinBox>
 #include <QCheckBox>
