@@ -553,7 +553,7 @@ void GeoreferencingDialog::accept()
 		}
 		else if (result == QMessageBox::Yes)
 		{
-			StretchMapDialog dialog(this, map, 1.0/scale_factor_change);
+			StretchMapDialog dialog(*map, 1.0/scale_factor_change, this);
 			dialog.setWindowModality(Qt::WindowModal);
 			int result = dialog.exec();
 			if (result == QDialog::Rejected)

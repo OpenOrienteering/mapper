@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_STRETCH_MAP_DIALOG_H
 #define OPENORIENTEERING_STRETCH_MAP_DIALOG_H
 
+#include <Qt>
 #include <QDialog>
 #include <QObject>
 #include <QString>
@@ -45,14 +46,13 @@ class StretchMapDialog : public QDialog
 Q_OBJECT
 public:
 	/** Creates a new StretchMapDialog. */
-	StretchMapDialog(QWidget* parent, Map* map, double stretch_factor);
+	StretchMapDialog(Map& map, double stretch_factor, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 
 private slots:
 	void updateWidgets();
 	void okClicked();
 	
 private:
-	const double stretch_factor;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;
@@ -63,7 +63,8 @@ private:
 	QCheckBox* adjust_templates_check;
 	QPushButton* ok_button;
 	
-	Map* map;
+	Map& map;
+	const double stretch_factor;
 };
 
 
