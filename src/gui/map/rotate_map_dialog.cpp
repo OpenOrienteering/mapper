@@ -36,7 +36,6 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_coord.h"
-#include "templates/template.h"
 #include "gui/util_gui.h"
 
 
@@ -98,15 +97,7 @@ RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlag
 	layout->addRow(adjust_declination_check);
 	
 	adjust_templates_check = new QCheckBox(tr("Rotate non-georeferenced templates"));
-	bool have_non_georeferenced_template = false;
-	for (int i = 0; i < map.getNumTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map.getTemplate(i)->isTemplateGeoreferenced();
-	for (int i = 0; i < map.getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map.getClosedTemplate(i)->isTemplateGeoreferenced();
-	if (have_non_georeferenced_template)
-		adjust_templates_check->setChecked(true);
-	else
-		adjust_templates_check->setEnabled(false);
+	adjust_templates_check->setChecked(true);
 	layout->addRow(adjust_templates_check);
 	
 	
