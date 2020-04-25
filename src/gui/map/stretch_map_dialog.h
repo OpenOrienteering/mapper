@@ -22,7 +22,10 @@
 #ifndef OPENORIENTEERING_STRETCH_MAP_DIALOG_H
 #define OPENORIENTEERING_STRETCH_MAP_DIALOG_H
 
+#include <functional>
+
 #include <Qt>
+#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
 #include <QString>
@@ -45,11 +48,16 @@ class StretchMapDialog : public QDialog
 {
 Q_OBJECT
 public:
+	using StretchOp = std::function<void (Map&)>;
+	
 	/** Creates a new StretchMapDialog. */
 	StretchMapDialog(const Map& map, double stretch_factor, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
 	/** Performs the configured scaling on the given map. */
 	void stretch(Map& map) const;
+	
+	/** Returns a scaling functor. */
+	Q_REQUIRED_RESULT StretchOp makeStretch() const;
 	
 private slots:
 	void updateWidgets();

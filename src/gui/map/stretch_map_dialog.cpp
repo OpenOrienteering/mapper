@@ -131,13 +131,23 @@ void StretchMapDialog::updateWidgets()
 
 void StretchMapDialog::stretch(Map& map) const
 {
+	makeStretch()(map);
+}
+
+StretchMapDialog::StretchOp StretchMapDialog::makeStretch() const
+{
 	auto center = MapCoord(0, 0);
-	if (center_georef_radio->isChecked())
-		center = map.getGeoreferencing().getMapRefPoint();
-	else if (center_other_radio->isChecked())
-		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
+	if (center_other_radio->isChecked())
+		center = MapCoord(other_x_edit->value(), -other_y_edit->value());
 	
-	map.changeScale(map.getScaleDenominator(), stretch_factor, center, false, true, adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
+	auto adjust_georeferencing = adjust_georeferencing_check->isChecked();
+	auto adjust_templates = adjust_templates_check->isChecked();
+	auto center_georef = center_georef_radio->isChecked();
+	auto factor = stretch_factor;
+	return [factor, center, center_georef, adjust_georeferencing, adjust_templates](Map& map) {
+		auto actual_center = center_georef ? map.getGeoreferencing().getMapRefPoint() : center;
+		map.changeScale(map.getScaleDenominator(), factor, actual_center, false, true, adjust_georeferencing, adjust_templates);
+	};
 }
 
 
