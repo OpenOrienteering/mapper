@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +23,12 @@
 
 #include <Qt>
 #include <QtMath>
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QDialogButtonBox>
 #include <QDoubleSpinBox>
-#include <QFlags>
 #include <QFormLayout>
-#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QRadioButton>
 #include <QSpacerItem>
@@ -45,7 +46,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 {
 	setWindowTitle(tr("Rotate map"));
 	
-	QFormLayout* layout = new QFormLayout();
+	auto* layout = new QFormLayout();
 	
 	layout->addRow(Util::Headline::create(tr("Rotation parameters")));
 	
