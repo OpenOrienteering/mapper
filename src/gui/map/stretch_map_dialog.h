@@ -24,12 +24,12 @@
 
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
-class QSpinBox;
 class QCheckBox;
+class QDoubleSpinBox;
 class QPushButton;
 class QRadioButton;
-class QDoubleSpinBox;
 class QWidget;
 
 namespace OpenOrienteering {

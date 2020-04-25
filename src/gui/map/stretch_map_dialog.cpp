@@ -21,19 +21,22 @@
 
 #include "stretch_map_dialog.h"
 
-#include <QDoubleSpinBox>
+#include <Qt>
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QRadioButton>
-#include <QSpinBox>
+#include <QSpacerItem>
 #include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "templates/template.h"
+#include "core/map_coord.h"
 #include "gui/util_gui.h"
+#include "templates/template.h"
 
 
 namespace OpenOrienteering {
