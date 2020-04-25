@@ -558,7 +558,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation>% 1 (% 2 °,% 3 lpi)</translation>
+        <translation>%1 (%2 °, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -984,7 +984,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tools/draw_path_tool.cpp" line="1170"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1197"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation>&lt;b&gt;% 1 +% 2 &lt;/b&gt;: Segmento azimute e comprimento. </translation>
+        <translation>&lt;b&gt;%1 + %2&lt;/b&gt;: Segmento azimute e comprimento. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1186"/>
@@ -1458,7 +1458,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation>Não foi possível escrever o arquivo:% 1</translation>
+        <translation>Não foi possível escrever o arquivo: %1</translation>
     </message>
     <message>
         <source>Could not create new file: %1</source>
