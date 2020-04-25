@@ -18,7 +18,7 @@
  */
 
 
-#include "map_dialog_rotate.h"
+#include "rotate_map_dialog.h"
 
 #include <Qt>
 #include <QtMath>
