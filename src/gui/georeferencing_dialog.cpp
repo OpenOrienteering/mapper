@@ -22,6 +22,7 @@
 #include "georeferencing_dialog.h"
 
 #include <cmath>
+#include <functional>
 #include <vector>
 
 #include <Qt>
@@ -514,6 +515,9 @@ void GeoreferencingDialog::accept()
 {
 	auto const declination_change_degrees = georef->getDeclination() - initial_georef->getDeclination();
 	auto const scale_factor_change = georef->getAuxiliaryScaleFactor() / initial_georef->getAuxiliaryScaleFactor();
+	auto rotate = RotateMapDialog::RotationOp {};
+	auto stretch = StretchMapDialog::StretchOp {};
+	
 	if (grivation_locked)
 	{
 		georef->updateGrivation();
@@ -523,10 +527,9 @@ void GeoreferencingDialog::accept()
 	{
 		int result = QMessageBox::question(this, tr("Declination change"), tr("The declination has been changed. Do you want to rotate the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (result == QMessageBox::Cancel)
-		{
 			return;
-		}
-		else if (result == QMessageBox::Yes)
+		
+		if (result == QMessageBox::Yes)
 		{
 			RotateMapDialog dialog(*map, this);
 			dialog.setWindowModality(Qt::WindowModal);
@@ -536,9 +539,10 @@ void GeoreferencingDialog::accept()
 			dialog.showAdjustDeclination(false);
 			if (dialog.exec() == QDialog::Rejected)
 				return;
-			dialog.rotate(*map);
+			rotate = dialog.makeRotation();
 		}
 	}
+	
 	if (scale_factor_locked)
 	{
 		georef->updateCombinedScaleFactor();
@@ -548,17 +552,38 @@ void GeoreferencingDialog::accept()
 	{
 		int result = QMessageBox::question(this, tr("Scale factor change"), tr("The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 		if (result == QMessageBox::Cancel)
-		{
 			return;
-		}
-		else if (result == QMessageBox::Yes)
+		
+		if (result == QMessageBox::Yes)
 		{
 			StretchMapDialog dialog(*map, 1.0/scale_factor_change, this);
 			dialog.setWindowModality(Qt::WindowModal);
 			if (dialog.exec() == QDialog::Rejected)
 				return;
-			dialog.stretch(*map);
+			stretch = dialog.makeStretch();
 		}
+	}
+	
+	if (rotate || stretch)
+	{
+		if (georef->isLocal() && !map->getGeoreferencing().isLocal())
+		{
+			// When switching the map to a local georeferencing, templates may
+			// switch to a non-georeferenced mode. Rotating and stretching
+			// must be applied to the mode-changing templates, too. So we add
+			// an intermediate step: switching to a local georeferencing with the same
+			// scale factors and rotation as before.
+			auto const& map_georef = map->getGeoreferencing();
+			Georeferencing local_georef { map_georef };
+			local_georef.setState(Georeferencing::Local);
+			local_georef.setDeclination(map_georef.getDeclination());
+			local_georef.setAuxiliaryScaleFactor(map_georef.getAuxiliaryScaleFactor());
+			map->setGeoreferencing(local_georef);
+		}
+		if (rotate)
+			rotate(*map);
+		if (stretch)
+			stretch(*map);
 	}
 	
 	map->setGeoreferencing(*georef);
