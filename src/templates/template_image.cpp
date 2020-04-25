@@ -412,8 +412,18 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 
 void TemplateImage::updateGeoreferencing()
 {
-	if (is_georeferenced && template_state == Template::Loaded)
-		updatePosFromGeoreferencing();
+	if (is_georeferenced)
+	{
+		if (map->getGeoreferencing().isLocal())
+		{
+			is_georeferenced = false;
+			map->emitTemplateChanged(this);
+		}
+		else if (template_state == Template::Loaded)
+		{
+			updatePosFromGeoreferencing();
+		}
+	}
 }
 
 
