@@ -162,14 +162,24 @@ void RotateMapDialog::updateWidgets()
 
 void RotateMapDialog::rotate(Map& map) const
 {
+	makeRotation()(map);
+}
+
+RotateMapDialog::RotationOp RotateMapDialog::makeRotation() const
+{
 	auto const rotation = qDegreesToRadians(rotation_edit->value());
 	auto center = MapCoord(0, 0);
-	if (center_georef_radio->isChecked())
-		center = map.getGeoreferencing().getMapRefPoint();
-	else if (center_other_radio->isChecked())
-		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
+	if (center_other_radio->isChecked())
+		center = MapCoord(other_x_edit->value(), -other_y_edit->value());
 	
-	map.rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
+	auto adjust_georeferencing = adjust_georeferencing_check->isChecked();
+	auto adjust_declination = adjust_declination_check->isChecked();
+	auto adjust_templates = adjust_templates_check->isChecked();
+	auto center_georef = center_georef_radio->isChecked();
+	return [rotation, center, center_georef, adjust_georeferencing, adjust_declination, adjust_templates](Map& map) {
+		auto actual_center = center_georef ? map.getGeoreferencing().getMapRefPoint() : center;
+		map.rotateMap(rotation, actual_center, adjust_georeferencing, adjust_declination, adjust_templates);
+	};
 }
 
 

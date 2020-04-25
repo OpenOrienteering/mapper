@@ -22,7 +22,10 @@
 #ifndef OPENORIENTEERING_ROTATE_MAP_DIALOG_H
 #define OPENORIENTEERING_ROTATE_MAP_DIALOG_H
 
+#include <functional>
+
 #include <Qt>
+#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
 #include <QString>
@@ -44,6 +47,8 @@ class RotateMapDialog : public QDialog
 {
 Q_OBJECT
 public:
+	using RotationOp = std::function<void (Map&)>;
+	
 	/** Creates a new RotateMapDialog. */
 	RotateMapDialog(const Map& map, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
@@ -58,6 +63,9 @@ public:
 	
 	/** Performs the configured rotation on the given map. */
 	void rotate(Map& map) const;
+	
+	/** Returns a rotation functor. */
+	Q_REQUIRED_RESULT RotationOp makeRotation() const;
 	
 private slots:
 	void updateWidgets();
