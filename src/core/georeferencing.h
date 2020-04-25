@@ -637,12 +637,29 @@ private:
 	unsigned int scale_denominator;
 	double combined_scale_factor;
 	double auxiliary_scale_factor;
+	
+	/**
+	 * This is the scale factor from true distance to grid distance.
+	 * 
+	 * In case of deformation, the scale factor varies with direction and this is an average.
+	 * 
+	 * \see updateGridCompensation()
+	 */
 	double grid_scale_factor;
 
 	double declination;
 	double grivation;
 	double grivation_error;
+	
+	/**
+	 * This is the angle between true azimuth and grid azimuth.
+	 * 
+	 * In case of deformation, the convergence varies with direction and this is an average.
+	 * 
+	 * \see updateGridCompensation()
+	 */
 	double convergence;
+	
 	MapCoord map_ref_point;
 	
 	QPointF projected_ref_point;

@@ -891,13 +891,8 @@ void Georeferencing::updateGridCompensation()
 	if (determinant < 0.00000000001)
 		return;
 
-	// This is the angle between true azimuth and grid azimuth.
-	// In case of deformation, the convergence varies with direction and this is an average.
 	convergence = qRadiansToDegrees(atan2(d_northing_dx - d_easting_dy,
 	                                      d_easting_dx + d_northing_dy));
-
-	// This is the scale factor from true distance to grid distance.
-	// In case of deformation, the scale factor varies with direction and this is an average.
 	grid_scale_factor = sqrt(determinant);
 }
 
