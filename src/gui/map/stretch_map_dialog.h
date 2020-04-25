@@ -46,11 +46,13 @@ class StretchMapDialog : public QDialog
 Q_OBJECT
 public:
 	/** Creates a new StretchMapDialog. */
-	StretchMapDialog(Map& map, double stretch_factor, QWidget* parent = nullptr, Qt::WindowFlags f = {});
-
+	StretchMapDialog(const Map& map, double stretch_factor, QWidget* parent = nullptr, Qt::WindowFlags f = {});
+	
+	/** Performs the configured scaling on the given map. */
+	void stretch(Map& map) const;
+	
 private slots:
 	void updateWidgets();
-	void okClicked();
 	
 private:
 	QRadioButton* center_origin_radio;
@@ -63,7 +65,6 @@ private:
 	QCheckBox* adjust_templates_check;
 	QPushButton* ok_button;
 	
-	Map& map;
 	const double stretch_factor;
 };
 

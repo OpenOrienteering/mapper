@@ -41,9 +41,8 @@
 
 namespace OpenOrienteering {
 
-StretchMapDialog::StretchMapDialog(Map& map, double stretch_factor, QWidget* parent, Qt::WindowFlags f)
+StretchMapDialog::StretchMapDialog(const Map& map, double stretch_factor, QWidget* parent, Qt::WindowFlags f)
 : QDialog(parent, f)
-, map(map)
 , stretch_factor(stretch_factor)
 {
 	setWindowTitle(tr("Change scale factor"));
@@ -117,7 +116,7 @@ StretchMapDialog::StretchMapDialog(Map& map, double stretch_factor, QWidget* par
 	connect(center_origin_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
 	connect(center_georef_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
 	connect(center_other_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
-	connect(button_box, &QDialogButtonBox::accepted, this, &StretchMapDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
@@ -130,7 +129,7 @@ void StretchMapDialog::updateWidgets()
 	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
-void StretchMapDialog::okClicked()
+void StretchMapDialog::stretch(Map& map) const
 {
 	auto center = MapCoord(0, 0);
 	if (center_georef_radio->isChecked())
@@ -139,7 +138,6 @@ void StretchMapDialog::okClicked()
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 	
 	map.changeScale(map.getScaleDenominator(), stretch_factor, center, false, true, adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
-	accept();
 }
 
 
