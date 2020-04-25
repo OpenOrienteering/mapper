@@ -528,7 +528,7 @@ void GeoreferencingDialog::accept()
 		}
 		else if (result == QMessageBox::Yes)
 		{
-			RotateMapDialog dialog(this, map);
+			RotateMapDialog dialog(*map, this);
 			dialog.setWindowModality(Qt::WindowModal);
 			dialog.setRotationDegrees(declination_change_degrees);
 			dialog.setRotateAroundGeorefRefPoint();

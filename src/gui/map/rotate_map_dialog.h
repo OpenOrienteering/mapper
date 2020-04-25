@@ -22,6 +22,7 @@
 #ifndef OPENORIENTEERING_ROTATE_MAP_DIALOG_H
 #define OPENORIENTEERING_ROTATE_MAP_DIALOG_H
 
+#include <Qt>
 #include <QDialog>
 #include <QObject>
 #include <QString>
@@ -44,7 +45,7 @@ class RotateMapDialog : public QDialog
 Q_OBJECT
 public:
 	/** Creates a new RotateMapDialog. */
-	RotateMapDialog(QWidget* parent, Map* map);
+	RotateMapDialog(Map& map, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
 	/** Sets the rotation angle in degrees in the corresponding widget. */
 	void setRotationDegrees(double rotation);
@@ -71,7 +72,7 @@ private:
 	QCheckBox* adjust_declination_check;
 	QCheckBox* adjust_templates_check;
 	
-	Map* map;
+	Map& map;
 };
 
 

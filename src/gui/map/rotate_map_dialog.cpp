@@ -42,7 +42,9 @@
 
 namespace OpenOrienteering {
 
-RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), map(map)
+RotateMapDialog::RotateMapDialog(Map& map, QWidget* parent, Qt::WindowFlags f)
+: QDialog(parent, f)
+, map(map)
 {
 	setWindowTitle(tr("Rotate map"));
 	
@@ -62,7 +64,7 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	
 	//: Rotation center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (!map->getGeoreferencing().isValid())
+	if (!map.getGeoreferencing().isValid())
 		center_georef_radio->setEnabled(false);
 	layout->addRow(center_georef_radio);
 	
@@ -83,14 +85,14 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	if (map->getGeoreferencing().isValid())
+	if (map.getGeoreferencing().isValid())
 		adjust_georeferencing_check->setChecked(true);
 	else
 		adjust_georeferencing_check->setEnabled(false);
 	layout->addRow(adjust_georeferencing_check);
 	
 	adjust_declination_check = new QCheckBox(tr("Adjust georeferencing declination"));
-	if (map->getGeoreferencing().isValid())
+	if (map.getGeoreferencing().isValid())
 		adjust_declination_check->setChecked(true);
 	else
 		adjust_declination_check->setEnabled(false);
@@ -98,10 +100,10 @@ RotateMapDialog::RotateMapDialog(QWidget* parent, Map* map) : QDialog(parent, Qt
 	
 	adjust_templates_check = new QCheckBox(tr("Rotate non-georeferenced templates"));
 	bool have_non_georeferenced_template = false;
-	for (int i = 0; i < map->getNumTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getTemplate(i)->isTemplateGeoreferenced();
-	for (int i = 0; i < map->getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getClosedTemplate(i)->isTemplateGeoreferenced();
+	for (int i = 0; i < map.getNumTemplates() && !have_non_georeferenced_template; ++i)
+		have_non_georeferenced_template = !map.getTemplate(i)->isTemplateGeoreferenced();
+	for (int i = 0; i < map.getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
+		have_non_georeferenced_template = !map.getClosedTemplate(i)->isTemplateGeoreferenced();
 	if (have_non_georeferenced_template)
 		adjust_templates_check->setChecked(true);
 	else
@@ -161,14 +163,14 @@ void RotateMapDialog::updateWidgets()
 
 void RotateMapDialog::okClicked()
 {
-	double rotation = M_PI * rotation_edit->value() / 180;
-	MapCoord center = MapCoord(0, 0);
+	auto const rotation = qDegreesToRadians(rotation_edit->value());
+	auto center = MapCoord(0, 0);
 	if (center_georef_radio->isChecked())
-		center = map->getGeoreferencing().getMapRefPoint();
+		center = map.getGeoreferencing().getMapRefPoint();
 	else if (center_other_radio->isChecked())
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 	
-	map->rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
+	map.rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
 	accept();
 }
 

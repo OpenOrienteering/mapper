@@ -2111,7 +2111,7 @@ void MapEditorController::scaleMapClicked()
 
 void MapEditorController::rotateMapClicked()
 {
-	RotateMapDialog dialog(window, map);
+	RotateMapDialog dialog(*map, window);
 	dialog.setWindowModality(Qt::WindowModal);
 	dialog.exec();
 }
