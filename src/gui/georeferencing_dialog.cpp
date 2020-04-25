@@ -534,9 +534,9 @@ void GeoreferencingDialog::accept()
 			dialog.setRotateAroundGeorefRefPoint();
 			dialog.setAdjustDeclination(false);
 			dialog.showAdjustDeclination(false);
-			int result = dialog.exec();
-			if (result == QDialog::Rejected)
+			if (dialog.exec() == QDialog::Rejected)
 				return;
+			dialog.rotate(*map);
 		}
 	}
 	if (scale_factor_locked)

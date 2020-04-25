@@ -45,7 +45,7 @@ class RotateMapDialog : public QDialog
 Q_OBJECT
 public:
 	/** Creates a new RotateMapDialog. */
-	RotateMapDialog(Map& map, QWidget* parent = nullptr, Qt::WindowFlags f = {});
+	RotateMapDialog(const Map& map, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
 	/** Sets the rotation angle in degrees in the corresponding widget. */
 	void setRotationDegrees(double rotation);
@@ -56,9 +56,11 @@ public:
 	/** Sets the visibility of the setting to adjust the georeferencing declination. */
 	void showAdjustDeclination(bool show);
 	
+	/** Performs the configured rotation on the given map. */
+	void rotate(Map& map) const;
+	
 private slots:
 	void updateWidgets();
-	void okClicked();
 	
 private:
 	QDoubleSpinBox* rotation_edit;
@@ -71,8 +73,6 @@ private:
 	QCheckBox* adjust_georeferencing_check;
 	QCheckBox* adjust_declination_check;
 	QCheckBox* adjust_templates_check;
-	
-	Map& map;
 };
 
 

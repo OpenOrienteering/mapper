@@ -42,9 +42,8 @@
 
 namespace OpenOrienteering {
 
-RotateMapDialog::RotateMapDialog(Map& map, QWidget* parent, Qt::WindowFlags f)
+RotateMapDialog::RotateMapDialog(const Map& map, QWidget* parent, Qt::WindowFlags f)
 : QDialog(parent, f)
-, map(map)
 {
 	setWindowTitle(tr("Rotate map"));
 	
@@ -124,7 +123,7 @@ RotateMapDialog::RotateMapDialog(Map& map, QWidget* parent, Qt::WindowFlags f)
 	connect(center_origin_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
 	connect(center_georef_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
 	connect(center_other_radio, &QAbstractButton::clicked, this, &RotateMapDialog::updateWidgets);
-	connect(button_box, &QDialogButtonBox::accepted, this, &RotateMapDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
@@ -161,7 +160,7 @@ void RotateMapDialog::updateWidgets()
 	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
-void RotateMapDialog::okClicked()
+void RotateMapDialog::rotate(Map& map) const
 {
 	auto const rotation = qDegreesToRadians(rotation_edit->value());
 	auto center = MapCoord(0, 0);
@@ -171,7 +170,6 @@ void RotateMapDialog::okClicked()
 		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
 	
 	map.rotateMap(rotation, center, adjust_georeferencing_check->isChecked(), adjust_declination_check->isChecked(), adjust_templates_check->isChecked());
-	accept();
 }
 
 

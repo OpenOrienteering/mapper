@@ -2113,7 +2113,8 @@ void MapEditorController::rotateMapClicked()
 {
 	RotateMapDialog dialog(*map, window);
 	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted)
+		dialog.rotate(*map);
 }
 
 void MapEditorController::mapNotesClicked()
