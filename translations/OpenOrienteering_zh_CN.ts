@@ -2211,7 +2211,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
         <source>Examples</source>
-        <translation>例子</translation>
+        <translation>示例</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
@@ -4597,7 +4597,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3254"/>
         <source>Measure</source>
-        <translation>措施</translation>
+        <translation>测量</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3268"/>
