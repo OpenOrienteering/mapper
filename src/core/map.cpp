@@ -1866,7 +1866,6 @@ int Map::findTemplateIndex(const Template* temp) const
 		if (templates[i] == temp)
 			return i;
 	}
-	Q_ASSERT(false);
 	return -1;
 }
 
@@ -1878,7 +1877,9 @@ void Map::setTemplatesDirty()
 
 void Map::emitTemplateChanged(Template* temp)
 {
-	emit templateChanged(findTemplateIndex(temp), temp);
+	auto const pos = findTemplateIndex(temp);
+	if (pos >= 0)
+		emit templateChanged(pos, temp);
 }
 
 void Map::clearClosedTemplates()
