@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -656,9 +656,7 @@ public:
 	void setTemplateAreaDirty(int i);
 	
 	/**
-	 * Loops over all templates in the map and looks for the given template pointer.
-	 * Returns the index of the template. The template must be contained in the map,
-	 * otherwise an assert will be triggered!
+	 * Finds the index of the given template, or returns -1.
 	 */
 	int findTemplateIndex(const Template* temp) const;
 	

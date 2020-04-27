@@ -130,8 +130,15 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
 			for (auto entry : template_visibilities)
 			{
+				auto const index = map->findTemplateIndex(entry.temp);
+				if (index < 0)
+				{
+					qWarning("Template visibility found for unknown template");
+					continue;
+				}
+				
 				XmlElementWriter ref_element(xml, literal::ref);
-				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(entry.temp));
+				ref_element.writeAttribute(literal::template_string, index);
 				ref_element.writeAttribute(literal::visible, entry.visible);
 				ref_element.writeAttribute(literal::opacity, entry.opacity);
 			}
