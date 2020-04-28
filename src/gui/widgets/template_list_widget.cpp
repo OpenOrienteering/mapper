@@ -1155,11 +1155,11 @@ void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bo
 		break;
 		
 	case MapView::TemplateVisible:
-		if (map->getNumTemplates() == template_table->rowCount()+1)
+		if (map->getNumTemplates() == template_table->rowCount() - 1)
 		{
-			auto row = map->findTemplateIndex(temp);
-			if (row >= 0)
-				updateRow(posFromRow(row));
+			auto const pos = map->findTemplateIndex(temp);
+			if (pos >= 0)
+				updateRow(rowFromPos(pos));
 			break;
 		}
 		Q_FALLTHROUGH();
