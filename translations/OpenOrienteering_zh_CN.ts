@@ -46,7 +46,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>按字母顺序排列的 OOM开发人员：</translation>
+        <translation>OOM开发人员(按字母顺序排列)：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
@@ -1041,7 +1041,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1148"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;长度︰&lt;/b&gt; %1 m </translation>
+        <translation>&lt;b&gt;长度︰&lt;/b&gt; %1 米 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1176"/>
@@ -1273,7 +1273,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="512"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 m </translation>
+        <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 米 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="728"/>
@@ -2386,12 +2386,12 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="49"/>
         <source>OCAD version 8, old implementation</source>
-        <translation>OCAD版本8，旧实现</translation>
+        <translation>OCAD版本8，旧的实现方式</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="51"/>
         <source>OCAD version %1</source>
-        <translation>OCAD版本％1</translation>
+        <translation>OCAD版本 %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -4890,7 +4890,7 @@ selected</source>
         <location filename="../src/gui/map/map_widget.cpp" line="628"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="665"/>
@@ -4989,7 +4989,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"/>
@@ -5001,7 +5001,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation>m ²</translation>
+        <translation>平方米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
@@ -5133,7 +5133,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1947"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>调整坐标以适应OCAD8绘图区域（-2 m。。。2米）。</translation>
+        <translation>调整坐标以适应OCAD8绘图区域（-2 米 ... 2米）。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1958"/>
@@ -5410,7 +5410,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="661"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="672"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>已调整坐标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
+        <translation>已调整坐标，以适配 OCAD 8 的绘图区大小 (-2 米 ... 2 米).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="682"/>
@@ -8255,7 +8255,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_positioning_dialog.cpp" line="52"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
