@@ -48,30 +48,45 @@ namespace OpenOrienteering {
 
 /**
  * A utility which encapsulates PROJ API variants and resource management.
+ * 
+ * QPointF coordinates are assumed to represent easting-northing order,
+ * for geographic coordinates longitude-latitude order, in degrees.
  */
 struct ProjTransform
 {
 	ProjTransform() noexcept = default;
 	ProjTransform(const ProjTransform&) = delete;
 	ProjTransform(ProjTransform&& other) noexcept;
-	ProjTransform(const QString& crs_spec);
+	/// Constructs a transform from the default geographic CRS to the given target CRS.
+	ProjTransform(const QString& target);
+	/// Constructs a transform from the given CRS to the given target CRS.
+	ProjTransform(const QString& source, const QString& target);
+	/// Constructs a transform from the given CRS to the given target CRS, early-binding.
+	ProjTransform(const QString& source, const QString& target, const LatLon& point_of_interest);
 	~ProjTransform();
 	
 	ProjTransform& operator=(const ProjTransform& other) = delete;
 	ProjTransform& operator=(ProjTransform&& other) noexcept;
 	
-	/// Create a PROJ CRS object.
+	/// Create a PROJ CRS object which can be used to query properties (not for transformations).
 	static ProjTransform crs(const QString& crs_spec);
 	
 	bool isValid() const noexcept;
 	bool isGeographic() const;
 	
+	/// Transforms from geographic coordinates (source CRS) to target CRS coordinates.
 	QPointF forward(const LatLon& lat_lon, bool* ok) const;
+	/// Transforms from target CRS coordinates to geographic coordinates (source CRS).
 	LatLon inverse(const QPointF& projected, bool* ok) const;
+	/// Transforms from source CRS coordinates to target CRS coordinates.
+	QPointF transform(const QPointF& point, bool* ok) const;
 	
 	QString errorText() const;
 	
 private:
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	ProjTransformData* source_pj = nullptr;
+#endif
 	ProjTransformData* pj = nullptr;
 	
 };
