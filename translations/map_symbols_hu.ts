@@ -46,7 +46,7 @@
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished">Fekete lila alatt a vasúti szimbólumokhoz</translation>
+        <translation>Fekete lila alatt a vasúti szimbólumokhoz</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -195,14 +195,14 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished">Azonos magasságú pontokat összekötő vonal. A szintvonalak közötti különbség 5 m. Sík terepen 2,5 m-es intervallum használható.
-A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén az újbóli belépőkbe kell helyezni őket.
-A zárt szintvonal egy dombot vagy mélyedést jelent. A mélyedésnek legalább egy lejtővonallal kell rendelkeznie. A minimális magasság/mélység 1 m.
-Fontos a szomszédos kontúrvonalak közötti kapcsolat. A szomszédos kontúrvonalak formáját és felépítését mutatják. Kerülni kell a kontúr apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
-A feltűnő tulajdonságokat, mint például a mélyedéseket, visszatérőket, kanyarokat, földpartokat és teraszokat lehet, hogy eltúlozzák.
-Az abszolút magassági pontosságnak nincs jelentősége, de a szomszédos elemek közötti relatív magassági különbséget a lehető legpontosabban meg kell jeleníteni a térképen. Megengedett a szintvonal magasságának kissé megváltoztatása, ha ez javítja a terepelemek ábrázolását. Ez az eltérés nem haladhatja meg a szintvonal különbség 25% -át, és figyelmet kell fordítani a szomszédos tulajdonságokra.
-A kontúrvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A visszatérő vagy a száj szája legalább 0,5 mm legyen a vonal közepétől a középpontjáig (8 m lábnyom).
-A kontúrhüvely minimális hossza 0,9 mm (lábnyom 13,5 m) és a minimális szélessége 0,6 mm (lábnyom 9 m) a mérési távolságon kívül. Kisebb kiemelkedő dombok ábrázolhatók a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólummal, vagy eltúlozhatók a térképen a minimális méret kielégítése érdekében.
+        <translation>Azonos magasságú pontokat összekötő vonal. A szintvonalak közötti különbség 5 m. Sík terepen 2,5 m-es intervallum használható.
+Az eséstüskék a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén a hajlatokba kell helyezni őket.
+A zárt szintvonal egy dombot vagy mélyedést jelent. A mélyedésnek legalább egy eséstürkével kell rendelkeznie. A minimális magasság/mélység 1 m.
+Fontos a szomszédos szintvonalak közötti kapcsolat. A szomszédos szintvonalak formáját és felépítését mutatják. Kerülni kell a szintvonal apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
+A feltűnő tulajdonságokat, mint például a mélyedéseket, üregeket, kanyarokat, földpartokat és teraszokat eltúlozhatják.
+Az abszolút magassági pontosságnak nincs jelentősége, de a szomszédos elemek közötti relatív magassági különbséget a lehető legpontosabban meg kell jeleníteni a térképen. Megengedett a szintvonal magasságának kismértékű megváltoztatása, ha ez javítja a terepelemek ábrázolását. Ez az eltérés nem haladhatja meg a szintvonal különbség 25% -át, és figyelmet kell fordítani a szomszédos tulajdonságokra.
+A szintvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A hajlat (vályú) vagy az orr szélessége meghaladja a 0,5 mm-t (valójában 8 m) a vonal közepétől a vonal középpontjáig. 
+A domb minimális hossza 0,9 mm (lábnyom 13,5 m) és a minimális szélessége 0,6 mm (lábnyom 9 m) a kívülről mérve. Kisebb kiemelkedő dombok ábrázolhatók a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólummal, vagy eltúlozhatók a térképen a minimális méret kielégítése érdekében.
 A mélyedésnek meg kell felelnie a lejtő vonalának, tehát a legkisebb hosszúság 1,1 mm (lábnyom 16,5 m) és a minimális szélesség 0,7 mm (10,5 m lábnyom). Kisebb, kiemelkedő mélyedéseket a Lapos mélyedés (111) szimbólummal ábrázolhatunk, vagy eltúlozhatjuk a minimális méret kielégítése érdekében.
 A szintvonalakat úgy kell beállítani (nem törve), hogy ne érintse meg a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólumot.</translation>
     </message>
@@ -473,7 +473,7 @@ A pontokat véletlenszerűen kell elosztani, de nem akadályozhatják a fontos t
 A pontok minimális száma három (lábnyom 10 m x 10 m). 
 A szomszédos pontok közötti maximális távolság középponttól középpontig 0,6 mm.
 A szomszédos pontok közti minimális távolság a középponttól-központig 0,5 mm.
-A szintvonalakat nem szabad vágni a szabdalt felszínnél. 
+A szintvonalakat nem szabad vágni a szabdalt területnél. 
 A pontok nem illeszthetők egy egy pont széles vonallá.</translation>
     </message>
     <message>
@@ -496,7 +496,7 @@ A pontokat véletlenszerűen kell elosztani, de nem akadályozhatják a fontos t
 A pontok minimális száma három (lábnyom 10 m x 10 m). 
 A szomszédos pontok közötti maximális távolság középponttól középpontig 0,6 mm.
 A szomszédos pontok közti minimális távolság a középponttól-központig 0,5 mm.
-A szintvonalakat nem szabad vágni a szabdalt felszínnél. 
+A szintvonalakat nem szabad vágni a szabdalt területnél. 
 A pontok nem illeszthetők egy egy pont széles vonallá.
 Sűrűség:3-4 pont/mm².</translation>
     </message>
@@ -519,7 +519,7 @@ A pontokat véletlenszerűen kell elosztani, de nem akadályozhatják a fontos t
 A pontok minimális száma három (lábnyom 7 m x 7 m). 
 A szomszédos pontok közötti maximális távolság középponttól középpontig 0,38 mm.
 A szomszédos pontok közti minimális távolság a középponttól-központig 0,25 mm.
-A szintvonalakat nem szabad vágni a szabdalt felszínnél. 
+A szintvonalakat nem szabad vágni a szabdalt területnél. 
 A pontok nem illeszthetők egy egy pont széles vonallá.</translation>
     </message>
     <message>
@@ -1214,7 +1214,8 @@ Minimális hosszúság (izolált): 1 mm (lábnyom 15 m).</translation>
         <source>A natural or man-made minor water channel which may contain water only intermittently.
 Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
         <comment>Description of symbol 306</comment>
-        <translation> </translation>
+        <translation>Természetes vagy ember által létrehozott kisebb vízcsatorna, amely csak időszakosan tartalmazhat vizet.
+Minimális hosszúság (elkülönítve): két vonal (2,75 mm - lábnyom 41 m).</translation>
     </message>
     <message>
         <source>Uncrossable marsh, with outline</source>
@@ -1295,7 +1296,7 @@ Minimális terület: 0,5 mm x 0,4 mm (lábnyom 7,5 m x 6 m).</translation>
         <source>A marsh or trickle of water which is too narrow (less than about 5 m wide) to be shown with the marsh symbol.
 Minimum length (isolated): two dots (0.7 mm - footprint 10.5 m).</source>
         <comment>Description of symbol 309</comment>
-        <translation>Egy mocsár vagy szivárgó vízfolyás, ami túlságosan keskeny (kevesebb, mint 5 m széles)  ahhoz, hogy a mocsár szimbólummal ábrázolni lehessen.
+        <translation>Egy mocsár vagy szivárgó vízfolyás, ami túlságosan keskeny (kevesebb, mint 5 m széles) ahhoz, hogy a mocsár szimbólummal ábrázolni lehessen.
 Minimális hosszúság (elkülönült): két pont (0,7 mm - lábnyom 10,5 m).</translation>
     </message>
     <message>
@@ -1309,7 +1310,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bizonytalan körvonalú mocsaras, szezonális mocsaras vagy a mocsártól a szilárd talajig tartó fokozatos átmenet területe, amely átjárható. A széle általában határozatlan, és a vegetáció hasonló a környező talajhoz.
+A szimbólumot más szimbólumokkal kell kombinálni, hogy a futhatóságot és a nyitottságot megmutassák.
+A szimbólum északi irányba mutat.
+Minimális terület: 2,0 mm x 0,7 mm (lábnyom 30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -1322,7 +1326,10 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.
 Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bizonytalan körvonalú mocsaras, szezonális mocsaras vagy a mocsártól a szilárd talajig tartó fokozatos átmenet területe, amely átjárható. A széle általában határozatlan, és a vegetáció hasonló a környező talajhoz.
+A szimbólumot más szimbólumokkal kell kombinálni, hogy a futhatóságot és a nyitottságot megmutassák.
+A szimbólum északi irányba mutat.
+Minimális terület: 2,0 mm x 0,7 mm (lábnyom 30 m x 10,5 m).</translation>
     </message>
     <message>
         <source>Well, fountain or water tank</source>
@@ -1333,7 +1340,8 @@ Minimum area: 2.0 mm x 0.7 mm (footprint 30 m x 10.5 m).</source>
         <source>A prominent well, fountain, water tank or captive spring.
 Footprint: 12 m x 12 m.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kiemelkedő kút, szökőkút, víztartály vagy befoglalt forrás.
+Lábnyom: 12 m x 12 m.</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -1346,7 +1354,10 @@ Location is the centre of gravity of the symbol.
 The symbol is orientated to open downstream.
 Footprint: 13.5 m x 7 m.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy víz forrása.
+A hely a szimbólum súlypontja.
+A szimbólum a kifolyás irányába nyílik.
+Lábnyom: 13,5 mx 7 m.</translation>
     </message>
     <message>
         <source>Prominent water feature</source>
@@ -1358,7 +1369,9 @@ Footprint: 13.5 m x 7 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólum északi irányba mutat.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyom: 13,5 m x 13,5 m.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -1370,7 +1383,9 @@ Footprint: 13.5 m x 13.5 m.</source>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyílt terület, amelynek talajtakarója van (fű, moha vagy hasonló), amely jobb futhatóságot kínál, mint a tipikus nyílt erdő. Ha a sárga színű területek dominálnak (a teljes sárga helyett 75%-ban) lehet használni 
+Nem kombinálható a más terület szimbólumokkal csak a Szabdalt terület(113), a kőmező (208), a mocsár (308) és az bizonytalan körvonalú mocsár(310) jelekkel
+Minimális terület: 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -1385,7 +1400,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elszórt fákkal vagy bokrokkal rendelkező területeket általánosíthatjuk úgy, hogy a sárga alapon rendszeresen nagy pontok vannak. A pontok lehetnek fehér (szétszórt fák) vagy zöld (szétszórt bokrok / cserjések). A prominens egyes fák hozzáadhatók a Prominens nagy fa (417) szimbólummal. Ha a sárga színű területek dominálnak, képernyőt lehet használni (a teljes sárga helyett 75%).
+Nem kombinálható más, a Szabdalt terület(113), a Boulder mező (208) vagy a mocsaras szimbólumokkal (308, 310) kapcsolatos szimbólumokkal.
+Minimális szélesség: 1,5 mm (lábnyom 22,5 m).
+Minimális terület: 2 mm x 2 mm (lábnyom 30 m x 30 m).
+A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.
+A szimbólum északi irányba mutat.).</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
@@ -1400,7 +1420,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Elszórt fákkal vagy bokrokkal rendelkező területeket általánosíthatjuk úgy, hogy a sárga alapon rendszeresen nagy pontok vannak. A pontok lehetnek fehér (szétszórt fák) vagy zöld (szétszórt bokrok / cserjések). A prominens egyes fák hozzáadhatók a Prominens nagy fa (417) szimbólummal. Ha a sárga színű területek dominálnak, képernyőt lehet használni (a teljes sárga helyett 75%).
+Nem kombinálható más, a Szabdalt terület(113), a Boulder mező (208) vagy a mocsaras szimbólumokkal (308, 310) kapcsolatos szimbólumokkal.
+Minimális szélesség: 1,5 mm (lábnyom 22,5 m).
+Minimális terület: 2 mm x 2 mm (lábnyom 30 m x 30 m).
+A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.
+A szimbólum északi irányba mutat.).</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -1413,7 +1438,7 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pusztaság, mocsarak, levágott területek, újonnan ültetett területek (kb. 1 m alatti fák) vagy más általánosan nyitott talaj durva talajjal, hanga vagy magas fű, amely ugyanolyan futhatóságot nyújt, mint a tipikus nyílt erdők. Kombinálható a következő szimbólumokkal: lassú futás, jó láthatóság (407) vagy Vegetation: séta, jó láthatóság (409) a csökkent futhatóság szempontjából.Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -1457,7 +1482,11 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az adott tereptípusra jellemző nyílt erdő. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem szabad a fehérszínnek megjelennie.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m) más színű foltok nyílásainak kivételével, kivéve a következőket:
+Nyílt terepen (401) jelölésű nyílások esetén a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
+A növényzet szimbólum nyílásai: séta (408), a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
+A növényzet szimbólum nyílásai: küzdelemes (410) minimális területe 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
@@ -1470,12 +1499,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
+Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: lassú futás, normál futás egy irányba</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -1488,7 +1520,7 @@ Minimum width: 0.4 mm (footprint 6 m).</source>
     <message>
         <source>Vegetation: slow running, good visibility</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: lassú futás, jó láthatóság</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 60-80% of normal speed.
@@ -1512,7 +1544,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</source>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta tempó, normál futhatóság egy irányba</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
@@ -1524,7 +1556,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</source>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta tempó, lassú futhatóság egy irányba</translation>
     </message>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed. Where runnability is better in one direction, a regular pattern of white or green 20% stripes is left in the screen to show the direction of better running.
@@ -1536,7 +1568,7 @@ Minimum width: 0.3 mm (footprint 4.5 m).</source>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta, jó láthatóság</translation>
     </message>
     <message>
         <source>An area of good visibility that is difficult to run through, due to, for instance, undergrowth (brambles, heather, low bushes, cut branches). Running speed is reduced to about 20-60% of normal speed.
@@ -2441,7 +2473,8 @@ An easily runnable stairway or indistinct stairway should be drawn as a footpath
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térképen.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonalakat. A nagyon kevés vízrajzzal rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -2452,7 +2485,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térképen.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonalakat. A nagyon kevés vízrajzzal rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -2463,7 +2497,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térképen.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonalakat. A nagyon kevés vízrajzzal rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -2474,7 +2509,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térképen.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonalakat. A nagyon kevés vízrajzzal rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>Registration mark</source>
@@ -3756,7 +3792,7 @@ May not be combined with other area symbols than symbol 113 (broken ground), sym
         <comment>Description of symbol 401</comment>
         <translation>Nyílt terület talajborítással (fű, moha vagy hasonló) egy tipikus nyílt erdőnél jobb futhatósággal. 
 Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.
-A jel nem kombinálható más területi jellel úgymint a 113 (szabdalt terület), a 208 (sziklamező) és a mocsár jelek (308, 310).</translation>
+A jel nem kombinálható más területi jellel úgymint a 113 (Szabdalt terület), a 208 (Sziklamező) és a mocsár jelek (308, 310).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -3767,7 +3803,7 @@ A jel nem kombinálható más területi jellel úgymint a 113 (szabdalt terület
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
         <comment>Description of symbol 402</comment>
-        <translation>A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (szétszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
+        <translation type="unfinished">A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (elszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
     </message>
     <message>
         <source>Open land with scattered bushes</source>
@@ -6750,43 +6786,50 @@ Footprint: 4.4 m x 5.0 m.</source>
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>A gödrök vagy a dombocskák területe, amely túl bonyolult ahhoz, hogy részletesebben ábrázolható legyen.
+A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek. A pontok minimális száma 3.</translation>
     </message>
     <message>
         <source>Broken ground, single dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szabdalt terület, egy pont</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A gödrök vagy a dombocskák területe, amely túl bonyolult ahhoz, hogy részletesebben ábrázolható legyen.
+A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek.
+ A pontok minimális száma 3.</translation>
     </message>
     <message>
         <source>Broken ground, dense</source>
         <comment>Name of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szabdalt terület , sűrű</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>gödrök vagy a dombocskák területe, amely túl bonyolult ahhoz, hogy részletesebben ábrázolható legyen.
+A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek.
+ A pontok minimális száma 3.</translation>
     </message>
     <message>
         <source>Broken ground, single dot, enlarged</source>
         <comment>Name of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szabdalt terület, egyetlen pont, nagyítva</translation>
     </message>
     <message>
         <source>An area of pits or knolls, which is too complex to be represented in detail.
 The density of randomly placed dots may vary according to the detail on the ground. The dots shall not interfere with the representation of important terrain features or objects. Contours shall not be cut in broken ground areas. Dots shall not be arranged to form a single point wide line.
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>gödrök vagy a dombocskák területe, amely túl bonyolult ahhoz, hogy részletesebben ábrázolható legyen.
+A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek.
+ A pontok minimális száma 3.</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -6944,7 +6987,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 202.8</comment>
-        <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk.  A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
+        <translation>A kis függőleges sziklafalat (minimum 1 méteres magasságú) fogak nélkül ábrázolhatjuk. A fogazás nélküli áthatolható sziklafal vonalának végeit le lehet kerekíteni a jobb olvashatóság végett.</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size (from ISSOM)</source>
@@ -7606,7 +7649,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, slow running in one direction</source>
         <comment>Name of symbol 408.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta tempó, lassú futhatóság egy irányba</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
@@ -7629,7 +7672,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, good visibility</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta, jó láthatóság</translation>
     </message>
     <message>
         <source>An area of good visibility and reduced runnability due to, for instance, undergrowth (brambles, heather, low bushes, cut branches, etc.). Running speed is reduced to about 20-60% of normal speed.
@@ -8485,7 +8528,8 @@ Minimum width: 0.4 mm (IM).</source>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -8496,7 +8540,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.</translation>
     </message>
     <message>
         <source>Magnetic north line, black, with arrow</source>
@@ -8508,7 +8553,9 @@ North lines may be broken where they obscure small features such as boulders, kn
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.
+&lt;b&gt; Megjegyzés: ez nem egy szabványos kiegészítés a szimbólumkészlethez &lt;/b&gt;</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -8519,7 +8566,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -8530,7 +8578,8 @@ North lines may be broken where they obscure small features such as boulders, kn
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue, with arrow</source>
@@ -8542,7 +8591,9 @@ North lines may be broken where they obscure small features such as boulders, kn
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak. Távolságuk 30 mm, a talajon 120 m.
+Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, mint a sziklák, kövek, sziklák, patak-kereszteződések, útvégek stb.
+&lt;b&gt; Megjegyzés: ez nem egy szabványos kiegészítés a szimbólumkészlethez &lt;/b&gt;</translation>
     </message>
     <message>
         <source>Start</source>
@@ -10641,7 +10692,7 @@ A jel északi irányba mutat.</translation>
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.1</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk.
 Színe: fekete (kék).</translation>
@@ -10658,7 +10709,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.2</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5 000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk.
 Színe: fekete (kék).
@@ -10690,7 +10741,7 @@ Színe: fekete (kék).</translation>
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.4</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. 
 Színe: fkék (fekete).</translation>
@@ -10707,7 +10758,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.5</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. 
 &lt;b&gt;A jel nem része a szabványos jelkészletnek.&lt;/b&gt;
@@ -10723,7 +10774,7 @@ Színe: kék</translation>
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.6</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek a térképen egymástól 30 mm-re helyezkednek el, ami 150 méteres terepi távolságnak felel meg 1:5000-es méretarányban; 1:4000-es méretarányban a terepi 150 méter 37,5 mm-nek felel meg. 
 
 Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalakat használhatunk. &lt;b&gt;A mintába vágott lyukak megszakítják a mintát.&lt;/b&gt;
 Színe: kék.</translation>
@@ -12739,7 +12790,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -13623,7 +13674,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -13638,7 +13689,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation>Az északvonalak a térképen a mágneses észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
+        <translation>Az északvonalak a térképen a mágneses Észak felé mutatnak. Ezek egymástól 33,33 mm-re helyezkednek el, amely 1:15 000-es méretarányban 500 m-nek felel meg. Más méretarányú térképeken úgy kell megválasztani az északvonalak közti távolságot, hogy a terepen kerek számú métert jelöljenek (pl. 50 m, 100 m, 250 m, 500 m). Az északvonalat meg lehet szakítani, amennyiben apró tereptárgyakat (pl. sziklát, kúpot, patakelágazást, ösvényvéget, stb.) fedne ki. Kevés vízrajzi objektumot ábrázoló területen kék színű vonalat alkalmazhatunk.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -15224,7 +15275,9 @@ Minimális hosszúság (izolált): 1 mm (lábnyom 15 m).</translation>
 Shall not be combined with area symbols other than Broken ground (113), Boulder field (208), Marsh (308) and Indistinct marsh (310).
 Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nyílt terület, amelynek talajtakarója van (fű, moha vagy hasonló), amely jobb futhatóságot kínál, mint a tipikus nyílt erdő. Ha a sárga színű területek dominálnak, képernyőt lehet használni (a teljes sárga helyett 75%).
+Nem kombinálható más, a Szabdalt terület (113), a Boulder mezővel (208), a mocsaras (308) és az Indininct mocsaras (310) területeken kívüli terület szimbólumokkal.
+Minimális terület: 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
@@ -15239,7 +15292,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>A nyílt területen szétszórt fákkal vagy bokrokkal rendelkező területeket általánosíthatjuk úgy, hogy a sárga képernyőn rendszeresen nagy pontok vannak. A pontok lehetnek fehér (szétszórt fák) vagy zöld (szétszórt bokrok / cserjések). A prominens egyes fák hozzáadhatók a Prominens nagy fa (417) szimbólummal. Ha a sárga színű területek dominálnak, képernyőt lehet használni (a teljes sárga helyett 75%).
+Nem kombinálható más, a Szabdalt terület (113), a Boulder mező (208) vagy a mocsaras szimbólumokkal (308, 310) kapcsolatos szimbólumokkal.
+Minimális szélesség: 1,5 mm (lábnyom 22,5 m).
+Minimális terület: 2 mm x 2 mm (lábnyom 30 m x 30 m).
+A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.
+A szimbólum északi irányba mutat.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -15885,7 +15943,8 @@ Footprint: 12 m x 12 m.</source>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térkép.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonásokat. A nagyon kevés vízfunkcióval rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -15896,7 +15955,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses Északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térkép.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonásokat. A nagyon kevés vízfunkcióval rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -15907,7 +15967,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térkép.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonásokat. A nagyon kevés vízfunkcióval rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -15918,7 +15979,8 @@ North lines shall be broken to improve the legibility of the map, for instance w
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
 North lines shall be broken to improve the legibility of the map, for instance where they would obscure small features. In areas with very few water features, blue lines may be used.</source>
         <comment>Description of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek a mágneses északra mutatnak, a papír oldalával párhuzamosan. Távolságuk a térképen 20 mm, a térképen pedig 300 m-et reprezentálnak 1:15 000 méretarányban. Ha a térképet nagyítják 1:10 000-re, akkor a vonalak távolsága 30 mm a térkép.
+Az északi vonalakat törni kell a térkép olvashatóságának javítása érdekében, például akkor, ha elrejtik a kis vonásokat. A nagyon kevés vízfunkcióval rendelkező területeken kék vonalak használhatók.</translation>
     </message>
     <message>
         <source>Start</source>
@@ -16819,7 +16881,7 @@ Map symbols: ISOM 116, 204</source>
     <message>
         <source>|D| Broken ground </source>
         <comment>Name of symbol 1.15</comment>
-        <translation type="unfinished"></translation>
+        <translation>|D|Szabdalt terület </translation>
     </message>
     <message>
         <source>Clearly disturbed ground with features too small or too numerous to be mapped individually; including animal earths.
