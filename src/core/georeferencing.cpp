@@ -303,6 +303,9 @@ ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 
 ProjTransform::ProjTransform(const QString& crs_spec)
 {
+	if (crs_spec.isEmpty())
+		return;
+	
 	auto spec_latin1 = crs_spec.toLatin1();
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
