@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2020 Kai Pastor
+ *    Copyright 2012-2021 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,6 +73,13 @@ private slots:
 	void testProjection();
 	
 	void testProjection_data();
+	
+	/**
+	 * Tests CRS to CRS transformations.
+	 */
+	void testCrsToCrs();
+	
+	void testCrsToCrs_data();
 	
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 	/**
