@@ -357,7 +357,7 @@ public:
 	 * regardless of the zoom level so that a bounding box in map coords
 	 * cannot be calculated.
 	 */
-	virtual int getTemplateBoundingBoxPixelBorder() {return 0;}
+	virtual int getTemplateBoundingBoxPixelBorder() const {return 0;}
 	
 	/** 
 	 * Marks the whole area of the template as needing a redraw.
