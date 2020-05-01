@@ -30,7 +30,7 @@
 
 #include "util/backports.h"  // IWYU pragma: keep
 
-namespace OpenOrienteering {};
+namespace OpenOrienteering {}
 using namespace OpenOrienteering;
 
 

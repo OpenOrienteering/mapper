@@ -921,7 +921,7 @@ bool endsWithAnyOf(const QString& path, const std::vector<QByteArray>& list)
 		       && path[path.size() - extension.size() - 1] == QLatin1Char('.')
 		       && path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
 	} );
-};
+}
 
 }  // namespace
 
