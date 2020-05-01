@@ -60,7 +60,7 @@ CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
 , private_parts { proto.private_parts }
 , parts { proto.parts }
 {
-	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [this](auto part, auto is_private) {
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
 		return (part && is_private) ? Symbol::duplicate(*part).release() : part;
 	});
 }
