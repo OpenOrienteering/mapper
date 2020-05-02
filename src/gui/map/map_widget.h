@@ -386,6 +386,8 @@ protected:
 	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
+	void updatePlaceholder();
+	
 	/** Checks if there is a visible template in the range
 	 *  from first_template to last_template. */
 	bool containsVisibleTemplate(int first_template, int last_template) const;
