@@ -1235,11 +1235,6 @@ void Map::setColor(MapColor* color, int pos)
 void Map::addColor(MapColor* color, int pos)
 {
 	color_set->insert(pos, color);
-	if (getNumColors() == 1)
-	{
-		// This is the first color - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
 	setColorsDirty();
 	emit colorAdded(pos, color);
 	color->setPriority(pos);
@@ -1262,12 +1257,6 @@ void Map::deleteColor(int pos)
 	}
 	
 	color_set->erase(pos);
-	
-	if (getNumColors() == 0)
-	{
-		// That was the last color - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
 	
 	// Treat combined symbols first before their parts
 	for (Symbol* symbol : symbols)
@@ -1530,12 +1519,6 @@ void Map::initStatic()
 void Map::addSymbol(Symbol* symbol, int pos)
 {
 	symbols.insert(symbols.begin() + pos, symbol);
-	if (symbols.size() == 1)
-	{
-		// This is the first symbol - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-	
 	emit symbolAdded(pos, symbol);
 	setSymbolsDirty();
 }
@@ -1628,13 +1611,6 @@ void Map::deleteSymbol(int pos)
 	Symbol* temp = symbols[pos];
 	delete symbols[pos];
 	symbols.erase(symbols.begin() + pos);
-	
-	if (symbols.empty())
-	{
-		// That was the last symbol - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-	
 	emit symbolDeleted(pos, temp);
 	setSymbolsDirty();
 }
@@ -1807,12 +1783,6 @@ void Map::setTemplate(Template* temp, int pos)
 void Map::addTemplate(Template* temp, int pos)
 {
 	templates.insert(templates.begin() + pos, temp);
-	if (templates.size() == 1)
-	{
-		// This is the first template - the help text in the map widget(s) should be updated
-		updateAllMapWidgets();
-	}
-	
 	emit templateAdded(pos, temp);
 }
 
@@ -1821,12 +1791,6 @@ void Map::removeTemplate(int pos)
 	auto it = templates.begin() + pos;
 	Template* temp = *it;
 	templates.erase(it);
-	if (templates.empty())
-	{
-		// That was the last template - the help text in the map widget(s) should maybe be updated (if there are no objects)
-		updateAllMapWidgets();
-	}
-	
 	emit templateDeleted(pos, temp);
 }
 

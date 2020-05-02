@@ -55,6 +55,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/symbol.h"  // IWYU pragma: keep
 #include "gui/touch_cursor.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/widgets/action_grid_bar.h"
@@ -124,12 +125,10 @@ void MapWidget::setMapView(MapView* view)
 	{
 		if (this->view)
 		{
-			auto map = view->getMap();
+			auto* map = view->getMap();
 			map->removeMapWidget(this);
-			
-			disconnect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
-			disconnect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
-			disconnect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
+			disconnect(map);
+			disconnect(this->view);
 		}
 		
 		this->view = view;
@@ -140,8 +139,14 @@ void MapWidget::setMapView(MapView* view)
 			connect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
 			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
 			
-			auto map = this->view->getMap();
+			auto* map = this->view->getMap();
 			map->addMapWidget(this);
+			connect(map, &Map::colorAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::colorDeleted, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::symbolAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::symbolDeleted, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::templateAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::templateDeleted, this, &MapWidget::updatePlaceholder);
 		}
 		
 		update();
@@ -1197,6 +1202,23 @@ void MapWidget::contextMenuEvent(QContextMenuEvent* event)
 		context_menu->popup(event->globalPos());
 	
 	event->accept();
+}
+
+void MapWidget::updatePlaceholder()
+{
+	if (!show_help)
+		return;
+	
+	auto const* map = view->getMap();
+	if (map->getNumObjects() > 1)
+		return;
+	
+	if (map->getNumColors() < 2
+	    || map->getNumSymbols() < 2
+	    || map->getNumTemplates() < 2)
+	{
+		update();
+	}
 }
 
 bool MapWidget::containsVisibleTemplate(int first_template, int last_template) const
