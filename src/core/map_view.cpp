@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -214,9 +214,9 @@ void MapView::load(QXmlStreamReader& xml)
 	emit visibilityChanged(MultipleFeatures, true);
 }
 
-void MapView::updateAllMapWidgets()
+void MapView::updateAllMapWidgets(VisibilityFeature change)
 {
-	emit visibilityChanged(MultipleFeatures, true);
+	emit visibilityChanged(change, true);
 }
 
 QPointF MapView::mapToView(const MapCoord& coords) const

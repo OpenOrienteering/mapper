@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -138,7 +138,7 @@ public:
 	 * Completely repainting widgets can be slow.
 	 * Try to do partial updates instead, if possible.
 	 */
-	void updateAllMapWidgets();
+	void updateAllMapWidgets(VisibilityFeature change = MultipleFeatures);
 	
 	
 	/** Converts the point (with origin at the center of the view) to map coordinates */
