@@ -359,8 +359,19 @@ bool ProjTransform::isValid() const noexcept
 
 bool ProjTransform::isGeographic() const
 {
-	/// \todo Evaluate proj_get_type() instead
-	return isValid() && proj_angular_output(pj, PJ_FWD);
+	if (!isValid())
+		return false;
+	
+	switch (proj_get_type(pj))
+	{
+	case PJ_TYPE_GEOGRAPHIC_CRS:
+	case PJ_TYPE_GEOGRAPHIC_2D_CRS:
+	case PJ_TYPE_GEOGRAPHIC_3D_CRS:
+		return true;
+	default:
+		return false;
+	}
+
 }
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
@@ -477,7 +488,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return proj_transform.isGeographic();
+	return ProjTransform::crs(getProjectedCRSSpec()).isGeographic();
 }
 
 
