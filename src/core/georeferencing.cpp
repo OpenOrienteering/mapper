@@ -238,6 +238,17 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 	return *this;
 }
 
+// static
+ProjTransform ProjTransform::crs(const QString& crs_spec)
+{
+	ProjTransform result;
+	auto crs_spec_latin1 = crs_spec.toLatin1();
+	if (!crs_spec_latin1.contains("+no_defs"))
+		crs_spec_latin1.append(" +no_defs");
+	result.pj = pj_init_plus(crs_spec_latin1);
+	return result;
+}
+
 bool ProjTransform::isValid() const noexcept
 {
 	return pj != nullptr;
@@ -328,6 +339,19 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 	return *this;
 }
 
+// static
+ProjTransform ProjTransform::crs(const QString& crs_spec)
+{
+	ProjTransform result;
+	auto crs_spec_utf8 = crs_spec.toUtf8();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	result.pj = proj_create(PJ_DEFAULT_CTX, crs_spec_utf8);
+	return result;
+}
+
 bool ProjTransform::isValid() const noexcept
 {
 	return pj != nullptr;
@@ -335,8 +359,19 @@ bool ProjTransform::isValid() const noexcept
 
 bool ProjTransform::isGeographic() const
 {
-	/// \todo Evaluate proj_get_type() instead
-	return isValid() && proj_angular_output(pj, PJ_FWD);
+	if (!isValid())
+		return false;
+	
+	switch (proj_get_type(pj))
+	{
+	case PJ_TYPE_GEOGRAPHIC_CRS:
+	case PJ_TYPE_GEOGRAPHIC_2D_CRS:
+	case PJ_TYPE_GEOGRAPHIC_3D_CRS:
+		return true;
+	default:
+		return false;
+	}
+
 }
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
@@ -453,7 +488,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return proj_transform.isGeographic();
+	return ProjTransform::crs(getProjectedCRSSpec()).isGeographic();
 }
 
 
