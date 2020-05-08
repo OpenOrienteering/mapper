@@ -246,34 +246,43 @@ void GeoreferencingTest::testCRS_data()
 {
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
+	QTest::addColumn<bool>("is_geographic");
 	
 	QTest::newRow("ETRS89")
 	        << QStringLiteral("ETRS89")
-	        << QStringLiteral("+init=epsg:4258");
+	        << QStringLiteral("+init=epsg:4258")
+	        << true;
 	QTest::newRow("WGS 84")
 	        << QStringLiteral("WGS84")
-	        << QStringLiteral("+init=epsg:4326");
+	        << QStringLiteral("+init=epsg:4326")
+	        << true;
 	QTest::newRow("WGS 84 (G730)")
 	        << QStringLiteral("EPSG:9057")
-	        << QStringLiteral("+init=epsg:9057");
+	        << QStringLiteral("+init=epsg:9057")
+	        << true;
 	QTest::newRow("ETRS89 / UTM zone 32N")
 	        << QStringLiteral("EPSG:25832")
-	        << QStringLiteral("+init=epsg:25832");
+	        << QStringLiteral("+init=epsg:25832")
+	        << false;
 	QTest::newRow("NAD83(2011) / UTM zone 13N")
 	        << QStringLiteral("EPSG:6342")
-	        << QStringLiteral("+init=epsg:6342");
+	        << QStringLiteral("+init=epsg:6342")
+	        << false;
 	QTest::newRow("WGS 84 / UTM zone 32N")
 	        << QStringLiteral("EPSG:32632")
-	        << QStringLiteral("+init=epsg:32632");
+	        << QStringLiteral("+init=epsg:32632")
+	        << false;
 	QTest::newRow("WGS 84 / UTM zone 32N (Mapper)")
 	        << utm32_spec
-	        << utm32_spec;
+	        << utm32_spec
+	        << false;
 }
 
 void GeoreferencingTest::testCRS()
 {
 	QFETCH(QString, id);
 	QFETCH(QString, spec);
+	QFETCH(bool, is_geographic);
 	
 #ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 	if (qstrcmp(QTest::currentDataTag(), "WGS 84 (G730)") == 0)
@@ -285,6 +294,10 @@ void GeoreferencingTest::testCRS()
 	{
 		Georeferencing georef;
 		QVERIFY2(georef.setProjectedCRS(id, id), georef.getErrorText().toLatin1());
+		QEXPECT_FAIL("ETRS89", "Cannot reliably detect geographic CRS for this ID", Continue);
+		QEXPECT_FAIL("WGS 84", "Cannot reliably detect geographic CRS for this ID", Continue);
+		QEXPECT_FAIL("WGS 84 (G730)", "Cannot reliably detect geographic CRS for this ID", Continue);
+		QCOMPARE(georef.isGeographic(), is_geographic);
 	}
 #endif
 	
@@ -292,6 +305,12 @@ void GeoreferencingTest::testCRS()
 	{
 		Georeferencing georef;
 		QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+		QEXPECT_FAIL("ETRS89", "Cannot reliably detect geographic CRS for this spec", Continue);
+		QEXPECT_FAIL("WGS 84", "Cannot reliably detect geographic CRS for this spec", Continue);
+		QEXPECT_FAIL("WGS 84 (G730)", "Cannot reliably detect geographic CRS for this spec", Continue);
+#endif
+		QCOMPARE(georef.isGeographic(), is_geographic);
 	}
 }
 
