@@ -1482,7 +1482,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation>被单击的位置不是免费的不能那里使用填充工具。</translation>
+        <translation>点击的位置不是空的，不能这里使用填充工具。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="232"/>
