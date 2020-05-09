@@ -654,7 +654,7 @@ void Georeferencing::save(QXmlStreamWriter& xml) const
 		}
 	}
 	
-	if (state == Normal)
+	if (state == Normal || geographic_ref_point != LatLon())
 	{
 		XmlElementWriter crs_element(xml, literal::geographic_crs);
 		crs_element.writeAttribute(literal::id, literal::geographic_coordinates);
@@ -836,7 +836,7 @@ void Georeferencing::updateGridCompensation()
 	convergence = 0.0;
 	grid_scale_factor = 1.0;
 
-	if (state != Normal || !isValid())
+	if (state != Normal || !isValid() || geographic_ref_point == LatLon())
 		return;
 
 	const double delta = 1000.0; // meters
@@ -909,7 +909,7 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 		
 		bool ok = {};
 		QPointF new_projected_ref = toProjectedCoords(lat_lon, &ok);
-		if (ok && new_projected_ref != projected_ref_point)
+		if (ok)
 		{
 			projected_ref_point = new_projected_ref;
 			updateGridCompensation();
@@ -918,9 +918,8 @@ void Georeferencing::setGeographicRefPoint(LatLon lat_lon, bool update_grivation
 			if (update_scale_factor)
 				updateCombinedScaleFactor();
 			updateTransformation();
-			emit projectionChanged();
 		}
-		else if (geo_ref_point_changed)
+		if (geo_ref_point_changed)
 		{
 			emit projectionChanged();
 		}
