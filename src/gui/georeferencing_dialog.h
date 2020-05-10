@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -48,6 +48,7 @@ namespace OpenOrienteering {
 
 class CRSSelector;
 class Georeferencing;
+class LatLon;
 class Map;
 class MapEditorController;
 class MapWidget;
@@ -190,6 +191,11 @@ protected:
 	 * Updates enabled / disabled states of all widgets.
 	 */
 	void updateWidgets();
+	
+	/**
+	  * Updates widgets which depend on the geographic reference point.
+	  */
+	void updateGeographicRefPoint(const LatLon& latlon);
 	
 	/**
 	 * Updates enabled / disabled state and text of the declination query button.
