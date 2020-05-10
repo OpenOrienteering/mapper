@@ -314,9 +314,14 @@ public:
 	);
 	
 protected:
-	void shiftCoordinates(
+	void shiftCoordinatesLeft(
 	        const VirtualPath& path,
-	        double main_shift,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords
+	) const;
+	
+	void shiftCoordinatesRight(
+	        const VirtualPath& path,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords
 	) const;
