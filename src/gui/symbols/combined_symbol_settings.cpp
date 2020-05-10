@@ -153,6 +153,7 @@ void CombinedSymbolSettings::updateContents()
 	for (auto i = num_parts; i < widgets.size(); ++i)
 	{
 		auto& w = widgets[i];
+		QSignalBlocker block{w.edit};
 		w.label->setVisible(false);
 		w.edit->setSymbol(nullptr);
 		w.edit->setVisible(false);

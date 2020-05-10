@@ -398,6 +398,7 @@ const Symbol::BorderHints* CombinedSymbol::borderHints() const
 void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {
 	const auto index = std::size_t(i);
+	Q_ASSERT(index < parts.size());
 	
 	if (private_parts[index])
 		delete parts[index];
