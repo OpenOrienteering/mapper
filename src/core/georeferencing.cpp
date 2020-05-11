@@ -527,6 +527,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			if (auxiliary_scale_factor <= 0.0)
 				throw FileFormatException(tr("Invalid auxiliary scale factor: %1").arg(QString::number(auxiliary_scale_factor)));
 		}
+		grid_scale_factor = combined_scale_factor / auxiliary_scale_factor;
+		
 		if (georef_element.hasAttribute(literal::declination))
 			declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 		if (georef_element.hasAttribute(literal::grivation))
@@ -534,6 +536,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
 			grivation_error = georef_element.attribute<double>(literal::grivation) - grivation;
 		}
+		convergence = declination - grivation;
 		
 		while (xml.readNextStartElement())
 		{
@@ -724,7 +727,6 @@ void Georeferencing::setState(Georeferencing::State value)
 		if (state != Normal)
 		{
 			setProjectedCRS(QStringLiteral("Local"), {});
-			updateGridCompensation();
 		}
 		
 		emit stateChanged();
@@ -929,13 +931,8 @@ void Georeferencing::updateGridCompensation()
 	if (determinant < 0.00000000001)
 		return;
 
-	// This is the angle between true azimuth and grid azimuth.
-	// In case of deformation, the convergence varies with direction and this is an average.
 	convergence = qRadiansToDegrees(atan2(d_northing_dx - d_easting_dy,
 	                                      d_easting_dx + d_northing_dy));
-
-	// This is the scale factor from true distance to grid distance.
-	// In case of deformation, the scale factor varies with direction and this is an average.
 	grid_scale_factor = sqrt(determinant);
 }
 
@@ -1065,7 +1062,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 			if (ok && state != Normal)
 				setState(Normal);
 		}
-		if (!ok)
+		if (isValid() && !isLocal())
 			updateGridCompensation();
 		
 		emit projectionChanged();
