@@ -5,7 +5,7 @@ keywords: Android
 
 ## Android version
 
-The minimum version for running the app is 2.3. Write access to SD cards may require Android 4.4 (cf. [Storage locations](android-storage.md))
+The minimum version for running the app is 4.1. Write access to SD cards may require Android 4.4 (cf. [Storage locations](android-storage.md))
 
 
 ## Water-proofing
