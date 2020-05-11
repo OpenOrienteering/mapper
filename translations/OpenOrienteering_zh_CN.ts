@@ -1064,7 +1064,7 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation>轻触地图完成平均</translation>
+        <translation>轻触地图完成平均坐标值计算</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
@@ -8664,7 +8664,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>解开这一步将超越的点被加载的文件。是否确定？</translation>
+        <translation>撤消这一步将超出文件加载的范围，确定执行吗？</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
