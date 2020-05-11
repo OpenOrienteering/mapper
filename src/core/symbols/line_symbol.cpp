@@ -403,7 +403,7 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	if ((create_line || create_border) && processed_coords.size() > 1)
 	{
 		VirtualPath processed_path = { processed_flags, processed_coords };
-		processed_path.path_coords.update(path.first_index);
+		processed_path.path_coords.update(processed_path.first_index);
 		if (create_line)
 		{
 			output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
