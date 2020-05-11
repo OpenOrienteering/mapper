@@ -1515,7 +1515,10 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
+Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, good visibility</source>
@@ -1800,7 +1803,9 @@ Footprint: 9.0 m x 9.0 m.</source>
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólum északi irányba mutat.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyom: 13,5 m x 13,5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
@@ -7587,7 +7592,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: lassú futás, normál futás egy irányba</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -7636,7 +7641,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
     <message>
         <source>Vegetation: walk, normal running in one direction</source>
         <comment>Name of symbol 408.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: séta tempó, normál futhatóság egy irányba</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
@@ -15310,7 +15315,7 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pusztaság, mocsarak, levágott területek, újonnan ültetett területek (kb. 1 m alatti fák) vagy más általánosan nyitott talaj durva talajjal, hanga vagy magas fű, amely ugyanolyan futhatóságot nyújt, mint a tipikus nyílt erdők. Kombinálható a következő szimbólumokkal: lassú futás, jó láthatóság (407) vagy Vegetation: séta, jó láthatóság (409) a csökkent futhatóság szempontjából.Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -15339,7 +15344,11 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az adott tereptípusra jellemző nyílt erdő. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem szabad a fehérszínnek megjelennie.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m) más színű foltok nyílásainak kivételével, kivéve a következőket:
+Nyílt terepen (401) jelölésű nyílások esetén a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
+A növényzet szimbólum nyílásai: séta (408), a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
+A növényzet szimbólum nyílásai: küzdelemes (410) minimális területe 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
@@ -15352,12 +15361,15 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
+Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
         <comment>Name of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: lassú futás, normál futás egy irányba</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.
@@ -15365,7 +15377,10 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
+Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, minimum width</source>
@@ -15460,7 +15475,9 @@ Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</
 The definition of the symbol must be given on the map.
 Footprint: 13.5 m x 13.5 m.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>A szimbólum északi irányba mutat.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyom: 13,5 m x 13,5 m.</translation>
     </message>
     <message>
         <source>Paved area, with bounding line</source>
