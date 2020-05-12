@@ -34,6 +34,7 @@
 #include <QString>
 
 #include "core/map_coord.h"
+#include "core/map_view.h"
 #include "tools/tool.h"
 #include "tools/tool_base.h"
 
@@ -148,6 +149,16 @@ protected:
 	 * An utility implementing object selection logic.
 	 */
 	QScopedPointer<ObjectSelector> object_selector;
+
+public slots:
+	/**
+	 * Rendering of some of the editor graphic elements may depend on
+	 * MapView settings. This method is the place where to process
+	 * the changes.
+	 *
+	 * @param change type of change as emitted by MapView
+	 */
+	virtual void applyViewChanges(OpenOrienteering::MapView::ChangeFlags change) = 0;
 };
 
 

@@ -46,7 +46,7 @@
         <location filename="../src/gui/about_dialog.cpp" line="178"/>
         <source>A free software for drawing orienteering maps</source>
         <extracomment>For the moment, we use this existing translation instead of the previous one.</extracomment>
-        <translation>לעת עתה, אנו משתמשים בתרגום הנוכחי במקום בקודם</translation>
+        <translation type="unfinished">תוכנה לשרטוט מפות ניווט</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
