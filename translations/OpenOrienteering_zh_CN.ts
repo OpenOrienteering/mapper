@@ -609,12 +609,12 @@
         <translation>组合设置</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="226"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
         <source>Change from public to private symbol</source>
         <translation>从公共改为私有符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="227"/>
+        <location filename="../src/gui/symbols/combined_symbol_settings.cpp" line="228"/>
         <source>Take the old symbol as template for the private symbol?</source>
         <translation>以旧符号作为私有符号的模板？</translation>
     </message>
@@ -1210,12 +1210,12 @@
         <translation>切换曲线</translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_line_tool.cpp" line="519"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="524"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Free movement. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 自由流动。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_line_tool.cpp" line="535"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="540"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on segment: Toggle between straight and curved. </source>
         <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 段上︰ 直线和曲线之间切换。 </translation>
     </message>
@@ -1241,28 +1241,28 @@
         <translation>切换短划线</translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="716"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Finish editing. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 完成编辑。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="735"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="740"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Keep opposite handle positions. </source>
         <extracomment>Actually, this means: &quot;Keep the opposite handle&apos;s position. &quot;</extracomment>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 保持相反的句柄位置。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="756"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="761"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new dash point; with &lt;b&gt;%2&lt;/b&gt;: Add a normal point. </source>
         <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上︰ 删除它；在路径上︰ 添加一个新的实点；&lt;b&gt;%2&lt;/b&gt;︰ 添加一个普通点。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="759"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="764"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point: Delete it; on path: Add a new point; with &lt;b&gt;%2&lt;/b&gt;: Add a dash point. </source>
         <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上︰ 删除它；在路径上︰ 添加一个新的普通点；&lt;b&gt;%2&lt;/b&gt;︰ 添加一个实点。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="763"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="768"/>
         <source>&lt;b&gt;%1+Click&lt;/b&gt; on point to switch between dash and normal point. </source>
         <translation>&lt;b&gt;%1 + 单击&lt;/b&gt; 在点上，可实现实点和普通点之间的进行切换。 </translation>
     </message>
@@ -1270,32 +1270,32 @@
 <context>
     <name>OpenOrienteering::EditTool</name>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
-        <location filename="../src/tools/edit_line_tool.cpp" line="512"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="726"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="517"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
         <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 米 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="728"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="733"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 固定的角度。 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
-        <location filename="../src/tools/edit_point_tool.cpp" line="739"/>
-        <location filename="../src/tools/edit_line_tool.cpp" line="521"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="744"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="526"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Snap to existing objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 与现有对象对齐。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="745"/>
-        <location filename="../src/tools/edit_line_tool.cpp" line="527"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="750"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="532"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Select a single object. &lt;b&gt;Drag&lt;/b&gt;: Select multiple objects. &lt;b&gt;%1+Click&lt;/b&gt;: Toggle selection. </source>
         <translation>&lt;b&gt;单击&lt;/b&gt;︰ 选择单个对象。&lt;b&gt;拖动&lt;/b&gt;︰ 选择多个对象。&lt;b&gt;%1 + 点击&lt;/b&gt;︰ 切换选择。 </translation>
     </message>
     <message>
-        <location filename="../src/tools/edit_point_tool.cpp" line="748"/>
-        <location filename="../src/tools/edit_line_tool.cpp" line="530"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="753"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="535"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Delete selected objects. </source>
         <translation>&lt;b&gt;%1&lt;/b&gt;︰ 删除选定的对象。 </translation>
     </message>
@@ -1444,9 +1444,9 @@
         <translation type="vanished">格式 (%1) 不支持出口</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="296"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="310"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="324"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="315"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="329"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="343"/>
         <source>Cannot save file
 %1:
 %2</source>
@@ -1791,7 +1791,7 @@
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="92"/>
-        <location filename="../src/core/georeferencing.cpp" line="820"/>
+        <location filename="../src/core/georeferencing.cpp" line="860"/>
         <source>Local coordinates</source>
         <translation>本地坐标</translation>
     </message>
@@ -1813,33 +1813,33 @@
         <translation>规范</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="471"/>
+        <location filename="../src/core/georeferencing.cpp" line="509"/>
         <source>Map scale specification invalid or missing.</source>
         <translation>地图比例尺规范无效或丢失。</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="477"/>
+        <location filename="../src/core/georeferencing.cpp" line="515"/>
         <source>Invalid grid scale factor: %1</source>
         <translation>无效的网格比例尺系数: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="490"/>
+        <location filename="../src/core/georeferencing.cpp" line="528"/>
         <source>Invalid auxiliary scale factor: %1</source>
         <translation>无效的辅助比例系数：%1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="519"/>
-        <location filename="../src/core/georeferencing.cpp" line="546"/>
+        <location filename="../src/core/georeferencing.cpp" line="560"/>
+        <location filename="../src/core/georeferencing.cpp" line="587"/>
         <source>Unknown CRS specification language: %1</source>
         <translation>未知的坐标参照系规范语言: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="549"/>
+        <location filename="../src/core/georeferencing.cpp" line="590"/>
         <source>Unsupported geographic CRS specification: %1</source>
         <translation>不受支持的地理坐标参照系标准: %1</translation>
     </message>
     <message>
-        <location filename="../src/core/georeferencing.cpp" line="811"/>
+        <location filename="../src/core/georeferencing.cpp" line="851"/>
         <source>Local</source>
         <translation>本地</translation>
     </message>
@@ -2419,7 +2419,7 @@
         <translation>在%1加载撤消/重做步骤时出错：%2:%3</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="73"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="75"/>
         <source>No such option: %1</source>
         <comment>No such import / export option</comment>
         <translation>没有这样的选项: %1</translation>
@@ -2435,8 +2435,8 @@
     <name>OpenOrienteering::Importer</name>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="776"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="108"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="127"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="110"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="129"/>
         <source>Cannot open file
 %1:
 %2</source>
@@ -2445,53 +2445,53 @@
 %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="176"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="178"/>
         <source>Found an object without symbol.</source>
         <translation>发现一个无符号的对象。</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="204"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="206"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>首字下沉 %n 不规则对象。</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="211"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="213"/>
         <source>Error during symbol post-processing.</source>
         <translation>符号后处理期间出错。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="244"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="263"/>
         <source>Template &quot;%1&quot; has been loaded from the map&apos;s directory instead of the relative location to the map file where it was previously.</source>
         <translation>底图“%1”已从地图的目录加载，而不是从它以前所在的地图文件的相对位置加载。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="235"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="254"/>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="750"/>
         <source>Failed to load template &apos;%1&apos;, reason: %2</source>
         <translation>未能加载底图&quot;%1&quot;，原因: %2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="160"/>
         <source>Georeferencing mismatch:</source>
         <translation>地理参照系不匹配：</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="271"/>
         <source>Warnings when loading template &apos;%1&apos;:
 %2</source>
         <translation>加载底图&apos;％1&apos;时的警告：
 ％2</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
-        <location filename="../src/fileformats/file_import_export.cpp" line="262"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="279"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="281"/>
         <source>At least one template file could not be found.</source>
         <translation>至少找不到一个底图文件。</translation>
     </message>
     <message>
-        <location filename="../src/fileformats/file_import_export.cpp" line="263"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="282"/>
         <source>Click the red template name(s) in the Templates -&gt; Template setup window to locate the template file name(s).</source>
         <translation>单击底图-&gt;底图设置栏中的红色底图名称以找到底图文件名。</translation>
     </message>
@@ -2792,7 +2792,7 @@
         <translation>末端偏移：</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1771"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1774"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="620"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1501"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
@@ -2801,14 +2801,14 @@
         <translation>开始符号</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1775"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1778"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
         <source>Mid symbol</source>
         <translation>中间符号</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1779"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1782"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1508"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="325"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="815"/>
@@ -2816,7 +2816,7 @@
         <translation>结束符号</translation>
     </message>
     <message>
-        <location filename="../src/core/symbols/line_symbol.cpp" line="1783"/>
+        <location filename="../src/core/symbols/line_symbol.cpp" line="1786"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="614"/>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1494"/>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="300"/>
@@ -3279,12 +3279,12 @@ for reading.</source>
         <translation>新颜色</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4183"/>
         <source>Import...</source>
         <translation>导入</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4183"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4184"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
         <translation>符号代替被取消。
@@ -3560,19 +3560,19 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1061"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3746"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3747"/>
         <source>Add new part...</source>
         <translation>添加新的地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1062"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3806"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3807"/>
         <source>Rename current part...</source>
         <translation>重命名当前地图块</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1063"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3767"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3768"/>
         <source>Remove current part</source>
         <translation>删除当前地图块</translation>
     </message>
@@ -3583,7 +3583,7 @@ Import the data anyway?</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1066"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4056"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4057"/>
         <source>Import...</source>
         <translation>导入</translation>
     </message>
@@ -3625,7 +3625,7 @@ Import the data anyway?</source>
         <translation>底图(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1294"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1295"/>
         <source>Drawing</source>
         <translation>绘图</translation>
     </message>
@@ -3836,7 +3836,7 @@ because saving as %2 (.%3) is not supported.</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="620"/>
         <location filename="../src/gui/map/map_editor.cpp" line="668"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4137"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4138"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
@@ -3847,7 +3847,7 @@ because saving as %2 (.%3) is not supported.</source>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="668"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4137"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4138"/>
         <source>The map import generated warnings.</source>
         <translation>底图导入生成了警告。</translation>
     </message>
@@ -4017,17 +4017,17 @@ because saving as %2 (.%3) is not supported.</source>
         <translation>按对照表指定新符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4209"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4210"/>
         <source>Nothing to import.</source>
         <translation>没有要导入的内容。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4222"/>
         <source>Question</source>
         <translation>问题</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4222"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4223"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
@@ -4059,40 +4059,40 @@ Rescale the imported data?</source>
         <translation>视图</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1280"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1285"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1424"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3679"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1286"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1425"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3680"/>
         <source>Map parts</source>
         <translation>地图块</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1312"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1313"/>
         <source>Select template...</source>
         <translation>选择底图</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1318"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1319"/>
         <source>Editing</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1343"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1344"/>
         <source>Advanced editing</source>
         <translation>高级编辑</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1377"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1378"/>
         <source>Select symbol</source>
         <translation>符号选择</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1417"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1418"/>
         <source>Hide top bar</source>
         <translation>隐藏顶栏</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1420"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1421"/>
         <source>Show top bar</source>
         <translation>显示顶栏</translation>
     </message>
@@ -4101,29 +4101,29 @@ Rescale the imported data?</source>
         <location filename="../src/gui/map/map_editor.cpp" line="613"/>
         <location filename="../src/gui/map/map_editor.cpp" line="648"/>
         <location filename="../src/gui/map/map_editor.cpp" line="661"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1756"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1776"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1832"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1852"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1865"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3268"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3274"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3280"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3286"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3295"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4101"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4132"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4209"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1757"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1833"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1853"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1866"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3269"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3275"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3281"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3287"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3296"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4102"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4133"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4210"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1756"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1757"/>
         <source>Print / Export is not available in this program version!</source>
         <translation>打印 / 导出此程序版本中不可用 ！</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1776"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1777"/>
         <source>No undo steps available.</source>
         <translation>没有可用的撤消步骤。</translation>
     </message>
@@ -4133,8 +4133,8 @@ Rescale the imported data?</source>
         <translation type="vanished">切断 %1 对象</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1832"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="1865"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1833"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1866"/>
         <source>An internal error occurred, sorry!</source>
         <translation>发生内部错误，抱歉 ！</translation>
     </message>
@@ -4143,7 +4143,7 @@ Rescale the imported data?</source>
         <translation type="vanished">复制 %1 对象</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1852"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1853"/>
         <source>There are no objects in clipboard which could be pasted!</source>
         <translation>剪贴板中没有可以粘贴的对象！</translation>
     </message>
@@ -4152,67 +4152,67 @@ Rescale the imported data?</source>
         <translation type="vanished">粘贴的 %1 对象</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1951"/>
         <source>Set custom zoom factor</source>
         <translation>设置缩放系数</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1950"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1951"/>
         <source>Zoom factor:</source>
         <translation>缩放系数：</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2024"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2025"/>
         <source>Symbols</source>
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2038"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2039"/>
         <source>Colors</source>
         <translation>颜色列表</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2059"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2060"/>
         <source>Symbol set ID</source>
         <translation>符号集ID设置</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2060"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2061"/>
         <source>Edit the symbol set ID:</source>
         <translation>编辑符号集ID:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2087"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2088"/>
         <source>Scale all symbols</source>
         <translation>缩放所有符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2087"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2088"/>
         <source>Scale to percentage:</source>
         <translation>按百分比缩放：</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2111"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2112"/>
         <source>Map notes</source>
         <translation>地图笔记</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2116"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2117"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2117"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2118"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2157"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2158"/>
         <source>Templates</source>
         <translation>底图</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2219"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2220"/>
         <source>Tag Editor</source>
         <translation>标签编辑器</translation>
     </message>
@@ -4221,7 +4221,7 @@ Rescale the imported data?</source>
         <translation type="vanished">标签选择器</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2283"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2284"/>
         <source>No
 symbol
 selected</source>
@@ -4229,7 +4229,7 @@ selected</source>
         <translation>没有选定的符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2285"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2286"/>
         <source>Multiple
 symbols
 selected</source>
@@ -4237,41 +4237,41 @@ selected</source>
         <translation>选定的多个符号</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2385"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
         <source>Place point objects on the map.</source>
         <translation>在地图上放置点对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2385"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2386"/>
         <source>Select a point symbol to be able to use this tool.</source>
         <translation>选择一个点状符号，以便能够使用此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2387"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2388"/>
         <source>Draw polygonal and curved lines.</source>
         <translation>绘制多边形和曲线。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2387"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2391"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2395"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2388"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2390"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2392"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
         <source>Select a line, area or combined symbol to be able to use this tool.</source>
         <translation>选择线状、面状或者组合符号即可使用此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2389"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2390"/>
         <source>Draw circles and ellipses.</source>
         <translation>绘制圆和椭圆。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2393"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2394"/>
         <source>Draw paths free-handedly.</source>
         <translation>自由地绘制路径。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2395"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2396"/>
         <source>Fill bounded areas.</source>
         <translation>填充有界的区域。</translation>
     </message>
@@ -4280,130 +4280,130 @@ selected</source>
         <translation type="vanished">删除所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2499"/>
         <source>Set the direction of area fill patterns or point objects.</source>
         <translation>设置区域的方向填充图案或点对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2499"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
         <translation>选择区域对象与旋转填充图案或要激活此工具可旋转点对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2528"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
         <source>Resulting symbol: %1 %2.</source>
         <translation>生成的符号: %1 %2。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2529"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2530"/>
         <source>Select at least two area or path objects activate this tool.</source>
         <translation>选择至少两个区域或路径对象激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2531"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2532"/>
         <source>Unify overlapping objects.</source>
         <translation>统一重叠对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2533"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2534"/>
         <source>Remove all parts which are not overlaps with the first selected object.</source>
         <translation>删除与第一个选定对象不重叠的所有部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2535"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2536"/>
         <source>Remove overlapped parts of the first selected object.</source>
         <translation>删除第一个选定对象的重叠部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2537"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2538"/>
         <source>Remove all parts which overlap the first selected object.</source>
         <translation>删除与第一个选定对象重叠的所有部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2541"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
         <translation>将区域孔合并在一起，或将孔与对象边界合并以切出该部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2541"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
         <source>Select one area object with holes to activate this tool.</source>
         <translation>选择一个区域对象与孔来激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2546"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
         <source>Create a cutout of some objects or the whole map.</source>
         <translation>创建某些对象或整个地图的一个保险开关。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2546"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2548"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2547"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2549"/>
         <source>Select a closed path object as cutout shape to activate this tool.</source>
         <translation>选择一个闭合路径对象作为切口形状以激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2548"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2549"/>
         <source>Cut away some objects or everything in a limited area.</source>
         <translation>在有限的区域内切掉一些物体或任何东西。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2567"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
         <source>Places evenly spaced point objects along an existing path object</source>
         <translation>点对象沿现有路径对象间隔均匀的地方</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2567"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2568"/>
         <source>Select at least one path object and a single point symbol to activate this tool.</source>
         <translation>选择至少一个路径对象和一个点状符号来激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3295"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3296"/>
         <source>Merging holes failed.</source>
         <translation>合并孔失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3571"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3572"/>
         <source>Clear temporary markers</source>
         <translation>清除临时标记</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3571"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3572"/>
         <source>Are you sure you want to delete all temporary GPS markers? This cannot be undone.</source>
         <translation>你确定你想要删除所有临时 GPS 标记？这不能撤消。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3686"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3687"/>
         <source>Merge this part with</source>
         <translation>将此地图块合并入</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3693"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3694"/>
         <source>Move selected objects to</source>
         <translation>将选中对象移至</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3747"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3807"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3748"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3808"/>
         <source>Enter the name of the map part:</source>
         <translation>输入地图块的名称:</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3823"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3824"/>
         <source>Switched to map part &apos;%1&apos;.</source>
         <translation>切换到地图块 &apos;%1&apos;。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3851"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="3883"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3852"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3884"/>
         <source>Merge map parts</source>
         <translation>合并地图块</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3852"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3853"/>
         <source>Do you want to move all objects from map part &quot;%1&quot; to &quot;%2&quot;, and to remove &quot;%1&quot;?</source>
         <translation>你想要将所有对象从地图块&quot;%1&quot;都移动到&quot;%2&quot;，并删除&quot;%1&quot;吗？</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3884"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3885"/>
         <source>Do you want to move all objects to map part &quot;%1&quot;, and to remove all other map parts?</source>
         <translation>你想要移动所有对象到地图块&quot;%1&quot;，并删除其他所有地图块吗？</translation>
     </message>
@@ -4412,7 +4412,7 @@ selected</source>
         <translation type="vanished">无法导入所选的映射文件，因为它不能被加载。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2391"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2392"/>
         <source>Draw rectangles.</source>
         <translation>绘制矩形。</translation>
     </message>
@@ -4472,27 +4472,27 @@ selected</source>
         <translation>导出为(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1467"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1468"/>
         <source>1x zoom</source>
         <translation>1倍放大</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1471"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1472"/>
         <source>2x zoom</source>
         <translation>2倍放大</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1715"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1716"/>
         <source>Export</source>
         <translation>导出</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2397"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <source>Write text on the map.</source>
         <translation>在地图上写的文本。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2397"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2398"/>
         <source>Select a text symbol to be able to use this tool.</source>
         <translation>选择一个文本符号，以便能够使用此工具。</translation>
     </message>
@@ -4501,26 +4501,26 @@ selected</source>
         <translation type="vanished">复制所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2487"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2489"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2491"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2493"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2490"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2492"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2494"/>
         <source>Select at least one object to activate this tool.</source>
         <translation>选择至少一个对象来激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2502"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2503"/>
         <source>Switch the direction of symbols on line objects.</source>
         <translation>切换行对象的符号的方向。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2502"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2504"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2503"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2505"/>
         <source>Select at least one line object to activate this tool.</source>
         <translation>选择至少一个要激活此工具的线对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2504"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2505"/>
         <source>Connect endpoints of paths which are close together.</source>
         <translation>将路径的端点连接在一起。</translation>
     </message>
@@ -4529,17 +4529,17 @@ selected</source>
         <translation type="vanished">剪切所选的对象分成较小部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2508"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
         <source>Select at least one line or area object to activate this tool.</source>
         <translation>选择至少一个线或区域的对象来激活此工具。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2517"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2518"/>
         <source>Cut a hole into the selected area object.</source>
         <translation>在选定区域对象中剪切一个孔。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2517"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2518"/>
         <source>Select a single area object to activate this tool.</source>
         <translation>选择要激活此工具的单个区域对象。</translation>
     </message>
@@ -4552,18 +4552,18 @@ selected</source>
         <translation type="vanished">缩放所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2510"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
         <source>Turn paths made of straight segments into smooth bezier splines.</source>
         <translation>将直线段构成的路径转换为平滑的贝塞尔曲线。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2510"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2512"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2511"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
         <source>Select a path object to activate this tool.</source>
         <translation>选择要激活此工具的路径对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2512"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2513"/>
         <source>Reduce the number of points in path objects while trying to retain their shape.</source>
         <translation>减少路径对象的点的数量，同时设法留住他们的形状。</translation>
     </message>
@@ -4572,8 +4572,8 @@ selected</source>
         <translation type="vanished">将所选对象的符号切换到所选符号。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2562"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="2564"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2563"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
         <translation>选择至少一个对象和一个拟合、 不同的符号来激活此工具。</translation>
     </message>
@@ -4586,7 +4586,7 @@ selected</source>
         <translation type="vanished">%1 对象复制</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2894"/>
         <source>Object selection</source>
         <translation>选取对象</translation>
     </message>
@@ -4595,32 +4595,32 @@ selected</source>
         <translation type="vanished">因为没有与所选符号的对象选择的对象没有。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3254"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3255"/>
         <source>Measure</source>
         <translation>测量</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3268"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3269"/>
         <source>Unification failed.</source>
         <translation>失败的统一。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3274"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3275"/>
         <source>Intersection failed.</source>
         <translation>失败的十字路口。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3280"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3281"/>
         <source>Difference failed.</source>
         <translation>失败的差异。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3286"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3287"/>
         <source>XOr failed.</source>
         <translation>异或失败。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="3768"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="3769"/>
         <source>Do you want to remove map part &quot;%1&quot; and all its objects?</source>
         <translation>你想要删除地图块&quot;%1&quot;及其所有对象吗？</translation>
     </message>
@@ -4637,18 +4637,18 @@ selected</source>
         <translation type="vanished">%1，GPX，OSM 或 DXF 文件导入</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4059"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4060"/>
         <source>Importable files</source>
         <translation>可导入文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1720"/>
-        <location filename="../src/gui/map/map_editor.cpp" line="4059"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1721"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4060"/>
         <source>All files</source>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="4101"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="4102"/>
         <source>Cannot import the selected file because its file format is not supported.</source>
         <translation>无法导入所选的文件，因为其文件格式不受支持。</translation>
     </message>
@@ -4663,7 +4663,7 @@ selected</source>
         <translation>缩放</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1790"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1791"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -4671,63 +4671,63 @@ selected</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1842"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1843"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>%N 复制的对象</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1882"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>%N 粘贴的对象</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2487"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2488"/>
         <source>Deletes the selected objects.</source>
         <translation>删除所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2489"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2490"/>
         <source>Duplicate the selected objects.</source>
         <translation>复制选定的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2491"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2492"/>
         <source>Rotate the selected objects.</source>
         <translation>旋转所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2493"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2494"/>
         <source>Scale the selected objects.</source>
         <translation>缩放所选的对象。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2508"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2509"/>
         <source>Cut the selected objects into smaller parts.</source>
         <translation>将选定的对象切成较小的部分。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2562"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2563"/>
         <source>Switches the symbol of the selected objects to the selected symbol.</source>
         <translation>切换到所选符号的所选对象的符号。</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2564"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
         <translation>填充选定的线段或为选定区域创建边框。</translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2683"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2684"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>克隆的％n个对象</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="2893"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2894"/>
         <source>No objects were selected because there are no objects with the selected symbols.</source>
         <translation>未选中对象因为没有对象与选定的符号。</translation>
     </message>
@@ -4748,13 +4748,13 @@ selected</source>
         <location filename="../src/tools/draw_path_tool.cpp" line="1226"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="725"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="726"/>
-        <location filename="../src/tools/edit_point_tool.cpp" line="765"/>
+        <location filename="../src/tools/edit_point_tool.cpp" line="770"/>
         <source>More: %1, %2</source>
         <translation>更多: %1、 %2</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1223"/>
-        <location filename="../src/tools/edit_line_tool.cpp" line="537"/>
+        <location filename="../src/tools/edit_line_tool.cpp" line="542"/>
         <source>More: %1</source>
         <translation>更多: %1</translation>
     </message>
@@ -7098,7 +7098,7 @@ separations</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1382"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1383"/>
         <source>Description</source>
         <translation>描述</translation>
     </message>
@@ -7231,13 +7231,13 @@ separations</source>
         <translation>从选择中删除所有该符号的对象</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1395"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1396"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"/>
         <source>Hide objects with this symbol</source>
         <translation>隐藏该符号的对象</translation>
     </message>
     <message>
-        <location filename="../src/gui/map/map_editor.cpp" line="1406"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1407"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"/>
         <source>Protect objects with this symbol</source>
         <translation>锁定该符号的对象</translation>
@@ -8186,7 +8186,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
 <context>
     <name>OpenOrienteering::TemplatePlaceholder</name>
     <message>
-        <location filename="../src/templates/template_placeholder.cpp" line="143"/>
+        <location filename="../src/templates/template_placeholder.cpp" line="156"/>
         <source>Unknown file format</source>
         <translation>未知的文件格式</translation>
     </message>

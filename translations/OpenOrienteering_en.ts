@@ -16,7 +16,7 @@
 <context>
     <name>OpenOrienteering::Importer</name>
     <message numerus="yes">
-        <location filename="../src/fileformats/file_import_export.cpp" line="204"/>
+        <location filename="../src/fileformats/file_import_export.cpp" line="206"/>
         <source>Dropped %n irregular object(s).</source>
         <translation>
             <numerusform>Dropped one irregular object.</numerusform>
@@ -27,7 +27,7 @@
 <context>
     <name>OpenOrienteering::MapEditorController</name>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1790"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1791"/>
         <source>Cut %n object(s)</source>
         <extracomment>Past tense. Displayed when an Edit &gt; Cut operation is completed.</extracomment>
         <translation>
@@ -36,7 +36,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1842"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1843"/>
         <source>Copied %n object(s)</source>
         <translation>
             <numerusform>Copied one object</numerusform>
@@ -44,7 +44,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="1882"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="1883"/>
         <source>Pasted %n object(s)</source>
         <translation>
             <numerusform>Pasted one object</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/gui/map/map_editor.cpp" line="2683"/>
+        <location filename="../src/gui/map/map_editor.cpp" line="2684"/>
         <source>Duplicated %n object(s)</source>
         <translation>
             <numerusform>Duplicated one object</numerusform>
