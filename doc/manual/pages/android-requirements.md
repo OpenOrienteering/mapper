@@ -5,7 +5,7 @@ keywords: Android
 
 ## Android version
 
-The minimum version for running the app is 2.3. Write access to SD cards may require Android 4.4 (cf. [Storage locations](android-storage.md))
+The minimum version for running the app is 4.1. Write access to SD cards may require Android 4.4 (cf. [Storage locations](android-storage.md))
 
 
 ## Water-proofing
@@ -30,6 +30,6 @@ It is very desirable to use a device with replaceable battery. It may be possibl
 
 ## Sensors
 
-OpenOrienteering Mapper can use integrated GPS receivers. However, their accuracy may be low, so it may be advantageous to connect to an external GPS receiver. There is no direct support for external devices in Mapper, but some third party apps bridge the gap. For example the [Bluetooth GPS app](https://play.google.com/store/apps/details?id=googoo.android.btgps&rdid=googoo.android.btgps) provides a "mock" location provider which can be used when Android is put in developer mode.
+OpenOrienteering Mapper can use integrated GPS receivers. However, their accuracy may be low, so it may be advantageous to connect to an external GPS receiver. There is no direct support for external devices in Mapper, but some third party apps bridge the gap. For example the [Bluetooth GPS app](https://play.google.com/store/apps/details?id=googoo.android.btgps&rdid=googoo.android.btgps) or [Bluetooth GNSS app](https://play.google.com/store/apps/details?id=com.clearevo.bluetooth_gnss) provide a "mock" location provider which can be used when Android is put in developer mode.
 
 The app can use a magnetometer and accelerometer as a compass. Almost all modern devices should contain these sensors. If a gyroscope is also available, it will be used to improve the compass stability. However, these sensors are typically not accurate enough to be used for measurements. They can be used for convenience when not relying on a compass, but for accurate measurements, an external compass is recommended.
