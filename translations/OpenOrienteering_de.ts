@@ -1586,17 +1586,17 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Importoptionen</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebenen beschneiden</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL für GPX verwenden</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1641,7 +1641,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -1871,7 +1871,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="490"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlicher Skalierungsfaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
@@ -2055,24 +2055,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktoren anzeigen</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Maßstabskorrektur</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kombinierter Skalierungsfaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlicher Skalierungsfaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2118,12 +2118,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderung des Skalierungsfaktors</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Skalierungsfaktor hat sich geändert. Soll der Karteninhalt entsprechend vergrößert bzw. verkleinert werden?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2143,7 +2143,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -2439,7 +2439,7 @@
         <location filename="../src/core/symbols/symbol.cpp" line="318"/>
         <location filename="../src/undo/object_undo.cpp" line="616"/>
         <source>Malformed symbol ID &apos;%1&apos; at line %2 column %3.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unzulässig Symbol-ID &apos;%1&apos; bei Zeile %2 Zeichen %3.</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object.cpp" line="389"/>
@@ -2567,7 +2567,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Abweichung der Georeferenzierung:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
@@ -5573,7 +5573,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kodierung &apos;%1&apos; ist nicht verfügbar. Prüfen Sie die Einstellungen.</translation>
+        <translation>Kodierung &apos;%1&apos; ist nicht verfügbar. Prüfen Sie die Einstellungen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -5616,58 +5616,58 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
+        <translation>Im Flächensymbol &quot;%1&quot; wird ein Füllmuster verworfen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
+        <translation>Im Flächensymbol &quot;%1&quot; wird ein Punktmuster mit gegeneinander versetzten Reihen angenommen. Dies könnte stimmen, aber auch falsch sein.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>Im Liniensymbol &quot;%1&quot; kann die Kombination von Linienenden- und -verbindungsart nicht übernommen werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
+        <translation>Im Liniensymbol &quot;%1&quot; wird die Gruppierung der Strichelungen verworfen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
+        <translation>Im Liniensymbol &quot;%1&quot; wird die Anzahl der Striche in einer Gruppe auf 2 reduziert.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Im Liniensymbol &quot;%1&quot; können die Ränder nicht korrekt exportiert werden.</translation>
+        <translation>Im Liniensymbol &quot;%1&quot; können die Ränder nicht korrekt exportiert werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">Im Textsymbol %1 kann der benutzerdefinierte Zeichenabstand von OCAD abweichen</translation>
+        <translation>Im Textsymbol %1 kann der benutzerdefinierte Zeichenabstand von OCAD abweichen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
+        <translation>Im Textsymbol &quot;%1&quot; wird das Unterstreichen verworfen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
+        <translation>Im Textsymbol &quot;%1&quot; wird das Kerning verworfen</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">In kombiniertem Symbol %1: Nicht unterstütztes Untersymbol an Stelle %2.</translation>
+        <translation>In kombiniertem Symbol %1: Nicht unterstütztes Untersymbol an Stelle %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Kann den Versatz eines Füllmusters für ein Flächenobjekt nicht exportieren</translation>
+        <translation>Kann den Versatz eines Füllmusters für ein Flächenobjekt nicht exportieren</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -7076,7 +7076,7 @@ rationen</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Von der Vorlagendatei</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -7144,13 +7144,13 @@ rationen</translation>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
         <extracomment>Position source</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -7215,62 +7215,62 @@ rationen</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalierungsfaktor ändern</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Skalierungs-Parameter</translation>
+        <translation>Skalierungsparameter</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Skalierungszentrum:</translation>
+        <translation>Skalierungszentrum:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Ursprung des Karten-Koordinatensystems</translation>
+        <translation>Ursprung des Karten-Koordinatensystems</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Referenzpunkt der Georeferenzierung</translation>
+        <translation>Referenzpunkt der Georeferenzierung</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Anderer Punkt,</translation>
+        <translation>Anderer Punkt,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">Optionen</translation>
+        <translation>Optionen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Referenzpunkt für Georeferenzierung anpassen</translation>
+        <translation>Referenzpunkt für Georeferenzierung anpassen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Nicht-georeferenzierte Vorlagen skalieren</translation>
+        <translation>Nicht-georeferenzierte Vorlagen skalieren</translation>
     </message>
 </context>
 <context>
@@ -8119,7 +8119,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/templates/template_image.cpp" line="259"/>
         <location filename="../src/templates/template_image.cpp" line="381"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie das Koordinatenbezugssystem des georeferenzierten Bildes.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="264"/>
@@ -8312,7 +8312,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="269"/>
         <source>Vectorize lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Linien vektorisieren</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
@@ -8438,7 +8438,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Unbekanntes Dateiformat</translation>
     </message>
 </context>
 <context>
@@ -8538,17 +8538,17 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Track</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Route</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Wegpunkt</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
@@ -9050,7 +9050,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="730"/>
         <source>Inconsistent declination/grivation detected. Declination adjusted from %1° to %2°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Deklination und Gitterabweichung sind widersprüchlich. Korrektur der Deklination von %1° zu %2°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>

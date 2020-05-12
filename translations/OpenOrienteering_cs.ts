@@ -369,7 +369,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation>Úhel rastru:</translation>
+        <translation>Natočení rastru:</translation>
     </message>
     <message>
         <source>°</source>
@@ -1623,17 +1623,17 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Možnosti importu</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Oříznout vrstvy</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít GDAL pro GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1678,7 +1678,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -1908,7 +1908,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="490"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný pomocný měřítkový faktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
@@ -2091,24 +2091,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit měřítkové faktory</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Kompenzace měřítka</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kombinovaný měřítkový faktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pomocný měřítkový faktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2154,12 +2154,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Změna měřítkového faktoru</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>Měřítkový faktor byl změněn. Chcete podle toho natáhnout / zmenšit také obsah mapy?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2179,7 +2179,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -2668,7 +2668,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nesoulad v georeferencování:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
@@ -5707,7 +5707,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kódování &apos;%1&apos; není k dispozici. Zkontrolujte nastavení.</translation>
+        <translation>Kódování &apos;%1&apos; není k dispozici. Zkontrolujte nastavení.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -5750,58 +5750,58 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">V plošném symbolu &quot;%1&quot; vynechávám vzor výplně.</translation>
+        <translation>V plošném symbolu &quot;%1&quot; vynechávám vzor výplně.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">V plošném symbolu &quot;%1&quot; předpokládám bodový vzor s &quot;posunutými řádky&quot;. To může být správně, ale také to může být chybně.</translation>
+        <translation>V plošném symbolu &quot;%1&quot; předpokládám bodový vzor s &quot;posunutými řádky&quot;. To může být správně, ale také to může být chybně.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nelze znázornit kombinaci koncovek/napojení linií.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; se přehlíží seskupení čárek.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; se přehlíží seskupení čárek.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; je počet čárek v jedné skupině zmenšen na 2.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; je počet čárek v jedné skupině zmenšen na 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">V liniovém symbolu &quot;%1&quot; nemohou být okraje správně exportovány.</translation>
+        <translation>V liniovém symbolu &quot;%1&quot; nemohou být okraje správně exportovány.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">V textovém symbolu %1: je nastavena vlastní rozteč znaků, tato implementace zatím neodpovídá chování OCADu</translation>
+        <translation>V textovém symbolu %1: je nastavena vlastní rozteč znaků, tato implementace zatím neodpovídá chování OCADu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">V textovém symbolu %1: přehlíží se podtržení</translation>
+        <translation>V textovém symbolu %1: přehlíží se podtržení</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">V textovém symbolu %1: přehlíží se podřezávání</translation>
+        <translation>V textovém symbolu %1: přehlíží se podřezávání</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">V kombinovaném symbolu %1: Nepodporovaný podsymbol v indexu %2.</translation>
+        <translation>V kombinovaném symbolu %1: Nepodporovaný podsymbol v indexu %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Nelze exportovat posun vzoru výplně pro objekt plochy</translation>
+        <translation>Nelze exportovat posun vzoru výplně pro objekt plochy</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -7242,7 +7242,7 @@ barev</translation>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Z podkladového souboru</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -7381,62 +7381,62 @@ barev</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Změnit měřítkový faktor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Parametry změny měřítka</translation>
+        <translation>Parametry změny měřítka</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Střed změny měřítka:</translation>
+        <translation>Střed změny měřítka:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Počátek souřadnicového systému mapy</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Souřadnicový referenční bod</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jiný bod,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">Volby</translation>
+        <translation>Volby</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Upravit souřadnicový referenční bod</translation>
+        <translation>Upravit souřadnicový referenční bod</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Přizpůsobit negeoreferencované podklady</translation>
+        <translation>Přizpůsobit negeoreferencované podklady</translation>
     </message>
 </context>
 <context>
@@ -8326,7 +8326,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
         <location filename="../src/templates/template_image.cpp" line="259"/>
         <location filename="../src/templates/template_image.cpp" line="381"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyberte souřadnicový systém georeferencovaného obrazu.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="264"/>
@@ -8674,7 +8674,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Neznámý formát souboru</translation>
     </message>
 </context>
 <context>
@@ -8779,12 +8779,12 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasa</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Bod trasy</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
@@ -9300,7 +9300,7 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="730"/>
         <source>Inconsistent declination/grivation detected. Declination adjusted from %1° to %2°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Byla zjištěna nekonzistentní deklinace / grivace. Deklinace upravena z %1° na %2°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>

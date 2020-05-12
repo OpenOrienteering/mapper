@@ -1657,7 +1657,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -2159,7 +2159,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -5635,7 +5635,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Koodaus &apos;%1&apos; ei ole käytettävissä. Tarkista asetukset.</translation>
+        <translation>Koodaus &apos;%1&apos; ei ole käytettävissä. Tarkista asetukset.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -5678,18 +5678,18 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished">Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
+        <translation>Aluesymbolissa &quot;%1&quot;, ohitetaan täyttökuvio.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished">Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
+        <translation>Aluesymbolissa &quot;%1&quot;, oletetaan &quot;siirretyt rivit&quot;-kuvio. Voi olla oikein tai väärin.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, viivan pää/liitos-yhdistelmää ei voida esittää.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
@@ -5699,37 +5699,37 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, katkoviivojen määrä ryhmässä vähennetään kahteen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished">Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
+        <translation>Viivasymbolissa &quot;%1&quot;, reunaviivoja ei voida viedä oikein.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä</translation>
+        <translation>Tekstisymbolissa %1: mukautettu merkkijako päällä, se ei vastaa vielä OCD käyttäytymistä</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished">Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
+        <translation>Tekstisymbolissa %1: ohitetaan alleviivaus</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished">Tekstisymbolissa %1: ohitetaan välistys</translation>
+        <translation>Tekstisymbolissa %1: ohitetaan välistys</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">Koostettu symboli %1: Koostavaa symbolia kohdassa %2 ei tueta.</translation>
+        <translation>Koostettu symboli %1: koostavaa symbolia kohdassa %2 ei tueta.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Täyttökuvion siirtoa ei voi viedä</translation>
+        <translation>Täyttökuvion siirtoa ei voi viedä</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -7281,57 +7281,57 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Skaalauksen parametrit</translation>
+        <translation>Skaalauksen parametrit</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Skaalauksen keskipiste:</translation>
+        <translation>Skaalauksen keskipiste:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Kartan koordinaatiston origo</translation>
+        <translation>Kartan koordinaatiston origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Georeferoinnin kiintopiste</translation>
+        <translation>Georeferoinnin kiintopiste</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished">Muu piste,</translation>
+        <translation>Muu piste,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">Valinnat</translation>
+        <translation>Valinnat</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">Säädä georeferoinnin kiintopistettä</translation>
+        <translation>Säädä georeferoinnin kiintopistettä</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Skaalaa georeferoimattomat taustakartat</translation>
+        <translation>Skaalaa georeferoimattomat taustakartat</translation>
     </message>
 </context>
 <context>
@@ -8527,7 +8527,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuntematon tiedostomuoto</translation>
     </message>
 </context>
 <context>
@@ -8632,12 +8632,12 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Reitti</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Reittipiste</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>

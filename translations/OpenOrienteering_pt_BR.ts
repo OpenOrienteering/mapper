@@ -195,7 +195,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clipe de elementos no limite.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
@@ -300,12 +300,12 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="93"/>
         <source>Edit</source>
-        <translation type="unfinished">Editar</translation>
+        <translation>Edição</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Impressão a cores spot</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="106"/>
@@ -315,22 +315,22 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Freqüência da tela:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
         <source>lpi</source>
-        <translation type="unfinished"></translation>
+        <translation>LPI</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Indefinido</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ângulo de tela:</translation>
     </message>
     <message>
         <source>°</source>
@@ -558,7 +558,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2 °, %3 lpi)</translation>
     </message>
     <message>
         <source>Error</source>
@@ -984,7 +984,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tools/draw_path_tool.cpp" line="1170"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1197"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1 + %2&lt;/b&gt;: Segmento azimute e comprimento. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1186"/>
@@ -1196,7 +1196,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished">Encaixar</translation>
+        <translation>Ajustar</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="476"/>
@@ -1360,7 +1360,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do botão de ação:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1381,7 +1381,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho do simbolo do ícone:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="75"/>
@@ -1458,7 +1458,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Não foi possível escrever o arquivo: %1</translation>
     </message>
     <message>
         <source>Could not create new file: %1</source>

@@ -342,7 +342,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrāna frekvence:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -352,12 +352,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nedefinēts</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekrāna leņķis:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="128"/>
@@ -1383,7 +1383,7 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Darbības pogas izmērs:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="68"/>
@@ -1497,7 +1497,7 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished">Nevar saglabāt datni
+        <translation>Nevar saglabāt datni
 %1:
 %2</translation>
     </message>
@@ -1597,7 +1597,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Importa Opcijas</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
@@ -1627,7 +1627,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="75"/>
         <source>Export Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksporta Opcijas</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="77"/>
@@ -4529,7 +4529,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1166"/>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Rīkjoslas</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1280"/>
@@ -4567,7 +4567,7 @@ jo saglabāšana kā %2 (.%3) netiek atbalstīta.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1715"/>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksports</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1756"/>
@@ -4632,12 +4632,12 @@ atlasīti</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4209"/>
         <source>Nothing to import.</source>
-        <translation type="unfinished">Nav ko importēt.</translation>
+        <translation>Nav ko importēt.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4221"/>
         <source>Question</source>
-        <translation type="unfinished">Jautājums</translation>
+        <translation>Jautājums</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4222"/>

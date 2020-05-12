@@ -46,7 +46,7 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>按字母顺序排列的 OOM开发人员：</translation>
+        <translation>OOM开发人员(按字母顺序排列)：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
@@ -823,7 +823,7 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="148"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the whole map. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 剪辑整个地图。 </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 裁剪整个地图。 </translation>
     </message>
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="149"/>
@@ -834,7 +834,7 @@
     <message>
         <location filename="../src/tools/cutout_tool.cpp" line="154"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Clip the selected objects. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;︰ 所选的对象的剪辑。 </translation>
+        <translation>&lt;b&gt;％1 &lt;/ b&gt;：裁剪选定的对象。 </translation>
     </message>
 </context>
 <context>
@@ -1041,7 +1041,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1148"/>
         <source>&lt;b&gt;Length:&lt;/b&gt; %1 m </source>
-        <translation>&lt;b&gt;长度︰&lt;/b&gt; %1 m </translation>
+        <translation>&lt;b&gt;长度︰&lt;/b&gt; %1 米 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1176"/>
@@ -1064,7 +1064,7 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation>轻触地图完成平均</translation>
+        <translation>轻触地图完成平均坐标值计算</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
@@ -1273,7 +1273,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
         <location filename="../src/tools/edit_line_tool.cpp" line="512"/>
         <source>&lt;b&gt;Coordinate offset:&lt;/b&gt; %1, %2 mm  &lt;b&gt;Distance:&lt;/b&gt; %3 m </source>
-        <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 m </translation>
+        <translation>&lt;b&gt;坐标偏移量︰&lt;/b&gt; %1、 %2 毫米 &lt;b&gt;距离︰&lt;/b&gt; %3 米 </translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="728"/>
@@ -1482,7 +1482,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"/>
         <source>The clicked position is not free, cannot use the fill tool there.</source>
-        <translation>被单击的位置不是免费的不能那里使用填充工具。</translation>
+        <translation>点击的位置不是空的，不能这里使用填充工具。</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="232"/>
@@ -1539,7 +1539,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>导入选项</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
@@ -1549,12 +1549,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪图层</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>对GPX使用GDAL库</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="60"/>
@@ -1604,7 +1604,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -1825,7 +1825,7 @@
     <message>
         <location filename="../src/core/georeferencing.cpp" line="490"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的辅助比例系数：%1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
@@ -1988,24 +1988,24 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>显示比例尺系数</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>比例尺修正</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>综合比例尺系数:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>辅助比例尺系数：</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="245"/>
@@ -2051,12 +2051,12 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>比例尺系数变更</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>比例尺系数已更改。是否也要相应地缩放地图内容？</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="575"/>
@@ -2072,7 +2072,7 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -2211,7 +2211,7 @@
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="554"/>
         <source>Examples</source>
-        <translation>例子</translation>
+        <translation>示例</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="351"/>
@@ -2386,12 +2386,12 @@
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="49"/>
         <source>OCAD version 8, old implementation</source>
-        <translation>OCAD版本8，旧实现</translation>
+        <translation>OCAD版本8，旧的实现方式</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_format.cpp" line="51"/>
         <source>OCAD version %1</source>
-        <translation>OCAD版本％1</translation>
+        <translation>OCAD版本 %1</translation>
     </message>
     <message>
         <location filename="../src/util/xml_stream_util.cpp" line="225"/>
@@ -2475,7 +2475,7 @@
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>地理参照系不匹配：</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
@@ -4145,7 +4145,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1852"/>
         <source>There are no objects in clipboard which could be pasted!</source>
-        <translation>可以粘贴的剪贴板中没有对象 ！</translation>
+        <translation>剪贴板中没有可以粘贴的对象！</translation>
     </message>
     <message>
         <source>Pasted %1 object(s)</source>
@@ -4204,7 +4204,7 @@ Rescale the imported data?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2117"/>
         <source>OK</source>
-        <translation>还行</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2157"/>
@@ -4597,7 +4597,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3254"/>
         <source>Measure</source>
-        <translation>措施</translation>
+        <translation>测量</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3268"/>
@@ -4890,7 +4890,7 @@ selected</source>
         <location filename="../src/gui/map/map_widget.cpp" line="628"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="665"/>
@@ -4989,7 +4989,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="138"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="115"/>
@@ -5001,7 +5001,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="116"/>
         <source>m²</source>
         <comment>square meters</comment>
-        <translation>m ²</translation>
+        <translation>平方米</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="128"/>
@@ -5133,7 +5133,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1947"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>调整坐标以适应OCAD8绘图区域（-2 m。。。2米）。</translation>
+        <translation>调整坐标以适应OCAD8绘图区域（-2 米 ... 2米）。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1958"/>
@@ -5399,7 +5399,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>编码&apos;％1&apos;不可用，请检查设置。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -5410,7 +5410,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="661"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="672"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation>已调整坐标，以配合 OCAD 8 的绘图区大小 (-2 m ... 2 m).</translation>
+        <translation>已调整坐标，以适配 OCAD 8 的绘图区大小 (-2 米 ... 2 米).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="682"/>
@@ -5442,58 +5442,58 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished"></translation>
+        <translation>在面状符号“％1”中，正在跳过一个填充图案。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>在面状符号“％1”中，假定为一个“位移行”的点图像。这可能是正确的，也可能是错误的。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>在线状符号“％1”中，不能表示端点或连接的组合。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>在线状符号“％1”中，忽略短划线分组。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished"></translation>
+        <translation>在线状符号“％1”中，组中的短划线数量已减少为2。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>在线状符号“％1”中，无法正确导出边界。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">文本符号%1：设置了自定义字符间距，实现与OCAD的方式还不匹配</translation>
+        <translation>文本符号%1：设置了自定义字符间距，实现与OCAD的方式还不匹配</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished"></translation>
+        <translation>在文本符号％1中：忽略下划线</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>在文本符号％1中：忽略字偶距</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">在组合符号％1中：序号％2处不支持的子符号。</translation>
+        <translation>在组合符号％1中：序号％2是不支持的子符号。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">无法导出区域对象的填充模式转变</translation>
+        <translation>无法导出面状对象的填充图案移位</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -5799,12 +5799,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2304"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">无法创建层 %1: %2</translation>
+        <translation>无法创建层 %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2311"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">无法创建名称字段: %1</translation>
+        <translation>无法创建名称字段: %1</translation>
     </message>
 </context>
 <context>
@@ -6858,7 +6858,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>来自底图文件</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -6981,62 +6981,62 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>变更比例系数</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">比例尺参数</translation>
+        <translation>比例尺参数</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">比例尺中心：</translation>
+        <translation>缩放中心：</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>地图坐标系原点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>地理坐标参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>其他坐标点，</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>X坐标:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Y坐标:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">选项</translation>
+        <translation>选项</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished">地理参照点配准</translation>
+        <translation>调整地理配准参照点</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">按比例调整未经地理配准校正的底图</translation>
+        <translation>按比例调整未经地理配准校正的底图</translation>
     </message>
 </context>
 <context>
@@ -7213,7 +7213,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="916"/>
         <source>There are no symbols in clipboard which could be pasted!</source>
-        <translation>可以粘贴的剪贴板中没有符号 ！</translation>
+        <translation>剪贴板中没有可粘贴的符号！</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1114"/>
@@ -7874,7 +7874,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_image.cpp" line="259"/>
         <location filename="../src/templates/template_image.cpp" line="381"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择地理参照图像的坐标参照系。</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="264"/>
@@ -8188,7 +8188,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>未知的文件格式</translation>
     </message>
 </context>
 <context>
@@ -8255,7 +8255,7 @@ If you do not intend to draw on this template however, that is no problem.</sour
         <location filename="../src/templates/template_positioning_dialog.cpp" line="52"/>
         <source>m</source>
         <comment>meters</comment>
-        <translation>m</translation>
+        <translation>米</translation>
     </message>
     <message>
         <location filename="../src/templates/template_positioning_dialog.cpp" line="55"/>
@@ -8293,12 +8293,12 @@ If you do not intend to draw on this template however, that is no problem.</sour
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>路线</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>路标</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
@@ -8664,7 +8664,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="147"/>
         <source>Undoing this step will go beyond the point where the file was loaded. Are you sure?</source>
-        <translation>解开这一步将超越的点被加载的文件。是否确定？</translation>
+        <translation>撤消这一步将超出文件加载的范围，确定执行吗？</translation>
     </message>
     <message>
         <location filename="../src/undo/undo_manager.cpp" line="185"/>
@@ -8790,7 +8790,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="730"/>
         <source>Inconsistent declination/grivation detected. Declination adjusted from %1° to %2°.</source>
-        <translation type="unfinished"></translation>
+        <translation>检测到磁偏角或网格偏角不一致。倾斜度从％1°调整到％2°。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>

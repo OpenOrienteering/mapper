@@ -233,12 +233,12 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
         <source>Area settings</source>
-        <translation>Inställningar för ytor</translation>
+        <translation>Ytinställningar</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="343"/>
         <source>Pattern fill %1</source>
-        <translation>Mönsterfyllning %1</translation>
+        <translation>Fyllningsmönster %1</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="352"/>
@@ -768,7 +768,7 @@
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="89"/>
         <source>millimeters on map</source>
-        <translation>milimeter på kartan</translation>
+        <translation>millimeter på kartan</translation>
     </message>
     <message>
         <location filename="../src/gui/configure_grid_dialog.cpp" line="91"/>
@@ -1077,7 +1077,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/tools/draw_path_tool.cpp" line="1196"/>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="755"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Låsta vinklar. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fasta vinklar. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1206"/>
@@ -1211,7 +1211,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="335"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Låsta vinklar. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fasta vinklar. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
@@ -1298,7 +1298,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="770"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Set a corner point. &lt;b&gt;Right or double click&lt;/b&gt;: Finish the rectangle. </source>
-        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Sätt hörnpunkt. &lt;b&gt;Höger- eller dubbelklicka&lt;/b&gt;: Färdigställ rektangeln. </translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Placera hörnpunkt. &lt;b&gt;Höger- eller dubbelklicka&lt;/b&gt;: Färdigställ rektangeln. </translation>
     </message>
 </context>
 <context>
@@ -1460,7 +1460,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="728"/>
         <source>&lt;b&gt;%1&lt;/b&gt;: Fixed angles. </source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;: Låsta vinklar. </translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: Fasta vinklar. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="484"/>
@@ -1523,7 +1523,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="73"/>
         <source>Stepping of fixed angle mode (%1):</source>
-        <translation>Stegning i låst vinkel-läget (%1):</translation>
+        <translation>Vinkelintervall för det fasta vinkelläget (%1):</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
@@ -1642,7 +1642,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="157"/>
         <source>The map area is large. Use of the fill tool may be very slow. Do you want to use it anyway?</source>
-        <translation>Kartytan är stor. Fyllnadsverktyget kan vara långsamt. Vill du använda det i alla fall?</translation>
+        <translation>Kartytan är stor. Att använda fyllningsverktyget kan vara långsamt. Vill du använda det ändå?</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="142"/>
@@ -1654,7 +1654,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="143"/>
         <source>The clicked area is not bounded by lines or areas, cannot fill this area.</source>
-        <translation>Den valda ytan är inte sluten av linjer eller areor, kan inte fylla denna yta.</translation>
+        <translation>Den valda ytan avgränsas inte av linjer eller andra ytor och kan därför inte fyllas.</translation>
     </message>
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="177"/>
@@ -1669,7 +1669,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Fyll ytan med den aktiva symbolen. Området måste vara slutet med linjer eller areor, hänsyn till andra symboler tas ej. </translation>
+        <translation>&lt;b&gt;Klicka&lt;/b&gt;: Fyll ytan med den aktiva symbolen. Ytan måste vara avgränsad av linjer eller andra ytor, ingen hänsyn tas till andra symboler. </translation>
     </message>
 </context>
 <context>
@@ -1757,17 +1757,17 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Importalternativ</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
         <source>Clip layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Klipp lager</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd GDAL för GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -1777,7 +1777,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="67"/>
         <source>Hatch areas</source>
-        <translation>Hatch-områden</translation>
+        <translation>Skugga ytor</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="70"/>
@@ -1812,7 +1812,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="107"/>
         <source>GDAL</source>
-        <translation type="unfinished"></translation>
+        <translation>GDAL</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="108"/>
@@ -1966,12 +1966,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/core/crs_template_implementation.cpp" line="56"/>
         <source>UTM</source>
         <comment>UTM coordinate reference system</comment>
-        <translation>UTM koordinat referenssystem</translation>
+        <translation>UTM</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="57"/>
         <source>UTM coordinates</source>
-        <translation>UTM koordinater</translation>
+        <translation>UTM-koordinater</translation>
     </message>
     <message>
         <source>UTM Zone (number north/south, e.g. &quot;32 N&quot;, &quot;24 S&quot;)</source>
@@ -1980,7 +1980,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="60"/>
         <source>UTM Zone (number north/south)</source>
-        <translation>UTM-Zon (nummer nord/syd)</translation>
+        <translation>UTM-zon (nummer nord/syd)</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
@@ -2003,7 +2003,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/core/crs_template_implementation.cpp" line="79"/>
         <source>by EPSG code</source>
         <comment>as in: The CRS is specified by EPSG code</comment>
-        <translation>av EPSG kod</translation>
+        <translation>av EPSG-kod</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="81"/>
@@ -2041,7 +2041,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/core/georeferencing.cpp" line="490"/>
         <source>Invalid auxiliary scale factor: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig hjälpskalefaktor: %1</translation>
     </message>
     <message>
         <location filename="../src/core/georeferencing.cpp" line="519"/>
@@ -2311,24 +2311,24 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="215"/>
         <source>Show scale factors</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa skalningsfaktorer</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="216"/>
         <source>Scale compensation</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalningskompensation</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="221"/>
         <source>Combined scale factor:</source>
         <extracomment>The combined scale factor is the ratio between a length on the ground and the corresponding length on the curved earth model. It is applied as a factor to ground distances to get grid plane distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kombinerad skalfaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="227"/>
         <source>Auxiliary scale factor:</source>
         <extracomment>The auxiliary scale factor is the ratio between a length in the curved earth model and the corresponding length on the ground. It is applied as a factor to ground distances to get curved earth model distances.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hjälpskalefaktor:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="251"/>
@@ -2368,12 +2368,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalfaktorförändring</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
         <source>The scale factor has been changed. Do you want to stretch/shrink the map content accordingly, too?</source>
-        <translation type="unfinished"></translation>
+        <translation>Skalfaktorn har ändrats. Vill du även sträcka/krympa kartinnehållet i enlighet med detta?</translation>
     </message>
     <message>
         <source>Projected coordinates:</source>
@@ -2393,7 +2393,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
         <location filename="../src/gui/georeferencing_dialog.cpp" line="607"/>
         <source>%1</source>
         <comment>scale factor value</comment>
-        <translation type="unfinished">%1° {1?}</translation>
+        <translation>%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="609"/>
@@ -2624,7 +2624,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="217"/>
         <source>Open most recently used file on start</source>
-        <translation>Öppna den senast använda kartan när programmet startar</translation>
+        <translation>Öppna den senast använda kartan när programmet startas</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/home_screen_widget.cpp" line="220"/>
@@ -2939,7 +2939,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="158"/>
         <source>Georeferencing mismatch:</source>
-        <translation type="unfinished"></translation>
+        <translation>Missanpassad georeferering:</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="252"/>
@@ -3098,7 +3098,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="99"/>
         <source>Line join:</source>
-        <translation>Linjeanslutning:</translation>
+        <translation>Linjekoppling:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="101"/>
@@ -3260,12 +3260,12 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="677"/>
         <source>Cap length at start:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändlängd vid start:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="678"/>
         <source>Cap length at end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändlängd vid slut:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="682"/>
@@ -3451,7 +3451,7 @@ Detta fönster låter dig välja en typsnittsstorlek som ger en exakt storlek f�
     <message>
         <location filename="../src/gui/main_window.cpp" line="391"/>
         <source>&amp;File</source>
-        <translation>&amp;Fil</translation>
+        <translation>&amp;Arkiv</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
@@ -3846,8 +3846,8 @@ Fel vid bearbetning av symbolerna.</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="4183"/>
         <source>Symbol replacement was canceled.
 Import the data anyway?</source>
-        <translation>Symbol-ersättningen avbröts.
-Importera datan ändå?</translation>
+        <translation>Symbolersättningen avbröts.
+Importera data ändå?</translation>
     </message>
 </context>
 <context>
@@ -3992,7 +3992,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="982"/>
         <source>Map notes...</source>
-        <translation>Kartanteckningar…</translation>
+        <translation>Kartnoteringar…</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="984"/>
@@ -4027,7 +4027,7 @@ Importera datan ändå?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
         <source>Set point objects</source>
-        <translation>Sätt punktobjekt</translation>
+        <translation>Placera punktobjekt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="995"/>
@@ -4330,7 +4330,7 @@ eftersom det inte stöds att spara som %2 (.%3).</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="966"/>
         <source>Hatch areas</source>
-        <translation>Konturteckna ytor</translation>
+        <translation>Skugga ytor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="967"/>
@@ -4442,12 +4442,12 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1022"/>
         <source>Unify areas</source>
-        <translation>Slå ihop ytor</translation>
+        <translation>Sammanfoga ytor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1023"/>
         <source>Intersect areas</source>
-        <translation>Dela ytor</translation>
+        <translation>Behåll överlappande ytor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2059"/>
@@ -4475,7 +4475,7 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1025"/>
         <source>Area XOr</source>
-        <translation>Yta XOr</translation>
+        <translation>Behåll icke överlappande ytor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1068"/>
@@ -4663,12 +4663,12 @@ Skala om den importerade datan?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
         <source>Set the direction of area fill patterns or point objects.</source>
-        <translation>Ställ in riktningen för yt-mönster eller punktobjekt.</translation>
+        <translation>Ställ in riktningen för ytfyllningsmönster eller punktobjekt.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2498"/>
         <source>Select an area object with rotatable fill pattern or a rotatable point object to activate this tool.</source>
-        <translation>Välj ett ytobjekt med roterbart mönster eller ett roterbart punktobjekt för att aktivera detta verktyg.</translation>
+        <translation>Välj ett ytobjekt med roterbart fyllningsmönster eller ett roterbart punktobjekt för att aktivera detta verktyg.</translation>
     </message>
     <message>
         <source>Import OMAP, OCD, GPX, OSM or DXF file</source>
@@ -5151,7 +5151,7 @@ valda</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="2562"/>
         <location filename="../src/gui/map/map_editor.cpp" line="2564"/>
         <source>Select at least one object and a fitting, different symbol to activate this tool.</source>
-        <translation>Välj minst ett objekt och en annan, passande, symbol för att använda detta verktyg.</translation>
+        <translation>Välj minst ett objekt och en passande, annan symbol för att använda detta verktyg.</translation>
     </message>
     <message>
         <source>Fill the selected line(s) or create a border for the selected area(s).</source>
@@ -5651,7 +5651,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
         <source>The minimimum area is %1 %2.</source>
-        <translation>Den minsta arean är %1 %2.</translation>
+        <translation>Minimumarean är %1 %2.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/measure_widget.cpp" line="129"/>
@@ -5761,7 +5761,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1737"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation>Det gick inte att exportera fyllningsmönstrets skifte för ett ytobjekt</translation>
+        <translation>Det gick inte att exportera fyllningsmönsterförskjutningen för ett ytobjekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1872"/>
@@ -5787,7 +5787,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2229"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation>I linjesymbolen &quot;%1&quot;, kan inte visa slut/anslutnings-kombination.</translation>
+        <translation>I linjesymbolen &quot;%1&quot;. kan inte visa ände/kopplings-kombination.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2250"/>
@@ -5807,12 +5807,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2376"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation>I ytsymbolen &quot;%1&quot;, hoppas ett fyllnadsmönster över.</translation>
+        <translation>I ytsymbol &quot;%1&quot;. Hoppar över ett fyllningsmönster.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2423"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation>I ytsymbolen &quot;%1&quot;, antas ett &quot;bytta rader&quot;-mönster. Detta kan vara rätt eller fel.</translation>
+        <translation>I ytsymbol &quot;%1&quot;. Antar ett &quot;radskiftat&quot; mönster. Detta kan vara rätt eller fel.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2462"/>
@@ -5856,8 +5856,8 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="165"/>
         <source>%n color separation(s) were skipped, reason: Import disabled.</source>
         <translation>
-            <numerusform>%n färgseperation skippades, anledning: importering avstängd.</numerusform>
-            <numerusform>%n färgseperationer skippades, anledning: importering avstängd.</numerusform>
+            <numerusform>%n färgseparation hoppades över. Orsak: import avstängd.</numerusform>
+            <numerusform>%n färgseparationer hoppades över. Orsak: import avstängd.</numerusform>
         </translation>
     </message>
     <message>
@@ -6048,7 +6048,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="548"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Kodning &apos;%1&apos; är inte tillgänglig. Kontrollera inställningarna.</translation>
+        <translation>Kodning &apos;%1&apos; är inte tillgänglig. Kontrollera inställningarna.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="577"/>
@@ -6091,58 +6091,58 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1351"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1387"/>
         <source>In area symbol &quot;%1&quot;, skipping a fill pattern.</source>
-        <translation type="unfinished"></translation>
+        <translation>I ytsymbol &quot;%1&quot;. Hoppar över ett fyllningsmönster.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1377"/>
         <source>In area symbol &quot;%1&quot;, assuming a &quot;shifted rows&quot; point pattern. This might be correct as well as incorrect.</source>
-        <translation type="unfinished"></translation>
+        <translation>I ytsymbol &quot;%1&quot;. Ett &quot;radskiftat&quot; mönster antas. Detta kan vara rätt eller fel.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1510"/>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2153"/>
         <source>In line symbol &quot;%1&quot;, cannot represent cap/join combination.</source>
-        <translation type="unfinished"></translation>
+        <translation>I linjesymbolen &quot;%1&quot;. Kan inte representera ände/kopplings-kombination.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1532"/>
         <source>In line symbol &quot;%1&quot;, neglecting the dash grouping.</source>
-        <translation type="unfinished"></translation>
+        <translation>I linjesymbol &quot;%1&quot;. Ignorerar streckgrupperingen.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1544"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation type="unfinished"></translation>
+        <translation>I linjesymbol &quot;%1&quot;. Antalet streck i en grupp har minskats till 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1639"/>
         <source>In line symbol &quot;%1&quot;, cannot export the borders correctly.</source>
-        <translation type="unfinished"></translation>
+        <translation>I linjesymbol &quot;%1&quot;. Kan inte exportera kantlinjerna korrekt.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1830"/>
         <source>In text symbol %1: custom character spacing is set,its implementation does not match OCAD&apos;s behavior yet</source>
-        <translation type="unfinished">I textsymbol %1: anpassat teckenavstånd är inställt, dess implementering matchar inte OCADs beteende ännu</translation>
+        <translation>I textsymbol %1: anpassat teckenavstånd är inställt, dess implementering matchar inte OCADs beteende ännu</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1846"/>
         <source>In text symbol %1: ignoring underlining</source>
-        <translation type="unfinished"></translation>
+        <translation>I textsymbol %1: ignorerar understrykning</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="1849"/>
         <source>In text symbol %1: ignoring kerning</source>
-        <translation type="unfinished"></translation>
+        <translation>I textsymbol %1: ignorerar kerning</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2071"/>
         <source>In combined symbol %1: Unsupported subsymbol at index %2.</source>
-        <translation type="unfinished">I den kombinerade symbolen %1: Undersymbolen stöds inte vid index %2.</translation>
+        <translation>I kombinerad symbol %1: Undersymbolen stöds inte vid index %2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2277"/>
         <source>Unable to export fill pattern shift for an area object</source>
-        <translation type="unfinished">Det gick inte att exportera fyllningsmönstrets skifte för ett ytobjekt</translation>
+        <translation>Det går inte att exportera fyllningsmönsterförskjutningen för ett ytobjekt</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2476"/>
@@ -6295,7 +6295,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="246"/>
         <source>In area symbol %1 &apos;%2&apos;: %3</source>
-        <translation>I areasymbol %1 &apos;%2&apos;: %3</translation>
+        <translation>I ytsymbol %1 &apos;%2&apos;: %3</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="520"/>
@@ -6452,12 +6452,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2304"/>
         <source>Failed to create layer %1: %2</source>
-        <translation type="unfinished">Det gick inte att skapa lager %1: %2</translation>
+        <translation>Det gick inte att skapa lager %1: %2</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="2311"/>
         <source>Failed to create name field: %1</source>
-        <translation type="unfinished">Det gick inte att skapa namnfält: %1</translation>
+        <translation>Det gick inte att skapa namnfält: %1</translation>
     </message>
 </context>
 <context>
@@ -6708,7 +6708,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="173"/>
         <source>Line cap:</source>
-        <translation>Ände:</translation>
+        <translation>Linjeände:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="175"/>
@@ -6729,7 +6729,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="180"/>
         <source>Line join:</source>
-        <translation>Linjeanslutning:</translation>
+        <translation>Linjekoppling:</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/point_symbol_editor_widget.cpp" line="182"/>
@@ -6828,7 +6828,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/gui/print_tool.cpp" line="59"/>
         <location filename="../src/gui/print_tool.cpp" line="371"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Move the map, the print area or the area&apos;s borders. </source>
-        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytta kartan, utskriftsområdet eller områdets kanter. </translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Flytta kartan, utskriftsområdet eller ytans kanter. </translation>
     </message>
     <message>
         <location filename="../src/gui/print_tool.cpp" line="343"/>
@@ -6952,17 +6952,17 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="189"/>
         <source>Custom area</source>
-        <translation>Egen yta</translation>
+        <translation>Egendefinierat område</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="190"/>
         <source>Map area:</source>
-        <translation>Kartyta:</translation>
+        <translation>Kartområde:</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="192"/>
         <source>Center print area</source>
-        <translation>Centrera utskriftområde</translation>
+        <translation>Centrera utskriftsområde</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="160"/>
@@ -7183,7 +7183,8 @@ graphics</source>
         <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
-        <translation>Färgseperationer</translation>
+        <translation>Färg-
+separationer</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="234"/>
@@ -7401,7 +7402,7 @@ separations</source>
     <message>
         <location filename="../src/tools/rotate_pattern_tool.cpp" line="85"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Set the direction of area fill patterns or point objects. </source>
-        <translation>&lt;b&gt;Dra&lt;/b&gt;: Sätt riktning för ytfyllnadsmönster eller punktobjekt. </translation>
+        <translation>&lt;b&gt;Dra&lt;/b&gt;: Sätt riktningen för ytfyllningsmönster eller punktobjekt. </translation>
     </message>
 </context>
 <context>
@@ -7595,7 +7596,7 @@ separations</source>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="76"/>
         <source>From template file</source>
-        <translation type="unfinished"></translation>
+        <translation>Från mallfil</translation>
     </message>
     <message>
         <location filename="../src/gui/select_crs_dialog.cpp" line="78"/>
@@ -7691,7 +7692,7 @@ separations</source>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="129"/>
         <source>Core Location</source>
         <extracomment>Position source; product name, do not translate literally.</extracomment>
-        <translation type="unfinished">Kärnplats</translation>
+        <translation>Core Location</translation>
     </message>
 </context>
 <context>
@@ -7734,62 +7735,62 @@ separations</source>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="43"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändra skalningsfaktor</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="47"/>
         <source>Scaling parameters</source>
-        <translation type="unfinished">Skalningsparametrar</translation>
+        <translation>Skalningsparametrar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="49"/>
         <source>Scaling center:</source>
-        <translation type="unfinished">Skalningscentrum:</translation>
+        <translation>Skalningscentrum:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="52"/>
         <source>Map coordinate system origin</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kartkoordinatsystemets origo</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="58"/>
         <source>Georeferencing reference point</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Georefereringens referenspunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="66"/>
         <source>Other point,</source>
         <extracomment>Scaling center point</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Andra punkt,</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="71"/>
         <source>X:</source>
         <extracomment>x coordinate</extracomment>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="75"/>
         <source>Y:</source>
         <extracomment>y coordinate</extracomment>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="78"/>
         <source>Options</source>
-        <translation type="unfinished">Inställningar</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="80"/>
         <source>Adjust georeferencing reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>Justera georefereringens referenspunkt</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_dialog_stretch.cpp" line="87"/>
         <source>Scale non-georeferenced templates</source>
-        <translation type="unfinished">Skala icke georefererade bakgrunder</translation>
+        <translation>Skala icke georefererade bakgrunder</translation>
     </message>
 </context>
 <context>
@@ -8145,7 +8146,7 @@ separations</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>Behåll symbolernas gömd/skyddad status från den tidigare symboluppsättningen</translation>
+        <translation>Behåll symbolernas status (gömd/skyddad) från den tidigare symboluppsättningen</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"/>
@@ -8293,7 +8294,7 @@ Vill du spara dina ändringar?</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
         <source>The chosen symbol set has a scale of 1:%1, while the map scale is 1:%2. Do you really want to choose this set?</source>
-        <translation>Den valda symboluppsättningen har skala !:%1, medans kartskalan är 1:%2. Vill du verkligen använda dessa symboler?</translation>
+        <translation>Den valda symboluppsättningen har skala 1:%1, medan kartskalan är 1:%2. Vill du verkligen använda dessa symboler?</translation>
     </message>
     <message>
         <source>Cannot load CRT file, aborting.</source>
@@ -8738,7 +8739,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
         <location filename="../src/templates/template_image.cpp" line="259"/>
         <location filename="../src/templates/template_image.cpp" line="381"/>
         <source>Select the coordinate reference system of the georeferenced image.</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj koordinatreferenssystemet för den georefererade bilden.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image.cpp" line="264"/>
@@ -9120,7 +9121,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message>
         <location filename="../src/templates/template_placeholder.cpp" line="143"/>
         <source>Unknown file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Okänt filformat</translation>
     </message>
 </context>
 <context>
@@ -9225,12 +9226,12 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutt</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Waypoint</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="289"/>
@@ -9757,13 +9758,13 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="730"/>
         <source>Inconsistent declination/grivation detected. Declination adjusted from %1° to %2°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkonsekvent deklination/grivation har upptäckts. Deklinationen justerad från %1° till %2°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
         <location filename="../src/fileformats/xml_file_format.cpp" line="914"/>
         <source>Could not set knockout property of color &apos;%1&apos;.</source>
-        <translation>Kunde inte sätta knockout egenskap för färg &apos;%1&apos;.</translation>
+        <translation>Kunde inte sätta knockout-egenskap för färg &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="874"/>
