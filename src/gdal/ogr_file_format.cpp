@@ -850,7 +850,7 @@ bool OgrFileImport::importImplementation()
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
-			georef.setProjectedRefPoint(new_projected, false);
+			georef.setProjectedRefPoint(new_projected, false, false);
 			map->setGeoreferencing(georef);
 		}
 	}
@@ -970,7 +970,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(latitude, 0, 'f')
 		                             .arg(longitude, 0, 'f') );
-		ortho_georef.setProjectedRefPoint({}, false);
+		ortho_georef.setProjectedRefPoint({}, false, false);
 		ortho_georef.setDeclination(map->getGeoreferencing().getDeclination());
 		map->setGeoreferencing(ortho_georef);
 		return srsFromMap();
