@@ -403,7 +403,7 @@ void LineSymbol::createSinglePathRenderables(const VirtualPath& path, bool path_
 	if ((create_line || create_border) && processed_coords.size() > 1)
 	{
 		VirtualPath processed_path = { processed_flags, processed_coords };
-		processed_path.path_coords.update(path.first_index);
+		processed_path.path_coords.update(processed_path.first_index);
 		if (create_line)
 		{
 			output.insertRenderable(new LineRenderable(this, processed_path, path_closed));
@@ -424,7 +424,6 @@ void LineSymbol::createBorderLines(
         const SplitPathCoord& end,
         ObjectRenderables& output) const
 {
-	const auto main_shift = 0.0005 * line_width;
 	const auto path_closed = path.isClosed();
 	
 	MapCoordVector border_flags;
@@ -450,12 +449,12 @@ void LineSymbol::createBorderLines(
 			// Left border is dashed
 			border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
-			shiftCoordinates({dashed_flags, dashed_coords}, -main_shift, border_flags, border_coords);
+			shiftCoordinatesLeft({dashed_flags, dashed_coords}, border_flags, border_coords);
 		}
 		else
 		{
 			// Solid left border
-			shiftCoordinates(path, -main_shift, border_flags, border_coords);
+			shiftCoordinatesLeft(path, border_flags, border_coords);
 		}
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
@@ -480,12 +479,12 @@ void LineSymbol::createBorderLines(
 				border_symbol.processDashedLine(path, start, end, path_closed, dashed_flags, dashed_coords, output);
 			}
 			border_symbol.dashed = false;	// important, otherwise more dashes might be added by createRenderables()!
-			shiftCoordinates({dashed_flags, dashed_coords}, main_shift, border_flags, border_coords);
+			shiftCoordinatesRight({dashed_flags, dashed_coords}, border_flags, border_coords);
 		}
 		else
 		{
 			// Solid right border
-			shiftCoordinates(path, main_shift, border_flags, border_coords);
+			shiftCoordinatesRight(path, border_flags, border_coords);
 		}
 		auto border_path = VirtualPath{border_flags, border_coords};
 		auto last = border_path.path_coords.update(0);
@@ -495,7 +494,7 @@ void LineSymbol::createBorderLines(
 }
 
 
-void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, double border_shift, LineSymbol::JoinStyle join_style, MapCoordVector& out_flags, MapCoordVectorF& out_coords)
 {
 	const float curve_threshold = 0.03f;	// TODO: decrease for export/print?
 	const int MAX_OFFSET = 16;
@@ -509,9 +508,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 		miter_reference = cos(atan(4.0 / miter_limit));
 	
 	// sign of shift and main shift indicates left or right border
-	// but u_border_shift is unsigned
-	double u_border_shift = 0.001 * ((main_shift > 0.0 && areBordersDifferent()) ? right_border.shift : border.shift);
-	double shift = main_shift + ((main_shift > 0.0) ? u_border_shift : -u_border_shift);
+	auto const shift = main_shift + border_shift;
 	
 	auto size = path.size();
 	out_flags.clear();
@@ -587,7 +584,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			double offset;
 				
 			// Determine type of corner (inner vs. outer side of corner)
-			double a = (tangent_out.x() * tangent_in.y() - tangent_in.x() * tangent_out.y()) * main_shift;
+			double a = (tangent_out.x() * tangent_in.y() - tangent_in.x() * tangent_out.y()) * shift;
 			if (a > 0.0)
 			{
 				// Outer side of corner
@@ -597,7 +594,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 					middle1 = tangent_in + middle0;
 					middle1.normalize();
 					double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
-					offset = tan(phi1) * u_border_shift;
+					offset = tan(phi1) * std::abs(border_shift);
 					
 					if (i > 0 && !qIsNaN(offset))
 					{
@@ -626,7 +623,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 						middle1 = tangent_in + middle0;
 						middle1.normalize();
 						double phi1 = acos(MapCoordF::dotProduct(middle1, tangent_in));
-						offset = miter_limit * fabs(main_shift) + tan(phi1) * u_border_shift;
+						offset = miter_limit * fabs(main_shift) + tan(phi1) * std::abs(border_shift);
 						
 						if (i > 0 && !qIsNaN(offset))
 						{
@@ -727,7 +724,7 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			
 			// Use QBezierCopy code to shift the curve, but set start and end point manually to get the correct end points (because of line joins)
 			// TODO: it may be necessary to remove some of the generated curves in the case an outer point is moved inwards
-			if (main_shift > 0.0)
+			if (shift > 0.0)
 			{
 				QBezier bezier = QBezier::fromPoints(path.coords[i+3], path.coords[i+2], path.coords[i+1], coords_i);
 				auto count = bezier.shifted(offsetCurves, MAX_OFFSET, qAbs(shift), curve_threshold);
@@ -773,6 +770,17 @@ void LineSymbol::shiftCoordinates(const VirtualPath& path, double main_shift, Ma
 			i += 2;
 		}
 	}
+}
+
+
+void LineSymbol::shiftCoordinatesLeft(const VirtualPath& path, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+{
+	shiftCoordinates(path, -0.0005 * line_width, -0.001 * border.shift, join_style, out_flags, out_coords);
+}
+
+void LineSymbol::shiftCoordinatesRight(const VirtualPath& path, MapCoordVector& out_flags, MapCoordVectorF& out_coords) const
+{
+	shiftCoordinates(path, 0.0005 * line_width, 0.001 * right_border.shift, join_style, out_flags, out_coords);
 }
 
 void LineSymbol::processContinuousLine(
@@ -1732,6 +1740,31 @@ qreal LineSymbol::calculateLargestLineExtent() const
 		result = qMax(result, line_extent_f + 0.001 * (getRightBorder().shift + getRightBorder().width)/2);
 	}
 	return result;
+}
+
+
+// virtual
+const Symbol::BorderHints* LineSymbol::borderHints() const
+{
+	if (!hasBorder())
+		return nullptr;
+	
+	auto const main_shift = 0.0005 * getLineWidth();
+	border_hints = {
+		{
+			getBorder().isVisible(),
+			getJoinStyle(),
+			-main_shift,
+			(getColor() && getBorder().dashed) ? 0 : -0.001 * getBorder().shift
+		},
+		{
+			getRightBorder().isVisible(),
+			getJoinStyle(),
+			+main_shift,
+			(getColor() && getRightBorder().dashed) ? 0 : 0.001 * getRightBorder().shift
+		},
+	};
+	return &border_hints;
 }
 
 

@@ -196,7 +196,8 @@ int FillTool::fill(const QRectF& extent)
 		int trace_result = traceBoundary(image, free_pixel, boundary_pixel, boundary);
 		if (trace_result == -1)
 			return 0;
-		else if (trace_result == 0)
+		
+		if (trace_result == 0)
 		{
 			// The outline does not contain start_pixel.
 			// Jump to the rightmost pixel of the boundary with same y as the start.
@@ -412,7 +413,7 @@ int FillTool::traceBoundary(const QImage& image, const QPoint& free_pixel, const
 		if ( ((out_boundary[i].y() > free_pixel.y()) != (out_boundary[j].y() > free_pixel.y()))
 		     &&	(free_pixel.x() < (out_boundary[j].x() - out_boundary[i].x())
 		                           * (free_pixel.y() - out_boundary[i].y())
-		                           / float(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
+		                           / double(out_boundary[j].y() - out_boundary[i].y()) + out_boundary[i].x()) )
 			inside = !inside;
 	}
 	return inside ? 1 : 0;
@@ -461,8 +462,6 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 			continue;
 		
 		MapCoordF map_pos = MapCoordF(image_to_map.map(QPointF(point)));
-		PathCoord path_coord;
-		float distance_sq;
 		
 		if (pixel != last_pixel)
 		{
@@ -470,44 +469,44 @@ bool FillTool::fillBoundary(const QImage& image, const std::vector<QPoint>& boun
 			append_section(section);
 			
 			section.object = map()->getCurrentPart()->getObject(int(pixel & RGB_MASK))->asPath();
-			section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-			section.part = section.object->findPartIndexForIndex(path_coord.index);
-			section.start_clen = path_coord.clen;
-			section.end_clen = path_coord.clen;
+			auto closest = section.object->findClosestPointTo(map_pos);
+			section.part = section.object->findPartIndexForIndex(closest.path_coord.index);
+			section.start_clen = closest.path_coord.clen;
+			section.end_clen = closest.path_coord.clen;
 			last_pixel = pixel;
 			threshold = section.object->parts()[section.part].length() - 5*pixel_length;
 			continue;
 		}
 		
-		section.object->calcClosestPointOnPath(map_pos, distance_sq, path_coord);
-		auto part = section.object->findPartIndexForIndex(path_coord.index);
+		auto closest = section.object->findClosestPointTo(map_pos);
+		auto part = section.object->findPartIndexForIndex(closest.path_coord.index);
 		if (Q_UNLIKELY(part != section.part))
 		{
 			// Change of path part
 			append_section(section);
 			
 			section.part = part;
-			section.start_clen = path_coord.clen;
-			section.end_clen = path_coord.clen;
+			section.start_clen = closest.path_coord.clen;
+			section.end_clen = closest.path_coord.clen;
 			threshold = section.object->parts()[section.part].length() - 4*pixel_length;
 			continue;
 		}
 		
-		if (section.end_clen - path_coord.clen >= threshold)
+		if (section.end_clen - closest.path_coord.clen >= threshold)
 		{
 			// Forward over closing point
 			section.end_clen = section.object->parts()[section.part].length();
 			append_section(section);
 			section.start_clen = 0;
 		}
-		else if (path_coord.clen - section.end_clen >= threshold)
+		else if (closest.path_coord.clen - section.end_clen >= threshold)
 		{
 			// Backward over closing point
 			section.end_clen = 0;
 			append_section(section);
 			section.start_clen = section.object->parts()[section.part].length();
 		}
-		section.end_clen = path_coord.clen;
+		section.end_clen = closest.path_coord.clen;
 	}
 	// Final section
 	append_section(section);

@@ -33,6 +33,7 @@
 
 #include <QtGlobal>
 #include <QtMath>
+#include <QtNumeric>
 #include <QChar>
 #include <QCoreApplication>
 #include <QDebug>
@@ -345,10 +346,7 @@ void OcdFileImport::importGeoreferencing(const OcdFile<Ocd::FormatV8>& file)
 	Georeferencing georef;
 	georef.setScaleDenominator(qRound(setup->map_scale));
 	georef.setProjectedRefPoint(QPointF(setup->real_offset_x, setup->real_offset_y));
-	if (std::abs(setup->real_angle) >= 0.01) /* degrees */
-	{
-		georef.setGrivation(setup->real_angle);
-	}
+	georef.setGrivation(qIsFinite(setup->real_angle) ? setup->real_angle : 0);
 	map->setGeoreferencing(georef);
 }
 

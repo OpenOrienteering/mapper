@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2019 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -100,6 +100,14 @@ namespace {
 
 
 
+// static
+bool OgrTemplate::canRead(const QString& path)
+{
+	return OgrFileImport::canRead(path);
+}
+
+
+// static
 const std::vector<QByteArray>& OgrTemplate::supportedExtensions()
 {
 	return GdalManager().supportedVectorImportExtensions();

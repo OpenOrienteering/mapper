@@ -646,8 +646,8 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 	if (!importer)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"),
-		                     MainWindow::tr("Cannot open file:\n%1\n\n%2")
-		                     .arg(path, MainWindow::tr("Invalid file type.")));
+		                     ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(path, ::OpenOrienteering::MainWindow::tr("Invalid file type.")));
 		return false;
 	}
 	
@@ -1275,6 +1275,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
+	toolbar_view->addAction(template_window_act);
 	
 	// MapParts toolbar
 	toolbar_mapparts = window->addToolBar(tr("Map parts"));
@@ -4107,7 +4108,7 @@ bool MapEditorController::importGpxFile(const QString& filename)
 	imported_map.setGeoreferencing(map->getGeoreferencing());
 	
 	TemplateTrack temp(filename, &imported_map);
-	if (!temp.configureAndLoad(window, main_view))
+	if (!temp.configureAndLoad(window, main_view) || !temp.import(window))
 		return false;
 	
 	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);

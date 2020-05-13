@@ -195,6 +195,10 @@ public:
 	 */
 	qreal calculateLargestLineExtent() const override;
 	
+	/**
+	 * Determines the border hints for this line symbol.
+	 */
+	const BorderHints* borderHints() const override;
 	
 	
 	/**
@@ -299,9 +303,25 @@ protected:
 	        ObjectRenderables& output
 	) const;
 	
-	void shiftCoordinates(
+public:
+	static void shiftCoordinates(
 	        const VirtualPath& path,
 	        double main_shift,
+	        double border_shift,
+	        LineSymbol::JoinStyle join_style,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords
+	);
+	
+protected:
+	void shiftCoordinatesLeft(
+	        const VirtualPath& path,
+	        MapCoordVector& out_flags,
+	        MapCoordVectorF& out_coords
+	) const;
+	
+	void shiftCoordinatesRight(
+	        const VirtualPath& path,
 	        MapCoordVector& out_flags,
 	        MapCoordVectorF& out_coords
 	) const;
@@ -416,6 +436,7 @@ protected:
 	// Border line details
 	LineSymbolBorder border;
 	LineSymbolBorder right_border;
+	mutable BorderHints border_hints;
 	
 	// Point symbols
 	PointSymbol* start_symbol;

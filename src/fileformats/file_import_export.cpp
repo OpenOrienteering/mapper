@@ -33,6 +33,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLineF>
+#include <QObject>
 #include <QSaveFile>
 #include <QScopedValueRollback>
 
@@ -47,6 +48,7 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "templates/template.h"
+#include "templates/template_placeholder.h"
 
 
 namespace OpenOrienteering {
@@ -223,6 +225,23 @@ void Importer::validate()
 		{
 			have_lost_template = true;
 			continue;
+		}
+		
+		// Migrate templates of undefined types, based on the now-resolved path.
+		if (auto* placeholder = qobject_cast<TemplatePlaceholder*>(temp))
+		{
+			if (auto actual = placeholder->makeActualTemplate())
+			{
+				temp = actual.release();
+				map->setTemplate(temp, i);
+				if (view)
+				{
+					view->setTemplateLoadingBlocked(true);
+					view->setTemplateVisibility(temp, view->getTemplateVisibility(placeholder));
+					view->setTemplateLoadingBlocked(false);
+				}
+				delete placeholder;
+			}
 		}
 		
 		if (view && !view->getTemplateVisibility(temp).visible)

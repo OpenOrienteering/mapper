@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -135,7 +135,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 		finishDrawing();
 		return true;
 	}
-	else if (editingInProgress() &&
+	
+	if (editingInProgress() &&
 		((event->button() == Qt::RightButton && event->buttons() & Qt::LeftButton) ||
 		 (event->button() == Qt::LeftButton && event->buttons() & Qt::RightButton)))
 	{
@@ -145,7 +146,8 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 			finishDrawing();
 		return true;
 	}
-	else if (isDrawingButton(event->button()))
+	
+	if (isDrawingButton(event->button()))
 	{
 		dragging = false;
 		bool start_appending = false;
@@ -175,9 +177,7 @@ bool DrawPathTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coor
 					if (snap_helper->snapToDirection(map_coord, widget, angle_helper.get()))
 						picked_angle = true;
 				}
-				else if (editingInProgress() &&
-						 (snap_info.type == SnappingToolHelper::ObjectCorners || snap_info.type == SnappingToolHelper::ObjectPaths) &&
-						 snap_info.object->getType() == Object::Path)
+				else if (follow_helper->canStartFollowing(snap_info))
 				{
 					// Start following another path
 					picked_angle = false;
@@ -342,7 +342,8 @@ bool DrawPathTool::mouseReleaseEvent(QMouseEvent* event, const MapCoordF& map_co
 		picked_angle = pickAngle(map_coord, widget);
 		return true;
 	}
-	else if (!editingInProgress())
+	
+	if (!editingInProgress())
 	{
 		return false;
 	}
@@ -1043,14 +1044,8 @@ void DrawPathTool::startAppending(SnappingToolHelperSnapInfo& snap_info)
 void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const MapCoord& snap_coord)
 {
 	following = true;
-	auto followed_object = snap_info.object->asPath();
 	create_segment = false;
-	
-	if (snap_info.type == SnappingToolHelper::ObjectCorners)
-		follow_helper->startFollowingFromCoord(followed_object, snap_info.coord_index);
-	else // if (snap_info.type == SnappingToolHelper::ObjectPaths)
-		follow_helper->startFollowingFromPathCoord(followed_object, snap_info.path_coord);
-	
+	follow_helper->startFollowing(snap_info);
 	if (path_has_preview_point)
 		preview_path->setCoordinate(preview_path->getCoordinateCount() - 1, snap_coord);
 	else
@@ -1063,12 +1058,10 @@ void DrawPathTool::startFollowing(SnappingToolHelperSnapInfo& snap_info, const M
 
 void DrawPathTool::updateFollowing()
 {
-	PathCoord path_coord;
-	float distance_sq;
-	const auto* followed_object = follow_helper->followed_object();
+	const auto* followed_object = follow_helper->followedObject();
 	const auto& part = followed_object->parts()[follow_helper->partIndex()];
-	followed_object->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord, part.first_index, part.last_index);
-	auto followed_path = follow_helper->updateFollowing(path_coord);
+	auto closest = followed_object->findClosestPointTo(cur_pos_map, part.first_index, part.last_index);
+	auto derived_path = follow_helper->updateFollowing(closest.path_coord);
 	
 	// Append the temporary object to the preview object at follow_start_index
 	// 1. Delete everything appended, except for the point where following started
@@ -1081,10 +1074,10 @@ void DrawPathTool::updateFollowing()
 		preview_path->deleteCoordinate(i, false);
 	}
 	// 2. Merge segments at the point where following started.
-	if (followed_path)
+	if (derived_path)
 	{
 		preview_path->connectPathParts(preview_path->findPartIndexForIndex(follow_start_index),
-		                               followed_path.get(), 0, false, true);
+		                               derived_path.get(), 0, false, true);
 	}
 	updatePreviewPath();
 	hidePreviewPoints();
@@ -1115,8 +1108,8 @@ qreal DrawPathTool::calculateRotation(const QPoint& mouse_pos, const MapCoordF& 
 {
 	if (dragging && (mouse_pos - click_pos).manhattanLength() >= startDragDistance())
 		return -atan2(mouse_pos_map.x() - click_pos_map.x(), click_pos_map.y() - mouse_pos_map.y());
-	else
-		return 0;
+	
+	return 0;
 }
 
 void DrawPathTool::updateDashPointDrawing()
@@ -1151,7 +1144,7 @@ void DrawPathTool::updateStatusText()
 	if (editingInProgress() && preview_path && preview_path->getCoordinateCount() >= 2)
 	{
 		//Q_ASSERT(!preview_path->isDirty());
-		float length = map()->getScaleDenominator() * preview_path->parts().front().path_coords.back().clen * 0.001f;
+		auto length = map()->getScaleDenominator() * double(preview_path->parts().front().path_coords.back().clen) * 0.001;
 		text += tr("<b>Length:</b> %1 m ").arg(QLocale().toString(length, 'f', 1)) + QLatin1String("| ");
 	}
 	

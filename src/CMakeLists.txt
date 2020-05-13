@@ -163,6 +163,7 @@ set(Mapper_Common_SRCS
   templates/template_image.cpp
   templates/template_image_open_dialog.cpp
   templates/template_map.cpp
+  templates/template_placeholder.cpp
   templates/template_position_dock_widget.cpp
   templates/template_positioning_dialog.cpp
   templates/template_tool_move.cpp

@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <iterator>
+#include <limits>
 #include <memory>
 #include <numeric>
 
@@ -59,7 +60,7 @@ CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
 , private_parts { proto.private_parts }
 , parts { proto.parts }
 {
-	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [this](auto part, auto is_private) {
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
 		return (part && is_private) ? Symbol::duplicate(*part).release() : part;
 	});
 }
@@ -357,10 +358,47 @@ qreal CombinedSymbol::calculateLargestLineExtent() const
 }
 
 
+const Symbol::BorderHints* CombinedSymbol::borderHints() const
+{
+	auto left_sum = std::numeric_limits<double>::max();
+	auto right_sum = std::numeric_limits<double>::min();
+	auto const useMax = [&](auto const& hints) {
+		if (hints.left.active)
+		{
+			auto const sum = hints.left.main_shift + hints.left.extra_shift;
+			if (!border_hints.left.active || sum < left_sum)
+			{
+				border_hints.left = hints.left;
+				left_sum = sum;
+			}
+		}
+		if (hints.right.active)
+		{
+			auto const sum = hints.right.main_shift + hints.right.extra_shift;
+			if (!border_hints.right.active || sum > right_sum)
+			{
+				border_hints.right = hints.right;
+				right_sum = sum;
+			}
+		}
+	};
+	border_hints = {};
+	for (auto const* part : parts)
+	{
+		if (!part)
+			continue;
+		if (auto const* hints = part->borderHints())
+			useMax(*hints);
+	}
+	return &border_hints;
+}
+
+
 
 void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {
 	const auto index = std::size_t(i);
+	Q_ASSERT(index < parts.size());
 	
 	if (private_parts[index])
 		delete parts[index];

@@ -1,9 +1,9 @@
 #
-# (C) 2017, 2019 Kai Pastor
+# Copyright 2017-2020 Kai Pastor
 #
 # Based on ISOM_rules.yaml from https://github.com/sembruk/osm2xmap/ rev 3c6cdb5
 #
-# (C) 2016 Semyon Yakimov
+# Copyright 2016 Semyon Yakimov
 #
 # This file is part of OpenOrienteering.
 #
@@ -47,6 +47,7 @@
 
 418    natural = bush
 403    natural = grassland
+403    natural = heath
 408    natural = scrub
 417    natural = tree
 406    natural = wood
@@ -93,24 +94,24 @@
 526    highway = milestone
 
 502.2  highway = motorway
-502.1  highway = motorway_link
+502    highway = motorway_link
 
 506    highway = path
 505    highway = path AND (smoothness = good OR smoothness = intermediate)
 506    highway = path AND (smoothness = bad OR smoothness = very_bad)
 507    highway = path AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = primary
-502.1  highway = secondary
-502.1  highway = tertiary
+502    highway = primary
+502    highway = secondary
+502    highway = tertiary
 
 504    highway = track
 503    highway = track AND (smoothness = good OR smoothness = intermediate)
 504    highway = track AND (smoothness = bad OR smoothness = very_bad)
 505    highway = track AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = trunk AND lanes = 2
-502.1  highway = trunk_link AND lanes = 1
+502    highway = trunk AND lanes = 2
+502    highway = trunk_link AND lanes = 1
 
 503    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street)
 502    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)

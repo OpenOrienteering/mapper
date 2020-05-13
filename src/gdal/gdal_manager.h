@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016, 2018 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -52,6 +52,11 @@ public:
 		GPX,
 	};
 
+	enum ImportOption
+	{
+		ClipLayers
+	};
+	
 	enum ExportOption
 	{
 		OneLayerPerSymbol
@@ -91,25 +96,36 @@ public:
 	
 	
 	/**
-	 * Enables or disables handling of a particular file format by GDAL/OGR.
+	 * Enables or disables handling of a particular file format by GDAL.
 	 */
 	void setFormatEnabled(FileFormat format, bool enabled);
 	
 	/**
-	 * Returns if GDAL/OGR will handle a particular file format.
+	 * Returns if GDAL will handle a particular file format.
 	 */
 	bool isFormatEnabled(FileFormat format) const;
 	
 
 	/**
-	 * Enables or disables an OGR export option
+	 * Enables or disables a GDAL export option
 	 */
 	void setExportOptionEnabled(ExportOption option, bool enabled);
 	
 	/**
-	 * Returns if an OGR export option is enabled
+	 * Returns if a GDAL export option is enabled
 	 */
 	bool isExportOptionEnabled(ExportOption option) const;
+
+
+	/**
+	 * Enables or disables a GDAL import option
+	 */
+	void setImportOptionEnabled(ImportOption option, bool enabled);
+	
+	/**
+	 * Returns if a GDAL import option is enabled
+	 */
+	bool isImportOptionEnabled(ImportOption option) const;
 
 
 	/**

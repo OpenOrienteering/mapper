@@ -244,12 +244,12 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 				dialog.setKeepGeographicRefCoords();
 			if (dialog.exec() == QDialog::Rejected)
 				continue;
-		}
-		
-		if (map->getGeoreferencing().getProjectedCRSSpec() == available_georef.effective.crs_spec)
-		{
-			// For convenience, skip CRS selection.
-			break;
+			
+			if (map->getGeoreferencing().getProjectedCRSSpec() == available_georef.effective.crs_spec)
+			{
+				// For convenience, skip CRS selection.
+				break;
+			}
 		}
 		
 		if (!map->getGeoreferencing().isLocal())

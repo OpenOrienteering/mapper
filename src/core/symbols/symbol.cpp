@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -837,6 +837,11 @@ qreal Symbol::dimensionForIcon() const
 qreal Symbol::calculateLargestLineExtent() const
 {
 	return 0;
+}
+
+const Symbol::BorderHints* Symbol::borderHints() const
+{
+	return nullptr;
 }
 
 

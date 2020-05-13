@@ -1,5 +1,5 @@
 /*
- *    Copyright 2016-2018 Kai Pastor
+ *    Copyright 2016-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -54,6 +54,7 @@ protected:
 	int findDuplicateKey(const QString& key, int row) const;
 	
 private:
+	QCheckBox* clip_layers;
 	QCheckBox* import_gpx;
 	QCheckBox* view_hatch;
 	QCheckBox* view_baseline;

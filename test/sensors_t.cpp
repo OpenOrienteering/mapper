@@ -1,5 +1,5 @@
 /*
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2019-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,13 +18,36 @@
  */
 
 #include <QtTest>
-#include <QGeoPositionInfoSource>
+#include <QDir>           // IWYU pragma: keep
+#include <QFileInfo>      // IWYU pragma: keep
 #include <QObject>
-#include <QStandardPaths>
+#include <QSignalSpy>     // IWYU pragma: keep
+#include <QStandardPaths> // IWYU pragma: keep
+#include <QStaticPlugin>  // IWYU pragma: keep
+#include <QTemporaryFile> // IWYU pragma: keep
 
-#include "sensors/powershell_position_source.h"
+#include "test_config.h"  // IWYU pragma: keep
 
+#include "util/backports.h"  // IWYU pragma: keep
+
+namespace OpenOrienteering {}
 using namespace OpenOrienteering;
+
+
+#ifdef QT_POSITIONING_LIB
+#include <QGeoPositionInfoSource>
+#endif
+
+#ifdef MAPPER_USE_NMEA_POSITION_PLUGIN
+#include <QNmeaPositionInfoSource>  // IWYU pragma: keep
+#include "sensors/nmea_position_plugin.h"
+Q_IMPORT_PLUGIN(NmeaPositionPlugin)
+#endif
+
+#ifdef MAPPER_USE_POWERSHELL_POSITION_PLUGIN
+#include "sensors/powershell_position_source.h"
+Q_IMPORT_PLUGIN(PowershellPositionPlugin)
+#endif
 
 
 class SensorsTest : public QObject
@@ -32,32 +55,137 @@ class SensorsTest : public QObject
 	Q_OBJECT
 	
 private slots:
-#ifdef Q_OS_WIN
-	void powershellPositionSourceWindowsTest()
+	void initTestCase()
 	{
-		QVERIFY(!PowershellPositionSource::defaultScript().isEmpty());
-		
-		PowershellPositionSource source;
-		QVERIFY(!source.script().isEmpty());
-		if (QStandardPaths::findExecutable(QLatin1String("powershell.exe")).isEmpty())
-			QCOMPARE(source.error(), QGeoPositionInfoSource::UnknownSourceError);
-		else
-			QCOMPARE(source.error(), QGeoPositionInfoSource::NoError);
+		QDir::addSearchPath(QStringLiteral("testdata"), QDir(QString::fromUtf8(MAPPER_TEST_SOURCE_DIR)).absoluteFilePath(QStringLiteral("data")));
 	}
-
-#else
-	void powershellPositionSourceOtherTest()
+	
+#if defined(MAPPER_USE_NMEA_POSITION_PLUGIN)
+	void nmeaPositionSourcePluginTest()
 	{
-		// The resource file shall not be linked.
-		QVERIFY(PowershellPositionSource::defaultScript().isEmpty());
-		
-		PowershellPositionSource source;
-		QVERIFY(source.script().isEmpty());
-		QCOMPARE(source.error(), QGeoPositionInfoSource::UnknownSourceError);
-		source.startUpdates();
-		QCOMPARE(source.error(), QGeoPositionInfoSource::UnknownSourceError);
+		auto nmea_position_source = QStringLiteral("NMEA (OpenOrienteering)");
+		auto sources = QGeoPositionInfoSource::availableSources();
+		QVERIFY(sources.contains(nmea_position_source));
 	}
+	
+	void nmeaPositionSourceSimulatedTest()
+	{
+		auto nmea_position_source = QStringLiteral("NMEA (OpenOrienteering)");
+		auto* source = QGeoPositionInfoSource::createSource(nmea_position_source, this);
+#if !defined(Q_OS_LINUX) && !defined(Q_OS_MACOS)
+		QVERIFY(!source || source->error() != QGeoPositionInfoSource::NoError);
+		QSKIP("\"unsupported platform");
 #endif
+		QVERIFY(source);
+		QVERIFY(qobject_cast<QNmeaPositionInfoSource*>(source));
+		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
+		
+		QSignalSpy source_spy(source, &QGeoPositionInfoSource::positionUpdated);
+		QVERIFY(source_spy.isValid());
+		
+		auto test_file = QFileInfo(QStringLiteral("testdata:sensors/nmea.txt"));
+		QVERIFY(test_file.exists());
+		qputenv("QT_NMEA_SERIAL_PORT", test_file.absoluteFilePath().toUtf8());
+		source->startUpdates();
+		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::NoError));
+		QVERIFY(source_spy.wait());
+		
+		auto last = source->lastKnownPosition(true);
+		QVERIFY(last.isValid());
+		QCOMPARE(int(last.coordinate().latitude()), -30);
+		QCOMPARE(int(last.coordinate().longitude()), 139);
+		
+		source->stopUpdates();
+		
+		QTemporaryFile unreadable_file;
+		QVERIFY(unreadable_file.open());
+		unreadable_file.close();
+		unreadable_file.setPermissions({});
+		qputenv("QT_NMEA_SERIAL_PORT", unreadable_file.fileName().toUtf8());
+		source->startUpdates();
+		QCOMPARE(int(source->error()), int(QGeoPositionInfoSource::AccessError));
+		
+		delete source;
+	}
+#endif  // MAPPER_USE_NMEA_POSITION_PLUGIN
+	
+#if defined(MAPPER_USE_POWERSHELL_POSITION_PLUGIN)
+	void powershellPositionSourcePluginTest()
+	{
+		auto powershell_position_source = QStringLiteral("Windows");
+		auto sources = QGeoPositionInfoSource::availableSources();
+		QVERIFY(sources.contains(powershell_position_source));  // JSON file properties
+	}
+		
+	void powershellPositionSourceLiveTest()
+	{
+		auto powershell_path = QStandardPaths::findExecutable(QStringLiteral("powershell.exe"));
+#if !defined(Q_OS_WIN)
+		if (powershell_path.isEmpty())
+			QSKIP("Powershell not available");
+#endif
+		QVERIFY(!powershell_path.isEmpty());
+		
+		auto powershell_position_source = QStringLiteral("Windows");
+		auto* source = QGeoPositionInfoSource::createSource(powershell_position_source, this);
+		QCOMPARE(source->error(), QGeoPositionInfoSource::NoError);
+		
+		QSignalSpy source_spy(source, &QGeoPositionInfoSource::positionUpdated);
+		source->startUpdates();
+		if (source_spy.wait(2000))
+			return;
+		
+		switch(source->error())
+		{
+		case QGeoPositionInfoSource::NoError:
+			QWARN("startUpdates(): QGeoPositionInfoSource::NoError");  // and no position yet!
+			break;
+		case QGeoPositionInfoSource::AccessError:
+			QWARN("startUpdates(): QGeoPositionInfoSource::AccessError");
+			break;
+		case QGeoPositionInfoSource::ClosedError:
+			QFAIL("startUpdates(): QGeoPositionInfoSource::ClosedError");
+			break;
+		default:
+			QFAIL("startUpdates(): unknown error");
+			break;
+		}
+	}
+	
+	void powershellPositionSourceSimulatedTest()
+	{
+		auto setup_function = [](QProcess& process, QByteArray&, QByteArray&) -> QGeoPositionInfoSource::Error {
+			auto test_file = QFileInfo(QStringLiteral("testdata:sensors/powershell_position.txt"));
+			if (!test_file.exists())
+				return QGeoPositionInfoSource::UnknownSourceError;
+			
+#if defined(Q_OS_WIN)
+			process.setProgram(QStandardPaths::findExecutable(QStringLiteral("cmd")));
+			process.setArguments({QStringLiteral("/C"), QStringLiteral("type"), QDir::toNativeSeparators(test_file.absoluteFilePath())});
+#else
+			process.setProgram(QStringLiteral("/bin/cat"));
+			process.setArguments({test_file.absoluteFilePath()});
+#endif
+			return QGeoPositionInfoSource::NoError;
+		};
+		PowershellPositionSource source(*setup_function);
+		QCOMPARE(int(source.error()), int(QGeoPositionInfoSource::NoError));
+		
+		QSignalSpy source_spy(&source, &QGeoPositionInfoSource::positionUpdated);
+		QVERIFY(source_spy.isValid());
+		source.startUpdates();
+		QCOMPARE(int(source.error()), int(QGeoPositionInfoSource::NoError));
+		QVERIFY(source_spy.wait());
+		
+		auto last = source.lastKnownPosition(true);
+		QVERIFY(last.isValid());
+		QCOMPARE(int(last.coordinate().latitude()), 50);
+		QCOMPARE(int(last.coordinate().longitude()), 8);
+		
+		source.stopUpdates();
+	}
+#endif  // MAPPER_USE_POWERSHELL_POSITION_PLUGIN
+	
 };
 
 

@@ -72,12 +72,12 @@ namespace {
 	 * Maximum number of objects in the selection for which point handles
 	 * will still be displayed (and can be edited).
 	 */
-	static unsigned int max_objects_for_handle_display = 10;
+	unsigned int max_objects_for_handle_display = 10;
 	
 	/**
 	 * The value which indicates that no point of the current object is hovered.
 	 */
-	static auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
+	auto no_point = std::numeric_limits<MapCoordVector::size_type>::max();
 	
 	
 }
@@ -175,18 +175,16 @@ void EditPointTool::clickPress()
 		// Add new point to path
 		PathObject* path = hover_object->asPath();
 		
-		float distance_sq;
-		PathCoord path_coord;
-		path->calcClosestPointOnPath(cur_pos_map, distance_sq, path_coord);
+		auto closest = path->findClosestPointTo(cur_pos_map);
 		
 		auto click_tolerance_map_sq = cur_map_widget->getMapView()->pixelToLength(clickTolerance());
 		click_tolerance_map_sq = click_tolerance_map_sq * click_tolerance_map_sq;
 		
-		if (distance_sq <= click_tolerance_map_sq)
+		if (closest.distance_squared <= click_tolerance_map_sq)
 		{
 			startDragging();
 			hover_state = OverObjectNode;
-			hover_point = path->subdivide(path_coord);
+			hover_point = path->subdivide(closest.path_coord);
 			if (addDashPointDefault() ^ switch_dash_points)
 			{
 				auto point = path->getCoordinate(hover_point);
@@ -404,10 +402,8 @@ void EditPointTool::dragCanceled()
 	updateDirtyRect();
 }
 
-void EditPointTool::focusOutEvent(QFocusEvent* event)
+void EditPointTool::focusOutEvent(QFocusEvent* /*event*/)
 {
-	Q_UNUSED(event);
-	
 	// Deactivate modifiers - not always correct, but should be
 	// wrong only in unusual cases and better than leaving the modifiers on forever
 	switch_dash_points = false;
@@ -575,6 +571,11 @@ int EditPointTool::updateDirtyRectImpl(QRectF& rect)
 	
 	selection_extent = QRectF();
 	map()->includeSelectionRect(selection_extent);
+
+	const auto frame_extension = 0.001 * cur_map_widget->getMapView()
+	                             ->pixelToLength(clickTolerance()); // in mm
+	selection_extent.adjust(-frame_extension, -frame_extension,
+	                        frame_extension, frame_extension);
 	
 	rectInclude(rect, selection_extent);
 	int pixel_border = show_object_points ? pointHandles().displayRadius() : 1;
@@ -669,7 +670,8 @@ void EditPointTool::finishEditing()
 			updateStatusText();
 			return;
 		}
-		else if (text_object->getText().isEmpty())
+		
+		if (text_object->getText().isEmpty())
 		{
 			abortEditing();
 			updateStatusText();
@@ -817,19 +819,17 @@ void EditPointTool::updateHoverState(const MapCoordF& cursor_pos)
 					if (object->getType() == Object::Path)
 					{
 						PathObject* path = object->asPath();
-						float distance_sq;
-						PathCoord path_coord;
-						path->calcClosestPointOnPath(cursor_pos, distance_sq, path_coord);
+						auto closest = path->findClosestPointTo(cursor_pos);
 						
-						if (distance_sq >= +0.0 &&
-						    distance_sq < best_distance_sq &&
-						    distance_sq < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
+						if (closest.distance_squared >= +0.0 &&
+						    closest.distance_squared < best_distance_sq &&
+						    closest.distance_squared < qMax(click_tolerance_sq, qPow(path->getSymbol()->calculateLargestLineExtent(), 2)))
 						{
 							new_hover_state |= OverPathEdge;
 							new_hover_object = path;
-							new_hover_point  = path_coord.index;
-							best_distance_sq = distance_sq;
-							handle_offset    = path_coord.pos - cursor_pos;
+							new_hover_point  = closest.path_coord.index;
+							best_distance_sq = closest.distance_squared;
+							handle_offset    = closest.path_coord.pos - cursor_pos;
 						}
 					}
 				}
@@ -957,6 +957,13 @@ bool EditPointTool::moveOppositeHandle() const
 {
 	return !(active_modifiers & Qt::ShiftModifier)
 	       && hoveringOverCurveHandle();
+}
+
+
+void EditPointTool::applyViewChanges(MapView::ChangeFlags change)
+{
+	if (change == MapView::ZoomChange)
+		updateDirtyRect(); // the bounding rectangle extent changes
 }
 
 

@@ -57,6 +57,7 @@
 #include "gui/file_dialog.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
+#include "templates/template_placeholder.h"
 #include "templates/template_track.h"
 #include "util/backports.h"  // IWYU pragma: keep
 #include "util/util.h"
@@ -277,6 +278,7 @@ void Template::setErrorString(const QString &text)
 void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const QDir* map_dir) const
 {
 	xml.writeStartElement(QString::fromLatin1("template"));
+	xml.writeAttribute(QString::fromLatin1("type"), QString::fromUtf8(getTemplateType()));
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
 	auto primary_path = getTemplatePath();
@@ -346,10 +348,13 @@ std::unique_ptr<Template> Template::loadTemplateConfiguration(QXmlStreamReader& 
 	if (attributes.hasAttribute(QLatin1String("open")))
 		open = (attributes.value(QLatin1String("open")) == QLatin1String("true"));
 	
+	auto const type = attributes.value(QLatin1String("type"));
 	QString path = attributes.value(QLatin1String("path")).toString();
-	auto temp = templateForFile(path, &map);
+	auto temp = templateForType(type, path, &map);
+	if (!temp && type.length() == 0)
+		temp = templateForPath(path, &map);
 	if (!temp)
-		temp = std::make_unique<TemplateImage>(path, &map); // fallback
+		temp = std::make_unique<TemplatePlaceholder>(type.toUtf8(), path, &map);
 	
 	temp->setTemplateRelativePath(attributes.value(QLatin1String("relpath")).toString());
 	if (attributes.hasAttribute(QLatin1String("name")))
@@ -885,57 +890,104 @@ const std::vector<QByteArray>& Template::supportedExtensions()
 		auto& image_extensions = TemplateImage::supportedExtensions();
 		auto& map_extensions   = TemplateMap::supportedExtensions();
 #ifdef MAPPER_USE_GDAL
+		auto& gdal_extensions  = GdalTemplate::supportedExtensions();
 		auto& ogr_extensions   = OgrTemplate::supportedExtensions();
 #else
-		auto ogr_extensions    = std::vector<QByteArray>{ };
+		auto const gdal_extensions = std::vector<QByteArray>{ };
+		auto const& ogr_extensions = gdal_extensions;
 #endif
 		auto& track_extensions = TemplateTrack::supportedExtensions();
 		extensions.reserve(image_extensions.size()
 		                   + map_extensions.size()
+		                   + gdal_extensions.size()
 		                   + ogr_extensions.size()
 		                   + track_extensions.size());
 		extensions.insert(end(extensions), begin(image_extensions), end(image_extensions));
 		extensions.insert(end(extensions), begin(map_extensions), end(map_extensions));
+		extensions.insert(end(extensions), begin(gdal_extensions), end(gdal_extensions));
 		extensions.insert(end(extensions), begin(ogr_extensions), end(ogr_extensions));
 		extensions.insert(end(extensions), begin(track_extensions), end(track_extensions));
 	}
 	return extensions;
 }
 
-std::unique_ptr<Template> Template::templateForFile(const QString& path, Map* map)
+namespace {
+
+bool endsWithAnyOf(const QString& path, const std::vector<QByteArray>& list)
 {
-	auto path_ends_with_any_of = [path](const std::vector<QByteArray>& list) -> bool {
-		using namespace std;
-		return any_of(begin(list), end(list), [path](const QByteArray& extension) {
-			return path.size() > extension.size()
-			       && path[path.size() - extension.size() - 1] == QLatin1Char('.')
-			       && path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
-		} );
-	};
+	using namespace std;
+	return any_of(begin(list), end(list), [path](const QByteArray& extension) {
+		return path.size() > extension.size()
+		       && path[path.size() - extension.size() - 1] == QLatin1Char('.')
+		       && path.endsWith(QLatin1String(extension), Qt::CaseInsensitive);
+	} );
+}
+
+}  // namespace
+
+std::unique_ptr<Template> Template::templateForPath(const QString& path, Map* map)
+{
+#ifdef MAPPER_USE_GDAL
+#  define HANDLED_BY_GDAL(expr) expr
+#else
+#  define HANDLED_BY_GDAL(expr) false
+#endif
 	
 	std::unique_ptr<Template> t;
-	// Start with placeholder 'if', for consistency in the following macro/if-else sequence
-	if (false)  // NOLINT
-		{} // nothing
-#ifdef MAPPER_USE_GDAL
-	else if (path_ends_with_any_of(GdalTemplate::supportedExtensions()))
-		t = std::make_unique<GdalTemplate>(path, map);
-#endif 
-	else if (path_ends_with_any_of(TemplateImage::supportedExtensions()))
+	if (endsWithAnyOf(path, TemplateImage::supportedExtensions())
+	    && !HANDLED_BY_GDAL(endsWithAnyOf(path, GdalTemplate::supportedExtensions())))
 		t = std::make_unique<TemplateImage>(path, map);
-	else if (path_ends_with_any_of(TemplateMap::supportedExtensions()))
+	else if (endsWithAnyOf(path, TemplateMap::supportedExtensions()))
 		t = std::make_unique<TemplateMap>(path, map);
-#ifdef MAPPER_USE_GDAL
-	else if (path_ends_with_any_of(OgrTemplate::supportedExtensions()))
-		t = std::make_unique<OgrTemplate>(path, map);
-#endif
-	else if (path_ends_with_any_of(TemplateTrack::supportedExtensions()))
+	else if (endsWithAnyOf(path, TemplateTrack::supportedExtensions())
+	         && !HANDLED_BY_GDAL(endsWithAnyOf(path, OgrTemplate::supportedExtensions())))
 		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
-	else
+	else if (GdalTemplate::canRead(path))
+		t = std::make_unique<GdalTemplate>(path, map);
+	else if (OgrTemplate::canRead(path))
+		t = std::make_unique<OgrTemplate>(path, map);
+	else if (endsWithAnyOf(path, GdalTemplate::supportedExtensions())
+	         && !endsWithAnyOf(path, OgrTemplate::supportedExtensions()))
+		t = std::make_unique<GdalTemplate>(path, map);
+	else if (endsWithAnyOf(path, OgrTemplate::supportedExtensions())
+	         && !endsWithAnyOf(path, GdalTemplate::supportedExtensions()))
 		t = std::make_unique<OgrTemplate>(path, map);
 #endif
 	
+	return t;
+}
+
+std::unique_ptr<Template> Template::templateForType(const QStringRef& type, const QString& path, Map* map)
+{
+	std::unique_ptr<Template> t;
+	
+	// We must respect the customizable handling of tracks,
+	// which is reflected in OgrTemplate::supportedExtensions().
+#ifdef MAPPER_USE_GDAL
+	auto const is_track = endsWithAnyOf(path, TemplateTrack::supportedExtensions());
+	auto const track_with_gdal = (is_track && endsWithAnyOf(path, OgrTemplate::supportedExtensions()));
+#else
+	constexpr auto const track_with_gdal = false;
+#endif
+	
+	auto type_cstring = type.toUtf8();
+	if (type_cstring == "TemplateImage")
+		t = std::make_unique<TemplateImage>(path, map);
+	else if (type_cstring == "TemplateMap")
+		t = std::make_unique<TemplateMap>(path, map);
+#ifdef MAPPER_USE_GDAL
+	else if (type_cstring == "OgrTemplate" && is_track && !track_with_gdal)
+		t = std::make_unique<TemplateTrack>(path, map);
+#endif
+	else if (type_cstring == "TemplateTrack" && !track_with_gdal)
+		t = std::make_unique<TemplateTrack>(path, map);
+#ifdef MAPPER_USE_GDAL
+	else if (type_cstring == "GdalTemplate")
+		t = std::make_unique<GdalTemplate>(path, map);
+	else if (type_cstring == "OgrTemplate" || type_cstring == "TemplateTrack")
+		t = std::make_unique<OgrTemplate>(path, map);
+#endif
 	return t;
 }
 

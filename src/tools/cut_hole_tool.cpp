@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2018 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -21,6 +21,7 @@
 
 #include "cut_hole_tool.h"
 
+#include <iterator>
 #include <map>
 #include <memory>
 
@@ -42,15 +43,15 @@
 #include "tools/draw_rectangle_tool.h"
 #include "tools/tool.h"
 #include "undo/object_undo.h"
+#include "undo/undo.h"
 
 
 namespace OpenOrienteering {
 
 CutHoleTool::CutHoleTool(MapEditorController* editor, QAction* tool_action, CutHoleTool::HoleType hole_type)
- : MapEditorTool(editor, Other, tool_action), hole_type(hole_type)
-{
-	path_tool = nullptr;
-}
+: MapEditorTool(editor, Other, tool_action)
+, hole_type(hole_type)
+{}
 
 void CutHoleTool::init()
 {
@@ -89,8 +90,6 @@ bool CutHoleTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord
 		return false;
 	
 	// Start a new hole
-	edit_widget = widget;
-	
 	switch (hole_type)
 	{
 	case CutHoleTool::Path:
@@ -212,43 +211,57 @@ void CutHoleTool::pathAborted()
 
 void CutHoleTool::pathFinished(PathObject* hole_path)
 {
-	if (map()->getNumSelectedObjects() == 0)
+	if (map()->getNumSelectedObjects() > 0)
 	{
-		pathAborted();
-		return;
+		auto* edited_object = *begin(map()->selectedObjects());
+		if (edited_object->getType() == Object::Path)
+		{
+			cutHole(static_cast<PathObject*>(edited_object), hole_path);
+			return;
+		}
 	}
+	pathAborted();
+}
 	
-	Object* edited_object = *map()->selectedObjectsBegin();
-	Object* undo_duplicate = edited_object->duplicate();
-	
+void CutHoleTool::cutHole(PathObject* edited_path, PathObject* hole_path)
+{
 	// Close the hole path
 	Q_ASSERT(hole_path->parts().size() == 1);
 	hole_path->parts().front().setClosed(true, true);
 	
-	BooleanTool::PathObjects in_objects, out_objects;
-	in_objects.push_back(hole_path);
+	BooleanTool::PathObjects out_objects;
+	out_objects.reserve(1);
 	
-	PathObject* edited_path = reinterpret_cast<PathObject*>(edited_object);
-	BooleanTool(BooleanTool::Difference, map()).executeForObjects(edited_path, in_objects, out_objects);
+	BooleanTool tool(BooleanTool::Difference, map());
+	if (!tool.executeForObjects(edited_path, { hole_path }, out_objects))
+		return;
 	
-	edited_path->clearCoordinates();
-	edited_path->appendPath(out_objects.front());
-	edited_path->update();
-	updateDirtyRect();
+	auto* undo_step = new CombinedUndoStep(map());
 	
-	while (!out_objects.empty())
+	auto* add_step = new AddObjectsUndoStep(map());
+	add_step->addObject(edited_path, edited_path);
+	map()->removeObjectFromSelection(edited_path, false);
+	map()->releaseObject(edited_path);
+	edited_path = nullptr;
+	undo_step->push(add_step);
+	
+	auto* delete_step = new DeleteObjectsUndoStep(map());
+	for (auto* object : out_objects)
 	{
-		delete out_objects.back();
-		out_objects.pop_back();
+		auto index = map()->addObject(object);
+		map()->addObjectToSelection(object, false);
+		delete_step->addObject(index);
 	}
+	undo_step->push(delete_step);
 	
-	auto undo_step = new ReplaceObjectsUndoStep(map());
-	undo_step->addObject(edited_object, undo_duplicate);
 	map()->push(undo_step);
-	map()->setObjectsDirty();
-	map()->emitSelectionEdited();
 	
+	updateDirtyRect();
+	map()->setObjectsDirty();
+	
+	// Don't signal selection change before editing was ended with pathAborted.
 	pathAborted();
+	map()->emitSelectionChanged();
 }
 
 void CutHoleTool::updateStatusText()

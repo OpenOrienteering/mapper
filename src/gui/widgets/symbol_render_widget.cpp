@@ -935,10 +935,10 @@ void SymbolRenderWidget::pasteSymbols()
 		///       See also MapEditor::importMap.
 		int answer = QMessageBox::question(
 		                 window(),
-		                 Map::tr("Question"),
-		                 Map::tr("The scale of the imported data is 1:%1 "
-		                         "which is different from this map's scale of 1:%2.\n\n"
-		                         "Rescale the imported data?")
+		                 ::OpenOrienteering::Map::tr("Question"),
+		                 ::OpenOrienteering::Map::tr("The scale of the imported data is 1:%1 "
+		                                             "which is different from this map's scale of 1:%2.\n\n"
+		                                             "Rescale the imported data?")
 		                 .arg(QLocale().toString(paste_map.getScaleDenominator()),
 		                      QLocale().toString(map->getScaleDenominator())),
 		                 QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Yes);

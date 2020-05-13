@@ -16,47 +16,47 @@
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit for jernbane</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort under lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished">Svart 65%</translation>
+        <translation>Sort 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished">Svart 20%</translation>
+        <translation>Sort 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
@@ -126,12 +126,12 @@
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 24</comment>
-        <translation>Svart 25% (grå)</translation>
+        <translation>Sort 25% (grå)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 25</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 100%/Sort 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -2531,17 +2531,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished">Svart 65%</translation>
+        <translation>Sort 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished">Svart 20%</translation>
+        <translation>Sort 20%</translation>
     </message>
     <message>
         <source>Brown 50%</source>
@@ -2576,7 +2576,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 12</comment>
-        <translation>Svart 25% (grå)</translation>
+        <translation>Sort 25% (grå)</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
@@ -2611,7 +2611,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 19</comment>
-        <translation>Grønn, svart 50%</translation>
+        <translation>Grønn, sort 50%</translation>
     </message>
     <message>
         <source>Opaque Green</source>
@@ -2796,7 +2796,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Brown 50%</source>
@@ -2831,7 +2831,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Black 30%</source>
         <comment>Color 9</comment>
-        <translation>Svart 30%</translation>
+        <translation>Sort 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
@@ -2979,22 +2979,22 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Black 100%</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit for jernbane</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Purple 50%</source>
@@ -3004,12 +3004,12 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Blue 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Black 60%</source>
@@ -3024,7 +3024,7 @@ Minimumshøyde: 0,5 m.</translation>
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished">Svart 20%</translation>
+        <translation>Sort 20%</translation>
     </message>
     <message>
         <source>White over light brown</source>
@@ -5329,17 +5329,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black</source>
         <comment>Color 2</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Black 30%</source>
         <comment>Color 7</comment>
-        <translation>Svart 30%</translation>
+        <translation>Sort 30%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 8</comment>
-        <translation type="unfinished">Svart 20%</translation>
+        <translation>Sort 20%</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -5369,7 +5369,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Green, Black 50%</source>
         <comment>Color 26</comment>
-        <translation>Grønn, svart 50%</translation>
+        <translation>Grønn, sort 50%</translation>
     </message>
     <message>
         <source>Opaque Green</source>
@@ -5472,7 +5472,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black</source>
         <comment>Color 1</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Lower Purple</source>
@@ -5522,7 +5522,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black 30%</source>
         <comment>Color 11</comment>
-        <translation>Svart 30%</translation>
+        <translation>Sort 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
@@ -7263,7 +7263,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black</source>
         <comment>Color 3</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Brown 50%</source>
@@ -7298,7 +7298,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 30%</source>
         <comment>Color 11</comment>
-        <translation>Svart 30%</translation>
+        <translation>Sort 30%</translation>
     </message>
     <message>
         <source>Green 50%, Yellow</source>
@@ -7451,47 +7451,47 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 100%</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort 100%</translation>
     </message>
     <message>
         <source>Green 100%</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 100%</translation>
     </message>
     <message>
         <source>White for railway</source>
         <comment>Color 5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hvit for jernbane</translation>
     </message>
     <message>
         <source>Blue 100%</source>
         <comment>Color 6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Blå 100%</translation>
     </message>
     <message>
         <source>Brown 100%</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Brun 100%</translation>
     </message>
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sort under lilla for sporsymboler</translation>
     </message>
     <message>
         <source>Black 65%</source>
         <comment>Color 10</comment>
-        <translation type="unfinished">Svart 65%</translation>
+        <translation>Sort 65%</translation>
     </message>
     <message>
         <source>Black 20%</source>
         <comment>Color 11</comment>
-        <translation type="unfinished">Svart 20%</translation>
+        <translation>Sort 20%</translation>
     </message>
     <message>
         <source>Upper brown 50%</source>
@@ -7561,12 +7561,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Black 25% (Grey)</source>
         <comment>Color 25</comment>
-        <translation>Svart 25% (grå)</translation>
+        <translation>Sort 25% (grå)</translation>
     </message>
     <message>
         <source>Green 100%/Black 50%</source>
         <comment>Color 26</comment>
-        <translation type="unfinished"></translation>
+        <translation>Grønn 100%/Sort 50%</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -9197,7 +9197,7 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>Black</source>
         <comment>Color 5</comment>
-        <translation>Svart</translation>
+        <translation>Sort</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>

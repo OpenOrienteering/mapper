@@ -238,6 +238,17 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 	return *this;
 }
 
+// static
+ProjTransform ProjTransform::crs(const QString& crs_spec)
+{
+	ProjTransform result;
+	auto crs_spec_latin1 = crs_spec.toLatin1();
+	if (!crs_spec_latin1.contains("+no_defs"))
+		crs_spec_latin1.append(" +no_defs");
+	result.pj = pj_init_plus(crs_spec_latin1);
+	return result;
+}
+
 bool ProjTransform::isValid() const noexcept
 {
 	return pj != nullptr;
@@ -303,6 +314,9 @@ ProjTransform::ProjTransform(ProjTransform&& other) noexcept
 
 ProjTransform::ProjTransform(const QString& crs_spec)
 {
+	if (crs_spec.isEmpty())
+		return;
+	
 	auto spec_latin1 = crs_spec.toLatin1();
 #ifdef PROJ_ISSUE_1573
 	// Cf. https://github.com/OSGeo/PROJ/pull/1573
@@ -325,6 +339,19 @@ ProjTransform& ProjTransform::operator=(ProjTransform&& other) noexcept
 	return *this;
 }
 
+// static
+ProjTransform ProjTransform::crs(const QString& crs_spec)
+{
+	ProjTransform result;
+	auto crs_spec_utf8 = crs_spec.toUtf8();
+#ifdef PROJ_ISSUE_1573
+	// Cf. https://github.com/OSGeo/PROJ/pull/1573
+	crs_spec_utf8.replace("+datum=potsdam", "+ellps=bessel +nadgrids=@BETA2007.gsb");
+#endif
+	result.pj = proj_create(PJ_DEFAULT_CTX, crs_spec_utf8);
+	return result;
+}
+
 bool ProjTransform::isValid() const noexcept
 {
 	return pj != nullptr;
@@ -332,8 +359,19 @@ bool ProjTransform::isValid() const noexcept
 
 bool ProjTransform::isGeographic() const
 {
-	/// \todo Evaluate proj_get_type() instead
-	return isValid() && proj_angular_output(pj, PJ_FWD);
+	if (!isValid())
+		return false;
+	
+	switch (proj_get_type(pj))
+	{
+	case PJ_TYPE_GEOGRAPHIC_CRS:
+	case PJ_TYPE_GEOGRAPHIC_2D_CRS:
+	case PJ_TYPE_GEOGRAPHIC_3D_CRS:
+		return true;
+	default:
+		return false;
+	}
+
 }
 
 QPointF ProjTransform::forward(const LatLon& lat_lon, bool* ok) const
@@ -450,7 +488,7 @@ Georeferencing& Georeferencing::operator=(const Georeferencing& other)
 
 bool Georeferencing::isGeographic() const
 {
-	return proj_transform.isGeographic();
+	return ProjTransform::crs(getProjectedCRSSpec()).isGeographic();
 }
 
 
@@ -489,6 +527,8 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			if (auxiliary_scale_factor <= 0.0)
 				throw FileFormatException(tr("Invalid auxiliary scale factor: %1").arg(QString::number(auxiliary_scale_factor)));
 		}
+		grid_scale_factor = combined_scale_factor / auxiliary_scale_factor;
+		
 		if (georef_element.hasAttribute(literal::declination))
 			declination = roundDeclination(georef_element.attribute<double>(literal::declination));
 		if (georef_element.hasAttribute(literal::grivation))
@@ -496,6 +536,7 @@ void Georeferencing::load(QXmlStreamReader& xml, bool load_scale_only)
 			grivation = roundDeclination(georef_element.attribute<double>(literal::grivation));
 			grivation_error = georef_element.attribute<double>(literal::grivation) - grivation;
 		}
+		convergence = declination - grivation;
 		
 		while (xml.readNextStartElement())
 		{
@@ -686,7 +727,6 @@ void Georeferencing::setState(Georeferencing::State value)
 		if (state != Normal)
 		{
 			setProjectedCRS(QStringLiteral("Local"), {});
-			updateGridCompensation();
 		}
 		
 		emit stateChanged();
@@ -891,13 +931,8 @@ void Georeferencing::updateGridCompensation()
 	if (determinant < 0.00000000001)
 		return;
 
-	// This is the angle between true azimuth and grid azimuth.
-	// In case of deformation, the convergence varies with direction and this is an average.
 	convergence = qRadiansToDegrees(atan2(d_northing_dx - d_easting_dy,
 	                                      d_easting_dx + d_northing_dy));
-
-	// This is the scale factor from true distance to grid distance.
-	// In case of deformation, the scale factor varies with direction and this is an average.
 	grid_scale_factor = sqrt(determinant);
 }
 
@@ -1027,7 +1062,7 @@ bool Georeferencing::setProjectedCRS(const QString& id, QString spec, std::vecto
 			if (ok && state != Normal)
 				setState(Normal);
 		}
-		if (!ok)
+		if (isValid() && !isLocal())
 			updateGridCompensation();
 		
 		emit projectionChanged();

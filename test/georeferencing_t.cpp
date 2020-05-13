@@ -1,5 +1,5 @@
 /*
- *    Copyright 2012-2015, 2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -24,6 +24,7 @@
 
 #include <QtMath>
 #include <QtTest>
+#include <QByteArray>
 #include <QLineF>
 #include <QPoint>
 #include <QPointF>
@@ -31,6 +32,13 @@
 #include <geodesic.h>
 #ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
 #  include <proj.h>
+#endif
+
+#ifdef MAPPER_USE_GDAL
+#  include <gdal.h>
+#  include <ogr_api.h>
+#  include <ogr_srs_api.h>
+// IWYU pragma: no_include <gdal_version.h>
 #endif
 
 #include "core/crs_template.h"
@@ -220,9 +228,8 @@ void GeoreferencingTest::testGridScaleFactor()
 	{
 		QCOMPARE(geod_distance, elevation_scale_factor * ground_distance);
 	}
-
-	// Finally, see that the auxiliary scale factor is preserved when
-	// the CRS changes.
+	
+	// See that the auxiliary scale factor is preserved when the CRS changes.
 	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), utm32_spec);
 	QVERIFY2(georef.isValid(), georef.getErrorText().toLatin1());
 	QCOMPARE(georef.getAuxiliaryScaleFactor(), elevation_scale_factor);
@@ -232,23 +239,107 @@ void GeoreferencingTest::testGridScaleFactor()
 	{
 		QCOMPARE(geod_distance, elevation_scale_factor * ground_distance);
 	}
+	
+	// The transformation between map coordinates and projected coordinates
+	// must be preserved when switching from projected to local and back.
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), spec);
+	georef.setDeclination(20.0);
+	auto const expected_grivation = georef.getGrivation();
+	georef.setAuxiliaryScaleFactor(0.95);
+	auto const expected_combined = georef.getCombinedScaleFactor();
+	auto const map_coord = georef.toMapCoordF(sw);
+	georef.setState(Georeferencing::Local);
+	QVERIFY(georef.getProjectedCRSSpec().isEmpty());
+	// This call to setDeclination must not have side-effects.
+	georef.setDeclination(georef.getDeclination());
+	QCOMPARE(georef.getGrivation(), expected_grivation);
+	// This call to setAuxiliaryScaleFactor must not have side-effects.
+	georef.setAuxiliaryScaleFactor(georef.getAuxiliaryScaleFactor());
+	QCOMPARE(georef.getCombinedScaleFactor(), expected_combined);
+	if (QLineF(georef.toProjectedCoords(map_coord), sw).length() >= 0.000001)
+		QCOMPARE(georef.toProjectedCoords(map_coord), sw);
+	georef.setProjectedCRS(QString::fromLatin1(QTest::currentDataTag()), spec);
+	QVERIFY(!georef.getProjectedCRSSpec().isEmpty());
+	// This call to setDeclination must not have side-effects.
+	georef.setDeclination(georef.getDeclination());
+	QCOMPARE(georef.getGrivation(), expected_grivation); // setDeclination must be no-op
+	// This call to setAuxiliaryScaleFactor must not have side-effects.
+	georef.setAuxiliaryScaleFactor(georef.getAuxiliaryScaleFactor());
+	QCOMPARE(georef.getCombinedScaleFactor(), expected_combined); // setAuxiliaryScaleFactor must be no-op
+	if (QLineF(georef.toProjectedCoords(map_coord), sw).length() >= 0.000001)
+		QCOMPARE(georef.toProjectedCoords(map_coord), sw);
 }
 
 void GeoreferencingTest::testCRS_data()
 {
 	QTest::addColumn<QString>("id");
 	QTest::addColumn<QString>("spec");
+	QTest::addColumn<bool>("is_geographic");
 	
-	QTest::newRow("EPSG:4326") << QStringLiteral("EPSG:4326") << QStringLiteral("+init=epsg:4326");
-	QTest::newRow("UTM")       << QStringLiteral("UTM")       << utm32_spec;
+	QTest::newRow("ETRS89")
+	        << QStringLiteral("ETRS89")
+	        << QStringLiteral("+init=epsg:4258")
+	        << true;
+	QTest::newRow("WGS 84")
+	        << QStringLiteral("WGS84")
+	        << QStringLiteral("+init=epsg:4326")
+	        << true;
+	QTest::newRow("WGS 84 (G730)")
+	        << QStringLiteral("EPSG:9057")
+	        << QStringLiteral("+init=epsg:9057")
+	        << true;
+	QTest::newRow("ETRS89 / UTM zone 32N")
+	        << QStringLiteral("EPSG:25832")
+	        << QStringLiteral("+init=epsg:25832")
+	        << false;
+	QTest::newRow("NAD83(2011) / UTM zone 13N")
+	        << QStringLiteral("EPSG:6342")
+	        << QStringLiteral("+init=epsg:6342")
+	        << false;
+	QTest::newRow("WGS 84 / UTM zone 32N")
+	        << QStringLiteral("EPSG:32632")
+	        << QStringLiteral("+init=epsg:32632")
+	        << false;
+	QTest::newRow("WGS 84 / UTM zone 32N (Mapper)")
+	        << utm32_spec
+	        << utm32_spec
+	        << false;
 }
 
 void GeoreferencingTest::testCRS()
 {
 	QFETCH(QString, id);
 	QFETCH(QString, spec);
-	Georeferencing georef;
-	QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
+	QFETCH(bool, is_geographic);
+	
+#ifdef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	if (qstrcmp(QTest::currentDataTag(), "WGS 84 (G730)") == 0)
+		QSKIP("WGS 84 (G730) requires up-to-date EPSG info");
+#endif
+	
+#ifndef ACCEPT_USE_OF_DEPRECATED_PROJ_API_H
+	// Test with IDs
+	{
+		auto t = ProjTransform::crs(id);
+		QVERIFY(t.isValid());
+		QCOMPARE(t.isGeographic(), is_geographic);
+		
+		Georeferencing georef;
+		QVERIFY2(georef.setProjectedCRS(id, id), georef.getErrorText().toLatin1());
+		QCOMPARE(georef.isGeographic(), is_geographic);
+	}
+#endif
+	
+	// Test with specs.
+	{
+		auto t = ProjTransform::crs(spec);
+		QVERIFY(t.isValid());
+		QCOMPARE(t.isGeographic(), is_geographic);
+		
+		Georeferencing georef;
+		QVERIFY2(georef.setProjectedCRS(id, spec), georef.getErrorText().toLatin1());
+		QCOMPARE(georef.isGeographic(), is_geographic);
+	}
 }
 
 
@@ -295,6 +386,11 @@ void GeoreferencingTest::testProjection_data()
 	QTest::newRow("EPSG 2056 Bern") << epsg2056_spec << 2600000.0 << 1200000.0 << degFromDMS(46, 57, 03.898) << degFromDMS(7, 26, 19.077);
 	// Issue GH-1325
 	QTest::newRow("EPSG 2056 GH-1325") << epsg2056_spec << 2643092.73 << 1150008.01 << 46.5 << 8.0;
+	
+	// EPSG:27700, OSGB 36
+	auto epsg27700_spec = QStringLiteral("+init=epsg:27700");
+	QTest::newRow("EPSG 27700 NY 06071 11978") << epsg27700_spec << 306071.0  << 511978.0 << 54.494403  << -3.4517026;
+	QTest::newRow("EPSG 27700 Lake District")  << epsg27700_spec << 306074.66 << 511974.0 << 54.4943673 << -3.4516448;
 }
 
 
@@ -333,6 +429,48 @@ void GeoreferencingTest::testProjection()
 		QCOMPARE(QString::number(lat_lon.latitude(), 'f'), QString::number(latitude, 'f'));
 	if (std::fabs(lat_lon.longitude() - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
 		QCOMPARE(QString::number(lat_lon.longitude(), 'f'), QString::number(longitude, 'f'));
+	
+#ifdef MAPPER_USE_GDAL
+	// Cf. OgrFileExport::setupGeoreferencing
+	auto* map_srs = OSRNewSpatialReference(nullptr);
+	OSRSetProjCS(map_srs, "Projected map SRS");
+	OSRSetWellKnownGeogCS(map_srs, "WGS84");
+	auto spec = QByteArray(georef.getProjectedCRSSpec().toLatin1());
+	QCOMPARE(OSRImportFromProj4(map_srs, spec), OGRERR_NONE);
+	auto* geo_srs = OSRNewSpatialReference(nullptr);
+	OSRSetWellKnownGeogCS(geo_srs, "WGS84");
+#if GDAL_VERSION_MAJOR >= 3
+	OSRSetAxisMappingStrategy(geo_srs, OAMS_TRADITIONAL_GIS_ORDER);
+#endif
+	
+	// geographic to projected
+	auto* transformation = OCTNewCoordinateTransformation(geo_srs, map_srs);
+	auto* pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, longitude, latitude);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetX(pt, 0) - easting) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(easting, 'f'));
+	if (std::fabs(OGR_G_GetY(pt, 0) - northing) > max_dist_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(northing, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	
+	// projected to geographic
+	transformation = OCTNewCoordinateTransformation(map_srs, geo_srs);
+	// Cf. OgrFileExport::addPointsToLayer
+	pt = OGR_G_CreateGeometry(wkbPoint);
+	OGR_G_SetPoint_2D(pt, 0, easting, northing);
+	QCOMPARE(OGR_G_Transform(pt, transformation), OGRERR_NONE);
+	if (std::fabs(OGR_G_GetY(pt, 0) - latitude) > max_angl_error)
+		QCOMPARE(QString::number(OGR_G_GetY(pt, 0), 'f'), QString::number(latitude, 'f'));
+	if (std::fabs(OGR_G_GetX(pt, 0) - longitude) > (max_angl_error * std::cos(qDegreesToRadians(latitude))))
+		QCOMPARE(QString::number(OGR_G_GetX(pt, 0), 'f'), QString::number(longitude, 'f'));
+	OGR_G_DestroyGeometry(pt);
+	OCTDestroyCoordinateTransformation(transformation);
+	
+	OSRDestroySpatialReference(geo_srs);
+	OSRDestroySpatialReference(map_srs);
+#endif  // MAPPPER_USE_GDAL
 }
 
 

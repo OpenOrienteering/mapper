@@ -30,6 +30,7 @@
 #include <QObject>
 #include <QPointF>
 #include <QString>
+#include <QStringRef>
 
 #include "core/map_coord.h"
 #include "util/matrix.h"
@@ -576,10 +577,20 @@ public:
 	 * Creates a Template instance for the given path.
 	 * 
 	 * This function tries to find a matching template subclass by looking at
-	 * the file extension. It may return nullptr if no subclass supports the
-	 * extension.
+	 * the file extension and/or the content available at the given path.
+	 * It may return nullptr if no subclass supports the extension or content.
 	 */
-	static std::unique_ptr<Template> templateForFile(const QString& path, Map* map);
+	static std::unique_ptr<Template> templateForPath(const QString& path, Map* map);
+	
+	/**
+	 * Creates a Template instance for the given type.
+	 * 
+	 * This function may return nullptr if the given type is unknown.
+	 * 
+	 * In addition, this function respects the user setting for assigning
+	 * some TemplateTrack extensions (GPX) explicitly to GDAL (OgrTemplate).
+	 */
+	static std::unique_ptr<Template> templateForType(const QStringRef& type, const QString& path, Map* map);
 	
 	/**
 	 * A flag which disables the writing of absolute paths for template files.
