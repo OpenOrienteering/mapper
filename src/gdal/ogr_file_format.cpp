@@ -851,6 +851,8 @@ bool OgrFileImport::importImplementation()
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
 			georef.setProjectedRefPoint(new_projected, false, false);
+			georef.setCombinedScaleFactor(georef.getCombinedScaleFactor()); // keep combined scale factor
+			georef.setGrivation(georef.getGrivation());  // keep grivation, update declination
 			map->setGeoreferencing(georef);
 		}
 	}
@@ -971,6 +973,7 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		                             .arg(latitude, 0, 'f')
 		                             .arg(longitude, 0, 'f') );
 		ortho_georef.setProjectedRefPoint({}, false, false);
+		ortho_georef.setCombinedScaleFactor(1.0);
 		ortho_georef.setDeclination(map->getGeoreferencing().getDeclination());
 		map->setGeoreferencing(ortho_georef);
 		return srsFromMap();
