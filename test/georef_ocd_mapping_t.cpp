@@ -266,7 +266,7 @@ private slots:
 		}
 
 		georef.setProjectedCRS(georef_result.crs_id, spec, crs_params);
-		georef.setProjectedRefPoint(georef_result.ref_point, false);
+		georef.setProjectedRefPoint(georef_result.ref_point, false, false);
 		georef.setScaleDenominator(georef_result.scale);
 		georef.setDeclination(georef_result.declination);
 		georef.setGrivation(georef_result.grivation);
