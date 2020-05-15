@@ -851,8 +851,8 @@ void OcdGeorefFields::setupGeoref(Georeferencing& georef,
 		applyGridAndZone(georef, i, warning_handler);
 
 	QPointF proj_ref_point(x, y);
-	georef.setProjectedRefPoint(proj_ref_point, false);
-	
+	georef.setProjectedRefPoint(proj_ref_point, false, false);
+	georef.setCombinedScaleFactor(1.0);
 	georef.setGrivation(qIsFinite(a) ? a : 0);
 }
 

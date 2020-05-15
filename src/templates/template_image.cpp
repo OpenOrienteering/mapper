@@ -235,6 +235,8 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 				calculateGeoreferencing();
 				auto const center_pixel = MapCoordF(0.5 * (image.width() - 1), 0.5 * (image.height() - 1));
 				initial_georef.setProjectedRefPoint(georef->toProjectedCoords(center_pixel));
+				initial_georef.setCombinedScaleFactor(1.0);
+				initial_georef.setGrivation(0.0);
 			}
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
