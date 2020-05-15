@@ -1457,17 +1457,13 @@ Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
         <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen
-szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek
-(elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok).
-A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására
-a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet:
-sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni.
+szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. 
+A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok). A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni.
 A térképjelet északra kell tájolni.
-Minimális szélesség: 1.5 mm (terepi méret 22.5 m). Minimális alapterület:
-2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
+Minimális szélesség: 1.5 mm (terepi méret 22.5 m). 
+Minimális alapterület: 2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
 Az ennél kisebb területeket nem, vagy felnagyítva a Durva nyílt terület (403)
-jelével kell ábrázolni.
-Színe: 50% sárga, fehér vagy 60% zöld pontokkal (35% sárga).</translation>
+jelével kell ábrázolni.</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
@@ -1482,14 +1478,12 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok).
-A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni. 
+        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. 
+A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok). A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni. 
 A térképjelet északra kell tájolni.
-Minimális szélesség: 1.5 mm (terepi méret 22.5 m). Minimális alapterület: 
-2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
-Az ennél kisebb területeket nem, vagy felnagyítva a Durva nyílt terület (403) 
-jelével kell ábrázolni.
-Színe: 50% sárga, fehér vagy 60% zöld pontokkal (35% sárga).</translation>
+Minimális szélesség: 1.5 mm (terepi méret 22.5 m).
+Minimális alapterület: 2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
+Az ennél kisebb területeket nem, vagy felnagyítva a Durva nyílt terület (403) jelével kell ábrázolni.</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -1744,7 +1738,9 @@ Must be combined with either symbol Open land (401) or Rough open land (403).
 May be combined with symbol Vegetation: slow running, good visibility (407) or Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
-        <translation>Fákkal vagy cserjékkel általában meghatározott minta szerint beültetett terület. A pontvonalak iránya utalhat az ültetés irányára. A Nyílt terület (401) vagy a Durva nyílt terület (403) felületi jelekkel együtt kell használni. A lecsökkent futhatóság ábrázolására alkalmazható a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is. 
+        <translation>Fákkal vagy cserjékkel általában meghatározott minta szerint beültetett terület. A pontvonalak iránya utalhat az ültetés irányára.
+ A Nyílt terület (401) vagy a Durva nyílt terület (403) felületi jelekkel együtt kell használni. 
+A lecsökkent futhatóság ábrázolására alkalmazható a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is. 
 Minimális alapterület: 2 mm x 2 mm (terepi méret 30 m x 30 m).</translation>
     </message>
     <message>
@@ -1759,7 +1755,8 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
         <translation>Fákkal vagy cserjékkel általában meghatározott minta szerint beültetett terület. A pontvonalak iránya utalhat az ültetés irányára. 
-A Nyílt terület (401) vagy a Durva nyílt terület (403) felületi jelekkel együtt kell használni. A lecsökkent futhatóság ábrázolására alkalmazható a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is. 
+A Nyílt terület (401) vagy a Durva nyílt terület (403) felületi jelekkel együtt kell használni. 
+A lecsökkent futhatóság ábrázolására alkalmazható a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is. 
 Minimális alapterület: 2 mm x 2 mm (terepi méret 30 m x 30 m).</translation>
     </message>
     <message>
@@ -2024,8 +2021,7 @@ Green 30%: slow running.
 Green 60%: walk.
 Minimum length: two dashes (3.25 mm - footprint 48 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyen megkülönböztethető út nem vezet végig. 
-A futhatóságot a térkpjelnél valamivel szélesebb sárga, zöld vagy fehér háttér jelzi. 
+        <translation>Erdővágás vagy egyértelmű nyomvonal (erdészeti fakitermelő nyom, homokos nyomvonal, sínyom) a terepen, amelyen megkülönböztethető út nem vezet végig. A futhatóságot a térkpjelnél valamivel szélesebb sárga, zöld vagy fehér háttér jelzi. 
 Háttér nélkül: a futhatóság megegyezik a környezet futhatóságával. 
 100% sárga: könnyen futható.
 Fehér a zöldben: jól futható.
@@ -3987,8 +3983,7 @@ A jel „lábnyoma” a terepen: 13.5 m x 13.5 m.</translation>
         <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) and marsh symbols (308, 310).</source>
         <comment>Description of symbol 401</comment>
-        <translation>Nyílt terület talajborítással (fű, moha vagy hasonló) egy tipikus nyílt erdőnél jobb futhatósággal. 
-Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.
+        <translation>Nyílt terület talajborítással (fű, moha vagy hasonló) egy tipikus nyílt erdőnél jobb futhatósággal. Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 75%-os rasztert alkalmazhatunk.
 A jel nem kombinálható más területi jellel úgymint a 113 (Szabdalt terület), a 208 (Sziklamező) és a mocsár jelek (308, 310).</translation>
     </message>
     <message>
@@ -4000,7 +3995,8 @@ A jel nem kombinálható más területi jellel úgymint a 113 (Szabdalt terület
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes/thickets). Prominent individual trees may be added using symbol 417 (prominent large tree). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
 May not be combined with other area symbols than symbol 113 (broken ground), symbol 208 (boulder field) or marsh symbols (308, 310).</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished">A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (elszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
+        <translation>A nyílt területen elszórt fákkal vagy bokrokkal rendelkező területek általánosíthatók a sárga képernyő nagy pontjai rendszeres mintázatával. A pontok lehetnek fehérek (elszórt fák) vagy zöld (szétszórt bokrok / bozótok). A 417 jelű szimbólummal (kiemelkedő nagy fa) kiemelkedő egyedi fákat lehet hozzáadni. Ha a sárga színű területek dominálnak, egy képernyő (75% a teljes sárga helyett) használható. 
+Nem lehet más területi szimbólumokkal kombinálni úgy mint a 113 szimbólum (Szabdalt terület), a 208 szimbólum (Sziklamező) vagy a mocsár szimbólumok (308, 310).</translation>
     </message>
     <message>
         <source>Open land with scattered bushes</source>
@@ -6984,7 +6980,8 @@ The density of randomly placed dots may vary according to the detail on the grou
 The minimum number of dots is three.</source>
         <comment>Description of symbol 113</comment>
         <translation>A gödrök vagy a dombocskák területe, amely túl bonyolult ahhoz, hogy részletesebben ábrázolható legyen.
-A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek. A pontok minimális száma 3.</translation>
+A véletlenszerűen elhelyezett pontok sűrűsége a terület részleteitől függően változhat. A pontok nem zavarhatják a fontos terepi jellemzők vagy tárgyak ábrázolását. A szintvonalakat nem szabad vágni a szabdalt területen. A pontokat nem lehet úgy elrendezni, hogy egyetlen pont széles vonalat képezzenek. 
+A pontok minimális száma 3.</translation>
     </message>
     <message>
         <source>Broken ground, single dot</source>
