@@ -1456,13 +1456,18 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok).
-A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni. 
-A térképjelet északra kell tájolni.
-Minimális szélesség: 1.5 mm (terepi méret 22.5 m). Minimális alapterület: 
+        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen
+szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek
+(elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok).
+A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására
+a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet:
+sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni.
+A térképjelet északra kell tájolni.
+Minimális szélesség: 1.5 mm (terepi méret 22.5 m). Minimális alapterület:
 2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
-Az ennél kisebb területeket nem, vagy felnagyítva a Durva nyílt terület (403) 
-jelével kell ábrázolni.</translation>
+Az ennél kisebb területeket nem, vagy felnagyítva a Durva nyílt terület (403)
+jelével kell ábrázolni.
+Színe: 50% sárga, fehér vagy 60% zöld pontokkal (35% sárga).</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
