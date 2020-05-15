@@ -281,7 +281,7 @@ void GeoreferencingTest::testCRS_data()
 	        << QStringLiteral("+init=epsg:4258")
 	        << true;
 	QTest::newRow("WGS 84")
-	        << QStringLiteral("WGS84")
+	        << QStringLiteral("WGS 84")  // not "WGS84"
 	        << QStringLiteral("+init=epsg:4326")
 	        << true;
 	QTest::newRow("WGS 84 (G730)")
