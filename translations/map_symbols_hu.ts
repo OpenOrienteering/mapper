@@ -1438,7 +1438,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished">Pusztaság, mocsarak, levágott területek, újonnan ültetett területek (kb. 1 m alatti fák) vagy más általánosan nyitott talaj durva talajjal, hanga vagy magas fű, amely ugyanolyan futhatóságot nyújt, mint a tipikus nyílt erdők. Kombinálható a következő szimbólumokkal: lassú futás, jó láthatóság (407) vagy Vegetation: séta, jó láthatóság (409) a csökkent futhatóság szempontjából.Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.</translation>
+        <translation>Durva nyílt területként jelöljük a pusztaságot, a mocsaras területeket, a tarvágást, a fiatal ültetvényest (1 méternél alacsonyabb fákkal) vagy egyéb durva aljnövényzettel borított nyílt területeket, ahol a futhatóság megegyezik a tiszta erdőben elérhető sebességgel. 
+A lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) együtt használható. 
+Minimális alapterület: 1 mm x 1 mm (terepi méret 15 m x 15 m). 
+Az ennél kisebb területeket nem, vagy felnagyítva a Nyílt terület (401) jelével kell ábrázolni.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -1453,8 +1456,8 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. 
-A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok). A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni. 
+        <translation>A fákkal és bokrokkal elszórtan benőtt durva nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok).
+A fehér pontokkal ábrázolt durva nyílt terület jelét a lecsökkent futhatóság ábrázolására a Növényzet: lassan futható, jó láthatóság (407) vagy a Növényzet: sétatempóban leküzdhető, jó láthatóság (409) jelekkel együtt is lehet alkalmazni. 
 A térképjelet északra kell tájolni.
 Minimális szélesség: 1.5 mm (terepi méret 22.5 m). Minimális alapterület: 
 2.5 mm x 2.5 mm (terepi méret 37.5 m x 37.5 m).
@@ -1495,11 +1498,11 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished">Az adott tereptípusra jellemző nyílt erdő. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem szabad a fehérszínnek megjelennie.
-Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m) más színű foltok nyílásainak kivételével, kivéve a következőket:
-Nyílt terepen (401) jelölésű nyílások esetén a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
-A növényzet szimbólum nyílásai: séta (408), a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
-A növényzet szimbólum nyílásai: küzdelemes (410) minimális területe 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
+        <translation>Az adott tereptípusra jellemző tiszta erdő. Amennyiben a terepen nincs jól futható erdő, a térképen mellőzni kell a fehér szín használatát. 
+Minimális alapterület: 1 mm x 1 mm (terepi méret 15 m x 15 m) más felületi színeken belül. 
+A Nyílt terület (401) felületi jeleken belül a minimális alapterület 0.7 mm x 0.7 mm (terepi méret 10.5 m x 10.5 m). 
+A Növényzet: sétatempóban leküzdhető (408) felületi jeleken belül a minimális alapterület 0.7 mm x 0.7 mm (terepi méret 10.5 m x 10.5 m). 
+A Növényzet: nehezen leküzdhető (410) felületi jelen belül a minimális alapterület 0.55 mm x 0.55 mm (terepi méret 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
@@ -1512,10 +1515,10 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
-Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
-Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
-Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
+        <translation>Sűrűn benőtt terület (csökkent láthatóság), ahol az elérhető futósebesség a normál futósebesség 60–80%-a. 
+Ahol az erdőben a futhatóság valamelyik irányban kedvezőbb, a zöld felületi jel a kedvező iránnyal párhuzamosan szabályos fehér csíkozást kap. 
+Minimális alapterület: 1 mm x 1 mm (terepi méret 15 m x 15 m). 
+Minimális szélesség: 0.4 mm (terepi méret 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, normal running in one direction</source>
@@ -1528,10 +1531,10 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
-Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
-Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
-Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
+        <translation>Sűrűn benőtt terület (csökkent láthatóság), ahol az elérhető futósebesség a normál futósebesség 60–80%-a. 
+Ahol az erdőben a futhatóság valamelyik irányban kedvezőbb, a zöld felületi jel a kedvező iránnyal párhuzamosan szabályos fehér csíkozást kap. 
+Minimális alapterület: 1 mm x 1 mm (terepi méret 15 m x 15 m). 
+Minimális szélesség: 0.4 mm (terepi méret 6 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running, good visibility</source>
@@ -1913,7 +1916,7 @@ Több nyomsávos utakat egymás mellé elhelyezett széles út jellel kell ábr�
     <message>
         <source>Wide road, 0.5 mm (from ISOM2000)</source>
         <comment>Name of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Széles út, 0.5 mm (az ISOM2000-ből)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -3086,7 +3089,7 @@ A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközel�
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Egy vonal, ami azonos tengerszint feletti magasságú pontokból áll. A szabványos magasság különbség két szintvonal között 5 méter. Sík terepen 2,5 méteres szintvonalköz használható. A legkisebb ív egy szintvonalban 0,25 mm-re lehet a vonalak középpontjától a középpontig.</translation>
+        <translation>Azonos tengerszint feletti magasságú pontokat összekötő vonal. A szomszédos szintvonalak közötti magasságkülönbség (alapszintköz) általában 5 méter. Lapos terepek esetén 0,25 mm-es alapszintköz használata megengedett.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -6660,7 +6663,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Black 60%</source>
         <comment>Color 9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete 60%</translation>
     </message>
     <message>
         <source>Black 50%</source>
@@ -6675,7 +6678,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>White over light brown</source>
         <comment>Color 12</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a világos barna felett</translation>
     </message>
     <message>
         <source>Lower brown 50%</source>
@@ -6685,12 +6688,12 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Lower brown 30%</source>
         <comment>Color 14</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alsó barna 30%</translation>
     </message>
     <message>
         <source>Black below lower light brown</source>
         <comment>Color 15</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete az alsó világos barna alatt</translation>
     </message>
     <message>
         <source>Blue 100% for area features</source>
@@ -6710,7 +6713,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>OpenOrienteering Blue</source>
         <comment>Color 19</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenOrienteering kék</translation>
     </message>
     <message>
         <source>OpenOrienteering Orange</source>
@@ -6725,12 +6728,12 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Green 50%/Yellow 100%</source>
         <comment>Color 22</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld 50%/sárga 100%</translation>
     </message>
     <message>
         <source>Black 30% for bare rock</source>
         <comment>Color 23</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete 30% csupasz sziklafelszinhez</translation>
     </message>
     <message>
         <source>Green 100% for area features</source>
@@ -6765,7 +6768,7 @@ A lila színnel a rajttól a célig megrajzolható a pálya. Egyszerű, de nem t
     <message>
         <source>Yellow 100%</source>
         <comment>Color 30</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sárga 100%</translation>
     </message>
     <message>
         <source>Yellow 50%</source>
