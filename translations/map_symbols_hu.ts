@@ -1420,12 +1420,12 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation>A fákkal és bokrokkal elszórtan fedett nyílt területeket a sárga felületi jelen szabályosan elhelyezett nagyobb pontokkal ábrázoljuk. A pontok lehetnek fehérek (elszórt fák) vagy zöldek (elszórt bokrok vagy bozótfoltok). Jellegzetes egyedülálló fákat a Jellegzetes fa (417) térképjellel külön is feltüntethetünk. Amennyiben a sárgával jelölt területek túlsúlyba kerülnek a térképen, a teli sárga szín helyett 75%-os raszter sárgát lehet alkalmazni. 
-A felületi jelek közül csak a Szabdalt terület (113), a Sziklamező (208), a Mocsár (308) és a Vizenyős terület (310) jelével együtt használható.
-Minimális szélesség: 1.5 mm (terepi méret 22.5 m).
-Minimális alapterület: 2 mm x 2 mm (terepi méret 30 m x 30 m).
-Az ennél kisebb területeket nem, vagy felnagyítva a Nyílt terület (401) jelével kell ábrázolni. 
-A térképjelet északra kell tájolni.</translation>
+        <translation>Elszórt fákkal vagy bokrokkal rendelkező területeket általánosíthatjuk úgy, hogy a sárga alapon rendszeresen nagy pontok vannak. A pontok lehetnek fehér (szétszórt fák) vagy zöld (szétszórt bokrok / cserjések). A prominens egyes fák hozzáadhatók a Prominens nagy fa (417) szimbólummal. Ha a sárga színű területek dominálnak, képernyőt lehet használni (a teljes sárga helyett 75%).
+Nem kombinálható más, a Szabdalt terület(113), a Boulder mező (208) vagy a mocsaras szimbólumokkal (308, 310) kapcsolatos szimbólumokkal.
+Minimális szélesség: 1,5 mm (lábnyom 22,5 m).
+Minimális terület: 2 mm x 2 mm (lábnyom 30 m x 30 m).
+A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.
+A szimbólum északi irányba mutat.</translation>
     </message>
     <message>
         <source>Rough open land</source>
