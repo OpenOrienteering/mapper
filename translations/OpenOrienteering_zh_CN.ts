@@ -41,12 +41,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="190"/>
         <source>&lt;a %1&gt;All about licenses, copyright notices, conditions and disclaimers.&lt;/a&gt;</source>
-        <translation>&lt;a％1&gt;所有关于许可证，版权的告示，条件和免责声明</translation>
+        <translation>&lt;a %1&gt;所有相关的许可证、版权告示、条件和免责声明。&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="192"/>
         <source>The OpenOrienteering developers in alphabetical order:</source>
-        <translation>OOM开发人员(按字母顺序排列)：</translation>
+        <translation>OpenOrienteering开发人员(按字母顺序排列)：</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="193"/>
@@ -63,12 +63,12 @@
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="180"/>
         <source>This program is free software: you can redistribute it and/or modify it under the terms of the &lt;a %1&gt;GNU General Public License (GPL), version&amp;nbsp;3&lt;/a&gt;, as published by the Free Software Foundation.</source>
-        <translation>此程序是自由软件：您可以根据自由软件基金会发布的&lt;a %1&gt;GNU通用公共许可证（GPL）版本 &amp;nbsp;3&lt;/a&gt;的条款重新分发和(或)修改它。</translation>
+        <translation>此程序是自由软件：您可以根据自由软件基金会发布的&lt;a %1&gt;GNU通用公共许可证（GPL）版本 3&lt;/a&gt;的条款重新分发和(或)修改它。</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="185"/>
         <source>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License (GPL), version&amp;nbsp;3, for &lt;a %1&gt;more details&lt;/a&gt;.</source>
-        <translation>这个程序被分发，希望它是有用的，但是没有任何保证；甚至没有对适销性或适合特定用途的默示保证。有关的&lt;a %1&gt;详细信息&lt;/a&gt;，请参阅GNU通用公共许可证（GPL）第&amp;nbsp;3版。</translation>
+        <translation>这个程序被分发，希望它是有用的，但是没有任何保证；甚至没有对适销性或适合特定用途的默示保证。有关的&lt;a %1&gt;详细信息&lt;/a&gt;，请参阅GNU通用公共许可证（GPL）第3版。</translation>
     </message>
     <message>
         <location filename="../src/gui/about_dialog.cpp" line="194"/>
