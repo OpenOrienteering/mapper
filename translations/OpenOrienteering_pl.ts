@@ -152,27 +152,27 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rysowanie elementu na granicy</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
         <source>Clip elements at the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Przyczep element na granicy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rysuj elementy jeżeli środek jest w obrębie granicy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
         <source>Draw elements if any point is inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rysuj elementy jeżeli jakikolwiek punkt jest w obrębie granicy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="234"/>
         <source>Draw elements if all points are inside the boundary.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rysuj elementy jeżeli wszystkie punkty są w obrębie granicy.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="249"/>
@@ -286,10 +286,10 @@
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
         <location filename="../src/gui/autosave_dialog.cpp" line="54"/>
         <source>%n bytes</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n bajt</numerusform>
+            <numerusform>%n bajtów</numerusform>
+            <numerusform>%n bajtów</numerusform>
         </translation>
     </message>
     <message>
@@ -393,12 +393,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Drukowanie w kolorze dodatkowym</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
         <source>Screen frequency:</source>
-        <translation type="unfinished"></translation>
+        <translation>Częstotliwość ekranu:</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="116"/>
@@ -408,12 +408,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="117"/>
         <source>Undefined</source>
-        <translation type="unfinished"></translation>
+        <translation>Niezdefiniowano</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="121"/>
         <source>Screen angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kąt ekranu:</translation>
     </message>
     <message>
         <source>°</source>
@@ -442,12 +442,12 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="292"/>
         <source>Name</source>
-        <translation type="unfinished">Nazwa</translation>
+        <translation>Nazwa</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="346"/>
         <source>- unnamed -</source>
-        <translation type="unfinished"></translation>
+        <translation>- nienazwane -</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="623"/>
@@ -520,7 +520,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
@@ -545,7 +545,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 (duplikat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="409"/>
@@ -948,7 +948,7 @@
     <message>
         <location filename="../src/tools/distribute_points_tool.cpp" line="153"/>
         <source>Additional rotation angle (counter-clockwise):</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodatkowy kąt obrotu (przeciwnie do ruchu wskazówek zegara):</translation>
     </message>
 </context>
 <context>
@@ -977,7 +977,7 @@
         <location filename="../src/tools/draw_circle_tool.cpp" line="70"/>
         <source>From center</source>
         <comment>Draw circle starting from center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Od środka</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_circle_tool.cpp" line="316"/>
@@ -990,7 +990,7 @@
     <message>
         <location filename="../src/tools/draw_freehand_tool.cpp" line="289"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Draw a path. </source>
-        <translation type="unfinished">&lt;b&gt;Przeciągnij&lt;/b&gt;: Narysować ścieżkę. </translation>
+        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Narysować ścieżkę. </translation>
     </message>
 </context>
 <context>
@@ -1012,7 +1012,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="1170"/>
         <location filename="../src/tools/draw_path_tool.cpp" line="1197"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Segment azimuth and length. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Azymut i długość segmentu. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1206"/>
@@ -1074,7 +1074,7 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="104"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Przypnij</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="105"/>
@@ -1086,13 +1086,13 @@
         <location filename="../src/tools/draw_path_tool.cpp" line="106"/>
         <source>Info</source>
         <comment>Show segment azimuth and length</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="109"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kreska</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="112"/>
@@ -1102,7 +1102,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="113"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerwij</translation>
     </message>
 </context>
 <context>
@@ -1110,12 +1110,12 @@
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="81"/>
         <source>Touch the map to finish averaging</source>
-        <translation type="unfinished">Kliknij na mapę, by zakończyć (?)</translation>
+        <translation>Kliknij na mapę, by zakończyć uśrednianie</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_gps_tool.cpp" line="193"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Finish setting the object. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Zakończ ustawianie obiektu. </translation>
     </message>
 </context>
 <context>
@@ -1141,17 +1141,17 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Utwórz obiekt punktowy.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
         <source>&lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Przeciągnij&lt;/b&gt;: Utwórz obiekt i ustaw jego orientację.</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="347"/>
         <source>&lt;b&gt;%1, 0&lt;/b&gt;: Reset rotation.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1, 0&lt;/b&gt;: Zresetuj obrót.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object. &lt;b&gt;Drag&lt;/b&gt;: Create an object and set its orientation (if rotatable). </source>
@@ -1161,7 +1161,7 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="83"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Przypnij</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="84"/>
@@ -1196,13 +1196,13 @@
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="91"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation>Przypnij</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="93"/>
         <source>Dash</source>
         <comment>Drawing dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kreska</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="96"/>
@@ -1212,7 +1212,7 @@
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="97"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerwij</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_rectangle_tool.cpp" line="92"/>
@@ -1231,12 +1231,12 @@
         <location filename="../src/tools/draw_text_tool.cpp" line="113"/>
         <source>Snap</source>
         <extracomment>Snap to existing objects</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Przyciągnij</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="477"/>
         <source>&lt;b&gt;%1+%2&lt;/b&gt;: Cancel editing. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1+%2&lt;/b&gt;: Anuluj edytowanie. </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
@@ -1265,13 +1265,13 @@
         <location filename="../src/tools/edit_line_tool.cpp" line="406"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Przyciągnij</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_line_tool.cpp" line="407"/>
         <source>Toggle curve</source>
         <comment>Toggle between curved and flat segment</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zmień zakrzywienie</translation>
     </message>
 </context>
 <context>
@@ -1301,7 +1301,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="534"/>
         <source>Snap</source>
         <comment>Snap to existing objects</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Przyciągnij</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="535"/>
@@ -1313,7 +1313,7 @@
         <location filename="../src/tools/edit_point_tool.cpp" line="536"/>
         <source>Toggle dash</source>
         <comment>Toggle dash points</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zmień kreskę</translation>
     </message>
     <message>
         <location filename="../src/tools/edit_point_tool.cpp" line="721"/>
@@ -1420,12 +1420,12 @@
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="50"/>
         <source>Action button size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wielkość przycisku akcji:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="54"/>
         <source>Symbol icon size:</source>
-        <translation type="unfinished"></translation>
+        <translation>Wielkość ikony symbolu:</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
@@ -1495,7 +1495,7 @@
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="576"/>
         <source>Could not write file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku: %1</translation>
     </message>
     <message>
         <source>Could not create new file: %1</source>
@@ -1512,7 +1512,9 @@
         <source>Cannot save file
 %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można zapisać pliku
+%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -1552,7 +1554,7 @@
     <message>
         <location filename="../src/tools/fill_tool.cpp" line="243"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Fill area with active symbol. The area to be filled must be bounded by lines or areas, other symbols are not taken into account. </source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Klik&lt;/b&gt;: Wypełnij obszar aktywnym symbolem. Wypełniany obszar musi być ograniczony liniami lub obszarami, inne symbole nie są brane pod uwagę. </translation>
     </message>
 </context>
 <context>
@@ -1579,12 +1581,12 @@
         <location filename="../src/gdal/gdal_image_reader.cpp" line="56"/>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="143"/>
         <source>Failed to read image data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Odczytanie danych z obrazu nie powiodło się: %1</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_image_reader.cpp" line="112"/>
         <source>Unsupported raster data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Niewspierane dane rastrowe: %1</translation>
     </message>
 </context>
 <context>
@@ -1592,12 +1594,12 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Opcje importu</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="54"/>
         <source>Import with GDAL/OGR:</source>
-        <translation type="unfinished"></translation>
+        <translation>Importuj z GDAL/OGR:</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
