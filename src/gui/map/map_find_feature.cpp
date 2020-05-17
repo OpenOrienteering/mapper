@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017, 2018 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -206,6 +206,7 @@ void MapFindFeature::findNext()
 	if (next_object)
 		map->addObjectToSelection(next_object, false);
 	map->emitSelectionChanged();
+	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	
 	if (!map->selectedObjects().empty())
 		controller.setEditTool();
@@ -228,6 +229,7 @@ void MapFindFeature::findAll()
 		map->addObjectToSelection(object, false);
 	}, std::cref(query));
 	map->emitSelectionChanged();
+	map->ensureVisibilityOfSelectedObjects(Map::FullVisibility);
 	controller.getWindow()->showStatusBarMessage(OpenOrienteering::TagSelectWidget::tr("%n object(s) selected", nullptr, map->getNumSelectedObjects()), 2000);
 	
 	if (!map->selectedObjects().empty())
