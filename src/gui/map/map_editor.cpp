@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -4072,7 +4072,7 @@ void MapEditorController::importClicked()
 	 *   it wants to report its support for the GPX format.
 	 * - Every other recognized map file is imported regularly.
 	 */
-	char const* format_id = "";
+	char const* format_id = nullptr;
 	if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 		format_id = "GPX";
 	
@@ -4093,7 +4093,7 @@ void MapEditorController::importClicked()
 		return; // Error reporting in Track::import()
 	}
 	
-	if (format_id != nullptr)
+	if (format_id)
 	{
 		importMapFile(filename, false);
 		return;
