@@ -1107,7 +1107,7 @@
         <location filename="../src/tools/draw_point_tool.cpp" line="340"/>
         <location filename="../src/tools/draw_point_tool.cpp" line="354"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a point object.</source>
-        <translation>&lt;b&gt;点击&lt;/b&gt; ：创建一个点对象。</translation>
+        <translation>&lt;b&gt;点击&lt;/b&gt; ：添加一个点对象。</translation>
     </message>
     <message>
         <location filename="../src/tools/draw_point_tool.cpp" line="341"/>
@@ -1192,7 +1192,7 @@
     <message>
         <location filename="../src/tools/draw_text_tool.cpp" line="482"/>
         <source>&lt;b&gt;Click&lt;/b&gt;: Create a text object with a single anchor. &lt;b&gt;Drag&lt;/b&gt;: Create a text box. </source>
-        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 创建具有单锚文本对象。&lt;b&gt;拖&lt;/b&gt;︰ 中创建一个文本框。 </translation>
+        <translation>&lt;b&gt;单击&lt;/b&gt;︰ 新建一个具有单一锚点的文本对象。&lt;b&gt;拖&lt;/b&gt;︰ 添加一个文本框。 </translation>
     </message>
 </context>
 <context>
@@ -3541,7 +3541,7 @@ Import the data anyway?</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1053"/>
         <source>Create temporary path at GPS position</source>
-        <translation>在 GPS 位置创建临时路径</translation>
+        <translation>在 GPS 位置添加临时路径</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1055"/>
@@ -4717,7 +4717,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2565"/>
         <source>Fill the selected lines or create a border for the selected areas.</source>
-        <translation>填充选定的线段或为选定区域创建边框。</translation>
+        <translation>填充选定的线段或为选定区域添加边框。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/map/map_editor.cpp" line="2684"/>
@@ -4922,7 +4922,7 @@ and select &quot;New symbol&quot;
 to create one.</source>
         <translation>没有符号 ！
 
-现在定义一些符号︰ 符号栏中用鼠标右键单击并选择&quot;新符号&quot;来创建一个。</translation>
+现在定义一些符号︰ 符号栏中用鼠标右键单击并选择&quot;新建符号&quot;来创建一个。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_widget.cpp" line="851"/>
@@ -5073,7 +5073,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="95"/>
         <source>Create</source>
-        <translation>创建</translation>
+        <translation>新建</translation>
     </message>
     <message>
         <location filename="../src/gui/map/new_map_dialog.cpp" line="171"/>
@@ -7113,7 +7113,7 @@ separations</source>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="108"/>
         <source>New symbol</source>
-        <translation>新符号</translation>
+        <translation>新建符号</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="351"/>
@@ -7234,13 +7234,13 @@ separations</source>
         <location filename="../src/gui/map/map_editor.cpp" line="1396"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1117"/>
         <source>Hide objects with this symbol</source>
-        <translation>隐藏该符号的对象</translation>
+        <translation>隐藏符号</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1407"/>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1118"/>
         <source>Protect objects with this symbol</source>
-        <translation>锁定该符号的对象</translation>
+        <translation>锁定符号</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/symbol_render_widget.cpp" line="1123"/>
