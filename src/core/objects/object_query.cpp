@@ -142,7 +142,7 @@ public:
 
 
 /**
- * Create a placeholder ObjectQuery.
+ * Create a cheap placeholder ObjectQuery.
  * 
  * During object query parsing, operands right of operators are unknown
  * at construction time. However, ObjectQuery does not allowed to construct
@@ -151,7 +151,7 @@ public:
  */
 OpenOrienteering::ObjectQuery placeholder()
 {
-	return { OpenOrienteering::ObjectQuery::OperatorSearch, {QChar::Space} };
+	return { static_cast<const OpenOrienteering::Symbol*>(nullptr) };
 }
 
 }  // namespace
@@ -512,7 +512,7 @@ QString ObjectQuery::toString() const
 		break;
 		
 	case OperatorSymbol:
-		ret = QLatin1String("SYMBOL \"") + symbol->getNumberAsString() + QLatin1Char('\"');
+		ret = QLatin1String("SYMBOL \"") + (symbol ? symbol->getNumberAsString() : QString{}) + QLatin1Char('\"');
 		break;
 		
 	case OperatorInvalid:

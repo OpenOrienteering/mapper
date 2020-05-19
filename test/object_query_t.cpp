@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -284,6 +284,12 @@ void ObjectQueryTest::testSymbol()
 	operand = clone.symbolOperand();
 	QVERIFY(operand);
 	QCOMPARE(operand, &symbol_2);
+	
+	symbol_query = ObjectQuery(static_cast<Symbol*>(nullptr));
+	QVERIFY(bool(symbol_query));
+	QVERIFY(symbol_query(&object) == false);
+	object.setSymbol(nullptr, true);
+	QVERIFY(symbol_query(&object) == true);
 }
 
 
@@ -318,6 +324,9 @@ void ObjectQueryTest::testToString()
 	                ObjectQuery::OperatorAnd,
 	                {QStringLiteral("A B C"), ObjectQuery::OperatorIsNot, QStringLiteral("3")});
 	QCOMPARE(q.toString(), QStringLiteral("Layer = \"1\" AND \"A B C\" != \"3\""));
+	
+	q = ObjectQuery(static_cast<Symbol*>(nullptr));
+	QCOMPARE(q.toString(), QStringLiteral("SYMBOL \"\""));
 }
 
 
