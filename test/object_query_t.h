@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -45,6 +45,7 @@ private slots:
 	void testSearch();
 	void testObjectText();
 	void testSymbol();
+	void testNegation();
 	void testToString();
 	void testParser();
 
