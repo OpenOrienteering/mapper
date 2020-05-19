@@ -29,6 +29,7 @@
 #include <QLatin1String>
 #include <QString>
 
+#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/objects/object_query.h"
@@ -327,6 +328,11 @@ void ObjectQueryTest::testToString()
 	
 	q = ObjectQuery(static_cast<Symbol*>(nullptr));
 	QCOMPARE(q.toString(), QStringLiteral("SYMBOL \"\""));
+	
+	PointSymbol symbol_1;
+	symbol_1.setNumberComponent(0, 123);
+	q = ObjectQuery(static_cast<Symbol*>(&symbol_1));
+	QCOMPARE(q.toString(), QStringLiteral("SYMBOL \"123\""));
 }
 
 
@@ -395,7 +401,31 @@ void ObjectQueryTest::testParser()
 	
 	q = ObjectQuery(ObjectQuery::OperatorSearch, QStringLiteral("1\"\\x"));
 	QCOMPARE(p.parse(QStringLiteral("\"1\\\"\\\\x\"")), q);
+	
+	q = ObjectQuery(static_cast<Symbol*>(nullptr));
+	QCOMPARE(p.parse(QStringLiteral("SYMBOL \"\"")), q);
+	
+	Map m;
+	auto* symbol_1 = new PointSymbol();
+	symbol_1->setNumberComponent(0, 123);
+	m.addSymbol(symbol_1, 0);
+	p.setMap(&m);
+	
+	q = ObjectQuery(static_cast<Symbol*>(symbol_1));
+	QCOMPARE(p.parse(QStringLiteral("SYMBOL 123")), q);
+	QCOMPARE(p.parse(QStringLiteral("SYMBOL \"123\"")), q);
+	
+	q = ObjectQuery(static_cast<Symbol*>(nullptr));
+	QCOMPARE(p.parse(QStringLiteral("SYMBOL \"\"")), q);
 }
 
 
-QTEST_APPLESS_MAIN(ObjectQueryTest)
+/*
+ * We don't need a real GUI window.
+ */
+namespace {
+	auto Q_DECL_UNUSED qpa_selected = qputenv("QT_QPA_PLATFORM", "minimal");  // clazy:exclude=non-pod-global-static
+}
+
+
+QTEST_MAIN(ObjectQueryTest)

@@ -35,6 +35,7 @@
 #include <QString>
 #include <QVarLengthArray>
 
+#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
@@ -610,6 +611,15 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 }
 
 
+
+// ### ObjectQueryParser ###
+
+void ObjectQueryParser::setMap(const Map* map)
+{
+	this->map = map;
+}
+
+
 ObjectQuery ObjectQueryParser::parse(const QString& text)
 {
 	auto result = ObjectQuery{};
@@ -663,6 +673,24 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			// After a <TestTerm>, finish parsing of the right side of AND expression.
 			while (nested_expressions.canPop(ObjectQuery::OperatorAnd))
 				current = nested_expressions.pop();
+		}
+		else if (token == TokenSymbol && !*current)
+		{
+			// Start parsing right side of SYMBOL expression.
+			getToken();
+			if (token == TokenWord || token == TokenString)
+			{
+				auto const key = tokenAsString();
+				auto* symbol = findSymbol(key);
+				if (symbol || key.isEmpty())
+					*current = ObjectQuery{symbol};
+				getToken();
+			}
+			else
+			{
+				result = {};
+				break;
+			}
 		}
 		else if (token == TokenAnd && *current)
 		{
@@ -823,6 +851,8 @@ void ObjectQueryParser::getToken()
 			token = TokenOr;
 		else if (token_text == QLatin1String("AND"))
 			token = TokenAnd;
+		else if (token_text == QLatin1String("SYMBOL"))
+			token = TokenSymbol;
 		else
 			token = TokenWord;
 	}
@@ -835,6 +865,19 @@ QString ObjectQueryParser::tokenAsString() const
 	if (token == TokenString)
 		string = fromEscaped(string);
 	return string;
+}
+
+
+const Symbol* ObjectQueryParser::findSymbol(const QString& key) const
+{
+	auto const num_symbols = map ? map->getNumSymbols() : 0;
+	for (int k = 0; k < num_symbols; ++k)
+	{
+		auto* symbol = map->getSymbol(k);
+		if (symbol->getNumberAsString() == key)
+			return symbol;
+	}
+	return nullptr;
 }
 
 

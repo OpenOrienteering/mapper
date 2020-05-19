@@ -30,6 +30,7 @@
 
 namespace OpenOrienteering {
 
+class Map;
 class Object;
 class Symbol;
 
@@ -223,8 +224,9 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
  * 
  * <ObjectQuery>      ::=  <AndExpression>  |  <ObjectQuery> 'OR' <AndExpression>
  * <AndExpression>    ::=  <BoolExpression>  |  <AndExpression> 'AND' <BoolExpression>
- * <BoolExpression>   ::=  <ParenExpression>  |  <TestTerm>
+ * <BoolExpression>   ::=  <ParenExpression>  |  <SymbolTerm>  |  <TestTerm>
  * <ParenExpression>  ::=  '(' <ObjectQuery> ')'
+ * <SymbolTerm>       ::=  'SYMBOL' <Literal>
  * <TestTerm>         ::=  <IsTerm> | <IsNotTerm> | <ContainsTerm> | <SearchTerm>
  * <IsTerm>           ::=  <Literal> '=' <Literal>
  * <IsNotTerm>        ::=  <Literal> '!=' <Literal>
@@ -237,6 +239,11 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
 class ObjectQueryParser
 {
 public:
+	/**
+	 * Sets the map for looking up symbols.
+	 */
+	void setMap(const Map* map);
+	
 	/**
 	 * Returns an ObjectQuery for the given text.
 	 * 
@@ -257,6 +264,7 @@ public:
 		TokenString,
 		TokenWord,
 		TokenTextOperator,
+		TokenSymbol,
 		TokenOr,
 		TokenAnd,
 		TokenLeftParen,
@@ -268,6 +276,9 @@ private:
 	
 	QString tokenAsString() const;
 	
+	const Symbol* findSymbol(const QString& key) const;
+	
+	const Map* map = nullptr;
 	QStringRef input;
 	QStringRef token_text;
 	TokenType token;
