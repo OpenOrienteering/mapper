@@ -56,6 +56,7 @@ public:
 		// Operators 1 .. 15 operate on other queries
 		OperatorAnd      = 1,  ///< And-chains two object queries
 		OperatorOr       = 2,  ///< Or-chains two object queries
+		OperatorNot      = 3,  ///< Negation of the sub-query
 		
 		// Operators 16 .. 18 operate on object tags and other strings
 		OperatorIs       = 16, ///< Tests an existing tag for equality with the given value (case-sensitive)
@@ -134,6 +135,12 @@ public:
 	 * Constructs a query for a particular symbol.
 	 */
 	ObjectQuery(const Symbol* symbol) noexcept;
+	
+	
+	/**
+	 * Returns a query which is the negation of the sub-query.
+	 */
+	static ObjectQuery negation(ObjectQuery query) noexcept;
 	
 	
 	/**
@@ -224,7 +231,7 @@ bool operator!=(const ObjectQuery::StringOperands& lhs, const ObjectQuery::Strin
  * 
  * <ObjectQuery>      ::=  <AndExpression>  |  <ObjectQuery> 'OR' <AndExpression>
  * <AndExpression>    ::=  <BoolExpression>  |  <AndExpression> 'AND' <BoolExpression>
- * <BoolExpression>   ::=  <ParenExpression>  |  <SymbolTerm>  |  <TestTerm>
+ * <BoolExpression>   ::=  <ParenExpression>  |  <SymbolTerm>  |  <TestTerm>  |  'NOT' <BoolExpression>
  * <ParenExpression>  ::=  '(' <ObjectQuery> ')'
  * <SymbolTerm>       ::=  'SYMBOL' <Literal>
  * <TestTerm>         ::=  <IsTerm> | <IsNotTerm> | <ContainsTerm> | <SearchTerm>
@@ -267,6 +274,7 @@ public:
 		TokenSymbol,
 		TokenOr,
 		TokenAnd,
+		TokenNot,
 		TokenLeftParen,
 		TokenRightParen,
 	};

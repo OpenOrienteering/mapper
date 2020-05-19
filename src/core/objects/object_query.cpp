@@ -299,8 +299,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, con
 	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2
+	Q_ASSERT(op <= 3);
+	if (op < 1 || op > 3
 	    || !first || !second)
 	{
 		reset();
@@ -320,8 +320,8 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2
+	Q_ASSERT(op <= 3);
+	if (op < 1 || op > 3
 	    || !first || !second)
 	{
 		reset();
@@ -339,6 +339,13 @@ ObjectQuery::ObjectQuery(const Symbol* symbol) noexcept
 , symbol { symbol }
 {
 	// nothing else
+}
+
+
+// static
+ObjectQuery ObjectQuery::negation(ObjectQuery query) noexcept
+{
+	return { placeholder(), OperatorNot, std::move(query) };
 }
 
 
@@ -370,6 +377,9 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	case OperatorOr:
 		//: Very short label
 		return tr("or");
+	case OperatorNot:
+		//: Very short label
+		return tr("not");
 		
 	case OperatorSymbol:
 		//: Very short label
@@ -417,6 +427,8 @@ bool ObjectQuery::operator()(const Object* object) const
 		return (*subqueries.first)(object) && (*subqueries.second)(object);
 	case OperatorOr:
 		return (*subqueries.first)(object) || (*subqueries.second)(object);
+	case OperatorNot:
+		return !(*subqueries.second)(object);
 		
 	case OperatorSymbol:
 		return object->getSymbol() == symbol;
@@ -433,14 +445,14 @@ bool ObjectQuery::operator()(const Object* object) const
 const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 {
 	const LogicalOperands* result = nullptr;
-	if (op >= 1 && op <= 2)
+	if (op >= 1 && op <= 3)
 	{
 		result = &subqueries;
 	}
 	else
 	{
 		Q_ASSERT(op >= 1);
-		Q_ASSERT(op <= 2);
+		Q_ASSERT(op <= 3);
 	}
 	return result;
 }
@@ -510,6 +522,9 @@ QString ObjectQuery::toString() const
 		break;
 	case OperatorOr:
 		ret = subqueries.first->toString() + QLatin1String(" OR ") + subqueries.second->toString();
+		break;
+	case OperatorNot:
+		ret = QLatin1String("NOT ") + subqueries.second->toString();
 		break;
 		
 	case OperatorSymbol:
@@ -599,6 +614,8 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 	case ObjectQuery::OperatorOr:
 		return *lhs.subqueries.first == *rhs.subqueries.first
 		       && *lhs.subqueries.second == *rhs.subqueries.second;
+	case ObjectQuery::OperatorNot:
+		return *lhs.subqueries.second == *rhs.subqueries.second;
 		
 	case ObjectQuery::OperatorSymbol:
 		return lhs.symbol == rhs.symbol;
@@ -670,6 +687,9 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			{
 				*current = { ObjectQuery::OperatorSearch, key };
 			}
+			// Finish parsing of "NOT NOT NOT x", making the top-most NOT the current expression.
+			while (nested_expressions.canPop(ObjectQuery::OperatorNot))
+				current = nested_expressions.pop();
 			// After a <TestTerm>, finish parsing of the right side of AND expression.
 			while (nested_expressions.canPop(ObjectQuery::OperatorAnd))
 				current = nested_expressions.pop();
@@ -691,6 +711,15 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 				result = {};
 				break;
 			}
+		}
+		else if (token == TokenNot && !*current)
+		{
+			// Start parsing right side of NOT expression.
+			*current = ObjectQuery::negation(placeholder());
+			nested_expressions.push(current);
+			current = current->logicalOperands()->second.get();
+			*current = {};
+			getToken();
 		}
 		else if (token == TokenAnd && *current)
 		{
@@ -731,7 +760,10 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			if (nested_expressions.canPop())
 			{
 				current = nested_expressions.pop();
-				// After a <ParenExpression>, finish parsing of the right side of AND expression.
+				// After a <ParenExpression>, finish parsing a "NOT NOT NOT (x)" expression.
+				while (nested_expressions.canPop(ObjectQuery::OperatorNot))
+					current = nested_expressions.pop();
+				// Now finish parsing of the right side of AND expression.
 				while (nested_expressions.canPop(ObjectQuery::OperatorAnd))
 					current = nested_expressions.pop();
 			}
@@ -851,6 +883,8 @@ void ObjectQueryParser::getToken()
 			token = TokenOr;
 		else if (token_text == QLatin1String("AND"))
 			token = TokenAnd;
+		else if (token_text == QLatin1String("NOT"))
+			token = TokenNot;
 		else if (token_text == QLatin1String("SYMBOL"))
 			token = TokenSymbol;
 		else

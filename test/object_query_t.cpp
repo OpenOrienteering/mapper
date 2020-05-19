@@ -293,6 +293,21 @@ void ObjectQueryTest::testSymbol()
 	QVERIFY(symbol_query(&object) == true);
 }
 
+void ObjectQueryTest::testNegation()
+{
+	PointSymbol symbol_1;
+	PointObject object(&symbol_1);
+	
+	// variation of testSymbol
+	QVERIFY(ObjectQuery::negation({&symbol_1})(&object) == false);
+	
+	PointSymbol symbol_2;
+	QVERIFY(ObjectQuery::negation({&symbol_2})(&object) == true);
+	
+	object.setSymbol(&symbol_2, false);
+	QVERIFY(ObjectQuery::negation({&symbol_2})(&object) == false);
+}
+
 
 void ObjectQueryTest::testToString()
 {
@@ -333,6 +348,26 @@ void ObjectQueryTest::testToString()
 	symbol_1.setNumberComponent(0, 123);
 	q = ObjectQuery(static_cast<Symbol*>(&symbol_1));
 	QCOMPARE(q.toString(), QStringLiteral("SYMBOL \"123\""));
+	
+	q = ObjectQuery(ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")}));
+	QCOMPARE(q.toString(), QStringLiteral("NOT \"1\""));
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("2")}));
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" AND NOT \"2\""));
+	
+	q = ObjectQuery({{ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("2")})},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(q.toString(), QStringLiteral("\"1\" AND NOT \"2\" OR \"3\""));
+	
+	q = ObjectQuery(ObjectQuery::negation(ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")})),
+	                ObjectQuery::OperatorAnd,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(q.toString(), QStringLiteral("NOT NOT \"1\" AND \"3\""));
 }
 
 
@@ -404,6 +439,55 @@ void ObjectQueryTest::testParser()
 	
 	q = ObjectQuery(static_cast<Symbol*>(nullptr));
 	QCOMPARE(p.parse(QStringLiteral("SYMBOL \"\"")), q);
+	
+	q = ObjectQuery(ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")}));
+	QCOMPARE(p.parse(QStringLiteral("NOT \"1\"")), q);
+	
+	q = ObjectQuery(ObjectQuery::negation(ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")})));
+	QCOMPARE(p.parse(QStringLiteral("NOT NOT \"1\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("NOT (NOT \"1\")")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT NOT \"1\")")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT NOT (\"1\"))")), q);
+	
+	q = ObjectQuery({ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("2")}));
+	QCOMPARE(p.parse(QStringLiteral("\"1\" AND NOT \"2\"")), q);
+	
+	q = ObjectQuery({{ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("2")})},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(p.parse(QStringLiteral("1 AND NOT 2 OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("1 AND (NOT 2) OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 AND NOT 2) OR 3")), q);
+	
+	q = ObjectQuery({ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")}),
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("2")}},
+	                ObjectQuery::OperatorOr,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(p.parse(QStringLiteral("NOT 1 AND 2 OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT 1) AND 2 OR 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT 1 AND 2) OR 3")), q);
+	
+	q = ObjectQuery({{ObjectQuery::OperatorSearch, QStringLiteral("1")},
+	                 ObjectQuery::OperatorAnd,
+	                 {ObjectQuery::OperatorSearch, QStringLiteral("2")}},
+	                ObjectQuery::OperatorOr,
+	                ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("3")}));
+	QCOMPARE(p.parse(QStringLiteral("1 AND 2 OR NOT 3")), q);
+	QCOMPARE(p.parse(QStringLiteral("1 AND 2 OR (NOT 3)")), q);
+	QCOMPARE(p.parse(QStringLiteral("(1 AND 2) OR NOT 3")), q);
+	
+	q = ObjectQuery(ObjectQuery::negation(ObjectQuery::negation({ObjectQuery::OperatorSearch, QStringLiteral("1")})),
+	                ObjectQuery::OperatorAnd,
+	                {ObjectQuery::OperatorSearch, QStringLiteral("3")});
+	QCOMPARE(p.parse(QStringLiteral("NOT NOT \"1\" AND \"3\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("NOT (NOT \"1\") AND \"3\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT NOT \"1\") AND \"3\"")), q);
+	QCOMPARE(p.parse(QStringLiteral("(NOT (NOT \"1\")) AND \"3\"")), q);
 	
 	Map m;
 	auto* symbol_1 = new PointSymbol();
