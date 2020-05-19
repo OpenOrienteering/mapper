@@ -2566,7 +2566,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="320"/>
         <source>Line settings</source>
-        <translation>行的设置</translation>
+        <translation>线的设置</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="81"/>
