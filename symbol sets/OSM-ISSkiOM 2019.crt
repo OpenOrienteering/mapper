@@ -29,9 +29,9 @@
 
 401    natural = beach AND surface = sand
 201    natural = cliff
-201.2  natural = cliff AND area = yes
+206    natural = cliff AND area = yes
 401    natural = dune
-201.2  natural = rock AND area = yes
+206    natural = rock AND area = yes
 401    natural = sand
 205    natural = stone
 

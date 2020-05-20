@@ -29,12 +29,12 @@
 
 214    natural = bare_rock
 213    natural = beach AND surface = sand
-203.9  natural = cave_entrance
+203.2  natural = cave_entrance
 201    natural = cliff
-201.2  natural = cliff AND area = yes
+206    natural = cliff AND area = yes
 213    natural = dune
 203.1  natural = hole AND rock != no
-201.2  natural = rock AND area = yes
+206    natural = rock AND area = yes
 213    natural = sand
 205    natural = stone
 
@@ -76,7 +76,7 @@
 # 710    landuse = landfill
 403    landuse = logging
 401    landuse = meadow
-709    landuse = military
+520.2  landuse = military
 413    landuse = orchard
 301    landuse = reservoir
 # 710    landuse = quarry
@@ -145,7 +145,7 @@
 311    amenity = fountain
 525    amenity = hunting_stand
 501    amenity = parking
-709    amenity = prison
+520    amenity = prison
 521    amenity = shelter
 313    amenity = watering_place
 
@@ -170,4 +170,4 @@
 
 531    pipeline = marker
 
-713    shop = convenience
+# 713    shop = convenience
