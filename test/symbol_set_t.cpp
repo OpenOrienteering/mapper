@@ -300,6 +300,38 @@ bool validLineWidth(const LineSymbol& symbol)
 }
 
 
+void checkOsmCrtFile(const Map& target, const QDir& symbol_set_dir)
+{
+	auto const crt_filename = QString::fromLatin1("OSM-%1.crt").arg(target.symbolSetId());
+	if (!symbol_set_dir.exists(crt_filename))
+		return;
+	
+	QFile crt_file {symbol_set_dir.absoluteFilePath(crt_filename)};
+	QVERIFY(crt_file.open(QIODevice::ReadOnly));
+	QTextStream stream {&crt_file};
+	
+	auto rules = SymbolRuleSet::loadCrt(stream, target);
+	QCOMPARE(stream.status(), QTextStream::Ok);
+	
+	auto test = [](auto const& item) ->bool {
+		return item.type == SymbolRule::NoAssignment
+		       || !item.symbol
+		       || item.symbol->isHidden()
+		       || !item.query.getOperator();
+	};
+	auto invalid_rule = std::find_if(begin(rules), end(rules), test);
+	if (invalid_rule != end(rules))
+	{
+		auto message = QString::fromLatin1("Invalid rule in OSM-%1.crt:  %2  %3")
+		               .arg(target.symbolSetId(),
+		                    invalid_rule->symbol ? invalid_rule->symbol->getNumberAsString() : QStringLiteral("???"),
+		                    invalid_rule->query.toString())
+		               .toLatin1();
+		QFAIL(message.constData());
+	}
+}
+
+
 namespace ISOM_2017_2
 {
 
@@ -824,7 +856,11 @@ void SymbolSetTool::processSymbolSet()
 		processTranslation(map, translation_entries);
 	}
 	
-	if (source_scale != target_scale)
+	if (source_scale == target_scale)
+	{
+		checkOsmCrtFile(map, symbol_set_dir);
+	}
+	else
 	{
 		if (name == QStringLiteral("ISOM 2017-2"))
 		{
