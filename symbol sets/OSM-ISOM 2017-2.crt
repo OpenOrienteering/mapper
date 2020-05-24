@@ -31,10 +31,10 @@
 213    natural = beach AND surface = sand
 203.2  natural = cave_entrance
 201    natural = cliff
-206    natural = cliff AND area = yes
+206    natural = cliff AND (area = yes OR is_area = yes)
 213    natural = dune
 203.1  natural = hole AND rock != no
-206    natural = rock AND area = yes
+206    natural = rock AND (area = yes OR is_area = yes)
 213    natural = sand
 205    natural = stone
 
@@ -158,7 +158,7 @@
 518    barrier = fence
 517    barrier = fence AND ruins = yes
 410.4  barrier = hedge
-410    barrier = hedge AND area = yes
+410    barrier = hedge AND (area = yes OR is_area = yes)
 515    barrier = wall
 514    barrier = wall AND ruins = yes
 

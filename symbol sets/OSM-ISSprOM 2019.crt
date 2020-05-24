@@ -146,7 +146,7 @@
 108    barrier = ditch
 518    barrier = fence
 410.1  barrier = hedge
-410    barrier = hedge AND area = yes
+410    barrier = hedge AND (area = yes OR is_area = yes)
 515    barrier = wall
 
 521    tourism = alpine_hut
