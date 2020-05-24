@@ -65,6 +65,11 @@ struct SymbolRule
 
 /**
  * An utility for assigning symbols to objects based on queries.
+ * 
+ * When the rule set is applied on a map or object, the rules are tried in
+ * reverse order. After the first matching rule with a valid assigned symbol,
+ * no further attempts are made for an object. This means lists using object
+ * queries must have more specific rules following more general rules.
  */
 class SymbolRuleSet : public std::vector<SymbolRule>
 {
