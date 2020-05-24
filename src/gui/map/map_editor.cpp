@@ -73,6 +73,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
@@ -976,6 +977,7 @@ void MapEditorController::createActions()
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act->setEnabled(false);
+	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
@@ -1491,7 +1493,12 @@ void MapEditorController::createMobileGUI()
 	});
 	zoom_out_button->setMenu(mobile_zoom_out_menu);
 
+	auto* move_to_gps_pos_menu = new QMenu(bottom_action_bar);
+	move_to_gps_pos_menu->addAction(follow_position_act);
+	move_to_gps_pos_act->setMenu(move_to_gps_pos_menu);
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
+	if (auto* button = bottom_action_bar->getButtonForAction(move_to_gps_pos_act))
+		button->setPopupMode(QToolButton::DelayedPopup);
 	
 	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
 	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
@@ -1953,6 +1960,39 @@ void MapEditorController::moveToGpsPos()
 	auto cur_gps_pos = gps_display->getLatestGPSCoord();
 	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
 	gps_display->startBlinking(3);
+}
+
+void MapEditorController::followPositionClicked(bool enable)
+{
+	if (enable)
+		connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+	else
+		disconnect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+}
+
+void MapEditorController::followPositionUpdate(MapCoordF position)
+{
+	// When the given position is out of the half-width half-height rectangle
+	// in the center of the view, push the position's coordinate to the center
+	// of the view.
+	auto const map_view_rect = main_view->calculateViewedRect(map_widget->viewportToView(map_widget->rect()));
+	auto center = map_view_rect.center();
+	bool update = false;
+	if (position.x() < map_view_rect.left() + map_view_rect.width() / 4
+	    || position.x() > map_view_rect.right() - map_view_rect.width() / 4)
+	{
+		center.setX(position.x());
+		update = true;
+	}
+	if (position.y() < map_view_rect.top() + map_view_rect.height() / 4
+	    || position.y() > map_view_rect.bottom() - map_view_rect.height() / 4)
+	{
+		center.setY(position.y());
+		update = true;
+	}
+	
+	if (update)
+		main_view->setCenter(MapCoord(center));
 }
 
 void MapEditorController::zoomIn()
