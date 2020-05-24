@@ -417,14 +417,11 @@ const Symbol* SymbolRuleSet::findDuplicateSymbolPattern() const
 
 void SymbolRuleSet::operator()(Object* object) const
 {
-	for (const auto& item : *this)
-	{
-		if (item.symbol && item.query(object))
-		{
-			object->setSymbol(item.symbol, false);
-			break;
-		}
-	}
+	auto const match = std::find_if(rbegin(), rend(), [object](auto const& item) {
+		return item.symbol && item.query(object);
+	});
+	if (match != rend())
+		object->setSymbol(match->symbol, false);
 }
 
 
