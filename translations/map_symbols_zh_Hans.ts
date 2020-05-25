@@ -4305,6 +4305,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
+    </message>
+    <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 204</comment>
         <translation>岩坑、地洞，或矿井，可能对运动员构成危险。位于符号的重心。符号必须向北正置。</translation>
@@ -8044,6 +8049,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
+    </message>
+    <message>
         <source>Cave</source>
         <comment>Name of symbol 205</comment>
         <translation>山洞</translation>
@@ -11119,6 +11129,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
     </message>
     <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
