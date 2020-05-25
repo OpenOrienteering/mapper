@@ -23,6 +23,7 @@
 #include "ocd_file_export.h"
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <iterator>
 #include <memory>
@@ -31,7 +32,6 @@
 #include <type_traits>
 #include <vector>
 
-#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QFileInfo>
@@ -2453,45 +2453,38 @@ void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
 
 void OcdFileExport::exportTemplates()
 {
+	static auto const supported_extensions = std::array<const char* const, 8>{{
+	    "bmp", "gif", "jpg", "jpeg", "ocd", "pdf", "tif", "tiff"
+	}};
+	
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
 		const auto* temp = map->getTemplate(i);
-		QString template_path = temp->getTemplatePath();
 		
-		auto supported_by_ocd = false;
-		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0)
-		{
-			supported_by_ocd = true;
-			
-			if (temp->isTemplateGeoreferenced())
-			{
-				if (temp->getTemplateState() == Template::Unloaded)
-				{
-					// Try to load the template, so that the positioning gets set.
-					const_cast<Template*>(temp)->loadTemplateFile(false);
-				}
-				
-				if (temp->getTemplateState() != Template::Loaded)
-				{
-					addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to save correct position of missing template: \"%1\"")
-					           .arg(temp->getTemplateFilename()));
-				}
-			}
-		}
-		else if (QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
-		{
-			supported_by_ocd = true;
-		}
-		
-		if (supported_by_ocd)
-		{
-			addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
-		}
-		else
+		auto const suffix = QFileInfo(temp->getTemplatePath()).suffix().toLower().toUtf8();
+		if (std::find(begin(supported_extensions), end(supported_extensions), suffix) == end(supported_extensions))
 		{
 			addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export template: file type of \"%1\" is not supported yet")
 			           .arg(temp->getTemplateFilename()));
+			continue;
 		}
+		
+		if (temp->isTemplateGeoreferenced() && suffix != "ocd")
+		{
+			if (temp->getTemplateState() == Template::Unloaded)
+			{
+				// Try to load the template, so that the positioning gets set.
+				const_cast<Template*>(temp)->loadTemplateFile(false);
+			}
+			
+			if (temp->getTemplateState() != Template::Loaded)
+			{
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to save correct position of missing template: \"%1\"")
+				           .arg(temp->getTemplateFilename()));
+			}
+		}
+		
+		addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
 	}
 }
 
