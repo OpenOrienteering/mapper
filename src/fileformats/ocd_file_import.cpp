@@ -38,15 +38,12 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-#include <QFileInfo>
 #include <QFlags>
 #include <QFontMetricsF>
 #include <QIODevice>
 #include <QImage>
-#include <QImageReader>
 #include <QLatin1Char>
 #include <QLatin1String>
-#include <QList>
 #include <QPointF>
 #include <QTextCodec>
 #include <QTextDecoder>
@@ -76,9 +73,7 @@
 #include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v2018.h"
-#include "templates/template.h"
-#include "templates/template_image.h"
-#include "templates/template_map.h"
+#include "templates/template_placeholder.h"
 #include "util/encoding.h"
 #include "util/util.h"
 
@@ -893,24 +888,10 @@ void OcdFileImport::importTemplate(const QString& param_string)
 	const QChar* unicode = param_string.unicode();
 	
 	int i = param_string.indexOf(QLatin1Char('\t'), 0);
-	const QString filename = QString::fromRawData(unicode, qMax(-1, i));
-	const QString clean_path = QDir::cleanPath(QString(filename).replace(QLatin1Char('\\'), QLatin1Char('/')));
-	const QString extension = QFileInfo(clean_path).suffix().toLower();
-	
-	Template* templ = nullptr;
-	if (extension.compare(QLatin1String("ocd")) == 0)
-	{
-		templ = new TemplateMap(clean_path, map);
-	}
-	else if (QImageReader::supportedImageFormats().contains(extension.toLatin1()))
-	{
-		templ = new TemplateImage(clean_path, map);
-	}
-	else
-	{
-		addWarning(tr("Unable to import template: \"%1\" is not a supported template type.").arg(filename));
-		return;
-	}
+	auto const filename = QString::fromRawData(unicode, qMax(-1, i)).replace(QLatin1Char('\\'), QLatin1Char('/'));
+	auto const clean_path = QDir::cleanPath(filename);
+	// Leave template type resolution to Importer::validate().
+	auto* templ = new TemplatePlaceholder("", clean_path, map);
 	
 	// 8 or 9 or 10 ? Only tested with 8 and 11
 	double scale_factor = (ocd_version <= 8) ? 0.01 : 1.0;
