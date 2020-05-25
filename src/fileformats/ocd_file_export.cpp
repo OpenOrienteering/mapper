@@ -1760,8 +1760,8 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 	if (text_format->count > 0)
 	{
 		text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-		number_owners.emplace_back(new PointSymbol());
-		symbol_numbers[number_owners.back().get()] = text_format->symbol_number;
+		temporary_symbols.emplace_back(new PointSymbol());
+		symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 		ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
 		Q_ASSERT(!ocd_symbol.isEmpty());
 		file.symbols().insert(ocd_symbol);
@@ -1770,8 +1770,8 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 		if (text_format->count > 0)
 		{
 			text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-			number_owners.emplace_back(new PointSymbol());
-			symbol_numbers[number_owners.back().get()] = text_format->symbol_number;
+			temporary_symbols.emplace_back(new PointSymbol());
+			symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 			ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
 			Q_ASSERT(!ocd_symbol.isEmpty());
 			file.symbols().insert(ocd_symbol);
@@ -1969,7 +1969,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				copySymbolHead(*combined_symbol, *border_duplicate);
 				border_duplicate->setName(QLatin1String("Border of ") + border_symbol->getName());
 				border_symbol = border_duplicate.get();
-				number_owners.emplace_back(std::move(border_duplicate));
+				temporary_symbols.emplace_back(std::move(border_duplicate));
 				auto border_symbol_number = makeUniqueSymbolNumber(symbol_number);
 				symbol_numbers[border_symbol] = border_symbol_number;
 				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_symbol, border_symbol_number));
@@ -2086,7 +2086,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 			breakdown_list.push_back({symbol_number, type});
 			if (number_owner)
 			{
-				number_owners.emplace_back(std::move(number_owner));
+				temporary_symbols.emplace_back(std::move(number_owner));
 				symbol_numbers[number_owner.get()] = symbol_number;
 			}
 			file.symbols().insert(ocd_data);
