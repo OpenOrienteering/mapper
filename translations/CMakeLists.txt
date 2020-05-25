@@ -76,7 +76,7 @@ set(map_symbols_translations
   map_symbols_sv.ts
   map_symbols_tr.ts
   map_symbols_uk.ts
-  map_symbols_zh_Hans.ts
+  map_symbols_zh_CN.ts
 )
 # Make translation list available for SymbolSetTool
 set(map_symbols_translations ${map_symbols_translations} PARENT_SCOPE)
