@@ -372,10 +372,14 @@ QString stringForSpotColor(int i, const MapColor& color)
 }
 
 
+
 /// String 8: background map (aka template)
 /// \todo Unify implementation, or use specialization.
-QString stringForTemplate(const Template& temp, const MapCoord& area_offset, quint16 version)
+QString stringForTemplate(const Template& temp, const MapView* view, const MapCoord& area_offset, quint16 version)
 {
+	auto const visibility = view ? view->getTemplateVisibility(&temp) : TemplateVisibility{};
+	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
+	const auto s = visibility.visible ? '1' : '0';
 	
 	auto template_path = temp.getTemplatePath();
 	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
@@ -387,7 +391,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 	QString string_8;
 	QTextStream out(&string_8, QIODevice::Append);
 	out << template_path
-	    << "\ts" << 1;  // visible
+	    << "\ts" << s;
 	// The order of the following parameters may not matter,
 	// but choosing the most frequent form may ease testing.
 	if (version >= 11)
@@ -404,7 +408,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << "\ta" << ab
 		    << "\tb" << ab
 		    // Random order: d [ q t ]
-		    << "\td0"
+		    << "\td" << d
 		    ;
 	}
 	else if (version == 10)
@@ -422,6 +426,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << "\tv" << temp.getTemplateScaleY()
 		    // Data may end here.
 		    // optional: t, q, d
+		    << "\td" << d
 		    ;
 	}
 	else if (version == 9)
@@ -435,7 +440,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << qSetRealNumberPrecision(10)
 		    << "\tu" << temp.getTemplateScaleX()
 		    << "\tv" << temp.getTemplateScaleY()
-		    << "\td0"
+		    << "\td" << d
 		    << "\tp"
 		    << "\tt0"
 		    << "\to0"
@@ -453,7 +458,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << qSetRealNumberPrecision(10)
 		    << "\tu" << 100 * temp.getTemplateScaleX()
 		    << "\tv" << 100 * temp.getTemplateScaleY()
-		    << "\td0"
+		    << "\td" << d
 		    << "\tp-1"
 		    << "\tt0"
 		    << "\to0"
@@ -2484,7 +2489,7 @@ void OcdFileExport::exportTemplates()
 			}
 		}
 		
-		addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
+		addParameterString(8, stringForTemplate(*temp, view, area_offset, ocd_version));
 	}
 }
 
