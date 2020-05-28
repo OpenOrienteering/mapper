@@ -1558,11 +1558,19 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				           .arg(area_symbol->getPlainTextName()));
 			}
 		}
+	}
+	
+	// Post-processing
+	if (!point_patterns.empty())
+	{
+		Q_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
+		auto point_symbol = postProcessFillPattern(point_patterns, ocd_area_common.structure_mode);
+		pattern_symbol = point_symbol.get();
+		temporary_symbols.push_back(std::move(point_symbol));
 		
-		if (ocd_version >= 12
-		    && ocd_area_common.structure_mode != Ocd::StructureNone)
+		if (ocd_version >= 12)
 		{
-			switch (pattern.clipping())
+			switch (point_patterns.front()->clipping())
 			{
 			case AreaSymbol::FillPattern::NoClippingIfCompletelyInside:
 				ocd_area_common.structure_draw_V12 = 1;
@@ -1578,15 +1586,6 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				break;
 			}
 		}
-	}
-	
-	// Post-processing
-	if (!point_patterns.empty())
-	{
-		Q_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
-		auto point_symbol = postProcessFillPattern(point_patterns, ocd_area_common.structure_mode);
-		pattern_symbol = point_symbol.get();
-		temporary_symbols.push_back(std::move(point_symbol));
 	}
 	
 	return flags;
