@@ -137,7 +137,15 @@ bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_i
 	// between the coordinate systems.
 	is_georeferenced = false;
 	out_center_in_view = false;
-	calculateTransformation();
+	QTransform q_transform;
+	if (!calculateTransformation(q_transform))
+	{
+		setErrorString(tr("Failed to transform the coordinates."));
+		return false;
+	}
+	
+	transform = TemplateTransform::fromQTransform(q_transform);
+	updateTransformationMatrices();
 	
 	/// \todo recursive template loading dialog
 	
@@ -255,13 +263,12 @@ void TemplateMap::reload()
 }
 
 
-void TemplateMap::calculateTransformation()
+bool TemplateMap::calculateTransformation(QTransform& q_transform) const
 {
 	const auto& georef = template_map->getGeoreferencing();
 	const auto src_origin = MapCoordF { georef.getMapRefPoint() };
 	
 	bool ok0, ok1, ok2;
-	QTransform q_transform;
 	PassPointList passpoints;
 	passpoints.resize(3);
 	passpoints[0].src_coords  = src_origin;
@@ -270,17 +277,7 @@ void TemplateMap::calculateTransformation()
 	passpoints[1].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[1].src_coords, &ok1);
 	passpoints[2].src_coords  = src_origin + MapCoordF { 0.0, 128.0 }; // 128 mm off vertically
 	passpoints[2].dest_coords = map->getGeoreferencing().toMapCoordF(&georef, passpoints[2].src_coords, &ok2);
-	if (ok0 && ok1 && ok2
-	    && passpoints.estimateNonIsometricSimilarityTransform(&q_transform))
-	{
-		transform = TemplateTransform::fromQTransform(q_transform);
-		updateTransformationMatrices();
-	}
-	else
-	{
-		qDebug("updateTransform() failed");
-		/// \todo proper error message
-	}
+	return ok0 && ok1 && ok2 && passpoints.estimateNonIsometricSimilarityTransform(&q_transform);
 }
 
 
