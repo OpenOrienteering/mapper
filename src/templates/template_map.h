@@ -35,6 +35,7 @@ class QByteArray;
 class QPainter;
 class QRectF;
 class QStringList;
+class QTransform;
 class QWidget;
 
 namespace OpenOrienteering {
@@ -107,7 +108,7 @@ protected:
 	void reload();
 	
 	
-	void calculateTransformation();
+	bool calculateTransformation(QTransform& q_transform) const;
 	
 public:
 	/**
