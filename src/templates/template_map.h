@@ -71,6 +71,7 @@ public:
 	
 	bool isRasterGraphics() const override;
 	
+	bool preLoadSetup(QWidget* dialogParent) override;
 	
 	bool loadTemplateFileImpl() override;
 	
@@ -87,6 +88,11 @@ public:
 	bool hasAlpha() const override;
 	
 	
+	bool canChangeTemplateGeoreferenced() const override;
+	
+	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
+	
+	
 	const Map* templateMap() const;
 	
 	/**
@@ -101,6 +107,11 @@ protected:
 	Map* templateMap();
 	
 	void setTemplateMap(std::unique_ptr<Map>&& map);
+	
+	
+	void mapProjectionChanged();
+	
+	virtual void mapTransformationChanged();
 	
 	
 	void reloadLater();
@@ -132,8 +143,23 @@ public:
 	static const char* ocdTransformProperty();
 	
 private:
+	bool georeferencedStateSupported() const;
+	
 	std::unique_ptr<Map> template_map;
 	bool reload_pending = false;
+	
+	/**
+	 * Flag to request end of georeferenced state.
+	 * 
+	 * Even if georeferencing is available, it is useful to avoid the
+	 * georeferenced template state because it cause different transformations
+	 * of map objects and map symbols on map loading. By setting this flag,
+	 * the template map's georeferencing will be used only to calculate an
+	 * initial template transformation, and then the georeferenced state will
+	 * be cleared. Note that this initialization matches the behaviour before
+	 * introducing support for georeferenced maps.
+	 */
+	bool block_georeferencing = true;
 	
 	static QStringList locked_maps;
 };

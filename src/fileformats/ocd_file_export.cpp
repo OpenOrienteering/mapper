@@ -2608,8 +2608,9 @@ QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& a
 	{
 		// OCD templates must use the map's scale and georeferencing.
 		TemplateTransform effective_transform;
-		ocd_template->getTransform(effective_transform);
-		if (ocd_template->transformForOcd() != effective_transform)
+		if (!ocd_template->isTemplateGeoreferenced())
+			ocd_template->getTransform(effective_transform);
+		if (ocd_template->isTemplateGeoreferenced() || ocd_template->transformForOcd() != effective_transform)
 		{
 			addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
 			           .arg(temp.getTemplateFilename()));
