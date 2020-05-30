@@ -92,14 +92,16 @@ public:
 	
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
+	
+	bool canChangeTemplateGeoreferenced() const override;
+	
+	
 	void applySettings();
 	
 protected:
 	void updateView(Map& template_map);
 	
-	void mapProjectionChanged();
-	
-	void mapTransformationChanged();
+	void mapTransformationChanged() override;
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	bool finishTypeSpecificTemplateConfiguration() override;

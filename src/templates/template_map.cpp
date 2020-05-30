@@ -27,6 +27,8 @@
 #include <QByteArray>
 #include <QPaintDevice>
 #include <QPainter>
+#include <QPoint>
+#include <QPointF>
 #include <QRectF>
 #include <QStringList>
 #include <QTimer>
@@ -37,6 +39,7 @@
 #include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_coord.h"
+#include "core/objects/object.h"
 #include "core/renderables/renderable.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
@@ -52,6 +55,27 @@
 
 namespace OpenOrienteering {
 
+namespace {
+
+/** 
+ * Transform a template map to match the given map's georeferencing, using
+ * an already determined transformation.
+ */
+void transformMap(Map& template_map, Map const& map, TemplateTransform const& transform)
+{
+	template_map.applyOnAllObjects(transform.makeObjectTransform());
+	template_map.setGeoreferencing(map.getGeoreferencing());
+	
+	auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
+	template_scale *= double(template_map.getScaleDenominator()) / map.getScaleDenominator();
+	if (!qFuzzyCompare(template_scale, 1))
+		template_map.scaleAllSymbols(template_scale);
+}
+
+}
+
+
+
 QStringList TemplateMap::locked_maps;
 
 const std::vector<QByteArray>& TemplateMap::supportedExtensions()
@@ -62,11 +86,21 @@ const std::vector<QByteArray>& TemplateMap::supportedExtensions()
 
 TemplateMap::TemplateMap(const QString& path, Map* map)
 : Template(path, map)
-{}
+{
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateMap::mapProjectionChanged);
+	// For connecting to virtual methods using PMF, we need to use a lambda.
+	connect(&georef, &Georeferencing::transformationChanged, this, [this]() { mapTransformationChanged(); });
+}
 
 TemplateMap::TemplateMap(const TemplateMap& proto)
 : Template(proto)
-{}
+{
+	const Georeferencing& georef = map->getGeoreferencing();
+	connect(&georef, &Georeferencing::projectionChanged, this, &TemplateMap::mapProjectionChanged);
+	// For connecting to virtual methods using PMF, we need to use a lambda.
+	connect(&georef, &Georeferencing::transformationChanged, this, [this]() { mapTransformationChanged(); });
+}
 
 TemplateMap::~TemplateMap()
 {
@@ -93,6 +127,17 @@ bool TemplateMap::isRasterGraphics() const
 	return false;
 }
 
+
+bool TemplateMap::preLoadSetup(QWidget* /* dialogParent */)
+{
+	// Use the template map's georeferencing to calculate
+	// a template transformation for non-georeferenced mode,
+	// but don't stay in georeferenced mode after setup.
+	is_georeferenced = true;
+	block_georeferencing = true;
+	return true;
+}
+
 bool TemplateMap::loadTemplateFileImpl()
 {
 	// Prevent unbounded recursive template loading
@@ -112,10 +157,36 @@ bool TemplateMap::loadTemplateFileImpl()
 		if (property(ocdTransformProperty()).toBool())
 		{
 			// Update the transformation without signalling dirty state.
+			is_georeferenced = false;
 			transform = transformForOcd();
 			updateTransformationMatrices();
 			setTemplateAreaDirty();
 			setProperty(ocdTransformProperty(), false);
+		}
+		else if (is_georeferenced)
+		{
+			QTransform q_transform;
+			if (!calculateTransformation(q_transform))
+			{
+				setErrorString(tr("Failed to transform the coordinates."));
+				return false;
+			}
+			
+			transform = TemplateTransform::fromQTransform(q_transform);
+			if (georeferencedStateSupported())
+			{
+				transformMap(*template_map, *map, transform);
+				transform = {};
+			}
+			else
+			{
+				// Owning map or template not georeferenced, or georeferencing
+				// blocked, so we must change the state now, using the
+				// calculated transformation.
+				is_georeferenced = false;
+			}
+			updateTransformationMatrices();
+			block_georeferencing = false;
 		}
 	}
 	else if (importer)
@@ -132,23 +203,10 @@ bool TemplateMap::loadTemplateFileImpl()
 
 bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_in_view)
 {
-	// Instead of dealing with the map as being (possibly) georeferenced,
-	// we simply use the both georeferencings to calculate a transformation
-	// between the coordinate systems.
-	is_georeferenced = false;
-	out_center_in_view = false;
-	QTransform q_transform;
-	if (!calculateTransformation(q_transform))
-	{
-		setErrorString(tr("Failed to transform the coordinates."));
-		return false;
-	}
-	
-	transform = TemplateTransform::fromQTransform(q_transform);
-	updateTransformationMatrices();
-	
-	/// \todo recursive template loading dialog
-	
+	auto const is_unconfigured = [](auto const& georef) {
+		return georef.isLocal() && georef.toProjectedCoords(MapCoordF{}) == QPointF{};
+	};
+	out_center_in_view = is_unconfigured(templateMap()->getGeoreferencing());
 	return true;
 }
 
@@ -215,6 +273,51 @@ bool TemplateMap::hasAlpha() const
 }
 
 
+bool TemplateMap::canChangeTemplateGeoreferenced() const
+{
+	return getTemplateState() == Template::Loaded
+	       && georeferencedStateSupported();
+}
+
+bool TemplateMap::trySetTemplateGeoreferenced(bool value, QWidget* /*dialog_parent*/)
+{
+	if (canChangeTemplateGeoreferenced()
+	    && isTemplateGeoreferenced() != value)
+	{
+		// Loaded state is implied by TemplateMap::canChangeTemplateGeoreferenced().
+		Q_ASSERT(getTemplateState() == Template::Loaded);
+		
+		setTemplateAreaDirty();
+		if (value == false)
+		{
+			// The currently loaded map data is transformed. Reload pristine
+			// data, and calculate the positioning as if loaded georeferenced.
+			block_georeferencing = true;
+			reload();
+		}
+		else
+		{
+			// The currently loaded map data is pristine. Immediately perform
+			// the same transformation as if loaded regularly.
+			QTransform q_transform;
+			if (!calculateTransformation(q_transform))
+			{
+				setErrorString(tr("Failed to transform the coordinates."));
+				return false;
+			}
+			
+			is_georeferenced = true;
+			transformMap(*template_map, *map, TemplateTransform::fromQTransform(q_transform));
+			transform = {};
+			updateTransformationMatrices();
+			setTemplateAreaDirty();
+		}
+		map->emitTemplateChanged(this);
+	}
+	return isTemplateGeoreferenced() == value;
+}
+
+
 const Map* TemplateMap::templateMap() const
 {
 	return template_map.get();
@@ -243,6 +346,42 @@ void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)
 }
 
 
+void TemplateMap::mapProjectionChanged()
+{
+	if (is_georeferenced && template_state == Template::Loaded)
+		reloadLater();
+}
+
+void TemplateMap::mapTransformationChanged()
+{
+	if (is_georeferenced)
+	{
+		if (template_state != Template::Loaded)
+			return;
+		
+		auto const& templ_georef = templateMap()->getGeoreferencing();
+		auto const& map_georef = map->getGeoreferencing();
+		if (templateMap()->getScaleDenominator() == map->getScaleDenominator()
+		    && templ_georef.getProjectedCRSSpec() == map_georef.getProjectedCRSSpec())
+		{
+			auto const t = templ_georef.mapToProjected() * map_georef.projectedToMap();
+			templateMap()->applyOnAllObjects([&t](Object* o) { o->transform(t); });
+			templateMap()->setGeoreferencing(map_georef);
+		}
+		else
+		{
+			// If the projected CRS changed: The necessary transformation
+			//   involves at least two CRS and might give imprecise results.
+			// If the scale changed: We can't know how to correctly scale
+			//   symbol dimensions.
+			// Reloading is a slow but safe way to get the same results as they
+			// will appear when opening the file the next time.
+			reloadLater();
+		}
+	}
+}
+
+
 void TemplateMap::reloadLater()
 {
 	if (reload_pending)
@@ -265,6 +404,9 @@ void TemplateMap::reload()
 
 bool TemplateMap::calculateTransformation(QTransform& q_transform) const
 {
+	if (!template_map)
+		return false;
+	
 	const auto& georef = template_map->getGeoreferencing();
 	const auto src_origin = MapCoordF { georef.getMapRefPoint() };
 	
@@ -297,6 +439,24 @@ const char* TemplateMap::ocdTransformProperty()
 {
 	static const char* name = "TemplateMap::transformForOcd";
 	return name;
+}
+
+
+bool TemplateMap::georeferencedStateSupported() const
+{
+	auto const test_transform = [](auto const& src, auto const& dest) {
+		// Cf. calculateTransformation()
+		bool success = false;
+		void(dest.toMapCoordF(&src, MapCoordF{src.getMapRefPoint()}, &success));
+		return success;
+	};
+	return !block_georeferencing
+	       && map->getGeoreferencing().isValid()
+	       && !map->getGeoreferencing().isLocal()
+	       && templateMap()
+	       && templateMap()->getGeoreferencing().isValid()
+	       && !templateMap()->getGeoreferencing().isLocal()
+	       && test_transform(templateMap()->getGeoreferencing(), map->getGeoreferencing());
 }
 
 
