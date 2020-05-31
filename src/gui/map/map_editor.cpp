@@ -1631,7 +1631,7 @@ void MapEditorController::detach()
 
 void MapEditorController::setWindowStateChanged()
 {
-	if (!window_state_changed && !mobile_mode && mode != SymbolEditor)
+	if (!window_state_changed)
 	{
 		window_state_changed = true;
 		QTimer::singleShot(10, this, &MapEditorController::saveWindowState);
@@ -1640,7 +1640,7 @@ void MapEditorController::setWindowStateChanged()
 
 void MapEditorController::saveWindowState()
 {
-	if (window_state_changed)
+	if (!mobile_mode && mode != SymbolEditor)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
