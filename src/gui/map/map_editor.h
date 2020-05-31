@@ -568,23 +568,26 @@ public slots:
 	void setViewOptionsEnabled(bool enabled = true);
 	
 	/**
-	 * Indicates a change of the current toolbar and dock widget positions,
-	 * and schedules saving.
+	 * Indicates a change of the current toolbar and dock widget visibilities
+	 * and locations, and schedules saving.
 	 */
 	void setWindowStateChanged();
 	
 private:
 	/**
-	 * Immediately saves the window state if needed.
+	 * Saves the window state in the permanent settings.
 	 * 
-	 * This will save the current toolbar and dock widget positions if the
-	 * window state is marked as changed.
-	 * After saving, it marks the state as clean.
+	 * The window state consists of current toolbar and dock widget visibility
+	 * and locations.
+	 * 
+	 * This function does nothing in mobile mode or symbol editor mode.
 	 */
 	void saveWindowState();
 	
 	/**
 	 * Restores previously saved toolbar and dock widget positions.
+	 * 
+	 * This function does nothing in mobile mode or symbol editor mode.
 	 */
 	void restoreWindowState();
 	
