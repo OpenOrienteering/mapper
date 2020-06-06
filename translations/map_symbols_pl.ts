@@ -309,7 +309,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zapewnione na potrzeby migracji z ISOM2000. Odradza się używania tego wariantu symbolu dla nowych map.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -416,7 +416,7 @@ Footprint: 10.5 m x 12 m.</source>
     <message>
         <source>Broken ground</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nierówny teren</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -432,7 +432,7 @@ The dots shall not be arranged to form a single point wide line.</source>
     <message>
         <source>Broken ground, individual dot</source>
         <comment>Name of symbol 113.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nierówny teren, pojedyńczy punkt</translation>
     </message>
     <message>
         <source>An area of pits and / or knolls which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable but has little impact on runnability.
@@ -449,7 +449,7 @@ Density: 3-4 dots / mm².</source>
     <message>
         <source>Very broken ground</source>
         <comment>Name of symbol 114</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bardzo nierówny teren</translation>
     </message>
     <message>
         <source>An area of pits and/or knolls, which is too intricate to be shown in detail, or other types of rough and uneven ground that is clearly distinguishable and affects runnability.
@@ -465,7 +465,7 @@ The dots shall not be arranged to form a single point wide line.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wyróżniająca się forma terenu</translation>
     </message>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings.
@@ -512,7 +512,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zapewnione na potrzeby migracji z ISOM2000. Odradza się używania tego wariantu symbolu dla nowych map.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -617,7 +617,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Skalny dół lub jaskinia (bez wyraźnego wejścia)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts without a distinct entrance which may constitute a danger to the competitor.
@@ -648,7 +648,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zapewnione na potrzeby migracji z ISOM2000. Odradza się używania tego wariantu symbolu dla nowych map.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -762,7 +762,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aby móc pokazać oczywiste różnice w wysokości na polu kamieni, jest dozwolone, aby powiększyć niektóre trójkąty do 120%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -10784,7 +10784,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Taped Route from finish funnel to Finish</source>
         <comment>Name of symbol 14.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wyznaczona taśmą trasa od wlotu tunelu do mety</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish funnel, and then follow tapes. Gives the distance from the last control to Finish.</source>
@@ -10794,7 +10794,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Navigation from last control to Finish (no Taped Route)</source>
         <comment>Name of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nawigacja z ostatniego punktu do mety (trasa nie oznaczona taśmą)</translation>
     </message>
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
@@ -10804,7 +10804,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>Length of special route</source>
         <comment>Name of symbol 13.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Długość trasy specjalnej</translation>
     </message>
     <message>
         <source>This is used with the special instruction (13.x) to give the distance from the last control to the end of the route (control, map exchange, or finish).</source>
