@@ -177,10 +177,9 @@ QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionVie
 	spinbox->setParent(parent);
 	
 	// Commit each change immediately when returning to event loop
-	QSignalMapper* signal_mapper = new QSignalMapper(spinbox);
-	signal_mapper->setMapping(spinbox, spinbox);
-	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), signal_mapper, QOverload<>::of(&QSignalMapper::map), Qt::QueuedConnection);
-	connect(signal_mapper, QOverload<QWidget*>::of(&QSignalMapper::mapped), this, &QItemDelegate::commitData);
+	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), this, [this, spinbox]() {
+		emit const_cast<PercentageDelegate*>(this)->commitData(spinbox); 
+	});
 	
 	return spinbox;
 }
