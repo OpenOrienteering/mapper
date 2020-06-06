@@ -1379,7 +1379,7 @@ void TemplateListWidget::showOpacitySlider(int row)
 	auto geometry = template_table->visualItemRect(template_table->item(row, name_column));
 	geometry.translate(0, geometry.height());
 	
-	QDialog dialog(this);
+	QDialog dialog(nullptr, Qt::FramelessWindowHint);
 	dialog.move(template_table->viewport()->mapToGlobal(geometry.topLeft()));
 	
 	auto slider = new QSlider();
