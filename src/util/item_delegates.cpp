@@ -187,7 +187,7 @@ QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionVie
 
 void PercentageDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-	int value = qRound(index.model()->data(index, Qt::DisplayRole).toFloat() * 100);
+	int value = qRound(index.model()->data(index, Qt::EditRole).toDouble() * 100);
 	static_cast< QSpinBox* >(editor)->setValue(value);
 }
 
@@ -195,9 +195,7 @@ void PercentageDelegate::setModelData(QWidget* editor, QAbstractItemModel* model
 {
 	QSpinBox* spinBox = static_cast< QSpinBox* >(editor);
 	spinBox->interpretText();
-	QMap< int, QVariant > data(model->itemData(index));
-	data[Qt::DisplayRole] = (float)spinBox->value() / 100.0;
-	model->setItemData(index, data);
+	model->setData(index, double(spinBox->value()) / 100.0, Qt::EditRole);
 }
 
 void PercentageDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const
