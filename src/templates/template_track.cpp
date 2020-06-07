@@ -455,7 +455,7 @@ QRectF TemplateTrack::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-int TemplateTrack::getTemplateBoundingBoxPixelBorder()
+int TemplateTrack::getTemplateBoundingBoxPixelBorder() const
 {
 	// As we don't estimate the extent of the widest waypoint text,
 	// return a "very big" number to cover everything
