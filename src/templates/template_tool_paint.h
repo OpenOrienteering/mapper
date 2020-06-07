@@ -113,6 +113,7 @@ public:
 	~PaintOnTemplatePaletteWidget() override;
 
 	QColor getSelectedColor();
+	bool getFillShapes() { return fill_shapes; }
 	
 	QSize sizeHint() const override;
 	
@@ -130,6 +131,8 @@ private:
 	int getNumFieldsX() const;
 	int getNumFieldsY() const;
 	QColor getFieldColor(int x, int y) const;
+	bool isEmptyField(int x, int y) const;
+	bool isFillShapesField(int x, int y) const;
 	bool isUndoField(int x, int y) const;
 	bool isRedoField(int x, int y) const;
 	
@@ -137,6 +140,7 @@ private:
 	
 	Qt::MouseButtons::Int pressed_buttons;
 	int selected_color;
+	bool fill_shapes = false;
 	bool close_on_selection;
 };
 

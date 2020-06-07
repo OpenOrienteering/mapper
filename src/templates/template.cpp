@@ -762,7 +762,7 @@ QRectF Template::calculateTemplateBoundingBox() const
 	return bbox;
 }
 
-void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox)
+void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox, ScribbleOptions mode)
 {
 	Q_ASSERT(canBeDrawnOnto());
 	Q_ASSERT(num_coords > 1);
@@ -777,7 +777,7 @@ void Template::drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, con
 	QRectF radius_bbox = QRectF(map_bbox.left() - radius, map_bbox.top() - radius,
 								map_bbox.width() + 2*radius, map_bbox.height() + 2*radius);
 	
-	drawOntoTemplateImpl(coords, num_coords, color, width);
+	drawOntoTemplateImpl(coords, num_coords, color, width, mode);
 	map->setTemplateAreaDirty(this, radius_bbox, 0);
 	
 	setHasUnsavedChanges(true);
@@ -1004,7 +1004,7 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/)
+void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/, ScribbleOptions /*mode*/)
 {
 	// nothing
 }
