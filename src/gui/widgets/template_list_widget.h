@@ -50,17 +50,27 @@ class TemplateTableModel;
 
 /**
  * Widget showing the list of templates, including the map layer.
+ * 
  * Allows to load templates, set their view properties and reorder them,
  * and do various other actions like adjusting template positions.
  */
 class TemplateListWidget : public QWidget
 {
-Q_OBJECT
+	Q_OBJECT
+	
 public:
-	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
+	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	
 	~TemplateListWidget() override;
 	
-	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
+	TemplateListWidget(const TemplateListWidget&) = delete;
+	TemplateListWidget(TemplateListWidget&&) = delete;
+	TemplateListWidget& operator=(const TemplateListWidget&) = delete;
+	TemplateListWidget& operator=(TemplateListWidget&&) = delete;
+	
+signals:
+	void closeClicked();
 	
 protected:
 	TemplateTableModel* model();
@@ -69,6 +79,19 @@ protected:
 	void setData(int row, int column, QVariant value, int role);
 	Qt::ItemFlags flags(int row, int column) const;
 	
+	int currentRow() const;
+	int posFromRow(int row) const;
+	int rowFromPos(int pos) const;
+	Template* currentTemplate();
+	
+protected:
+	/**
+	 * Reacts to feature visibility changes.
+	 * 
+	 * @see MapView::visibilityChanged
+	 */
+	void updateVisibility(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
+	
 	/**
 	 * Updates widget state depending on general template visibility.
 	 *
@@ -76,10 +99,12 @@ protected:
 	 */
 	void updateAllTemplatesHidden();
 	
-signals:
-	void closeClicked();
+	void setButtonsDirty();
+	void updateButtons();
 	
-protected:
+	void itemClicked(const QModelIndex& index);
+	void itemDoubleClicked(const QModelIndex& index);
+	
 	/**
 	 * When key events for Qt::Key_Space are sent to the template_table,
 	 * this will toggle the visibility of the current template.
@@ -88,22 +113,18 @@ protected:
 	
 	
 // slots:
+	void onTemplateLoadingChanged(const Template* temp, int row, int state);
+	
 #if 0
 	void newTemplate(QAction* action);
 #endif
 	
-	void onTemplateLoadingChanged(const Template* temp, int row, int state);
 	void openTemplate();
 	void deleteTemplate();
 	void duplicateTemplate();
 	void moveTemplateUp();
 	void moveTemplateDown();
 	void showHelp();
-	
-	void setButtonsDirty();
-	void updateButtons();
-	void itemClicked(const QModelIndex& index);
-	void itemDoubleClicked(const QModelIndex& index);
 	
 	void moveByHandClicked(bool checked);
 	void adjustClicked(bool checked);
@@ -120,19 +141,6 @@ protected:
 	void changeTemplateFile(int pos);
 	
 	void showOpacitySlider(int row);
-	
-	/**
-	 * Reacts to feature visibility changes.
-	 * 
-	 * @see MapView::visibilityChanged
-	 */
-	void updateVisibility(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
-	
-	
-	int currentRow() const;
-	int posFromRow(int row) const;
-	int rowFromPos(int pos) const;
-	Template* getCurrentTemplate();
 	
 private:
 	Map* map;

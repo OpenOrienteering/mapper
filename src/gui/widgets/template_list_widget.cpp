@@ -149,6 +149,8 @@ namespace OpenOrienteering {
 // Template grouping implementation is incomplete
 #define NO_TEMPLATE_GROUP_SUPPORT
 
+TemplateListWidget::~TemplateListWidget() = default;
+
 TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
 : QWidget(parent)
 , map(map)
@@ -164,8 +166,8 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
 	
 	// Wrap the checkbox in a widget and layout to force a margin.
-	auto top_bar_widget = new QWidget();
-	auto top_bar_layout = new QHBoxLayout(top_bar_widget);
+	auto* top_bar_widget = new QWidget();
+	auto* top_bar_layout = new QHBoxLayout(top_bar_widget);
 	
 	// Reuse the translation from MapEditorController action.
 	all_hidden_check = new QCheckBox(::OpenOrienteering::MapEditorController::tr("Hide all templates"));
@@ -173,10 +175,10 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	
 	if (mobile_mode)
 	{
-		auto close_action = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), ::OpenOrienteering::MainWindow::tr("Close"), this);
+		auto* close_action = new QAction(QIcon(QString::fromLatin1(":/images/close.png")), ::OpenOrienteering::MainWindow::tr("Close"), this);
 		connect(close_action, &QAction::triggered, this, &TemplateListWidget::closeClicked );
 		
-		auto close_button = new QToolButton();
+		auto* close_button = new QToolButton();
 		close_button->setDefaultAction(close_action);
 		close_button->setAutoRaise(true);
 		
@@ -206,10 +208,10 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	template_table->hideColumn(TemplateTableModel::groupColumn());
 #endif
 	
-	auto percentage_delegate = new PercentageDelegate(this, 5);
+	auto* percentage_delegate = new PercentageDelegate(this, 5);
 	template_table->setItemDelegateForColumn(1, percentage_delegate);
 	
-	auto header_view = template_table->horizontalHeader();
+	auto* header_view = template_table->horizontalHeader();
 	if (mobile_mode)
 	{
 		template_model->setTouchMode(true);
@@ -244,7 +246,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	all_templates_layout->addWidget(top_bar_widget);
 	all_templates_layout->addWidget(template_table, 1);
 	
-	auto new_button_menu = new QMenu(this);
+	auto* new_button_menu = new QMenu(this);
 	if (!mobile_mode)
 	{
 		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, &TemplateListWidget::openTemplate);
@@ -258,13 +260,13 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	current_action->setDisabled(true);
 #endif
 	
-	auto new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
+	auto* new_button = newToolButton(QIcon(QString::fromLatin1(":/images/plus.png")), tr("Add template..."));
 	new_button->setPopupMode(QToolButton::InstantPopup);
 	new_button->setMenu(new_button_menu);
 	
 	delete_button = newToolButton(QIcon(QString::fromLatin1(":/images/minus.png")), tr("Remove"));
 	
-	auto add_remove_layout = new SegmentedButtonLayout();
+	auto* add_remove_layout = new SegmentedButtonLayout();
 	add_remove_layout->addWidget(new_button);
 	add_remove_layout->addWidget(delete_button);
 	
@@ -273,7 +275,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	move_down_button = newToolButton(QIcon(QString::fromLatin1(":/images/arrow-down.png")), tr("Move Down"));
 	move_down_button->setAutoRepeat(true);
 	
-	auto up_down_layout = new SegmentedButtonLayout();
+	auto* up_down_layout = new SegmentedButtonLayout();
 	up_down_layout->addWidget(move_up_button);
 	up_down_layout->addWidget(move_down_button);
 	
@@ -286,7 +288,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	adjust_button->setCheckable(true);
 	adjust_button->setVisible(!mobile_mode);
 	
-	auto edit_menu = new QMenu(this);
+	auto* edit_menu = new QMenu(this);
 	georef_action = edit_menu->addAction(tr("Georeferenced"), this, &TemplateListWidget::changeGeorefClicked);
 	georef_action->setCheckable(true);
 	position_action = edit_menu->addAction(tr("Positioning..."));
@@ -308,7 +310,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	edit_button->setVisible(!mobile_mode);
 	
 	// The buttons row layout
-	auto list_buttons_layout = new QHBoxLayout();
+	auto* list_buttons_layout = new QHBoxLayout();
 	list_buttons_layout->setContentsMargins(0,0,0,0);
 	list_buttons_layout->addLayout(add_remove_layout);
 	list_buttons_layout->addLayout(up_down_layout);
@@ -319,7 +321,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	list_buttons_group = new QWidget();
 	list_buttons_group->setLayout(list_buttons_layout);
 	
-	auto all_buttons_layout = new QHBoxLayout();
+	auto* all_buttons_layout = new QHBoxLayout();
 	all_buttons_layout->setContentsMargins(
 		style()->pixelMetric(QStyle::PM_LayoutLeftMargin, &style_option) / 2,
 		0, // Covered by the main layout's spacing.
@@ -379,18 +381,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	connect(controller, &MapEditorController::templatePositionDockWidgetClosed, this, &TemplateListWidget::templatePositionDockWidgetClosed);
 }
 
-TemplateListWidget::~TemplateListWidget() = default;
-
-
-
-void TemplateListWidget::updateAllTemplatesHidden()
-{
-	auto hidden = main_view->areAllTemplatesHidden();
-	all_hidden_check->setChecked(hidden);
-	template_table->setEnabled(!hidden);
-	list_buttons_group->setEnabled(!hidden);
-	updateButtons();
-}
 
 
 inline
@@ -413,6 +403,241 @@ Qt::ItemFlags TemplateListWidget::flags(int row, int column) const
 {
 	return template_table->model()->flags(template_table->model()->index(row, column));
 }
+
+
+
+inline
+int TemplateListWidget::currentRow() const
+{
+	return template_table->currentIndex().row();
+}
+
+inline
+int TemplateListWidget::posFromRow(int row) const
+{
+	return model()->posFromRow(row);
+}
+
+inline
+int TemplateListWidget::rowFromPos(int pos) const
+{
+	return model()->rowFromPos(pos);
+}
+
+Template* TemplateListWidget::currentTemplate()
+{
+	int current_row = currentRow();
+	if (current_row < 0)
+		return nullptr;
+	int pos = posFromRow(current_row);
+	if (pos < 0)
+		return nullptr;
+	return map->getTemplate(pos);
+}
+
+
+
+void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bool /*active*/, const Template* /*temp*/)
+{
+	switch (feature)
+	{
+	case MapView::MultipleFeatures:
+	case MapView::AllTemplatesHidden:
+		updateAllTemplatesHidden();
+		break;
+		
+	default:
+		;  // nothing
+	}
+}
+
+void TemplateListWidget::updateAllTemplatesHidden()
+{
+	auto hidden = main_view->areAllTemplatesHidden();
+	all_hidden_check->setChecked(hidden);
+	template_table->setEnabled(!hidden);
+	list_buttons_group->setEnabled(!hidden);
+	updateButtons();
+}
+
+void TemplateListWidget::setButtonsDirty()
+{
+	if (!buttons_dirty)
+	{
+		buttons_dirty = true;
+		QTimer::singleShot(0, this, &TemplateListWidget::updateButtons);
+	}
+}
+
+void TemplateListWidget::updateButtons()
+{
+	buttons_dirty = false;
+	int visited_row = currentRow();
+	int num_rows_selected = currentRow() == -1 ? 0 : 1;
+	bool first_row_selected = visited_row == 0;
+	bool last_row_selected = visited_row == template_table->model()->rowCount() - 1;
+	for (auto row = 0, last = template_table->model()->rowCount(); row < last; ++row)
+	{
+		if (row == visited_row)
+			continue;
+		
+		if (!template_table->selectionModel()->isRowSelected(row, {}))
+			continue;
+		
+		visited_row = row;
+		++num_rows_selected;
+		if (row == 0)
+			first_row_selected = true;
+		if (row == template_table->model()->rowCount() - 1)
+			last_row_selected = true;
+	}
+	
+	bool single_row_selected = num_rows_selected == 1 && visited_row == currentRow();
+	auto single_template_selected = single_row_selected && posFromRow(visited_row) >= 0;
+	duplicate_action->setEnabled(single_template_selected);
+	delete_button->setEnabled(single_template_selected);	/// \todo Make it possible to delete multiple templates at once
+	move_up_button->setEnabled(single_row_selected && !first_row_selected);
+	move_down_button->setEnabled(single_row_selected && !last_row_selected);
+	
+	if (!mobile_mode)
+	{
+		// Update and show other buttons
+		
+		bool is_georeferenced = false;
+		bool edit_enabled   = false;
+		bool georef_enabled = false;
+		bool custom_enabled = false;
+		bool import_enabled = false;
+		bool vectorize_enabled  = false;
+		if (single_template_selected)
+		{
+			auto* temp = currentTemplate();
+			is_georeferenced = temp->isTemplateGeoreferenced();
+			if (data(visited_row, TemplateTableModel::visibilityColumn(), Qt::CheckStateRole) == Qt::Checked)
+			{
+				edit_enabled   = true;
+				georef_enabled = temp->canChangeTemplateGeoreferenced();
+				custom_enabled = !is_georeferenced;
+				import_enabled = bool(qobject_cast<TemplateMap*>(temp));
+				vectorize_enabled = qobject_cast<TemplateImage*>(temp)
+									&& temp->getTemplateState() == Template::Loaded;
+			}
+		}
+		else if (single_row_selected)
+		{
+			// map row
+			is_georeferenced = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
+		}
+		
+		edit_button->setEnabled(edit_enabled);
+		georef_action->setChecked(is_georeferenced);
+		georef_action->setEnabled(georef_enabled);
+		move_by_hand_button->setEnabled(custom_enabled);
+		adjust_button->setEnabled(custom_enabled);
+		position_action->setEnabled(custom_enabled);
+		import_action->setEnabled(import_enabled);
+		if (vectorize_action)
+			vectorize_action->setEnabled(vectorize_enabled);
+	}
+}
+
+
+
+void TemplateListWidget::itemClicked(const QModelIndex& index)
+{
+	auto const row = index.row();
+	auto const pos = posFromRow(qMax(0, row));
+	
+	switch (index.column())
+	{
+	case TemplateTableModel::opacityColumn():
+		if (mobile_mode
+		    && row >= 0
+		    && data(row, 0, Qt::CheckStateRole) == Qt::Checked)
+		{
+			showOpacitySlider(row);
+		}
+		break;
+		
+	case TemplateTableModel::nameColumn():
+		if (!mobile_mode
+		    && row >= 0 && pos >= 0
+		    && map->getTemplate(pos)->getTemplateState() == Template::Invalid)
+		{
+			changeTemplateFile(pos);
+		}
+		break;
+		
+	default:
+		break;
+	}
+}
+
+void TemplateListWidget::itemDoubleClicked(const QModelIndex& index)
+{
+	auto const row = index.row();
+	auto const pos = posFromRow(qMax(0, row));
+	
+	switch (index.column())
+	{
+	default:
+		if (! (row >= 0 && pos >= 0
+		       && map->getTemplate(pos)->getTemplateState() == Template::Invalid))
+			break;
+		// Invalid template:
+		Q_FALLTHROUGH();
+	case TemplateTableModel::nameColumn():
+		if (!mobile_mode
+		    && row >= 0 && pos >= 0)
+		{
+			changeTemplateFile(pos);
+		}
+	}
+}
+
+bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
+{
+	if (watched == template_table)
+	{
+		switch (event->type())
+		{
+		case QEvent::KeyPress:
+			if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space)
+			{
+				int row = currentRow();
+				if (row >= 0 && flags(row, 1).testFlag(Qt::ItemIsEnabled))
+				{
+					bool is_checked = data(row, 0, Qt::CheckStateRole) != Qt::Unchecked;
+					auto check_state = is_checked ? Qt::Unchecked : Qt::Checked;
+					setData(row, TemplateTableModel::visibilityColumn(), check_state, Qt::CheckStateRole);
+				}
+				return true;
+			}
+			break;
+			
+		case QEvent::KeyRelease:
+			if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space)
+				return true;
+			break;
+			
+#ifdef Q_OS_ANDROID
+		case QEvent::Show:
+			{
+				auto map_row = rowFromPos(map->getFirstFrontTemplate()) + 1;
+				template_table->resizeRowToContents(map_row);
+				template_table->verticalHeader()->setDefaultSectionSize(template_table->verticalHeader()->sectionSize(map_row));
+			}
+			break;
+#endif
+			
+		default:
+			; //nothing
+		}
+	}
+	
+	return false;
+}
+
 
 
 void TemplateListWidget::onTemplateLoadingChanged(const Template* temp, int row, int state)
@@ -516,49 +741,6 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	}
 	
 	return new_temp;
-}
-
-bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
-{
-	if (watched == template_table)
-	{
-		switch (event->type())
-		{
-		case QEvent::KeyPress:
-			if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space)
-			{
-				int row = currentRow();
-				if (row >= 0 && flags(row, 1).testFlag(Qt::ItemIsEnabled))
-				{
-					bool is_checked = data(row, 0, Qt::CheckStateRole) != Qt::Unchecked;
-					auto check_state = is_checked ? Qt::Unchecked : Qt::Checked;
-					setData(row, TemplateTableModel::visibilityColumn(), check_state, Qt::CheckStateRole);
-				}
-				return true;
-			}
-			break;
-			
-		case QEvent::KeyRelease:
-			if (static_cast<QKeyEvent*>(event)->key() == Qt::Key_Space)
-				return true;
-			break;
-			
-#ifdef Q_OS_ANDROID
-		case QEvent::Show:
-			{
-				auto map_row = rowFromPos(map->getFirstFrontTemplate()) + 1;
-				template_table->resizeRowToContents(map_row);
-				template_table->verticalHeader()->setDefaultSectionSize(template_table->verticalHeader()->sectionSize(map_row));
-			}
-			break;
-#endif
-			
-		default:
-			; //nothing
-		}
-	}
-	
-	return false;
 }
 
 
@@ -680,142 +862,9 @@ void TemplateListWidget::showHelp()
 }
 
 
-void TemplateListWidget::setButtonsDirty()
-{
-	if (!buttons_dirty)
-	{
-		buttons_dirty = true;
-		QTimer::singleShot(0, this, &TemplateListWidget::updateButtons);
-	}
-}
-
-void TemplateListWidget::updateButtons()
-{
-	buttons_dirty = false;
-	int visited_row = currentRow();
-	int num_rows_selected = currentRow() == -1 ? 0 : 1;
-	bool first_row_selected = visited_row == 0;
-	bool last_row_selected = visited_row == template_table->model()->rowCount() - 1;
-	for (auto row = 0, last = template_table->model()->rowCount(); row < last; ++row)
-	{
-		if (row == visited_row)
-			continue;
-		
-		if (!template_table->selectionModel()->isRowSelected(row, {}))
-			continue;
-		
-		visited_row = row;
-		++num_rows_selected;
-		if (row == 0)
-			first_row_selected = true;
-		if (row == template_table->model()->rowCount() - 1)
-			last_row_selected = true;
-	}
-	
-	bool single_row_selected = num_rows_selected == 1 && visited_row == currentRow();
-	auto single_template_selected = single_row_selected && posFromRow(visited_row) >= 0;
-	duplicate_action->setEnabled(single_template_selected);
-	delete_button->setEnabled(single_template_selected);	/// \todo Make it possible to delete multiple templates at once
-	move_up_button->setEnabled(single_row_selected && !first_row_selected);
-	move_down_button->setEnabled(single_row_selected && !last_row_selected);
-	
-	if (!mobile_mode)
-	{
-		// Update and show other buttons
-		
-		bool is_georeferenced = false;
-		bool edit_enabled   = false;
-		bool georef_enabled = false;
-		bool custom_enabled = false;
-		bool import_enabled = false;
-		bool vectorize_enabled  = false;
-		if (single_template_selected)
-		{
-			auto temp = getCurrentTemplate();
-			is_georeferenced = temp->isTemplateGeoreferenced();
-			if (data(visited_row, TemplateTableModel::visibilityColumn(), Qt::CheckStateRole) == Qt::Checked)
-			{
-				edit_enabled   = true;
-				georef_enabled = temp->canChangeTemplateGeoreferenced();
-				custom_enabled = !is_georeferenced;
-				import_enabled = bool(qobject_cast<TemplateMap*>(temp));
-				vectorize_enabled = qobject_cast<TemplateImage*>(temp)
-									&& temp->getTemplateState() == Template::Loaded;
-			}
-		}
-		else if (single_row_selected)
-		{
-			// map row
-			is_georeferenced = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
-		}
-		
-		edit_button->setEnabled(edit_enabled);
-		georef_action->setChecked(is_georeferenced);
-		georef_action->setEnabled(georef_enabled);
-		move_by_hand_button->setEnabled(custom_enabled);
-		adjust_button->setEnabled(custom_enabled);
-		position_action->setEnabled(custom_enabled);
-		import_action->setEnabled(import_enabled);
-		if (vectorize_action)
-			vectorize_action->setEnabled(vectorize_enabled);
-	}
-}
-
-void TemplateListWidget::itemClicked(const QModelIndex& index)
-{
-	auto const row = index.row();
-	auto const pos = posFromRow(qMax(0, row));
-	
-	switch (index.column())
-	{
-	case TemplateTableModel::opacityColumn():
-		if (mobile_mode
-		    && row >= 0
-		    && data(row, 0, Qt::CheckStateRole) == Qt::Checked)
-		{
-			showOpacitySlider(row);
-		}
-		break;
-		
-	case TemplateTableModel::nameColumn():
-		if (!mobile_mode
-		    && row >= 0 && pos >= 0
-		    && map->getTemplate(pos)->getTemplateState() == Template::Invalid)
-		{
-			changeTemplateFile(pos);
-		}
-		break;
-		
-	default:
-		break;
-	}
-}
-
-void TemplateListWidget::itemDoubleClicked(const QModelIndex& index)
-{
-	auto const row = index.row();
-	auto const pos = posFromRow(qMax(0, row));
-	
-	switch (index.column())
-	{
-	default:
-		if (! (row >= 0 && pos >= 0
-		       && map->getTemplate(pos)->getTemplateState() == Template::Invalid))
-			break;
-		// Invalid template:
-		Q_FALLTHROUGH();
-	case TemplateTableModel::nameColumn():
-		if (!mobile_mode
-		    && row >= 0 && pos >= 0)
-		{
-			changeTemplateFile(pos);
-		}
-	}
-}
-
 void TemplateListWidget::moveByHandClicked(bool checked)
 {
-	auto temp = getCurrentTemplate();
+	auto* temp = currentTemplate();
 	Q_ASSERT(temp);
 	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : nullptr);
 }
@@ -824,9 +873,9 @@ void TemplateListWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
-		auto temp = getCurrentTemplate();
+		auto* temp = currentTemplate();
 		Q_ASSERT(temp);
-		auto activity = new TemplateAdjustActivity(temp, controller);
+		auto* activity = new TemplateAdjustActivity(temp, controller);
 		controller->setEditorActivity(activity);
 		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed, this, &TemplateListWidget::adjustWindowClosed);
 	}
@@ -838,7 +887,7 @@ void TemplateListWidget::adjustClicked(bool checked)
 
 void TemplateListWidget::adjustWindowClosed()
 {
-	auto current_template = getCurrentTemplate();
+	auto* current_template = currentTemplate();
 	if (!current_template)
 		return;
 	
@@ -857,7 +906,7 @@ void TemplateListWidget::positionClicked(bool checked)
 {
 	Q_UNUSED(checked);
 	
-	auto temp = getCurrentTemplate();
+	auto* temp = currentTemplate();
 	if (!temp)
 		return;
 	
@@ -869,7 +918,7 @@ void TemplateListWidget::positionClicked(bool checked)
 
 void TemplateListWidget::importClicked()
 {
-	auto prototype = qobject_cast<const TemplateMap*>(getCurrentTemplate());
+	auto* prototype = qobject_cast<const TemplateMap*>(currentTemplate());
 	if (!prototype)
 		return;
 	
@@ -979,7 +1028,7 @@ void TemplateListWidget::importClicked()
 
 void TemplateListWidget::changeGeorefClicked()
 {
-	auto* templ = getCurrentTemplate();
+	auto* templ = currentTemplate();
 	if (templ && templ->canChangeTemplateGeoreferenced())
 	{
 		auto new_value = !templ->isTemplateGeoreferenced();
@@ -1005,7 +1054,7 @@ void TemplateListWidget::vectorizeClicked()
 {
 #ifdef WITH_COVE
 	cove::CoveRunner cr;
-	auto templ = qobject_cast<TemplateImage*>(getCurrentTemplate());
+	auto* templ = qobject_cast<TemplateImage*>(currentTemplate());
 	cr.run(controller->getWindow(), map, templ);
 #endif /* WITH_COVE */
 }
@@ -1018,57 +1067,14 @@ void TemplateListWidget::moreActionClicked(QAction* action)
 
 void TemplateListWidget::templatePositionDockWidgetClosed(Template* temp)
 {
-	auto current_temp = getCurrentTemplate();
+	auto* current_temp = currentTemplate();
 	if (current_temp == temp)
 		position_action->setChecked(false);
 }
 
-void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bool /*active*/, const Template* /*temp*/)
-{
-	switch (feature)
-	{
-	case MapView::MultipleFeatures:
-	case MapView::AllTemplatesHidden:
-		updateAllTemplatesHidden();
-		break;
-		
-	default:
-		;  // nothing
-	}
-}
-
-inline
-int TemplateListWidget::currentRow() const
-{
-	return template_table->currentIndex().row();
-}
-
-inline
-int TemplateListWidget::posFromRow(int row) const
-{
-	return model()->posFromRow(row);
-}
-
-inline
-int TemplateListWidget::rowFromPos(int pos) const
-{
-	return model()->rowFromPos(pos);
-}
-
-Template* TemplateListWidget::getCurrentTemplate()
-{
-	int current_row = currentRow();
-	if (current_row < 0)
-		return nullptr;
-	int pos = posFromRow(current_row);
-	if (pos < 0)
-		return nullptr;
-	return map->getTemplate(pos);
-}
-
 void TemplateListWidget::changeTemplateFile(int pos)
 {
-	auto temp = map->getTemplate(pos);
+	auto* temp = map->getTemplate(pos);
 	Q_ASSERT(temp);
 	temp->execSwitchTemplateFileDialog(this);
 }
@@ -1081,7 +1087,7 @@ void TemplateListWidget::showOpacitySlider(int row)
 	QDialog dialog(nullptr, Qt::FramelessWindowHint);
 	dialog.move(template_table->viewport()->mapToGlobal(geometry.topLeft()));
 	
-	auto slider = new QSlider();
+	auto* slider = new QSlider();
 	slider->setOrientation(Qt::Horizontal);
 	slider->setRange(0, 20);
 	slider->setMinimumWidth(geometry.width());
@@ -1091,12 +1097,12 @@ void TemplateListWidget::showOpacitySlider(int row)
 		setData(row, TemplateTableModel::opacityColumn(), 0.05 * value, Qt::EditRole);
 	} );
 	
-	auto close_button = new QToolButton();
+	auto* close_button = new QToolButton();
 	close_button->setIcon(style()->standardIcon(QStyle::SP_DialogApplyButton, nullptr, this));
 	close_button->setAutoRaise(true);
 	connect(close_button, &QToolButton::clicked, &dialog, &QDialog::accept);
 	
-	auto layout = new QHBoxLayout(&dialog);
+	auto* layout = new QHBoxLayout(&dialog);
 	layout->addWidget(slider);
 	layout->addWidget(close_button);
 	
