@@ -77,11 +77,6 @@ protected:
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
-	/**
-	 * Returns a new QToolButton with a unified appearance.
-	 */
-	QToolButton* newToolButton(const QIcon& icon, const QString& text);
-	
 protected slots:
 	void newTemplate(QAction* action);
 	void openTemplate();

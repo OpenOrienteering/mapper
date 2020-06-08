@@ -101,6 +101,40 @@
 #include "util/item_delegates.h"
 
 
+namespace {
+
+QVariant makeCheckBoxDecorator(QStyle* style, const QSize& size)
+{
+	QCheckBox header_check;
+	header_check.setChecked(true);
+	header_check.setEnabled(false);
+	QPixmap pixmap(size);
+	pixmap.fill(Qt::transparent);
+	QPainter painter(&pixmap);
+	QStyleOptionViewItem option_item;
+	option_item.rect = { {0, 0}, size };
+	style->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &option_item, &painter, nullptr);
+	painter.end();
+	return pixmap;
+}
+
+/**
+ * Returns a new QToolButton with a unified appearance.
+ */
+QToolButton* newToolButton(const QIcon& icon, const QString& text)
+{
+	auto* button = new QToolButton();
+	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	button->setToolTip(text);
+	button->setIcon(icon);
+	button->setText(text);
+	button->setWhatsThis(OpenOrienteering::Util::makeWhatThis("templates.html#setup"));
+	return button;
+}
+
+}
+
+
 namespace OpenOrienteering {
 
 // ### TemplateListWidget ###
@@ -185,16 +219,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 		auto header_check_size = geometry.size();
 		if (header_check_size.isValid())
 		{
-			QCheckBox header_check;
-			header_check.setChecked(true);
-			header_check.setEnabled(false);
-			QPixmap pixmap(header_check_size);
-			pixmap.fill(Qt::transparent);
-			QPainter painter(&pixmap);
-			QStyleOptionViewItem option;
-			option.rect = { {0, 0}, geometry.size() };
-			style()->drawPrimitive(QStyle::PE_IndicatorViewItemCheck, &option, &painter, nullptr);
-			painter.end();
+			auto pixmap = makeCheckBoxDecorator(style(), header_check_size);
 			template_table->horizontalHeaderItem(0)->setData(Qt::DecorationRole, pixmap);
 		}
 	}
@@ -353,17 +378,6 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 TemplateListWidget::~TemplateListWidget() = default;
 
 
-
-QToolButton* TemplateListWidget::newToolButton(const QIcon& icon, const QString& text)
-{
-	auto button = new QToolButton();
-	button->setToolButtonStyle(Qt::ToolButtonIconOnly);
-	button->setToolTip(text);
-	button->setIcon(icon);
-	button->setText(text);
-	button->setWhatsThis(Util::makeWhatThis("templates.html#setup"));
-	return button;
-}
 
 // slot
 void TemplateListWidget::setAllTemplatesHidden(bool value)
