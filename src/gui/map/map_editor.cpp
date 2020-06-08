@@ -28,6 +28,7 @@
 #include <iterator>
 #include <limits>
 #include <set>
+#include <utility>
 #include <vector>
 // IWYU pragma: no_include <type_traits>
 
@@ -2180,11 +2181,9 @@ void MapEditorController::openTemplateClicked()
 	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
 	if (new_template)
 	{
+		map->addTemplate(-1, std::move(new_template));
 		hideAllTemplates(false);
 		showTemplateWindow(true);
-		
-		// FIXME: this should be done through the core map, not through the UI
-		template_list_widget->addTemplateAt(new_template.release(), -1);
 	}
 }
 
