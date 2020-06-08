@@ -625,6 +625,7 @@ bool Template::loadTemplateFile(bool configuring)
 		else if (loadTemplateFileImpl(configuring))
 		{
 			template_state = Loaded;
+			setTemplateAreaDirty();
 		}
 		else
 		{

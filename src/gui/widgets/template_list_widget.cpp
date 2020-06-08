@@ -388,7 +388,6 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 		pos = -1;
 	
 	map->addTemplate(pos, std::unique_ptr<Template>{new_template});
-	map->setTemplateAreaDirty(pos);
 }
 
 std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
@@ -537,8 +536,6 @@ void TemplateListWidget::deleteTemplate()
 	int pos = posFromRow(template_table->currentRow());
 	Q_ASSERT(pos >= 0);
 	
-	map->setTemplateAreaDirty(pos);
-	
 	if (Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool())
 		map->closeTemplate(pos);
 	else
@@ -579,8 +576,6 @@ void TemplateListWidget::moveTemplateUp()
 	
 	int cur_pos = posFromRow(row);
 	int above_pos = posFromRow(row - 1);
-	map->setTemplateAreaDirty(cur_pos);
-	map->setTemplateAreaDirty(above_pos);
 	
 	if (cur_pos < 0)
 	{
@@ -598,8 +593,6 @@ void TemplateListWidget::moveTemplateUp()
 		map->moveTemplate(cur_pos, above_pos);
 	}
 	
-	map->setTemplateAreaDirty(cur_pos);
-	map->setTemplateAreaDirty(above_pos);
 	updateRow(row - 1);
 	updateRow(row);
 	
@@ -620,8 +613,6 @@ void TemplateListWidget::moveTemplateDown()
 	
 	int cur_pos = posFromRow(row);
 	int below_pos = posFromRow(row + 1);
-	map->setTemplateAreaDirty(cur_pos);
-	map->setTemplateAreaDirty(below_pos);
 	
 	if (cur_pos < 0)
 	{
@@ -639,8 +630,6 @@ void TemplateListWidget::moveTemplateDown()
 		map->moveTemplate(cur_pos, below_pos);
 	}
 	
-	map->setTemplateAreaDirty(cur_pos);
-	map->setTemplateAreaDirty(below_pos);
 	updateRow(row + 1);
 	updateRow(row);
 	
@@ -681,20 +670,6 @@ void TemplateListWidget::cellChange(int row, int column)
 	
 	if (state != Template::Invalid)
 	{
-		auto setAreaDirty = [this, pos]()
-		{ 
-			if (pos >= 0)
-			{
-				map->setTemplateAreaDirty(pos);
-			}
-			else
-			{
-				//QRectF map_bounds = map->calculateExtent(true, false, nullptr);
-				//map->setObjectAreaDirty(map_bounds);
-				main_view->updateAllMapWidgets();  // Map change - doesn't need to update the map cache
-			}
-		};
-		
 		switch (column)
 		{
 		case 0:  // Visibility checkbox
@@ -704,7 +679,6 @@ void TemplateListWidget::cellChange(int row, int column)
 				{
 					if (!visible)
 					{
-						setAreaDirty();
 						visibility.visible = false;
 						updateVisibility(temp, visibility);
 					}
@@ -722,7 +696,6 @@ void TemplateListWidget::cellChange(int row, int column)
 						}
 						visibility.visible = true;
 						updateVisibility(temp, visibility);
-						setAreaDirty();
 						if (state != Template::Loaded)
 						{
 							QToolTip::hideText();
@@ -748,7 +721,6 @@ void TemplateListWidget::cellChange(int row, int column)
 				{
 					visibility.opacity = qBound(0.0, opacity, 1.0);
 					updateVisibility(temp, visibility);
-					setAreaDirty();
 					template_table->item(row, 1)->setData(Qt::DecorationRole, QColor::fromCmykF(0.0, 0.0, 0.0, visibility.opacity));
 				}
 			}
@@ -1353,7 +1325,6 @@ void TemplateListWidget::changeTemplateFile(int pos)
 	temp->execSwitchTemplateFileDialog(this);
 	updateRow(rowFromPos(pos));
 	updateButtons();
-	temp->setTemplateAreaDirty();
 }
 
 void TemplateListWidget::showOpacitySlider(int row)

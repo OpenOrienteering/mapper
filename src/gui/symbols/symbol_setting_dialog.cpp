@@ -199,14 +199,11 @@ void SymbolSettingDialog::loadTemplateClicked()
 		if (preview_map->getNumTemplates() > 0)
 		{
 			// Delete old template
-			preview_map->setTemplateAreaDirty(0);
 			preview_map->deleteTemplate(0);
 		}
 		
 		auto temp = new_template.get();
 		preview_map->addTemplate(-1, std::move(new_template));
-		preview_map->setTemplateAreaDirty(preview_map->findTemplateIndex(temp));
-		
 		template_file_label->setText(temp->getTemplateFilename());
 		center_template_button->setEnabled(qstrcmp(temp->getTemplateType(), "TemplateImage") == 0);
 	}

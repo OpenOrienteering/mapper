@@ -1776,10 +1776,19 @@ void Map::setFirstFrontTemplate(int pos)
 	if (getFirstFrontTemplate() == pos)
 		return;
 	
+	auto first = begin(templates) + std::min(getNumTemplates(), pos);
+	auto last  = begin(templates) + std::min(getNumTemplates(), getFirstFrontTemplate());
+	if (getFirstFrontTemplate() < pos)
+	{
+		using std::swap;
+		swap(first, last);
+	}
 	auto const old_pos = first_front_template;
+	std::for_each(first, last, [](auto& templ) { templ->setTemplateAreaDirty(); });
 	emit firstFrontTemplateAboutToBeChanged(old_pos, pos);
 	first_front_template = pos;
 	emit firstFrontTemplateChanged(old_pos, pos);
+	std::for_each(first, last, [](auto& templ) { templ->setTemplateAreaDirty(); });
 	setTemplatesDirty();
 }
 
@@ -1787,8 +1796,10 @@ std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> te
 {
 	using std::swap;
 	auto const it = begin(templates) + pos;
+	(*it)->setTemplateAreaDirty();
 	swap(temp, *it);
 	emit templateChanged(pos, it->get());
+	(*it)->setTemplateAreaDirty();
 	setTemplatesDirty();
 	return temp;
 }
@@ -1818,7 +1829,9 @@ void Map::moveTemplate(int old_pos, int new_pos)
 	if (old_pos == new_pos)
 		return;
 	
-	emit templateAboutToBeMoved(old_pos, new_pos, getTemplate(old_pos));
+	auto* temp = getTemplate(old_pos);
+	temp->setTemplateAreaDirty();
+	emit templateAboutToBeMoved(old_pos, new_pos, temp);
 	
 	auto old_it = begin(templates) + old_pos;
 	auto new_it = begin(templates) + new_pos;
@@ -1827,7 +1840,8 @@ void Map::moveTemplate(int old_pos, int new_pos)
 	else
 		std::rotate(new_it, old_it, old_it + 1);
 	
-	emit templateMoved(old_pos, new_pos, getTemplate(new_pos));
+	emit templateMoved(old_pos, new_pos, temp);
+	temp->setTemplateAreaDirty();
 	setTemplatesDirty();
 }
 
@@ -1839,6 +1853,7 @@ std::unique_ptr<Template> Map::removeTemplate(int pos)
 		--front;
 	}
 	auto const it = begin(templates) + pos;
+	(*it)->setTemplateAreaDirty();
 	emit templateAboutToBeDeleted(pos, it->get());
 	auto temp = std::move(*it);
 	templates.erase(it);
@@ -1942,7 +1957,6 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	}
 	
 	addTemplate(target_pos, std::move(temp));
-	getTemplate(target_pos)->setTemplateAreaDirty();
 	if (closed_templates.empty())
 		emit closedTemplateAvailabilityChanged();
 	return true;

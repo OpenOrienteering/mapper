@@ -3487,7 +3487,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				if (!new_template)
 				{
 					// Need to replace the template at template_index
-					map->setTemplateAreaDirty(template_index);
 					map->deleteTemplate(template_index);
 				}
 				track = new TemplateTrack(gpx_file_path, map);
@@ -3506,7 +3505,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 			}
 			
 			main_view->setTemplateVisibility(track, visibility);
-			map->setTemplateAreaDirty(template_index);
 			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
@@ -3925,7 +3923,6 @@ void MapEditorController::paintOnTemplate(Template* temp)
 	auto vis = main_view->getTemplateVisibility(temp);
 	vis.visible = true;
 	main_view->setTemplateVisibility(temp, vis);
-	temp->setTemplateAreaDirty();
 	
 	tool->setTemplate(temp);
 }
