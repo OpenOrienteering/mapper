@@ -63,7 +63,7 @@
 #include "gui/widgets/pie_menu.h"
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
-#include "templates/template.h" // IWYU pragma: keep
+#include "templates/template.h"
 #include "tools/tool.h"
 #include "util/backports.h" // IWYU pragma: keep
 #include "util/util.h"
@@ -136,8 +136,8 @@ void MapWidget::setMapView(MapView* view)
 		if (view)
 		{
 			connect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
+			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::visibilityChanged);
 			connect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
-			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
 			
 			auto* map = this->view->getMap();
 			map->addMapWidget(this);
@@ -281,6 +281,36 @@ void MapWidget::viewChanged(MapView::ChangeFlags changes)
 	updateEverything();
 	if (changes.testFlag(MapView::ZoomChange))
 		updateZoomDisplay();
+}
+
+void MapWidget::visibilityChanged(MapView::VisibilityFeature feature, bool /*active*/, const Template* temp)
+{
+	switch (feature)
+	{
+	case MapView::VisibilityFeature::TemplateVisible:
+		if (temp)
+		{
+			auto const pos = getMapView()->getMap()->findTemplateIndex(temp);
+			auto const template_area = temp->calculateTemplateBoundingBox();
+			markTemplateCacheDirty(getMapView()->calculateViewBoundingBox(template_area),
+			                       temp->getTemplateBoundingBoxPixelBorder(),
+			                       pos >= getMapView()->getMap()->getFirstFrontTemplate());
+		
+		}
+		break;
+		
+	case MapView::VisibilityFeature::GridVisible:
+	case MapView::VisibilityFeature::MapVisible:
+		map_cache_dirty_rect = rect();
+		Q_FALLTHROUGH();
+	case MapView::VisibilityFeature::AllTemplatesHidden:
+		update();
+		break;
+		
+	default:
+		updateEverything();
+		break;
+	}
 }
 
 void MapWidget::setPanOffset(const QPoint& offset)
