@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <QtGlobal>
+#include <QFlags>
 #include <QObject>
 #include <QPointF>
 #include <QString>
@@ -134,6 +135,16 @@ public:
 		FoundByRelPath = 2,  ///< File found by relative path from the map's directory.
 		FoundByAbsPath = 3,  ///< File found by absolute path.
 	};
+
+	/**
+	 * Modifier options for the scribble tool operation.
+	 */
+	enum ScribbleOption
+	{
+		NoScribbleOptions = 0,
+		FilledAreas	= 1<<0,  ///< Fill area defined by the scribble line
+	};
+	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	
 	/**
 	 * Indicates arguments which must not be nullptr.
@@ -387,7 +398,7 @@ public:
 	 * 
 	 * \todo Rewrite using a range of MapCoordF.
 	 */
-	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox);
+	void drawOntoTemplate(not_null<MapCoordF*> coords, int num_coords, const QColor& color, qreal width, QRectF map_bbox, ScribbleOptions mode);
 	
 	/** 
 	 * Triggers an undo or redo action for template freehand drawing.
@@ -658,7 +669,7 @@ protected:
 	 * Draws the polyline given by the points onto the template.
 	 * Required if canBeDrawnOnto() returns true.
 	 */
-	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width);
+	virtual void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode);
 	
 	
 	/**
@@ -736,5 +747,8 @@ protected:
 
 
 }  // namespace OpenOrienteering
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Template::ScribbleOptions)
+
 
 #endif

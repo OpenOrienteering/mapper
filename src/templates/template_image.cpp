@@ -28,6 +28,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QBrush>
 #include <QByteArray>
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
@@ -495,7 +496,7 @@ bool TemplateImage::isGeoreferencingUsable() const
 }
 
 
-void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode)
 {
 	QPointF* points;
 	QRect radius_bbox;
@@ -576,8 +577,16 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
-	for (int i = 0; i < draw_iterations; ++ i)
-		painter.drawPolyline(points, num_coords);
+
+	if (mode.testFlag(FilledAreas))
+	{
+		painter.setBrush(QBrush(color));
+		for (int i = 0; i < draw_iterations; ++i)
+			painter.drawPolygon(points, num_coords);
+	} else {
+		for (int i = 0; i < draw_iterations; ++i)
+			painter.drawPolyline(points, num_coords);
+	}
 	
 	painter.end();
 	delete[] points;

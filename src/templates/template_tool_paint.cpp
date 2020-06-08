@@ -27,10 +27,12 @@
 #include <Qt>
 #include <QtMath>
 #include <QAbstractButton>
+#include <QBrush>
 #include <QCoreApplication>
 #include <QCursor>
 #include <QDir>
 #include <QFileInfo>
+#include <QFlags>
 #include <QFontMetrics>
 #include <QHBoxLayout>
 #include <QIcon>
@@ -46,6 +48,7 @@
 #include <QPen>
 #include <QPixmap>
 #include <QPointF>
+#include <QPolygonF>
 #include <QPushButton>
 #include <QRect>
 #include <QRgb>
@@ -244,7 +247,12 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoo
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
-		temp->drawOntoTemplate(&coords[0], int(coords.size()), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
+		auto mode = QFlags<Template::ScribbleOption>()
+		            .setFlag(Template::FilledAreas, widget->getFillShapes());
+		
+		temp->drawOntoTemplate(&coords[0], int(coords.size()),
+		        erasing ? QColor(255, 255, 255, 0) : paint_color,
+		        erasing ? erase_width : 0, map_bbox, mode);
 		
 		coords.clear();
 		map()->clearDrawingBoundingBox();
@@ -267,11 +275,21 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 		pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
 		pen.setCapStyle(Qt::RoundCap);
 		pen.setJoinStyle(Qt::RoundJoin);
-		painter->setPen(pen);
 		
-		auto size = coords.size();
-		for (std::size_t i = 1; i < size; ++i)
-			painter->drawLine(widget->mapToViewport(coords[i - 1]), widget->mapToViewport(coords[i]));
+		QPolygonF polygon;
+		polygon.reserve(coords.size());
+		for (auto const& coord : coords)
+			polygon.append(widget->mapToViewport(coord));
+
+		if (this->widget->getFillShapes())
+		{
+			painter->setPen(Qt::NoPen);
+			painter->setBrush(QBrush(pen.color(), Qt::Dense5Pattern));
+			painter->drawPolygon(polygon);
+		}
+
+		painter->setPen(pen);
+		painter->drawPolyline(polygon);
 	}
 }
 
@@ -323,6 +341,19 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	painter.begin(this);
 	painter.setClipRect(event->rect());
 	
+	auto draw_field_selection_marker = [&painter](QRect field_rect) {
+		int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
+		painter.fillRect(field_rect, Qt::black);
+		QPen pen(Qt::white);
+		pen.setStyle(Qt::DotLine);
+		pen.setWidth(line_width);
+		painter.setPen(pen);
+		field_rect.adjust(line_width, line_width, -line_width, -line_width);
+		painter.drawRect(field_rect);
+		field_rect.adjust(line_width, line_width, -line_width, -line_width);
+		return field_rect;
+	};
+
 	int max_x = getNumFieldsX();
 	int max_y = getNumFieldsY();
 	for (int x = 0; x < max_x; ++x)
@@ -339,20 +370,16 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 				drawIcon(&painter, QString::fromLatin1(":/images/undo.png"), field_rect);
 			else if (isRedoField(x, y))
 				drawIcon(&painter, QString::fromLatin1(":/images/redo.png"), field_rect);
-			else
+			else if (isFillShapesField(x, y))
+			{
+				if (fill_shapes)
+					field_rect = draw_field_selection_marker(field_rect);
+				drawIcon(&painter, QString::fromLatin1(":/images/scribble-fill-shapes.png"), field_rect);
+			}
+			else if (!isEmptyField(x, y))
 			{
 				if (selected_color == x + getNumFieldsX()*y)
-				{
-					int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
-					painter.fillRect(field_rect, Qt::black);
-					QPen pen(Qt::white);
-					pen.setStyle(Qt::DotLine);
-					pen.setWidth(line_width);
-					painter.setPen(pen);
-					field_rect.adjust(line_width, line_width, -line_width, -line_width);
-					painter.drawRect(field_rect);
-					field_rect.adjust(line_width, line_width, -line_width, -line_width);
-				}
+					field_rect = draw_field_selection_marker(field_rect);
 				painter.fillRect(field_rect, getFieldColor(x, y));
 			}
 		}
@@ -383,7 +410,12 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 	{
 		emit redoSelected();
 	}
-	else if (selected_color != x + getNumFieldsX()*y)
+	else if (isFillShapesField(x, y))
+	{
+		fill_shapes = !fill_shapes;
+		update();
+	}
+	else if (!isEmptyField(x, y) && selected_color != x + getNumFieldsX()*y)
 	{
 		selected_color = x + getNumFieldsX()*y;
 		update();
@@ -405,7 +437,7 @@ void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
 
 int PaintOnTemplatePaletteWidget::getNumFieldsX() const
 {
-	return 5;
+	return 6;
 }
 
 int PaintOnTemplatePaletteWidget::getNumFieldsY() const
@@ -418,6 +450,16 @@ QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 	static QColor rows[2][4] = { {qRgb(255,   0,   0), qRgb(  0, 255,   0), qRgb(  0,   0, 255), qRgb(  0,   0,   0)},
 	                             {qRgb(255, 255,   0), qRgb(219,   0, 216), qRgb(209,  92,   0), qRgb(255, 255, 255)} };
 	return rows[y][x];
+}
+
+bool PaintOnTemplatePaletteWidget::isEmptyField(int x, int y) const
+{
+	return x == 5 && y == 0;
+}
+
+bool PaintOnTemplatePaletteWidget::isFillShapesField(int x, int y) const
+{
+	return x == 5 && y == 1;
 }
 
 bool PaintOnTemplatePaletteWidget::isUndoField(int x, int y) const

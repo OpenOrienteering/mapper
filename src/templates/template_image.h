@@ -180,7 +180,7 @@ protected:
 		int y;
 	};
 	
-	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();
