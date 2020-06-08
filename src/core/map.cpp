@@ -1774,29 +1774,34 @@ void Map::updateSymbolIconZoom()
 
 
 
+void Map::setFirstFrontTemplate(int pos)
+{
+	first_front_template = pos;
+}
+
 void Map::setTemplate(Template* temp, int pos)
 {
-	templates[pos] = temp;
-	emit templateChanged(pos, templates[pos]);
+	templates[std::size_t(pos)] = temp;
+	emit templateChanged(pos, temp);
 }
 
 void Map::addTemplate(Template* temp, int pos)
 {
-	templates.insert(templates.begin() + pos, temp);
+	templates.insert(begin(templates) + pos, temp);
 	emit templateAdded(pos, temp);
 }
 
 void Map::removeTemplate(int pos)
 {
-	auto it = templates.begin() + pos;
-	Template* temp = *it;
+	auto const it = begin(templates) + pos;
+	auto* temp = *it;
 	templates.erase(it);
 	emit templateDeleted(pos, temp);
 }
 
 void Map::deleteTemplate(int pos)
 {
-	Template* temp = getTemplate(pos);
+	auto* temp = getTemplate(pos);
 	removeTemplate(pos);
 	delete temp;
 }
@@ -1813,24 +1818,20 @@ void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_bor
 	}
 }
 
-void Map::setTemplateAreaDirty(int i)
+void Map::setTemplateAreaDirty(int pos)
 {
-	if (i == -1)
+	if (pos == -1)
 		return;	// no assert here as convenience, so setTemplateAreaDirty(-1) can be called without effect for the map part
-	Q_ASSERT(i >= 0 && i < (int)templates.size());
-	
-	templates[i]->setTemplateAreaDirty();
+	Q_ASSERT(pos < getNumTemplates());
+	getTemplate(pos)->setTemplateAreaDirty();
 }
 
 int Map::findTemplateIndex(const Template* temp) const
 {
-	int size = (int)templates.size();
-	for (int i = 0; i < size; ++i)
-	{
-		if (templates[i] == temp)
-			return i;
-	}
-	return -1;
+	auto const first = begin(templates);
+	auto const last = end(templates);
+	auto const it = std::find(first, last, temp);
+	return it == last ? -1 : int(std::distance(first, it));
 }
 
 void Map::setTemplatesDirty()
@@ -1859,10 +1860,10 @@ void Map::clearClosedTemplates()
 	emit closedTemplateAvailabilityChanged();
 }
 
-void Map::closeTemplate(int i)
+void Map::closeTemplate(int pos)
 {
-	Template* temp = getTemplate(i);
-	removeTemplate(i);
+	Template* temp = getTemplate(pos);
+	removeTemplate(pos);
 	
 	if (temp->getTemplateState() == Template::Loaded)
 		temp->unloadTemplateFile();
@@ -1875,7 +1876,8 @@ void Map::closeTemplate(int i)
 
 bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
-	Template* temp = closed_templates[i];
+	auto const it = begin(closed_templates) + i;
+	auto* temp = *it;
 	
 	// Try to find and load the template again
 	if (temp->getTemplateState() != Template::Loaded)
@@ -1890,7 +1892,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	// If successfully loaded, add to template list again
 	if (temp->getTemplateState() == Template::Loaded)
 	{
-		closed_templates.erase(closed_templates.begin() + i);
+		closed_templates.erase(it);
 		addTemplate(temp, target_pos);
 		temp->setTemplateAreaDirty();
 		setTemplatesDirty();
@@ -1900,6 +1902,8 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	}
 	return false;
 }
+
+
 
 void Map::push(UndoStep *step)
 {
