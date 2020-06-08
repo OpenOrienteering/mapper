@@ -604,10 +604,7 @@ void TemplateListWidget::moveTemplateUp()
 	else
 	{
 		// Exchanging two templates
-		auto above_template = map->getTemplate(above_pos);
-		auto cur_template = map->getTemplate(cur_pos);
-		map->setTemplate(above_pos, cur_template);
-		map->setTemplate(cur_pos, above_template);
+		map->moveTemplate(cur_pos, above_pos);
 	}
 	
 	map->setTemplateAreaDirty(cur_pos);
@@ -649,10 +646,7 @@ void TemplateListWidget::moveTemplateDown()
 	else
 	{
 		// Exchanging two templates
-		auto below_template = map->getTemplate(below_pos);
-		auto cur_template = map->getTemplate(cur_pos);
-		map->setTemplate(below_pos, cur_template);
-		map->setTemplate(cur_pos, below_template);
+		map->moveTemplate(cur_pos, below_pos);
 	}
 	
 	map->setTemplateAreaDirty(cur_pos);

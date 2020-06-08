@@ -1791,6 +1791,21 @@ void Map::addTemplate(int pos, Template* temp)
 	emit templateAdded(pos, temp);
 }
 
+void Map::moveTemplate(int old_pos, int new_pos)
+{
+	if (old_pos == new_pos)
+		return;
+	
+	auto old_it = begin(templates) + old_pos;
+	auto new_it = begin(templates) + new_pos;
+	if (old_pos < new_pos)
+		std::rotate(old_it, old_it + 1, new_it + 1);
+	else
+		std::rotate(new_it, old_it, old_it + 1);
+	
+	emit templateMoved(old_pos, new_pos, getTemplate(new_pos));
+}
+
 void Map::removeTemplate(int pos)
 {
 	auto const it = begin(templates) + pos;

@@ -636,6 +636,11 @@ public:
 	void addTemplate(int pos, Template* temp);
 	
 	/**
+	 * Moves a template to a new position.
+	 */
+	void moveTemplate(int old_pos, int new_pos);
+	
+	/**
 	 * Removes the template with the given index from the template list,
 	 * but does not delete it.
 	 * 
@@ -1401,6 +1406,9 @@ signals:
 	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
 	void templateChanged(int pos, OpenOrienteering::Template* temp);
+	
+	/** Emitted when a template in the map was moved to a different index. */
+	void templateMoved(int old_pos, int new_pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
 	void templateDeleted(int pos, const OpenOrienteering::Template* old_temp);
