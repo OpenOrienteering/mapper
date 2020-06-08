@@ -243,10 +243,10 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	auto new_button_menu = new QMenu(this);
 	if (!mobile_mode)
 	{
-		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, SLOT(openTemplate()));
+		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, &TemplateListWidget::openTemplate);
 		new_button_menu->addAction(controller->getAction("reopentemplate"));
 	}
-	duplicate_action = new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")), tr("Duplicate"), this, SLOT(duplicateTemplate()));
+	duplicate_action = new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")), tr("Duplicate"), this, &TemplateListWidget::duplicateTemplate);
 #if 0
 	current_action = new_button_menu->addAction(tr("Sketch"));
 	current_action->setDisabled(true);
@@ -283,15 +283,15 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	adjust_button->setVisible(!mobile_mode);
 	
 	auto edit_menu = new QMenu(this);
-	georef_action = edit_menu->addAction(tr("Georeferenced"), this, SLOT(changeGeorefClicked()));
+	georef_action = edit_menu->addAction(tr("Georeferenced"), this, &TemplateListWidget::changeGeorefClicked);
 	georef_action->setCheckable(true);
 	position_action = edit_menu->addAction(tr("Positioning..."));
 	position_action->setCheckable(true);
 	edit_menu->addSeparator();
-	import_action =  edit_menu->addAction(tr("Import and remove"), this, SLOT(importClicked()));
+	import_action =  edit_menu->addAction(tr("Import and remove"), this, &TemplateListWidget::importClicked);
 	
 #if WITH_COVE
-	vectorize_action = edit_menu->addAction(tr("Vectorize lines"), this, SLOT(vectorizeClicked()));
+	vectorize_action = edit_menu->addAction(tr("Vectorize lines"), this, &TemplateListWidget::vectorizeClicked);
 #else
 	vectorize_action = nullptr;
 #endif /* WITH_COVE */
@@ -368,7 +368,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	connect(adjust_button, &QAbstractButton::clicked, this, &TemplateListWidget::adjustClicked);
 	connect(position_action, &QAction::triggered, this, &TemplateListWidget::positionClicked);
 	
-	//connect(group_button, SIGNAL(clicked(bool)), this, SLOT(groupClicked()));
+	//connect(group_button, SIGNAL(clicked(bool)), this, &TemplateListWidget::groupClicked);
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
 	connect(main_view, &MapView::visibilityChanged, this, &TemplateListWidget::updateVisibility);
