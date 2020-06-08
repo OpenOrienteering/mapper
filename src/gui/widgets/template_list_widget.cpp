@@ -469,32 +469,14 @@ void TemplateListWidget::setButtonsDirty()
 void TemplateListWidget::updateButtons()
 {
 	buttons_dirty = false;
-	int visited_row = currentRow();
-	int num_rows_selected = currentRow() == -1 ? 0 : 1;
-	bool first_row_selected = visited_row == 0;
-	bool last_row_selected = visited_row == template_table->model()->rowCount() - 1;
-	for (auto row = 0, last = template_table->model()->rowCount(); row < last; ++row)
-	{
-		if (row == visited_row)
-			continue;
-		
-		if (!template_table->selectionModel()->isRowSelected(row, {}))
-			continue;
-		
-		visited_row = row;
-		++num_rows_selected;
-		if (row == 0)
-			first_row_selected = true;
-		if (row == template_table->model()->rowCount() - 1)
-			last_row_selected = true;
-	}
 	
-	bool single_row_selected = num_rows_selected == 1 && visited_row == currentRow();
-	auto single_template_selected = single_row_selected && posFromRow(visited_row) >= 0;
-	duplicate_action->setEnabled(single_template_selected);
-	delete_button->setEnabled(single_template_selected);	/// \todo Make it possible to delete multiple templates at once
-	move_up_button->setEnabled(single_row_selected && !first_row_selected);
-	move_down_button->setEnabled(single_row_selected && !last_row_selected);
+	auto const current_row = currentRow();
+	move_up_button->setEnabled(current_row > 0);
+	move_down_button->setEnabled(current_row >= 0 && current_row < model()->rowCount() - 1);
+	
+	auto* temp = currentTemplate();
+	duplicate_action->setEnabled(bool(temp));
+	delete_button->setEnabled(bool(temp));	/// \todo Make it possible to delete multiple templates at once
 	
 	if (!mobile_mode)
 	{
@@ -506,11 +488,10 @@ void TemplateListWidget::updateButtons()
 		bool custom_enabled = false;
 		bool import_enabled = false;
 		bool vectorize_enabled  = false;
-		if (single_template_selected)
+		if (bool(temp))
 		{
-			auto* temp = currentTemplate();
 			is_georeferenced = temp->isTemplateGeoreferenced();
-			if (data(visited_row, TemplateTableModel::visibilityColumn(), Qt::CheckStateRole) == Qt::Checked)
+			if (data(current_row, TemplateTableModel::visibilityColumn(), Qt::CheckStateRole) == Qt::Checked)
 			{
 				edit_enabled   = true;
 				georef_enabled = temp->canChangeTemplateGeoreferenced();
@@ -520,7 +501,7 @@ void TemplateListWidget::updateButtons()
 									&& temp->getTemplateState() == Template::Loaded;
 			}
 		}
-		else if (single_row_selected)
+		else if (current_row >= 0)
 		{
 			// map row
 			is_georeferenced = map.getGeoreferencing().isValid() && !map.getGeoreferencing().isLocal();
