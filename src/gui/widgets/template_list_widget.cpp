@@ -1303,7 +1303,7 @@ void TemplateListWidget::updateRow(int row)
 	}
 }
 
-int TemplateListWidget::posFromRow(int row)
+int TemplateListWidget::posFromRow(int row) const
 {
 	int pos = template_table->rowCount() - 1 - row;
 	
@@ -1315,7 +1315,7 @@ int TemplateListWidget::posFromRow(int row)
 	return pos;
 }
 
-int TemplateListWidget::rowFromPos(int pos)
+int TemplateListWidget::rowFromPos(int pos) const
 {
 	Q_ASSERT(pos >= 0);
 	return map->getNumTemplates() - 1 - ((pos >= map->getFirstFrontTemplate()) ? pos : (pos - 1));

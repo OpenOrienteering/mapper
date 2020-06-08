@@ -119,8 +119,8 @@ private:
 	void updateAll();
 	void addRowItems(int row);
 	void updateRow(int row);
-	int posFromRow(int row);
-	int rowFromPos(int pos);
+	int posFromRow(int row) const;
+	int rowFromPos(int pos) const;
 	Template* getCurrentTemplate();
 	
 	Map* map;
