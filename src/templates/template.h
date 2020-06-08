@@ -141,6 +141,7 @@ public:
 	 */
 	enum ScribbleOption
 	{
+		NoScribbleOptions = 0,
 		FilledAreas	= 1<<0,  ///< Fill area defined by the scribble line
 	};
 	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
@@ -744,9 +745,10 @@ protected:
 	Matrix template_to_map_other;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Template::ScribbleOptions)
-
 
 }  // namespace OpenOrienteering
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::Template::ScribbleOptions)
+
 
 #endif
