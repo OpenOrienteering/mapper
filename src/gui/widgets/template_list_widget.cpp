@@ -517,6 +517,18 @@ void TemplateListWidget::updateButtons()
 		if (vectorize_action)
 			vectorize_action->setEnabled(vectorize_enabled);
 	}
+	
+	// Not strictly related to buttons, but exactly the same triggers.
+	if (current_row != last_row)
+	{
+		last_row = current_row;
+		emit currentRowChanged(current_row);
+	}
+	if (temp != last_template)
+	{
+		last_template = temp;
+		emit currentTemplateChanged(temp);
+	}
 }
 
 

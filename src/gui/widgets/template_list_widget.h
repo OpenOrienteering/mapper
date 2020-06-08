@@ -70,6 +70,8 @@ public:
 	TemplateListWidget& operator=(TemplateListWidget&&) = delete;
 	
 signals:
+	void currentRowChanged(int row);
+	void currentTemplateChanged(const OpenOrienteering::Template* temp);
 	void closeClicked();
 	
 protected:
@@ -148,6 +150,9 @@ private:
 	MapEditorController& controller;
 	bool mobile_mode;
 	bool buttons_dirty = false;
+	
+	Template* last_template = nullptr;
+	int last_row = -1;
 	
 	QCheckBox* all_hidden_check;
 	QTableView* template_table;
