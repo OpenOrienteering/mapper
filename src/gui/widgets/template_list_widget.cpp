@@ -389,8 +389,6 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	
 	map->addTemplate(pos, std::unique_ptr<Template>{new_template});
 	map->setTemplateAreaDirty(pos);
-	
-	map->setTemplatesDirty();
 }
 
 std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
@@ -551,8 +549,6 @@ void TemplateListWidget::deleteTemplate()
 		template_table->removeRow(template_table->currentRow());
 	}
 	
-	map->setTemplatesDirty();
-	
 	// Do a change of selection to trigger a button update
 	int current_row = template_table->currentRow();
 	template_table->clearSelection();
@@ -612,7 +608,6 @@ void TemplateListWidget::moveTemplateUp()
 		template_table->setCurrentCell(row - 1, template_table->currentColumn());
 	}
 	//updateButtons();
-	map->setTemplatesDirty();
 }
 
 void TemplateListWidget::moveTemplateDown()
@@ -654,7 +649,6 @@ void TemplateListWidget::moveTemplateDown()
 		template_table->setCurrentCell(row + 1, template_table->currentColumn());
 	}
 	updateButtons();
-	map->setTemplatesDirty();
 }
 
 void TemplateListWidget::showHelp()
@@ -1360,7 +1354,6 @@ void TemplateListWidget::changeTemplateFile(int pos)
 	updateRow(rowFromPos(pos));
 	updateButtons();
 	temp->setTemplateAreaDirty();
-	map->setTemplatesDirty();
 }
 
 void TemplateListWidget::showOpacitySlider(int row)

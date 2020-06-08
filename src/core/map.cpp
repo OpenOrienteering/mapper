@@ -1780,6 +1780,7 @@ void Map::setFirstFrontTemplate(int pos)
 	emit firstFrontTemplateAboutToBeChanged(old_pos, pos);
 	first_front_template = pos;
 	emit firstFrontTemplateChanged(old_pos, pos);
+	setTemplatesDirty();
 }
 
 std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> temp)
@@ -1788,6 +1789,7 @@ std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> te
 	auto const it = begin(templates) + pos;
 	swap(temp, *it);
 	emit templateChanged(pos, it->get());
+	setTemplatesDirty();
 	return temp;
 }
 
@@ -1808,6 +1810,7 @@ void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
 		setFirstFrontTemplate(front);
 	}
 	emit templateAdded(pos, it->get());
+	setTemplatesDirty();
 }
 
 void Map::moveTemplate(int old_pos, int new_pos)
@@ -1825,6 +1828,7 @@ void Map::moveTemplate(int old_pos, int new_pos)
 		std::rotate(new_it, old_it, old_it + 1);
 	
 	emit templateMoved(old_pos, new_pos, getTemplate(new_pos));
+	setTemplatesDirty();
 }
 
 std::unique_ptr<Template> Map::removeTemplate(int pos)
@@ -1843,6 +1847,7 @@ std::unique_ptr<Template> Map::removeTemplate(int pos)
 		setFirstFrontTemplate(front);
 	}
 	emit templateDeleted(pos, temp.get());
+	setTemplatesDirty();
 	return temp;
 }
 
@@ -1887,6 +1892,7 @@ void Map::setTemplatesDirty()
 
 void Map::emitTemplateChanged(Template* temp)
 {
+	setTemplatesDirty();
 	auto const pos = findTemplateIndex(temp);
 	if (pos >= 0)
 		emit templateChanged(pos, temp);
@@ -1937,7 +1943,6 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	
 	addTemplate(target_pos, std::move(temp));
 	getTemplate(target_pos)->setTemplateAreaDirty();
-	setTemplatesDirty();
 	if (closed_templates.empty())
 		emit closedTemplateAvailabilityChanged();
 	return true;

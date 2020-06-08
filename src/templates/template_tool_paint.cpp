@@ -625,7 +625,6 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	
 	map->addTemplate(-1, std::unique_ptr<Template>{temp});
 	map->setTemplateAreaDirty(map->findTemplateIndex(temp));
-	map->setTemplatesDirty();
 	
 	return temp;
 }

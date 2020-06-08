@@ -185,7 +185,6 @@ void TemplatePositionDockWidget::valueChanged()
 	temp->setTemplateAreaDirty();
 	
 	// Tell others about changes
-	controller->getMap()->setTemplatesDirty();
 	react_to_changes = false;
 	controller->getMap()->emitTemplateChanged(temp);
 	react_to_changes = true;

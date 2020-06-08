@@ -3503,7 +3503,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				map->addTemplate(template_index, std::unique_ptr<Template>{track});
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
-				map->setTemplatesDirty();
 			}
 			
 			main_view->setTemplateVisibility(track, visibility);

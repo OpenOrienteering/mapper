@@ -817,7 +817,6 @@ void Template::switchTransforms()
 	
 	adjusted = !adjusted;
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
 	map->emitTemplateChanged(this);
 }
 void Template::getTransform(TemplateTransform& out) const
@@ -834,7 +833,6 @@ void Template::setTransform(const TemplateTransform& transform)
 	updateTransformationMatrices();
 	
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
 	map->emitTemplateChanged(this);
 }
 void Template::getOtherTransform(TemplateTransform& out) const
