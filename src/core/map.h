@@ -625,7 +625,7 @@ public:
 	 * 
 	 * Emits templateChanged().
 	 */
-	void setTemplate(Template* temp, int pos);
+	void setTemplate(int pos, Template* temp);
 	
 	/**
 	 * Adds a new template at the given index.
@@ -633,7 +633,7 @@ public:
 	 * To place a template immediately below the map, adjust first_front_template
 	 * manually with setFirstFrontTemplate()!
 	 */
-	void addTemplate(Template* temp, int pos);
+	void addTemplate(int pos, Template* temp);
 	
 	/**
 	 * Removes the template with the given index from the template list,

@@ -233,7 +233,7 @@ void Importer::validate()
 			if (auto actual = placeholder->makeActualTemplate())
 			{
 				temp = actual.release();
-				map->setTemplate(temp, i);
+				map->setTemplate(i, temp);
 				if (view)
 				{
 					view->setTemplateLoadingBlocked(true);

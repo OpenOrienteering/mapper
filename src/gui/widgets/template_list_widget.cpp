@@ -389,7 +389,7 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	if (pos < 0)
 		pos = map->getFirstFrontTemplate() - 1;
 	
-	map->addTemplate(new_template, pos);
+	map->addTemplate(pos, new_template);
 	map->setTemplateAreaDirty(pos);
 	
 	map->setTemplatesDirty();
@@ -606,8 +606,8 @@ void TemplateListWidget::moveTemplateUp()
 		// Exchanging two templates
 		auto above_template = map->getTemplate(above_pos);
 		auto cur_template = map->getTemplate(cur_pos);
-		map->setTemplate(cur_template, above_pos);
-		map->setTemplate(above_template, cur_pos);
+		map->setTemplate(above_pos, cur_template);
+		map->setTemplate(cur_pos, above_template);
 	}
 	
 	map->setTemplateAreaDirty(cur_pos);
@@ -651,8 +651,8 @@ void TemplateListWidget::moveTemplateDown()
 		// Exchanging two templates
 		auto below_template = map->getTemplate(below_pos);
 		auto cur_template = map->getTemplate(cur_pos);
-		map->setTemplate(cur_template, below_pos);
-		map->setTemplate(below_template, cur_pos);
+		map->setTemplate(below_pos, cur_template);
+		map->setTemplate(cur_pos, below_template);
 	}
 	
 	map->setTemplateAreaDirty(cur_pos);

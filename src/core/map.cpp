@@ -1779,13 +1779,13 @@ void Map::setFirstFrontTemplate(int pos)
 	first_front_template = pos;
 }
 
-void Map::setTemplate(Template* temp, int pos)
+void Map::setTemplate(int pos, Template* temp)
 {
 	templates[std::size_t(pos)] = temp;
 	emit templateChanged(pos, temp);
 }
 
-void Map::addTemplate(Template* temp, int pos)
+void Map::addTemplate(int pos, Template* temp)
 {
 	templates.insert(begin(templates) + pos, temp);
 	emit templateAdded(pos, temp);
@@ -1893,7 +1893,7 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	if (temp->getTemplateState() == Template::Loaded)
 	{
 		closed_templates.erase(it);
-		addTemplate(temp, target_pos);
+		addTemplate(target_pos, temp);
 		temp->setTemplateAreaDirty();
 		setTemplatesDirty();
 		if (closed_templates.empty())
