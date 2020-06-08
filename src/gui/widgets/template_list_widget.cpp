@@ -389,7 +389,7 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	if (pos < 0)
 		pos = map->getFirstFrontTemplate() - 1;
 	
-	map->addTemplate(pos, new_template);
+	map->addTemplate(pos, std::unique_ptr<Template>{new_template});
 	map->setTemplateAreaDirty(pos);
 	
 	map->setTemplatesDirty();

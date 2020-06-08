@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -1011,9 +1012,9 @@ void XMLFileImporter::importTemplates()
 			bool opened = true;
 			auto temp = Template::loadTemplateConfiguration(xml, *map, opened);
 			if (opened)
-				map->templates.push_back(temp.release());
+				map->templates.push_back(std::move(temp));
 			else
-				map->closed_templates.push_back(temp.release());
+				map->closed_templates.push_back(std::move(temp));
 		}
 		else if (xml.name() == literal::defaults)
 		{

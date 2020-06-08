@@ -624,7 +624,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	temp->loadTemplateFile(false);
 	
 	auto pos = map->getFirstFrontTemplate();
-	map->addTemplate(pos, temp);
+	map->addTemplate(pos, std::unique_ptr<Template>{temp});
 	map->setTemplateAreaDirty(pos);
 	map->setFirstFrontTemplate(pos + 1);
 	map->setTemplatesDirty();

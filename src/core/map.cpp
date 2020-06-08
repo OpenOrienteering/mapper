@@ -26,6 +26,7 @@
 #include <iterator>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
 #include <Qt>
 #include <QtGlobal>
@@ -446,13 +447,8 @@ void Map::clear()
 {
 	undo_manager->clear();
 	
-	for (auto temp : templates)
-		delete temp;
 	templates.clear();
 	first_front_template = 0;
-	
-	for (auto temp : closed_templates)
-		delete temp;
 	closed_templates.clear();
 	
 	object_selection.clear();
@@ -1779,16 +1775,19 @@ void Map::setFirstFrontTemplate(int pos)
 	first_front_template = pos;
 }
 
-void Map::setTemplate(int pos, Template* temp)
+std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> temp)
 {
-	templates[std::size_t(pos)] = temp;
-	emit templateChanged(pos, temp);
+	using std::swap;
+	auto const it = begin(templates) + pos;
+	swap(temp, *it);
+	emit templateChanged(pos, it->get());
+	return temp;
 }
 
-void Map::addTemplate(int pos, Template* temp)
+void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
 {
-	templates.insert(begin(templates) + pos, temp);
-	emit templateAdded(pos, temp);
+	auto const it = templates.insert(begin(templates) + pos, std::move(temp));
+	emit templateAdded(pos, it->get());
 }
 
 void Map::moveTemplate(int old_pos, int new_pos)
@@ -1806,19 +1805,18 @@ void Map::moveTemplate(int old_pos, int new_pos)
 	emit templateMoved(old_pos, new_pos, getTemplate(new_pos));
 }
 
-void Map::removeTemplate(int pos)
+std::unique_ptr<Template> Map::removeTemplate(int pos)
 {
 	auto const it = begin(templates) + pos;
-	auto* temp = *it;
+	auto temp = std::move(*it);
 	templates.erase(it);
-	emit templateDeleted(pos, temp);
+	emit templateDeleted(pos, temp.get());
+	return temp;
 }
 
 void Map::deleteTemplate(int pos)
 {
-	auto* temp = getTemplate(pos);
-	removeTemplate(pos);
-	delete temp;
+	void(removeTemplate(pos));
 }
 
 void Map::setTemplateAreaDirty(Template* temp, const QRectF& area, int pixel_border)
@@ -1845,7 +1843,7 @@ int Map::findTemplateIndex(const Template* temp) const
 {
 	auto const first = begin(templates);
 	auto const last = end(templates);
-	auto const it = std::find(first, last, temp);
+	auto const it = std::find_if(first, last, [temp](auto const& t) { return t.get() == temp; });
 	return it == last ? -1 : int(std::distance(first, it));
 }
 
@@ -1867,9 +1865,6 @@ void Map::clearClosedTemplates()
 	if (closed_templates.empty())
 		return;
 	
-	for (Template* temp : closed_templates)
-		delete temp;
-	
 	closed_templates.clear();
 	setTemplatesDirty();
 	emit closedTemplateAvailabilityChanged();
@@ -1877,13 +1872,12 @@ void Map::clearClosedTemplates()
 
 void Map::closeTemplate(int pos)
 {
-	Template* temp = getTemplate(pos);
-	removeTemplate(pos);
+	auto temp = removeTemplate(pos);
 	
 	if (temp->getTemplateState() == Template::Loaded)
 		temp->unloadTemplateFile();
 	
-	closed_templates.push_back(temp);
+	closed_templates.push_back(std::move(temp));
 	setTemplatesDirty();
 	if (closed_templates.size() == 1)
 		emit closedTemplateAvailabilityChanged();
@@ -1891,31 +1885,30 @@ void Map::closeTemplate(int pos)
 
 bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
-	auto const it = begin(closed_templates) + i;
-	auto* temp = *it;
+	auto const it_closed = begin(closed_templates) + i;
+	auto temp = std::move(*it_closed);
+	closed_templates.erase(it_closed);
 	
 	// Try to find and load the template again
-	if (temp->getTemplateState() != Template::Loaded)
+	if (temp->getTemplateState() != Template::Loaded
+	    && !temp->tryToFindAndReloadTemplateFile(map_path))
 	{
-		if (!temp->tryToFindAndReloadTemplateFile(map_path))
-		{
-			if (!temp->execSwitchTemplateFileDialog(dialog_parent))
-				return false;
-		}
+		temp->execSwitchTemplateFileDialog(dialog_parent);
 	}
 	
-	// If successfully loaded, add to template list again
-	if (temp->getTemplateState() == Template::Loaded)
+	// If not loaded successfully, re-add to list of closed templates
+	if (temp->getTemplateState() != Template::Loaded)
 	{
-		closed_templates.erase(it);
-		addTemplate(target_pos, temp);
-		temp->setTemplateAreaDirty();
-		setTemplatesDirty();
-		if (closed_templates.empty())
-			emit closedTemplateAvailabilityChanged();
-		return true;
+		closed_templates.push_back(std::move(temp));
+		return false;
 	}
-	return false;
+	
+	addTemplate(target_pos, std::move(temp));
+	getTemplate(target_pos)->setTemplateAreaDirty();
+	setTemplatesDirty();
+	if (closed_templates.empty())
+		emit closedTemplateAvailabilityChanged();
+	return true;
 }
 
 
@@ -2109,9 +2102,9 @@ QRectF Map::calculateExtent(bool include_helper_symbols, bool include_templates,
 	// Templates
 	if (include_templates)
 	{
-		for (const Template* temp : templates)
+		for (const auto& temp : templates)
 		{
-			if (view && !view->isTemplateVisible(temp))
+			if (view && !view->isTemplateVisible(temp.get()))
 				continue;
 			if (temp->getTemplateState() != Template::Loaded)
 				continue;

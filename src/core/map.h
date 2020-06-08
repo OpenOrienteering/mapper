@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <functional>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -603,12 +604,12 @@ public:
 	/**
 	 * Returns the i-th template.
 	 */
-	const Template* getTemplate(int pos) const { return templates[std::size_t(pos)]; }
+	const Template* getTemplate(int pos) const { return templates[std::size_t(pos)].get(); }
 	
 	/**
 	 * Returns the i-th template.
 	 */
-	Template* getTemplate(int pos) { return templates[std::size_t(pos)]; }
+	Template* getTemplate(int pos) { return templates[std::size_t(pos)].get(); }
 	
 	/**
 	 * Sets the template index which is the first (lowest) to be drawn in front of the map.
@@ -625,15 +626,15 @@ public:
 	 * 
 	 * Emits templateChanged().
 	 */
-	void setTemplate(int pos, Template* temp);
+	std::unique_ptr<Template> setTemplate(int pos, std::unique_ptr<Template> temp);
 	
 	/**
-	 * Adds a new template at the given index.
+	 * Insert a new template at the given index.
 	 * 
 	 * To place a template immediately below the map, adjust first_front_template
 	 * manually with setFirstFrontTemplate()!
 	 */
-	void addTemplate(int pos, Template* temp);
+	void addTemplate(int pos, std::unique_ptr<Template> temp);
 	
 	/**
 	 * Moves a template to a new position.
@@ -642,14 +643,15 @@ public:
 	
 	/**
 	 * Removes the template with the given index from the template list,
-	 * but does not delete it.
+	 * and returns it.
 	 * 
 	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
 	 */
-	void removeTemplate(int pos);
+	std::unique_ptr<Template> removeTemplate(int pos);
 	
 	/**
-	 * Removes the template with the given position from the template list and deletes it.
+	 * Removes the template with the given index from the template list,
+	 * and deletes it.
 	 * 
 	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
 	 */
@@ -702,12 +704,12 @@ public:
 	/**
 	 * Returns the i-th closed template.
 	 */
-	const Template* getClosedTemplate(int i) const { return closed_templates[std::size_t(i)]; }
+	const Template* getClosedTemplate(int i) const { return closed_templates[std::size_t(i)].get(); }
 	
 	/**
 	 * Returns the i-th closed template.
 	 */
-	Template* getClosedTemplate(int i) { return closed_templates[std::size_t(i)]; }
+	Template* getClosedTemplate(int i) { return closed_templates[std::size_t(i)].get(); }
 	
 	/**
 	 * Empties the list of closed templates.
@@ -1469,7 +1471,7 @@ protected slots:
 private:
 	typedef std::vector<MapColor*> ColorVector;
 	typedef std::vector<Symbol*> SymbolVector;
-	typedef std::vector<Template*> TemplateVector;
+	typedef std::vector<std::unique_ptr<Template>> TemplateVector;
 	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	

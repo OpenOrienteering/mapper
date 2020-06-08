@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1229,7 +1229,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
 	templ->setTemplateShear(0.0);
 	
-	map->templates.insert(map->templates.begin(), templ);
+	map->templates.insert(map->templates.begin(), std::unique_ptr<Template>{templ});
 	
 	if (view)
 	{

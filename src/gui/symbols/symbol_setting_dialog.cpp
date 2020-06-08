@@ -205,8 +205,8 @@ void SymbolSettingDialog::loadTemplateClicked()
 		
 		preview_map->setFirstFrontTemplate(1);
 		
-		auto temp = new_template.release(); // avoid double release after addTemplate
-		preview_map->addTemplate(0, temp);
+		auto temp = new_template.get();
+		preview_map->addTemplate(0, std::move(new_template));
 		preview_map_view->setTemplateVisibility(temp, { 1, true });
 		preview_map->setTemplateAreaDirty(0);
 		
