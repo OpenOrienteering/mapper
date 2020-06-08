@@ -70,6 +70,7 @@
 #include <QStyleOptionButton>
 #include <QStyleOptionViewItem>
 #include <QTableView>
+#include <QTimer>
 #include <QToolButton>
 #include <QToolTip>
 #include <QVBoxLayout>
@@ -356,9 +357,9 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	// Connections
 	connect(all_hidden_check, &QAbstractButton::toggled, controller, &MapEditorController::hideAllTemplates);
 	
-	connect(template_table->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &TemplateListWidget::updateButtons, Qt::QueuedConnection);
-	connect(template_table->model(), &QAbstractTableModel::rowsMoved, this, &TemplateListWidget::updateButtons, Qt::QueuedConnection);
-	connect(template_table->model(), &QAbstractTableModel::dataChanged, this, &TemplateListWidget::updateButtons, Qt::QueuedConnection);
+	connect(template_table->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &TemplateListWidget::setButtonsDirty);
+	connect(template_table->model(), &QAbstractTableModel::rowsMoved, this, &TemplateListWidget::setButtonsDirty);
+	connect(template_table->model(), &QAbstractTableModel::dataChanged, this, &TemplateListWidget::setButtonsDirty);
 	connect(template_table, &QTableView::clicked, this, &TemplateListWidget::itemClicked, Qt::QueuedConnection);
 	connect(template_table, &QTableView::doubleClicked, this, &TemplateListWidget::itemDoubleClicked, Qt::QueuedConnection);
 	connect(template_model, &TemplateTableModel::templateLoadingChanged, this, &TemplateListWidget::onTemplateLoadingChanged);
@@ -679,8 +680,18 @@ void TemplateListWidget::showHelp()
 }
 
 
+void TemplateListWidget::setButtonsDirty()
+{
+	if (!buttons_dirty)
+	{
+		buttons_dirty = true;
+		QTimer::singleShot(0, this, &TemplateListWidget::updateButtons);
+	}
+}
+
 void TemplateListWidget::updateButtons()
 {
+	buttons_dirty = false;
 	int visited_row = currentRow();
 	int num_rows_selected = currentRow() == -1 ? 0 : 1;
 	bool first_row_selected = visited_row == 0;

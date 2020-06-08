@@ -100,6 +100,7 @@ protected:
 	void moveTemplateDown();
 	void showHelp();
 	
+	void setButtonsDirty();
 	void updateButtons();
 	void itemClicked(const QModelIndex& index);
 	void itemDoubleClicked(const QModelIndex& index);
@@ -138,6 +139,7 @@ private:
 	MapView* main_view;
 	MapEditorController* controller;
 	bool mobile_mode;
+	bool buttons_dirty = false;
 	
 	QCheckBox* all_hidden_check;
 	QTableView* template_table;
