@@ -406,6 +406,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 			is_georeferenced = false;
 		}
 		map->setTemplatesDirty();
+		map->emitTemplateChanged(this);
 	}
 	return isTemplateGeoreferenced() == value;
 }
