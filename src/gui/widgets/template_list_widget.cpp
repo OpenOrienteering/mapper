@@ -151,16 +151,13 @@ namespace OpenOrienteering {
 
 TemplateListWidget::~TemplateListWidget() = default;
 
-TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent)
+TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorController& controller, QWidget* parent)
 : QWidget(parent)
 , map(map)
 , main_view(main_view)
 , controller(controller)
-, mobile_mode(controller->isInMobileMode())
+, mobile_mode(controller.isInMobileMode())
 {
-	Q_ASSERT(main_view);
-	Q_ASSERT(controller);
-	
 	setWhatsThis(Util::makeWhatThis("templates.html#setup"));
 	
 	QStyleOption style_option(QStyleOption::Version, QStyleOption::SO_DockWidget);
@@ -193,7 +190,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	);
 	
 	// Template table
-	auto* template_model = new TemplateTableModel(*map, *main_view, this);
+	auto* template_model = new TemplateTableModel(map, main_view, this);
 	template_table = new QTableView();
 	template_table->setModel(template_model);
 	
@@ -250,7 +247,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	if (!mobile_mode)
 	{
 		new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/open.png")), tr("Open..."), this, &TemplateListWidget::openTemplate);
-		new_button_menu->addAction(controller->getAction("reopentemplate"));
+		new_button_menu->addAction(controller.getAction("reopentemplate"));
 	}
 	duplicate_action = new_button_menu->addAction(QIcon(QString::fromLatin1(":/images/tool-duplicate.png")), tr("Duplicate"), this, &TemplateListWidget::duplicateTemplate);
 #if 0
@@ -357,7 +354,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	updateVisibility(MapView::MultipleFeatures, true);
 	
 	// Connections
-	connect(all_hidden_check, &QAbstractButton::toggled, controller, &MapEditorController::hideAllTemplates);
+	connect(all_hidden_check, &QAbstractButton::toggled, &controller, &MapEditorController::hideAllTemplates);
 	
 	connect(template_table->selectionModel(), &QItemSelectionModel::currentRowChanged, this, &TemplateListWidget::setButtonsDirty);
 	connect(template_table->model(), &QAbstractTableModel::rowsMoved, this, &TemplateListWidget::setButtonsDirty);
@@ -377,8 +374,8 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	//connect(group_button, SIGNAL(clicked(bool)), this, &TemplateListWidget::groupClicked);
 	//connect(more_button_menu, SIGNAL(triggered(QAction*)), this, SLOT(moreActionClicked(QAction*)));
 	
-	connect(main_view, &MapView::visibilityChanged, this, &TemplateListWidget::updateVisibility);
-	connect(controller, &MapEditorController::templatePositionDockWidgetClosed, this, &TemplateListWidget::templatePositionDockWidgetClosed);
+	connect(&main_view, &MapView::visibilityChanged, this, &TemplateListWidget::updateVisibility);
+	connect(&controller, &MapEditorController::templatePositionDockWidgetClosed, this, &TemplateListWidget::templatePositionDockWidgetClosed);
 }
 
 
@@ -432,7 +429,7 @@ Template* TemplateListWidget::currentTemplate()
 	int pos = posFromRow(current_row);
 	if (pos < 0)
 		return nullptr;
-	return map->getTemplate(pos);
+	return map.getTemplate(pos);
 }
 
 
@@ -453,7 +450,7 @@ void TemplateListWidget::updateVisibility(MapView::VisibilityFeature feature, bo
 
 void TemplateListWidget::updateAllTemplatesHidden()
 {
-	auto hidden = main_view->areAllTemplatesHidden();
+	auto hidden = main_view.areAllTemplatesHidden();
 	all_hidden_check->setChecked(hidden);
 	template_table->setEnabled(!hidden);
 	list_buttons_group->setEnabled(!hidden);
@@ -526,7 +523,7 @@ void TemplateListWidget::updateButtons()
 		else if (single_row_selected)
 		{
 			// map row
-			is_georeferenced = map->getGeoreferencing().isValid() && !map->getGeoreferencing().isLocal();
+			is_georeferenced = map.getGeoreferencing().isValid() && !map.getGeoreferencing().isLocal();
 		}
 		
 		edit_button->setEnabled(edit_enabled);
@@ -562,7 +559,7 @@ void TemplateListWidget::itemClicked(const QModelIndex& index)
 	case TemplateTableModel::nameColumn():
 		if (!mobile_mode
 		    && row >= 0 && pos >= 0
-		    && map->getTemplate(pos)->getTemplateState() == Template::Invalid)
+		    && map.getTemplate(pos)->getTemplateState() == Template::Invalid)
 		{
 			changeTemplateFile(pos);
 		}
@@ -582,7 +579,7 @@ void TemplateListWidget::itemDoubleClicked(const QModelIndex& index)
 	{
 	default:
 		if (! (row >= 0 && pos >= 0
-		       && map->getTemplate(pos)->getTemplateState() == Template::Invalid))
+		       && map.getTemplate(pos)->getTemplateState() == Template::Invalid))
 			break;
 		// Invalid template:
 		Q_FALLTHROUGH();
@@ -623,7 +620,7 @@ bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
 #ifdef Q_OS_ANDROID
 		case QEvent::Show:
 			{
-				auto map_row = rowFromPos(map->getFirstFrontTemplate()) + 1;
+				auto map_row = rowFromPos(map.getFirstFrontTemplate()) + 1;
 				template_table->resizeRowToContents(map_row);
 				template_table->verticalHeader()->setDefaultSectionSize(template_table->verticalHeader()->sectionSize(map_row));
 			}
@@ -670,7 +667,7 @@ void TemplateListWidget::onTemplateLoadingChanged(const Template* temp, int row,
 }
 
 
-std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller)
+std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller)
 {
 	QSettings settings;
 	QString template_directory = settings.value(QString::fromLatin1("templateFileDirectory"), QDir::homePath()).toString();
@@ -700,7 +697,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	
 	bool center_in_view = true;
 	QString error;
-	auto new_temp = Template::templateForPath(path, controller->getMap());
+	auto new_temp = Template::templateForPath(path, controller.getMap());
 	if (!new_temp)
 	{
 		error = tr("File format not recognized.");
@@ -728,7 +725,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	// If the template is not georeferenced, position it at the viewport midpoint
 	else if (!new_temp->isTemplateGeoreferenced() && center_in_view)
 	{
-		auto main_view = controller->getMainWidget()->getMapView();
+		auto* main_view = controller.getMainWidget()->getMapView();
 		auto view_pos = main_view->center();
 		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
 		new_temp->setTemplatePosition(view_pos - offset);
@@ -768,7 +765,7 @@ void TemplateListWidget::openTemplate()
 		if (row >= 0)
 			pos = posFromRow(row);
 		
-		map->addTemplate(pos, std::move(new_template));
+		map.addTemplate(pos, std::move(new_template));
 	}
 }
 
@@ -778,9 +775,9 @@ void TemplateListWidget::deleteTemplate()
 	Q_ASSERT(pos >= 0);
 	
 	if (Settings::getInstance().getSettingCached(Settings::Templates_KeepSettingsOfClosed).toBool())
-		map->closeTemplate(pos);
+		map.closeTemplate(pos);
 	else
-		map->deleteTemplate(pos);
+		map.deleteTemplate(pos);
 }
 
 void TemplateListWidget::duplicateTemplate()
@@ -790,12 +787,12 @@ void TemplateListWidget::duplicateTemplate()
 	int pos = posFromRow(row);
 	Q_ASSERT(pos >= 0);
 	
-	const auto* prototype = map->getTemplate(pos);
-	const auto visibility = main_view->getTemplateVisibility(prototype);
+	const auto* prototype = map.getTemplate(pos);
+	const auto visibility = main_view.getTemplateVisibility(prototype);
 	
 	auto new_template = prototype->duplicate();
-	map->addTemplate(pos, std::unique_ptr<Template>{new_template});
-	main_view->setTemplateVisibility(new_template, visibility);
+	map.addTemplate(pos, std::unique_ptr<Template>{new_template});
+	main_view.setTemplateVisibility(new_template, visibility);
 }
 
 void TemplateListWidget::moveTemplateUp()
@@ -810,17 +807,17 @@ void TemplateListWidget::moveTemplateUp()
 	if (cur_pos < 0)
 	{
 		// Moving the map layer up
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() + 1);
+		map.setFirstFrontTemplate(map.getFirstFrontTemplate() + 1);
 	}
 	else if (above_pos < 0)
 	{
 		// Moving something above the map layer
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
+		map.setFirstFrontTemplate(map.getFirstFrontTemplate() - 1);
 	}
 	else
 	{
 		// Exchanging two templates
-		map->moveTemplate(cur_pos, above_pos);
+		map.moveTemplate(cur_pos, above_pos);
 	}
 	
 	template_table->setCurrentIndex(template_table->model()->index(row - 1, template_table->selectionModel()->currentIndex().column()));
@@ -840,17 +837,17 @@ void TemplateListWidget::moveTemplateDown()
 	if (cur_pos < 0)
 	{
 		// Moving the map layer down
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
+		map.setFirstFrontTemplate(map.getFirstFrontTemplate() - 1);
 	}
 	else if (below_pos < 0)
 	{
 		// Moving something below the map layer
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() + 1);
+		map.setFirstFrontTemplate(map.getFirstFrontTemplate() + 1);
 	}
 	else
 	{
 		// Exchanging two templates
-		map->moveTemplate(cur_pos, below_pos);
+		map.moveTemplate(cur_pos, below_pos);
 	}
 	
 	template_table->setCurrentIndex(template_table->model()->index(row + 1, template_table->selectionModel()->currentIndex().column()));
@@ -858,7 +855,7 @@ void TemplateListWidget::moveTemplateDown()
 
 void TemplateListWidget::showHelp()
 {
-	Util::showHelp(controller->getWindow(), "templates.html", "setup");
+	Util::showHelp(controller.getWindow(), "templates.html", "setup");
 }
 
 
@@ -866,7 +863,7 @@ void TemplateListWidget::moveByHandClicked(bool checked)
 {
 	auto* temp = currentTemplate();
 	Q_ASSERT(temp);
-	controller->setTool(checked ? new TemplateMoveTool(temp, controller, move_by_hand_action) : nullptr);
+	controller.setTool(checked ? new TemplateMoveTool(temp, &controller, move_by_hand_action) : nullptr);
 }
 
 void TemplateListWidget::adjustClicked(bool checked)
@@ -875,13 +872,13 @@ void TemplateListWidget::adjustClicked(bool checked)
 	{
 		auto* temp = currentTemplate();
 		Q_ASSERT(temp);
-		auto* activity = new TemplateAdjustActivity(temp, controller);
-		controller->setEditorActivity(activity);
+		auto* activity = new TemplateAdjustActivity(temp, &controller);
+		controller.setEditorActivity(activity);
 		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed, this, &TemplateListWidget::adjustWindowClosed);
 	}
 	else
 	{
-		controller->setEditorActivity(nullptr);	// TODO: default activity?!
+		controller.setEditorActivity(nullptr);	// TODO: default activity?!
 	}
 }
 
@@ -891,7 +888,7 @@ void TemplateListWidget::adjustWindowClosed()
 	if (!current_template)
 		return;
 	
-	if (controller->getEditorActivity() && controller->getEditorActivity()->getActivityObject() == current_template)
+	if (controller.getEditorActivity() && controller.getEditorActivity()->getActivityObject() == current_template)
 		adjust_button->setChecked(false);
 }
 
@@ -910,10 +907,10 @@ void TemplateListWidget::positionClicked(bool checked)
 	if (!temp)
 		return;
 	
-	if (controller->existsTemplatePositionDockWidget(temp))
-		controller->removeTemplatePositionDockWidget(temp);
+	if (controller.existsTemplatePositionDockWidget(temp))
+		controller.removeTemplatePositionDockWidget(temp);
 	else
-		controller->addTemplatePositionDockWidget(temp);
+		controller.addTemplatePositionDockWidget(temp);
 }
 
 void TemplateListWidget::importClicked()
@@ -934,10 +931,10 @@ void TemplateListWidget::importClicked()
 		if (!prototype->isTemplateGeoreferenced())
 		{
 			template_map.applyOnAllObjects(transform.makeObjectTransform());
-			template_map.setGeoreferencing(map->getGeoreferencing());
+			template_map.setGeoreferencing(map.getGeoreferencing());
 		}
 		auto template_scale = (transform.template_scale_x + transform.template_scale_y) / 2;
-		template_scale *= double(prototype->templateMap()->getScaleDenominator()) / map->getScaleDenominator();
+		template_scale *= double(prototype->templateMap()->getScaleDenominator()) / map.getScaleDenominator();
 		if (!qFuzzyCompare(template_scale, 1))
 		{
 			template_map.scaleAllSymbols(template_scale);
@@ -964,7 +961,7 @@ void TemplateListWidget::importClicked()
 		if (!prototype->isTemplateGeoreferenced())
 			template_map.applyOnAllObjects(transform.makeObjectTransform());
 		
-		auto nominal_scale = double(template_map.getScaleDenominator()) / map->getScaleDenominator();
+		auto nominal_scale = double(template_map.getScaleDenominator()) / map.getScaleDenominator();
 		auto current_scale = 0.5 * (transform.template_scale_x + transform.template_scale_y);
 		auto scale = 1.0;
 		QStringList scale_options;
@@ -998,10 +995,10 @@ void TemplateListWidget::importClicked()
 		return;
 	}
 
-	map->importMap(template_map, Map::MinimalObjectImport);
+	map.importMap(template_map, Map::MinimalObjectImport);
 	deleteTemplate();
 	
-	if (main_view->isOverprintingSimulationEnabled()
+	if (main_view.isOverprintingSimulationEnabled()
 	    && !template_map.hasSpotColors())
 	{
 		auto answer = QMessageBox::question(
@@ -1013,13 +1010,13 @@ void TemplateListWidget::importClicked()
 		                  QMessageBox::Yes );
 		if (answer == QMessageBox::Yes)
 		{
-			if (auto action = controller->getAction("overprintsimulation"))
+			if (auto* action = controller.getAction("overprintsimulation"))
 				action->trigger();
 		}
 	}
 	
 	
-	auto map_visibility = main_view->getMapVisibility();
+	auto map_visibility = main_view.getMapVisibility();
 	if (!map_visibility.visible)
 	{
 		map_visibility.visible = true;
@@ -1055,7 +1052,7 @@ void TemplateListWidget::vectorizeClicked()
 #ifdef WITH_COVE
 	cove::CoveRunner cr;
 	auto* templ = qobject_cast<TemplateImage*>(currentTemplate());
-	cr.run(controller->getWindow(), map, templ);
+	cr.run(controller.getWindow(), &map, templ);
 #endif /* WITH_COVE */
 }
 
@@ -1074,7 +1071,7 @@ void TemplateListWidget::templatePositionDockWidgetClosed(Template* temp)
 
 void TemplateListWidget::changeTemplateFile(int pos)
 {
-	auto* temp = map->getTemplate(pos);
+	auto* temp = map.getTemplate(pos);
 	Q_ASSERT(temp);
 	temp->execSwitchTemplateFileDialog(this);
 }

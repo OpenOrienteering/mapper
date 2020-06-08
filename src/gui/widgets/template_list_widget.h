@@ -59,11 +59,11 @@ class TemplateListWidget : public QWidget
 	Q_OBJECT
 	
 public:
-	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
+	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller);
 	
 	~TemplateListWidget() override;
 	
-	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
+	TemplateListWidget(Map& map, MapView& main_view, MapEditorController& controller, QWidget* parent = nullptr);
 	TemplateListWidget(const TemplateListWidget&) = delete;
 	TemplateListWidget(TemplateListWidget&&) = delete;
 	TemplateListWidget& operator=(const TemplateListWidget&) = delete;
@@ -143,9 +143,9 @@ protected:
 	void showOpacitySlider(int row);
 	
 private:
-	Map* map;
-	MapView* main_view;
-	MapEditorController* controller;
+	Map& map;
+	MapView& main_view;
+	MapEditorController& controller;
 	bool mobile_mode;
 	bool buttons_dirty = false;
 	

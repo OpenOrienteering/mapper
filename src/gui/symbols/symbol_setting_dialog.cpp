@@ -193,7 +193,7 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(this, preview_controller);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(this, *preview_controller);
 	if (new_template)
 	{
 		if (preview_map->getNumTemplates() > 0)

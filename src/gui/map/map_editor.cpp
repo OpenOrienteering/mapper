@@ -2146,7 +2146,7 @@ void MapEditorController::createTemplateWindow()
 {
 	Q_ASSERT(!template_dock_widget);
 	
-	template_list_widget = new TemplateListWidget(map, main_view, this);
+	template_list_widget = new TemplateListWidget(*map, *main_view, *this);
 	
 	if (isInMobileMode())
 	{
@@ -2177,7 +2177,7 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, *this);
 	if (new_template)
 	{
 		map->addTemplate(-1, std::move(new_template));
