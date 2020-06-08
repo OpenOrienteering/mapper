@@ -631,8 +631,9 @@ public:
 	/**
 	 * Insert a new template at the given index.
 	 * 
-	 * To place a template immediately below the map, adjust first_front_template
-	 * manually with setFirstFrontTemplate()!
+	 * If the index is lower then the first front template index, the function
+	 * increments this index. To place a template immediately below the map,
+	 * pass index -1.
 	 */
 	void addTemplate(int pos, std::unique_ptr<Template> temp);
 	
@@ -645,7 +646,8 @@ public:
 	 * Removes the template with the given index from the template list,
 	 * and returns it.
 	 * 
-	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
+	 * If the index is lower then the first front template index, the function
+	 * decrements this index.
 	 */
 	std::unique_ptr<Template> removeTemplate(int pos);
 	
@@ -653,7 +655,8 @@ public:
 	 * Removes the template with the given index from the template list,
 	 * and deletes it.
 	 * 
-	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
+	 * If the index is lower then the first front template index, the function
+	 * decrements this index.
 	 */
 	void deleteTemplate(int pos);
 	

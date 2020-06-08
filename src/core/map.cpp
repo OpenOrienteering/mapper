@@ -1772,6 +1772,9 @@ void Map::updateSymbolIconZoom()
 
 void Map::setFirstFrontTemplate(int pos)
 {
+	if (getFirstFrontTemplate() == pos)
+		return;
+	
 	first_front_template = pos;
 }
 
@@ -1786,7 +1789,15 @@ std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> te
 
 void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
 {
+	auto front = getFirstFrontTemplate();
+	if (pos < front)
+	{
+		if (pos < 0)
+			pos = front;
+		++front;
+	}
 	auto const it = templates.insert(begin(templates) + pos, std::move(temp));
+	setFirstFrontTemplate(front);
 	emit templateAdded(pos, it->get());
 }
 
@@ -1807,9 +1818,15 @@ void Map::moveTemplate(int old_pos, int new_pos)
 
 std::unique_ptr<Template> Map::removeTemplate(int pos)
 {
+	auto front = getFirstFrontTemplate();
+	if (pos < front || getNumTemplates() < front)
+	{
+		--front;
+	}
 	auto const it = begin(templates) + pos;
 	auto temp = std::move(*it);
 	templates.erase(it);
+	setFirstFrontTemplate(front);
 	emit templateDeleted(pos, temp.get());
 	return temp;
 }

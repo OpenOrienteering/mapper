@@ -331,7 +331,7 @@ TemplateListWidget::TemplateListWidget(Map* map, MapView* main_view, MapEditorCo
 	connect(all_hidden_check, &QAbstractButton::toggled, controller, &MapEditorController::hideAllTemplates);
 	
 	connect(template_table, &QTableWidget::cellChanged, this, &TemplateListWidget::cellChange);
-	connect(template_table->selectionModel(), &QItemSelectionModel::selectionChanged, this, &TemplateListWidget::updateButtons);
+	connect(template_table->selectionModel(), &QItemSelectionModel::selectionChanged, this, &TemplateListWidget::updateButtons, Qt::QueuedConnection);
 	connect(template_table, &QTableWidget::cellClicked, this, &TemplateListWidget::cellClicked, Qt::QueuedConnection);
 	connect(template_table, &QTableWidget::cellDoubleClicked, this, &TemplateListWidget::cellDoubleClicked, Qt::QueuedConnection);
 	
@@ -384,10 +384,8 @@ void TemplateListWidget::addTemplateAt(Template* new_template, int pos)
 	else
 		row = template_table->rowCount() - 1 - map->getFirstFrontTemplate();*/
 	
-	if (pos < map->getFirstFrontTemplate())
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() + 1);
 	if (pos < 0)
-		pos = map->getFirstFrontTemplate() - 1;
+		pos = -1;
 	
 	map->addTemplate(pos, std::unique_ptr<Template>{new_template});
 	map->setTemplateAreaDirty(pos);
@@ -552,9 +550,6 @@ void TemplateListWidget::deleteTemplate()
 		QSignalBlocker block(template_table);
 		template_table->removeRow(template_table->currentRow());
 	}
-		
-	if (pos < map->getFirstFrontTemplate())
-		map->setFirstFrontTemplate(map->getFirstFrontTemplate() - 1);
 	
 	map->setTemplatesDirty();
 	

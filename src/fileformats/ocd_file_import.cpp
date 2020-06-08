@@ -978,9 +978,8 @@ void OcdFileImport::importTemplate(const QString& param_string)
 	templ->setTemplateScaleX(scale_x * scale_factor);
 	templ->setTemplateScaleY(scale_y * scale_factor);
 	
-	int template_pos = map->getFirstFrontTemplate();
-	map->addTemplate(0, std::unique_ptr<Template>{templ});
-	map->setFirstFrontTemplate(template_pos+1);
+	auto const template_pos = std::min(0, map->getFirstFrontTemplate() - 1);
+	map->addTemplate(template_pos, std::unique_ptr<Template>{templ});
 	
 	if (view)
 	{
