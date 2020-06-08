@@ -205,7 +205,6 @@ void SymbolSettingDialog::loadTemplateClicked()
 		
 		auto temp = new_template.get();
 		preview_map->addTemplate(-1, std::move(new_template));
-		preview_map_view->setTemplateVisibility(temp, { 1, true });
 		preview_map->setTemplateAreaDirty(preview_map->findTemplateIndex(temp));
 		
 		template_file_label->setText(temp->getTemplateFilename());

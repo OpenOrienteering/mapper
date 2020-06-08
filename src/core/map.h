@@ -1406,14 +1406,37 @@ signals:
 	void symbolIconZoomChanged();
 	
 	
+	/** Emitted before an explicit change of the first front template.
+	 * 
+	 * This signal is not emitted when the change is done implicitly by
+	 * addTemplate or removeTemplate.
+	 */
+	void firstFrontTemplateAboutToBeChanged(int old_pos, int new_pos);
+	
+	/** Emitted after an explicit change of the first front template.
+	 * 
+	 * This signal is not emitted when the change is done implicitly by
+	 * addTemplate or removeTemplate.
+	 */
+	void firstFrontTemplateChanged(int old_pos, int new_pos);
+	
+	/** Emitted before a template is added to the map. */
+	void templateAboutToBeAdded(int pos, OpenOrienteering::Template* temp);
+	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
 	void templateAdded(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
 	void templateChanged(int pos, OpenOrienteering::Template* temp);
 	
+	/** Emitted before a template in the map is moved to a different index. */
+	void templateAboutToBeMoved(int old_pos, int new_pos, OpenOrienteering::Template* temp);
+	
 	/** Emitted when a template in the map was moved to a different index. */
 	void templateMoved(int old_pos, int new_pos, OpenOrienteering::Template* temp);
+	
+	/** Emitted before a template in the map is deleted. */
+	void templateAboutToBeDeleted(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
 	void templateDeleted(int pos, const OpenOrienteering::Template* old_temp);

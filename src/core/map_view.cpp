@@ -89,6 +89,7 @@ MapView::MapView(QObject* parent, Map* map)
 {
 	Q_ASSERT(map);
 	updateTransform();
+	connect(map, &Map::templateAboutToBeAdded, this, &MapView::onAboutToAddTemplate);
 	connect(map, &Map::templateAdded, this, &MapView::onTemplateAdded);
 	connect(map, &Map::templateDeleted, this, &MapView::onTemplateDeleted, Qt::QueuedConnection);
 }
@@ -442,6 +443,11 @@ bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibili
 		return true;
 	}
 	return false;
+}
+
+void MapView::onAboutToAddTemplate(int, Template* temp)
+{
+	setTemplateVisibilityHelper(temp, { 1.0f, false });
 }
 
 void MapView::onTemplateAdded(int, Template* temp)

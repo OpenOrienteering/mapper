@@ -38,6 +38,7 @@
 #include <QPainter>
 #include <QPoint>
 #include <QPointF>
+#include <QSignalBlocker>
 #include <QTimer>
 #include <QTranslator>
 
@@ -1775,7 +1776,10 @@ void Map::setFirstFrontTemplate(int pos)
 	if (getFirstFrontTemplate() == pos)
 		return;
 	
+	auto const old_pos = first_front_template;
+	emit firstFrontTemplateAboutToBeChanged(old_pos, pos);
 	first_front_template = pos;
+	emit firstFrontTemplateChanged(old_pos, pos);
 }
 
 std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> temp)
@@ -1796,8 +1800,13 @@ void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
 			pos = front;
 		++front;
 	}
-	auto const it = templates.insert(begin(templates) + pos, std::move(temp));
-	setFirstFrontTemplate(front);
+	auto it = begin(templates) + pos;
+	emit templateAboutToBeAdded(pos, temp.get());
+	it = templates.insert(it, std::move(temp));
+	{
+		QSignalBlocker block(this);
+		setFirstFrontTemplate(front);
+	}
 	emit templateAdded(pos, it->get());
 }
 
@@ -1805,6 +1814,8 @@ void Map::moveTemplate(int old_pos, int new_pos)
 {
 	if (old_pos == new_pos)
 		return;
+	
+	emit templateAboutToBeMoved(old_pos, new_pos, getTemplate(old_pos));
 	
 	auto old_it = begin(templates) + old_pos;
 	auto new_it = begin(templates) + new_pos;
@@ -1824,9 +1835,13 @@ std::unique_ptr<Template> Map::removeTemplate(int pos)
 		--front;
 	}
 	auto const it = begin(templates) + pos;
+	emit templateAboutToBeDeleted(pos, it->get());
 	auto temp = std::move(*it);
 	templates.erase(it);
-	setFirstFrontTemplate(front);
+	{
+		QSignalBlocker block(this);
+		setFirstFrontTemplate(front);
+	}
 	emit templateDeleted(pos, temp.get());
 	return temp;
 }

@@ -368,7 +368,12 @@ protected:
 	bool setTemplateVisibilityHelper(const Template *temp, TemplateVisibility vis);
 	
 	/**
-	 * Creates the visibility data when a template is added to the map.
+	 * Creates a default visibility entry (100% opaque, hidden) before a template is added to the map.
+	 */
+	void onAboutToAddTemplate(int pos, Template* temp);
+	
+	/**
+	 * Changes the visibility entry to 100% visible after a template is added to the map.
 	 */
 	void onTemplateAdded(int pos, Template* temp);
 	
