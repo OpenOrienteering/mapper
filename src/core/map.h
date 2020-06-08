@@ -1420,8 +1420,14 @@ signals:
 	 */
 	void firstFrontTemplateChanged(int old_pos, int new_pos);
 	
-	/** Emitted before a template is added to the map. */
-	void templateAboutToBeAdded(int pos, OpenOrienteering::Template* temp);
+	/** Emitted before a template is added to the map.
+	 * 
+	 * Adding a template immediately below the map uses the same value for pos
+	 * as adding one immediately above the map. That's why there is a third
+	 * parameter which always signals whether the template is being added in
+	 * the background.
+	 */
+	void templateAboutToBeAdded(int pos, OpenOrienteering::Template* temp, bool in_background);
 	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
 	void templateAdded(int pos, OpenOrienteering::Template* temp);

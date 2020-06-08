@@ -36,6 +36,7 @@
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
 #include "templates/template.h"
+#include "templates/template_table_model.h"
 #include "templates/world_file.h"
 
 using namespace OpenOrienteering;
@@ -215,6 +216,40 @@ private slots:
 		QCOMPARE(qRound(latlon.longitude()), 8);
 	}
 #endif
+	
+	void templateTableModelTest()
+	{
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(QStringLiteral("testdata:templates/world-file.xmap"), &view));
+		QCOMPARE(map.getNumTemplates(), 1);
+		
+		TemplateTableModel model(map, view);
+		QCOMPARE(model.rowCount(), 2);
+		
+		// Single template, in background
+		QCOMPARE(map.getFirstFrontTemplate(), 1);
+		QCOMPARE(model.mapRow(map.getFirstFrontTemplate()), 0);
+		QCOMPARE(model.posFromRow(0), -1);
+		QCOMPARE(model.rowFromPos(0), 1);
+		QCOMPARE(model.posFromRow(1), 0);
+		// Three possible calls in onTemplateAboutToBeAdded
+		QCOMPARE(model.insertionRowFromPos(0, true), 2);
+		QCOMPARE(model.insertionRowFromPos(1, true), 1);
+		QCOMPARE(model.insertionRowFromPos(1, false), 0);
+		
+		// Single template, in foreground
+		map.setFirstFrontTemplate(0);
+		QCOMPARE(model.mapRow(map.getFirstFrontTemplate()), 1);
+		QCOMPARE(model.posFromRow(1), -1);
+		QCOMPARE(model.rowFromPos(0), 0);
+		QCOMPARE(model.posFromRow(0), 0);
+		// Three possible calls in onTemplateAboutToBeAdded
+		QCOMPARE(model.insertionRowFromPos(0, true), 2);
+		QCOMPARE(model.insertionRowFromPos(0, false), 1);
+		QCOMPARE(model.insertionRowFromPos(1, false), 0);
+	}
+	
 };
 
 

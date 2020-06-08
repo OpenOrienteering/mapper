@@ -166,6 +166,7 @@ set(Mapper_Common_SRCS
   templates/template_placeholder.cpp
   templates/template_position_dock_widget.cpp
   templates/template_positioning_dialog.cpp
+  templates/template_table_model.cpp
   templates/template_tool_move.cpp
   templates/template_tool_paint.cpp
   templates/template_track.cpp

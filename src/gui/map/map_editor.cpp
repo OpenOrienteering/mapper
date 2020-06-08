@@ -2147,7 +2147,6 @@ void MapEditorController::createTemplateWindow()
 	Q_ASSERT(!template_dock_widget);
 	
 	template_list_widget = new TemplateListWidget(map, main_view, this);
-	connect(hide_all_templates_act, &QAction::toggled, template_list_widget, &TemplateListWidget::setAllTemplatesHidden);
 	
 	if (isInMobileMode())
 	{

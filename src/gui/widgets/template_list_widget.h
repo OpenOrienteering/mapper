@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,6 +24,7 @@
 
 #include <memory>
 
+#include <Qt>
 #include <QWidget>
 #include <QObject>
 #include <QString>
@@ -33,15 +35,17 @@ class QAction;
 class QBoxLayout;
 class QCheckBox;
 class QEvent;
-class QIcon;
-class QTableWidget;
+class QModelIndex;
+class QTableView;
 class QToolButton;
+class QVariant;
 
 namespace OpenOrienteering {
 
 class Map;
 class MapEditorController;
 class Template;
+class TemplateTableModel;
 
 
 /**
@@ -56,16 +60,21 @@ public:
 	TemplateListWidget(Map* map, MapView* main_view, MapEditorController* controller, QWidget* parent = nullptr);
 	~TemplateListWidget() override;
 	
-	void addTemplateAt(Template* new_template, int pos);
-	
 	static std::unique_ptr<Template> showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController* controller);
 	
-public slots:
+protected:
+	TemplateTableModel* model();
+	const TemplateTableModel* model() const { return static_cast<const TemplateTableModel*>(const_cast<TemplateListWidget*>(this)->model()); }
+	QVariant data(int row, int column, int role) const;
+	void setData(int row, int column, QVariant value, int role);
+	Qt::ItemFlags flags(int row, int column) const;
+	
 	/**
-	 * Sets or clears the all-templates-hidden state.
+	 * Updates widget state depending on general template visibility.
+	 *
 	 * When all templates are hidden, operations on templates are disabled.
 	 */
-	void setAllTemplatesHidden(bool value);
+	void updateAllTemplatesHidden();
 	
 signals:
 	void closeClicked();
@@ -77,8 +86,13 @@ protected:
 	 */
 	bool eventFilter(QObject* watched, QEvent* event) override;
 	
-protected slots:
+	
+// slots:
+#if 0
 	void newTemplate(QAction* action);
+#endif
+	
+	void onTemplateLoadingChanged(const Template* temp, int row, int state);
 	void openTemplate();
 	void deleteTemplate();
 	void duplicateTemplate();
@@ -86,10 +100,9 @@ protected slots:
 	void moveTemplateDown();
 	void showHelp();
 	
-	void cellChange(int row, int column);
 	void updateButtons();
-	void cellClicked(int row, int column);
-	void cellDoubleClicked(int row, int column);
+	void itemClicked(const QModelIndex& index);
+	void itemDoubleClicked(const QModelIndex& index);
 	
 	void moveByHandClicked(bool checked);
 	void adjustClicked(bool checked);
@@ -101,7 +114,6 @@ protected slots:
 	void moreActionClicked(QAction* action);
 	void vectorizeClicked();
 	
-	void templateAdded(int pos, const OpenOrienteering::Template* temp);
 	void templatePositionDockWidgetClosed(OpenOrienteering::Template* temp);
 	
 	void changeTemplateFile(int pos);
@@ -115,22 +127,20 @@ protected slots:
 	 */
 	void updateVisibility(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
 	
-private:
-	void updateAll();
-	void addRowItems(int row);
-	void updateRow(int row);
+	
+	int currentRow() const;
 	int posFromRow(int row) const;
 	int rowFromPos(int pos) const;
 	Template* getCurrentTemplate();
 	
+private:
 	Map* map;
 	MapView* main_view;
 	MapEditorController* controller;
 	bool mobile_mode;
-	int name_column;
 	
 	QCheckBox* all_hidden_check;
-	QTableWidget* template_table;
+	QTableView* template_table;
 	QBoxLayout* all_templates_layout;
 	
 	QAction* duplicate_action;

@@ -1807,14 +1807,15 @@ std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> te
 void Map::addTemplate(int pos, std::unique_ptr<Template> temp)
 {
 	auto front = getFirstFrontTemplate();
-	if (pos < front)
+	auto in_background = pos < front;
+	if (in_background)
 	{
 		if (pos < 0)
 			pos = front;
 		++front;
 	}
 	auto it = begin(templates) + pos;
-	emit templateAboutToBeAdded(pos, temp.get());
+	emit templateAboutToBeAdded(pos, temp.get(), in_background);
 	it = templates.insert(it, std::move(temp));
 	{
 		QSignalBlocker block(this);
