@@ -100,6 +100,7 @@
 #include "templates/template_map.h"
 #include "templates/template_table_model.h"
 #include "templates/template_tool_move.h"
+#include "tools/tool.h"
 #include "util/item_delegates.h"
 
 
@@ -854,9 +855,13 @@ void TemplateListWidget::showHelp()
 
 void TemplateListWidget::moveByHandClicked(bool checked)
 {
-	auto* temp = currentTemplate();
-	Q_ASSERT(temp);
-	controller.setTool(checked ? new TemplateMoveTool(temp, &controller, move_by_hand_action) : nullptr);
+	MapEditorTool* tool = nullptr;
+	if (checked)
+	{
+		tool = new TemplateMoveTool(currentTemplate(), &controller, move_by_hand_action);
+		connect(this, &TemplateListWidget::currentRowChanged, tool, &TemplateMoveTool::deactivate);
+	}
+	controller.setTool(tool);
 }
 
 void TemplateListWidget::adjustClicked(bool checked)
