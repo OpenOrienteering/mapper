@@ -511,7 +511,7 @@ void TemplateListWidget::updateButtons()
 		edit_button->setEnabled(edit_enabled);
 		georef_action->setChecked(is_georeferenced);
 		georef_action->setEnabled(georef_enabled);
-		move_by_hand_button->setEnabled(custom_enabled);
+		move_by_hand_action->setEnabled(custom_enabled);
 		adjust_button->setEnabled(custom_enabled);
 		position_action->setEnabled(custom_enabled);
 		import_action->setEnabled(import_enabled);
