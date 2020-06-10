@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -110,7 +111,8 @@ bool TemplatePositionDockWidget::event(QEvent* event)
 void TemplatePositionDockWidget::closeEvent(QCloseEvent* event)
 {
 	Q_UNUSED(event);
-	controller->removeTemplatePositionDockWidget(temp);
+	emit closed();
+	deleteLater();
 }
 
 void TemplatePositionDockWidget::templateChanged(int index, const Template* temp)

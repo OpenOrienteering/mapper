@@ -72,6 +72,7 @@ public:
 signals:
 	void currentRowChanged(int row);
 	void currentTemplateChanged(const OpenOrienteering::Template* temp);
+	void closePositionDockWidget();
 	void closeClicked();
 	
 protected:

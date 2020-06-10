@@ -138,7 +138,6 @@
 #include "sensors/gps_track_recorder.h"
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
-#include "templates/template_position_dock_widget.h"
 #include "templates/template_tool_paint.h"
 #include "templates/template_track.h"
 #include "tools/cut_tool.h"
@@ -331,8 +330,6 @@ MapEditorController::~MapEditorController()
 	delete mappart_move_menu;
 	if (mappart_selector_box)
 		delete mappart_selector_box;
-	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
-		delete widget;
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
@@ -503,24 +500,6 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 	map_widget->setActivity(editor_activity);
 }
 
-void MapEditorController::addTemplatePositionDockWidget(Template* temp)
-{
-	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
-	auto* dock_widget = new TemplatePositionDockWidget(temp, this, window);
-	addFloatingDockWidget(dock_widget);
-	template_position_widgets.insert(temp, dock_widget);
-}
-
-void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
-{
-	emit templatePositionDockWidgetClosed(temp);
-	
-	if (auto* w = getTemplatePositionDockWidget(temp))
-		w->deleteLater();
-	int num_deleted = template_position_widgets.remove(temp);
-	Q_ASSERT(num_deleted == 1);
-	Q_UNUSED(num_deleted);
-}
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
 {

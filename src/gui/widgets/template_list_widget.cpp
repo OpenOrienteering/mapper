@@ -97,6 +97,7 @@
 #include "templates/template_adjust.h"
 #include "templates/template_image.h"
 #include "templates/template_map.h"
+#include "templates/template_position_dock_widget.h"
 #include "templates/template_table_model.h"
 #include "templates/template_tool_move.h"
 #include "tools/tool.h"
@@ -888,16 +889,20 @@ void TemplateListWidget::groupClicked()
 
 void TemplateListWidget::positionClicked(bool checked)
 {
-	Q_UNUSED(checked);
-	
-	auto* temp = currentTemplate();
-	if (!temp)
-		return;
-	
-	if (controller.existsTemplatePositionDockWidget(temp))
-		controller.removeTemplatePositionDockWidget(temp);
+	if (checked)
+	{
+		auto* dock_widget = new TemplatePositionDockWidget(currentTemplate(), &controller, controller.getWindow());
+		controller.addFloatingDockWidget(dock_widget);
+		connect(&controller, &MapEditorController::destroyed, dock_widget, &TemplateAdjustDockWidget::close);
+		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
+		connect(this, &TemplateListWidget::closePositionDockWidget, dock_widget, &TemplateAdjustDockWidget::close);
+		connect(dock_widget, &TemplatePositionDockWidget::closed,
+		        position_action, [this]() { position_action->setChecked(false); });
+	}
 	else
-		controller.addTemplatePositionDockWidget(temp);
+	{
+		emit closePositionDockWidget();
+	}
 }
 
 void TemplateListWidget::importClicked()
