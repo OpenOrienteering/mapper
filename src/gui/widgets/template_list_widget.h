@@ -130,7 +130,6 @@ protected:
 	
 	void moveByHandClicked(bool checked);
 	void adjustClicked(bool checked);
-	void adjustWindowClosed();
 	//void groupClicked();
 	void positionClicked(bool checked);
 	void importClicked();

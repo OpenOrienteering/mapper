@@ -91,7 +91,6 @@
 #include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
-#include "gui/map/map_editor_activity.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/segmented_button_layout.h"
 #include "templates/template.h"
@@ -868,26 +867,16 @@ void TemplateListWidget::adjustClicked(bool checked)
 {
 	if (checked)
 	{
-		auto* temp = currentTemplate();
-		Q_ASSERT(temp);
-		auto* activity = new TemplateAdjustActivity(temp, &controller);
+		auto* activity = new TemplateAdjustActivity(currentTemplate(), &controller);
 		controller.setEditorActivity(activity);
-		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed, this, &TemplateListWidget::adjustWindowClosed);
+		connect(this, &TemplateListWidget::currentRowChanged, activity->getDockWidget(), &TemplateAdjustDockWidget::close);
+		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed,
+		        adjust_button, [this]() { adjust_button->setChecked(false); });
 	}
 	else
 	{
 		controller.setEditorActivity(nullptr);	// TODO: default activity?!
 	}
-}
-
-void TemplateListWidget::adjustWindowClosed()
-{
-	auto* current_template = currentTemplate();
-	if (!current_template)
-		return;
-	
-	if (controller.getEditorActivity() && controller.getEditorActivity()->getActivityObject() == current_template)
-		adjust_button->setChecked(false);
 }
 
 #ifndef NO_TEMPLATE_GROUP_SUPPORT
