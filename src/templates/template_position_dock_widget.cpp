@@ -39,6 +39,8 @@ namespace OpenOrienteering {
 TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent)
  : QDockWidget(tr("Positioning"), parent), temp(temp), controller(controller)
 {
+	setObjectName(QStringLiteral("TemplatePositioning"));
+	
 	react_to_changes = true;
 	
 	QLabel* x_label = new QLabel(tr("X:"));

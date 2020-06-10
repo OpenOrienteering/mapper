@@ -870,9 +870,13 @@ void TemplateListWidget::adjustClicked(bool checked)
 	{
 		auto* activity = new TemplateAdjustActivity(currentTemplate(), &controller);
 		controller.setEditorActivity(activity);
-		connect(this, &TemplateListWidget::currentRowChanged, activity->getDockWidget(), &TemplateAdjustDockWidget::close);
-		connect(activity->getDockWidget(), &TemplateAdjustDockWidget::closed,
+		auto* dock_widget = activity->getDockWidget();
+		dock_widget->show();
+		dock_widget->raise();
+		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
+		connect(dock_widget, &TemplateAdjustDockWidget::closed,
 		        adjust_button, [this]() { adjust_button->setChecked(false); });
+		
 	}
 	else
 	{
@@ -893,6 +897,8 @@ void TemplateListWidget::positionClicked(bool checked)
 	{
 		auto* dock_widget = new TemplatePositionDockWidget(currentTemplate(), &controller, controller.getWindow());
 		controller.addFloatingDockWidget(dock_widget);
+		dock_widget->show();
+		dock_widget->raise();
 		connect(&controller, &MapEditorController::destroyed, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
 		connect(this, &TemplateListWidget::closePositionDockWidget, dock_widget, &TemplateAdjustDockWidget::close);
