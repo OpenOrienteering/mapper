@@ -21,7 +21,6 @@
 
 #include "template_tool_paint.h"
 
-#include <cstddef>
 #include <memory>
 
 #include <Qt>
