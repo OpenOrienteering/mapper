@@ -4602,7 +4602,7 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3269"/>
         <source>Unification failed.</source>
-        <translation>失败的统一。</translation>
+        <translation>合并失败。</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="3275"/>
