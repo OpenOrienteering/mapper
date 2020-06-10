@@ -21,8 +21,6 @@
 
 #include "template_tool_paint.h"
 
-#include <memory>
-
 #include <Qt>
 #include <QtMath>
 #include <QAbstractButton>
