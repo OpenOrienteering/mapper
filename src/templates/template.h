@@ -212,6 +212,11 @@ public:
 	 */
 	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
 	
+	/**
+	 * Finishes configuration after the template's elements are loaded from the XML stream.
+	 */
+	virtual void finishTemplateConfiguration();
+	
 	
 	/**
 	 *  Saves the template itself, returns true if successful.

@@ -105,6 +105,7 @@ protected:
 	void mapTransformationChanged();
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	void finishTemplateConfiguration() override;
 	
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	

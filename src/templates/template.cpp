@@ -449,8 +449,15 @@ Q_ASSERT(temp->passpoints.size() == 0);
 			temp->setTemplateRotation(temp->getTemplateRotation() + Georeferencing::degToRad(correction));
 		}
 	}
+
+	if (temp)
+		temp->finishTemplateConfiguration();
 	
 	return temp;
+}
+
+void Template::finishTemplateConfiguration()
+{
 }
 
 bool Template::saveTemplateFile() const

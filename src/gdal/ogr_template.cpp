@@ -568,6 +568,16 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
+void OgrTemplate::finishTemplateConfiguration()
+{
+	if (!is_georeferenced && !explicit_georef
+		&& !track_crs_spec.contains(QLatin1String("+proj=latlong")))
+	{
+		const auto& map_georef = map->getGeoreferencing();
+		explicit_georef = std::make_unique<Georeferencing>(map_georef);
+	}
+}
+
 
 void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
