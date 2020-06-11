@@ -49,6 +49,7 @@
 #include <QTextEncoder>
 #include <QTextStream>
 #include <QTransform>
+#include <QVarLengthArray>
 #include <QVariant>
 
 #include "settings.h"
@@ -152,14 +153,33 @@ void copySymbolHead(const Symbol& source, Symbol& symbol)
 
 
 /**
- * Test if the fill patterns constitute OCD structure "shifted rows".
+ * Test if the fill patterns constitute OCD structure "aligned rows".
  * 
- * A rows structure in OCD format is a basic pattern (Mapper: point symbol)
+ * An "aligned rows" structure in OCD format is a basic pattern (Mapper: point symbol)
  * which is repeated a along a row (OCD: structure width, Mapper: point distance)
  * and in parallel rows (OCD: structure height, Mapper: line spacing).
  * 
- * A shifted rows structure in OCD format prints the basic pattern with an offset
- * of half structure in every second row.
+ * OCD format does not support multiple fill patterns in the way Mapper does.
+ * But if two Mapper fill patterns are equal in type, frequency and rotation,
+ * it is possible to merge them to a single OCD structure.
+ */
+bool isStructureAlignedRows(const AreaSymbol::FillPattern& first, const AreaSymbol::FillPattern& second) noexcept
+{
+	return first.type == AreaSymbol::FillPattern::PointPattern
+	       && second.type == AreaSymbol::FillPattern::PointPattern
+	       && first.rotatable() == second.rotatable()
+	       && qFuzzyCompare(first.angle, second.angle)
+	       && first.line_spacing == second.line_spacing
+	       && first.point_distance == second.point_distance;
+}
+
+
+/**
+ * Test if the fill patterns constitute OCD structure "shifted rows".
+ * 
+ * A "shifted rows" structure in OCD format is a variation of the "aligned rows"
+ * structure which prints the basic pattern with an offset of half structure
+ * in every second row.
  * 
  * In Mapper, there is no explicit shifted rows structure. Basic row and shifted
  * row need to be represented as explicit fill patterns with individual offsets.
@@ -179,12 +199,7 @@ bool isStructureShiftedRows(const AreaSymbol::FillPattern& first, const AreaSymb
 		clone->setName(name);
 		return clone;
 	};
-	return first.type == AreaSymbol::FillPattern::PointPattern
-	       && second.type == AreaSymbol::FillPattern::PointPattern
-	       && first.rotatable() == second.rotatable()
-	       && qFuzzyCompare(first.angle, second.angle)
-	       && first.line_spacing == second.line_spacing
-	       && first.point_distance == second.point_distance
+	return isStructureAlignedRows(first, second)
 	       && qAbs((first.line_offset - second.line_offset + first.line_spacing) % first.line_spacing - first.line_spacing / 2) <= 1
 	       && qAbs((first.offset_along_line - second.offset_along_line + first.point_distance) % first.point_distance - first.point_distance / 2) <= 1
 	       && first.point
@@ -194,18 +209,25 @@ bool isStructureShiftedRows(const AreaSymbol::FillPattern& first, const AreaSymb
 
 
 
+using FillPatternSequence = QVarLengthArray<const AreaSymbol::FillPattern*, 8>;
+
 /**
- * Transform an area fill pattern for OCD structure export.
+ * Transform an area fill pattern sequence for OCD structure export.
  * 
  * In Mapper, fill patterns are point symbols which are placed at certain offsets
  * and which are repeated in X and Y direction. OCD format does not support such
  * offsets, so we must move the point symbols elements instead.
  * 
+ * In addition, Mappper allows multiple explicit fill patterns. OCD format does
+ * not support such a structure. For some cases, we may resolve this situation
+ * by merging the Mapper fill patterns into a single OCD fill pattern.
+ * 
  * For simplicity, this function always creates and returns a clone,
  * even if no adjustments are necessary.
  */
-std::unique_ptr<PointSymbol> postProcessFillPattern(const AreaSymbol::FillPattern* first_point_pattern)
+std::unique_ptr<PointSymbol> postProcessFillPattern(const FillPatternSequence& patterns, int structure_mode)
 {
+	auto* first_point_pattern = patterns.front();
 	auto point_symbol = duplicate(*first_point_pattern->point);
 	
 	// If the (cloned) first point pattern has non-zero offsets,
@@ -235,6 +257,53 @@ std::unique_ptr<PointSymbol> postProcessFillPattern(const AreaSymbol::FillPatter
 			point_symbol->setOuterColor(nullptr);
 		}
 	}
+	
+	// Any remaining point patterns must be appended to the elements of
+	// point_symbol, applying offsets if needed, ...
+	using std::begin; using std::end;
+	auto first = begin(patterns) + 1;
+	auto last = end(patterns);
+	
+	// ... except for the second pattern when the OCD structure is "shifted rows".
+	if (structure_mode == Ocd::StructureShiftedRows)
+	{
+		Q_ASSERT(patterns.size() == 2);
+		if (first != last)
+			++first;
+	}
+	
+	auto i = point_symbol->getNumElements(); 
+	for (auto it = first; it != last; ++it)
+	{
+		auto const* pattern = *it;
+		auto const* pattern_symbol = pattern->point;
+		if ((pattern_symbol->getInnerRadius() > 0 && pattern_symbol->getInnerColor())
+		    || (pattern_symbol->getOuterWidth() > 0 && pattern_symbol->getOuterColor()))
+		{
+			auto* primary_element = new PointSymbol();
+			primary_element->setInnerRadius(pattern_symbol->getInnerRadius());
+			primary_element->setInnerColor(pattern_symbol->getInnerColor());
+			primary_element->setOuterWidth(pattern_symbol->getOuterWidth());
+			primary_element->setOuterColor(pattern_symbol->getOuterColor());
+			auto* object = new PointObject(primary_element);
+			object->setPosition(pattern->line_offset, pattern->offset_along_line);
+			point_symbol->addElement(i, object, primary_element);
+			++i;
+		}
+		for (int k = 0, last = pattern_symbol->getNumElements(); k < last; ++k)
+		{
+			auto* element_symbol = pattern_symbol->getElementSymbol(k);
+			auto* element_object = pattern_symbol->getElementObject(k);
+			if (!element_symbol || !element_object)
+				continue;
+			
+			auto* object = element_object->duplicate();
+			object->move(pattern->line_offset, pattern->offset_along_line);
+			point_symbol->addElement(i, object, duplicate(*element_symbol).release());
+			++i;
+		}
+	}
+	
 	return point_symbol;
 }
 
@@ -1395,7 +1464,7 @@ QByteArray OcdFileExport::exportAreaSymbol(const AreaSymbol* area_symbol, quint3
 template< class OcdAreaSymbolCommon >
 quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdAreaSymbolCommon& ocd_area_common, const PointSymbol*& pattern_symbol)
 {
-	AreaSymbol::FillPattern const* first_point_pattern = nullptr;
+	FillPatternSequence point_patterns;
 	
 	if (area_symbol->getColor())
 	{
@@ -1454,9 +1523,9 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 			if (!pattern.point)
 				continue;
 			
-			switch (ocd_area_common.structure_mode)
+			switch (point_patterns.size())
 			{
-			case Ocd::StructureNone:
+			case 0:
 				ocd_area_common.structure_mode = Ocd::StructureAlignedRows;
 				ocd_area_common.structure_width = decltype(ocd_area_common.structure_width)(convertSize(pattern.point_distance));
 				ocd_area_common.structure_height = decltype(ocd_area_common.structure_height)(convertSize(pattern.line_spacing));
@@ -1464,21 +1533,27 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				pattern_symbol = pattern.point;
 				if (pattern.rotatable())
 					flags |= Ocd::SymbolRotatable;
-				first_point_pattern = &pattern;
+				point_patterns.append(&pattern);
 				break;
-			case Ocd::StructureAlignedRows:
-				if (!first_point_pattern)
-				{
-					qWarning("Unexpected sequence of area fill patterns");
-				}
-				else if (isStructureShiftedRows(*first_point_pattern, pattern))
+			case 1:
+				if (isStructureShiftedRows(*point_patterns.front(), pattern))
 				{
 					ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
 					ocd_area_common.structure_height /= 2;
+					point_patterns.append(&pattern);
 					break;
 				}
 				Q_FALLTHROUGH();
 			default:
+				if (isStructureAlignedRows(*point_patterns.front(), pattern))
+				{
+					// Revert from shifted rows if needed
+					ocd_area_common.structure_mode = Ocd::StructureAlignedRows;
+					ocd_area_common.structure_height = decltype(ocd_area_common.structure_height)(convertSize(pattern.line_spacing));
+					point_patterns.append(&pattern);
+					break;
+				}
+				
 				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\", skipping a fill pattern.")
 				           .arg(area_symbol->getPlainTextName()));
 			}
@@ -1506,9 +1581,10 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 	}
 	
 	// Post-processing
-	if (ocd_area_common.structure_mode != Ocd::StructureNone)
+	if (!point_patterns.empty())
 	{
-		auto point_symbol = postProcessFillPattern(first_point_pattern);
+		Q_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
+		auto point_symbol = postProcessFillPattern(point_patterns, ocd_area_common.structure_mode);
 		pattern_symbol = point_symbol.get();
 		temporary_symbols.push_back(std::move(point_symbol));
 	}
