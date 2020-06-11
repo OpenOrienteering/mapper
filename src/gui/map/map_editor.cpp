@@ -28,6 +28,7 @@
 #include <iterator>
 #include <limits>
 #include <set>
+#include <utility>
 #include <vector>
 // IWYU pragma: no_include <type_traits>
 
@@ -137,7 +138,6 @@
 #include "sensors/gps_track_recorder.h"
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
-#include "templates/template_position_dock_widget.h"
 #include "templates/template_tool_paint.h"
 #include "templates/template_track.h"
 #include "tools/cut_tool.h"
@@ -330,8 +330,6 @@ MapEditorController::~MapEditorController()
 	delete mappart_move_menu;
 	if (mappart_selector_box)
 		delete mappart_selector_box;
-	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
-		delete widget;
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
@@ -502,24 +500,6 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 	map_widget->setActivity(editor_activity);
 }
 
-void MapEditorController::addTemplatePositionDockWidget(Template* temp)
-{
-	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
-	auto* dock_widget = new TemplatePositionDockWidget(temp, this, window);
-	addFloatingDockWidget(dock_widget);
-	template_position_widgets.insert(temp, dock_widget);
-}
-
-void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
-{
-	emit templatePositionDockWidgetClosed(temp);
-	
-	if (auto* w = getTemplatePositionDockWidget(temp))
-		w->deleteLater();
-	int num_deleted = template_position_widgets.remove(temp);
-	Q_ASSERT(num_deleted == 1);
-	Q_UNUSED(num_deleted);
-}
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
 {
@@ -2145,8 +2125,7 @@ void MapEditorController::createTemplateWindow()
 {
 	Q_ASSERT(!template_dock_widget);
 	
-	template_list_widget = new TemplateListWidget(map, main_view, this);
-	connect(hide_all_templates_act, &QAction::toggled, template_list_widget, &TemplateListWidget::setAllTemplatesHidden);
+	template_list_widget = new TemplateListWidget(*map, *main_view, *this);
 	
 	if (isInMobileMode())
 	{
@@ -2177,14 +2156,12 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, *this);
 	if (new_template)
 	{
+		map->addTemplate(-1, std::move(new_template));
 		hideAllTemplates(false);
 		showTemplateWindow(true);
-		
-		// FIXME: this should be done through the core map, not through the UI
-		template_list_widget->addTemplateAt(new_template.release(), -1);
 	}
 }
 
@@ -3487,7 +3464,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				if (!new_template)
 				{
 					// Need to replace the template at template_index
-					map->setTemplateAreaDirty(template_index);
 					map->deleteTemplate(template_index);
 				}
 				track = new TemplateTrack(gpx_file_path, map);
@@ -3500,14 +3476,12 @@ void MapEditorController::enableGPSDisplay(bool enable)
 					track->unloadTemplateFile();
 					track->loadTemplateFile(false);
 				}
-				map->addTemplate(track, template_index);
+				map->addTemplate(template_index, std::unique_ptr<Template>{track});
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
-				map->setTemplatesDirty();
 			}
 			
 			main_view->setTemplateVisibility(track, visibility);
-			map->setTemplateAreaDirty(template_index);
 			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
@@ -3926,7 +3900,6 @@ void MapEditorController::paintOnTemplate(Template* temp)
 	auto vis = main_view->getTemplateVisibility(temp);
 	vis.visible = true;
 	main_view->setTemplateVisibility(temp, vis);
-	temp->setTemplateAreaDirty();
 	
 	tool->setTemplate(temp);
 }

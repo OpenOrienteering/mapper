@@ -64,6 +64,7 @@ class GPSTemporaryMarkers;
 class MapEditorActivity;
 class MapEditorTool;
 class PieMenu;
+class Template;
 class TouchCursor;
 
 
@@ -194,6 +195,9 @@ public:
 	
 	/** Notifies the MapWidget of the view having zoomed, moved or rotated. */
 	void viewChanged(MapView::ChangeFlags changes);
+	
+	/** Notifies the MapWidget of changes in feature visibility. */
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp);
 	
 	
 	/** 

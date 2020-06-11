@@ -23,6 +23,7 @@
 
 #include <exception>
 #include <memory>
+#include <utility>
 
 #include <QtGlobal>
 #include <QtMath>
@@ -232,8 +233,8 @@ void Importer::validate()
 		{
 			if (auto actual = placeholder->makeActualTemplate())
 			{
-				temp = actual.release();
-				map->setTemplate(temp, i);
+				temp = actual.get();
+				map->setTemplate(i, std::move(actual));
 				if (view)
 				{
 					view->setTemplateLoadingBlocked(true);

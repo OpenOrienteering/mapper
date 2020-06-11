@@ -69,11 +69,8 @@ void TemplateAdjustActivity::init()
 	dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
 	widget = new TemplateAdjustWidget(temp, controller, dock);
 	dock->setWidget(widget);
-	
-	// Show dock in floating state
-	dock->setFloating(true);
-	dock->show();
-	dock->setGeometry(controller->getWindow()->geometry().left() + 40, controller->getWindow()->geometry().top() + 100, dock->width(), dock->height());
+	dock->setObjectName(QStringLiteral("TemplateAdjust"));
+	controller->addFloatingDockWidget(dock);
 }
 
 void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)

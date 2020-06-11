@@ -492,7 +492,6 @@ void OgrTemplate::reloadLater()
 {
 	if (reload_pending)
 		return;
-	setTemplateAreaDirty();
 	if (template_state == Loaded)
 		templateMap()->clear(); // no expensive operations before reloading
 	QTimer::singleShot(0, this, &OgrTemplate::reload);
@@ -505,7 +504,6 @@ void OgrTemplate::reload()
 		unloadTemplateFile();
 	loadTemplateFile(false);
 	reload_pending = false;
-	setTemplateAreaDirty();
 }
 
 

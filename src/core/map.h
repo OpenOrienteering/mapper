@@ -25,6 +25,7 @@
 #include <algorithm>
 #include <cstddef>
 #include <functional>
+#include <memory>
 #include <set>
 #include <vector>
 
@@ -44,6 +45,7 @@
 #include "core/map_coord.h"
 #include "core/map_grid.h"
 #include "core/map_part.h"
+// IWYU pragma: no_include "templates/template.h"
 
 class QIODevice;
 class QPainter;
@@ -66,7 +68,7 @@ class Object;
 class PointSymbol;
 class RenderConfig;
 class Symbol;
-class Template;
+class Template;  // IWYU pragma: keep
 class TextSymbol;
 class UndoManager;
 class UndoStep;
@@ -594,45 +596,67 @@ public slots:
 public:
 	// Templates
 	
-	/** Returns the number of templates in this map. */
-	int getNumTemplates() const;
+	/**
+	 * Returns the number of templates in this map.
+	 */
+	int getNumTemplates() const	{ return int(templates.size()); }
 	
-	/** Returns the i-th template. */
-	const Template* getTemplate(int i) const;
+	/**
+	 * Returns the i-th template.
+	 */
+	const Template* getTemplate(int pos) const { return templates[std::size_t(pos)].get(); }
 	
-	/** Returns the i-th template. */
-	Template* getTemplate(int i);
+	/**
+	 * Returns the i-th template.
+	 */
+	Template* getTemplate(int pos) { return templates[std::size_t(pos)].get(); }
 	
-	/** Sets the template index which is the first (lowest) to be drawn in front of the map. */
+	/**
+	 * Sets the template index which is the first (lowest) to be drawn in front of the map.
+	 */
 	void setFirstFrontTemplate(int pos);
 	
-	/** Returns the template index which is the first (lowest) to be drawn in front of the map. */
-	int getFirstFrontTemplate() const;
+	/**
+	 * Returns the template index which is the first (lowest) to be drawn in front of the map.
+	 */
+	int getFirstFrontTemplate() const { return first_front_template; }
 	
 	/**
 	 * Replaces the template at the given index with another.
+	 * 
 	 * Emits templateChanged().
 	 */
-	void setTemplate(Template* temp, int pos);
+	std::unique_ptr<Template> setTemplate(int pos, std::unique_ptr<Template> temp);
 	
 	/**
-	 * Adds a new template at the given index.
+	 * Insert a new template at the given index.
 	 * 
-	 * To place a template immediately below the map, adjust first_front_template
-	 * manually with setFirstFrontTemplate()!
+	 * If the index is lower then the first front template index, the function
+	 * increments this index. To place a template immediately below the map,
+	 * pass index -1.
 	 */
-	void addTemplate(Template* temp, int pos);
+	void addTemplate(int pos, std::unique_ptr<Template> temp);
+	
+	/**
+	 * Moves a template to a new position.
+	 */
+	void moveTemplate(int old_pos, int new_pos);
 	
 	/**
 	 * Removes the template with the given index from the template list,
-	 * but does not delete it.
-	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
+	 * and returns it.
+	 * 
+	 * If the index is lower then the first front template index, the function
+	 * decrements this index.
 	 */
-	void removeTemplate(int pos);
+	std::unique_ptr<Template> removeTemplate(int pos);
 	
 	/**
-	 * Removes the template with the given position from the template list and deletes it.
-	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
+	 * Removes the template with the given index from the template list,
+	 * and deletes it.
+	 * 
+	 * If the index is lower then the first front template index, the function
+	 * decrements this index.
 	 */
 	void deleteTemplate(int pos);
 	
@@ -650,10 +674,12 @@ public:
 	
 	/**
 	 * Marks the whole area of the i-th template as "to be repainted".
-	 * See setTemplateAreaDirty().
-	 * Does nothing for i == -1.
+	 * 
+	 * Does nothing for pos == -1.
+	 * 
+	 * @see setTemplateAreaDirty()
 	 */
-	void setTemplateAreaDirty(int i);
+	void setTemplateAreaDirty(int pos);
 	
 	/**
 	 * Finds the index of the given template, or returns -1.
@@ -662,36 +688,44 @@ public:
 	
 	/**
 	 * Marks the template settings as "dirty", i.e. as having unsaved changes.
+	 * 
 	 * Emits hasUnsavedChanged(true) if the map did not have unsaved changed before.
 	 */
 	void setTemplatesDirty();
 	
-	/** Emits templateChanged() for the given template. */
+	/**
+	 * Emits templateChanged() for the given template.
+	 */
 	void emitTemplateChanged(Template* temp);
 	
 	
 	/**
-	 * Returns the number of manually closed templates
-	 * for which the settings are still stored.
+	 * Returns the number of closed templates for which the settings are still stored.
 	 */
-	int getNumClosedTemplates() const;
+	int getNumClosedTemplates() const { return int(closed_templates.size()); }
 	
-	/** Returns the i-th closed template. */
-	const Template* getClosedTemplate(int i) const;
+	/**
+	 * Returns the i-th closed template.
+	 */
+	const Template* getClosedTemplate(int i) const { return closed_templates[std::size_t(i)].get(); }
 	
-	/** Returns the i-th closed template. */
-	Template* getClosedTemplate(int i);
+	/**
+	 * Returns the i-th closed template.
+	 */
+	Template* getClosedTemplate(int i) { return closed_templates[std::size_t(i)].get(); }
 	
-	/** Empties the list of closed templates. */
+	/**
+	 * Empties the list of closed templates.
+	 */
 	void clearClosedTemplates();
 	
 	/**
 	 * Removes the template with the given index from the normal template list,
-	 * unloads the template file and adds the template to the closed template list
+	 * unloads the template file and adds the template to the closed template list.
 	 * 
 	 * NOTE: if required, adjust first_front_template manually with setFirstFrontTemplate()!
 	 */
-	void closeTemplate(int i);
+	void closeTemplate(int pos);
 	
 	/**
 	 * Removes the template with the given index from the closed template list,
@@ -707,7 +741,7 @@ public:
 	 * @param map_path Path where the map is saved currently. Used as possible
 	 *     search location to locate missing templates.
 	 */
-	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = QString());
+	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = {});
 	
 	
 	// Undo & Redo
@@ -1372,11 +1406,43 @@ signals:
 	void symbolIconZoomChanged();
 	
 	
+	/** Emitted before an explicit change of the first front template.
+	 * 
+	 * This signal is not emitted when the change is done implicitly by
+	 * addTemplate or removeTemplate.
+	 */
+	void firstFrontTemplateAboutToBeChanged(int old_pos, int new_pos);
+	
+	/** Emitted after an explicit change of the first front template.
+	 * 
+	 * This signal is not emitted when the change is done implicitly by
+	 * addTemplate or removeTemplate.
+	 */
+	void firstFrontTemplateChanged(int old_pos, int new_pos);
+	
+	/** Emitted before a template is added to the map.
+	 * 
+	 * Adding a template immediately below the map uses the same value for pos
+	 * as adding one immediately above the map. That's why there is a third
+	 * parameter which always signals whether the template is being added in
+	 * the background.
+	 */
+	void templateAboutToBeAdded(int pos, OpenOrienteering::Template* temp, bool in_background);
+	
 	/** Emitted when a template is added to the map, gives the template's index and pointer. */
 	void templateAdded(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is changed, gives the template's index and pointer. */
 	void templateChanged(int pos, OpenOrienteering::Template* temp);
+	
+	/** Emitted before a template in the map is moved to a different index. */
+	void templateAboutToBeMoved(int old_pos, int new_pos, OpenOrienteering::Template* temp);
+	
+	/** Emitted when a template in the map was moved to a different index. */
+	void templateMoved(int old_pos, int new_pos, OpenOrienteering::Template* temp);
+	
+	/** Emitted before a template in the map is deleted. */
+	void templateAboutToBeDeleted(int pos, OpenOrienteering::Template* temp);
 	
 	/** Emitted when a template in the map is deleted, gives the template's index and pointer. */
 	void templateDeleted(int pos, const OpenOrienteering::Template* old_temp);
@@ -1437,7 +1503,7 @@ protected slots:
 private:
 	typedef std::vector<MapColor*> ColorVector;
 	typedef std::vector<Symbol*> SymbolVector;
-	typedef std::vector<Template*> TemplateVector;
+	typedef std::vector<std::unique_ptr<Template>> TemplateVector;
 	typedef std::vector<MapPart*> PartVector;
 	typedef std::vector<MapWidget*> WidgetVector;
 	
@@ -1628,53 +1694,7 @@ void Map::sortSymbols(T compare)
 	setSymbolsDirty();
 }
 
-inline
-int Map::getNumTemplates() const
-{
-	return templates.size();
-}
 
-inline
-const Template*Map::getTemplate(int i) const
-{
-	return templates[i];
-}
-
-inline
-Template*Map::getTemplate(int i)
-{
-	return templates[i];
-}
-
-inline
-void Map::setFirstFrontTemplate(int pos)
-{
-	first_front_template = pos;
-}
-
-inline
-int Map::getFirstFrontTemplate() const
-{
-	return first_front_template;
-}
-
-inline
-int Map::getNumClosedTemplates() const
-{
-	return (int)closed_templates.size();
-}
-
-inline
-const Template* Map::getClosedTemplate(int i) const
-{
-	return closed_templates[i];
-}
-
-inline
-Template* Map::getClosedTemplate(int i)
-{
-	return closed_templates[i];
-}
 
 inline
 UndoManager& Map::undoManager()

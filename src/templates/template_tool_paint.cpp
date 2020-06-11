@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015, 2017, 2018 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -620,11 +620,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	temp->setTemplateRotation(0);
 	temp->loadTemplateFile(false);
 	
-	auto pos = map->getFirstFrontTemplate();
-	map->addTemplate(temp, pos);
-	map->setTemplateAreaDirty(pos);
-	map->setFirstFrontTemplate(pos + 1);
-	map->setTemplatesDirty();
+	map->addTemplate(-1, std::unique_ptr<Template>{temp});
 	
 	return temp;
 }

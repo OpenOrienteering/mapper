@@ -480,7 +480,7 @@ The orientation of the symbol indicates the direction in which the corner points
 <object type="0" symbol="22"><coords count="1">20000 10000;</coords></object>
 </objects></part>
 </parts>
-<templates count="0" first_front_template="1">
+<templates count="0" first_front_template="0">
 <defaults use_meters_per_pixel="true" meters_per_pixel="100" dpi="0" scale="0"/>
 </templates>
 <view>

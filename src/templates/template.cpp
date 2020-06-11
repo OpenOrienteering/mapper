@@ -625,6 +625,7 @@ bool Template::loadTemplateFile(bool configuring)
 		else if (loadTemplateFileImpl(configuring))
 		{
 			template_state = Loaded;
+			setTemplateAreaDirty();
 		}
 		else
 		{
@@ -817,7 +818,7 @@ void Template::switchTransforms()
 	
 	adjusted = !adjusted;
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
+	map->emitTemplateChanged(this);
 }
 void Template::getTransform(TemplateTransform& out) const
 {
@@ -833,7 +834,7 @@ void Template::setTransform(const TemplateTransform& transform)
 	updateTransformationMatrices();
 	
 	setTemplateAreaDirty();
-	map->setTemplatesDirty();
+	map->emitTemplateChanged(this);
 }
 void Template::getOtherTransform(TemplateTransform& out) const
 {

@@ -72,7 +72,6 @@ class Symbol;
 class SymbolWidget;
 class Template;
 class TemplateListWidget;
-class TemplatePositionDockWidget;
 
 
 /**
@@ -194,20 +193,6 @@ public:
 	inline MapWidget* getMainWidget() const {return map_widget;}
 	/** Returns this controller's symbol widget, where the symbol selection happens. */
 	inline SymbolWidget* getSymbolWidget() const {return symbol_widget;}
-	
-	/** Returns if a template position dock widget exists for a template. */
-	inline bool existsTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.contains(temp);}
-	/** Returns the template position dock widget for a template. */
-	inline TemplatePositionDockWidget* getTemplatePositionDockWidget(Template* temp) const {return template_position_widgets.value(temp);}
-	/** Adds a template position dock widget for the given template. */
-	void addTemplatePositionDockWidget(Template* temp);
-	/**
-	 * Removes the template position dock widget for the template.
-	 * 
-	 * Should be called by the dock widget if it is closed or the
-	 * template deleted; deletes the dock widget.
-	 */
-	void removeTemplatePositionDockWidget(Template* temp);
 	
 	
 	/**
@@ -843,8 +828,6 @@ private:
 	QScopedPointer<GeoreferencingDialog> georeferencing_dialog;
 	QScopedPointer<ReopenTemplateDialog> reopen_template_dialog;
 	
-	QHash<Template*, TemplatePositionDockWidget*> template_position_widgets;
-
 	QSignalMapper* mappart_merge_mapper;
 	QSignalMapper* mappart_move_mapper;
 };
