@@ -73,6 +73,7 @@
 #include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v2018.h"
+#include "templates/template.h"
 #include "templates/template_placeholder.h"
 #include "util/encoding.h"
 #include "util/util.h"
