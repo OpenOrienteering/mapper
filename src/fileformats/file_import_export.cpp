@@ -241,7 +241,6 @@ void Importer::validate()
 					view->setTemplateVisibility(temp, view->getTemplateVisibility(placeholder));
 					view->setTemplateLoadingBlocked(false);
 				}
-				delete placeholder;
 			}
 		}
 		
