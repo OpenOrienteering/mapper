@@ -2632,7 +2632,7 @@ void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
 void OcdFileExport::exportTemplates()
 {
 	static auto const supported_extensions = std::array<const char* const, 8>{{
-	    "bmp", "gif", "jpg", "jpeg", "ocd", "pdf", "tif", "tiff"
+	    "bmp", "gif", "jpg", "jpeg", "ocd", "png", "tif", "tiff"
 	}};
 	
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
