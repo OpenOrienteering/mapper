@@ -24,6 +24,8 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QObject>
+#include <QPainter>
+#include <QPicture>
 #include <QString>
 #include <QTransform>
 
@@ -36,10 +38,10 @@
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
 #include "templates/template.h"
+#include "templates/template_track.h"
 #include "templates/world_file.h"
 
 using namespace OpenOrienteering;
-
 
 /**
  * @test Tests template classes.
@@ -213,6 +215,127 @@ private slots:
 		auto latlon = georef->getGeographicRefPoint();
 		QCOMPARE(qRound(latlon.latitude()), 50);
 		QCOMPARE(qRound(latlon.longitude()), 8);
+	}
+#endif
+
+	void templateRotationTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+		QTest::addColumn<bool>("is_georeferenced");
+		QTest::addColumn<double>("expected_rotation");
+
+		QTest::newRow("georef")
+				<< QStringLiteral("testdata:templates/template-rotation.xmap")
+				<< 0
+				<< true
+				<< 0.0;
+		QTest::newRow("non-georef")
+				<< QStringLiteral("testdata:templates/template-rotation.xmap")
+				<< 1
+				<< false
+				<< 5.62;
+	}
+
+	void templateRotationTest()
+	{
+		QFETCH(QString, map_file);
+		QByteArray template_type("TemplateTrack");
+		QFETCH(int, template_index);
+		QFETCH(bool, is_georeferenced);
+		QFETCH(double, expected_rotation);
+
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 2);
+		auto temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateType(), template_type);
+		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("rotation-test.gpx"));
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		QCOMPARE(temp->isTemplateGeoreferenced(), is_georeferenced);
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		QCOMPARE(rotation_template, expected_rotation);
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QVERIFY(std::fabs(rotation_map) >= 0.01);
+
+		MapCoord center = map.getGeoreferencing().getMapRefPoint();
+		map.rotateMap(qDegreesToRadians(0.5), center, true, true, true);
+
+		QVERIFY(temp->loadTemplateFile(false));
+
+		TemplateTrack* temp_track = dynamic_cast<TemplateTrack*>(temp);
+		QVERIFY2(temp_track, "template not a TemplateTrack");
+
+		// The template rectangle is in the interior of the map figure.
+		QRectF map_extent = map.calculateExtent();
+		// Determine the template bounds.
+		QPicture picture;
+		QPainter painter;
+		painter.begin(&picture);
+		temp_track->drawTracks(&painter, false);
+		painter.end();
+		QRectF temp_bounds(picture.boundingRect());
+		if ((temp_bounds.center() - map_extent.center()).manhattanLength() > 1.5)
+		{
+			QCOMPARE(map_extent.center(), temp_bounds.center());
+		}
+	}
+
+#ifdef MAPPER_USE_GDAL
+	void ogrTemplateRotationTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<QByteArray>("template_type");
+
+		QTest::newRow("basic")
+				<< QStringLiteral("testdata:templates/ogr-template.xmap")
+				<< QByteArray("OgrTemplate");
+		QTest::newRow("compatibility")
+				<< QStringLiteral("testdata:templates/ogr-template.compat.xmap")
+				<< QByteArray("OgrTemplate");
+	}
+
+	void ogrTemplateRotationTest()
+	{
+		QFETCH(QString, map_file);
+		QFETCH(QByteArray, template_type);
+
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), template_type);
+		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("ogr-template.dxf"));
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		QVERIFY(!temp->isTemplateGeoreferenced());
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		QCOMPARE(rotation_template, 0.0);
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QVERIFY(std::fabs(rotation_map) >= 0.01);
+
+		MapCoord center = map.getGeoreferencing().getMapRefPoint();
+		map.rotateMap(qDegreesToRadians(0.5), center, true, true, true);
+
+		QVERIFY(temp->loadTemplateFile(false));
+
+		// The template rectangle is in the interior of the map figure.
+		QRectF map_extent = map.calculateExtent();
+		QRectF template_extent = temp->getTemplateExtent();
+		QPointF template_center = temp->templateToMap(template_extent.center());
+		if ((template_center - map_extent.center()).manhattanLength() > 0.1)
+		{
+			QCOMPARE(map_extent.center(), template_center);
+		}
 	}
 #endif
 };
