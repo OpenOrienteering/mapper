@@ -321,6 +321,99 @@ private slots:
 	}
 #endif
 	
+	void templateRotationTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+
+		QTest::newRow("TemplateTrack georef")      << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("TemplateTrack non-georef")  << QStringLiteral("testdata:templates/template-track.xmap") << 1;
+#ifdef MAPPER_USE_GDAL
+		QTest::newRow("OgrTemplate basic")         << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
+		QTest::newRow("OgrTemplate compatibility") << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
+#endif
+	}
+	
+	void templateRotationTest()
+	{
+#ifdef MAPPER_USE_GDAL
+		GdalManager().setFormatEnabled(GdalManager::GPX, false);
+#endif
+		
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		auto const& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		QVERIFY(std::abs(georef.getGrivation()) >= 0.01);
+		
+		QVERIFY(map.getNumTemplates() > template_index);
+		auto const* temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		
+		// A clone of temp which is loaded before map rotation
+		auto* loaded_clone = temp->duplicate();
+		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(loaded_clone));
+		if (loaded_clone->getTemplateState() != Template::Loaded)
+			QVERIFY(loaded_clone->loadTemplateFile(false));
+		QCOMPARE(loaded_clone->getTemplateState(), Template::Loaded);
+		
+		// A clone of temp which is loaded and unloaded before map rotation
+		auto* reloaded_clone = temp->duplicate();
+		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(reloaded_clone));
+		if (reloaded_clone->getTemplateState() != Template::Loaded)
+			QVERIFY(reloaded_clone->loadTemplateFile(false));
+		reloaded_clone->unloadTemplateFile();
+		QCOMPARE(reloaded_clone->getTemplateState(), Template::Unloaded);
+		
+		auto initially_georeferenced = temp->isTemplateGeoreferenced();
+		auto initial_rotation = temp->getTemplateRotation();  // radians
+		if (initially_georeferenced)
+			QCOMPARE(initial_rotation, 0.0);
+		
+		// ROTATION
+		auto const ref_point = map.getGeoreferencing().getMapRefPoint();
+		map.rotateMap(0.1, ref_point, true, true, true);  // radians
+		
+		if (!initially_georeferenced)
+			QCOMPARE(temp->getTemplateRotation(), initial_rotation + 0.1);  // radians
+		
+		// TEMPLATE LOADING
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile(false));
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		
+		QVERIFY(reloaded_clone->loadTemplateFile(false));
+		QCOMPARE(reloaded_clone->getTemplateState(), Template::Loaded);
+		
+		// The template rectangle is in the interior of the map figure.
+		auto const expected_center = map.calculateExtent().center();
+		// Template instance loaded only after configuration
+		QEXPECT_FAIL("OgrTemplate basic", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
+		QEXPECT_FAIL("OgrTemplate compatibility", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
+		if (QLineF(center(temp), expected_center).length() > 0.5)
+			QCOMPARE(center(temp), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+		
+		// Template instance loaded before rotation
+		if (QLineF(center(loaded_clone), expected_center).length() > 0.5)
+			QCOMPARE(center(loaded_clone), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+		
+		// Template instance loaded+unloaded before, and loaded again after, rotation
+		QEXPECT_FAIL("OgrTemplate basic", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
+		QEXPECT_FAIL("OgrTemplate compatibility", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
+		if (QLineF(center(reloaded_clone), expected_center).length() > 0.5)
+			QCOMPARE(center(reloaded_clone), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+	}
+	
 	void templateTableModelTest()
 	{
 		Map map;
