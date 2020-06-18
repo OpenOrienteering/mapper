@@ -300,6 +300,7 @@ private slots:
 				<< QByteArray("OgrTemplate");
 	}
 
+	// When the map is rotated before a template is loaded, check the template's position.
 	void ogrTemplateRotationTest()
 	{
 		QFETCH(QString, map_file);
@@ -327,6 +328,49 @@ private slots:
 		map.rotateMap(qDegreesToRadians(0.5), center, true, true, true);
 
 		QVERIFY(temp->loadTemplateFile(false));
+
+		// The template rectangle is in the interior of the map figure.
+		QRectF map_extent = map.calculateExtent();
+		QRectF template_extent = temp->getTemplateExtent();
+		QPointF template_center = temp->templateToMap(template_extent.center());
+		if ((template_center - map_extent.center()).manhattanLength() > 0.1)
+		{
+			QCOMPARE(map_extent.center(), template_center);
+		}
+	}
+
+	// When the map is rotated while a template is unloaded, check the template's position.
+	void ogrUnloadedTemplateTest()
+	{
+		QString map_file(QStringLiteral("testdata:templates/ogr-template.visible.xmap"));
+		QByteArray template_type("OgrTemplate");
+
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		const auto& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		
+		QCOMPARE(map.getNumTemplates(), 1);
+		auto temp = map.getTemplate(0);
+		QCOMPARE(temp->getTemplateType(), template_type);
+		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("ogr-template.dxf"));
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		QVERIFY(!temp->isTemplateGeoreferenced());
+		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
+		QCOMPARE(rotation_template, 0.0);
+		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
+		QVERIFY(std::fabs(rotation_map) >= 0.01);
+
+		temp->unloadTemplateFile();
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+
+		MapCoord center = map.getGeoreferencing().getMapRefPoint();
+		map.rotateMap(qDegreesToRadians(0.5), center, true, true, true);
+
+		QVERIFY(temp->loadTemplateFile(false));
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
 		// The template rectangle is in the interior of the map figure.
 		QRectF map_extent = map.calculateExtent();
