@@ -91,6 +91,7 @@ public:
 	
 protected:
 	void reloadLater();
+	void unloadTemplateFileImpl() override;
 	
 protected slots:
 	void reload();

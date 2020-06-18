@@ -508,6 +508,17 @@ void OgrTemplate::reload()
 	setTemplateAreaDirty();
 }
 
+void OgrTemplate::unloadTemplateFileImpl()
+{
+	Q_ASSERT(template_state == Template::Loaded);
+	if (!is_georeferenced && !explicit_georef)
+	{
+		const auto& map_georef = templateMap()->getGeoreferencing();
+		explicit_georef = std::make_unique<Georeferencing>(map_georef);
+		resetTemplatePositionOffset();
+	}
+	TemplateMap::unloadTemplateFileImpl();
+}
 
 
 void OgrTemplate::applySettings()
@@ -577,7 +588,6 @@ void OgrTemplate::finishTemplateConfiguration()
 		explicit_georef = std::make_unique<Georeferencing>(map_georef);
 	}
 }
-
 
 void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
