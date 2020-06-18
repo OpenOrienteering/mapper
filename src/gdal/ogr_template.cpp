@@ -149,6 +149,8 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 {
 	if (proto.explicit_georef)
 		explicit_georef = std::make_unique<Georeferencing>(*proto.explicit_georef);
+	if (proto.map_configuration_georef)
+		map_configuration_georef = std::make_unique<Georeferencing>(*proto.map_configuration_georef);
 	
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
 	
@@ -210,6 +212,7 @@ try
 {
 	is_georeferenced = false;
 	explicit_georef.reset();
+	map_configuration_georef.reset();
 	track_crs_spec.clear();
 	transform = {};
 	updateTransformationMatrices();
@@ -378,7 +381,18 @@ try
 	}
 	
 	
-	if (is_georeferenced || !explicit_georef)
+	if (map_configuration_georef)
+	{
+		if (!explicit_georef)
+		{
+			explicit_georef = std::move(map_configuration_georef);
+		}
+		else
+		{
+			map_configuration_georef.reset();
+		}
+	}
+	if (is_georeferenced && !explicit_georef)
 	{
 		new_template_map->setGeoreferencing(map_georef);
 	}
@@ -484,6 +498,12 @@ void OgrTemplate::mapTransformationChanged()
 			resetTemplatePositionOffset();
 		}
 	}
+	else
+	{
+		template_track_compatibility = false;
+		explicit_georef = std::move(map_configuration_georef);
+	}
+	map_configuration_georef.reset();
 }
 
 
@@ -585,7 +605,7 @@ void OgrTemplate::finishTemplateConfiguration()
 		&& !track_crs_spec.contains(QLatin1String("+proj=latlong")))
 	{
 		const auto& map_georef = map->getGeoreferencing();
-		explicit_georef = std::make_unique<Georeferencing>(map_georef);
+		map_configuration_georef = std::make_unique<Georeferencing>(map_georef);
 	}
 }
 
