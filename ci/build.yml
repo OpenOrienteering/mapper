@@ -107,9 +107,8 @@ steps:
     if [ -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
       # Test result exist, so executables are runnable
       OLD_PATH="$PATH"
-      if [ -n "${MSYSTEM}" ]; then
-        export PATH=`cygpath -u "$(SUPERBUILD_INSTALL_DIR)"`/bin:${PATH}
-        echo 'echo %PATH%' | cmd
+      if [ -n "$(MINGW)" ]; then
+        export PATH=`cygpath -u "$(SUPERBUILD_INSTALL_DIR)"`/$(MINGW)/superbuild/bin:${PATH}
       fi
       build/${TARGET:-default}/openorienteering-mapper-ci/src/gdal/mapper-gdal-info \
       | tee output/OpenOrienteering-Mapper-GDAL-info-$(IMAGE_NAME)$(OUTPUT_SUFFIX).md;
