@@ -39,7 +39,6 @@ endif()
 
 # Based on OpenOrienteering superbuild as of 2020-06-21
 list(APPEND third_party_components
-  freetype
   giflib
   libjpeg-turbo
   liblzma
@@ -65,13 +64,8 @@ if(NOT APPLE)
 endif()
 if(ANDROID)
 	list(APPEND third_party_components
+	  freetype
 	  libiconv
-	)
-endif()
-if(WIN32)
-	list(APPEND third_party_components
-	  libiconv
-	  zlib
 	)
 endif()
 if(CMAKE_ANDROID_STL_TYPE MATCHES "gnustl")
@@ -83,11 +77,23 @@ elseif(CMAKE_ANDROID_STL_TYPE MATCHES "c\\+\\+")
 	  libc++
 	)
 endif()
+if(APPLE)
+	list(APPEND third_party_components
+	  freetype
+	)
+endif()
 if(MINGW)
 	list(APPEND third_party_components
 	  gcc-libs
 	  mingw-w64
 	  winpthreads
+	)
+endif()
+if(WIN32)
+	list(APPEND third_party_components
+	  freetype
+	  libiconv
+	  zlib
 	)
 endif()
 
