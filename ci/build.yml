@@ -106,11 +106,13 @@ steps:
     #
     if [ -f build/default/openorienteering-mapper-ci/Testing/TAG ]; then
       # Test result exist, so executables are runnable
+      OLD_PATH="$PATH"
       if [ -n "${MSYSTEM}" ]; then
-        PATH=`cygpath -u "$(SUPERBUILD_INSTALL_DIR)"`/bin:${PATH}
+        export PATH=`cygpath -u "$(SUPERBUILD_INSTALL_DIR)"`/bin:${PATH}
       fi
       build/${TARGET:-default}/openorienteering-mapper-ci/src/gdal/mapper-gdal-info \
       | tee output/OpenOrienteering-Mapper-GDAL-info-$(IMAGE_NAME)$(OUTPUT_SUFFIX).md;
+      export PATH="$OLD_PATH"
     else
       # No test results, probably cross-compiling
       set +x # https://github.com/microsoft/azure-pipelines-tasks/issues/10331
