@@ -155,9 +155,9 @@ void dumpGdalDrivers()
 	prefixDuplicates(qimagereader_extensions, raster_import_drivers, "raster.");
 	
 	std::cout << "## GDAL driver list for OpenOrienteering Mapper" << std::endl << std::endl;
-	dumpDriverList("Raster import drivers", std::move(raster_import_drivers));
-	dumpDriverList("Vector import drivers", std::move(vector_import_drivers));
-	dumpDriverList("Vector export drivers", std::move(vector_export_drivers));
+	dumpDriverList("### Raster import drivers", std::move(raster_import_drivers));
+	dumpDriverList("### Vector import drivers", std::move(vector_import_drivers));
+	dumpDriverList("### Vector export drivers", std::move(vector_export_drivers));
 }
 
 
