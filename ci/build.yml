@@ -109,6 +109,7 @@ steps:
       OLD_PATH="$PATH"
       if [ -n "${MSYSTEM}" ]; then
         export PATH=`cygpath -u "$(SUPERBUILD_INSTALL_DIR)"`/bin:${PATH}
+        echo 'echo %PATH%' | cmd
       fi
       build/${TARGET:-default}/openorienteering-mapper-ci/src/gdal/mapper-gdal-info \
       | tee output/OpenOrienteering-Mapper-GDAL-info-$(IMAGE_NAME)$(OUTPUT_SUFFIX).md;
