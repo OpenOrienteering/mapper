@@ -41,7 +41,7 @@
     <message>
         <source>Purple for track symbols</source>
         <comment>Color 7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fialová pro zákres tratí</translation>
     </message>
     <message>
         <source>Black below purple for track symbols</source>
