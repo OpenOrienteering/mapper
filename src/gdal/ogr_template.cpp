@@ -180,7 +180,7 @@ const char* OgrTemplate::getTemplateType() const
 
 
 
-std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path)
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(const QString& path) const
 {
 	// Is the template's SRS orthographic, or can it be converted?
 	/// \todo Use the template's datum etc. instead of WGS84?
@@ -204,6 +204,32 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(cons
 	return georef;
 }
 
+std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing() const
+{
+	// For a transition period, copy behaviour from
+	// TemplateTrack::loadTemplateFileImpl(),
+	// TemplateTrack::calculateLocalGeoreferencing().
+	// This is an extra expense (by loading the data twice), but
+	// only until the map (projected_crs_spec) is saved once.
+	// If the TemplateTrack approach failed, use local approach.
+	TemplateTrack track{template_path, map};
+	if (track.track.loadFrom(template_path, false))
+		return makeGeoreferencing(track.calculateLocalGeoreferencing());
+	else
+		return makeOrthographicGeoreferencing(template_path);
+}
+
+std::unique_ptr<Georeferencing> OgrTemplate::makeGeoreferencing(const QString& spec) const
+{
+	auto georef = std::make_unique<Georeferencing>();
+	georef->setScaleDenominator(int(map->getScaleDenominator()));
+	georef->setProjectedCRS(QString{}, spec);
+	georef->setProjectedRefPoint({}, false, false);
+	georef->setCombinedScaleFactor(1.0);
+	georef->setGrivation(0.0);
+	return georef;
+}
+
 
 bool OgrTemplate::preLoadSetup(QWidget* dialog_parent)
 try
@@ -211,6 +237,7 @@ try
 	is_georeferenced = false;
 	explicit_georef.reset();
 	track_crs_spec.clear();
+	projected_crs_spec.clear();
 	transform = {};
 	updateTransformationMatrices();
 	
@@ -252,6 +279,8 @@ try
 		if (OgrFileImport::checkGeoreferencing(template_path, map->getGeoreferencing()))
 		{
 			is_georeferenced = true;
+			// Data is to be transformed to the map CRS directly.
+			track_crs_spec = Georeferencing::geographic_crs_spec;
 			return true;
 		}
 	}
@@ -272,6 +301,9 @@ try
 		else
 			preserveRefPoints(*data_georef, initial_georef);
 		explicit_georef = std::move(data_georef);
+		// Data is to be transformed to the projected CRS.
+		track_crs_spec = Georeferencing::geographic_crs_spec;
+		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
 	}
 	
 	TemplatePositioningDialog dialog(dialog_parent);
@@ -297,6 +329,14 @@ catch (FileFormatException& e)
 bool OgrTemplate::loadTemplateFileImpl()
 try
 {
+	if (explicit_georef_pending)
+	{
+		// Need to create an orthographic projection during data loading.
+		explicit_georef = makeOrthographicGeoreferencing();
+		projected_crs_spec = explicit_georef->getProjectedCRSSpec();
+		explicit_georef_pending = false;
+	}
+	
 	auto new_template_map = std::make_unique<Map>();
 	auto unit_type = use_real_coords ? OgrFileImport::UnitOnGround : OgrFileImport::UnitOnPaper;
 	OgrFileImport importer{template_path, new_template_map.get(), nullptr, unit_type };
@@ -305,78 +345,6 @@ try
 	updateView(*new_template_map);
 	
 	const auto& map_georef = map->getGeoreferencing();
-	
-	if (template_track_compatibility)
-	{
-		if (getTemplateState() == Configuring)
-		{
-			if (is_georeferenced)
-			{
-				// Data is to be transformed to the map CRS directly.
-				track_crs_spec = Georeferencing::geographic_crs_spec;
-				projected_crs_spec.clear();
-			}
-			else if (explicit_georef)
-			{
-				// Data is to be transformed to the projected CRS.
-				track_crs_spec = Georeferencing::geographic_crs_spec;
-				projected_crs_spec = explicit_georef->getProjectedCRSSpec();
-			}
-			else
-			{
-				track_crs_spec.clear();
-				projected_crs_spec.clear();
-			}
-		}
-		else
-		{
-			if (is_georeferenced)
-			{
-				// Data is to be transformed to the map CRS directly.
-				Q_ASSERT(projected_crs_spec.isEmpty());
-			}
-			else if (!track_crs_spec.contains(QLatin1String("+proj=latlong")))
-			{
-				// Nothing to do with this configuration
-				Q_ASSERT(projected_crs_spec.isEmpty());
-			}
-			else if (!explicit_georef)
-			{
-				// Data is to be transformed to the projected CRS.
-				if (projected_crs_spec.isEmpty())
-				{
-					// Need to create an orthographic projection.
-					// For a transition period, copy behaviour from
-					// TemplateTrack::loadTemplateFileImpl(),
-					// TemplateTrack::calculateLocalGeoreferencing().
-					// This is an extra expense (by loading the data twice), but
-					// only until the map (projected_crs_spec) is saved once.
-					TemplateTrack track{template_path, map};
-					if (track.track.loadFrom(template_path, false))
-					{
-						projected_crs_spec = track.calculateLocalGeoreferencing();
-					}
-					else
-					{
-						// If the TemplateTrack approach failed, use local approach.
-						explicit_georef = makeOrthographicGeoreferencing(template_path);
-						projected_crs_spec = explicit_georef->getProjectedCRSSpec();
-					}
-				}
-				
-				if (!explicit_georef)
-				{
-					explicit_georef = std::make_unique<Georeferencing>();
-					explicit_georef->setScaleDenominator(int(map_georef.getScaleDenominator()));
-					explicit_georef->setProjectedCRS(QString{}, projected_crs_spec);
-					explicit_georef->setProjectedRefPoint({}, false, false);
-					explicit_georef->setCombinedScaleFactor(1.0);
-					explicit_georef->setGrivation(0.0);
-				}
-			}
-		}
-	}
-	
 	
 	if (is_georeferenced || !explicit_georef)
 	{
@@ -566,6 +534,38 @@ bool OgrTemplate::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
+bool OgrTemplate::finishTypeSpecificTemplateConfiguration()
+{
+	if (!TemplateMap::finishTypeSpecificTemplateConfiguration())
+		return false;
+	
+	if (template_track_compatibility)
+	{
+		if (is_georeferenced)
+		{
+			// Data is to be transformed to the map CRS directly.
+			Q_ASSERT(projected_crs_spec.isEmpty());
+		}
+		else if (!track_crs_spec.contains(QLatin1String("+proj=latlong")))
+		{
+			// Nothing to do with this configuration
+			Q_ASSERT(projected_crs_spec.isEmpty());
+		}
+		else if (projected_crs_spec.isEmpty())
+		{
+			// Data is to be transformed to a projected CRS.
+			// But we cannot calculate this georeferencing now,
+			// because the template path is not yet validated.
+			explicit_georef_pending = !explicit_georef;
+		}
+		else if (!explicit_georef)
+		{
+			// Data is to be transformed to the projected CRS.
+			explicit_georef = makeGeoreferencing(projected_crs_spec);
+		}
+	}
+	return true;
+}
 
 void OgrTemplate::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

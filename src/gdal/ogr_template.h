@@ -67,7 +67,10 @@ public:
 	
 	const char* getTemplateType() const override;
 	
-	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path);
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path) const;
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing() const;
+	std::unique_ptr<Georeferencing> makeGeoreferencing(const QString& spec) const;
+	
 	
 	bool preLoadSetup(QWidget* dialog_parent) override;
 	
@@ -105,6 +108,7 @@ protected:
 	void mapTransformationChanged();
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	bool finishTypeSpecificTemplateConfiguration() override;
 	
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	
@@ -113,6 +117,7 @@ private:
 	QString track_crs_spec;           // (limited) TemplateTrack compatibility
 	QString projected_crs_spec;       // (limited) TemplateTrack compatibility
 	bool template_track_compatibility { false };  //  transient
+	bool explicit_georef_pending      { false };  //  transient
 	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
 	bool reload_pending               { false };  //  transient
