@@ -453,6 +453,9 @@ Q_ASSERT(temp->passpoints.size() == 0);
 	if (temp && !temp->finishTypeSpecificTemplateConfiguration())
 		temp.reset();
 	
+	if (temp)
+		temp->setTemplateState(Unloaded);
+	
 	return temp;
 }
 
@@ -515,6 +518,8 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 
 bool Template::setupAndLoad(QWidget* dialog_parent, MapView* view)
 {
+	Q_ASSERT(getTemplateState() == Template::Configuring);
+	
 	bool center_in_view = true;
 	
 	if (!preLoadSetup(dialog_parent))

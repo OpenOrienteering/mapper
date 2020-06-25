@@ -120,6 +120,9 @@ public:
 		/// The template data is not yet loaded or has been unloaded.
 		/// It is assumed to be available, so it can be (re-)loaded if needed.
 		Unloaded,
+		/// The template's configuration/setup is not yet finished.
+		/// This is the initial state after construction.
+		Configuring,
 		/// A required resource cannot be found (e.g. missing image or font),
 		/// so the template data cannot be loaded.
 		Invalid
@@ -208,6 +211,8 @@ public:
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
 	 * 
+	 * The template will be in Unloaded state after this function.
+	 * 
 	 * Returns a null pointer in the case of error.
 	 */
 	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
@@ -243,6 +248,7 @@ public:
 	/**
 	 * Does everything needed to load a template.
 	 * 
+	 * This function can be called only if the template state is Configuring.
 	 * Calls preLoadSetup(), loadTemplateFile() and postLoadSetup().
 	 * Returns true if the process was successful.
 	 * 
@@ -311,7 +317,7 @@ public:
 	/**
 	 * Loads the template file.
 	 * 
-	 * This function can be called if the template state is Invalid or Unloaded.
+	 * This function can be called if the template state is Configuring, Invalid or Unloaded.
 	 * It must not be called if the template file is already loaded.
 	 * It returns true if the template is loaded successfully.
 	 * 
@@ -710,7 +716,7 @@ protected:
 	QString template_relative_path;
 	
 	/// The template lifetime state
-	State template_state = Unloaded;
+	State template_state = Configuring;
 	
 	/// The description of the last error
 	QString error_string;

@@ -692,6 +692,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	bool center_in_view = true;
 	QString error;
 	auto new_temp = Template::templateForPath(path, controller.getMap());
+	Q_ASSERT(!new_temp || new_temp->getTemplateState() == Template::Configuring);
 	if (!new_temp)
 	{
 		error = tr("File format not recognized.");
