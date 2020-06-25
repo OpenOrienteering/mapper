@@ -449,11 +449,8 @@ void OgrTemplate::mapTransformationChanged()
 	else if (template_state == Template::Loaded)
 	{
 		template_track_compatibility = false;
-		if (!explicit_georef)
-		{
-			explicit_georef = std::make_unique<Georeferencing>(templateMap()->getGeoreferencing());
-			resetTemplatePositionOffset();
-		}
+		explicit_georef = std::make_unique<Georeferencing>(templateMap()->getGeoreferencing());
+		resetTemplatePositionOffset();
 	}
 	else if (map_configuration_georef)
 	{
