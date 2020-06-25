@@ -516,7 +516,7 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	return true;
 }
 
-bool Template::setupAndLoad(QWidget* dialog_parent, MapView* view)
+bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 {
 	Q_ASSERT(getTemplateState() == Template::Configuring);
 	

@@ -254,7 +254,7 @@ public:
 	 * 
 	 * The passed-in view is used to center the template if needed.
 	 */
-	bool setupAndLoad(QWidget* dialog_parent, MapView* view);
+	bool setupAndLoad(QWidget* dialog_parent, const MapView* view);
 	
 	/**
 	 * Tries to find the template file non-interactively.

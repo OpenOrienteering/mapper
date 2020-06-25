@@ -59,7 +59,6 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QRect>
-#include <QRectF>
 #include <QScroller>
 #include <QSettings>
 #include <QSize>
@@ -84,7 +83,6 @@
 #include "settings.h"
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "core/map_coord.h"
 #include "fileformats/file_format_registry.h"
 #include "fileformats/file_import_export.h"
 #include "gui/file_dialog.h"
@@ -674,7 +672,8 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	}
 	pattern.remove(0, 1);
 	QString path = FileDialog::getOpenFileName(dialog_parent,
-	                                           tr("Open image, GPS track or DXF file"),
+	                                           QCoreApplication::translate("OpenOrienteering::MapEditorController",
+	                                                                       "Open template..."),
 	                                           template_directory,
 	                                           QString::fromLatin1("%1 (%2);;%3 (*.*)").arg(
 	                                               tr("Template files"), pattern, tr("All files")));
@@ -689,44 +688,21 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 		return {};
 	}
 	
-	bool center_in_view = true;
 	QString error;
 	auto new_temp = Template::templateForPath(path, controller.getMap());
-	Q_ASSERT(!new_temp || new_temp->getTemplateState() == Template::Configuring);
 	if (!new_temp)
 	{
 		error = tr("File format not recognized.");
 	}
-	else if (!new_temp->preLoadSetup(dialog_parent))
-	{
-		// For now, an empty error string means the step was canceled by the user.
-		error = new_temp->errorString();
-		new_temp.reset();
-	}
-	else if (!new_temp->loadTemplateFile())
+	else if (!new_temp->setupAndLoad(dialog_parent, controller.getMainWidget()->getMapView()))
 	{
 		error = new_temp->errorString();
-		/// \todo Review the default error message. Don't use question mark.
-		if (error.isEmpty())
+		if (new_temp->getTemplateState() == Template::Invalid && error.isEmpty())
 			error = tr("Failed to load template. Does the file exist and is it valid?");
 		new_temp.reset();
 	}
-	else if (!new_temp->postLoadSetup(dialog_parent, center_in_view))
-	{
-		// For now, an empty error string means the step was canceled by the user.
-		error = new_temp->errorString();
-		new_temp.reset();
-	}
-	// If the template is not georeferenced, position it at the viewport midpoint
-	else if (!new_temp->isTemplateGeoreferenced() && center_in_view)
-	{
-		auto* main_view = controller.getMainWidget()->getMapView();
-		auto view_pos = main_view->center();
-		auto offset = MapCoord { new_temp->calculateTemplateBoundingBox().center() };
-		new_temp->setTemplatePosition(view_pos - offset);
-	}
 	
-	if (!new_temp && !error.isEmpty())
+	if (!error.isEmpty())
 	{
 		auto const error_template = tr("Cannot open template\n%1:\n%2");
 		QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(path, error));
