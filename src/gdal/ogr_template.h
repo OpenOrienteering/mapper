@@ -85,7 +85,7 @@ public:
 	 * Otherwise, the data will be handled as raw map or paper data, depending on
 	 * use_real_coords.
 	 */
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	

@@ -168,7 +168,7 @@ OgrTemplate* OgrTemplate::duplicate() const
 {
 	auto* copy = new OgrTemplate(*this);
 	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
+		copy->loadTemplateFileImpl();
 	return copy;
 }
 
@@ -294,7 +294,7 @@ catch (FileFormatException& e)
 }
 
 
-bool OgrTemplate::loadTemplateFileImpl(bool configuring)
+bool OgrTemplate::loadTemplateFileImpl()
 try
 {
 	auto new_template_map = std::make_unique<Map>();
@@ -308,7 +308,7 @@ try
 	
 	if (template_track_compatibility)
 	{
-		if (configuring)
+		if (getTemplateState() == Configuring)
 		{
 			if (is_georeferenced)
 			{

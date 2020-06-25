@@ -616,7 +616,7 @@ bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
 	return true;
 }
 
-bool Template::loadTemplateFile(bool configuring)
+bool Template::loadTemplateFile(bool /*configuring*/)
 {
 	Q_ASSERT(template_state != Loaded);
 	
@@ -630,7 +630,7 @@ bool Template::loadTemplateFile(bool configuring)
 			template_state = Invalid;
 			setErrorString(tr("No such file."));
 		}
-		else if (loadTemplateFileImpl(configuring))
+		else if (loadTemplateFileImpl())
 		{
 			template_state = Loaded;
 			setTemplateAreaDirty();

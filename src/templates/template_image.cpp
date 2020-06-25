@@ -158,7 +158,7 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-bool TemplateImage::loadTemplateFileImpl(bool configuring)
+bool TemplateImage::loadTemplateFileImpl()
 {
 	QImageReader reader(template_path);
 	
@@ -197,7 +197,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	available_georef = findAvailableGeoreferencing({});
 #endif
 	
-	if (!configuring && is_georeferenced)
+	if (is_georeferenced)
 	{
 		if (!isGeoreferencingUsable())
 		{

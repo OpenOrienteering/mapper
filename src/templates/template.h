@@ -320,12 +320,8 @@ public:
 	 * This function can be called if the template state is Configuring, Invalid or Unloaded.
 	 * It must not be called if the template file is already loaded.
 	 * It returns true if the template is loaded successfully.
-	 * 
-	 * Set the configuring parameter to true if the template is currently being
-	 * set up by the user (in contrast to the case where it is reloaded, e.g.
-	 * when loaded while reopening an existing map file).
 	 */
-	bool loadTemplateFile(bool configuring);
+	bool loadTemplateFile(bool /*configuring*/);
 	
 	/**
 	 * Setup event after the template is loaded for the first time.
@@ -677,7 +673,7 @@ protected:
 	 * If configuring is true, a call to postLoadSetup() will follow
 	 * if this returns true.
 	 */
-	virtual bool loadTemplateFileImpl(bool configuring) = 0;
+	virtual bool loadTemplateFileImpl() = 0;
 	
 	/**
 	 * Hook for unloading the template file.

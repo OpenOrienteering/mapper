@@ -110,7 +110,7 @@ public:
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	

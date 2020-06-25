@@ -72,7 +72,7 @@ TemplateMap* TemplateMap::duplicate() const
 {
 	auto* copy = new TemplateMap(*this);
 	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
+		copy->loadTemplateFileImpl();
 	return copy;
 }
 
@@ -87,7 +87,7 @@ bool TemplateMap::isRasterGraphics() const
 	return false;
 }
 
-bool TemplateMap::loadTemplateFileImpl(bool configuring)
+bool TemplateMap::loadTemplateFileImpl()
 {
 	// Prevent unbounded recursive template loading
 	if (locked_maps.contains(template_path))
@@ -110,7 +110,7 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 		
 		template_map = std::move(new_template_map);
 	}
-	else if (configuring)
+	else if (getTemplateState() == Configuring)
 	{
 		if (importer)
 			setErrorString(importer->warnings().back());

@@ -71,7 +71,7 @@ public:
 	bool isRasterGraphics() const override;
 	
 	
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
