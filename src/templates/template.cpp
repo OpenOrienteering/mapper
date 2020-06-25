@@ -478,7 +478,7 @@ void Template::switchTemplateFile(const QString& new_path, bool load_file)
 	template_state         = Template::Unloaded;
 	
 	if (load_file)
-		loadTemplateFile(false);
+		loadTemplateFile();
 }
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
@@ -524,7 +524,7 @@ bool Template::setupAndLoad(QWidget* dialog_parent, MapView* view)
 	
 	if (!preLoadSetup(dialog_parent))
 		return false;
-	if (!loadTemplateFile(true))
+	if (!loadTemplateFile())
 		return false;
 	if (!postLoadSetup(dialog_parent, center_in_view))
 	{
@@ -608,7 +608,7 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
 	return tryToFindTemplateFile(map_path) != NotFound
-	       && loadTemplateFile(false);
+	       && loadTemplateFile();
 }
 
 bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
@@ -616,7 +616,7 @@ bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
 	return true;
 }
 
-bool Template::loadTemplateFile(bool /*configuring*/)
+bool Template::loadTemplateFile()
 {
 	Q_ASSERT(template_state != Loaded);
 	

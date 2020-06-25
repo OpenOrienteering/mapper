@@ -321,7 +321,7 @@ public:
 	 * It must not be called if the template file is already loaded.
 	 * It returns true if the template is loaded successfully.
 	 */
-	bool loadTemplateFile(bool /*configuring*/);
+	bool loadTemplateFile();
 	
 	/**
 	 * Setup event after the template is loaded for the first time.

@@ -260,7 +260,7 @@ private slots:
 		auto const* temp = map.getTemplate(template_index);
 		QCOMPARE(temp->getTemplateType(), "TemplateTrack");
 		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
-		QVERIFY(map.getTemplate(template_index)->loadTemplateFile(false));
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
 		auto const expected_center = map.calculateExtent().center();
@@ -299,7 +299,7 @@ private slots:
 		auto const* temp = map.getTemplate(template_index);
 		QCOMPARE(temp->getTemplateType(), "OgrTemplate");
 		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
-		QVERIFY(map.getTemplate(template_index)->loadTemplateFile(false));
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 
 		auto const expected_center = map.calculateExtent().center();
@@ -359,14 +359,14 @@ private slots:
 		auto* loaded_clone = temp->duplicate();
 		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(loaded_clone));
 		if (loaded_clone->getTemplateState() != Template::Loaded)
-			QVERIFY(loaded_clone->loadTemplateFile(false));
+			QVERIFY(loaded_clone->loadTemplateFile());
 		QCOMPARE(loaded_clone->getTemplateState(), Template::Loaded);
 		
 		// A clone of temp which is loaded and unloaded before map rotation
 		auto* reloaded_clone = temp->duplicate();
 		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(reloaded_clone));
 		if (reloaded_clone->getTemplateState() != Template::Loaded)
-			QVERIFY(reloaded_clone->loadTemplateFile(false));
+			QVERIFY(reloaded_clone->loadTemplateFile());
 		reloaded_clone->unloadTemplateFile();
 		QCOMPARE(reloaded_clone->getTemplateState(), Template::Unloaded);
 		
@@ -383,10 +383,10 @@ private slots:
 			QCOMPARE(temp->getTemplateRotation(), initial_rotation + 0.1);  // radians
 		
 		// TEMPLATE LOADING
-		QVERIFY(map.getTemplate(template_index)->loadTemplateFile(false));
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		
-		QVERIFY(reloaded_clone->loadTemplateFile(false));
+		QVERIFY(reloaded_clone->loadTemplateFile());
 		QCOMPARE(reloaded_clone->getTemplateState(), Template::Loaded);
 		
 		// The template rectangle is in the interior of the map figure.

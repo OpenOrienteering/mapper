@@ -3474,7 +3474,7 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				if (QFileInfo::exists(gpx_file_path))
 				{
 					track->unloadTemplateFile();
-					track->loadTemplateFile(false);
+					track->loadTemplateFile();
 				}
 				map->addTemplate(template_index, std::unique_ptr<Template>{track});
 				// When the map is saved, the new track must be saved even if it is empty.

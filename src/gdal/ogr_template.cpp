@@ -502,7 +502,7 @@ void OgrTemplate::reload()
 {
 	if (template_state == Loaded)
 		unloadTemplateFile();
-	loadTemplateFile(false);
+	loadTemplateFile();
 	reload_pending = false;
 }
 

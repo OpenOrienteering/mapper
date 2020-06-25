@@ -620,7 +620,7 @@ Template* PaintOnTemplateSelectDialog::addNewTemplate() const
 	temp->setTemplateScaleY(1.0/pixel_per_mm);
 	temp->setTemplateShear(0);
 	temp->setTemplateRotation(0);
-	temp->loadTemplateFile(false);
+	temp->loadTemplateFile();
 	
 	map->addTemplate(-1, std::unique_ptr<Template>{temp});
 	

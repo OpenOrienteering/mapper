@@ -703,7 +703,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 		error = new_temp->errorString();
 		new_temp.reset();
 	}
-	else if (!new_temp->loadTemplateFile(true))
+	else if (!new_temp->loadTemplateFile())
 	{
 		error = new_temp->errorString();
 		/// \todo Review the default error message. Don't use question mark.
