@@ -450,6 +450,9 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
+	if (temp && !temp->finishTypeSpecificTemplateConfiguration())
+		temp.reset();
+	
 	return temp;
 }
 
@@ -1004,6 +1007,13 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	xml.skipCurrentElement();
 	return true;
 }
+
+bool Template::finishTypeSpecificTemplateConfiguration()
+{
+	return true;
+}
+
+
 
 void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/, ScribbleOptions /*mode*/)
 {

@@ -646,6 +646,22 @@ protected:
 	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
+	/**
+	 * Hook which is called at the end of template configuration loading.
+	 * 
+	 * Derived classes may override this function if they need to do any post-
+	 * processing on the configuration. Unlike loadTypeSpecificTemplateConfiguration(),
+	 * this function is always called, even when there is no type-specific data.
+	 * 
+	 * The implementation must not do expensive calculations because it is
+	 * called also for hidden and closed templates. It cannot reliably access
+	 * the template data (or sidecar files) because it is called before the
+	 * validation/updating of the template path.
+	 * 
+	 * Returns true on success.
+	 */
+	virtual bool finishTypeSpecificTemplateConfiguration();
+	
 	
 	/**
 	 * Hook for loading the actual template file non-interactively.
