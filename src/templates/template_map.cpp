@@ -110,12 +110,13 @@ bool TemplateMap::loadTemplateFileImpl()
 		
 		template_map = std::move(new_template_map);
 	}
-	else if (getTemplateState() == Configuring)
+	else if (importer)
 	{
-		if (importer)
-			setErrorString(importer->warnings().back());
-		else
-			setErrorString(tr("Cannot load map file, aborting."));
+		setErrorString(importer->warnings().back());
+	}
+	else
+	{
+		setErrorString(tr("Cannot load map file, aborting."));
 	}
 	
 	return new_template_valid;
