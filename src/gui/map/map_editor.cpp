@@ -4081,7 +4081,7 @@ bool MapEditorController::importGpxFile(const QString& filename)
 	imported_map.setGeoreferencing(map->getGeoreferencing());
 	
 	TemplateTrack temp(filename, &imported_map);
-	if (!temp.configureAndLoad(window, main_view) || !temp.import(window))
+	if (!temp.setupAndLoad(window, main_view) || !temp.import(window))
 		return false;
 	
 	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
@@ -4117,7 +4117,7 @@ bool MapEditorController::importOgrFile(const QString& filename)
 {
 #if MAPPER_USE_GDAL
 	OgrTemplate ogr_template {filename, map};
-	if (!ogr_template.configureAndLoad(window, main_view))
+	if (!ogr_template.setupAndLoad(window, main_view))
 		return false;
 	
 	auto template_map = ogr_template.takeTemplateMap();

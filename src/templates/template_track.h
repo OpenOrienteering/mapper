@@ -76,7 +76,7 @@ public:
 	bool saveTemplateFile() const override;
 	
 	bool loadTemplateFileImpl(bool configuring) override;
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
 	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
@@ -96,7 +96,7 @@ public:
 	/// TODO: should this be moved to the Track class?
 	bool import(QWidget* dialog_parent = nullptr);
 	
-	/// Replaces the calls to pre/postLoadConfiguration() if creating a new GPS track.
+	/// Replaces the calls to pre/postLoadSetup() if creating a new GPS track.
 	/// Assumes that the map's georeferencing is valid.
 	void configureForGPSTrack();
 	

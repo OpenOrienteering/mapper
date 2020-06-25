@@ -243,12 +243,12 @@ public:
 	/**
 	 * Does everything needed to load a template.
 	 * 
-	 * Calls preLoadConfiguration(), loadTemplateFile() and
-	 * postLoadConfiguration(). Returns if the process was successful. 
+	 * Calls preLoadSetup(), loadTemplateFile() and postLoadSetup().
+	 * Returns true if the process was successful.
 	 * 
 	 * The passed-in view is used to center the template if needed.
 	 */
-	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
+	bool setupAndLoad(QWidget* dialog_parent, MapView* view);
 	
 	/**
 	 * Tries to find the template file non-interactively.
@@ -294,19 +294,19 @@ public:
 	
 	
 	/** 
-	 * Does configuration before the actual template is loaded.
+	 * Setup event before the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chooses the template file, but
-	 * before it is loaded. Derived classes can show dialogs here to get user
+	 * before regular loading. Derived classes can show dialogs here to get user
 	 * input which is needed to interpret the template file.
 	 * 
 	 * If the implementation returns false, loading the template is aborted.
 	 * 
 	 * \note Derived classes should set is_georeferenced either here or in
-	 *       postLoadConfiguration().
+	 *       postLoadSetup().
 	 *       By default templates are loaded as non-georeferenced.
 	 */
-	virtual bool preLoadConfiguration(QWidget* dialog_parent);
+	virtual bool preLoadSetup(QWidget* dialog_parent);
 	
 	/**
 	 * Loads the template file.
@@ -316,13 +316,13 @@ public:
 	 * It returns true if the template is loaded successfully.
 	 * 
 	 * Set the configuring parameter to true if the template is currently being
-	 * configured by the user (in contrast to the case where it is reloaded, e.g.
+	 * set up by the user (in contrast to the case where it is reloaded, e.g.
 	 * when loaded while reopening an existing map file).
 	 */
 	bool loadTemplateFile(bool configuring);
 	
 	/**
-	 * Does configuration after the actual template is loaded.
+	 * Setup event after the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chose the template file and after
 	 * the chosen file was successfully loaded. Derived classes can show dialogs
@@ -334,7 +334,7 @@ public:
 	 * template should be centered in the active view (only if it is not
 	 * georeferenced.)
 	 */
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
+	virtual bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view);
 	
 	/**
 	 * Unloads the template file.
@@ -652,7 +652,7 @@ protected:
 	 * 
 	 * Returns true if successful.
 	 * 
-	 * If configuring is true, a call to postLoadConfiguration() will follow
+	 * If configuring is true, a call to postLoadSetup() will follow
 	 * if this returns true.
 	 */
 	virtual bool loadTemplateFileImpl(bool configuring) = 0;

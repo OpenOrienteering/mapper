@@ -111,7 +111,7 @@ public:
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
 	bool loadTemplateFileImpl(bool configuring) override;
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;

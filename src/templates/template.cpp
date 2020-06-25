@@ -510,15 +510,15 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	return true;
 }
 
-bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
+bool Template::setupAndLoad(QWidget* dialog_parent, MapView* view)
 {
 	bool center_in_view = true;
 	
-	if (!preLoadConfiguration(dialog_parent))
+	if (!preLoadSetup(dialog_parent))
 		return false;
 	if (!loadTemplateFile(true))
 		return false;
-	if (!postLoadConfiguration(dialog_parent, center_in_view))
+	if (!postLoadSetup(dialog_parent, center_in_view))
 	{
 		unloadTemplateFile();
 		return false;
@@ -603,7 +603,7 @@ bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 	       && loadTemplateFile(false);
 }
 
-bool Template::preLoadConfiguration(QWidget* /*dialog_parent*/)
+bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
 {
 	return true;
 }
@@ -656,7 +656,7 @@ bool Template::loadTemplateFile(bool configuring)
 	return template_state == Loaded;
 }
 
-bool Template::postLoadConfiguration(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
+bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
 {
 	return true;
 }

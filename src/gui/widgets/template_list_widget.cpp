@@ -696,7 +696,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 	{
 		error = tr("File format not recognized.");
 	}
-	else if (!new_temp->preLoadConfiguration(dialog_parent))
+	else if (!new_temp->preLoadSetup(dialog_parent))
 	{
 		// For now, an empty error string means the step was canceled by the user.
 		error = new_temp->errorString();
@@ -710,7 +710,7 @@ std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* di
 			error = tr("Failed to load template. Does the file exist and is it valid?");
 		new_temp.reset();
 	}
-	else if (!new_temp->postLoadConfiguration(dialog_parent, center_in_view))
+	else if (!new_temp->postLoadSetup(dialog_parent, center_in_view))
 	{
 		// For now, an empty error string means the step was canceled by the user.
 		error = new_temp->errorString();

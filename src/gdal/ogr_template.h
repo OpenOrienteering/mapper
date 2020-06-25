@@ -69,7 +69,7 @@ public:
 	
 	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path);
 	
-	bool preLoadConfiguration(QWidget* dialog_parent) override;
+	bool preLoadSetup(QWidget* dialog_parent) override;
 	
 	/**
 	 * Loads the geospatial vector data into the template_map.
@@ -87,7 +87,7 @@ public:
 	 */
 	bool loadTemplateFileImpl(bool configuring) override;
 	
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 protected:
 	void reloadLater();

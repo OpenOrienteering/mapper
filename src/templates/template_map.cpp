@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -121,7 +121,7 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	return new_template_valid;
 }
 
-bool TemplateMap::postLoadConfiguration(QWidget* /* dialog_parent */, bool& out_center_in_view)
+bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_in_view)
 {
 	// Instead of dealing with the map as being (possibly) georeferenced,
 	// we simply use the both georeferencings to calculate a transformation

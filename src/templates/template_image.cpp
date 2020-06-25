@@ -212,7 +212,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
@@ -378,7 +378,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		
 		if (value)
 		{
-			// Cf. postLoadConfiguration
+			// Cf. postLoadSetup
 			// Let user select the coordinate reference system.
 			// \todo Change description text below (no longer just for world files.)
 			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))

@@ -205,7 +205,7 @@ std::unique_ptr<Georeferencing> OgrTemplate::makeOrthographicGeoreferencing(cons
 }
 
 
-bool OgrTemplate::preLoadConfiguration(QWidget* dialog_parent)
+bool OgrTemplate::preLoadSetup(QWidget* dialog_parent)
 try
 {
 	is_georeferenced = false;
@@ -429,7 +429,7 @@ catch (FileFormatException& e)
 }
 
 
-bool OgrTemplate::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool OgrTemplate::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	Q_UNUSED(dialog_parent)
 	out_center_in_view = center_in_view;

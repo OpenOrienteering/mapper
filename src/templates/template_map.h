@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -73,7 +73,7 @@ public:
 	
 	bool loadTemplateFileImpl(bool configuring) override;
 	
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 	void unloadTemplateFileImpl() override;
 	
