@@ -526,7 +526,7 @@ public:
 	 * 
 	 * The default implementation returns false.
 	 */
-	virtual bool canChangeTemplateGeoreferenced();
+	virtual bool canChangeTemplateGeoreferenced() const;
 	
 	/**
 	 * Tries to change the usage of georeferencing data.

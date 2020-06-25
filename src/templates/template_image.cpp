@@ -362,7 +362,7 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 }
 
 
-bool TemplateImage::canChangeTemplateGeoreferenced()
+bool TemplateImage::canChangeTemplateGeoreferenced() const
 {
 	// No need to care for CRS here and now: This is handled by the dialog ATM.
 	return !available_georef.effective.transform.source.isEmpty();

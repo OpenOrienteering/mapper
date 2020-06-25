@@ -684,7 +684,7 @@ void Template::unloadTemplateFile()
 
 
 // virtual
-bool Template::canChangeTemplateGeoreferenced()
+bool Template::canChangeTemplateGeoreferenced() const
 {
 	return false;
 }

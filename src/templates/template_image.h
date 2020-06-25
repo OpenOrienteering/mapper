@@ -137,7 +137,7 @@ public:
 	 */
 	const GeoreferencingOptions& availableGeoreferencing() const { return available_georef; }
 	
-	bool canChangeTemplateGeoreferenced() override;
+	bool canChangeTemplateGeoreferenced() const override;
 	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
 	
 	
