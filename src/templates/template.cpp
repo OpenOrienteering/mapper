@@ -973,8 +973,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 	
 	// We must respect the customizable handling of tracks,
 	// which is reflected in OgrTemplate::supportedExtensions().
-#ifdef MAPPER_USE_GDAL
 	auto const is_track = endsWithAnyOf(path, TemplateTrack::supportedExtensions());
+#ifdef MAPPER_USE_GDAL
 	auto const track_with_gdal = (is_track && endsWithAnyOf(path, OgrTemplate::supportedExtensions()));
 #else
 	constexpr auto const track_with_gdal = false;
@@ -985,10 +985,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (type_cstring == "TemplateMap")
 		t = std::make_unique<TemplateMap>(path, map);
-#ifdef MAPPER_USE_GDAL
 	else if (type_cstring == "OgrTemplate" && is_track && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
-#endif
 	else if (type_cstring == "TemplateTrack" && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
