@@ -114,6 +114,7 @@ protected:
 	
 private:
 	std::unique_ptr<Georeferencing> explicit_georef;
+	std::unique_ptr<Georeferencing> map_configuration_georef;
 	QString track_crs_spec;           // (limited) TemplateTrack compatibility
 	QString projected_crs_spec;       // (limited) TemplateTrack compatibility
 	bool template_track_compatibility { false };  //  transient

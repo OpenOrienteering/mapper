@@ -392,8 +392,6 @@ private slots:
 		// The template rectangle is in the interior of the map figure.
 		auto const expected_center = map.calculateExtent().center();
 		// Template instance loaded only after configuration
-		QEXPECT_FAIL("OgrTemplate basic", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
-		QEXPECT_FAIL("OgrTemplate compatibility", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
 		if (QLineF(center(temp), expected_center).length() > 0.5)
 			QCOMPARE(center(temp), expected_center);
 		else
@@ -406,8 +404,6 @@ private slots:
 			QVERIFY2(true, "Centers do match.");
 		
 		// Template instance loaded+unloaded before, and loaded again after, rotation
-		QEXPECT_FAIL("OgrTemplate basic", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
-		QEXPECT_FAIL("OgrTemplate compatibility", "GH-1591 Rotation error with non-georeferenced DXF template", Continue);
 		if (QLineF(center(reloaded_clone), expected_center).length() > 0.5)
 			QCOMPARE(center(reloaded_clone), expected_center);
 		else

@@ -149,6 +149,8 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 {
 	if (proto.explicit_georef)
 		explicit_georef = std::make_unique<Georeferencing>(*proto.explicit_georef);
+	if (proto.map_configuration_georef)
+		map_configuration_georef = std::make_unique<Georeferencing>(*proto.map_configuration_georef);
 	
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
 	
@@ -236,6 +238,7 @@ try
 {
 	is_georeferenced = false;
 	explicit_georef.reset();
+	map_configuration_georef.reset();
 	track_crs_spec.clear();
 	projected_crs_spec.clear();
 	transform = {};
@@ -452,6 +455,12 @@ void OgrTemplate::mapTransformationChanged()
 			resetTemplatePositionOffset();
 		}
 	}
+	else if (map_configuration_georef)
+	{
+		template_track_compatibility = false;
+		explicit_georef = std::move(map_configuration_georef);
+		resetTemplatePositionOffset();
+	}
 }
 
 
@@ -550,6 +559,8 @@ bool OgrTemplate::finishTypeSpecificTemplateConfiguration()
 		{
 			// Nothing to do with this configuration
 			Q_ASSERT(projected_crs_spec.isEmpty());
+			if (!explicit_georef)
+				map_configuration_georef = std::make_unique<Georeferencing>(map->getGeoreferencing());
 		}
 		else if (projected_crs_spec.isEmpty())
 		{
@@ -563,6 +574,10 @@ bool OgrTemplate::finishTypeSpecificTemplateConfiguration()
 			// Data is to be transformed to the projected CRS.
 			explicit_georef = makeGeoreferencing(projected_crs_spec);
 		}
+	}
+	else if (!is_georeferenced && !explicit_georef)
+	{
+		map_configuration_georef = std::make_unique<Georeferencing>(map->getGeoreferencing());
 	}
 	return true;
 }
