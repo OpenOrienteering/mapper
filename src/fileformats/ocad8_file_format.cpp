@@ -1864,7 +1864,7 @@ bool OCAD8FileExport::exportImplementation()
 				if (temp->getTemplateState() == Template::Unloaded)
 				{
 					// Try to load the template, so that the positioning gets set.
-					const_cast<Template*>(temp)->loadTemplateFile(false);
+					const_cast<Template*>(temp)->loadTemplateFile();
 				}
 				
 				if (temp->getTemplateState() != Template::Loaded)

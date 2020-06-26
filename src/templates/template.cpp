@@ -450,6 +450,12 @@ Q_ASSERT(temp->passpoints.size() == 0);
 		}
 	}
 	
+	if (temp && !temp->finishTypeSpecificTemplateConfiguration())
+		temp.reset();
+	
+	if (temp)
+		temp->setTemplateState(Unloaded);
+	
 	return temp;
 }
 
@@ -472,7 +478,7 @@ void Template::switchTemplateFile(const QString& new_path, bool load_file)
 	template_state         = Template::Unloaded;
 	
 	if (load_file)
-		loadTemplateFile(false);
+		loadTemplateFile();
 }
 
 bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
@@ -510,15 +516,17 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	return true;
 }
 
-bool Template::configureAndLoad(QWidget* dialog_parent, MapView* view)
+bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 {
+	Q_ASSERT(getTemplateState() == Template::Configuring);
+	
 	bool center_in_view = true;
 	
-	if (!preLoadConfiguration(dialog_parent))
+	if (!preLoadSetup(dialog_parent))
 		return false;
-	if (!loadTemplateFile(true))
+	if (!loadTemplateFile())
 		return false;
-	if (!postLoadConfiguration(dialog_parent, center_in_view))
+	if (!postLoadSetup(dialog_parent, center_in_view))
 	{
 		unloadTemplateFile();
 		return false;
@@ -600,15 +608,15 @@ Template::LookupResult Template::tryToFindTemplateFile(const QString& map_path)
 bool Template::tryToFindAndReloadTemplateFile(const QString& map_path)
 {
 	return tryToFindTemplateFile(map_path) != NotFound
-	       && loadTemplateFile(false);
+	       && loadTemplateFile();
 }
 
-bool Template::preLoadConfiguration(QWidget* /*dialog_parent*/)
+bool Template::preLoadSetup(QWidget* /*dialog_parent*/)
 {
 	return true;
 }
 
-bool Template::loadTemplateFile(bool configuring)
+bool Template::loadTemplateFile()
 {
 	Q_ASSERT(template_state != Loaded);
 	
@@ -622,7 +630,7 @@ bool Template::loadTemplateFile(bool configuring)
 			template_state = Invalid;
 			setErrorString(tr("No such file."));
 		}
-		else if (loadTemplateFileImpl(configuring))
+		else if (loadTemplateFileImpl())
 		{
 			template_state = Loaded;
 			setTemplateAreaDirty();
@@ -656,7 +664,7 @@ bool Template::loadTemplateFile(bool configuring)
 	return template_state == Loaded;
 }
 
-bool Template::postLoadConfiguration(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
+bool Template::postLoadSetup(QWidget* /*dialog_parent*/, bool& /*out_center_in_view*/)
 {
 	return true;
 }
@@ -676,7 +684,7 @@ void Template::unloadTemplateFile()
 
 
 // virtual
-bool Template::canChangeTemplateGeoreferenced()
+bool Template::canChangeTemplateGeoreferenced() const
 {
 	return false;
 }
@@ -965,8 +973,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 	
 	// We must respect the customizable handling of tracks,
 	// which is reflected in OgrTemplate::supportedExtensions().
-#ifdef MAPPER_USE_GDAL
 	auto const is_track = endsWithAnyOf(path, TemplateTrack::supportedExtensions());
+#ifdef MAPPER_USE_GDAL
 	auto const track_with_gdal = (is_track && endsWithAnyOf(path, OgrTemplate::supportedExtensions()));
 #else
 	constexpr auto const track_with_gdal = false;
@@ -977,10 +985,8 @@ std::unique_ptr<Template> Template::templateForType(const QStringRef& type, cons
 		t = std::make_unique<TemplateImage>(path, map);
 	else if (type_cstring == "TemplateMap")
 		t = std::make_unique<TemplateMap>(path, map);
-#ifdef MAPPER_USE_GDAL
 	else if (type_cstring == "OgrTemplate" && is_track && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
-#endif
 	else if (type_cstring == "TemplateTrack" && !track_with_gdal)
 		t = std::make_unique<TemplateTrack>(path, map);
 #ifdef MAPPER_USE_GDAL
@@ -1004,6 +1010,13 @@ bool Template::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	xml.skipCurrentElement();
 	return true;
 }
+
+bool Template::finishTypeSpecificTemplateConfiguration()
+{
+	return true;
+}
+
+
 
 void Template::drawOntoTemplateImpl(MapCoordF* /*coords*/, int /*num_coords*/, const QColor& /*color*/, qreal /*width*/, ScribbleOptions /*mode*/)
 {

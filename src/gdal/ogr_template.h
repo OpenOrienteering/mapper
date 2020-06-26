@@ -67,9 +67,12 @@ public:
 	
 	const char* getTemplateType() const override;
 	
-	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path);
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing(const QString& path) const;
+	std::unique_ptr<Georeferencing> makeOrthographicGeoreferencing() const;
+	std::unique_ptr<Georeferencing> makeGeoreferencing(const QString& spec) const;
 	
-	bool preLoadConfiguration(QWidget* dialog_parent) override;
+	
+	bool preLoadSetup(QWidget* dialog_parent) override;
 	
 	/**
 	 * Loads the geospatial vector data into the template_map.
@@ -85,9 +88,9 @@ public:
 	 * Otherwise, the data will be handled as raw map or paper data, depending on
 	 * use_real_coords.
 	 */
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
 protected:
 	void reloadLater();
@@ -105,14 +108,17 @@ protected:
 	void mapTransformationChanged();
 	
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
+	bool finishTypeSpecificTemplateConfiguration() override;
 	
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	
 private:
 	std::unique_ptr<Georeferencing> explicit_georef;
+	std::unique_ptr<Georeferencing> map_configuration_georef;
 	QString track_crs_spec;           // (limited) TemplateTrack compatibility
 	QString projected_crs_spec;       // (limited) TemplateTrack compatibility
 	bool template_track_compatibility { false };  //  transient
+	bool explicit_georef_pending      { false };  //  transient
 	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
 	bool reload_pending               { false };  //  transient

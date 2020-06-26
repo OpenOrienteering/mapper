@@ -151,7 +151,7 @@ bool TemplatePlaceholder::loadTypeSpecificTemplateConfiguration(QXmlStreamReader
 	return result;
 }
 
-bool TemplatePlaceholder::loadTemplateFileImpl(bool /*configuring*/)
+bool TemplatePlaceholder::loadTemplateFileImpl()
 {
 	setErrorString(tr("Unknown file format"));
 	return false;

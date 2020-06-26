@@ -74,7 +74,7 @@ protected:
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
 	void unloadTemplateFileImpl() override;
 

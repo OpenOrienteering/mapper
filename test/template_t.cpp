@@ -1,5 +1,5 @@
 /*
- *    Copyright 2017-2019 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -23,7 +23,10 @@
 #include <QtTest>
 #include <QDir>
 #include <QFileInfo>
+#include <QLineF>
 #include <QObject>
+#include <QPainter>
+#include <QPicture>
 #include <QString>
 #include <QTransform>
 
@@ -35,11 +38,34 @@
 #include "core/map_view.h"
 #include "fileformats/xml_file_format_p.h"
 #include "gdal/ogr_template.h"
+#include "gdal/gdal_manager.h"
 #include "templates/template.h"
 #include "templates/template_table_model.h"
+#include "templates/template_track.h"
 #include "templates/world_file.h"
 
 using namespace OpenOrienteering;
+
+namespace
+{
+
+QPointF center(const TemplateTrack* temp)
+{
+	QPicture picture;
+	QPainter painter(&picture);
+	temp->drawTracks(&painter, false);
+	painter.end();
+	return QRectF(picture.boundingRect()).center();
+}
+
+QPointF center(const Template* temp)
+{
+	if (auto* template_track = qobject_cast<const TemplateTrack*>(temp))
+		return center(template_track);
+	return temp->templateToMap(temp->getTemplateExtent().center());
+}
+
+}  // namespace
 
 
 /**
@@ -51,6 +77,8 @@ Q_OBJECT
 private slots:
 	void initTestCase()
 	{
+		QCoreApplication::setOrganizationName(QString::fromLatin1("OpenOrienteering.org"));
+		QCoreApplication::setApplicationName(QString::fromLatin1(metaObject()->className()));
 		Q_INIT_RESOURCE(resources);
 		doStaticInitializations();
 		// Static map initializations
@@ -204,7 +232,83 @@ private slots:
 #endif
 	}
 	
+	void templateTrackTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+
+		QTest::newRow("TemplateTrack georef")         << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("TemplateTrack non-georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 1;
+		QTest::newRow("TemplateTrack OGR georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 2;
+		QTest::newRow("TemplateTrack OGR non-georef") << QStringLiteral("testdata:templates/template-track.xmap") << 3;
+	}
+	
+	void templateTrackTest()
+	{
 #ifdef MAPPER_USE_GDAL
+		GdalManager().setFormatEnabled(GdalManager::GPX, false);
+#endif
+		
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		QVERIFY(map.getNumTemplates() > template_index);
+		auto const* temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateType(), "TemplateTrack");
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+
+		auto const expected_center = map.calculateExtent().center();
+		if (QLineF(center(temp), expected_center).length() > 0.5)
+			QCOMPARE(center(temp), expected_center);
+		else
+			QVERIFY2(true, "Centers do match");
+	}
+	
+#ifdef MAPPER_USE_GDAL
+	void ogrTemplateTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+
+		QTest::newRow("TemplateTrack georef")         << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("TemplateTrack non-georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 1;
+		QTest::newRow("TemplateTrack OGR georef")     << QStringLiteral("testdata:templates/template-track.xmap") << 2;
+		QTest::newRow("TemplateTrack OGR non-georef") << QStringLiteral("testdata:templates/template-track.xmap") << 3;
+		QTest::newRow("OgrTemplate basic")            << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
+		QTest::newRow("OgrTemplate compatibility")    << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
+	}
+	
+	void ogrTemplateTest()
+	{
+		GdalManager().setFormatEnabled(GdalManager::GPX, true);
+		
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		QVERIFY(map.getNumTemplates() > template_index);
+		auto const* temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateType(), "OgrTemplate");
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+
+		auto const expected_center = map.calculateExtent().center();
+		if (QLineF(center(temp), expected_center).length() > 0.5)
+			QCOMPARE(center(temp), expected_center);
+		else
+			QVERIFY2(true, "Centers do match");
+	}
+	
 	void ogrTemplateGeoreferencingTest()
 	{
 		auto const osm_fileinfo = QFileInfo(QStringLiteral("testdata:templates/map.osm"));
@@ -216,6 +320,95 @@ private slots:
 		QCOMPARE(qRound(latlon.longitude()), 8);
 	}
 #endif
+	
+	void templateRotationTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+
+		QTest::newRow("TemplateTrack georef")      << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("TemplateTrack non-georef")  << QStringLiteral("testdata:templates/template-track.xmap") << 1;
+#ifdef MAPPER_USE_GDAL
+		QTest::newRow("OgrTemplate basic")         << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
+		QTest::newRow("OgrTemplate compatibility") << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
+#endif
+	}
+	
+	void templateRotationTest()
+	{
+#ifdef MAPPER_USE_GDAL
+		GdalManager().setFormatEnabled(GdalManager::GPX, false);
+#endif
+		
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		
+		auto const& georef = map.getGeoreferencing();
+		QVERIFY(georef.isValid());
+		QVERIFY(std::abs(georef.getGrivation()) >= 0.01);
+		
+		QVERIFY(map.getNumTemplates() > template_index);
+		auto const* temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		
+		// A clone of temp which is loaded before map rotation
+		auto* loaded_clone = temp->duplicate();
+		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(loaded_clone));
+		if (loaded_clone->getTemplateState() != Template::Loaded)
+			QVERIFY(loaded_clone->loadTemplateFile());
+		QCOMPARE(loaded_clone->getTemplateState(), Template::Loaded);
+		
+		// A clone of temp which is loaded and unloaded before map rotation
+		auto* reloaded_clone = temp->duplicate();
+		map.addTemplate(map.getNumTemplates(), std::unique_ptr<Template>(reloaded_clone));
+		if (reloaded_clone->getTemplateState() != Template::Loaded)
+			QVERIFY(reloaded_clone->loadTemplateFile());
+		reloaded_clone->unloadTemplateFile();
+		QCOMPARE(reloaded_clone->getTemplateState(), Template::Unloaded);
+		
+		auto initially_georeferenced = temp->isTemplateGeoreferenced();
+		auto initial_rotation = temp->getTemplateRotation();  // radians
+		if (initially_georeferenced)
+			QCOMPARE(initial_rotation, 0.0);
+		
+		// ROTATION
+		auto const ref_point = map.getGeoreferencing().getMapRefPoint();
+		map.rotateMap(0.1, ref_point, true, true, true);  // radians
+		
+		if (!initially_georeferenced)
+			QCOMPARE(temp->getTemplateRotation(), initial_rotation + 0.1);  // radians
+		
+		// TEMPLATE LOADING
+		QVERIFY(map.getTemplate(template_index)->loadTemplateFile());
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
+		
+		QVERIFY(reloaded_clone->loadTemplateFile());
+		QCOMPARE(reloaded_clone->getTemplateState(), Template::Loaded);
+		
+		// The template rectangle is in the interior of the map figure.
+		auto const expected_center = map.calculateExtent().center();
+		// Template instance loaded only after configuration
+		if (QLineF(center(temp), expected_center).length() > 0.5)
+			QCOMPARE(center(temp), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+		
+		// Template instance loaded before rotation
+		if (QLineF(center(loaded_clone), expected_center).length() > 0.5)
+			QCOMPARE(center(loaded_clone), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+		
+		// Template instance loaded+unloaded before, and loaded again after, rotation
+		if (QLineF(center(reloaded_clone), expected_center).length() > 0.5)
+			QCOMPARE(center(reloaded_clone), expected_center);
+		else
+			QVERIFY2(true, "Centers do match.");
+	}
 	
 	void templateTableModelTest()
 	{

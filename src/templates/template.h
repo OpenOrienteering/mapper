@@ -120,6 +120,9 @@ public:
 		/// The template data is not yet loaded or has been unloaded.
 		/// It is assumed to be available, so it can be (re-)loaded if needed.
 		Unloaded,
+		/// The template's configuration/setup is not yet finished.
+		/// This is the initial state after construction.
+		Configuring,
 		/// A required resource cannot be found (e.g. missing image or font),
 		/// so the template data cannot be loaded.
 		Invalid
@@ -208,6 +211,8 @@ public:
 	/**
 	 * Creates and returns a template from the configuration in the XML stream.
 	 * 
+	 * The template will be in Unloaded state after this function.
+	 * 
 	 * Returns a null pointer in the case of error.
 	 */
 	static std::unique_ptr<Template> loadTemplateConfiguration(QXmlStreamReader& xml, Map& map, bool& open);
@@ -243,12 +248,13 @@ public:
 	/**
 	 * Does everything needed to load a template.
 	 * 
-	 * Calls preLoadConfiguration(), loadTemplateFile() and
-	 * postLoadConfiguration(). Returns if the process was successful. 
+	 * This function can be called only if the template state is Configuring.
+	 * Calls preLoadSetup(), loadTemplateFile() and postLoadSetup().
+	 * Returns true if the process was successful.
 	 * 
 	 * The passed-in view is used to center the template if needed.
 	 */
-	bool configureAndLoad(QWidget* dialog_parent, MapView* view);
+	bool setupAndLoad(QWidget* dialog_parent, const MapView* view);
 	
 	/**
 	 * Tries to find the template file non-interactively.
@@ -294,35 +300,31 @@ public:
 	
 	
 	/** 
-	 * Does configuration before the actual template is loaded.
+	 * Setup event before the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chooses the template file, but
-	 * before it is loaded. Derived classes can show dialogs here to get user
+	 * before regular loading. Derived classes can show dialogs here to get user
 	 * input which is needed to interpret the template file.
 	 * 
 	 * If the implementation returns false, loading the template is aborted.
 	 * 
 	 * \note Derived classes should set is_georeferenced either here or in
-	 *       postLoadConfiguration().
+	 *       postLoadSetup().
 	 *       By default templates are loaded as non-georeferenced.
 	 */
-	virtual bool preLoadConfiguration(QWidget* dialog_parent);
+	virtual bool preLoadSetup(QWidget* dialog_parent);
 	
 	/**
 	 * Loads the template file.
 	 * 
-	 * This function can be called if the template state is Invalid or Unloaded.
+	 * This function can be called if the template state is Configuring, Invalid or Unloaded.
 	 * It must not be called if the template file is already loaded.
 	 * It returns true if the template is loaded successfully.
-	 * 
-	 * Set the configuring parameter to true if the template is currently being
-	 * configured by the user (in contrast to the case where it is reloaded, e.g.
-	 * when loaded while reopening an existing map file).
 	 */
-	bool loadTemplateFile(bool configuring);
+	bool loadTemplateFile();
 	
 	/**
-	 * Does configuration after the actual template is loaded.
+	 * Setup event after the template is loaded for the first time.
 	 * 
 	 * This function is called after the user chose the template file and after
 	 * the chosen file was successfully loaded. Derived classes can show dialogs
@@ -334,7 +336,7 @@ public:
 	 * template should be centered in the active view (only if it is not
 	 * georeferenced.)
 	 */
-	virtual bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view);
+	virtual bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view);
 	
 	/**
 	 * Unloads the template file.
@@ -524,7 +526,7 @@ public:
 	 * 
 	 * The default implementation returns false.
 	 */
-	virtual bool canChangeTemplateGeoreferenced();
+	virtual bool canChangeTemplateGeoreferenced() const;
 	
 	/**
 	 * Tries to change the usage of georeferencing data.
@@ -646,16 +648,32 @@ protected:
 	 */
 	virtual bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml);
 	
+	/**
+	 * Hook which is called at the end of template configuration loading.
+	 * 
+	 * Derived classes may override this function if they need to do any post-
+	 * processing on the configuration. Unlike loadTypeSpecificTemplateConfiguration(),
+	 * this function is always called, even when there is no type-specific data.
+	 * 
+	 * The implementation must not do expensive calculations because it is
+	 * called also for hidden and closed templates. It cannot reliably access
+	 * the template data (or sidecar files) because it is called before the
+	 * validation/updating of the template path.
+	 * 
+	 * Returns true on success.
+	 */
+	virtual bool finishTypeSpecificTemplateConfiguration();
+	
 	
 	/**
 	 * Hook for loading the actual template file non-interactively.
 	 * 
 	 * Returns true if successful.
 	 * 
-	 * If configuring is true, a call to postLoadConfiguration() will follow
+	 * If configuring is true, a call to postLoadSetup() will follow
 	 * if this returns true.
 	 */
-	virtual bool loadTemplateFileImpl(bool configuring) = 0;
+	virtual bool loadTemplateFileImpl() = 0;
 	
 	/**
 	 * Hook for unloading the template file.
@@ -694,7 +712,7 @@ protected:
 	QString template_relative_path;
 	
 	/// The template lifetime state
-	State template_state = Unloaded;
+	State template_state = Configuring;
 	
 	/// The description of the last error
 	QString error_string;

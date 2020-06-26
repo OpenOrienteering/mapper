@@ -249,7 +249,7 @@ void Importer::validate()
 			continue;
 		}
 		
-		if (!temp->loadTemplateFile(false))
+		if (!temp->loadTemplateFile())
 		{
 			addWarning(tr("Failed to load template '%1', reason: %2")
 			           .arg(temp->getTemplateFilename(), temp->errorString()));

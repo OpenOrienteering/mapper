@@ -244,7 +244,7 @@ bool TemplateTrack::saveTemplateFile() const
     return track.saveTo(template_path);
 }
 
-bool TemplateTrack::loadTemplateFileImpl(bool configuring)
+bool TemplateTrack::loadTemplateFileImpl()
 {
 	if (preserved_georef)
 	{
@@ -261,7 +261,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	if (!track.loadFrom(template_path, false))
 		return false;
 	
-	if (!configuring)
+	if (getTemplateState() != Configuring)
 	{
 		if (!is_georeferenced)
 		{
@@ -279,7 +279,7 @@ bool TemplateTrack::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateTrack::postLoadConfiguration(QWidget* dialog_parent, bool& /*out_center_in_view*/)
+bool TemplateTrack::postLoadSetup(QWidget* dialog_parent, bool& /*out_center_in_view*/)
 {
 	is_georeferenced = true;
 	

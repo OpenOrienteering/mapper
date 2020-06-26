@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="OpenOrienteering Mapper 0.9.3">
+<trk>
+<trkseg>
+<trkpt lat="51.394406" lon="21.143543"><time>2019-03-23T20:53:53Z</time><ele>558.729</ele><hdop>3.000</hdop></trkpt>
+<trkpt lat="51.394233" lon="21.143535"><time>2019-03-23T20:53:54Z</time><ele>543.622</ele><hdop>3.000</hdop></trkpt>
+<trkpt lat="51.394226" lon="21.143897"><time>2019-03-23T20:53:55Z</time><ele>542.462</ele><hdop>3.000</hdop></trkpt>
+<trkpt lat="51.394399" lon="21.143905"><time>2019-03-23T20:53:57Z</time><ele>538.657</ele><hdop>3.000</hdop></trkpt>
+<trkpt lat="51.394406" lon="21.143543"><time>2019-03-23T20:53:58Z</time><ele>537.042</ele><hdop>3.000</hdop></trkpt>
+</trkseg>
+</trk>
+</gpx>

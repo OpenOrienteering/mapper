@@ -419,7 +419,7 @@ void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 	    && temp->getTemplateState() != Template::Loaded
 	    && !templateLoadingBlocked())
 	{
-		vis.visible = visible = temp->loadTemplateFile(false);
+		vis.visible = visible = temp->loadTemplateFile();
 	}
 	
 	if (setTemplateVisibilityHelper(temp, vis))
