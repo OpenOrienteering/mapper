@@ -3918,10 +3918,12 @@ void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 		templateAvailabilityChanged();
 }
 
-void MapEditorController::templateDeleted(int /*pos*/, const Template* /*temp*/)
+void MapEditorController::templateDeleted(int /*pos*/, const Template* temp)
 {
 	if (map->getNumTemplates() == 0)
 		templateAvailabilityChanged();
+	if (temp == last_painted_on_template)
+		last_painted_on_template = nullptr;
 }
 
 void MapEditorController::setMapAndView(Map* map, MapView* map_view)
