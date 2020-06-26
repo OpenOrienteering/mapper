@@ -3407,6 +3407,9 @@ void MapEditorController::paintOnTemplateClicked(bool checked)
 		paintOnTemplate(last_painted_on_template);
 	else
 		paintOnTemplateSelectClicked();
+	
+	if (!qobject_cast<PaintOnTemplateTool*>(current_tool))
+		paint_on_template_act->setChecked(false);
 }
 
 void MapEditorController::paintOnTemplateSelectClicked()
