@@ -729,7 +729,7 @@ void XMLFileImporter::validateGeoreferencing()
 	{
 		map->setGeoreferencing(valid_georef);
 		addWarning(tr("Inconsistent declination/grivation detected. "
-		              "Resolved by automatic adjustment of the declination to %1°."")
+		              "Resolved by automatic adjustment of the declination to %1°.")
 		           .arg(QLocale().toString(valid_georef.getDeclination()) ) );
 	}
 }
