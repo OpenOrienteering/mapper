@@ -727,13 +727,10 @@ void XMLFileImporter::validateGeoreferencing()
 	valid_georef.setGrivation(loaded_georef.getGrivation());
 	if (!qFuzzyCompare(loaded_georef.getDeclination(), valid_georef.getDeclination()))
 	{
-		auto const loaded_declination = loaded_georef.getDeclination();
 		map->setGeoreferencing(valid_georef);
-		QLocale locale;
 		addWarning(tr("Inconsistent declination/grivation detected. "
-		              "Declination adjusted from %1° to %2°.")
-		           .arg(locale.toString(loaded_declination),
-		                locale.toString(valid_georef.getDeclination()) ) );
+		              "Resolved by automatic adjustment of the declination to %1°.")
+		           .arg(QLocale().toString(valid_georef.getDeclination()) ) );
 	}
 }
 
