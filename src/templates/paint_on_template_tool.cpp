@@ -19,7 +19,7 @@
  */
 
 
-#include "template_tool_paint.h"
+#include "paint_on_template_tool.h"
 
 #include <memory>
 

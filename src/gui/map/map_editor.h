@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013, 2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -66,6 +66,7 @@ class MapEditorTool;
 class MapFindFeature;
 class MapView;
 class MapWidget;
+class PaintOnTemplateFeature;
 class PrintWidget;
 class ReopenTemplateDialog;
 class Symbol;
@@ -449,11 +450,6 @@ public slots:
 	 *  The prerequisites for using the tool must be given. */
 	void distributePointsClicked();
 	
-	/** Shows or hides the paint-on-template widget */
-	void paintOnTemplateClicked(bool checked);
-	/** Shows the template selection dialog for for the paint-on-template functionality */
-	void paintOnTemplateSelectClicked();
-	
 	/** Enables or disables GPS display. */
 	void enableGPSDisplay(bool enable);
 	/** Enables or disables showing distance rings when GPS display is active. */
@@ -651,9 +647,6 @@ private:
 	void createMenuAndToolbars();
 	void createMobileGUI();
 	
-	void paintOnTemplate(Template* temp);
-	void finishPaintOnTemplate();
-	
 	void doUndo(bool redo);
 	
 	Map* map;
@@ -778,9 +771,7 @@ private:
 	QAction* cutaway_physical_act;
 	QAction* distribute_points_act;
 	
-	QAction* paint_on_template_act;
-	QAction* paint_on_template_settings_act;
-	Template* last_painted_on_template;
+	std::unique_ptr<PaintOnTemplateFeature> paint_feature;
 	
 	QAction* touch_cursor_action;
 	QAction* gps_display_action;
