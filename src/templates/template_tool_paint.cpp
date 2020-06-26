@@ -180,6 +180,7 @@ const QCursor& PaintOnTemplateTool::getCursor() const
 }
 
 
+// slot
 void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
 {
 	if (temp == this->temp)
@@ -189,17 +190,20 @@ void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
 	}
 }
 
+// slot
 void PaintOnTemplateTool::colorSelected(const QColor& color)
 {
 	paint_color = color;
 }
 
+// slot
 void PaintOnTemplateTool::undoSelected()
 {
 	if (temp)
 		temp->drawOntoTemplateUndo(false);
 }
 
+// slot
 void PaintOnTemplateTool::redoSelected()
 {
 	if (temp)

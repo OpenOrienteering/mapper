@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017, 2018 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -79,8 +79,10 @@ public:
 	
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
-public slots:
+protected:
 	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
+	
+public:
 	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();
