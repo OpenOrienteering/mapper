@@ -144,7 +144,7 @@ int PaintOnTemplateTool::erase_width = 4;
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorTool(editor, Scribble, tool_action)
 {
-	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
+	connect(map(), &Map::templateAboutToBeDeleted, this, &PaintOnTemplateTool::templateAboutToBeDeleted);
 }
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
@@ -181,11 +181,11 @@ const QCursor& PaintOnTemplateTool::getCursor() const
 
 
 // slot
-void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
+void PaintOnTemplateTool::templateAboutToBeDeleted(int /*pos*/, Template* temp)
 {
 	if (temp == this->temp)
 	{
-		temp = nullptr;
+		this->temp = nullptr;
 		deactivate();
 	}
 }

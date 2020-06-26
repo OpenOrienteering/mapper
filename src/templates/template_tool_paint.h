@@ -80,7 +80,7 @@ public:
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
 protected:
-	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
+	void templateAboutToBeDeleted(int pos, Template* temp);
 	
 public:
 	void colorSelected(const QColor& color);
