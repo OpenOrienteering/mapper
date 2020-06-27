@@ -39,6 +39,7 @@
 #include <QImage>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QLineF>
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QMessageBox>
@@ -223,28 +224,40 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 	/// \todo Review source string (no ellipsis when no dialog)
 	auto* item = new QListWidgetItem(QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Add template..."));
 	item->setData(Qt::UserRole, qVariantFromValue<void*>(nullptr));
+	item->setData(Qt::UserRole + 1, 0.0);
 	list_widget.addItem(item);
+	auto* current_item = item;
 	
 	auto& map = *controller.getMap();
 	auto const viewed_rect = viewedRect();
 	
-	auto current_row = 0;
 	for (int i = map.getNumTemplates() - 1; i >= 0; --i)
 	{
 		auto& temp = *map.getTemplate(i);
-		if (temp.getTemplateState() == Template::Invalid
-		    || !temp.canBeDrawnOnto()
-		    || !temp.boundingRect().intersects(viewed_rect))
+		if (temp.getTemplateState() == Template::Invalid || !temp.canBeDrawnOnto())
 			continue;
 		
-		if (&temp == last_template)
-			current_row = list_widget.count();
+		auto const bounding_rect = temp.boundingRect();
+		if (!bounding_rect.intersects(viewed_rect))
+			continue;
+		
+		auto const distance = QLineF(bounding_rect.center(), viewedRect().center()).length();
+		auto row = 0;
+		for (auto last = list_widget.count(); row < last; ++row)
+		{
+			if (list_widget.item(row)->data(Qt::UserRole + 1).toReal() > distance)
+				break;
+		}
 		
 		auto* item = new QListWidgetItem(temp.getTemplateFilename());
 		item->setData(Qt::UserRole, qVariantFromValue<void*>(&temp));
-		list_widget.addItem(item);
+		item->setData(Qt::UserRole + 1, distance);
+		list_widget.insertItem(row, item);
+		
+		if (&temp == last_template)
+			current_item = item;
 	}
-	list_widget.setCurrentRow(current_row);
+	list_widget.setCurrentItem(current_item);
 }
 
 Template* PaintOnTemplateFeature::setupTemplate() const
