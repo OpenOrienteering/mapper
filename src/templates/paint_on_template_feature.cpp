@@ -22,6 +22,7 @@
 #include "paint_on_template_feature.h"
 
 #include <memory>
+#include <utility>
 
 #include <Qt>
 #include <QtMath>
@@ -31,6 +32,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QFontMetrics>
 #include <QIcon>
@@ -208,7 +210,7 @@ void PaintOnTemplateFeature::initTemplateDialog(QDialog& dialog, Template*& sele
 		{
 			selected_template = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
 			if (!selected_template)
-				selected_template = addNewTemplate();
+				selected_template = setupTemplate();
 			if (selected_template)
 				dialog.accept();
 		}
@@ -240,7 +242,7 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 	list_widget.setCurrentRow(current_row);
 }
 
-Template* PaintOnTemplateFeature::addNewTemplate() const
+Template* PaintOnTemplateFeature::setupTemplate() const
 {
 	auto* window = controller.getWindow();
 	if (!window || window->currentPath().isEmpty())
@@ -263,30 +265,81 @@ Template* PaintOnTemplateFeature::addNewTemplate() const
 	QString image_file_path = QFileInfo(window->currentPath()).absoluteDir().canonicalPath()
 	                          + QLatin1Char('/')
 	                          + filename;
+	
+	// When needing a new file, we try write it and read it once (for confidence
+	// in permissions), but remove it before exiting this function.
+	bool remove_file = false;
+	
+	Template* temp = nullptr;
 	if (QFileInfo::exists(image_file_path))
 	{
 		showMessage(window, tr("Template file exists: '%1'").arg(filename));
-		return nullptr;
+		
+		// Our names are unique. So we can safely assume that existing files and
+		// templates are meant to be reused.
+		temp = [&map, image_file_path]() -> Template* {
+			for (int i = map.getNumTemplates() - 1; i >= 0; --i)
+			{
+				auto* temp = map.getTemplate(i);
+				if (temp->getTemplatePath() == image_file_path && temp->canBeDrawnOnto())
+					return temp;
+			}
+			return nullptr;
+		}();
+		
+		if (temp && temp->getTemplateState() != Template::Loaded)
+		{
+			temp->loadTemplateFile();
+		}
+		
+		if (temp && temp->getTemplateState() != Template::Loaded)
+		{
+			showMessage(window,
+			            ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+			            .arg(image_file_path, temp->errorString()));
+			return nullptr;
+		}
 	}
-	
-	auto image = makeImage(filename);
-	if (!image.save(image_file_path))
+	else
 	{
-		showMessage(window,
-		            OpenOrienteering::MapEditorController::tr("Cannot save file\n%1:\n%2")
-		            .arg(filename, QString{}));
-		return nullptr;
+		auto image = makeImage(filename);
+		if (!image.save(image_file_path))
+		{
+			showMessage(window,
+			            OpenOrienteering::MapEditorController::tr("Cannot save file\n%1:\n%2")
+			            .arg(filename, QString{}));
+			return nullptr;
+		}
+		remove_file = true;
 	}
 	
-	auto* temp = new TemplateImage{image_file_path, &map};
-	temp->setTemplatePosition(georef.toMapCoords(projected_top_left) + offset);
-	temp->setTemplateScaleX(1.0/pixel_per_mm);
-	temp->setTemplateScaleY(1.0/pixel_per_mm);
-	temp->setTemplateShear(0);
-	temp->setTemplateRotation(0);
-	temp->loadTemplateFile();
+	if (!temp)
+	{
+		auto template_image = std::make_unique<TemplateImage>(image_file_path, &map);
+		template_image->setTemplatePosition(georef.toMapCoords(projected_top_left) + offset);
+		template_image->setTemplateScaleX(1.0/pixel_per_mm);
+		template_image->setTemplateScaleY(1.0/pixel_per_mm);
+		template_image->setTemplateShear(0);
+		template_image->setTemplateRotation(0);
+		template_image->loadTemplateFile();
+		
+		if (template_image->getTemplateState() != Template::Loaded)
+		{
+			showMessage(window,
+			            ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+			            .arg(image_file_path, template_image->errorString()));
+			return nullptr;
+		}
+		
+		temp = template_image.get();
+		map.addTemplate(-1, std::move(template_image));
+	}
 	
-	map.addTemplate(-1, std::unique_ptr<Template>{temp});
+	if (remove_file)
+	{
+		QFile::remove(image_file_path);   // Created for check/initialization.
+		temp->setHasUnsavedChanges(true); // Save again when the map is saved.
+	}
 	
 	return temp;
 }

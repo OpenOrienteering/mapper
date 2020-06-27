@@ -127,9 +127,9 @@ protected:
 	void initTemplateListWidget(QListWidget& list_widget) const;
 	
 	/**
-	 * Adds a new template image to the map, and returns it.
+	 * Sets up a new or existing template image, and returns it.
 	 */
-	Template* addNewTemplate() const;
+	Template* setupTemplate() const;
 	
 	/**
 	 * Creates an empty image for use in scribbling.
