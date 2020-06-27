@@ -29,6 +29,7 @@ class QDialog;
 class QImage;
 class QListWidget;
 class QPointF;
+class QRectF;
 
 namespace OpenOrienteering {
 
@@ -146,6 +147,12 @@ protected:
 	 * Terminates the painting tool.
 	 */
 	void finishPainting();
+	
+	
+	/**
+	 * Returns the currently viewed rectangle, in map coordinates.
+	 */
+	QRectF viewedRect() const;
 	
 private:
 	MapEditorController& controller;

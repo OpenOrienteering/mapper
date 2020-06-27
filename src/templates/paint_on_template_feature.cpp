@@ -44,6 +44,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QPointF>
+#include <QRectF>
 #include <QSpacerItem>
 #include <QVariant>
 #include <QVBoxLayout>
@@ -161,7 +162,7 @@ void PaintOnTemplateFeature::paintClicked(bool checked)
 {
 	if (!checked)
 		finishPainting();
-	else if (last_template)
+	else if (last_template && last_template->boundingRect().intersects(viewedRect()))
 		startPainting(last_template);
 	else if (auto* temp = selectTemplate())
 		startPainting(temp);
@@ -225,11 +226,15 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 	list_widget.addItem(item);
 	
 	auto& map = *controller.getMap();
+	auto const viewed_rect = viewedRect();
+	
 	auto current_row = 0;
 	for (int i = map.getNumTemplates() - 1; i >= 0; --i)
 	{
 		auto& temp = *map.getTemplate(i);
-		if (!temp.canBeDrawnOnto() || temp.getTemplateState() != Template::Loaded)
+		if (temp.getTemplateState() == Template::Invalid
+		    || !temp.canBeDrawnOnto()
+		    || !temp.boundingRect().intersects(viewed_rect))
 			continue;
 		
 		if (&temp == last_template)
@@ -382,6 +387,14 @@ void PaintOnTemplateFeature::finishPainting()
 {
 	if (auto* tool = qobject_cast<PaintOnTemplateTool*>(controller.getTool()))
 		tool->deactivate();
+}
+
+
+QRectF PaintOnTemplateFeature::viewedRect() const
+{
+	auto const& map_widget = *controller.getMainWidget();
+	auto const& view = *map_widget.getMapView();
+	return view.calculateViewedRect(map_widget.viewportToView(map_widget.rect()));
 }
 
 
