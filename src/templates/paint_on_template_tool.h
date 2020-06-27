@@ -27,7 +27,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QColor>
-#include <QDialog>
 #include <QObject>
 #include <QPointer>
 #include <QRectF>
@@ -40,19 +39,14 @@
 
 class QAction;
 class QCursor;
-class QListWidget;
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
-class QPushButton;
 class QRect;
 
 namespace OpenOrienteering {
 
-class MainWindow;
-class Map;
 class MapEditorController;
-class MapView;
 class MapWidget;
 class PaintOnTemplatePaletteWidget;
 class Template;
@@ -144,32 +138,6 @@ private:
 	int selected_color;
 	bool fill_shapes = false;
 	bool close_on_selection;
-};
-
-
-
-/**
- * Template selection dialog for PaintOnTemplateTool.
-*/
-class PaintOnTemplateSelectDialog : public QDialog
-{
-Q_OBJECT
-public:
-	PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent);
-	
-	Template* getSelectedTemplate() const { return selection; }
-	
-protected:
-	void drawClicked();
-	
-	Template* addNewTemplate() const;
-	
-private:
-	Map* map;
-	MapView* view;
-	Template* selection = nullptr;
-	QListWidget* template_list;
-	QPushButton* draw_button;
 };
 
 

@@ -25,6 +25,10 @@
 #include <QString>
 
 class QAction;
+class QDialog;
+class QImage;
+class QListWidget;
+class QPointF;
 
 namespace OpenOrienteering {
 
@@ -42,6 +46,29 @@ class PaintOnTemplateFeature : public QObject
 	Q_OBJECT
 	
 public:
+	/**
+	 * Determines the base for rounding projected coordinates.
+	 * 
+	 * When adding templates for painting, the top left corner of these images
+	 * is aligned to projected coordinates which are multiples of this base.
+	 * (However, since map and images usually are not aligned to grid north,
+	 * images created at different locations will not really align very well.
+	 * 
+	 * This function is designed for images of 100 mm at 10 pixel per mm.
+	 */
+	static int alignmentBase(qreal scale);
+	
+	/**
+	 * Rounds x to a multiple of base.
+	 */
+	static qint64 roundToMultiple(qreal x, int base);
+	
+	/**
+	 * Rounds each coordinate to a multiple of base.
+	 */
+	static QPointF roundToMultiple(const QPointF& point, int base);
+	
+	
 	~PaintOnTemplateFeature() override;
 	
 	PaintOnTemplateFeature(MapEditorController& controller);
@@ -60,6 +87,7 @@ public:
 	 * The action which lets the use choose a template, or create a new template.
 	 */
 	QAction* selectAction() { return select_action; }
+	
 	
 protected:
 	/**
@@ -83,6 +111,31 @@ protected:
 	 * May return nullptr when cancelled, or on error.
 	 */
 	Template* selectTemplate() const;
+	
+	
+	/**
+	 * Creates the user interface and behaviour of the select-template dialog.
+	 * 
+	 * The selected_template parameter determines where the dialog will store
+	 * the selected template when the user closes the dialog.
+	 */
+	void initTemplateDialog(QDialog& dialog, Template*& selected_template) const;
+	
+	/**
+	 * Fills a QListWidget with template options.
+	 */
+	void initTemplateListWidget(QListWidget& list_widget) const;
+	
+	/**
+	 * Adds a new template image to the map, and returns it.
+	 */
+	Template* addNewTemplate() const;
+	
+	/**
+	 * Creates an empty image for use in scribbling.
+	 */
+	static QImage makeImage(const QString& label);
+	
 	
 	/**
 	 * Activates the painting tool for the given template.
