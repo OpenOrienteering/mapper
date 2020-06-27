@@ -41,6 +41,7 @@
 #include <QMessageBox>
 #include <QPainter>
 #include <QRectF>
+#include <QSizeF>
 #include <QStringRef>
 #include <QTransform>
 #include <QXmlStreamAttributes>
@@ -720,6 +721,16 @@ QRectF Template::getTemplateExtent() const
 {
 	Q_ASSERT(!is_georeferenced);
 	return infiniteRectF();
+}
+
+QRectF Template::boundingRect() const
+{
+	auto const extent = getTemplateExtent();
+	auto rect = QRectF { templateToMap(extent.topLeft()), QSizeF{} };
+	rectInclude(rect, templateToMap(extent.topRight()));
+	rectInclude(rect, templateToMap(extent.bottomRight()));
+	rectInclude(rect, templateToMap(extent.bottomLeft()));
+	return rect;
 }
 
 void Template::scale(double factor, const MapCoord& center)

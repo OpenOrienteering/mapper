@@ -159,6 +159,9 @@ private slots:
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
 		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
 		QCOMPARE(rotation_template, rotation_map);
+		
+		// Test boundingRect for TemplateImage
+		QCOMPARE(temp->boundingRect().center(), center(temp));
 	}
 	
 	
@@ -307,6 +310,9 @@ private slots:
 			QCOMPARE(center(temp), expected_center);
 		else
 			QVERIFY2(true, "Centers do match");
+		
+		// Test boundingRect for OgrTemplate
+		QCOMPARE(temp->boundingRect().center(), center(temp));
 	}
 	
 	void ogrTemplateGeoreferencingTest()
