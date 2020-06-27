@@ -1605,6 +1605,7 @@ private:
 	bool objects_dirty;				//    ... for the objects?
 	bool other_dirty;				//    ... for any other settings?
 	bool unsaved_changes;			// are there unsaved changes for any component?
+	bool unsaved_changes_signaled = false; // state of unsaved_changes before signals were blocked
 	
 	std::set<Object*> irregular_objects;
 	
