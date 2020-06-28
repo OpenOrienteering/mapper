@@ -81,6 +81,12 @@ TemplateTableModel::TemplateTableModel(Map& map, MapView& view, QObject* parent)
 	connect(&map, &Map::templateMoved, this, &TemplateTableModel::onTemplateMoved);
 	connect(&map, &Map::templateAboutToBeDeleted, this, &TemplateTableModel::onTemplateAboutToBeDeleted);
 	connect(&map, &Map::templateDeleted, this, &TemplateTableModel::onTemplateDeleted);
+	
+	for (auto i = 0, last = map.getNumTemplates(); i < last; ++i)
+	{
+		auto* temp = map.getTemplate(i);
+		connect(temp, &Template::templateStateChanged, this, &TemplateTableModel::onTemplateStateChanged);
+	}
 }
 
 
@@ -413,13 +419,15 @@ void TemplateTableModel::onTemplateAboutToBeAdded(int pos, Template* /*temp*/, b
 	beginInsertRows({}, row, row);
 }
 
-void TemplateTableModel::onTemplateAdded()
+void TemplateTableModel::onTemplateAdded(int /*pos*/, Template* temp)
 {
 	endInsertRows();
+	connect(temp, &Template::templateStateChanged, this, &TemplateTableModel::onTemplateStateChanged);
 }
 
-void TemplateTableModel::onTemplateChanged(int pos)
+void TemplateTableModel::onTemplateChanged(int pos, Template* temp)
 {
+	connect(temp, &Template::templateStateChanged, this, &TemplateTableModel::onTemplateStateChanged);
 	auto const row = rowFromPos(pos);
 	emit dataChanged(index(row, 0), index(row, 3));
 }
@@ -438,8 +446,9 @@ void TemplateTableModel::onTemplateMoved()
 	endMoveRows();
 }
 
-void TemplateTableModel::onTemplateAboutToBeDeleted(int pos)
+void TemplateTableModel::onTemplateAboutToBeDeleted(int pos, Template* temp)
 {
+	disconnect(temp);
 	beginRemoveRows({}, rowFromPos(pos), rowFromPos(pos));
 }
 
@@ -448,6 +457,15 @@ void TemplateTableModel::onTemplateDeleted()
 	endRemoveRows();
 }
 
+void TemplateTableModel::onTemplateStateChanged()
+{
+	auto pos = this->map.findTemplateIndex(qobject_cast<Template*>(sender()));
+	if (pos >= 0)
+	{
+		auto const row = rowFromPos(pos);
+		emit dataChanged(index(row, 0), index(row, 3));
+	}
+}
 
 void TemplateTableModel::loadTemplate(Template* temp, int row)
 {
