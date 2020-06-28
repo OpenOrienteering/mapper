@@ -121,12 +121,13 @@ protected:
 	void onFirstFrontTemplateAboutToBeChanged(int old_pos, int new_pos);
 	void onFirstFrontTemplateChanged(int old_pos, int new_pos);
 	void onTemplateAboutToBeAdded(int pos, Template* temp, bool in_background);
-	void onTemplateAdded();
-	void onTemplateChanged(int pos);
+	void onTemplateAdded(int pos, Template* temp);
+	void onTemplateChanged(int pos, Template* temp);
 	void onTemplateAboutToBeMoved(int old_pos, int new_pos);
 	void onTemplateMoved();
-	void onTemplateAboutToBeDeleted(int pos);
+	void onTemplateAboutToBeDeleted(int pos, Template* temp);
 	void onTemplateDeleted();
+	void onTemplateStateChanged();
 	
 	void loadTemplate(Template* temp, int row);
 	
