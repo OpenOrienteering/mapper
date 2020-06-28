@@ -1796,6 +1796,11 @@ std::unique_ptr<Template> Map::setTemplate(int pos, std::unique_ptr<Template> te
 {
 	using std::swap;
 	auto const it = begin(templates) + pos;
+	for (auto* widget : widgets)
+	{
+		auto* view = widget->getMapView();
+		view->setTemplateVisibility(temp.get(), view->getTemplateVisibility(it->get()));
+	}
 	(*it)->setTemplateAreaDirty();
 	swap(temp, *it);
 	emit templateChanged(pos, it->get());
