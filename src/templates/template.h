@@ -431,6 +431,13 @@ public:
 	 */
 	virtual QRectF getTemplateExtent() const;
 	
+	/**
+	 * Returns the bounding rectangle of the template in map coordinates.
+	 * 
+	 * The default implementation relies on getTemplateExtent().
+	 */
+	virtual QRectF boundingRect() const;
+	
 	/** 
 	 * Scales the template with the given scaling center.
 	 * 

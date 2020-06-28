@@ -76,6 +76,7 @@ for I in \
   ocd_file_format.cpp \
   ocd_t.cpp \
   overriding_shortcut.cpp \
+  paint_on_template \
   point_symbol.cpp \
   print_widget.cpp \
   renderable.cpp \

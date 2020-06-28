@@ -2424,16 +2424,25 @@ void Map::setHasUnsavedChanges(bool has_unsaved_changes)
 		templates_dirty = false;
 		objects_dirty = false;
 		other_dirty = false;
-		if (unsaved_changes)
+		if (unsaved_changes || unsaved_changes_signaled)
 		{
 			unsaved_changes = false;
 			emit hasUnsavedChanged(unsaved_changes);
 		}
 	}
-	else if (!unsaved_changes)
+	else if (!unsaved_changes || !unsaved_changes_signaled)
 	{
 		unsaved_changes = true;
 		emit hasUnsavedChanged(unsaved_changes);
+	}
+	
+	if (!signalsBlocked())
+	{
+		// Save what has been signaled to observers.
+		// We update unsaved_changes also when signals are blocked. The extra
+		// variable helps to ensure that a signal is emitted in the first
+		// invocation as soon as signals are unblocked.
+		unsaved_changes_signaled = unsaved_changes;
 	}
 }
 
