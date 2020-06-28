@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -197,7 +197,7 @@ public:
 	void viewChanged(MapView::ChangeFlags changes);
 	
 	/** Notifies the MapWidget of changes in feature visibility. */
-	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp);
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, OpenOrienteering::Template* temp);
 	
 	
 	/** 

@@ -105,13 +105,6 @@ public:
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 	
-signals:
-	/**
-	 * Signals changes of the state of template loading when it is triggered
-	 * via this model.
-	 */
-	void templateLoadingChanged(const ::OpenOrienteering::Template* temp, int row, int state);
-	
 protected:
 	QVariant mapData(const QModelIndex &index, int role = Qt::DisplayRole) const;
 	QVariant templateData(Template* temp, const QModelIndex &index, int role = Qt::DisplayRole) const;
@@ -129,12 +122,9 @@ protected:
 	void onTemplateDeleted();
 	void onTemplateStateChanged();
 	
-	void loadTemplate(Template* temp, int row);
-	
 private:
 	Map& map;
 	MapView& view;
-	Template* to_be_loaded = nullptr;
 	QVariant checkbox_decorator;
 	bool touch_mode = false;
 	

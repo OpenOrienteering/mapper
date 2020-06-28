@@ -136,17 +136,11 @@ bool Importer::doImport()
 
 
 void Importer::prepare()
-{
-	if (view)
-		view->setTemplateLoadingBlocked(true);
-}
+{}
 
 // Don't add warnings in this function. They may hide the error message.
 void Importer::importFailed()
-{
-	if (view)
-		view->setTemplateLoadingBlocked(false);
-}
+{}
 
 void Importer::validate()
 {
@@ -215,8 +209,6 @@ void Importer::validate()
 	}
 	
 	// Template loading: try to find all template files
-	if (view)
-		view->setTemplateLoadingBlocked(false);
 	bool have_lost_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
@@ -236,11 +228,7 @@ void Importer::validate()
 				temp = actual.get();
 				map->setTemplate(i, std::move(actual));
 				if (view)
-				{
-					view->setTemplateLoadingBlocked(true);
 					view->setTemplateVisibility(temp, view->getTemplateVisibility(placeholder));
-					view->setTemplateLoadingBlocked(false);
-				}
 			}
 		}
 		

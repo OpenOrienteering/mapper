@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,15 +36,18 @@
 #include <QLatin1String>
 #include <QList>
 #include <QLocale>
+#include <QMessageBox>
 #include <QMouseEvent>
 #include <QObjectList>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPinchGesture>
 #include <QPixmap>
+#include <QPointer>
 #include <QResizeEvent>
 #include <QSizePolicy>
 #include <QTimer>
+#include <QToolTip>
 #include <QTouchEvent>
 #include <QTransform>
 #include <QVariant>
@@ -283,12 +286,12 @@ void MapWidget::viewChanged(MapView::ChangeFlags changes)
 		updateZoomDisplay();
 }
 
-void MapWidget::visibilityChanged(MapView::VisibilityFeature feature, bool /*active*/, const Template* temp)
+void MapWidget::visibilityChanged(MapView::VisibilityFeature feature, bool active, Template* temp)
 {
 	switch (feature)
 	{
 	case MapView::VisibilityFeature::TemplateVisible:
-		if (temp)
+		if (temp && temp->getTemplateState() == Template::Loaded)
 		{
 			auto const pos = getMapView()->getMap()->findTemplateIndex(temp);
 			auto const template_area = temp->calculateTemplateBoundingBox();
@@ -296,6 +299,27 @@ void MapWidget::visibilityChanged(MapView::VisibilityFeature feature, bool /*act
 			                       temp->getTemplateBoundingBoxPixelBorder(),
 			                       pos >= getMapView()->getMap()->getFirstFrontTemplate());
 		
+		}
+		else if (temp && temp->getTemplateState() == Template::Unloaded && active)
+		{
+			// The template must be loaded.
+			QToolTip::showText(QCursor::pos(),
+			                   qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
+			                   .arg(temp->getTemplateFilename()) );
+			// Use a small delay so that some UI events can be processed first.
+			QPointer<MapWidget> widget(this);
+			QTimer::singleShot(10, temp, ([temp, widget]() {
+				if (temp->getTemplateState() != Template::Loaded)
+				{
+					temp->loadTemplateFile();
+					QToolTip::hideText();
+					if (temp->getTemplateState() == Template::Invalid)
+						QMessageBox::warning(widget.data(),
+						                     qApp->translate("OpenOrienteering::MainWindow", "Error"),
+						                     qApp->translate("OpenOrienteering::Importer", "Failed to load template '%1', reason: %2")
+						                     .arg(temp->getTemplateFilename(), temp->errorString()) );
+				}
+			}));
 		}
 		break;
 		

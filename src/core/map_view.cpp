@@ -414,16 +414,9 @@ TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
 
 void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 {
-	auto visible = vis.visible && vis.opacity > 0;
-	if (visible
-	    && temp->getTemplateState() != Template::Loaded
-	    && !templateLoadingBlocked())
-	{
-		vis.visible = visible = temp->loadTemplateFile();
-	}
-	
 	if (setTemplateVisibilityHelper(temp, vis))
 	{
+		auto const visible = vis.visible && vis.opacity > 0;
 		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, temp);
 	}
 }
@@ -508,13 +501,6 @@ bool MapView::hasAlpha() const
 	}
 	
 	return false;
-}
-
-
-
-void MapView::setTemplateLoadingBlocked(bool blocked)
-{
-	template_loading_blocked = blocked;
 }
 
 
