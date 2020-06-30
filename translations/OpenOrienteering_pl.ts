@@ -152,7 +152,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation type="unfinished">Rysowanie elementu na granicy</translation>
+        <translation>Rysunek elementu na granicy</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -393,7 +393,7 @@
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="101"/>
         <source>Spot color printing</source>
-        <translation type="unfinished">Drukowanie w kolorze dodatkowym</translation>
+        <translation>Druk offsetowy</translation>
     </message>
     <message>
         <location filename="../src/gui/color_dialog.cpp" line="115"/>
@@ -545,7 +545,7 @@
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="250"/>
         <source>%1 (duplicate)</source>
         <extracomment>Future replacement for COLOR_NAME + &quot; (Duplicate)&quot;, for better localization.</extracomment>
-        <translation type="unfinished">%1 (duplikat)</translation>
+        <translation>%1 (duplikat)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="409"/>
