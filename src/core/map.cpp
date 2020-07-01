@@ -1968,6 +1968,16 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	return true;
 }
 
+void Map::loadTemplateFiles(const MapView& view)
+{
+	for (auto& temp : templates)
+	{
+		if (temp->getTemplateState() == Template::Unloaded
+		    && view.getTemplateVisibility(temp.get()).visible)
+			temp->loadTemplateFile();
+	}
+}
+
 
 
 void Map::push(UndoStep *step)

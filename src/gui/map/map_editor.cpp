@@ -644,6 +644,7 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		return false;
 	}
 	
+	map->loadTemplateFiles(*main_view);
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())

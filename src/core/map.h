@@ -743,6 +743,11 @@ public:
 	 */
 	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = {});
 	
+	/**
+	 * Loads all "unloaded" templates which are marked visible in the given view.
+	 */
+	void loadTemplateFiles(const MapView& view);
+	
 	
 	// Undo & Redo
 	

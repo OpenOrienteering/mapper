@@ -208,16 +208,27 @@ void Importer::validate()
 			throw FileFormatException(::OpenOrienteering::Importer::tr("Error during symbol post-processing."));
 	}
 	
-	// Template loading: try to find all template files
+	// Template post processing
 	bool have_lost_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
+		QString error_string;
 		Template* temp = map->getTemplate(i);
-		auto const lookup_result = temp->tryToFindTemplateFile(path);
-		if (lookup_result == Template::NotFound)
+		
+		// Resolve actual filepath.
+		switch (temp->tryToFindTemplateFile(path))
 		{
+		case Template::NotFound:
 			have_lost_template = true;
 			continue;
+		case Template::FoundInMapDir:
+			error_string.append(
+			            ::OpenOrienteering::Importer::tr(
+			                "Template \"%1\" has been loaded from the map's directory instead of"
+			                " the relative location to the map file where it was previously.")
+			            .arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+		default:
+			;
 		}
 		
 		// Migrate templates of undefined types, based on the now-resolved path.
@@ -232,28 +243,8 @@ void Importer::validate()
 			}
 		}
 		
-		if (view && !view->getTemplateVisibility(temp).visible)
-		{
-			continue;
-		}
-		
-		if (!temp->loadTemplateFile())
-		{
-			addWarning(tr("Failed to load template '%1', reason: %2")
-			           .arg(temp->getTemplateFilename(), temp->errorString()));
-			continue;
-		}
-		
-		auto error_string = temp->errorString();
-		if (lookup_result == Template::FoundInMapDir)
-		{
-			error_string.prepend(
-			            ::OpenOrienteering::Importer::tr(
-			                "Template \"%1\" has been loaded from the map's directory instead of"
-			                " the relative location to the map file where it was previously."
-			                ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
-		}
-		
+		// Report warnings
+		error_string.append(temp->errorString());
 		if (!error_string.isEmpty())
 		{
 			addWarning(tr("Warnings when loading template '%1':\n%2")

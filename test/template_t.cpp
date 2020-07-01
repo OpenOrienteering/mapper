@@ -154,8 +154,10 @@ private slots:
 		auto temp = map.getTemplate(0);
 		QCOMPARE(temp->getTemplateType(), "TemplateImage");
 		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("world-file.png"));
-		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		QVERIFY(temp->isTemplateGeoreferenced());
+		
+		map.loadTemplateFiles(view);
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
 		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
 		QCOMPARE(rotation_template, rotation_map);
@@ -227,8 +229,10 @@ private slots:
 		if (QFile::encodeName(temp->getTemplateFilename()) != temp->getTemplateFilename().toUtf8())
 			QEXPECT_FAIL("", "Local 8 bit encoding is not UTF-8", Abort);
 #endif
-		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		QVERIFY(temp->isTemplateGeoreferenced());
+		
+		map.loadTemplateFiles(view);
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
 		auto rotation_map = 0.01 * qRound(100 * georef.getGrivation());
 		QCOMPARE(rotation_template, rotation_map);
