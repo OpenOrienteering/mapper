@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QPicture>
+#include <QSignalSpy>
 #include <QString>
 #include <QTransform>
 
@@ -418,6 +419,42 @@ private slots:
 			QCOMPARE(center(reloaded_clone), expected_center);
 		else
 			QVERIFY2(true, "Centers do match.");
+	}
+	
+	void asyncLoadingTest_data()
+	{
+		QTest::addColumn<QString>("map_file");
+		QTest::addColumn<int>("template_index");
+		
+		QTest::newRow("TemplateImage")             << QStringLiteral("testdata:templates/world-file.xmap")     << 0;
+		QTest::newRow("TemplateTrack georef")      << QStringLiteral("testdata:templates/template-track.xmap") << 0;
+		QTest::newRow("TemplateTrack non-georef")  << QStringLiteral("testdata:templates/template-track.xmap") << 1;
+#ifdef MAPPER_USE_GDAL
+		QTest::newRow("OgrTemplate basic")         << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
+		QTest::newRow("OgrTemplate compatibility") << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
+#endif
+	}
+	
+	void asyncLoadingTest()
+	{
+#ifdef MAPPER_USE_GDAL
+		GdalManager().setFormatEnabled(GdalManager::GPX, false);
+#endif
+		
+		QFETCH(QString, map_file);
+		QFETCH(int, template_index);
+		
+		Map map;
+		MapView view{ &map };
+		QVERIFY(map.loadFrom(map_file, &view));
+		QVERIFY(map.getNumTemplates() > template_index);
+		
+		auto* temp = map.getTemplate(template_index);
+		QCOMPARE(temp->getTemplateState(), Template::Unloaded);
+		view.setTemplateVisibility(temp, TemplateVisibility{1, true});
+		map.loadTemplateFilesAsync(view);
+		QSignalSpy(temp, &Template::templateStateChanged).wait();
+		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 	}
 	
 	void templateTableModelTest()

@@ -644,11 +644,21 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		return false;
 	}
 	
-	map->loadTemplateFiles(*main_view);
+	map->loadTemplateFilesAsync(*main_view);
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())
-		MainWindow::showMessageBox(dialog_parent, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+	{
+		// Display warnings asynchronously, so that map and templates get visible.
+		auto warnings = importer->warnings();
+		auto show_warnings = [dialog_parent, warnings]() {
+			MainWindow::showMessageBox(dialog_parent,
+			                           tr("Warning"),
+			                           tr("The map import generated warnings."),
+			                           warnings);
+		};
+		QTimer::singleShot(0, dialog_parent, show_warnings);
+	}
 	return true;
 }
 
