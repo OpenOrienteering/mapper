@@ -337,9 +337,11 @@ private slots:
 		QTest::addColumn<QString>("map_file");
 		QTest::addColumn<int>("template_index");
 
+		QTest::newRow("TemplateImage world file")  << QStringLiteral("testdata:templates/world-file.xmap")     << 0;
 		QTest::newRow("TemplateTrack georef")      << QStringLiteral("testdata:templates/template-track.xmap") << 0;
 		QTest::newRow("TemplateTrack non-georef")  << QStringLiteral("testdata:templates/template-track.xmap") << 1;
 #ifdef MAPPER_USE_GDAL
+		QTest::newRow("GdalImage geotiff")         << QStringLiteral("testdata:templates/geotiff.xmap")        << 0;
 		QTest::newRow("OgrTemplate basic")         << QStringLiteral("testdata:templates/ogr-template.xmap")   << 0;
 		QTest::newRow("OgrTemplate compatibility") << QStringLiteral("testdata:templates/ogr-template.xmap")   << 1;
 #endif
