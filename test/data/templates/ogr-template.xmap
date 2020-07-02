@@ -137,8 +137,8 @@
             <map_view zoom="16" position_x="-204000" position_y="-399000">
                 <map opacity="1" visible="true"/>
                 <templates count="2">
-                    <ref template="0" visible="false" opacity="0.2"/>
-                    <ref template="1" visible="false" opacity="0.4"/>
+                    <ref template="0" visible="true" opacity="0.2"/>
+                    <ref template="1" visible="true" opacity="0.4"/>
                 </templates>
             </map_view>
         </view>
