@@ -33,3 +33,5 @@ codespell -q 7 \
   -L endwhile \
   -L intrest \
   "$@"
+
+git log -n 20 | codespell -q 7 - | sed 's/^/git log: /'
