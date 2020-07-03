@@ -32,7 +32,6 @@
 #include <QAbstractSlider>
 #include <QAbstractTableModel>
 #include <QAction>
-#include <QApplication>
 #include <QBoxLayout>
 #include <QByteArray>
 #include <QCheckBox>
@@ -40,7 +39,6 @@
 #include <QDialog>
 #include <QDir>
 #include <QEvent>
-#include <QEventLoop>
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -71,7 +69,6 @@
 #include <QTableView>
 #include <QTimer>
 #include <QToolButton>
-#include <QToolTip>
 #include <QVBoxLayout>
 #include <QVariant>
 #include <QVector>
@@ -360,7 +357,6 @@ TemplateListWidget::TemplateListWidget(Map& map, MapView& main_view, MapEditorCo
 	connect(template_table->model(), &QAbstractTableModel::dataChanged, this, &TemplateListWidget::setButtonsDirty);
 	connect(template_table, &QTableView::clicked, this, &TemplateListWidget::itemClicked, Qt::QueuedConnection);
 	connect(template_table, &QTableView::doubleClicked, this, &TemplateListWidget::itemDoubleClicked, Qt::QueuedConnection);
-	connect(template_model, &TemplateTableModel::templateLoadingChanged, this, &TemplateListWidget::onTemplateLoadingChanged);
 	
 	connect(delete_button, &QAbstractButton::clicked, this, &TemplateListWidget::deleteTemplate);
 	connect(move_up_button, &QAbstractButton::clicked, this, &TemplateListWidget::moveTemplateUp);
@@ -627,36 +623,6 @@ bool TemplateListWidget::eventFilter(QObject* watched, QEvent* event)
 	return false;
 }
 
-
-
-void TemplateListWidget::onTemplateLoadingChanged(const Template* temp, int row, int state)
-{
-	switch (state)
-	{
-	case TemplateTableModel::StateLoadingStarted:
-		{
-			auto item_rect = template_table->visualRect(model()->index(row, 1));
-			QToolTip::showText(template_table->mapToGlobal(item_rect.bottomLeft()),
-			                   qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
-			                   .arg(temp->getTemplateFilename()) );
-			// Ensure feedback before slow loading/drawing
-			QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents, 100 /* ms */);
-		}
-		break;
-		
-	case TemplateTableModel::StateLoaded:
-		QToolTip::hideText();
-		break;
-		
-	case TemplateTableModel::StateLoadingFailed:
-		QToolTip::hideText();
-		QMessageBox::warning(this,
-		                     qApp->translate("OpenOrienteering::MainWindow", "Error"),
-		                     qApp->translate("OpenOrienteering::Importer", "Failed to load template '%1', reason: %2")
-		                     .arg(temp->getTemplateFilename(), temp->errorString()) );
-		break;
-	}
-}
 
 
 std::unique_ptr<Template> TemplateListWidget::showOpenTemplateDialog(QWidget* dialog_parent, MapEditorController& controller)

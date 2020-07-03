@@ -743,6 +743,19 @@ public:
 	 */
 	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = {});
 	
+	/**
+	 * Loads all "unloaded" templates which are marked visible in the given view.
+	 */
+	void loadTemplateFiles(const MapView& view);
+	
+	/**
+	 * Requests all visible "unloaded" templates to be loaded asynchronously.
+	 * 
+	 * If the view is destroyed before template loading is finished, template
+	 * loading will be stopped. (The map must not be destroyed before the view.)
+	 */
+	void loadTemplateFilesAsync(MapView& view);
+	
 	
 	// Undo & Redo
 	

@@ -167,10 +167,10 @@
             <map_view zoom="16" position_x="-204000" position_y="-399000">
                 <map opacity="1" visible="true"/>
                 <templates count="4">
-                    <ref template="0" visible="false" opacity="0.2"/>
-                    <ref template="1" visible="false" opacity="0.4"/>
-                    <ref template="2" visible="false" opacity="0.6"/>
-                    <ref template="3" visible="false" opacity="0.8"/>
+                    <ref template="0" visible="true" opacity="0.2"/>
+                    <ref template="1" visible="true" opacity="0.4"/>
+                    <ref template="2" visible="true" opacity="0.6"/>
+                    <ref template="3" visible="true" opacity="0.8"/>
                 </templates>
             </map_view>
         </view>

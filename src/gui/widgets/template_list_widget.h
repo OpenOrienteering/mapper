@@ -116,8 +116,6 @@ protected:
 	
 	
 // slots:
-	void onTemplateLoadingChanged(const Template* temp, int row, int state);
-	
 #if 0
 	void newTemplate(QAction* action);
 #endif

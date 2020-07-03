@@ -101,13 +101,6 @@ bool TemplateMap::loadTemplateFileImpl()
 	
 	if (new_template_valid)
 	{
-		// Remove all template's templates from memory
-		/// \todo prevent loading and/or let user decide
-		for (int i = new_template_map->getNumTemplates()-1; i >= 0; i--)
-		{
-			new_template_map->deleteTemplate(i);
-		}
-		
 		template_map = std::move(new_template_map);
 	}
 	else if (importer)

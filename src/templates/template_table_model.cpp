@@ -289,9 +289,7 @@ QVariant TemplateTableModel::templateData(Template* temp, const QModelIndex &ind
 	switch (combined(index.column(), Qt::ItemDataRole(role)))
 	{
 	case combined(visibilityColumn(), Qt::CheckStateRole):
-		if (temp == to_be_loaded)
-			return Qt::PartiallyChecked;
-		if (visibility.visible && temp->getTemplateState() == Template::Invalid)
+		if (visibility.visible && temp->getTemplateState() != Template::Loaded)
 			return Qt::PartiallyChecked;
 		return toCheckState(visibility.visible);
 		
@@ -366,12 +364,8 @@ bool TemplateTableModel::setTemplateData(Template* temp, const QModelIndex& inde
 		if (role == Qt::CheckStateRole)
 		{
 			auto vis = view.getTemplateVisibility(temp);
-			auto was_visible = vis.visible;
 			vis.visible = value.toInt() == Qt::Checked;
-			if (vis.visible && !was_visible && temp->getTemplateState() != Template::Loaded)
-				loadTemplate(temp, index.row());
-			else
-				view.setTemplateVisibility(temp, vis);
+			view.setTemplateVisibility(temp, vis);
 			// Visibility impacts enabled state of the other fields in the row.
 			emit dataChanged(this->index(index.row(), 0), this->index(index.row(), columnCount() - 1));
 			return true;
@@ -465,23 +459,6 @@ void TemplateTableModel::onTemplateStateChanged()
 		auto const row = rowFromPos(pos);
 		emit dataChanged(index(row, 0), index(row, 3));
 	}
-}
-
-void TemplateTableModel::loadTemplate(Template* temp, int row)
-{
-	to_be_loaded = temp;
-	emit dataChanged(index(row, 0), index(row, columnCount() - 1));
-	
-	/// \todo Start template loading in a separate thread, and handle the result.
-	emit templateLoadingChanged(to_be_loaded, row, StateLoadingStarted);
-	auto visibility = view.getTemplateVisibility(to_be_loaded);
-	visibility.visible = true;
-	view.setTemplateVisibility(to_be_loaded, visibility);
-	auto const state = to_be_loaded->getTemplateState() == Template::Loaded ? StateLoaded : StateLoadingFailed;
-	emit templateLoadingChanged(to_be_loaded, row, state);
-	
-	to_be_loaded = nullptr;
-	emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
 

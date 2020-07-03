@@ -1968,6 +1968,35 @@ bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, co
 	return true;
 }
 
+void Map::loadTemplateFiles(const MapView& view)
+{
+	for (auto& temp : templates)
+	{
+		if (temp->getTemplateState() == Template::Unloaded
+		    && view.getTemplateVisibility(temp.get()).visible)
+			temp->loadTemplateFile();
+	}
+}
+
+void Map::loadTemplateFilesAsync(MapView& view)
+{
+	for (auto& temp : templates)
+	{
+		if (temp->getTemplateState() == Template::Unloaded
+		    && view.getTemplateVisibility(temp.get()).visible)
+		{
+			QTimer::singleShot(10, temp.get(), [&temp]() {
+				if (temp->getTemplateState() != Template::Loaded)
+					temp->loadTemplateFile();
+			});
+			QTimer::singleShot(11, &view, ([this, &view]() {
+				loadTemplateFilesAsync(view);
+			}));
+			return;
+		}
+	}
+}
+
 
 
 void Map::push(UndoStep *step)

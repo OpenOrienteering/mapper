@@ -323,13 +323,6 @@ public:
 	bool hasAlpha() const;
 	
 	
-	/** Temporarily blocks automatic template loading on visibility changes. */
-	void setTemplateLoadingBlocked(bool blocked);
-	
-	/** Returns true when template loading on visibility changes is disabled. */
-	bool templateLoadingBlocked() const { return template_loading_blocked; }
-	
-	
 signals:
 	/**
 	 * Indicates a change of the viewed area of the map.
@@ -350,7 +343,7 @@ signals:
 	 * @param active  The features current state of activation.
 	 * @param temp    If a the feature is a template, a pointer to this template.
 	 */
-	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, const OpenOrienteering::Template* temp = nullptr);
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, OpenOrienteering::Template* temp = nullptr);
 	
 	
 public:
@@ -424,8 +417,6 @@ private:
 	bool all_templates_hidden;
 	bool grid_visible;
 	bool overprinting_simulation_enabled;
-	
-	bool template_loading_blocked;
 };
 
 
