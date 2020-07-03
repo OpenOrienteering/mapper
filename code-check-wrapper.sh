@@ -76,6 +76,7 @@ for I in \
   ocd_file_format.cpp \
   ocd_t.cpp \
   overriding_shortcut.cpp \
+  paint_on_template \
   point_symbol.cpp \
   print_widget.cpp \
   renderable.cpp \
@@ -94,6 +95,7 @@ for I in \
   template_list_widget.cpp \
   template_map.cpp \
   template_placeholder.cpp \
+  template_table_model.cpp \
   template_tool \
   template_track.cpp \
   text_brwoser_dialog \

@@ -1,7 +1,7 @@
 /*
  *    Copyright 2012 Pete Curtis
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,6 +27,7 @@
 #include <functional>
 #include <memory>
 #include <vector>
+#include <utility>
 
 #include <QtGlobal>
 #include <QByteArray>
@@ -593,7 +594,9 @@ bool XMLFileImporter::importImplementation()
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
-			georef.setProjectedRefPoint(new_projected, false);
+			georef.setProjectedRefPoint(new_projected, false, false);
+			georef.setCombinedScaleFactor(georef.getCombinedScaleFactor()); // keep combined scale factor
+			georef.setGrivation(georef.getGrivation());  // keep grivation, update declination
 			map->setGeoreferencing(georef);
 		}
 	}
@@ -724,13 +727,10 @@ void XMLFileImporter::validateGeoreferencing()
 	valid_georef.setGrivation(loaded_georef.getGrivation());
 	if (!qFuzzyCompare(loaded_georef.getDeclination(), valid_georef.getDeclination()))
 	{
-		auto const loaded_declination = loaded_georef.getDeclination();
 		map->setGeoreferencing(valid_georef);
-		QLocale locale;
 		addWarning(tr("Inconsistent declination/grivation detected. "
-		              "Declination adjusted from %1° to %2°.")
-		           .arg(locale.toString(loaded_declination),
-		                locale.toString(valid_georef.getDeclination()) ) );
+		              "Resolved by automatic adjustment of the declination to %1°.")
+		           .arg(QLocale().toString(valid_georef.getDeclination()) ) );
 	}
 }
 
@@ -1009,9 +1009,9 @@ void XMLFileImporter::importTemplates()
 			bool opened = true;
 			auto temp = Template::loadTemplateConfiguration(xml, *map, opened);
 			if (opened)
-				map->templates.push_back(temp.release());
+				map->templates.push_back(std::move(temp));
 			else
-				map->closed_templates.push_back(temp.release());
+				map->closed_templates.push_back(std::move(temp));
 		}
 		else if (xml.name() == literal::defaults)
 		{

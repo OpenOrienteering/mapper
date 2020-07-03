@@ -32,7 +32,11 @@ class QXmlStreamWriter;
 namespace OpenOrienteering {
 
 
-/** Dynamically sized matrix of doubles. */
+/** 
+ * Dynamically sized matrix of doubles.
+ * 
+ * \todo Add a unit test, then rewrite using std::vector and pure functions.
+ */
 class Matrix
 {
 public:
@@ -46,7 +50,8 @@ public:
 		n = other.n;
 		m = other.m;
 		d = new double[n * m];
-		memcpy(d, other.d, n * m * sizeof(double));
+		if (other.d)
+			memcpy(d, other.d, n * m * sizeof(double));
 	}
 	
 	/** Constructs a nxm matrix. */
@@ -83,7 +88,8 @@ public:
 		n = other.n;
 		m = other.m;
 		d = new double[n * m];
-		memcpy(d, other.d, n * m * sizeof(double));
+		if (other.d)
+			memcpy(d, other.d, n * m * sizeof(double));
 		return *this;
 	}
 	

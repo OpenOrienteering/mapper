@@ -333,7 +333,7 @@ private:
 	std::vector<BreakdownEntry> breakdown_list;
 	std::unordered_map<quint32, std::size_t> breakdown_index;
 	
-	std::vector<std::unique_ptr<const Symbol>> number_owners;
+	std::vector<std::unique_ptr<const Symbol>> temporary_symbols;
 	
 	quint16 ocd_version;
 	

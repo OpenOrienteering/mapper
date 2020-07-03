@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,6 +28,7 @@
 #include <iterator>
 #include <limits>
 #include <set>
+#include <utility>
 #include <vector>
 // IWYU pragma: no_include <type_traits>
 
@@ -135,10 +136,9 @@
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
 #include "sensors/gps_track_recorder.h"
+#include "templates/paint_on_template_feature.h"
 #include "templates/template.h"
 #include "templates/template_dialog_reopen.h"
-#include "templates/template_position_dock_widget.h"
-#include "templates/template_tool_paint.h"
 #include "templates/template_track.h"
 #include "tools/cut_tool.h"
 #include "tools/cut_hole_tool.h"
@@ -275,7 +275,6 @@ MapEditorController::MapEditorController(OperatingMode mode, Map* map, MapView* 
 	editor_activity = nullptr;
 	current_tool = nullptr;
 	override_tool = nullptr;
-	last_painted_on_template = nullptr;
 	
 	paste_act = nullptr;
 	reopen_template_act = nullptr;
@@ -330,8 +329,6 @@ MapEditorController::~MapEditorController()
 	delete mappart_move_menu;
 	if (mappart_selector_box)
 		delete mappart_selector_box;
-	for (TemplatePositionDockWidget* widget : qAsConst(template_position_widgets))
-		delete widget;
 	delete gps_display;
 	delete gps_track_recorder;
 	delete compass_display;
@@ -478,6 +475,9 @@ void MapEditorController::setEditingInProgress(bool value)
 		load_symbols_from_act->setEnabled(!editing_in_progress);
 		load_crt_act->setEnabled(!editing_in_progress);
 		
+		// Templates menu
+		paint_feature->setEnabled(!editing_in_progress);
+		
 		updateObjectDependentActions();
 		updateSymbolDependentActions();
 		updateSymbolAndObjectDependentActions();
@@ -502,24 +502,6 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 	map_widget->setActivity(editor_activity);
 }
 
-void MapEditorController::addTemplatePositionDockWidget(Template* temp)
-{
-	Q_ASSERT(!existsTemplatePositionDockWidget(temp));
-	auto* dock_widget = new TemplatePositionDockWidget(temp, this, window);
-	addFloatingDockWidget(dock_widget);
-	template_position_widgets.insert(temp, dock_widget);
-}
-
-void MapEditorController::removeTemplatePositionDockWidget(Template* temp)
-{
-	emit templatePositionDockWidgetClosed(temp);
-	
-	if (auto* w = getTemplatePositionDockWidget(temp))
-		w->deleteLater();
-	int num_deleted = template_position_widgets.remove(temp);
-	Q_ASSERT(num_deleted == 1);
-	Q_UNUSED(num_deleted);
-}
 
 void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
 {
@@ -646,8 +628,8 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 	if (!importer)
 	{
 		QMessageBox::warning(dialog_parent, tr("Error"),
-		                     MainWindow::tr("Cannot open file:\n%1\n\n%2")
-		                     .arg(path, MainWindow::tr("Invalid file type.")));
+		                     ::OpenOrienteering::MainWindow::tr("Cannot open file:\n%1\n\n%2")
+		                     .arg(path, ::OpenOrienteering::MainWindow::tr("Invalid file type.")));
 		return false;
 	}
 	
@@ -662,10 +644,21 @@ bool MapEditorController::loadFrom(const QString& path, const FileFormat& format
 		return false;
 	}
 	
+	map->loadTemplateFilesAsync(*main_view);
 	setMapAndView(map, main_view);
 	map->setHasUnsavedChanges(false);
 	if (!importer->warnings().empty())
-		MainWindow::showMessageBox(dialog_parent, tr("Warning"), tr("The map import generated warnings."), importer->warnings());
+	{
+		// Display warnings asynchronously, so that map and templates get visible.
+		auto warnings = importer->warnings();
+		auto show_warnings = [dialog_parent, warnings]() {
+			MainWindow::showMessageBox(dialog_parent,
+			                           tr("Warning"),
+			                           tr("The map import generated warnings."),
+			                           warnings);
+		};
+		QTimer::singleShot(0, dialog_parent, show_warnings);
+	}
 	return true;
 }
 
@@ -948,7 +941,7 @@ void MapEditorController::createActions()
 	select_nothing_act = newAction("select-nothing", tr("Select nothing"), this, SLOT(selectNothing()), nullptr, QString{}, "edit_menu.html");
 	invert_selection_act = newAction("invert-selection", tr("Invert selection"), this, SLOT(invertSelection()), nullptr, QString{}, "edit_menu.html");
 	select_by_current_symbol_act = newAction("select-by-symbol", QApplication::translate("OpenOrienteering::SymbolRenderWidget", "Select all objects with selected symbols"), this, SLOT(selectByCurrentSymbols()), nullptr, QString{}, "edit_menu.html");
-	find_feature.reset(new MapFindFeature(*this));
+	find_feature = std::make_unique<MapFindFeature>(*this);
 	
 	clear_undo_redo_history_act = newAction("clearundoredohistory", tr("Clear undo / redo history"), this, SLOT(clearUndoRedoHistory()), nullptr, tr("Clear the undo / redo history to reduce map file size."), "edit_menu.html");
 	
@@ -1030,17 +1023,8 @@ void MapEditorController::createActions()
 	cutaway_physical_act = newToolAction("cutawayphysical", tr("Cut away"), this, SLOT(cutawayPhysicalClicked()), "tool-cutout-physical-inner.png", QString{}, "toolbars.html#cutaway_physical");
 	distribute_points_act = newAction("distributepoints", tr("Distribute points along path"), this, SLOT(distributePointsClicked()), "tool-distribute-points.png", QString{}, "toolbars.html#distribute_points"); // TODO: write documentation
 	
-	paint_on_template_act = new QAction(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Paint on template"), this);
-	paint_on_template_act->setMenuRole(QAction::NoRole);
-	paint_on_template_act->setCheckable(true);
-	paint_on_template_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
-	connect(paint_on_template_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateClicked);
-
-	paint_on_template_settings_act = new QAction(QIcon(QString::fromLatin1(":/images/paint-on-template-settings.png")), tr("Paint on template settings"), this);
-	paint_on_template_settings_act->setMenuRole(QAction::NoRole);
-	paint_on_template_settings_act->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
-	connect(paint_on_template_settings_act, &QAction::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
-
+	paint_feature = std::make_unique<PaintOnTemplateFeature>(*this);
+	
 	touch_cursor_action = newCheckAction("touchcursor", tr("Enable touch cursor"), map_widget, SLOT(enableTouchCursor(bool)), "tool-touch-cursor.png", QString{}, "toolbars.html#touch_cursor"); // TODO: write documentation
 	gps_display_action = newCheckAction("gpsdisplay", tr("Enable GPS display"), this, SLOT(enableGPSDisplay(bool)), "tool-gps-display.png", QString{}, "toolbars.html#gps_display"); // TODO: write documentation
 	gps_display_action->setEnabled(map->getGeoreferencing().isValid() && ! map->getGeoreferencing().isLocal());
@@ -1275,6 +1259,7 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_view->addAction(zoom_in_act);
 	toolbar_view->addAction(zoom_out_act);
 	toolbar_view->addAction(show_all_act);
+	toolbar_view->addAction(template_window_act);
 	
 	// MapParts toolbar
 	toolbar_mapparts = window->addToolBar(tr("Map parts"));
@@ -1306,12 +1291,11 @@ void MapEditorController::createMenuAndToolbars()
 	
 	auto* paint_on_template_button = new QToolButton();
 	paint_on_template_button->setCheckable(true);
-	paint_on_template_button->setDefaultAction(paint_on_template_act);
+	paint_on_template_button->setDefaultAction(paint_feature->paintAction());
 	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
 	auto* paint_on_template_menu = new QMenu(paint_on_template_button);
-	paint_on_template_menu->addAction(tr("Select template..."));
+	paint_on_template_menu->addAction(paint_feature->selectAction());
 	paint_on_template_button->setMenu(paint_on_template_menu);
-	connect(paint_on_template_menu, &QMenu::triggered, this, &MapEditorController::paintOnTemplateSelectClicked);
 	toolbar_drawing->addWidget(paint_on_template_button);
 	
 	// Editing toolbar
@@ -1487,10 +1471,10 @@ void MapEditorController::createMobileGUI()
 	
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
-	bottom_action_bar->addAction(paint_on_template_act, 0, col);
-	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_on_template_act);
+	bottom_action_bar->addAction(paint_feature->paintAction(), 0, col);
+	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_feature->paintAction());
 	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
-	mobile_paint_on_template_menu->addAction(paint_on_template_settings_act);
+	mobile_paint_on_template_menu->addAction(paint_feature->selectAction());
 	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
 
 	// Right side
@@ -1610,6 +1594,7 @@ void MapEditorController::detach()
 	gps_marker_display = nullptr;
 	
 	find_feature.reset(nullptr);
+	paint_feature.reset(nullptr);
 	
 	window->setCentralWidget(nullptr);
 	delete map_widget;
@@ -1630,7 +1615,7 @@ void MapEditorController::detach()
 
 void MapEditorController::setWindowStateChanged()
 {
-	if (!window_state_changed && !mobile_mode && mode != SymbolEditor)
+	if (!window_state_changed)
 	{
 		window_state_changed = true;
 		QTimer::singleShot(10, this, &MapEditorController::saveWindowState);
@@ -1639,7 +1624,7 @@ void MapEditorController::setWindowStateChanged()
 
 void MapEditorController::saveWindowState()
 {
-	if (window_state_changed)
+	if (!mobile_mode && mode != SymbolEditor)
 	{
 		QSettings settings;
 		settings.beginGroup(QString::fromUtf8(metaObject()->className()));
@@ -2144,8 +2129,7 @@ void MapEditorController::createTemplateWindow()
 {
 	Q_ASSERT(!template_dock_widget);
 	
-	template_list_widget = new TemplateListWidget(map, main_view, this);
-	connect(hide_all_templates_act, &QAction::toggled, template_list_widget, &TemplateListWidget::setAllTemplatesHidden);
+	template_list_widget = new TemplateListWidget(*map, *main_view, *this);
 	
 	if (isInMobileMode())
 	{
@@ -2176,14 +2160,12 @@ void MapEditorController::showTemplateWindow(bool show)
 
 void MapEditorController::openTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, this);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(window, *this);
 	if (new_template)
 	{
+		map->addTemplate(-1, std::move(new_template));
 		hideAllTemplates(false);
 		showTemplateWindow(true);
-		
-		// FIXME: this should be done through the core map, not through the UI
-		template_list_widget->addTemplateAt(new_template.release(), -1);
 	}
 }
 
@@ -3421,26 +3403,6 @@ void MapEditorController::addFloatingDockWidget(QDockWidget* dock_widget)
 	}
 }
 
-void MapEditorController::paintOnTemplateClicked(bool checked)
-{
-	if (!checked)
-		finishPaintOnTemplate();
-	else if (last_painted_on_template)
-		paintOnTemplate(last_painted_on_template);
-	else
-		paintOnTemplateSelectClicked();
-}
-
-void MapEditorController::paintOnTemplateSelectClicked()
-{
-	PaintOnTemplateSelectDialog paintDialog(map, main_view, last_painted_on_template, window);
-	paintDialog.setWindowModality(Qt::WindowModal);
-	if (paintDialog.exec() == QDialog::Accepted)
-	{
-		last_painted_on_template = paintDialog.getSelectedTemplate();
-		paintOnTemplate(last_painted_on_template);
-	}
-}
 
 void MapEditorController::enableGPSDisplay(bool enable)
 {
@@ -3486,7 +3448,6 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				if (!new_template)
 				{
 					// Need to replace the template at template_index
-					map->setTemplateAreaDirty(template_index);
 					map->deleteTemplate(template_index);
 				}
 				track = new TemplateTrack(gpx_file_path, map);
@@ -3497,16 +3458,14 @@ void MapEditorController::enableGPSDisplay(bool enable)
 				if (QFileInfo::exists(gpx_file_path))
 				{
 					track->unloadTemplateFile();
-					track->loadTemplateFile(false);
+					track->loadTemplateFile();
 				}
-				map->addTemplate(track, template_index);
+				map->addTemplate(template_index, std::unique_ptr<Template>{track});
 				// When the map is saved, the new track must be saved even if it is empty.
 				track->setHasUnsavedChanges(true);
-				map->setTemplatesDirty();
 			}
 			
 			main_view->setTemplateVisibility(track, visibility);
-			map->setTemplateAreaDirty(template_index);
 			
 			gps_track_recorder = new GPSTrackRecorder(gps_display, track, gps_track_draw_update_interval, map_widget);
 		}
@@ -3912,32 +3871,6 @@ void MapEditorController::mergeAllMapParts()
 }
 
 
-void MapEditorController::paintOnTemplate(Template* temp)
-{
-	auto* tool = qobject_cast<PaintOnTemplateTool*>(getTool());
-	if (!tool)
-	{
-		tool = new PaintOnTemplateTool(this, paint_on_template_act);
-		setTool(tool);
-	}
-	
-	hideAllTemplates(false);
-	auto vis = main_view->getTemplateVisibility(temp);
-	vis.visible = true;
-	main_view->setTemplateVisibility(temp, vis);
-	temp->setTemplateAreaDirty();
-	
-	tool->setTemplate(temp);
-}
-
-void MapEditorController::finishPaintOnTemplate()
-{
-	if (auto* tool = qobject_cast<PaintOnTemplateTool*>(current_tool))
-	{
-		tool->deactivate();
-	}
-}
-
 void MapEditorController::templateAdded(int /*pos*/, const Template* /*temp*/)
 {
 	if (map->getNumTemplates() == 1)
@@ -4071,7 +4004,7 @@ void MapEditorController::importClicked()
 	 *   it wants to report its support for the GPX format.
 	 * - Every other recognized map file is imported regularly.
 	 */
-	char const* format_id = "";
+	char const* format_id = nullptr;
 	if (filename.endsWith(QLatin1String(".gpx"), Qt::CaseInsensitive))
 		format_id = "GPX";
 	
@@ -4092,7 +4025,7 @@ void MapEditorController::importClicked()
 		return; // Error reporting in Track::import()
 	}
 	
-	if (format_id != nullptr)
+	if (format_id)
 	{
 		importMapFile(filename, false);
 		return;
@@ -4107,7 +4040,7 @@ bool MapEditorController::importGpxFile(const QString& filename)
 	imported_map.setGeoreferencing(map->getGeoreferencing());
 	
 	TemplateTrack temp(filename, &imported_map);
-	if (!temp.configureAndLoad(window, main_view) || !temp.import(window))
+	if (!temp.setupAndLoad(window, main_view) || !temp.import(window))
 		return false;
 	
 	return importMapWithReplacement(imported_map, Map::MinimalObjectImport | Map::GeorefImport, filename);
@@ -4143,7 +4076,7 @@ bool MapEditorController::importOgrFile(const QString& filename)
 {
 #if MAPPER_USE_GDAL
 	OgrTemplate ogr_template {filename, map};
-	if (!ogr_template.configureAndLoad(window, main_view))
+	if (!ogr_template.setupAndLoad(window, main_view))
 		return false;
 	
 	auto template_map = ogr_template.takeTemplateMap();

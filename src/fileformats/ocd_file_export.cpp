@@ -23,6 +23,7 @@
 #include "ocd_file_export.h"
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <iterator>
 #include <memory>
@@ -31,7 +32,6 @@
 #include <type_traits>
 #include <vector>
 
-#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QFileInfo>
@@ -49,6 +49,7 @@
 #include <QTextEncoder>
 #include <QTextStream>
 #include <QTransform>
+#include <QVarLengthArray>
 #include <QVariant>
 
 #include "settings.h"
@@ -147,6 +148,163 @@ void copySymbolHead(const Symbol& source, Symbol& symbol)
 	symbol.setProtected(source.isProtected());
 	symbol.setHidden(source.isHidden());
 	symbol.setProtected(source.isProtected());
+}
+
+
+
+/**
+ * Test if the fill patterns constitute OCD structure "aligned rows".
+ * 
+ * An "aligned rows" structure in OCD format is a basic pattern (Mapper: point symbol)
+ * which is repeated a along a row (OCD: structure width, Mapper: point distance)
+ * and in parallel rows (OCD: structure height, Mapper: line spacing).
+ * 
+ * OCD format does not support multiple fill patterns in the way Mapper does.
+ * But if two Mapper fill patterns are equal in type, frequency and rotation,
+ * it is possible to merge them to a single OCD structure.
+ */
+bool isStructureAlignedRows(const AreaSymbol::FillPattern& first, const AreaSymbol::FillPattern& second) noexcept
+{
+	return first.type == AreaSymbol::FillPattern::PointPattern
+	       && second.type == AreaSymbol::FillPattern::PointPattern
+	       && first.rotatable() == second.rotatable()
+	       && qFuzzyCompare(first.angle, second.angle)
+	       && first.line_spacing == second.line_spacing
+	       && first.point_distance == second.point_distance;
+}
+
+
+/**
+ * Test if the fill patterns constitute OCD structure "shifted rows".
+ * 
+ * A "shifted rows" structure in OCD format is a variation of the "aligned rows"
+ * structure which prints the basic pattern with an offset of half structure
+ * in every second row.
+ * 
+ * In Mapper, there is no explicit shifted rows structure. Basic row and shifted
+ * row need to be represented as explicit fill patterns with individual offsets.
+ * OCD format does not support custom offsets at all. To properly recognize what
+ * can be exported as OCD structure "shifted rows", we must establish the 
+ * equality of two fill patterns, the equality of the frequency of the patterns,
+ * and the fact that the X and Y offsets from one pattern to the other is half
+ * the frequency of the patterns.
+ * 
+ * Note that we explicitly allow for single bit errors (0.001 mm) when comparing
+ * the offset between first and second pattern with (half) pattern frequency.
+ */
+bool isStructureShiftedRows(const AreaSymbol::FillPattern& first, const AreaSymbol::FillPattern& second)
+{
+	auto renamed = [](PointSymbol const& symbol, QString const& name) {
+		auto clone = duplicate(symbol);
+		clone->setName(name);
+		return clone;
+	};
+	return isStructureAlignedRows(first, second)
+	       && qAbs((first.line_offset - second.line_offset + first.line_spacing) % first.line_spacing - first.line_spacing / 2) <= 1
+	       && qAbs((first.offset_along_line - second.offset_along_line + first.point_distance) % first.point_distance - first.point_distance / 2) <= 1
+	       && first.point
+	       && second.point
+	       && first.point->equals(renamed(*second.point, first.point->getName()).get());
+}
+
+
+
+using FillPatternSequence = QVarLengthArray<const AreaSymbol::FillPattern*, 8>;
+
+/**
+ * Transform an area fill pattern sequence for OCD structure export.
+ * 
+ * In Mapper, fill patterns are point symbols which are placed at certain offsets
+ * and which are repeated in X and Y direction. OCD format does not support such
+ * offsets, so we must move the point symbols elements instead.
+ * 
+ * In addition, Mappper allows multiple explicit fill patterns. OCD format does
+ * not support such a structure. For some cases, we may resolve this situation
+ * by merging the Mapper fill patterns into a single OCD fill pattern.
+ * 
+ * For simplicity, this function always creates and returns a clone,
+ * even if no adjustments are necessary.
+ */
+std::unique_ptr<PointSymbol> postProcessFillPattern(const FillPatternSequence& patterns, int structure_mode)
+{
+	auto* first_point_pattern = patterns.front();
+	auto point_symbol = duplicate(*first_point_pattern->point);
+	
+	// If the (cloned) first point pattern has non-zero offsets,
+	// we must apply them to the elements.
+	if (first_point_pattern->line_offset != 0
+	    || first_point_pattern->offset_along_line != 0)
+	{
+		for (int i = 0, last = point_symbol->getNumElements(); i < last; ++i)
+		{
+			if (auto* element = point_symbol->getElementObject(i))
+				element->move(first_point_pattern->line_offset, first_point_pattern->offset_along_line);
+		}
+		if ((point_symbol->getInnerRadius() > 0 && point_symbol->getInnerColor())
+		    || (point_symbol->getOuterWidth() > 0 && point_symbol->getOuterColor()))
+		{
+			// The central dot/circle must be converted to an explicit element to apply the offset.
+			auto* primary_element = new PointSymbol();
+			primary_element->setInnerRadius(point_symbol->getInnerRadius());
+			primary_element->setInnerColor(point_symbol->getInnerColor());
+			primary_element->setOuterWidth(point_symbol->getOuterWidth());
+			primary_element->setOuterColor(point_symbol->getOuterColor());
+			auto* object = new PointObject(primary_element);
+			object->setPosition(first_point_pattern->line_offset, first_point_pattern->offset_along_line);
+			point_symbol->addElement(0, object, primary_element);
+			// Now, the central dot/circle have been replaced by primary_element.
+			point_symbol->setInnerColor(nullptr);
+			point_symbol->setOuterColor(nullptr);
+		}
+	}
+	
+	// Any remaining point patterns must be appended to the elements of
+	// point_symbol, applying offsets if needed, ...
+	using std::begin; using std::end;
+	auto first = begin(patterns) + 1;
+	auto last = end(patterns);
+	
+	// ... except for the second pattern when the OCD structure is "shifted rows".
+	if (structure_mode == Ocd::StructureShiftedRows)
+	{
+		Q_ASSERT(patterns.size() == 2);
+		if (first != last)
+			++first;
+	}
+	
+	auto i = point_symbol->getNumElements(); 
+	for (auto it = first; it != last; ++it)
+	{
+		auto const* pattern = *it;
+		auto const* pattern_symbol = pattern->point;
+		if ((pattern_symbol->getInnerRadius() > 0 && pattern_symbol->getInnerColor())
+		    || (pattern_symbol->getOuterWidth() > 0 && pattern_symbol->getOuterColor()))
+		{
+			auto* primary_element = new PointSymbol();
+			primary_element->setInnerRadius(pattern_symbol->getInnerRadius());
+			primary_element->setInnerColor(pattern_symbol->getInnerColor());
+			primary_element->setOuterWidth(pattern_symbol->getOuterWidth());
+			primary_element->setOuterColor(pattern_symbol->getOuterColor());
+			auto* object = new PointObject(primary_element);
+			object->setPosition(pattern->line_offset, pattern->offset_along_line);
+			point_symbol->addElement(i, object, primary_element);
+			++i;
+		}
+		for (int k = 0, last = pattern_symbol->getNumElements(); k < last; ++k)
+		{
+			auto* element_symbol = pattern_symbol->getElementSymbol(k);
+			auto* element_object = pattern_symbol->getElementObject(k);
+			if (!element_symbol || !element_object)
+				continue;
+			
+			auto* object = element_object->duplicate();
+			object->move(pattern->line_offset, pattern->offset_along_line);
+			point_symbol->addElement(i, object, duplicate(*element_symbol).release());
+			++i;
+		}
+	}
+	
+	return point_symbol;
 }
 
 
@@ -372,10 +530,14 @@ QString stringForSpotColor(int i, const MapColor& color)
 }
 
 
+
 /// String 8: background map (aka template)
 /// \todo Unify implementation, or use specialization.
-QString stringForTemplate(const Template& temp, const MapCoord& area_offset, quint16 version)
+QString stringForTemplate(const Template& temp, const MapView* view, const MapCoord& area_offset, quint16 version)
 {
+	auto const visibility = view ? view->getTemplateVisibility(&temp) : TemplateVisibility{};
+	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
+	const auto s = visibility.visible ? '1' : '0';
 	
 	auto template_path = temp.getTemplatePath();
 	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
@@ -387,7 +549,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 	QString string_8;
 	QTextStream out(&string_8, QIODevice::Append);
 	out << template_path
-	    << "\ts" << 1;  // visible
+	    << "\ts" << s;
 	// The order of the following parameters may not matter,
 	// but choosing the most frequent form may ease testing.
 	if (version >= 11)
@@ -404,7 +566,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << "\ta" << ab
 		    << "\tb" << ab
 		    // Random order: d [ q t ]
-		    << "\td0"
+		    << "\td" << d
 		    ;
 	}
 	else if (version == 10)
@@ -422,6 +584,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << "\tv" << temp.getTemplateScaleY()
 		    // Data may end here.
 		    // optional: t, q, d
+		    << "\td" << d
 		    ;
 	}
 	else if (version == 9)
@@ -435,7 +598,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << qSetRealNumberPrecision(10)
 		    << "\tu" << temp.getTemplateScaleX()
 		    << "\tv" << temp.getTemplateScaleY()
-		    << "\td0"
+		    << "\td" << d
 		    << "\tp"
 		    << "\tt0"
 		    << "\to0"
@@ -453,7 +616,7 @@ QString stringForTemplate(const Template& temp, const MapCoord& area_offset, qui
 		    << qSetRealNumberPrecision(10)
 		    << "\tu" << 100 * temp.getTemplateScaleX()
 		    << "\tv" << 100 * temp.getTemplateScaleY()
-		    << "\td0"
+		    << "\td" << d
 		    << "\tp-1"
 		    << "\tt0"
 		    << "\to0"
@@ -545,7 +708,7 @@ QTextCodec* OcdFileExport::determineEncoding<Ocd::Custom8BitEncoding>()
 	auto encoding = codecFromSettings();
 	if (!encoding)
 	{
-		addWarning(tr("Encoding '%1' is not available. Check the settings.")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("Encoding '%1' is not available. Check the settings.")
 		           .arg(Settings::getInstance().getSetting(Settings::General_Local8BitEncoding).toString()));
 		encoding = QTextCodec::codecForLocale();
 	}
@@ -573,8 +736,9 @@ bool OcdFileExport::exportImplementation()
 		
 	default:
 		throw FileFormatException(
-		            Exporter::tr("Could not write file: %1").
-		            arg(tr("OCD files of version %1 are not supported!").arg(ocd_version))
+		            ::OpenOrienteering::Exporter::tr("Could not write file: %1").
+		            arg(::OpenOrienteering::OcdFileExport::tr("OCD files of version %1 are not supported!")
+		                .arg(ocd_version))
 		            );
 	}
 }
@@ -657,7 +821,7 @@ MapCoord OcdFileExport::calculateAreaOffset()
 		    && objects_extent.height() < ocd_bounds.height())
 		{
 			// The extent fits into the limited area.
-			addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 			area_offset = objects_extent.center();
 		}
 		else
@@ -668,7 +832,7 @@ MapCoord OcdFileExport::calculateAreaOffset()
 			// This avoids repeated moves on open/save/close cycles.
 			if (!objects_extent.intersects(ocd_bounds))
 			{
-				addWarning(tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m)."));
 				std::size_t count = 0;
 				auto calculate_average_center = [&area_offset, &count](const Object* object) {
 					area_offset *= qreal(count)/qreal(count+1);
@@ -678,8 +842,8 @@ MapCoord OcdFileExport::calculateAreaOffset()
 				map->applyOnAllObjects(calculate_average_center);
 			}
 			
-			addWarning(tr("Some coordinates remain outside of the OCAD 8 drawing area."
-			              " They might be unreachable in OCAD."));
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Some coordinates remain outside of the OCAD 8 drawing area."
+			                                                 " They might be unreachable in OCAD."));
 		}
 		
 		if (area_offset.manhattanLength() > 0)
@@ -712,7 +876,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		setup->real_offset_y = fields.y;
 		setup->real_angle = fields.a;
 		if (fields.i)
-			addWarning(tr("The georeferencing cannot be saved in OCD version 8."));
+			addWarning(::OpenOrienteering::OcdFileExport::tr("The georeferencing cannot be saved in OCD version 8."));
 		
 		if (view)
 		{
@@ -762,13 +926,13 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 		
 		symbol_header.num_separations = spotColorNumber(nullptr);
 		if (symbol_header.num_separations > 24)
-			throw FileFormatException(tr("The map contains more than 24 spot colors which is not supported by OCD version 8."));
+			throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("The map contains more than 24 spot colors which is not supported by OCD version 8."));
 		
 		auto begin_of_spot_colors = beginOfSpotColors(map);
 		if (uses_registration_color)
 			++begin_of_spot_colors;  // in ocd output (ocd_number below)
 		if (begin_of_spot_colors > 256)
-			throw FileFormatException(tr("The map contains more than 256 colors which is not supported by OCD version 8."));
+			throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("The map contains more than 256 colors which is not supported by OCD version 8."));
 		
 		using std::begin; using std::end;
 		auto separation_info = symbol_header.separation_info;
@@ -812,7 +976,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 				std::fill(begin(color_info->separations), end(color_info->separations), 255);
 				auto index = spotColorNumber(color);
 				if (index >= symbol_header.num_separations)
-					throw FileFormatException(tr("Invalid spot color."));
+					throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("Invalid spot color."));
 				color_info->separations[index] = 200;
 			}
 			else
@@ -824,7 +988,7 @@ void OcdFileExport::exportSetup(OcdFile<Ocd::FormatV8>& file)
 					{
 						auto index = spotColorNumber(component.spot_color);
 						if (index >= symbol_header.num_separations)
-							throw FileFormatException(tr("Invalid spot color."));
+							throw FileFormatException(::OpenOrienteering::OcdFileExport::tr("Invalid spot color."));
 						color_info->separations[index] = quint8(qRound(component.factor * 200));
 					}
 				}
@@ -1300,17 +1464,20 @@ QByteArray OcdFileExport::exportAreaSymbol(const AreaSymbol* area_symbol, quint3
 template< class OcdAreaSymbolCommon >
 quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdAreaSymbolCommon& ocd_area_common, const PointSymbol*& pattern_symbol)
 {
+	FillPatternSequence point_patterns;
+	
 	if (area_symbol->getColor())
 	{
 		ocd_area_common.fill_on_V9 = 1;
 		ocd_area_common.fill_color = convertColor(area_symbol->getColor());
 	}
 	
+	ocd_area_common.hatch_mode = Ocd::HatchNone;
+	ocd_area_common.structure_mode = Ocd::StructureNone;
 	ocd_area_common.structure_draw_V12 = 0;
 	
 	quint8 flags = 0;
 	// Hatch
-	// ocd_area_common.hatch_mode = Ocd::HatchNone; // 0
 	for (int i = 0, end = area_symbol->getNumFillPatterns(); i < end; ++i)
 	{
 		const auto& pattern = area_symbol->getFillPattern(i);
@@ -1347,14 +1514,18 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				}
 				Q_FALLTHROUGH();
 			default:
-				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area_symbol->getPlainTextName()));
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\", skipping a fill pattern.")
+				           .arg(area_symbol->getPlainTextName()));
 			}
 			break;
 			
 		case AreaSymbol::FillPattern::PointPattern:
-			switch (ocd_area_common.structure_mode)
+			if (!pattern.point)
+				continue;
+			
+			switch (point_patterns.size())
 			{
-			case Ocd::StructureNone:
+			case 0:
 				ocd_area_common.structure_mode = Ocd::StructureAlignedRows;
 				ocd_area_common.structure_width = decltype(ocd_area_common.structure_width)(convertSize(pattern.point_distance));
 				ocd_area_common.structure_height = decltype(ocd_area_common.structure_height)(convertSize(pattern.line_spacing));
@@ -1362,34 +1533,44 @@ quint8 OcdFileExport::exportAreaSymbolCommon(const AreaSymbol* area_symbol, OcdA
 				pattern_symbol = pattern.point;
 				if (pattern.rotatable())
 					flags |= Ocd::SymbolRotatable;
+				point_patterns.append(&pattern);
 				break;
-			case Ocd::StructureAlignedRows:
-				ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
-				// NOTE: This is only a heuristic which works for the
-				// orienteering symbol sets, not a general conversion.
-				// (Conversion is not generally possible.)
-				// No further checks are done to find out if the conversion
-				// is applicable because with these checks. Already a tiny
-				// (not noticeable) error in the symbol definition would make
-				// it take the wrong choice.
-				addWarning(tr("In area symbol \"%1\", assuming a \"shifted rows\" point pattern. This might be correct as well as incorrect.")
-				           .arg(area_symbol->getPlainTextName()));
-				
-				if (pattern.line_offset != 0)
+			case 1:
+				if (isStructureShiftedRows(*point_patterns.front(), pattern))
+				{
+					ocd_area_common.structure_mode = Ocd::StructureShiftedRows;
 					ocd_area_common.structure_height /= 2;
-				else
-					ocd_area_common.structure_width /= 2;
-				
-				break;
+					point_patterns.append(&pattern);
+					break;
+				}
+				Q_FALLTHROUGH();
 			default:
-				addWarning(tr("In area symbol \"%1\", skipping a fill pattern.").arg(area_symbol->getPlainTextName()));
+				if (isStructureAlignedRows(*point_patterns.front(), pattern))
+				{
+					// Revert from shifted rows if needed
+					ocd_area_common.structure_mode = Ocd::StructureAlignedRows;
+					ocd_area_common.structure_height = decltype(ocd_area_common.structure_height)(convertSize(pattern.line_spacing));
+					point_patterns.append(&pattern);
+					break;
+				}
+				
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In area symbol \"%1\", skipping a fill pattern.")
+				           .arg(area_symbol->getPlainTextName()));
 			}
 		}
+	}
+	
+	// Post-processing
+	if (!point_patterns.empty())
+	{
+		Q_ASSERT(ocd_area_common.structure_mode != Ocd::StructureNone);
+		auto point_symbol = postProcessFillPattern(point_patterns, ocd_area_common.structure_mode);
+		pattern_symbol = point_symbol.get();
+		temporary_symbols.push_back(std::move(point_symbol));
 		
-		if (ocd_version >= 12
-		    && ocd_area_common.structure_mode != Ocd::StructureNone)
+		if (ocd_version >= 12)
 		{
-			switch (pattern.clipping())
+			switch (point_patterns.front()->clipping())
 			{
 			case AreaSymbol::FillPattern::NoClippingIfCompletelyInside:
 				ocd_area_common.structure_draw_V12 = 1;
@@ -1504,7 +1685,8 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 		ocd_line_common.line_style = 6;
 	else
 	{
-		addWarning(tr("In line symbol \"%1\", cannot represent cap/join combination.").arg(line_symbol->getPlainTextName()));
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot represent cap/join combination.")
+		           .arg(line_symbol->getPlainTextName()));
 		// Decide based on the caps
 		if (line_symbol->getCapStyle() == LineSymbol::FlatCap)
 			ocd_line_common.line_style = 0;
@@ -1525,7 +1707,8 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 		if (line_symbol->getMidSymbol() && !line_symbol->getMidSymbol()->isEmpty())
 		{
 			if (line_symbol->getDashesInGroup() > 1)
-				addWarning(tr("In line symbol \"%1\", neglecting the dash grouping.").arg(line_symbol->getPlainTextName()));
+				addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", neglecting the dash grouping.")
+				           .arg(line_symbol->getPlainTextName()));
 			
 			ocd_line_common.main_length = convertSize(line_symbol->getDashLength() + line_symbol->getBreakLength());
 			ocd_line_common.end_length = ocd_line_common.main_length / 2;
@@ -1536,7 +1719,8 @@ quint32 OcdFileExport::exportLineSymbolCommon(const LineSymbol* line_symbol, Ocd
 			if (line_symbol->getDashesInGroup() > 1)
 			{
 				if (line_symbol->getDashesInGroup() > 2)
-					addWarning(tr("In line symbol \"%1\", the number of dashes in a group has been reduced to 2.").arg(line_symbol->getPlainTextName()));
+					addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", the number of dashes in a group has been reduced to 2.")
+					           .arg(line_symbol->getPlainTextName()));
 				
 				ocd_line_common.main_length = convertSize(2 * line_symbol->getDashLength() + line_symbol->getInGroupBreakLength());
 				ocd_line_common.end_length = convertSize(2 * line_symbol->getDashLength() + line_symbol->getInGroupBreakLength());
@@ -1630,7 +1814,7 @@ void OcdFileExport::exportLineSymbolDoubleLine(const LineSymbol* line_symbol, qu
 		    || left_border.shift != right_border.shift
 		    || left_border.width != right_border.width)
 		{
-			addWarning(tr("In line symbol \"%1\", cannot export the borders correctly.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot export the borders correctly.")
 			           .arg(line_symbol->getPlainTextName()));
 			
 			if (filling_pattern_differs)
@@ -1749,8 +1933,8 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 	if (text_format->count > 0)
 	{
 		text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-		number_owners.emplace_back(new PointSymbol());
-		symbol_numbers[number_owners.back().get()] = text_format->symbol_number;
+		temporary_symbols.emplace_back(new PointSymbol());
+		symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 		ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
 		Q_ASSERT(!ocd_symbol.isEmpty());
 		file.symbols().insert(ocd_symbol);
@@ -1759,8 +1943,8 @@ void OcdFileExport::exportTextSymbol(OcdFile<Format>& file, const TextSymbol* te
 		if (text_format->count > 0)
 		{
 			text_format->symbol_number = makeUniqueSymbolNumber(symbol_number);
-			number_owners.emplace_back(new PointSymbol());
-			symbol_numbers[number_owners.back().get()] = text_format->symbol_number;
+			temporary_symbols.emplace_back(new PointSymbol());
+			symbol_numbers[temporary_symbols.back().get()] = text_format->symbol_number;
 			ocd_symbol = exportTextSymbol<typename Format::TextSymbol>(text_symbol, text_format->symbol_number, text_format->alignment);
 			Q_ASSERT(!ocd_symbol.isEmpty());
 			file.symbols().insert(ocd_symbol);
@@ -1821,8 +2005,8 @@ void OcdFileExport::setupTextSymbolBasic(const TextSymbol* text_symbol, int alig
 	ocd_text_basic.font_italic = text_symbol->isItalic() ? 1 : 0;
 	ocd_text_basic.char_spacing = decltype(ocd_text_basic.char_spacing)(convertSize(qRound(1000 * text_symbol->getCharacterSpacing())));
 	if (ocd_text_basic.char_spacing != 0)
-		addWarning(tr("In text symbol %1: custom character spacing is set,"
-		              "its implementation does not match OCAD's behavior yet")
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: custom character spacing is set,"
+		                                                 "its implementation does not match OCAD's behavior yet")
 		           .arg(text_symbol->getPlainTextName()));
 	ocd_text_basic.word_spacing = 100;
 	ocd_text_basic.alignment = alignment;	// Default value, we might have to change this or even create copies of this symbol with other alignments later
@@ -1837,9 +2021,11 @@ void OcdFileExport::setupTextSymbolSpecial(const TextSymbol* text_symbol, OcdTex
 	ocd_text_special.line_spacing = decltype(ocd_text_special.line_spacing)(qRound(absolute_line_spacing / (text_symbol->getFontSize() * 0.01)));
 	ocd_text_special.para_spacing = convertSize(qRound(1000 * text_symbol->getParagraphSpacing()));
 	if (text_symbol->isUnderlined())
-		addWarning(tr("In text symbol %1: ignoring underlining").arg(text_symbol->getPlainTextName()));
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: ignoring underlining")
+		           .arg(text_symbol->getPlainTextName()));
 	if (text_symbol->usesKerning())
-		addWarning(tr("In text symbol %1: ignoring kerning").arg(text_symbol->getPlainTextName()));
+		addWarning(::OpenOrienteering::OcdFileExport::tr("In text symbol %1: ignoring kerning")
+		           .arg(text_symbol->getPlainTextName()));
 	
 	ocd_text_special.line_below_on = text_symbol->hasLineBelow() ? 1 : 0;
 	ocd_text_special.line_below_color = convertColor(text_symbol->getLineBelowColor());
@@ -1956,7 +2142,7 @@ void OcdFileExport::exportCombinedSymbol(OcdFile<Format>& file, const CombinedSy
 				copySymbolHead(*combined_symbol, *border_duplicate);
 				border_duplicate->setName(QLatin1String("Border of ") + border_symbol->getName());
 				border_symbol = border_duplicate.get();
-				number_owners.emplace_back(std::move(border_duplicate));
+				temporary_symbols.emplace_back(std::move(border_duplicate));
 				auto border_symbol_number = makeUniqueSymbolNumber(symbol_number);
 				symbol_numbers[border_symbol] = border_symbol_number;
 				file.symbols().insert(exportLineSymbol<typename Format::LineSymbol>(border_symbol, border_symbol_number));
@@ -2060,7 +2246,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 		}
 		if (type == 0)
 		{
-			addWarning(tr("In combined symbol %1: Unsupported subsymbol at index %2.")
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In combined symbol %1: Unsupported subsymbol at index %2.")
 			           .arg(combined_symbol->getPlainTextName(), QString::number(i)));
 		}
 		else if (!combined_symbol->isPartPrivate(i))
@@ -2073,7 +2259,7 @@ void OcdFileExport::exportGenericCombinedSymbol(OcdFile<Format>& file, const Com
 			breakdown_list.push_back({symbol_number, type});
 			if (number_owner)
 			{
-				number_owners.emplace_back(std::move(number_owner));
+				temporary_symbols.emplace_back(std::move(number_owner));
 				symbol_numbers[number_owner.get()] = symbol_number;
 			}
 			file.symbols().insert(ocd_data);
@@ -2142,7 +2328,8 @@ QByteArray OcdFileExport::exportCombinedLineSymbol(
 			ocd_line_common.framing_style = 4;
 		else
 		{
-			addWarning(tr("In line symbol \"%1\", cannot represent cap/join combination.").arg(main_line->getPlainTextName()));
+			addWarning(::OpenOrienteering::OcdFileExport::tr("In line symbol \"%1\", cannot represent cap/join combination.")
+			           .arg(main_line->getPlainTextName()));
 			// Decide based on the caps
 			if (framing->getCapStyle() == LineSymbol::RoundCap)
 				ocd_line_common.framing_style = 1;
@@ -2265,7 +2452,7 @@ void OcdFileExport::exportPathObject(OcdFile<Format>& file, const PathObject* pa
 			if (static_cast<const AreaSymbol*>(symbol)->hasRotatableFillPattern())
 				ocd_object.angle = decltype(ocd_object.angle)(convertRotation(path->getPatternRotation()));
 			if (path->getPatternOrigin() != MapCoord(0, 0))
-				addWarning(tr("Unable to export fill pattern shift for an area object"));
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export fill pattern shift for an area object"));
 		}
 	}
 	else
@@ -2444,44 +2631,38 @@ void OcdFileExport::exportTemplates(OcdFile<Format>& /*file*/)
 
 void OcdFileExport::exportTemplates()
 {
+	static auto const supported_extensions = std::array<const char* const, 8>{{
+	    "bmp", "gif", "jpg", "jpeg", "ocd", "png", "tif", "tiff"
+	}};
+	
 	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
 	{
 		const auto* temp = map->getTemplate(i);
-		QString template_path = temp->getTemplatePath();
 		
-		auto supported_by_ocd = false;
-		if (qstrcmp(temp->getTemplateType(), "TemplateImage") == 0)
+		auto const suffix = QFileInfo(temp->getTemplatePath()).suffix().toLower().toUtf8();
+		if (std::find(begin(supported_extensions), end(supported_extensions), suffix) == end(supported_extensions))
 		{
-			supported_by_ocd = true;
-			
-			if (temp->isTemplateGeoreferenced())
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to export template: file type of \"%1\" is not supported yet")
+			           .arg(temp->getTemplateFilename()));
+			continue;
+		}
+		
+		if (temp->isTemplateGeoreferenced() && suffix != "ocd")
+		{
+			if (temp->getTemplateState() == Template::Unloaded)
 			{
-				if (temp->getTemplateState() == Template::Unloaded)
-				{
-					// Try to load the template, so that the positioning gets set.
-					const_cast<Template*>(temp)->loadTemplateFile(false);
-				}
-				
-				if (temp->getTemplateState() != Template::Loaded)
-				{
-					addWarning(tr("Unable to save correct position of missing template: \"%1\"")
-					           .arg(temp->getTemplateFilename()));
-				}
+				// Try to load the template, so that the positioning gets set.
+				const_cast<Template*>(temp)->loadTemplateFile();
+			}
+			
+			if (temp->getTemplateState() != Template::Loaded)
+			{
+				addWarning(::OpenOrienteering::OcdFileExport::tr("Unable to save correct position of missing template: \"%1\"")
+				           .arg(temp->getTemplateFilename()));
 			}
 		}
-		else if (QFileInfo(template_path).suffix().compare(QLatin1String("ocd"), Qt::CaseInsensitive) == 0)
-		{
-			supported_by_ocd = true;
-		}
 		
-		if (supported_by_ocd)
-		{
-			addParameterString(8, stringForTemplate(*temp, area_offset, ocd_version));
-		}
-		else
-		{
-			addWarning(tr("Unable to export template: file type of \"%1\" is not supported yet").arg(temp->getTemplateFilename()));
-		}
+		addParameterString(8, stringForTemplate(*temp, view, area_offset, ocd_version));
 	}
 }
 
@@ -2729,7 +2910,7 @@ QByteArray OcdFileExport::exportTextData(const TextObject* object, int chunk_siz
 void OcdFileExport::addTextTruncationWarning(QString text, int pos)
 {
 	text.insert(pos, QLatin1Char('|'));
-	addWarning(tr("Text truncated at '|'): %1").arg(text));
+	addWarning(::OpenOrienteering::OcdFileExport::tr("Text truncated at '|'): %1").arg(text));
 }
 
 

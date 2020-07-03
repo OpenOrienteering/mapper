@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map xmlns="http://openorienteering.org/apps/mapper/xml/v2" version="9">
+    <notes></notes>
+    <georeferencing scale="4000" auxiliary_scale_factor="1.000425" declination="5.62" grivation="3.94">
+        <projected_crs id="EPSG">
+            <spec language="PROJ.4">+init=epsg:2180</spec>
+            <parameter>2180</parameter>
+            <ref_point x="649800" y="392500"/>
+        </projected_crs>
+        <geographic_crs id="Geographic coordinates">
+            <spec language="PROJ.4">+proj=latlong +datum=WGS84</spec>
+            <ref_point_deg lat="51.3793253" lon="21.15318339"/>
+        </geographic_crs>
+    </georeferencing>
+    <colors count="1">
+        <color priority="0" name="Purple" c="0.2" m="1" y="0" k="0" opacity="1">
+            <spotcolors>
+                <namedcolor>PURPLE</namedcolor>
+            </spotcolors>
+            <cmyk method="custom"/>
+            <rgb method="cmyk" r="0.8" g="0" b="1"/>
+        </color>
+    </colors>
+    <barrier version="6" required="0.6.0">
+        <symbols count="1">
+            <symbol type="2" id="0" code="1" name="Line">
+                <line_symbol color="0" line_width="100" minimum_length="0" join_style="1" cap_style="0" start_offset="0" end_offset="0" segment_length="4000" end_length="0" show_at_least_one_symbol="true" minimum_mid_symbol_count="0" minimum_mid_symbol_count_when_closed="0" dash_length="4000" break_length="1000" dashes_in_group="1" in_group_break_length="500" mid_symbols_per_spot="1" mid_symbol_distance="0"/>
+            </symbol>
+        </symbols>
+        <parts count="1" current="0">
+            <part name="Default">
+                <objects count="4">
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-208573" y="-400944"/>
+                            <coord x="-201072" y="-401465"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-208204" y="-395846"/>
+                            <coord x="-200685" y="-396368"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-207731" y="-395449"/>
+                            <coord x="-208144" y="-401399" flags="16"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                    <object type="1" symbol="0">
+                        <coords count="2">
+                            <coord x="-201141" y="-395912"/>
+                            <coord x="-201556" y="-401882"/>
+                        </coords>
+                        <pattern rotation="0">
+                            <coord x="0" y="0"/>
+                        </pattern>
+                    </object>
+                </objects>
+            </part>
+        </parts>
+        <templates count="4" first_front_template="0">
+            <template type="TemplateTrack" open="true" name="template-track.gpx" path="template-track.gpx" relpath="template-track.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <template type="TemplateTrack" open="true" name="template-track.gpx" path="template-track.gpx" relpath="template-track.gpx">
+                <transformations adjustment_dirty="true" passpoints="0">
+                    <transformation role="active" x="-205293" y="-399091" scale_x="1" scale_y="1" rotation="0.0980875"/>
+                    <transformation role="other" x="-205915" y="-398683" scale_x="1" scale_y="1" rotation="0"/>
+                    <matrix role="map_to_template" n="3" m="3">
+                        <element value="0.995193"/>
+                        <element value="-0.0979303"/>
+                        <element value="165.223"/>
+                        <element value="0.0979303"/>
+                        <element value="0.995193"/>
+                        <element value="417.277"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                    <matrix role="template_to_map" n="3" m="3">
+                        <element value="0.995193"/>
+                        <element value="0.0979303"/>
+                        <element value="-205.293"/>
+                        <element value="-0.0979303"/>
+                        <element value="0.995193"/>
+                        <element value="-399.091"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                    <matrix role="template_to_map_other" n="3" m="3">
+                        <element value="1"/>
+                        <element value="0"/>
+                        <element value="-205.915"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                        <element value="-398.683"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                </transformations>
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+                <projected_crs_spec>+proj=ortho +datum=WGS84 +lat_0=51.394334 +lon_0=21.143685</projected_crs_spec>
+            </template>
+            <!-- Clone of first template, with type changed to "OgrTemplate" -->
+            <template type="OgrTemplate" open="true" name="template-track.gpx" path="template-track.gpx" relpath="template-track.gpx" georef="true">
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+            </template>
+            <!-- Clone of second template, with type changed to "OgrTemplate" -->
+            <template type="OgrTemplate" open="true" name="template-track.gpx" path="template-track.gpx" relpath="template-track.gpx">
+                <transformations adjustment_dirty="true" passpoints="0">
+                    <transformation role="active" x="-205293" y="-399091" scale_x="1" scale_y="1" rotation="0.0980875"/>
+                    <transformation role="other" x="-205915" y="-398683" scale_x="1" scale_y="1" rotation="0"/>
+                    <matrix role="map_to_template" n="3" m="3">
+                        <element value="0.995193"/>
+                        <element value="-0.0979303"/>
+                        <element value="165.223"/>
+                        <element value="0.0979303"/>
+                        <element value="0.995193"/>
+                        <element value="417.277"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                    <matrix role="template_to_map" n="3" m="3">
+                        <element value="0.995193"/>
+                        <element value="0.0979303"/>
+                        <element value="-205.293"/>
+                        <element value="-0.0979303"/>
+                        <element value="0.995193"/>
+                        <element value="-399.091"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                    <matrix role="template_to_map_other" n="3" m="3">
+                        <element value="1"/>
+                        <element value="0"/>
+                        <element value="-205.915"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                        <element value="-398.683"/>
+                        <element value="0"/>
+                        <element value="0"/>
+                        <element value="1"/>
+                    </matrix>
+                </transformations>
+                <crs_spec>+proj=latlong +datum=WGS84</crs_spec>
+                <projected_crs_spec>+proj=ortho +datum=WGS84 +lat_0=51.394334 +lon_0=21.143685</projected_crs_spec>
+            </template>
+            <defaults use_meters_per_pixel="true" meters_per_pixel="0" dpi="0" scale="0"/>
+        </templates>
+        <view>
+            <grid color="#646464" display="0" alignment="0" additional_rotation="0" unit="1" h_spacing="500" v_spacing="500" h_offset="0" v_offset="0" snapping_enabled="true"/>
+            <map_view zoom="16" position_x="-204000" position_y="-399000">
+                <map opacity="1" visible="true"/>
+                <templates count="4">
+                    <ref template="0" visible="true" opacity="0.2"/>
+                    <ref template="1" visible="true" opacity="0.4"/>
+                    <ref template="2" visible="true" opacity="0.6"/>
+                    <ref template="3" visible="true" opacity="0.8"/>
+                </templates>
+            </map_view>
+        </view>
+    </barrier>
+</map>

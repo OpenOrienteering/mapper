@@ -1,9 +1,9 @@
 #
-# (C) 2017, 2019 Kai Pastor
+# Copyright 2017-2020 Kai Pastor
 #
 # Based on ISOM_rules.yaml from https://github.com/sembruk/osm2xmap/ rev 3c6cdb5
 #
-# (C) 2016 Semyon Yakimov
+# Copyright 2016 Semyon Yakimov
 #
 # This file is part of OpenOrienteering.
 #
@@ -29,12 +29,12 @@
 
 214    natural = bare_rock
 213    natural = beach AND surface = sand
-203.9  natural = cave_entrance
+203.2  natural = cave_entrance
 201    natural = cliff
-201.2  natural = cliff AND area = yes
+206    natural = cliff AND (area = yes OR is_area = yes)
 213    natural = dune
 203.1  natural = hole AND rock != no
-201.2  natural = rock AND area = yes
+206    natural = rock AND (area = yes OR is_area = yes)
 213    natural = sand
 205    natural = stone
 
@@ -47,6 +47,7 @@
 
 418    natural = bush
 403    natural = grassland
+403    natural = heath
 408    natural = scrub
 417    natural = tree
 406    natural = wood
@@ -75,7 +76,7 @@
 # 710    landuse = landfill
 403    landuse = logging
 401    landuse = meadow
-709    landuse = military
+520.2  landuse = military
 413    landuse = orchard
 301    landuse = reservoir
 # 710    landuse = quarry
@@ -93,24 +94,24 @@
 526    highway = milestone
 
 502.2  highway = motorway
-502.1  highway = motorway_link
+502    highway = motorway_link
 
 506    highway = path
 505    highway = path AND (smoothness = good OR smoothness = intermediate)
 506    highway = path AND (smoothness = bad OR smoothness = very_bad)
 507    highway = path AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = primary
-502.1  highway = secondary
-502.1  highway = tertiary
+502    highway = primary
+502    highway = secondary
+502    highway = tertiary
 
 504    highway = track
 503    highway = track AND (smoothness = good OR smoothness = intermediate)
 504    highway = track AND (smoothness = bad OR smoothness = very_bad)
 505    highway = track AND (smoothness = horrible OR smoothness = very_horrible)
 
-502.1  highway = trunk AND lanes = 2
-502.1  highway = trunk_link AND lanes = 1
+502    highway = trunk AND lanes = 2
+502    highway = trunk_link AND lanes = 1
 
 503    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street)
 502    (highway = unclassified OR highway = residential OR highway = service OR highway = living_street) AND (surface = asphalt OR surface = concrete OR surface = concrete:plates OR surface = concrete:lanes)
@@ -144,7 +145,7 @@
 311    amenity = fountain
 525    amenity = hunting_stand
 501    amenity = parking
-709    amenity = prison
+520    amenity = prison
 521    amenity = shelter
 313    amenity = watering_place
 
@@ -157,7 +158,7 @@
 518    barrier = fence
 517    barrier = fence AND ruins = yes
 410.4  barrier = hedge
-410    barrier = hedge AND area = yes
+410    barrier = hedge AND (area = yes OR is_area = yes)
 515    barrier = wall
 514    barrier = wall AND ruins = yes
 
@@ -169,4 +170,4 @@
 
 531    pipeline = marker
 
-713    shop = convenience
+# 713    shop = convenience

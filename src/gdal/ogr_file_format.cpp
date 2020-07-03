@@ -773,7 +773,7 @@ bool OgrFileImport::importImplementation()
 	auto data_source = ogr::unique_datasource(OGROpen(path.toUtf8().constData(), 0, nullptr));
 	if (!data_source)
 	{
-		addWarning(Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
+		addWarning(::OpenOrienteering::Importer::tr("Cannot open file\n%1:\n%2").arg(path, QString::fromLatin1(CPLGetLastErrorMsg())));
 		return false;
 	}
 	
@@ -850,7 +850,9 @@ bool OgrFileImport::importImplementation()
 			auto georef = map->getGeoreferencing();
 			auto ref_point = MapCoordF { georef.getMapRefPoint() };
 			auto new_projected = georef.toProjectedCoords(ref_point + offset_f);
-			georef.setProjectedRefPoint(new_projected, false);
+			georef.setProjectedRefPoint(new_projected, false, false);
+			georef.setCombinedScaleFactor(georef.getCombinedScaleFactor()); // keep combined scale factor
+			georef.setGrivation(georef.getGrivation());  // keep grivation, update declination
 			map->setGeoreferencing(georef);
 		}
 	}
@@ -970,7 +972,8 @@ ogr::unique_srs OgrFileImport::importGeoreferencing(OGRDataSourceH data_source)
 		                             QString::fromLatin1("+proj=ortho +datum=WGS84 +ellps=WGS84 +units=m +lat_0=%1 +lon_0=%2 +no_defs")
 		                             .arg(latitude, 0, 'f')
 		                             .arg(longitude, 0, 'f') );
-		ortho_georef.setProjectedRefPoint({}, false);
+		ortho_georef.setProjectedRefPoint({}, false, false);
+		ortho_georef.setCombinedScaleFactor(1.0);
 		ortho_georef.setDeclination(map->getGeoreferencing().getDeclination());
 		map->setGeoreferencing(ortho_georef);
 		return srsFromMap();

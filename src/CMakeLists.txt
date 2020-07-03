@@ -157,6 +157,8 @@ set(Mapper_Common_SRCS
   gui/widgets/text_browser.cpp
   gui/widgets/toast.cpp
   
+  templates/paint_on_template_feature.cpp
+  templates/paint_on_template_tool.cpp
   templates/template.cpp
   templates/template_adjust.cpp
   templates/template_dialog_reopen.cpp
@@ -166,8 +168,8 @@ set(Mapper_Common_SRCS
   templates/template_placeholder.cpp
   templates/template_position_dock_widget.cpp
   templates/template_positioning_dialog.cpp
+  templates/template_table_model.cpp
   templates/template_tool_move.cpp
-  templates/template_tool_paint.cpp
   templates/template_track.cpp
   templates/world_file.cpp
   

@@ -1,0 +1,9 @@
+{
+    "Keys":      ["openorienteering_nmea"],
+    "Provider":  "NMEA (OpenOrienteering)",
+    "Position":  true,
+    "Satellite": false,
+    "Monitor":   false,
+    "Priority":  999,
+    "Testable":  true
+}

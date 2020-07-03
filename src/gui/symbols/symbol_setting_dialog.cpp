@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -193,23 +193,17 @@ void SymbolSettingDialog::updatePreview()
 
 void SymbolSettingDialog::loadTemplateClicked()
 {
-	auto new_template = TemplateListWidget::showOpenTemplateDialog(this, preview_controller);
+	auto new_template = TemplateListWidget::showOpenTemplateDialog(this, *preview_controller);
 	if (new_template)
 	{
 		if (preview_map->getNumTemplates() > 0)
 		{
 			// Delete old template
-			preview_map->setTemplateAreaDirty(0);
 			preview_map->deleteTemplate(0);
 		}
 		
-		preview_map->setFirstFrontTemplate(1);
-		
-		auto temp = new_template.release(); // avoid double release after addTemplate
-		preview_map->addTemplate(temp, 0);
-		preview_map_view->setTemplateVisibility(temp, { 1, true });
-		preview_map->setTemplateAreaDirty(0);
-		
+		auto temp = new_template.get();
+		preview_map->addTemplate(-1, std::move(new_template));
 		template_file_label->setText(temp->getTemplateFilename());
 		center_template_button->setEnabled(qstrcmp(temp->getTemplateType(), "TemplateImage") == 0);
 	}

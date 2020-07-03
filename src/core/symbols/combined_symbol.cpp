@@ -60,7 +60,7 @@ CombinedSymbol::CombinedSymbol(const CombinedSymbol& proto)
 , private_parts { proto.private_parts }
 , parts { proto.parts }
 {
-	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [this](auto part, auto is_private) {
+	std::transform(begin(parts), end(parts), begin(private_parts), begin(parts), [](auto part, auto is_private) {
 		return (part && is_private) ? Symbol::duplicate(*part).release() : part;
 	});
 }
@@ -398,6 +398,7 @@ const Symbol::BorderHints* CombinedSymbol::borderHints() const
 void CombinedSymbol::setPart(int i, const Symbol* symbol, bool is_private)
 {
 	const auto index = std::size_t(i);
+	Q_ASSERT(index < parts.size());
 	
 	if (private_parts[index])
 		delete parts[index];

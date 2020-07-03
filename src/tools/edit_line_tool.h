@@ -29,6 +29,7 @@
 #include <QString>
 
 #include "core/map_coord.h"
+#include "core/map_view.h"
 #include "tools/edit_tool.h"
 
 class QAction;
@@ -68,6 +69,8 @@ public:
 	void dragMove() override;
 	void dragFinish() override;
 	void dragCanceled() override;
+	
+	void applyViewChanges(OpenOrienteering::MapView::ChangeFlags change) override;
 	
 protected:
 	bool keyPress(QKeyEvent* event) override;

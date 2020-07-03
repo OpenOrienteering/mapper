@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2014-2019 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -89,6 +89,7 @@ MapView::MapView(QObject* parent, Map* map)
 {
 	Q_ASSERT(map);
 	updateTransform();
+	connect(map, &Map::templateAboutToBeAdded, this, &MapView::onAboutToAddTemplate);
 	connect(map, &Map::templateAdded, this, &MapView::onTemplateAdded);
 	connect(map, &Map::templateDeleted, this, &MapView::onTemplateDeleted, Qt::QueuedConnection);
 }
@@ -130,8 +131,15 @@ void MapView::save(QXmlStreamWriter& xml, const QLatin1String& element_name, boo
 			templates_element.writeAttribute(XmlStreamLiteral::count, template_visibilities.size());
 			for (auto entry : template_visibilities)
 			{
+				auto const index = map->findTemplateIndex(entry.temp);
+				if (index < 0)
+				{
+					qWarning("Template visibility found for unknown template");
+					continue;
+				}
+				
 				XmlElementWriter ref_element(xml, literal::ref);
-				ref_element.writeAttribute(literal::template_string, map->findTemplateIndex(entry.temp));
+				ref_element.writeAttribute(literal::template_string, index);
 				ref_element.writeAttribute(literal::visible, entry.visible);
 				ref_element.writeAttribute(literal::opacity, entry.opacity);
 			}
@@ -207,9 +215,9 @@ void MapView::load(QXmlStreamReader& xml)
 	emit visibilityChanged(MultipleFeatures, true);
 }
 
-void MapView::updateAllMapWidgets()
+void MapView::updateAllMapWidgets(VisibilityFeature change)
 {
-	emit visibilityChanged(MultipleFeatures, true);
+	emit visibilityChanged(change, true);
 }
 
 QPointF MapView::mapToView(const MapCoord& coords) const
@@ -406,16 +414,9 @@ TemplateVisibility MapView::getTemplateVisibility(const Template* temp) const
 
 void MapView::setTemplateVisibility(Template* temp, TemplateVisibility vis)
 {
-	auto visible = vis.visible && vis.opacity > 0;
-	if (visible
-	    && temp->getTemplateState() != Template::Loaded
-	    && !templateLoadingBlocked())
-	{
-		vis.visible = visible = temp->loadTemplateFile(false);
-	}
-	
 	if (setTemplateVisibilityHelper(temp, vis))
 	{
+		auto const visible = vis.visible && vis.opacity > 0;
 		emit visibilityChanged(VisibilityFeature::TemplateVisible, visible, temp);
 	}
 }
@@ -435,6 +436,11 @@ bool MapView::setTemplateVisibilityHelper(const Template *temp, TemplateVisibili
 		return true;
 	}
 	return false;
+}
+
+void MapView::onAboutToAddTemplate(int, Template* temp)
+{
+	setTemplateVisibilityHelper(temp, { 1.0f, false });
 }
 
 void MapView::onTemplateAdded(int, Template* temp)
@@ -495,13 +501,6 @@ bool MapView::hasAlpha() const
 	}
 	
 	return false;
-}
-
-
-
-void MapView::setTemplateLoadingBlocked(bool blocked)
-{
-	template_loading_blocked = blocked;
 }
 
 

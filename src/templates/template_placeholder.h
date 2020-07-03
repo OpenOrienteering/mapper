@@ -21,6 +21,8 @@
 #ifndef OPENORIENTEERING_TEMPLATE_PLACEHOLDER_H
 #define OPENORIENTEERING_TEMPLATE_PLACEHOLDER_H
 
+#include <memory>
+
 #include <QtGlobal>
 #include <QByteArray>
 #include <QObject>
@@ -58,6 +60,9 @@ public:
 	const char* getTemplateType() const override;
 	
 	
+	std::unique_ptr<Template> makeActualTemplate() const;
+	
+	
 	bool isRasterGraphics() const override;
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
@@ -69,7 +74,7 @@ protected:
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 	
 	
-	bool loadTemplateFileImpl(bool configuring) override;
+	bool loadTemplateFileImpl() override;
 	
 	void unloadTemplateFileImpl() override;
 

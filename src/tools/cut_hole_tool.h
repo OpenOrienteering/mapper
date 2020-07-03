@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2018 Kai Pastor
+ *    Copyright 2018-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -86,12 +86,14 @@ public slots:
 	void pathFinished(OpenOrienteering::PathObject* hole_path);
 	
 protected:
+	void cutHole(PathObject* edited_path, PathObject* hole_path);
+	
 	void updateStatusText();
 	void updateDirtyRect(const QRectF* path_rect = nullptr);
 	
+private:
+	DrawLineAndAreaTool* path_tool = nullptr;
 	CutHoleTool::HoleType hole_type;
-	DrawLineAndAreaTool* path_tool;
-	MapWidget* edit_widget;
 };
 
 

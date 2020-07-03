@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Pete Curtis
- *    Copyright 2013-2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -1229,7 +1229,7 @@ Template *OCAD8FileImport::importTemplate(OCADCString* ocad_str)
 	templ->setTemplateScaleY(convertTemplateScale(background.scly));
 	templ->setTemplateShear(0.0);
 	
-	map->templates.insert(map->templates.begin(), templ);
+	map->templates.insert(map->templates.begin(), std::unique_ptr<Template>{templ});
 	
 	if (view)
 	{
@@ -1864,7 +1864,7 @@ bool OCAD8FileExport::exportImplementation()
 				if (temp->getTemplateState() == Template::Unloaded)
 				{
 					// Try to load the template, so that the positioning gets set.
-					const_cast<Template*>(temp)->loadTemplateFile(false);
+					const_cast<Template*>(temp)->loadTemplateFile();
 				}
 				
 				if (temp->getTemplateState() != Template::Loaded)

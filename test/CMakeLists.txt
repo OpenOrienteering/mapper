@@ -1,5 +1,5 @@
 #
-#    Copyright 2012-2019 Kai Pastor
+#    Copyright 2012-2020 Kai Pastor
 #    
 #    This file is part of OpenOrienteering.
 # 
@@ -22,6 +22,7 @@ find_package(Qt5PrintSupport REQUIRED)
 find_package(Qt5Test REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Positioning)
+find_package(Qt5Sensors)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -199,9 +200,14 @@ add_system_test(track_t)  # Could be unit test, but needs Georeferencing
 add_system_test(transform_t)
 add_system_test(undo_manager_t)
 
-if(TARGET Qt5::Positioning)
+if(TARGET mapper-sensors)
 	add_system_test(sensors_t)
-	target_link_libraries(sensors_t PRIVATE Qt5::Positioning mapper-sensors Mapper_Common)
+	target_link_libraries(sensors_t  PRIVATE mapper-sensors)
+	foreach(lib Qt5::Positioning Qt5::Sensors)
+		if(TARGET ${lib})
+			target_link_libraries(sensors_t  PRIVATE ${lib})
+		endif()
+	endforeach()
 endif()
 
 # Collect the AUTORUN_TESTS

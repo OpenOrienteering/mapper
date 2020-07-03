@@ -105,6 +105,19 @@ const char* TemplatePlaceholder::getTemplateType() const
 	return original_type;
 }
 
+std::unique_ptr<Template> TemplatePlaceholder::makeActualTemplate() const
+{
+	auto maybe_open = true;
+	QString buffer;
+	{
+		QXmlStreamWriter writer(&buffer);
+		saveTemplateConfiguration(writer, maybe_open);
+	}
+	QXmlStreamReader reader(buffer);
+	reader.readNextStartElement();  // <template ...>
+	return Template::loadTemplateConfiguration(reader, *map, maybe_open);
+}
+
 bool TemplatePlaceholder::isRasterGraphics() const
 {
 	return true;
@@ -138,7 +151,7 @@ bool TemplatePlaceholder::loadTypeSpecificTemplateConfiguration(QXmlStreamReader
 	return result;
 }
 
-bool TemplatePlaceholder::loadTemplateFileImpl(bool /*configuring*/)
+bool TemplatePlaceholder::loadTemplateFileImpl()
 {
 	setErrorString(tr("Unknown file format"));
 	return false;

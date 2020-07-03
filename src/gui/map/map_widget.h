@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -64,6 +64,7 @@ class GPSTemporaryMarkers;
 class MapEditorActivity;
 class MapEditorTool;
 class PieMenu;
+class Template;
 class TouchCursor;
 
 
@@ -194,6 +195,9 @@ public:
 	
 	/** Notifies the MapWidget of the view having zoomed, moved or rotated. */
 	void viewChanged(MapView::ChangeFlags changes);
+	
+	/** Notifies the MapWidget of changes in feature visibility. */
+	void visibilityChanged(OpenOrienteering::MapView::VisibilityFeature feature, bool active, OpenOrienteering::Template* temp);
 	
 	
 	/** 
@@ -386,6 +390,8 @@ protected:
 	void contextMenuEvent(QContextMenuEvent* event) override;
 	
 private:
+	void updatePlaceholder();
+	
 	/** Checks if there is a visible template in the range
 	 *  from first_template to last_template. */
 	bool containsVisibleTemplate(int first_template, int last_template) const;

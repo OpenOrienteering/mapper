@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012-2014 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -36,15 +36,18 @@
 #include <QLatin1String>
 #include <QList>
 #include <QLocale>
+#include <QMessageBox>
 #include <QMouseEvent>
 #include <QObjectList>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPinchGesture>
 #include <QPixmap>
+#include <QPointer>
 #include <QResizeEvent>
 #include <QSizePolicy>
 #include <QTimer>
+#include <QToolTip>
 #include <QTouchEvent>
 #include <QTransform>
 #include <QVariant>
@@ -55,6 +58,7 @@
 #include "core/latlon.h"
 #include "core/map.h"
 #include "core/renderables/renderable.h"
+#include "core/symbols/symbol.h"  // IWYU pragma: keep
 #include "gui/touch_cursor.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/widgets/action_grid_bar.h"
@@ -62,7 +66,7 @@
 #include "gui/widgets/pie_menu.h"
 #include "sensors/gps_display.h"
 #include "sensors/gps_temporary_markers.h"
-#include "templates/template.h" // IWYU pragma: keep
+#include "templates/template.h"
 #include "tools/tool.h"
 #include "util/backports.h" // IWYU pragma: keep
 #include "util/util.h"
@@ -124,12 +128,10 @@ void MapWidget::setMapView(MapView* view)
 	{
 		if (this->view)
 		{
-			auto map = view->getMap();
+			auto* map = view->getMap();
 			map->removeMapWidget(this);
-			
-			disconnect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
-			disconnect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
-			disconnect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
+			disconnect(map);
+			disconnect(this->view);
 		}
 		
 		this->view = view;
@@ -137,11 +139,17 @@ void MapWidget::setMapView(MapView* view)
 		if (view)
 		{
 			connect(this->view, &MapView::viewChanged, this, &MapWidget::viewChanged);
+			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::visibilityChanged);
 			connect(this->view, &MapView::panOffsetChanged, this, &MapWidget::setPanOffset);
-			connect(this->view, &MapView::visibilityChanged, this, &MapWidget::updateEverything);
 			
-			auto map = this->view->getMap();
+			auto* map = this->view->getMap();
 			map->addMapWidget(this);
+			connect(map, &Map::colorAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::colorDeleted, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::symbolAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::symbolDeleted, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::templateAdded, this, &MapWidget::updatePlaceholder);
+			connect(map, &Map::templateDeleted, this, &MapWidget::updatePlaceholder);
 		}
 		
 		update();
@@ -276,6 +284,57 @@ void MapWidget::viewChanged(MapView::ChangeFlags changes)
 	updateEverything();
 	if (changes.testFlag(MapView::ZoomChange))
 		updateZoomDisplay();
+}
+
+void MapWidget::visibilityChanged(MapView::VisibilityFeature feature, bool active, Template* temp)
+{
+	switch (feature)
+	{
+	case MapView::VisibilityFeature::TemplateVisible:
+		if (temp && temp->getTemplateState() == Template::Loaded)
+		{
+			auto const pos = getMapView()->getMap()->findTemplateIndex(temp);
+			auto const template_area = temp->calculateTemplateBoundingBox();
+			markTemplateCacheDirty(getMapView()->calculateViewBoundingBox(template_area),
+			                       temp->getTemplateBoundingBoxPixelBorder(),
+			                       pos >= getMapView()->getMap()->getFirstFrontTemplate());
+		
+		}
+		else if (temp && temp->getTemplateState() == Template::Unloaded && active)
+		{
+			// The template must be loaded.
+			QToolTip::showText(QCursor::pos(),
+			                   qApp->translate("OpenOrienteering::MainWindow", "Opening %1")
+			                   .arg(temp->getTemplateFilename()) );
+			// Use a small delay so that some UI events can be processed first.
+			QPointer<MapWidget> widget(this);
+			QTimer::singleShot(10, temp, ([temp, widget]() {
+				if (temp->getTemplateState() != Template::Loaded)
+				{
+					temp->loadTemplateFile();
+					QToolTip::hideText();
+					if (temp->getTemplateState() == Template::Invalid)
+						QMessageBox::warning(widget.data(),
+						                     qApp->translate("OpenOrienteering::MainWindow", "Error"),
+						                     qApp->translate("OpenOrienteering::Importer", "Failed to load template '%1', reason: %2")
+						                     .arg(temp->getTemplateFilename(), temp->errorString()) );
+				}
+			}));
+		}
+		break;
+		
+	case MapView::VisibilityFeature::GridVisible:
+	case MapView::VisibilityFeature::MapVisible:
+		map_cache_dirty_rect = rect();
+		Q_FALLTHROUGH();
+	case MapView::VisibilityFeature::AllTemplatesHidden:
+		update();
+		break;
+		
+	default:
+		updateEverything();
+		break;
+	}
 }
 
 void MapWidget::setPanOffset(const QPoint& offset)
@@ -1197,6 +1256,23 @@ void MapWidget::contextMenuEvent(QContextMenuEvent* event)
 		context_menu->popup(event->globalPos());
 	
 	event->accept();
+}
+
+void MapWidget::updatePlaceholder()
+{
+	if (!show_help)
+		return;
+	
+	auto const* map = view->getMap();
+	if (map->getNumObjects() > 1)
+		return;
+	
+	if (map->getNumColors() < 2
+	    || map->getNumSymbols() < 2
+	    || map->getNumTemplates() < 2)
+	{
+		update();
+	}
 }
 
 bool MapWidget::containsVisibleTemplate(int first_template, int last_template) const

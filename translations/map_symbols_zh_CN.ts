@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="zh_Hans">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>ISOM 2017-2</name>
     <message>
@@ -161,7 +161,7 @@
     <message>
         <source>Black for open land</source>
         <comment>Color 31</comment>
-        <translation>开阔地的黑色</translation>
+        <translation>空旷地的黑色</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -181,7 +181,7 @@
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -235,7 +235,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
@@ -245,21 +245,21 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation>如果必须提供更多有关地面形状的信息，则使用辅助等高线。只有在普通等高线不能完整描述地形的情况下才会添加辅助等高线。它们不得用在等高线之间的中间位置。相邻等高线之间只应使用一条辅助等高线。辅助等高线逻辑上和等高线体系吻合非常重要，因此辅助等高线的起点和终点应与相邻等高线平行。辅助等高线虚线之间的间隙必须放在辅助等高线的合理直线部分上。辅助等高线线可用于区分扁平和明显的土丘、洼地（最小高度/深度应为1米）。必须避免过度使用辅助等高线，因为这会干扰地面形状的三维图像，并使地图阅读复杂化。
+        <translation>如果必须提供更多有关地面形状的信息，则使用间曲线。只有在首曲线不能完整描述地形的情况下才会添加间曲线。它们不得用在等高线之间的中间位置。相邻首曲线之间只应使用一条间曲线。间曲线逻辑上和等高线体系吻合非常重要，因此间曲线的起点和终点应与相邻等高线平行。间曲线虚线之间的间隙必须放在间曲线的合理直线部分上。间曲线可用于区分扁平和明显的土丘、洼地（最小高度/深度应为1米）。必须避免过度使用间曲线，因为这会干扰地面形状的三维图像，并使地图阅读复杂化。
 最小长度（非闭合）：两段虚线。
 最小长度，小丘或凹地：1.1mm（实地长度16.5米）</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>辅助等高线-示坡线</translation>
+        <translation>间曲线-示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -279,7 +279,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可翻越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -295,7 +295,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可翻越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -311,7 +311,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可翻越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -361,7 +361,7 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the object mu
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation>冲沟或堑壕</translation>
+        <translation>冲沟</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
@@ -525,7 +525,7 @@ The dots shall not be arranged to form a single point wide line.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation>特殊地貌</translation>
+        <translation>突出地貌</translation>
     </message>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings.
@@ -543,7 +543,7 @@ Footprint: 13.5 m x 11.5 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -552,16 +552,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖-最小尺寸</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -570,16 +570,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>不可通过的陡崖，平面形状表示（来自 ISOM2000）</translation>
+        <translation>不可翻越的陡崖-平面形状表示（来自 ISOM2000）</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -589,7 +589,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>陡崖-主线</translation>
+        <translation>可翻越的石崖-主线</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -598,16 +598,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>陡崖-齿线</translation>
+        <translation>可翻越的石崖-齿线</translation>
     </message>
     <message>
         <source>Use this symbol to display the full extent of a wide cliff.</source>
@@ -617,7 +617,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>不可通过的陡崖最小尺寸 (来自 ISOM2000)</translation>
+        <translation>不可翻越的陡崖-最小尺寸 (来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -627,7 +627,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -636,9 +636,9 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
@@ -654,16 +654,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -672,16 +672,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation>可通过陡崖最小尺寸</translation>
+        <translation>可翻越陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -690,16 +690,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation>可通过陡崖最小尺寸(来自 ISOM2000)</translation>
+        <translation>可翻越陡崖最小尺寸(来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -765,7 +765,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
     <message>
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
-        <translation>巨石</translation>
+        <translation>不同尺寸的石块或大石块</translation>
     </message>
     <message>
         <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -1234,7 +1234,7 @@ Minimum length (isolated): two dashes (2.75 mm - footprint 41 m).</source>
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307</comment>
-        <translation>对参赛者而言是有危险或不能通过的沼泽。 黑色的边线强调了其不可通行的特性。当此符号与不可通行水域（301）同时使用时，两者之间的黑色边线可省略掉。此符号可与凌乱开阔地符号(403，404) 结合使用，表示此沼泽的开阔性。
+        <translation>对参赛者而言是有危险或不能通过的沼泽。 黑色的边线强调了其不可通行的特性。当此符号与不可通行水域（301）同时使用时，两者之间的黑色边线可省略掉。此符号可与凌乱空旷地符号(403，404) 结合使用，表示此沼泽的开阔性。
 符号朝北。
 最小宽度: 0.3 mm( 内) 。最小面积: 0.5 mm² ( 内) 。</translation>
     </message>
@@ -1248,7 +1248,7 @@ Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
 The symbol is orientated to north.
 Minimum width: 0.3 mm (inside). Minimum area: 0.5 mm² (inside).</source>
         <comment>Description of symbol 307.1</comment>
-        <translation>对参赛者而言是有危险或不能通过的沼泽。 黑色的边线强调了其不可通行的特性。当此符号与不可通行水域（301）同时使用时，两者之间的黑色边线可省略掉。此符号可与凌乱开阔地符号(403，404) 结合使用，表示此沼泽的开阔性。
+        <translation>对参赛者而言是有危险或不能通过的沼泽。 黑色的边线强调了其不可通行的特性。当此符号与不可通行水域（301）同时使用时，两者之间的黑色边线可省略掉。此符号可与凌乱空旷地符号(403，404) 结合使用，表示此沼泽的开阔性。
 符号朝北。
 最小宽度: 0.3 mm( 内) 。最小面积: 0.5 mm² ( 内) 。</translation>
     </message>
@@ -1383,7 +1383,7 @@ Footprint: 13.5 m x 13.5 m.</source>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
     </message>
     <message>
         <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1397,7 +1397,7 @@ Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1407,17 +1407,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation>在开阔地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
+        <translation>在空旷地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
 不得与坑洼地(113)、石块地(208)或者沼泽符号 (308、310) 以外的面状符号组合。
 最小宽度:1.5mm(实地宽度22.5米)。
 最小面积:2mm x 2mm(占地面积30米 x 30米)。
-较小的区域必须被删除，或夸大使用符号 开阔地(401)表示。
+较小的区域必须被删除，或夸大使用符号 空旷地(401)表示。
 这个符号是朝北的。</translation>
     </message>
     <message>
         <source>Open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 402.1</comment>
-        <translation>稀树开阔地(灌木)</translation>
+        <translation>稀树空旷地(灌木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -1427,17 +1427,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402.1</comment>
-        <translation>在开阔地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
+        <translation>在空旷地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
 不得与坑洼地(113)、石块地(208)或者沼泽符号 (308、310) 以外的面状符号组合。
 最小宽度:1.5mm(实地宽度22.5米)。
 最小面积:2mm x 2mm(占地面积30米 x 30米)。
-较小的区域必须被删除，或夸大使用符号 开阔地(401)表示。
+较小的区域必须被删除，或夸大使用符号 空旷地(401)表示。
 这个符号是朝北的。</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -1445,15 +1445,15 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation>荒野、高沼地、砍伐区、新种植区(低于约1米的树木)或其他具有粗糙地面植被、石楠或高草的开阔地带，与典型的可跑树林具有相同的可跑性。
+        <translation>荒野、高沼地、砍伐区、新种植区(低于约1米的树木)或其他具有粗糙地面植被、石楠或高草的空旷地带，与典型的可跑树林具有相同的可跑性。
 可与慢跑底层植被（407）或慢行底层植被（409）组合使用。
 最小面积：1mm x 1mm(实地面积15米 x 15米)。
-较小的区域必须被删除，或夸大使用符号 开阔地(401）标示。</translation>
+较小的区域必须被删除，或夸大使用符号 空旷地(401）标示。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1463,17 +1463,17 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation>在凌乱的开阔地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
+        <translation>在凌乱的空旷地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
 这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。只有白点型态可以与符号植被相结合：慢跑底层植被(407)或 慢行底层植被(409)，以显示可跑性降低。
 符号朝北。
 最小宽度：1.5mm (实地面积22.5米)。
 最小面积：2.5mmx2.5mm (实地面积37.5米 x 37.5米)。
-较小的区域必须删除，或夸大使用符号凌乱开阔地（403)表示。</translation>
+较小的区域必须删除，或夸大使用符号凌乱空旷地（403)表示。</translation>
     </message>
     <message>
         <source>Rough open land with scattered bushes (green dots)</source>
         <comment>Name of symbol 404.1</comment>
-        <translation>稀树凌乱开阔地(灌木)</translation>
+        <translation>稀树凌乱空旷地(灌木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -1483,12 +1483,12 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation>在凌乱的开阔地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
+        <translation>在凌乱的空旷地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
 这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。只有白点型态可以与符号植被相结合：慢跑底层植被(407)或 慢行底层植被(409)，以显示可跑性降低。
 符号朝北。
 最小宽度：1.5mm (实地面积22.5米)。
 最小面积：2.5mmx2.5mm (实地面积37.5米 x 37.5米)。
-较小的区域必须删除，或夸大使用符号凌乱开阔地（403)表示。</translation>
+较小的区域必须删除，或夸大使用符号凌乱空旷地（403)表示。</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -1504,7 +1504,7 @@ For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.5
         <comment>Description of symbol 405</comment>
         <translation>特殊地形的典型开阔森林。如果没有可跑的树林，那么地图上就不应该出现白色。
 最小面积：除了下面的符号外，在其他颜色网屏开孔最小面积是1mm x1mm（实地面积15米X 15米）：
-开阔地（401）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
+空旷地（401）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
 符号慢行植被（408）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
 符号难行植被（410）的开孔最小面积为0.55mm x 0.55mm(实地面积8 米x8米）。</translation>
     </message>
@@ -1710,7 +1710,7 @@ The symbol is combined with symbol Out-of-bounds area (709) to show cultivated l
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412</comment>
-        <translation>耕作地，通常用于种植农作物。可跑性根据种植的作物类型和一年中的时间而变化。对于农林业，可以使用符号 可跑树林（405）或 稀树开阔地（402）而不是黄色。
+        <translation>耕作地，通常用于种植农作物。可跑性根据种植的作物类型和一年中的时间而变化。对于农林业，可以使用符号 可跑树林（405）或 稀树空旷地（402）而不是黄色。
 由于可跑性有所不同，因此在路线设计时应避免使用这些区域。
 该符号与符号禁止进入区域（709）组合以显示不能进入的耕作地。
 符号朝向北方。
@@ -1732,7 +1732,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
         <translation>耕作地。该符号必须与另一个符号一起使用： 
 -对于用于种植农作物的土地，请与符号开放土地（401）组合。
--对于农林业，可以使用符号 可跑树林（405）或 稀树开阔地（402）而不是黄色。
+-对于农林业，可以使用符号 可跑树林（405）或 稀树空旷地（402）而不是黄色。
 可跑性根据种植的作物类型和一年中的时间而变化。
 因此在路线设计时应避免使用这些区域。
 符号朝向北方。
@@ -1741,7 +1741,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1750,14 +1750,14 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
         <translation>种植树木或灌木的土地，通常是规则的。点线可以定向为显示种植方向。
-必须与符号 开阔地（401）或 凌乱开阔地(403)组合使用。
+必须与符号 空旷地（401）或 凌乱空旷地(403)组合使用。
 可与符号慢跑底层植被（407）或 慢行底层植被（409）组合使用以显示减低的可跑性。
 最小面积：2mm x 2mm（实地面积30 米 x 30米）。</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation>果园(凌乱开阔地)</translation>
+        <translation>果园(凌乱空旷地)</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -1766,32 +1766,32 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
         <translation>种植树木或灌木的土地，通常是规则的。点线可以定向为显示种植方向。
-必须与符号 开阔地（401）或 凌乱开阔地(403)组合使用。
+必须与符号 空旷地（401）或 凌乱空旷地(403)组合使用。
 可与符号慢跑底层植被（407）或慢行底层植被（409）组合使用以显示减低的可跑性。
 最小面积：2mm x 2mm（实地面积30 米 x 30米）。</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation>葡萄园或类似植被(开阔地)</translation>
+        <translation>葡萄园或类似植被(空旷地)</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 开阔地（401）或 凌乱开阔地（403）组合使用。
+        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 空旷地（401）或 凌乱空旷地（403）组合使用。
 最小面积： 2mm x 2mm （ 实地面积30m米 x 30米）。</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation>葡萄园或类似植被(凌乱开阔地)</translation>
+        <translation>葡萄园或类似植被(凌乱空旷地)</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 开阔地（401）或 凌乱开阔地（403）组合使用。
+        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 空旷地（401）或 凌乱空旷地（403）组合使用。
 最小面积： 2mm x 2mm （ 实地面积30m米 x 30米）。</translation>
     </message>
     <message>
@@ -1922,7 +1922,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可通过高墙(515)。
+        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可翻越高墙(515)。
 两条黑线之间填充棕色（50％）。
 具有两条车道的道路可以用两个公路符号并排表示,中间只保留一条道路边缘。</translation>
     </message>
@@ -1946,7 +1946,7 @@ A road with two carriageways can be represented using two wide road symbols side
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可通过高墙(515)。
+        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可翻越高墙(515)。
 两条黑线之间填充棕色（50％）。
 具有两条车道的道路可以用两个公路符号并排表示,中间只保留一条道路边缘。</translation>
     </message>
@@ -2223,13 +2223,13 @@ must be exaggerated to the minimum length or changed to symbol Wall (513).</sour
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>不可通过的高墙</translation>
+        <translation>不可翻越的高墙</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
 Minimum length (isolated): 3 mm (footprint 45 m).</source>
         <comment>Description of symbol 515</comment>
-        <translation>不可通过或不可跨越的高墙，通常超过1.5米高。
+        <translation>不可翻越或不可跨越的高墙，通常超过1.5米高。
 最小长度(单独): 3mm (实地尺寸45米)。</translation>
     </message>
     <message>
@@ -2259,14 +2259,14 @@ Minimum length: two dashes (3.65 mm - footprint 55 m). If shorter, the symbol mu
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>不可通过高围栏</translation>
+        <translation>不可翻越高围栏</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation>不可通过或不可翻越的栅栏，通常超过1.5米高。
+        <translation>不可翻越或不可翻越的栅栏，通常超过1.5米高。
 如果栅栏围成一个封闭的区域, 则齿线应朝向区域内部。
 最小长度 (单独): 2 mm (实地尺寸30米)。</translation>
     </message>
@@ -2589,13 +2589,13 @@ Minimum length: 1.5 mm (footprint 22.5 m).</source>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. The definition of the symbol must be given on the map.
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 529</comment>
-        <translation>明显的无法逾越的人造线状特征物。例如，高大管道（气、水、油、供热等）或雪橇/骨架轨道。符号的定义必须标明在地图上。
+        <translation>明显的无法翻越的人造线状特征物。例如，高大管道（气、水、油、供热等）或雪橇/骨架轨道。符号的定义必须标明在地图上。
 最小长度：2mm （实际尺寸 30 米）。</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
         <comment>Name of symbol 530</comment>
-        <translation>特殊人造地物-⚪</translation>
+        <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
         <source>Location is at the centre of gravity of the symbol.
@@ -2679,7 +2679,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.3</comment>
-        <translation>磁北线</translation>
+        <translation>磁北线-蓝色</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
@@ -2691,7 +2691,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>North lines pattern, blue</source>
         <comment>Name of symbol 601.4</comment>
-        <translation>磁北线，蓝色</translation>
+        <translation>磁北线-蓝色(面状)</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north, parallel to the sides of the paper. Their spacing on the map shall be 20 mm on the map which represents 300 m on the ground at the scale of 1:15 000. If the map is enlarged to 1:10 000, the spacing of the lines will be 30 mm on the map.
@@ -2878,7 +2878,7 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
     <message>
         <source>A crossing point, for instance through or over a wall or fence, across a road or railway, through a tunnel or out-of-bounds area, or over an uncrossable boundary is drawn on the map with two lines curving outwards. The lines shall reflect the length of the crossing.</source>
         <comment>Description of symbol 710</comment>
-        <translation>通过点，例如需要通过或越过围墙或栅栏、穿过公路或铁路、穿过隧道或禁区区域，或越过一个不可通过的边界，则在地图上画出两条向外弯曲的线。通过点（即符号线）的长短则是反映参赛者需要横穿的长度。</translation>
+        <translation>翻越点，例如需要翻越或越过围墙或栅栏、穿过公路或铁路、穿过隧道或禁区区域，或越过一个不可翻越的边界，则在地图上画出两条向外弯曲的线。翻越点（即符号线）的长短则是反映参赛者需要横穿的长度。</translation>
     </message>
     <message>
         <source>Out-of-bounds route</source>
@@ -3053,7 +3053,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -3073,22 +3073,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 102.1</comment>
-        <translation>计曲等高线可以标注高度。高度值只能插入计曲等高线中，其他细节不被遮挡的位置。它的方向要朝向计曲等高线较高侧。</translation>
+        <translation>等高线可以标注高度，以帮助评估较大的高度差。高度值只能插入计曲等高线中，其他细节不被遮挡的位置。它的方向要朝向等高线较高侧。</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>辅助等高线-示坡线</translation>
+        <translation>间曲线-示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -3129,6 +3129,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Earth wall</source>
         <comment>Name of symbol 105</comment>
         <translation>土墙</translation>
+    </message>
+    <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 105</comment>
+        <translation>明显的土墙，最小高度为1 m。</translation>
     </message>
     <message>
         <source>Ruined earth wall</source>
@@ -3188,17 +3193,22 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖最小尺寸</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
         <translation>陡崖-主线</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.3</comment>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -3213,12 +3223,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>不可通过的陡崖最小尺寸 (来自 ISOM2000)</translation>
+        <translation>不可翻越的陡崖最小尺寸 (来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>Cliff, minimum size</source>
@@ -3228,17 +3238,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation>可通过陡崖最小尺寸</translation>
+        <translation>可翻越陡崖最小尺寸</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation>可通过陡崖最小尺寸(来自 ISOM2000)</translation>
+        <translation>可翻越陡崖最小尺寸(来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Rocky pits, holes, caves or mineshafts with a distinct entrance which may constitute a danger to the competitor. Minimum depth: 1 m.
@@ -3271,7 +3281,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
-        <translation>巨石</translation>
+        <translation>不同尺寸的石块或大石块</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -3394,6 +3404,16 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <translation>季节性水道</translation>
     </message>
     <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 306</comment>
+        <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
+    </message>
+    <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 307</comment>
+        <translation>不可逾越的沼泽-有边界线</translation>
+    </message>
+    <message>
         <source>Uncrossable marsh</source>
         <comment>Name of symbol 307.1</comment>
         <translation>不可通行的沼泽</translation>
@@ -3446,22 +3466,22 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -3488,7 +3508,12 @@ Minimum width: 0.35 mm</source>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 414</comment>
+        <translation>葡萄园</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -3648,7 +3673,7 @@ Minimum width: 0.35 mm</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>不可通过的高墙</translation>
+        <translation>不可翻越的高墙</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -3663,7 +3688,7 @@ Minimum width: 0.35 mm</source>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>不可通过高围栏</translation>
+        <translation>不可翻越高围栏</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -3755,7 +3780,7 @@ For impassable features, the line shall be broken at the crossing point. For pas
     <message>
         <source>Prominent man-made feature – ring</source>
         <comment>Name of symbol 530</comment>
-        <translation>特殊人造地物-⚪</translation>
+        <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
         <source>Prominent man-made feature – x</source>
@@ -4067,7 +4092,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -4087,12 +4112,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用辅助等高线。它仅在普通等高线无法表示的情况下使用，相邻等高线之间只能使用一条辅助等高线。</translation>
+        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用间曲线。它仅在首曲线无法表示的情况下使用，相邻首曲线之间只能使用一条间曲线。</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -4107,7 +4132,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -4122,7 +4147,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -4132,7 +4157,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -4143,6 +4168,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.1</comment>
         <translation>非常高的土崖线宽可以是0.25 mm。</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>很高的土崖-最小尺寸</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
@@ -4165,6 +4195,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土墙</translation>
     </message>
     <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 107</comment>
+        <translation>明显的土墙，最小高度为1 m。</translation>
+    </message>
+    <message>
         <source>Small earth wall</source>
         <comment>Name of symbol 108</comment>
         <translation>小土墙</translation>
@@ -4172,7 +4207,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
-        <translation>冲沟或堑壕</translation>
+        <translation>冲沟</translation>
+    </message>
+    <message>
+        <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
+        <comment>Description of symbol 109</comment>
+        <translation>太小而无法用符号106表示的冲沟或沟槽用单线表示。线宽反映了冲沟的大小。最小深度1 m。线的末端已标示。</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -4197,12 +4237,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201</comment>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖最小尺寸</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201.0.1</comment>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>不可翻越石崖-无齿线</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -4215,14 +4275,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>使用此符号可以显示宽悬崖的整个延展范围。</translation>
     </message>
     <message>
+        <source>Rock pillars/cliffs</source>
+        <comment>Name of symbol 202</comment>
+        <translation>岩柱/悬崖</translation>
+    </message>
+    <message>
+        <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
+        <comment>Description of symbol 202</comment>
+        <translation>在岩石柱、巨大的悬崖或巨大的巨石等异常特征的情况下，岩石应以平面图形表示，且没有齿线。</translation>
+    </message>
+    <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
-        <translation>可通过的石崖</translation>
+        <translation>可翻越的石崖</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
-        <translation>可通过的石崖-最小尺寸</translation>
+        <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -4233,6 +4303,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
     </message>
     <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -4253,6 +4328,21 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Boulder</source>
         <comment>Name of symbol 206</comment>
         <translation>石块</translation>
+    </message>
+    <message>
+        <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206</comment>
+        <translation>一个较小的明显石头（最小高度为1 m）。地图上标记的每个石头都应立即在地面上被识别。为了能够显示出大小差异显著的石头之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>石头-放大</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206.1</comment>
+        <translation>为了能够显示出大小差异显著的巨石之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -4280,9 +4370,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>大的石群</translation>
     </message>
     <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210</comment>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
+    </message>
+    <message>
         <source>Stony ground</source>
         <comment>Name of symbol 210.1</comment>
         <translation>碎石地</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210.1</comment>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
@@ -4290,14 +4390,44 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>开阔沙地</translation>
     </message>
     <message>
+        <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
+        <comment>Description of symbol 211</comment>
+        <translation>沙质较软的地面或碎石区，无植被，行驶缓慢。沙质土地开阔但行驶良好的地方显示为开阔土地（401/402）。</translation>
+    </message>
+    <message>
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
         <translation>裸岩地</translation>
     </message>
     <message>
+        <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
+        <comment>Description of symbol 212</comment>
+        <translation>没有土壤或植被的可跑岩石区域显示为裸岩。覆盖着草、苔藓或其他低矮植被的岩石区域显示为开阔土地（401/402）。</translation>
+    </message>
+    <message>
+        <source>Lake</source>
+        <comment>Name of symbol 301</comment>
+        <translation>湖</translation>
+    </message>
+    <message>
+        <source>Lake, bank line</source>
+        <comment>Name of symbol 301.1</comment>
+        <translation>湖-岸线</translation>
+    </message>
+    <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
         <comment>Description of symbol 301.1</comment>
         <translation>黑色的水岸线强调了这个符号特征是不可通行的。</translation>
+    </message>
+    <message>
+        <source>Lake, with bank line</source>
+        <comment>Name of symbol 301.2</comment>
+        <translation>湖-有岸线</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>池塘</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -4308,6 +4438,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Crossable watercourse</source>
         <comment>Name of symbol 305</comment>
         <translation>可涉水道</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+        <comment>Description of symbol 305</comment>
+        <translation>可穿越的河流，最小宽度为2 m。宽度超过5 m的河流应按比例显示。</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>可穿越的小河流</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
+        <comment>Description of symbol 306</comment>
+        <translation>宽度小于2 m的可穿越河流（包括主排水沟）。为了更好的可读性，应在沼泽中画为一条沟渠作为可越过的河流（305）。</translation>
+    </message>
+    <message>
+        <source>Minor water channel</source>
+        <comment>Name of symbol 307</comment>
+        <translation>小水道</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -4325,9 +4480,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不可通行沼泽-边界线</translation>
     </message>
     <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>不可逾越的沼泽-有边界线</translation>
+    </message>
+    <message>
         <source>Marsh</source>
         <comment>Name of symbol 310</comment>
         <translation>可通行沼泽地</translation>
+    </message>
+    <message>
+        <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
+        <comment>Description of symbol 310</comment>
+        <translation>可穿越的沼泽，通常具有明显的边缘。该符号应与植被符号结合使用以显示可跑性和开放性。如果小沼泽地应与403/404结合使用，则可以使用401/402来提高清晰度。</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -4350,29 +4515,76 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>泉</translation>
     </message>
     <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>特殊水体</translation>
+    </message>
+    <message>
+        <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
+        <comment>Description of symbol 314</comment>
+        <translation>一种特殊的小水体。必须在地图图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
+    </message>
+    <message>
+        <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 401</comment>
+        <translation>耕地、田野、草地、草原等，没有树木，可跑性好。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
+    </message>
+    <message>
+        <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 402</comment>
+        <translation>草地上有零散的树木或灌木丛，草地或类似的植被提供了良好的可跑性。地图比例尺上小于10毫米的区域显示为开阔土地（401）。可以添加单个树（418、419、420）。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
+    </message>
+    <message>
+        <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
+        <comment>Description of symbol 403</comment>
+        <translation>杂草地、伐木场、新栽植的区域（树木约1 m以下）或其他通常空旷的土地，地面植被茂密，石楠或高草丛生。符号403可以与符号407和409结合以显示降低的可跑性。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
+    </message>
+    <message>
+        <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
+        <comment>Description of symbol 404</comment>
+        <translation>凌乱开阔土地上零星树木，白色（或绿色）点应出现在其中。可以通过在黄色屏幕中使用大白点的规则图案来概括此类区域。地图比例尺中小于16毫米的区域显示为粗糙的开阔土地（403）。可以添加单个树（418、419、420）。</translation>
     </message>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
+    </message>
+    <message>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
+direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 412</comment>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示
+种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>葡萄园</translation>
+    </message>
+    <message>
+        <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 413</comment>
+        <translation>绿线的方向可以指示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -4388,6 +4600,66 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 418</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 420</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>高速公路</translation>
+    </message>
+    <message>
+        <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.0</comment>
+        <translation>有两条车道的道路。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>主要道路-最小宽度</translation>
+    </message>
+    <message>
+        <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502</comment>
+        <translation>道路宽于5m。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Minor road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>道路3-5 m宽。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
         <source>Road</source>
@@ -4425,9 +4697,54 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>铁路</translation>
     </message>
     <message>
+        <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
+        <comment>Description of symbol 515</comment>
+        <translation>铁路或其他类型的有轨轨道（电车道、卡车道等）。</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>输电线</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
+        <comment>Description of symbol 516</comment>
+        <translation>输电线、索道或滑雪缆车。节点指示了塔的确切位置。</translation>
+    </message>
+    <message>
         <source>Major power line</source>
         <comment>Name of symbol 517</comment>
         <translation>主输电线</translation>
+    </message>
+    <message>
+        <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
+        <comment>Description of symbol 517</comment>
+        <translation>主输电线应画成双线。线之间的间隙可以表示电力线的范围。</translation>
+    </message>
+    <message>
+        <source>Tunnel</source>
+        <comment>Name of symbol 518</comment>
+        <translation>隧道</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518</comment>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
+    </message>
+    <message>
+        <source>Tunnel, minimum size</source>
+        <comment>Name of symbol 518.1</comment>
+        <translation>隧道-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518.1</comment>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
+    </message>
+    <message>
+        <source>Stone wall</source>
+        <comment>Name of symbol 519</comment>
+        <translation>石墙</translation>
     </message>
     <message>
         <source>Fence</source>
@@ -4440,6 +4757,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>残破围栏</translation>
     </message>
     <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>高围栏</translation>
+    </message>
+    <message>
+        <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
+        <comment>Description of symbol 524</comment>
+        <translation>大于约1.5 m的木板或铁丝网，一般参赛者无法翻越，例如鹿围栏。</translation>
+    </message>
+    <message>
         <source>Crossing point</source>
         <comment>Name of symbol 525</comment>
         <translation>可通过口</translation>
@@ -4450,14 +4777,44 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不可通过建筑物</translation>
     </message>
     <message>
+        <source>A building is shown with its ground plan so far as the scale permits.</source>
+        <comment>Description of symbol 526</comment>
+        <translation>在比例尺允许的范围内显示建筑物的平面图。</translation>
+    </message>
+    <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 526.1</comment>
         <translation>建筑物最小尺寸</translation>
     </message>
     <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527</comment>
+        <translation>禁区</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527</comment>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527.1</comment>
+        <translation>禁区</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527.1</comment>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>铺装区域</translation>
+    </message>
+    <message>
+        <source>An area of hard standing used for parking or other purposes.</source>
+        <comment>Description of symbol 529</comment>
+        <translation>硬质地面用于停车场或其他目的。</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -4478,6 +4835,26 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Firing range</source>
+        <comment>Name of symbol 531</comment>
+        <translation>射击场</translation>
+    </message>
+    <message>
+        <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>射击场显示为特殊符号，表示需要小心。关联的建筑物分别标记。</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>坟墓</translation>
+    </message>
+    <message>
+        <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
+        <comment>Description of symbol 532</comment>
+        <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -4867,7 +5244,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black for open land</source>
         <comment>Color 29</comment>
-        <translation>开阔地的黑色</translation>
+        <translation>空旷地的黑色</translation>
     </message>
     <message>
         <source>Yellow 100%</source>
@@ -4882,7 +5259,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height.
@@ -4913,7 +5290,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
         <comment>Description of symbol 102</comment>
-        <translation>每五个等高线应画一条较粗的线，这有助于快速评估高度差和地形表面的整体形状。如果计曲线与许多细节区域重合， 则可以用符号等高线（101）表示。</translation>
+        <translation>每五个等高线应画一条较粗的线，这有助于快速评估高度差和地形表面的整体形状。如果计曲线与许多细节区域重合， 则可以用符号首曲线（101）表示。</translation>
     </message>
     <message>
         <source>Slope line, index contour</source>
@@ -4928,27 +5305,27 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.2</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
         <comment>Description of symbol 102.2</comment>
-        <translation>等高注记可以帮助评估较大的高度差。等高注记的方向应使等高注记顶部位于等高线的较高一侧。它们将插入计曲线中其他细节不被遮挡的位置。</translation>
+        <translation>等高线注记可以帮助评估较大的高度差。等高线注记的方向应使等高注记顶部位于等高线的较高一侧。它们将插入计曲线中其他细节不被遮挡的位置。</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用辅助等高线。它仅在普通等高线无法表示的情况下使用，相邻等高线之间只能使用一条辅助等高线。</translation>
+        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用间曲线。它仅在首曲线无法表示的情况下使用，相邻首曲线之间只能使用一条间曲线。</translation>
     </message>
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>辅助等高线-示坡线</translation>
+        <translation>间曲线-示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -5001,7 +5378,7 @@ Minimum height: 0.5 m.
 Minimum length: 1.4 mm (footprint 5,6 m).</source>
         <comment>Description of symbol 105</comment>
         <translation>一种很小的独特的土墙，通常是人造的。
-较大的土墙应以符号等高线（101）、辅助等高线（103）或土崖（104）表示。
+较大的土墙应以符号首曲线（101）、间曲线（103）或土崖（104）表示。
 最小高度：0.5m。
 最小长度：1.4mm（实地 5.6m）。</translation>
     </message>
@@ -5015,7 +5392,7 @@ Minimum length: 1.4 mm (footprint 5,6 m).</source>
 Minimum depth: 1 m.
 Minimum length: 2.0 mm (footprint 8 m).</source>
         <comment>Description of symbol 107</comment>
-        <translation>冲沟或堑壕太小，不能用符号土崖（104）、等高线（101）、计曲线（102）或辅助等高线（103）表示，只能用一条线表示，这条线的末端是尖的。为了提高可读性，此符号周围的等高线应该被剪断。
+        <translation>冲沟或堑壕太小，而不能用符号土崖（104）、首曲线（101）、计曲线（102）或间曲线（103）表示，只能用一条线表示，这条线的末端是尖的。为了提高可读性，此符号周围的等高线应该被剪断。
 最小深度：1m。
 最小长度：2.0mm（实地 8m）。</translation>
     </message>
@@ -5045,7 +5422,7 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
 Minimum height: 0.5 m.
 Footprint: 3 m in diameter.</source>
         <comment>Description of symbol 109</comment>
-        <translation>不能用等高线（101）、计曲线（102）或辅助等高线（103）按比例绘制的一个明显的小土堆或岩石丘。该符号不得接触或重叠等高线。
+        <translation>不能用首曲线（101）、计曲线（102）或间曲线（103）按比例绘制的一个明显的小土堆或岩石丘。该符号不得接触或重叠等高线。
 最小高度：0.5m。
 实地：直径 3m。</translation>
     </message>
@@ -5059,7 +5436,7 @@ Footprint: 3 m in diameter.</source>
 Minimum height: 0.5 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation>一个明显的细长的小山丘，不能用等高线（101）、计曲线（102）或辅助等高线（103）按比例绘制。最大长度为 6m，最大宽度为 2m，大于此值的小丘应以等高线（101）表示。该符号不能以自由形式绘制，也不能使两个该符号接触或重叠，该符号不不能接触或重叠等高线。
+        <translation>一个明显的细长的小山丘，不能用首曲线（101）、计曲线（102）或间曲线（103）按比例绘制。最大长度为 6m，最大宽度为 2m，大于此值的小丘应以等高线（101）表示。该符号不能以自由形式绘制，也不能使两个该符号接触或重叠，该符号不不能接触或重叠等高线。
 最小高度：0.5m。
 实地面积：4.8m x 2.4m。</translation>
     </message>
@@ -5074,7 +5451,7 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation>一个不能用符号等高线（101）或辅助等高线（103）表示的小的浅的自然凹地或坑洼处用半圆表示。该符号不得接触或重叠其他棕色符号。该符号朝向北方。
+        <translation>一个不能用符号首曲线（101）或间曲线（103）表示的小的浅的自然凹地或坑洼处用半圆表示。该符号不得接触或重叠其他棕色符号。该符号朝向北方。
 最小深度：0.5m。
 最小宽度：1m。
 实地面积：4.8m x 2.4m。</translation>
@@ -5154,7 +5531,7 @@ The minimum number of dots is three.</source>
     <message>
         <source>Prominent landform feature</source>
         <comment>Name of symbol 115</comment>
-        <translation>特殊地貌</translation>
+        <translation>突出地貌</translation>
     </message>
     <message>
         <source>A small landform feature which is significant or prominent.
@@ -5170,7 +5547,7 @@ Footprint: 5.4 m x 4.6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的悬崖</translation>
+        <translation>不可翻越的悬崖</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5178,15 +5555,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation>无法通过的悬崖、采石场或土崖（见符号“土崖 104”）。
-锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下通过时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可通过的悬崖应该与等高线相交。不可通过的悬崖禁止通行。
+        <translation>无法翻越的悬崖、采石场或土崖（见符号“土崖 104”）。
+锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下翻越时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可翻越的悬崖应该与等高线相交。不可翻越的悬崖禁止通行。
 最小高度：1.5m。
 最小长度：0.9mm（实地面积 3.6m）。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>不可通过的悬崖，最小尺寸</translation>
+        <translation>不可翻越的悬崖，最小尺寸</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5194,15 +5571,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation>无法通过的悬崖、采石场或土崖（见符号“土崖 104”）。
-锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下通过时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可通过的悬崖应该与等高线相交。不可通过的悬崖禁止通行。
+        <translation>无法翻越的悬崖、采石场或土崖（见符号“土崖 104”）。
+锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下翻越时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可翻越的悬崖应该与等高线相交。不可翻越的悬崖禁止通行。
 最小高度：1.5m。
 最小长度：0.9mm（实地面积 3.6m）。</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
         <comment>Name of symbol 201.3</comment>
-        <translation>不可通过的悬崖，主线</translation>
+        <translation>不可翻越的悬崖，主线</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5210,37 +5587,37 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation>无法通过的悬崖、采石场或土崖（见符号“土崖 104”）。
-锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下通过时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可通过的悬崖应该与等高线相交。不可通过的悬崖禁止通行。
+        <translation>无法翻越的悬崖、采石场或土崖（见符号“土崖 104”）。
+锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下翻越时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可翻越的悬崖应该与等高线相交。不可翻越的悬崖禁止通行。
 最小高度：1.5m。
 最小长度：0.9mm（实地面积 3.6m）。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.4</comment>
-        <translation>不可通过的悬崖，齿线</translation>
+        <translation>不可翻越的悬崖，齿线</translation>
     </message>
     <message>
         <source>Tags are drawn downwards, showing a cliff&apos;s full extent from the top line to the foot. The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line.</source>
         <comment>Description of symbol 201.4</comment>
-        <translation>锯齿线向下绘制，显示从顶线到脚的整个范围。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下通过时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。</translation>
+        <translation>锯齿线向下绘制，显示从顶线到脚的整个范围。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下翻越时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.8</comment>
-        <translation>不可通过的悬崖，无齿线，最小尺寸（来自ISSOM）</translation>
+        <translation>不可翻越的悬崖，无齿线，最小尺寸（来自ISSOM）</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
 For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.4 mm).</source>
         <comment>Description of symbol 201.8</comment>
-        <translation>无法通过的悬崖、采石场或土崖（见符号“土崖 104”）。
+        <translation>无法翻越的悬崖、采石场或土崖（见符号“土崖 104”）。
 对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm）。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>不可通过的悬崖，最小尺寸（来自ISSOM）</translation>
+        <translation>不可翻越的悬崖，最小尺寸（来自ISSOM）</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -5248,15 +5625,15 @@ Tags are drawn downwards, showing its full extent from the top line to the foot.
 Minimum height: 1.5 m.
 Minimum length: 0.9 mm (footprint 3.6 m).</source>
         <comment>Description of symbol 201.9</comment>
-        <translation>无法通过的悬崖、采石场或土崖（见符号“土崖 104”）。
-锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下通过时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可通过的悬崖应该与等高线相交。不可通过的悬崖禁止通行。
+        <translation>无法翻越的悬崖、采石场或土崖（见符号“土崖 104”）。
+锯齿线向下绘制，显示从顶线到脚的整个范围。对于垂直岩石面，如果空间较短，例如悬崖之间的狭窄通道（通道宽度应至少为 0.4 mm），则可省略锯齿线。这些锯齿线可以延伸到一个区域符号上，该区域符号表示岩石面正下方的细节。当岩石面直接深入水中，无法沿着水边从悬崖下翻越时，应省略河岸线，或者锯齿线应清楚地延伸到河岸线上方。不可翻越的悬崖应该与等高线相交。不可翻越的悬崖禁止通行。
 最小高度：1.5m。
 最小长度：0.9mm（实地面积 3.6m）。</translation>
     </message>
     <message>
         <source>Passable rock face, small (rounded ends, no tags)</source>
         <comment>Name of symbol 202</comment>
-        <translation>可通过的石崖-小（圆端，无齿线）</translation>
+        <translation>可翻越的石崖-小（圆端，无齿线）</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5272,7 +5649,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 202.1</comment>
-        <translation>可通过的石崖</translation>
+        <translation>可翻越的石崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5288,7 +5665,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 202.2</comment>
-        <translation>可通过的石崖-最小尺寸</translation>
+        <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5304,7 +5681,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, top line (flat ends)</source>
         <comment>Name of symbol 202.3</comment>
-        <translation>可通过的石崖-主线（平端）</translation>
+        <translation>可翻越的石崖-主线（平端）</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5320,7 +5697,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, tag line</source>
         <comment>Name of symbol 202.4</comment>
-        <translation>可通过的石崖-齿线</translation>
+        <translation>可翻越的石崖-齿线</translation>
     </message>
     <message>
         <source>If the direction of fall of the rock face is not apparent from the contours, or to improve legibility, short tags should be drawn in the direction of the fall. For non-vertical cliffs, the tags should be drawn to show the full horizontal extent.</source>
@@ -5330,7 +5707,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, small (rounded ends, no tags; minimum size, from ISSOM)</source>
         <comment>Name of symbol 202.8</comment>
-        <translation>可通过的石崖-小（圆端，无齿线；最小尺寸，来自ISSOM）</translation>
+        <translation>可翻越的石崖-小（圆端，无齿线；最小尺寸，来自ISSOM）</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -5340,7 +5717,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Passable rock face, minimum size (from ISSOM)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation>可通过的石崖-最小尺寸（来自ISSOM）</translation>
+        <translation>可翻越的石崖-最小尺寸（来自ISSOM）</translation>
     </message>
     <message>
         <source>A passable cliff or quarry.
@@ -5404,14 +5781,14 @@ Footprint: 4.4 m x 5.0 m.</source>
     <message>
         <source>Boulder</source>
         <comment>Name of symbol 204</comment>
-        <translation>独立石头</translation>
+        <translation>石块</translation>
     </message>
     <message>
         <source>A small distinct boulder.
 Every boulder marked on the map shall be immediately identifiable on the ground.
 Footprint: 2.4 m in diameter.</source>
         <comment>Description of symbol 204</comment>
-        <translation>204一块单独的小圆石。
+        <translation>204一块突出的小圆石。
 地图上标记的每一块石头能立即在地面上辨认出来。
 实地面积：直径 2.4m。</translation>
     </message>
@@ -5967,14 +6344,14 @@ Smaller areas must be left out, exaggerated or shown using the symbol Open land 
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>An area of heath or moorland, a felled area, a newly planted area (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, i.e. heather or tall grass.
 This symbol may be combined with symbols Vegetation: slow running, good visibility (407) and Vegetation: walk, good visibility (409) to show reduced runnability.
 Minimum area: 1 mm² (footprint 16 m²).</source>
         <comment>Description of symbol 403</comment>
-        <translation>杂草地或高沼地、砍伐区、新种植区（低于约 1 米的树木） 或其他地面植被杂乱的开阔地，如石楠花或高草。
+        <translation>杂草地或高沼地、砍伐区、新种植区（低于约 1 米的树木） 或其他地面植被杂乱的空旷地，如石楠花或高草。
 该符号可与符号“慢行低矮植被（407）”和“步行低矮植被（409）” 结合使用，以显示可行进性降低。
 最小面积：1mm²（实地面积 16m²）。</translation>
     </message>
@@ -5990,11 +6367,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404</comment>
-        <translation>有零星树木或灌木的杂乱开阔地。圆点可以是白色（零星的树木）或绿色（零星的灌木/灌木丛）。
+        <translation>有零星树木或灌木的杂乱空旷地。圆点可以是白色（零星的树木）或绿色（零星的灌木/灌木丛）。
 可添加突出的大树（417） 和突出的灌木或小树（418）符号。只有不一致的白点符号可以与符号“慢跑低矮植被（407）”或“步行低矮植被（409）”结合使用，以显示可行进性降低。
 最小宽度：2.5mm。
 最小面积：6.25mm²（实地面积 100m²）
-较小的区域必须省略、夸张或用符号“杂乱开阔地（403）” 或“好跑树林（白林）（405）”表示。</translation>
+较小的区域必须省略、夸张或用符号“杂乱空旷地（403）” 或“好跑树林（白林）（405）”表示。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
@@ -6008,11 +6385,11 @@ Minimum width: 2.5 mm.
 Minimum area: 6.25 mm² (footprint 100 m²)
 Smaller areas must be left out, exaggerated or shown using either the symbol Rough open land (403) or Forest (405).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation>有零星树木或灌木的杂乱开阔地。圆点可以是白色（零星的树木）或绿色（零星的灌木/灌木丛）。
+        <translation>有零星树木或灌木的杂乱空旷地。圆点可以是白色（零星的树木）或绿色（零星的灌木/灌木丛）。
 可添加突出的大树（417） 和突出的灌木或小树（418）符号。只有不一致的白点符号可以与符号“慢跑低矮植被（407）”或“步行低矮植被（409）”结合使用，以显示可行进性降低。
 最小宽度：2.5mm。
 最小面积：6.25mm²（实地面积 100m²）
-较小的区域必须省略、夸张或用符号“杂乱开阔地（403）” 或“好跑树林（白林）（405）”表示。</translation>
+较小的区域必须省略、夸张或用符号“杂乱空旷地（403）” 或“好跑树林（白林）（405）”表示。</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -6220,14 +6597,14 @@ Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413</comment>
         <translation>种植果树或林区的土地，通常有规则的排列。
-点线方向应该表示种植方向。至少四个点应清晰可见。必须与符号空旷地（401）或杂乱开阔地（403）结合使用。
+点线方向应该表示种植方向。至少四个点应清晰可见。必须与符号空旷地（401）或杂乱空旷地（403）结合使用。
 最小宽度：2mm。
 最小面积：4mm²（实地面积 64m²）</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation>果园（杂乱开阔地）</translation>
+        <translation>果园（杂乱空旷地）</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes, normally in regular pattern.
@@ -6236,7 +6613,7 @@ Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 413.1</comment>
         <translation>种植果树或林区的土地，通常有规则的排列。
-点线方向应该表示种植方向。至少四个点应清晰可见。必须与符号空旷地（401）或杂乱开阔地（403）结合使用。
+点线方向应该表示种植方向。至少四个点应清晰可见。必须与符号空旷地（401）或杂乱空旷地（403）结合使用。
 最小宽度：2mm。
 最小面积：4mm²（实地面积 64m²）</translation>
     </message>
@@ -6252,14 +6629,14 @@ Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414</comment>
         <translation>一种葡萄园或类似的耕地，含有密集的行状植被，在沿植被方向上具有良好或正常的可行进性。
-线条的方向应表示种植方向。至少三条线应清晰可见。必须与符号空旷地（401）或 杂乱开阔地（403）结合使用。
+线条的方向应表示种植方向。至少三条线应清晰可见。必须与符号空旷地（401）或 杂乱空旷地（403）结合使用。
 最小宽度：2mm。
 最小面积：4mm²（实地面积 64m²）</translation>
     </message>
     <message>
         <source> Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation> 葡萄园或类似的耕地（杂乱开阔地）</translation>
+        <translation> 葡萄园或类似的耕地（杂乱空旷地）</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting.
@@ -6268,7 +6645,7 @@ Minimum width: 2 mm.
 Minimum area: 4 mm² (64 m²)</source>
         <comment>Description of symbol 414.1</comment>
         <translation>一种葡萄园或类似的耕地，含有密集的行状植被，在沿植被方向上具有良好或正常的可行进性。
-线条的方向应表示种植方向。至少三条线应清晰可见。必须与符号空旷地（401）或 杂乱开阔地（403）结合使用。
+线条的方向应表示种植方向。至少三条线应清晰可见。必须与符号空旷地（401）或 杂乱空旷地（403）结合使用。
 最小宽度：2mm。
 最小面积：4mm²（实地面积 64m²）</translation>
     </message>
@@ -6351,7 +6728,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic</source>
         <comment>Name of symbol 501.5</comment>
-        <translation>铺装区域-轻度交通</translation>
+        <translation>交通顺畅的铺装区域</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -6397,7 +6774,7 @@ Edges within paved areas are generally not represented, unless they serve naviga
     <message>
         <source>Paved area, light traffic, footprint: 1.4 m</source>
         <comment>Name of symbol 501.6</comment>
-        <translation>铺装道路-轻度交通: 1.4 m</translation>
+        <translation>交通顺畅的铺装道路: 1.4 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -6425,7 +6802,7 @@ Differences in the brown colour shall be used to show differences in the traffic
     <message>
         <source>Paved area, light traffic, footprint: 3 m</source>
         <comment>Name of symbol 501.8</comment>
-        <translation>铺装道路-轻度交通: 3 m</translation>
+        <translation>交通顺畅的铺装道路: 3 m</translation>
     </message>
     <message>
         <source>A paved area is an area with a firm surface such as asphalt, hard gravel, tiles, concrete or the like. It should be bordered (or framed) by the symbol Step or edge of paved area (501.1).
@@ -6713,47 +7090,47 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
     <message>
         <source>Passable wall</source>
         <comment>Name of symbol 513.1</comment>
-        <translation>可通过的墙</translation>
+        <translation>可翻越的墙</translation>
     </message>
     <message>
         <source>A passable wall is a construction made of stone, brick, concrete etc., which can be passed.
 If such a wall is higher than 1.5 m, it shall be represented with the symbol Impassable wall (515). Wide walls shall be drawn in plan shape using a ground symbol delineated by the passable wall symbol. It should be dotted if possible (minimum length around the dot 0.4 mm each side).
 Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
         <comment>Description of symbol 513.1</comment>
-        <translation>可通过的墙是一种由石头、砖、混凝土等构成的建筑，可以通行。
-如果此类墙高于 1.5m，则应以符号“不可通过的墙”（515）表示。宽墙应使用可通过的墙符号所规定的的区域符号绘制出其平面形状，如有可能，应以虚线标出（点周围的最小长度为每侧 0.4mm）
+        <translation>可翻越的墙是一种由石头、砖、混凝土等构成的建筑，可以通行。
+如果此类墙高于 1.5m，则应以符号“不可翻越的墙”（515）表示。宽墙应使用可翻越的墙符号所规定的的区域符号绘制出其平面形状，如有可能，应以虚线标出（点周围的最小长度为每侧 0.4mm）
 最小长度（单独的）：1.4mm（实地面积 5.6m）。</translation>
     </message>
     <message>
         <source>Passable retained wall</source>
         <comment>Name of symbol 513.2</comment>
-        <translation>单侧可见的可通过围墙</translation>
+        <translation>可翻越的挡土墙</translation>
     </message>
     <message>
         <source>A passable wall which is seen only from one side. Half dot must point to the lower level.
 Height is 0.6 - 1.5 m. If lower, use symbol Step or edge of paved area (501.1).
 Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <comment>Description of symbol 513.2</comment>
-        <translation>只能从一侧可见的可通行的墙。半点必须指向较低的一侧。高度为 0.6-1.5m。
+        <translation>只能从一侧可见的可翻越的墙。半点必须指向较低的一侧。高度为 0.6-1.5m。
 如果低于 0.6-1.5m，则使用符号台阶或铺装区域边缘（501.1）。
 最小长度（单独的）：2.4mm（实地面积 9.6m）。</translation>
     </message>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>不可通过的围墙</translation>
+        <translation>不可翻越的围墙</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
 Very wide impassable walls shall be drawn in plan shape and represented with the symbol Building (521).</source>
         <comment>Description of symbol 515</comment>
-        <translation>不能通行或不能翻越的墙或固定的屏障是一种能够起到封闭或固定屏障作用的墙。不能通过。
+        <translation>不能通行或不能翻越的墙或固定的屏障是一种能够起到封闭或固定屏障作用的墙。不能翻越。
 非常宽的不可通行墙应绘制成符号建筑物（521）表示其平面形状。</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
         <comment>Name of symbol 516</comment>
-        <translation>可通过的围栏或栏杆</translation>
+        <translation>可翻越的围栏或栏杆</translation>
     </message>
     <message>
         <source>A passable fence is a barrier enclosing or bordering a field, yard, etc., usually made of posts and wire or wood. It is used to prevent entrance or to confine or mark a boundary. A railing is a fencelike barrier composed of one or more horizontal rails supported by widely spaced upright poles, usually it can be slipped through.
@@ -6761,13 +7138,13 @@ If a fence or railing is dangerous or very difficult to cross, it shall be repre
 Minimum length (isolated): 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 516</comment>
         <translation>可通行的围栏是一种围住或围绕田野、院子等的围栏，通常由柱子、铁丝或木头制成。它用于防止或限制进入或标记边界。栏杆是由一个或多个水平栏杆组成的围栏状栏杆，由间距较大的立杆支撑，通常可以钻过。
-如果围栏或栏杆很危险或很难穿过，则应使用符号“不可通过的围栏或栏杆”（518）表示。
+如果围栏或栏杆很危险或很难穿过，则应使用符号“不可翻越的围栏或栏杆”（518）表示。
 最小长度（单独的）：2.2mm（实地面积 8.8m）。</translation>
     </message>
     <message>
         <source>Impassable fence or railing</source>
         <comment>Name of symbol 518</comment>
-        <translation>不可通过的围栏或栏杆</translation>
+        <translation>不可翻越的围栏或栏杆</translation>
     </message>
     <message>
         <source>An impassable fence or railing shall not be crossed.
@@ -6775,7 +7152,7 @@ If the length is shorter than 3 mm, it must be presented with the symbol Impassa
 Minimum length (isolated): 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 518</comment>
         <translation>不能翻越或无法通行的围栏或栏杆。
-如果最小长度小于 3mm， 则必须用符号“不可通过的围墙”（515）表示。
+如果最小长度小于 3mm， 则必须用符号“不可翻越的围墙”（515）表示。
 最小长度（单独的）：3mm（实地面积 12m）。</translation>
     </message>
     <message>
@@ -7017,7 +7394,7 @@ Footprint: 6 m x 6 m.</source>
     <message>
         <source> Prominent line feature</source>
         <comment>Name of symbol 528</comment>
-        <translation> 可通行管道</translation>
+        <translation> 突出的线状特征物</translation>
     </message>
     <message>
         <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible.
@@ -7031,7 +7408,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
     <message>
         <source> Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation> 不可通行管道</translation>
+        <translation> 突出的不可翻越线状特征物</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
@@ -7047,7 +7424,7 @@ Minimum length: 3 mm (footprint 12 m).</source>
     <message>
         <source>Prominent man-made feature – ring</source>
         <comment>Name of symbol 530</comment>
-        <translation>特殊人造地物-⚪</translation>
+        <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
         <source>A man-made feature which is significant or prominent.
@@ -7534,7 +7911,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>Index contour</source>
@@ -7544,12 +7921,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用辅助等高线。它仅在普通等高线无法表示的情况下使用，相邻等高线之间只能使用一条辅助等高线。</translation>
+        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用间曲线。它仅在首曲线无法表示的情况下使用，相邻首曲线之间只能使用一条间曲线。</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -7627,6 +8004,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>特殊地貌</translation>
     </message>
     <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1.1</comment>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
+    </message>
+    <message>
         <source>Impassable cliff, tag line</source>
         <comment>Name of symbol 201.2</comment>
         <translation>陡崖-齿线</translation>
@@ -7644,12 +8031,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
-        <translation>可通过的石崖</translation>
+        <translation>可翻越的石崖</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
-        <translation>可通过的石崖-最小尺寸</translation>
+        <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -7660,6 +8047,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
     </message>
     <message>
         <source>Cave</source>
@@ -7700,6 +8092,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Waterhole</source>
         <comment>Name of symbol 303</comment>
         <translation>水坑</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -7744,27 +8141,27 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -7844,12 +8241,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable wall</source>
         <comment>Name of symbol 519.1.1</comment>
-        <translation>可通过的墙</translation>
+        <translation>可翻越的墙</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
         <comment>Name of symbol 522</comment>
-        <translation>可通过的围栏或栏杆</translation>
+        <translation>可翻越的围栏或栏杆</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -8171,7 +8568,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -8186,7 +8583,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation>每五条等高线应画一条较粗的线。这有助于快速评估高度差和地形表面的整体形状。在一个有很多细节的区域中，计曲等高线可以表示为一条普通的等高线。</translation>
+        <translation>每五条等高线应画一条较粗的线。这有助于快速评估高度差和地形表面的整体形状。在一个有很多细节的区域中，计曲线可以表示为一条普通的等高线。</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -8201,7 +8598,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 105</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
@@ -8216,7 +8613,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -8226,7 +8623,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -8241,7 +8638,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Earth bank, very high, minimum size</source>
         <comment>Name of symbol 106.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>很高的土崖-最小尺寸</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
@@ -8266,47 +8663,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Distinct earth wall. Minimum height is 1 m.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的土墙，最小高度为1 m。</translation>
     </message>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
-        <translation>冲沟或堑壕</translation>
+        <translation>冲沟</translation>
     </message>
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>太小而无法用符号106表示的冲沟或沟槽用单线表示。线宽反映了冲沟的大小。最小深度1 m。线的末端已标示。</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖最小尺寸</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags</source>
         <comment>Name of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可翻越石崖-无齿线</translation>
     </message>
     <message>
         <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -8321,12 +8718,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Rock pillars/cliffs</source>
         <comment>Name of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>岩柱/悬崖</translation>
     </message>
     <message>
         <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
         <comment>Description of symbol 202</comment>
-        <translation type="unfinished"></translation>
+        <translation>在岩石柱、巨大的悬崖或巨大的巨石等异常特征的情况下，岩石应以平面图形表示，且没有齿线。</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -8336,37 +8733,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>一个较小的明显石头（最小高度为1 m）。地图上标记的每个石头都应立即在地面上被识别。为了能够显示出大小差异显著的石头之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
     </message>
     <message>
         <source>Boulder, enlarged</source>
         <comment>Name of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>石头-放大</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
         <comment>Description of symbol 206.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示出大小差异显著的巨石之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
     </message>
     <message>
         <source>Boulder fields / Stony ground, small</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>巨石场/碎石地-小</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
         <comment>Description of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
     </message>
     <message>
         <source>Boulder fields / Stony ground</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>巨石场/碎石地</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
@@ -8376,7 +8773,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
         <comment>Description of symbol 211</comment>
-        <translation type="unfinished"></translation>
+        <translation>沙质较软的地面或碎石区，无植被，行驶缓慢。沙质土地开阔但行驶良好的地方显示为开阔土地（401/402）。</translation>
     </message>
     <message>
         <source>Bare rock</source>
@@ -8386,24 +8783,26 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
         <comment>Description of symbol 212</comment>
-        <translation type="unfinished"></translation>
+        <translation>没有土壤或植被的可跑岩石区域显示为裸岩。覆盖着草、苔藓或其他低矮植被的岩石区域显示为开阔土地（401/402）。</translation>
     </message>
     <message>
         <source>Lake</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>湖</translation>
     </message>
     <message>
         <source>Large areas of water are shown with this symbol (blue 50%). The colour of the bank line is blue 100 %.
 
 Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>大面积的水体用此符号表示（蓝色50％）。岸线的颜色为100％蓝色。
+
+小面积的水体应显示为全色。使用符号302（ISOM中的“ Pond”）。</translation>
     </message>
     <message>
         <source>Lake, bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>湖-岸线</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
@@ -8413,19 +8812,21 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
     <message>
         <source>Lake, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>湖-有岸线</translation>
     </message>
     <message>
         <source>Pond</source>
         <comment>Name of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>池塘</translation>
     </message>
     <message>
         <source>Small areas of water should be shown with full colour.
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>小面积的水应显示为全色。
+
+这是ISOM中的符号“ 302池塘”，但是ISMTBOM中“ 301 Lake”的变体。</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -8435,27 +8836,27 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
         <comment>Description of symbol 305</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿越的河流，最小宽度为2 m。宽度超过5 m的河流应按比例显示。</translation>
     </message>
     <message>
         <source>Crossable small watercourse</source>
         <comment>Name of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿越的小河流</translation>
     </message>
     <message>
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
-        <translation type="unfinished"></translation>
+        <translation>宽度小于2 m的可穿越河流（包括主排水沟）。为了更好的可读性，应在沼泽中画为一条沟渠作为可越过的河流（305）。</translation>
     </message>
     <message>
         <source>Minor water channel</source>
         <comment>Name of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>小水道</translation>
     </message>
     <message>
         <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
         <comment>Description of symbol 307</comment>
-        <translation type="unfinished"></translation>
+        <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -8465,7 +8866,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>对参赛者来说不可逾越或危险的沼泽。一条蓝线围绕该符号。</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -8475,7 +8876,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Uncrossable marsh, with border line</source>
         <comment>Name of symbol 309.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可逾越的沼泽-有边界线</translation>
     </message>
     <message>
         <source>Marsh</source>
@@ -8485,7 +8886,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
         <comment>Description of symbol 310</comment>
-        <translation type="unfinished"></translation>
+        <translation>可穿越的沼泽，通常具有明显的边缘。该符号应与植被符号结合使用以显示可跑性和开放性。如果小沼泽地应与403/404结合使用，则可以使用401/402来提高清晰度。</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -8495,235 +8896,238 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Special water feature</source>
         <comment>Name of symbol 314</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊水体</translation>
     </message>
     <message>
         <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
         <comment>Description of symbol 314</comment>
-        <translation type="unfinished"></translation>
+        <translation>一种特殊的小水体。必须在地图图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
     </message>
     <message>
         <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 401</comment>
-        <translation type="unfinished"></translation>
+        <translation>耕地、田野、草地、草原等，没有树木，可跑性好。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
     </message>
     <message>
         <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 402</comment>
-        <translation type="unfinished"></translation>
+        <translation>草地上有零散的树木或灌木丛，草地或类似的植被提供了良好的可跑性。地图比例尺上小于10毫米的区域显示为开阔土地（401）。可以添加单个树（418、419、420）。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished"></translation>
+        <translation>杂草地、伐木场、新栽植的区域（树木约1 m以下）或其他通常空旷的土地，地面植被茂密，石楠或高草丛生。符号403可以与符号407和409结合以显示降低的可跑性。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
         <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
         <comment>Description of symbol 404</comment>
-        <translation type="unfinished"></translation>
+        <translation>凌乱开阔土地上零星树木，白色（或绿色）点应出现在其中。可以通过在黄色屏幕中使用大白点的规则图案来概括此类区域。地图比例尺中小于16毫米的区域显示为粗糙的开阔土地（403）。可以添加单个树（418、419、420）。</translation>
     </message>
     <message>
         <source>Forest: good visibility</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>森林：通视性良好</translation>
     </message>
     <message>
         <source>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>通常针对特定类型地形的开阔森林。无论森林的哪个地方太茂密，以至于无法横穿推或骑自行车时，地图上都不应该出现白色。</translation>
     </message>
     <message>
         <source>Forest: reduced visibility</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>森林：通视性降低</translation>
     </message>
     <message>
         <source>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>树木茂密（通视性低）的区域，会大大降低穿越森林的速度，从而要推或搬自行车，甚至无法穿越。</translation>
     </message>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
     </message>
     <message>
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation type="unfinished"></translation>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示
+种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Vineyard</source>
         <comment>Name of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>葡萄园</translation>
     </message>
     <message>
         <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 413</comment>
-        <translation type="unfinished"></translation>
+        <translation>绿线的方向可以指示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊植被</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 418</comment>
-        <translation type="unfinished"></translation>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊植被</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 419</comment>
-        <translation type="unfinished"></translation>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
         <comment>Name of symbol 420</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊植被</translation>
     </message>
     <message>
         <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
         <comment>Description of symbol 420</comment>
-        <translation type="unfinished"></translation>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
         <source>Motorway</source>
         <comment>Name of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>高速公路</translation>
     </message>
     <message>
         <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 501.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>有两条车道的道路。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
         <source>Major road, minimum width</source>
         <comment>Name of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>主要道路-最小宽度</translation>
     </message>
     <message>
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
-        <translation type="unfinished"></translation>
+        <translation>道路宽于5m。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
         <source>Minor road</source>
         <comment>Name of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>小路</translation>
     </message>
     <message>
         <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503</comment>
-        <translation type="unfinished"></translation>
+        <translation>道路3-5 m宽。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
         <source>Track: fast riding</source>
         <comment>Name of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>赛道：快速骑行</translation>
     </message>
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有稳定表面的轨道，宽度至少为1.5 m。林道或维护良好的轨道无障碍。速度75-100％。</translation>
     </message>
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径：快速骑行</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>维护良好的路径窄于1.5 m宽。光滑、清洁的路径，无腐蚀或障碍物。速度75-100％。</translation>
     </message>
     <message>
         <source>Track: medium riding</source>
         <comment>Name of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>赛道：中速骑行</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>至少为1.5 m宽的赛道，速度有所降低，并可能有小的障碍物，例如石头，岩石，车辙，草，沙或泥土。速度50-75％。</translation>
     </message>
     <message>
         <source>Path: medium riding</source>
         <comment>Name of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径：中速骑行</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>宽度小于1.5 m的路径，速度有所降低，并可能有小的障碍物，例如石头，岩石，车辙、草、沙或泥土。速度50-75％。</translation>
     </message>
     <message>
         <source>Track: slow riding</source>
         <comment>Name of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>赛道：慢速骑行</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>至少宽度为1.5 m的赛道，有障碍物，要求骑车人选择避开石头，岩石，车辙，草，沙或泥土等障碍物的方式。岩石表面的可能性。踩踏板更困难，骑行速度变慢。熟练/健康的骑手将通过。不熟练的人可能必须下车。速度25-50％。</translation>
     </message>
     <message>
         <source>Path: slow riding</source>
         <comment>Name of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径：慢速骑行</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide, with sufficient obstacles to require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径小于1.5 m宽，有足够的障碍物，要求骑手选择自己的方式来避开障碍物，例如石头、岩石、车辙、草、沙或泥土。可通过的岩石表面。踩踏板更困难，骑行速度变慢。熟练/健康的骑手将通过。不熟练的人可能必须下车。速度25-50％。</translation>
     </message>
     <message>
         <source>Track: difficult to ride</source>
         <comment>Name of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>赛道：难以骑行</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
 erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
 required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>至少1.5 m宽的轨道，有困难的障碍物，例如树根，深沙/泥浆，
+侵蚀或岩石台阶。骑行非常缓慢或无法骑行。熟练/健康的骑手可能是
+需要下马。最高速度25％。</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
         <comment>Name of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径：难以骑行</translation>
     </message>
     <message>
         <source>A path less than 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible riding. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>路径小于1.5 m宽，有困难的障碍物，例如树根，深沙/泥浆，侵蚀或岩石台阶。非常慢的骑行或无法骑行。熟练/健康的骑手可能会被要求下车。最高速度25％。</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -8733,7 +9137,7 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Non-ridable narrow forest rides should be represented.</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可骑车的狭窄森林应该表示出来。</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -8743,17 +9147,17 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>铁路或其他类型的有轨轨道（电车道、卡车道等）。</translation>
     </message>
     <message>
         <source>Power line</source>
         <comment>Name of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>输电线</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>输电线、索道或滑雪缆车。节点指示了塔的确切位置。</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -8763,48 +9167,49 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
         <comment>Description of symbol 517</comment>
-        <translation type="unfinished"></translation>
+        <translation>主输电线应画成双线。线之间的间隙可以表示电力线的范围。</translation>
     </message>
     <message>
         <source>Tunnel</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>隧道</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
     </message>
     <message>
         <source>Tunnel, minimum size</source>
         <comment>Name of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>隧道-最小尺寸</translation>
     </message>
     <message>
         <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
         <comment>Description of symbol 518.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
     </message>
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>石墙</translation>
     </message>
     <message>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
 cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>此石墙符号应代表所有可见的墙。如果是禁止翻越的石墙，
+应标有符号707（不可跨越的边界）。</translation>
     </message>
     <message>
         <source>High fence</source>
         <comment>Name of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>高围栏</translation>
     </message>
     <message>
         <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>大于约1.5 m的木板或铁丝网，一般参赛者无法翻越，例如鹿围栏。</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -8814,7 +9219,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>必须指明翻越或穿过高的围栏或墙的所有方式。该符号还可以用于穿过石墙（521）或栅栏（524）或管道（534）或在其上的门。</translation>
     </message>
     <message>
         <source>Building</source>
@@ -8824,7 +9229,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A building is shown with its ground plan so far as the scale permits.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>在比例尺允许的范围内显示建筑物的平面图。</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
@@ -8834,12 +9239,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Settlement</source>
         <comment>Name of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>禁区</translation>
     </message>
     <message>
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -8849,7 +9254,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>An area of hard standing used for parking or other purposes.</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation>硬质地面用于停车场或其他目的。</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -8864,22 +9269,22 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Firing range</source>
         <comment>Name of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>射击场</translation>
     </message>
     <message>
         <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>射击场显示为特殊符号，表示需要小心。关联的建筑物分别标记。</translation>
     </message>
     <message>
         <source>Grave</source>
         <comment>Name of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>坟墓</translation>
     </message>
     <message>
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
-        <translation type="unfinished"></translation>
+        <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
         <source>Uncrossable pipeline</source>
@@ -9175,12 +9580,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用辅助等高线。它仅在普通等高线无法表示的情况下使用，相邻等高线之间只能使用一条辅助等高线。</translation>
+        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用间曲线。它仅在首曲线无法表示的情况下使用，相邻首曲线之间只能使用一条间曲线。</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -9275,7 +9680,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
-        <translation>可通过的石崖</translation>
+        <translation>可翻越的石崖</translation>
     </message>
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -9285,7 +9690,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
-        <translation>可通过的石崖-最小尺寸</translation>
+        <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
@@ -9335,7 +9740,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Rocky pit</source>
         <comment>Name of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>岩坑</translation>
     </message>
     <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
@@ -9671,7 +10076,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Stone wall</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>石墙</translation>
     </message>
     <message>
         <source>A stone wall or stone-faced bank.</source>
@@ -9711,12 +10116,12 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Settlement</source>
         <comment>Name of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>禁区</translation>
     </message>
     <message>
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
     </message>
     <message>
         <source>Permanently out of bounds</source>
@@ -9949,7 +10354,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
@@ -9969,17 +10374,17 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with a normal contour line.</source>
         <comment>Description of symbol 102</comment>
-        <translation>每五条等高线应画一条较粗的线。这有助于快速评估高度差和地形表面的整体形状。在一个有很多细节的区域中，计曲等高线可以表示为一条普通的等高线。</translation>
+        <translation>每五条等高线应画一条较粗的线。这有助于快速评估高度差和地形表面的整体形状。在一个有很多细节的区域中，计曲线可以表示为一条普通的等高线。</translation>
     </message>
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>An intermediate contour line. Form lines are used where more information can be given about the shape of the ground. They are used only where representation is not possible with ordinary contours. Only one form line may be used between neighbouring contours.</source>
         <comment>Description of symbol 103</comment>
-        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用辅助等高线。它仅在普通等高线无法表示的情况下使用，相邻等高线之间只能使用一条辅助等高线。</translation>
+        <translation>是一条中间等高线。在可以提供更多关于地面形状的信息的地方，可以使用间曲线。它仅在首曲线无法表示的情况下使用，相邻首曲线之间只能使用一条间曲线。</translation>
     </message>
     <message>
         <source>Slope line</source>
@@ -10009,7 +10414,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -10019,7 +10424,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
-        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
+        <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。齿线表示土崖整个延展范围，如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。非常高的土崖线宽可以是0.25 mm。</translation>
     </message>
     <message>
         <source>Earth bank, very high</source>
@@ -10030,6 +10435,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.1</comment>
         <translation>非常高的土崖线宽可以是0.25 mm。</translation>
+    </message>
+    <message>
+        <source>Earth bank, very high, minimum size</source>
+        <comment>Name of symbol 106.1.1</comment>
+        <translation>很高的土崖-最小尺寸</translation>
     </message>
     <message>
         <source>The line width of very high earth banks may be 0.25 mm.</source>
@@ -10052,19 +10462,49 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>土墙</translation>
     </message>
     <message>
+        <source>Distinct earth wall. Minimum height is 1 m.</source>
+        <comment>Description of symbol 107</comment>
+        <translation>明显的土墙，最小高度为1 m。</translation>
+    </message>
+    <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
         <translation>冲沟或堑壕</translation>
     </message>
     <message>
+        <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
+        <comment>Description of symbol 109</comment>
+        <translation>太小而无法用符号106表示的冲沟或沟槽用单线表示。线宽反映了冲沟的大小。最小深度1 m。线的末端已标示。</translation>
+    </message>
+    <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201</comment>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.0.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖最小尺寸</translation>
+    </message>
+    <message>
+        <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
+        <comment>Description of symbol 201.0.1</comment>
+        <translation>不可翻越的石崖、采石场或土堤（参见106），0.35毫米的线宽，下面的齿线显示了从顶线到脚的整个范围。对于垂直的岩壁，如果空间较短（例如，悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。齿线可以在表示岩石面正下方的细节的区域符号上延伸。当岩石面直接掉入水中，使其无法沿着水的边缘越过悬崖时，将忽略堤岸线，否则标签应清晰地延伸到堤岸线上。</translation>
+    </message>
+    <message>
+        <source>Impassable cliff, no tags</source>
+        <comment>Name of symbol 201.1</comment>
+        <translation>不可翻越石崖-无齿线</translation>
+    </message>
+    <message>
+        <source>For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).</source>
+        <comment>Description of symbol 201.1</comment>
+        <translation>垂直的岩壁，空间较短，例如悬崖之间的狭窄通道（通道的宽度至少应为0.3毫米）。</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -10077,14 +10517,24 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>使用此符号可以显示宽悬崖的整个延展范围。</translation>
     </message>
     <message>
+        <source>Rock pillars/cliffs</source>
+        <comment>Name of symbol 202</comment>
+        <translation>岩柱/悬崖</translation>
+    </message>
+    <message>
+        <source>In the case of unusual features such as rock pillars or massive cliffs or gigantic boulders, the rocks shall be shown in plan shape without tags.</source>
+        <comment>Description of symbol 202</comment>
+        <translation>在岩石柱、巨大的悬崖或巨大的巨石等异常特征的情况下，岩石应以平面图形表示，且没有齿线。</translation>
+    </message>
+    <message>
         <source>Passable rock face</source>
         <comment>Name of symbol 203</comment>
-        <translation>可通过的石崖</translation>
+        <translation>可翻越的石崖</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
-        <translation>可通过的石崖-最小尺寸</translation>
+        <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -10100,6 +10550,21 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Boulder</source>
         <comment>Name of symbol 206</comment>
         <translation>石块</translation>
+    </message>
+    <message>
+        <source>A small distinct boulder (minimum height 1 m). Every boulder marked on the map should be immediately identifiable on the ground. To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206</comment>
+        <translation>一个较小的明显石头（最小高度为1 m）。地图上标记的每个石头都应立即在地面上被识别。为了能够显示出大小差异显著的石头之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
+    </message>
+    <message>
+        <source>Boulder, enlarged</source>
+        <comment>Name of symbol 206.1</comment>
+        <translation>石头-放大</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulders with significant difference in size it is permitted to enlarge this symbol by 20% (diameter 0.5 mm).</source>
+        <comment>Description of symbol 206.1</comment>
+        <translation>为了能够显示出大小差异显著的巨石之间的区别，允许将该符号放大20％（直径0.5毫米）。</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -10137,29 +10602,81 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>可涉水道</translation>
     </message>
     <message>
+        <source>A crossable watercourse, minimum 2 m wide. The width of watercourses over 5 m wide should be shown to scale.</source>
+        <comment>Description of symbol 305</comment>
+        <translation>可穿越的河流，最小宽度为2 m。宽度超过5 m的河流应按比例显示。</translation>
+    </message>
+    <message>
+        <source>Crossable small watercourse</source>
+        <comment>Name of symbol 306</comment>
+        <translation>可穿越的小河流</translation>
+    </message>
+    <message>
+        <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
+        <comment>Description of symbol 306</comment>
+        <translation>宽度小于2 m的可穿越河流（包括主排水沟）。为了更好的可读性，应在沼泽中画为一条沟渠作为可越过的河流（305）。</translation>
+    </message>
+    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
+    </message>
+    <message>
+        <source>Cultivated land, fields, meadows, grassland, etc. without trees, offering easy running. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 401</comment>
+        <translation>耕地、田野、草地、草原等，没有树木，可跑性好。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
+    </message>
+    <message>
+        <source>Meadows with scattered trees or bushes, with grass or similar ground cover offering easy running. Areas smaller than 10 mm at the maps scale are shown as open land (401). Individual trees may be added (418, 419, 420). If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 402</comment>
+        <translation>草地上有零散的树木或灌木丛，草地或类似的植被提供了良好的可跑性。地图比例尺上小于10毫米的区域显示为开阔土地（401）。可以添加单个树（418、419、420）。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
+    </message>
+    <message>
+        <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass. Symbol 403 may be combined with symbols 407 and 409 to show reduced runnability.</source>
+        <comment>Description of symbol 403</comment>
+        <translation>杂草地、伐木场、新栽植的区域（树木约1 m以下）或其他通常空旷的土地，地面植被茂密，石楠或高草丛生。符号403可以与符号407和409结合以显示降低的可跑性。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
+    </message>
+    <message>
+        <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
+        <comment>Description of symbol 404</comment>
+        <translation>凌乱开阔土地上零星树木，白色（或绿色）点应出现在其中。可以通过在黄色屏幕中使用大白点的规则图案来概括此类区域。地图比例尺中小于16毫米的区域显示为粗糙的开阔土地（403）。可以添加单个树（418、419、420）。</translation>
     </message>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
+    </message>
+    <message>
+        <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
+direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 412</comment>
+        <translation>用果树或灌木种植的土地。点阵的方向可以表示
+种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
+    </message>
+    <message>
+        <source>Vineyard</source>
+        <comment>Name of symbol 413</comment>
+        <translation>葡萄园</translation>
+    </message>
+    <message>
+        <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
+        <comment>Description of symbol 413</comment>
+        <translation>绿线的方向可以指示种植方向。如果黄色区域占主导地位，则可以使用浅黄色（75％）代替全黄色。</translation>
     </message>
     <message>
         <source>Distinct cultivation boundary</source>
@@ -10170,6 +10687,46 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 418</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 418</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Motorway</source>
+        <comment>Name of symbol 501.0</comment>
+        <translation>高速公路</translation>
+    </message>
+    <message>
+        <source>A road with two carriageways. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.0</comment>
+        <translation>有两条车道的道路。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width</source>
+        <comment>Name of symbol 502</comment>
+        <translation>主要道路-最小宽度</translation>
+    </message>
+    <message>
+        <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502</comment>
+        <translation>道路宽于5m。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Minor road</source>
+        <comment>Name of symbol 503</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503</comment>
+        <translation>道路3-5 m宽。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
         <source>Road</source>
@@ -10187,14 +10744,69 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>铁路</translation>
     </message>
     <message>
+        <source>A railway or other kind of railed track (tramway, truckway, etc.).</source>
+        <comment>Description of symbol 515</comment>
+        <translation>铁路或其他类型的有轨轨道（电车道、卡车道等）。</translation>
+    </message>
+    <message>
+        <source>Power line</source>
+        <comment>Name of symbol 516</comment>
+        <translation>输电线</translation>
+    </message>
+    <message>
+        <source>Power line, cableway or skilift. The bars indicate the exact location of the pylons.</source>
+        <comment>Description of symbol 516</comment>
+        <translation>输电线、索道或滑雪缆车。节点指示了塔的确切位置。</translation>
+    </message>
+    <message>
         <source>Major power line</source>
         <comment>Name of symbol 517</comment>
         <translation>主输电线</translation>
     </message>
     <message>
+        <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline.</source>
+        <comment>Description of symbol 517</comment>
+        <translation>主输电线应画成双线。线之间的间隙可以表示电力线的范围。</translation>
+    </message>
+    <message>
+        <source>Tunnel</source>
+        <comment>Name of symbol 518</comment>
+        <translation>隧道</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518</comment>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
+    </message>
+    <message>
+        <source>Tunnel, minimum size</source>
+        <comment>Name of symbol 518.1</comment>
+        <translation>隧道-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A way under roads, railways, etc. which may be used by the runner. This symbol is used whether or not the tunnel has a track leading to it.</source>
+        <comment>Description of symbol 518.1</comment>
+        <translation>参赛者可以在公路、铁路等下方行驶的道路。无论隧道是否有通向它的路径，都会使用此符号。</translation>
+    </message>
+    <message>
+        <source>Stone wall</source>
+        <comment>Name of symbol 519</comment>
+        <translation>石墙</translation>
+    </message>
+    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>围栏</translation>
+    </message>
+    <message>
+        <source>High fence</source>
+        <comment>Name of symbol 524</comment>
+        <translation>高围栏</translation>
+    </message>
+    <message>
+        <source>A boarded or wire fence higher than ca 1.5 m, not crossable to the average orienteer, eg. deer fence.</source>
+        <comment>Description of symbol 524</comment>
+        <translation>大于约1.5 m的木板或铁丝网，一般参赛者无法翻越，例如鹿围栏。</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -10207,14 +10819,44 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>不可通过建筑物</translation>
     </message>
     <message>
+        <source>A building is shown with its ground plan so far as the scale permits.</source>
+        <comment>Description of symbol 526</comment>
+        <translation>在比例尺允许的范围内显示建筑物的平面图。</translation>
+    </message>
+    <message>
         <source>Building, minimum size</source>
         <comment>Name of symbol 526.1</comment>
         <translation>建筑物最小尺寸</translation>
     </message>
     <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527</comment>
+        <translation>禁区</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527</comment>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
+    </message>
+    <message>
+        <source>Settlement</source>
+        <comment>Name of symbol 527.1</comment>
+        <translation>禁区</translation>
+    </message>
+    <message>
+        <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
+        <comment>Description of symbol 527.1</comment>
+        <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>铺装区域</translation>
+    </message>
+    <message>
+        <source>An area of hard standing used for parking or other purposes.</source>
+        <comment>Description of symbol 529</comment>
+        <translation>硬质地面用于停车场或其他目的。</translation>
     </message>
     <message>
         <source>Paved area, bounding line</source>
@@ -10225,6 +10867,16 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <source>Paved area, with bounding line</source>
         <comment>Name of symbol 529.2</comment>
         <translation>铺装区域(有边界)</translation>
+    </message>
+    <message>
+        <source>Firing range</source>
+        <comment>Name of symbol 531</comment>
+        <translation>射击场</translation>
+    </message>
+    <message>
+        <source>A firing range is shown with a special symbol to indicate the need for caution. Associated buildings are individually marked.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>射击场显示为特殊符号，表示需要小心。关联的建筑物分别标记。</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -10479,6 +11131,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>土坑或洞</translation>
     </message>
     <message>
+        <source>Rocky pit</source>
+        <comment>Name of symbol 204</comment>
+        <translation>岩坑</translation>
+    </message>
+    <message>
         <source>Rocky pits, holes or mineshafts which may constitute a danger to the runner. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 204</comment>
         <translation>岩坑、地洞，或矿井，可能对运动员构成危险。位于符号的重心。符号必须向北正置。</translation>
@@ -10494,9 +11151,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>山洞与岩坑以同一个符号表示，但表示山洞时，须将其尖端指向等高线较高一侧。符号的重心位于山洞的入口。</translation>
     </message>
     <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210</comment>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
+    </message>
+    <message>
         <source>Stony ground</source>
         <comment>Name of symbol 210.1</comment>
         <translation>碎石地</translation>
+    </message>
+    <message>
+        <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
+        <comment>Description of symbol 210.1</comment>
+        <translation>影响行进的碎石或岩石地面应显示在地图上。这些点应根据岩石的数量以一定密度随机分布。至少应使用三个点。</translation>
     </message>
     <message>
         <source>Open sandy ground</source>
@@ -10504,14 +11171,39 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>开阔沙地</translation>
     </message>
     <message>
+        <source>An area of soft sandy ground or gravel with no vegetation and where running is slow. Where an area of sandy ground is open but running is good, it is shown as open land (401/402).</source>
+        <comment>Description of symbol 211</comment>
+        <translation>沙质较软的地面或碎石区，无植被，行驶缓慢。沙质土地开阔但行驶良好的地方显示为开阔土地（401/402）。</translation>
+    </message>
+    <message>
         <source>Bare rock</source>
         <comment>Name of symbol 212</comment>
         <translation>裸岩地</translation>
     </message>
     <message>
+        <source>A runnable area of rock without earth or vegetation is shown as bare rock. An area of rock covered with grass, moss or other low vegetation is shown as open land (401/402).</source>
+        <comment>Description of symbol 212</comment>
+        <translation>没有土壤或植被的可跑岩石区域显示为裸岩。覆盖着草、苔藓或其他低矮植被的岩石区域显示为开阔土地（401/402）。</translation>
+    </message>
+    <message>
+        <source>Pond</source>
+        <comment>Name of symbol 302</comment>
+        <translation>池塘</translation>
+    </message>
+    <message>
         <source>Waterhole</source>
         <comment>Name of symbol 303</comment>
         <translation>水坑</translation>
+    </message>
+    <message>
+        <source>Minor water channel</source>
+        <comment>Name of symbol 307</comment>
+        <translation>小水道</translation>
+    </message>
+    <message>
+        <source>A natural or man-made minor water channel which may contain water only intermittently.</source>
+        <comment>Description of symbol 307</comment>
+        <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -10529,9 +11221,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不可通行沼泽-边界线</translation>
     </message>
     <message>
+        <source>Uncrossable marsh, with border line</source>
+        <comment>Name of symbol 309.2</comment>
+        <translation>不可逾越的沼泽-有边界线</translation>
+    </message>
+    <message>
         <source>Marsh</source>
         <comment>Name of symbol 310</comment>
         <translation>可通行沼泽地</translation>
+    </message>
+    <message>
+        <source>A crossable marsh, usually with a distinct edge. The symbol should be combined with vegetation symbols to show runnability and openness. Where a small marsh area should be combined with either 403/404 it is permitted to use 401/402 to improve legibility.</source>
+        <comment>Description of symbol 310</comment>
+        <translation>可穿越的沼泽，通常具有明显的边缘。该符号应与植被符号结合使用以显示可跑性和开放性。如果小沼泽地应与403/404结合使用，则可以使用401/402来提高清晰度。</translation>
     </message>
     <message>
         <source>Marsh, minimum size</source>
@@ -10554,9 +11256,39 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>泉</translation>
     </message>
     <message>
+        <source>Special water feature</source>
+        <comment>Name of symbol 314</comment>
+        <translation>特殊水体</translation>
+    </message>
+    <message>
+        <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
+        <comment>Description of symbol 314</comment>
+        <translation>一种特殊的小水体。必须在地图图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 415</comment>
         <translation>耕地</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 419</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 419</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special vegetation feature</source>
+        <comment>Name of symbol 420</comment>
+        <translation>特殊植被</translation>
+    </message>
+    <message>
+        <source>Symbols 418, 419 and 420 can be used for special small vegetation features. The definition of the symbol must be given in each case in the map legend.</source>
+        <comment>Description of symbol 420</comment>
+        <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -10592,6 +11324,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Grave</source>
+        <comment>Name of symbol 532</comment>
+        <translation>坟墓</translation>
+    </message>
+    <message>
+        <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
+        <comment>Description of symbol 532</comment>
+        <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
         <source>Cairn</source>
@@ -10769,7 +11511,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Black for open land</source>
         <comment>Color 32</comment>
-        <translation>开阔地的黑色</translation>
+        <translation>空旷地的黑色</translation>
     </message>
     <message>
         <source>Yellow</source>
@@ -10789,7 +11531,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Contour</source>
         <comment>Name of symbol 101</comment>
-        <translation>等高线</translation>
+        <translation>首曲线</translation>
     </message>
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 m. A contour interval of 2.5 m may be used for flat terrains.
@@ -10843,7 +11585,7 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Contour value</source>
         <comment>Name of symbol 102.1</comment>
-        <translation>等高线高度</translation>
+        <translation>等高线注记</translation>
     </message>
     <message>
         <source>An index contour may have a height value assigned. A height value should only be inserted in an index contour in places where other detail is not obscured. It shall be orientated so that the top of the label is on the higher side of the contour. The index value (label) shall be 1.5 mm high and represented in a sans-serif font.</source>
@@ -10853,21 +11595,21 @@ The index contour level must be carefully selected in flat terrain. The ideal le
     <message>
         <source>Form line</source>
         <comment>Name of symbol 103</comment>
-        <translation>辅助等高线</translation>
+        <translation>间曲线</translation>
     </message>
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones (minimum height / depth should be 1 m). Excessive use of form lines must be avoided as this disturbs the three-dimensional picture of the ground shape and will complicate map reading.
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation>如果必须提供更多有关地面形状的信息，则使用辅助等高线。只有在普通等高线不能完整描述地形的情况下才会添加辅助等高线。它们不得用在等高线之间的中间位置。相邻等高线之间只应使用一条辅助等高线。辅助等高线逻辑上和等高线体系吻合非常重要，因此辅助等高线的起点和终点应与相邻等高线平行。辅助等高线虚线之间的间隙必须放在辅助等高线的合理直线部分上。辅助等高线线可用于区分扁平和明显的土丘、洼地（最小高度/深度应为1米）。必须避免过度使用辅助等高线，因为这会干扰地面形状的三维图像，并使地图阅读复杂化。
+        <translation>如果必须提供更多有关地面形状的信息，则使用间曲线。只有在普通等高线不能完整描述地形的情况下才会添加间曲线。它们不得用在等高线之间的中间位置。相邻等高线之间只应使用一条间曲线。间曲线逻辑上和等高线体系吻合非常重要，因此间曲线的起点和终点应与相邻等高线平行。间曲线虚线之间的间隙必须放在间曲线的合理直线部分上。间曲线可用于区分扁平和明显的土丘、洼地（最小高度/深度应为1米）。必须避免过度使用间曲线，因为这会干扰地面形状的三维图像，并使地图阅读复杂化。
 最小长度（非闭合）：两段虚线。
 最小长度，小丘或凹地：1.1mm（实地长度16.5米）</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
         <comment>Name of symbol 103.1</comment>
-        <translation>辅助等高线-示坡线</translation>
+        <translation>间曲线-示坡线</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -10887,7 +11629,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -10903,7 +11645,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -10919,7 +11661,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
         <translation>土崖是指地面的高度突然变化，可以与周围环境明显区分开来，例如砾石或沙坑，公路和铁路路堑或堤坝。
 最小高度：1米。土崖可能会影响可跑性。齿线表示土崖整个延展范围。
-对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可通过的陡崖（201）表示。
+对于长土崖，末端允许使用短于最小长度的齿线。如果两个土崖太靠近，则可以省略齿线。不可逾越的土崖应使用符号 不可翻越的陡崖（201）表示。
 最小长度：0.6mm（实地长度9米）。</translation>
     </message>
     <message>
@@ -10957,7 +11699,7 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 107</comment>
-        <translation>冲沟或堑壕</translation>
+        <translation>冲沟</translation>
     </message>
     <message>
         <source>An erosion gully which is too small to be shown using symbol Earth bank (104) is shown by a single line. Minimum depth: 1 m.
@@ -11005,7 +11747,7 @@ Footprint: 12 m x 6 m.</source>
     <message>
         <source>Impassable cliff</source>
         <comment>Name of symbol 201</comment>
-        <translation>不可通过的陡崖</translation>
+        <translation>不可翻越的陡崖</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11014,16 +11756,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
         <comment>Name of symbol 201.1</comment>
-        <translation>不可通过的陡崖最小尺寸</translation>
+        <translation>不可翻越的陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A cliff, quarry or earth bank that is so high and steep that it is impossible to pass/climb or is dangerous.
@@ -11032,16 +11774,16 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation>不可通过的陡崖，平面形状表示（来自 ISOM2000）</translation>
+        <translation>不可翻越的陡崖，平面形状表示（来自 ISOM2000）</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -11060,10 +11802,10 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法通过/攀登或具有危险性。
+        <translation>陡崖、采石场或者土崖，其高度和陡峭程度使其无法翻越/攀登或具有危险性。
 对于垂直的岩石面，如果其空间较窄，齿线可以被省略；顶部的横线末端可以是圆形或者方形，可以在横线的两端用更短一些的齿线。
-在地图上，两个不可通过特征物符号之间最小的间隙不少于0.25mm。
-当不可通过的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边通过，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可通过的陡崖的符号要和等高线互相对应。
+在地图上，两个不可翻越特征物符号之间最小的间隙不少于0.25mm。
+当不可翻越的陡崖垂直立在水的边上时，如果人不能从陡崖下面的水边翻越，水岸线应省略，陡崖的齿线可以延伸到面状符号里面或者是陡崖的短齿线要清楚地延伸到水的堤岸线上来表示这个细节。不能可翻越的陡崖的符号要和等高线互相对应。
 最小长度： 0.6mm ( 实际长度最小9米)。</translation>
     </message>
     <message>
@@ -11079,7 +11821,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Impassable cliff, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation>不可通过的陡崖最小尺寸 (来自 ISOM2000)</translation>
+        <translation>不可翻越的陡崖最小尺寸 (来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -11089,7 +11831,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Cliff</source>
         <comment>Name of symbol 202</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -11098,9 +11840,9 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
@@ -11116,16 +11858,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.1</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags</source>
         <comment>Name of symbol 202.2</comment>
-        <translation>可通过的陡崖</translation>
+        <translation>可翻越的陡崖</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -11134,16 +11876,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.2</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size</source>
         <comment>Name of symbol 202.3</comment>
-        <translation>可通过陡崖最小尺寸</translation>
+        <translation>可翻越陡崖最小尺寸</translation>
     </message>
     <message>
         <source>A passable cliff or quarry. If the direction of fall of the cliff is not apparent from the contours, or to improve legibility, short tags may be drawn in the direction of the downslope.
@@ -11152,16 +11894,16 @@ Crossing a cliff will normally slow progress.
 Minimum height: 1 m.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 202.3</comment>
-        <translation>可以通过的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
-对于那种非垂直的可通过陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
-通常情况下，通过这种陡崖地形时会降低行进的速度。
+        <translation>可以翻越的陡崖、采石场。如果从等高线上不能明显反映出陡崖的低的方向，或者是为了提高地图的易读性，陡崖的短齿线可以指向下坡的方向来表达。
+对于那种非垂直的可翻越陡崖，齿线可以画到整个坡面延伸水平范围。两个陡崖之间最小的间隙不少于0.2mm。陡崖要和等高线互相对应。
+通常情况下，翻越这种陡崖地形时会降低行进的速度。
 最小高度： 1米。
 最小长度：0.6mm（实际长度9米）。</translation>
     </message>
     <message>
         <source>Cliff, with tags, minimum size (from ISOM2000)</source>
         <comment>Name of symbol 202.9</comment>
-        <translation>可通过陡崖最小尺寸(来自 ISOM2000)</translation>
+        <translation>可翻越陡崖最小尺寸(来自 ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
@@ -11185,7 +11927,7 @@ Footprint: 6 m diameter (7.5 m diameter).</source>
     <message>
         <source>Boulder or large boulder, different size</source>
         <comment>Name of symbol 204.5</comment>
-        <translation>巨石</translation>
+        <translation>不同尺寸的石块或大石块</translation>
     </message>
     <message>
         <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
@@ -11417,7 +12159,7 @@ Minimum length (isolated): 1 mm (footprint 15 m).</source>
     <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
-        <translation>开阔地</translation>
+        <translation>空旷地</translation>
     </message>
     <message>
         <source>Open land that has a ground cover (grass, moss or similar) which offers better runnability than typical open forest. If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -11431,7 +12173,7 @@ Minimum area: 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
     <message>
         <source>Open land with scattered trees</source>
         <comment>Name of symbol 402</comment>
-        <translation>稀树开阔地(乔木)</translation>
+        <translation>稀树空旷地(乔木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in open land may be generalised by using a regular pattern of large dots in the yellow screen. The dots may be white (scattered trees) or green (scattered bushes / thickets). Prominent individual trees may be added using symbol Prominent large tree (417). If yellow coloured areas become dominant, a screen (75% instead of full yellow) may be used.
@@ -11441,17 +12183,17 @@ Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).
 The symbol is orientated to north.</source>
         <comment>Description of symbol 402</comment>
-        <translation>在开阔地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
+        <translation>在空旷地上散布零星树木或灌木的区域可以使用黄色网屏上有规则的大圆点来概括。这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。可以使用符号突出的大树(417)添加突出个体树。如果地图上黄色区域面积较大时，可以使用 75%黄色。
 不得与坑洼地(113)、石块地(208)或者沼泽符号 (308、310) 以外的面状符号组合。
 最小宽度:1.5mm(实地宽度22.5米)。
 最小面积:2mm x 2mm(占地面积30米 x 30米)。
-较小的区域必须被删除，或夸大使用符号 开阔地(401)表示。
+较小的区域必须被删除，或夸大使用符号 空旷地(401)表示。
 这个符号是朝北的。</translation>
     </message>
     <message>
         <source>Rough open land</source>
         <comment>Name of symbol 403</comment>
-        <translation>凌乱开阔地</translation>
+        <translation>凌乱空旷地</translation>
     </message>
     <message>
         <source>Heath, moorland, felled areas, newly planted areas (trees lower than ca. 1 m) or other generally open land with rough ground vegetation, heather or tall grass offering the same runnability as typical open forest.
@@ -11459,15 +12201,15 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation>荒野、高沼地、砍伐区、新种植区(低于约1米的树木)或其他具有粗糙地面植被、石楠或高草的开阔地带，与典型的可跑树林具有相同的可跑性。
+        <translation>荒野、高沼地、砍伐区、新种植区(低于约1米的树木)或其他具有粗糙地面植被、石楠或高草的空旷地带，与典型的可跑树林具有相同的可跑性。
 可与慢跑底层植被（407）或慢行底层植被（409）组合使用。
 最小面积：1mm x 1mm(实地面积15米 x 15米)。
-较小的区域必须被删除，或夸大使用符号 开阔地(401）标示。</translation>
+较小的区域必须被删除，或夸大使用符号 空旷地(401）标示。</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
-        <translation>稀树凌乱开阔地(乔木)</translation>
+        <translation>稀树凌乱空旷地(乔木)</translation>
     </message>
     <message>
         <source>Areas with scattered trees or bushes in rough open land may be generalised by using a regular pattern of large dots in the yellow screen.
@@ -11477,12 +12219,12 @@ Minimum width: 1.5 mm (footprint 22.5 m).
 Minimum area: 2.5 mm x 2.5 mm (footprint 37.5 m x 37.5 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Rough open land (403).</source>
         <comment>Description of symbol 404</comment>
-        <translation>在凌乱的开阔地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
+        <translation>在凌乱的空旷地上分散布零星树木或灌木的区域可以使用黄色网屏上规则的大圆点来概括。
 这些点可以是白色的(分散的树)或绿色的(分散的灌木/灌木丛)。只有白点型态可以与符号植被相结合：慢跑底层植被(407)或 慢行底层植被(409)，以显示可跑性降低。
 符号朝北。
 最小宽度：1.5mm (实地面积22.5米)。
 最小面积：2.5mmx2.5mm (实地面积37.5米 x 37.5米)。
-较小的区域必须删除，或夸大使用符号凌乱开阔地（403)表示。</translation>
+较小的区域必须删除，或夸大使用符号凌乱空旷地（403)表示。</translation>
     </message>
     <message>
         <source>Forest</source>
@@ -11498,7 +12240,7 @@ For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.5
         <comment>Description of symbol 405</comment>
         <translation>特殊地形的典型开阔森林。如果没有可跑的树林，那么地图上就不应该出现白色。
 最小面积：除了下面的符号外，在其他颜色网屏开孔最小面积是1mm x1mm（实地面积15米X 15米）：
-开阔地（401）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
+空旷地（401）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
 符号慢行植被（408）开孔最小面积是0.7mm x 0.7mm（实地面积10.5米 x10.5米）。
 符号难行植被（410）的开孔最小面积为0.55mm x 0.55mm(实地面积8 米x8米）。</translation>
     </message>
@@ -11547,7 +12289,7 @@ Minimum width: 0.4 mm (footprint 6 m).</source>
     <message>
         <source>Orchard</source>
         <comment>Name of symbol 413</comment>
-        <translation>果园(开阔地)</translation>
+        <translation>果园(空旷地)</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -11556,14 +12298,14 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413</comment>
         <translation>种植树木或灌木的土地，通常是规则的。点线可以定向为显示种植方向。
-必须与符号 开阔地（401）或 凌乱开阔地(403)组合使用。
+必须与符号 空旷地（401）或 凌乱空旷地(403)组合使用。
 可与符号慢跑底层植被（407）或 慢行底层植被（409）组合使用以显示减低的可跑性。
 最小面积：2mm x 2mm（实地面积30 米 x 30米）。</translation>
     </message>
     <message>
         <source>Orchard, rough open land</source>
         <comment>Name of symbol 413.1</comment>
-        <translation>果园(凌乱开阔地)</translation>
+        <translation>果园(凌乱空旷地)</translation>
     </message>
     <message>
         <source>Land planted with trees or bushes, normally in a regular pattern. The dot lines may be orientated to show the direction of planting.
@@ -11572,32 +12314,32 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 413.1</comment>
         <translation>种植树木或灌木的土地，通常是规则的。点线可以定向为显示种植方向。
-必须与符号 开阔地（401）或 凌乱开阔地(403)组合使用。
+必须与符号 空旷地（401）或 凌乱空旷地(403)组合使用。
 可与符号慢跑底层植被（407）或 慢行底层植被（409）组合使用以显示减低的可跑性。
 最小面积：2mm x 2mm（实地面积30 米 x 30米）。</translation>
     </message>
     <message>
         <source>Vineyard or similar</source>
         <comment>Name of symbol 414</comment>
-        <translation>葡萄园或类似植被(开阔地)</translation>
+        <translation>葡萄园或类似植被(空旷地)</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414</comment>
-        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 开阔地（401）或 凌乱开阔地（403）组合使用。
+        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 空旷地（401）或 凌乱空旷地（403）组合使用。
 最小面积： 2mm x 2mm （ 实地面积30m米 x 30米）。</translation>
     </message>
     <message>
         <source>Vineyard or similar, rough open land</source>
         <comment>Name of symbol 414.1</comment>
-        <translation>葡萄园或类似植被(凌乱开阔地)</translation>
+        <translation>葡萄园或类似植被(凌乱空旷地)</translation>
     </message>
     <message>
         <source>A vineyard or similar cultivated land containing dense rows of plants offering good or normal runnability in the direction of planting. The lines shall be orientated to show the direction of planting. At least three lines shall be clearly visible. Must be combined with either symbol Open land (401) or Rough open land (403).
 Minimum area: 2 mm x 2 mm (footprint 30 m x 30 m).</source>
         <comment>Description of symbol 414.1</comment>
-        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 开阔地（401）或 凌乱开阔地（403）组合使用。
+        <translation>葡萄园或类似的耕栽培地， 有密集的植物行列， 在种植方向上有良好或正常的可跑性。 线的方向需显示种植方向。至少应有三条线清晰可见。必须与符号 空旷地（401）或 凌乱空旷地（403）组合使用。
 最小面积： 2mm x 2mm （ 实地面积30m米 x 30米）。</translation>
     </message>
     <message>
@@ -11688,7 +12430,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502</comment>
-        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可通过高墙(515)。
+        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可翻越的墙(515)。
 两条黑线之间填充棕色（50％）。
 具有两条车道的道路可以用两个公路符号并排表示,中间只保留一条道路边缘。</translation>
     </message>
@@ -11712,7 +12454,7 @@ A road with two carriageways can be represented using two wide road symbols side
 The space between the black lines is filled with brown (50%).
 A road with two carriageways can be represented using two wide road symbols side by side, keeping only one of the road edges in the middle.</source>
         <comment>Description of symbol 502.2</comment>
-        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可通过高墙(515)。
+        <translation>路的宽度应该按比例进行绘制，但不得小于最小宽度(0.3+2*0.14 mm - 占地面积 8.7米)。如果其他地图符号离道路边缘太近而不能使用各自符号时，则外部边界线可以替换为其他黑线符号，如符号 栅栏(516)、不可通行栅栏(518)、墙(513) 或 不可翻越的墙(515)。
 两条黑线之间填充棕色（50％）。
 具有两条车道的道路可以用两个公路符号并排表示,中间只保留一条道路边缘。</translation>
     </message>
@@ -11919,7 +12661,7 @@ Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
     <message>
         <source>Impassable wall</source>
         <comment>Name of symbol 515</comment>
-        <translation>不可通过的高墙</translation>
+        <translation>不可翻越的高墙</translation>
     </message>
     <message>
         <source>An impassable or uncrossable wall, normally more than 1.5 m high.
@@ -11943,14 +12685,14 @@ Minimum length (isolated): 1.5 mm (footprint 22.5 m).</source>
     <message>
         <source>Impassable fence</source>
         <comment>Name of symbol 518</comment>
-        <translation>不可通过高围栏</translation>
+        <translation>不可翻越高围栏</translation>
     </message>
     <message>
         <source>An impassable or uncrossable fence, normally more than 1.5 m high.
 If the fence forms an enclosed area, tags should be placed inside.
 Minimum length (isolated): 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation>不可通过或不可翻越的栅栏，通常超过1.5米高。
+        <translation>不可翻越或不可翻越的栅栏，通常超过1.5米高。
 如果栅栏围成一个封闭的区域, 则齿线应朝向区域内部。
 最小长度 (单独): 2 mm (实地尺寸30米)。</translation>
     </message>
@@ -11999,7 +12741,7 @@ Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).</source>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation>不可通过区域(条状禁区)</translation>
+        <translation>不可翻越区域(条状禁区)</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -12165,13 +12907,13 @@ Footprint: 15 m x 15 m.</source>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. The definition of the symbol must be given on the map.
 Minimum length: 2 mm (footprint 30 m).</source>
         <comment>Description of symbol 529</comment>
-        <translation>明显的无法逾越的人造线状特征物。例如，高大管道（气、水、油、供热等）或雪橇/骨架轨道。符号的定义必须标明在地图上。
+        <translation>明显的无法翻越的人造线状特征物。例如，高大管道（气、水、油、供热等）或雪橇/骨架轨道。符号的定义必须标明在地图上。
 最小长度：2mm （实际尺寸 30 米）。</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
         <comment>Name of symbol 530</comment>
-        <translation>特殊人造地物-⚪</translation>
+        <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
         <source>Location is at the centre of gravity of the symbol.
@@ -13110,7 +13852,9 @@ Map symbol: ISOM 110</source>
 
 Map symbols: ISOM 101, 111</source>
         <comment>Description of symbol 1.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>一个高点，在地图上以等高线显示。
+
+地图符号：ISOM 101、111</translation>
     </message>
     <message>
         <source>|D| Knol</source>
@@ -13168,7 +13912,9 @@ Map symbol: ISOM 115</source>
 
 Map symbols: ISOM 116, 204</source>
         <comment>Description of symbol 1.14</comment>
-        <translation type="unfinished"></translation>
+        <translation>有明显的陡边的坑或洞，通常是人造的。与符号8.6一起使用时表示岩石坑。
+
+地图符号：ISOM 116、204</translation>
     </message>
     <message>
         <source>|D| Broken ground </source>
@@ -13588,7 +14334,9 @@ Map symbol: ISOM 509</source>
 
 Map symbols: ISOM 512, 513</source>
         <comment>Description of symbol 5.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>水道或其他线性特征物上的通过点。
+
+地图符号：ISOM 512、513</translation>
     </message>
     <message>
         <source>|D| Power line</source>

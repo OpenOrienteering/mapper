@@ -1,6 +1,6 @@
 /*
  *    Copyright 2013 Thomas Schöps
- *    Copyright 2014, 2016, 2018 Kai Pastor
+ *    Copyright 2014-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -28,6 +28,10 @@
 #  include <QGeoCoordinate>
 #  include <QGeoPositionInfo>
 #  include <QGeoPositionInfoSource>  // IWYU pragma: keep
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+#  include <QMetaType>
+Q_DECLARE_METATYPE(QGeoPositionInfo)  // QTBUG-65937
+#endif
 #endif
 
 #include <algorithm>
@@ -109,7 +113,16 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
  , georeferencing(georeferencing)
 {
 #if defined(QT_POSITIONING_LIB)
+#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
+	static const int register_metatype = qRegisterMetaType<QGeoPositionInfo>();  // QTBUG-65937
+	Q_UNUSED(register_metatype)
+#endif
+	
 	auto const & settings = Settings::getInstance();
+	auto const nmea_serialport = settings.nmeaSerialPort();
+	if (!nmea_serialport.isEmpty())
+		qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
+	
 	auto source_name = settings.positionSource();
 	if (source_name.isEmpty())
 	{
@@ -118,13 +131,7 @@ GPSDisplay::GPSDisplay(MapWidget* widget, const Georeferencing& georeferencing, 
 	}
 	else
 	{
-		auto const nmea_serialport = settings.nmeaSerialPort();
-		if (source_name == QLatin1String("serialnmea") && !nmea_serialport.isEmpty())
-		{
-			qputenv("QT_NMEA_SERIAL_PORT", nmea_serialport.toUtf8());
-			source_name += QLatin1String(" from ") + nmea_serialport;
-		}
-		source = QGeoPositionInfoSource::createSource(source_name, this);	
+		source = QGeoPositionInfoSource::createSource(source_name, this);
 	}
 	
 	if (!source)

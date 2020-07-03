@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2015, 2017, 2018 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,120 +19,35 @@
  */
 
 
-#include "template_tool_paint.h"
-
-#include <cstddef>
-#include <memory>
+#include "paint_on_template_tool.h"
 
 #include <Qt>
 #include <QtMath>
-#include <QAbstractButton>
-#include <QCoreApplication>
+#include <QBrush>
 #include <QCursor>
-#include <QDir>
-#include <QFileInfo>
-#include <QFontMetrics>
-#include <QHBoxLayout>
+#include <QFlags>
 #include <QIcon>
-#include <QImage>
-#include <QLatin1Char>
-#include <QLatin1String>
-#include <QListWidget>
-#include <QListWidgetItem>
-#include <QMessageBox>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPaintEvent>
 #include <QPen>
 #include <QPixmap>
-#include <QPointF>
-#include <QPushButton>
+#include <QPolygonF>
 #include <QRect>
 #include <QRgb>
 #include <QSettings>
 #include <QVariant>
-#include <QVBoxLayout>
 
-#include "core/georeferencing.h"
 #include "core/map.h"
 #include "core/map_view.h"
-#include "gui/main_window.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "templates/template.h"
-#include "templates/template_image.h"
 #include "util/util.h"
 
 
 namespace OpenOrienteering {
-
-namespace {
-
-/**
- * Determines the base for rounding projected coordinates.
- * 
- * When adding templates for painting, the top left corner of these images
- * is aligned to projected coordinates which are multiples of this base.
- * (However, since map and images usually are not aligned to grid north,
- * images created at different locations will not really align very well.
- * 
- * This function is designed for images of 100 mm at 10 pixel per mm.
- */
-int alignmentBase(qreal scale)
-{
-	auto l = (qLn(scale) / qLn(10)) - 2;
-	auto base = 1;
-	for (int i = qFloor(l); i > 0; --i)
-		base *= 10;
-	auto fraction = l - qFloor(l);
-	if (fraction > 0.8)
-		base *= 10;
-	else if (fraction > 0.5)
-		base *= 5;
-	else if (fraction > 0.2)
-		base *= 2;
-	return base;
-}
-
-
-/**
- * Rounds x to a multiple of base.
- */
-qint64 roundToMultiple(qreal x, int base)
-{
-	return qRound(x / base) * base;
-}
-
-
-#ifdef MAPPER_DEVELOPMENT_BUILD
-
-bool selfTest()
-{
-	Q_ASSERT(alignmentBase(20000) == 200);
-	Q_ASSERT(alignmentBase(15000) == 100);
-	Q_ASSERT(alignmentBase(10000) == 100);
-	Q_ASSERT(alignmentBase(7500)  == 100);
-	Q_ASSERT(alignmentBase(5000)  == 50);
-	Q_ASSERT(alignmentBase(4000)  == 50);
-	Q_ASSERT(alignmentBase(1000)  == 10);
-	
-	Q_ASSERT(roundToMultiple(-347,  10) == -350);
-	Q_ASSERT(roundToMultiple(-347,  20) == -340);
-	Q_ASSERT(roundToMultiple(-347,  50) == -350);
-	Q_ASSERT(roundToMultiple(-347, 100) == -300);
-	Q_ASSERT(roundToMultiple(347,  10) == 350);
-	Q_ASSERT(roundToMultiple(347,  20) == 340);
-	Q_ASSERT(roundToMultiple(347,  50) == 350);
-	Q_ASSERT(roundToMultiple(347, 100) == 300);
-	
-	return true;
-}
-
-#endif
-
-
-} 
 
 // ### PaintOnTemplateTool ###
 
@@ -142,7 +57,7 @@ int PaintOnTemplateTool::erase_width = 4;
 PaintOnTemplateTool::PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action)
 : MapEditorTool(editor, Scribble, tool_action)
 {
-	connect(map(), &Map::templateDeleted, this, &PaintOnTemplateTool::templateDeleted);
+	connect(map(), &Map::templateAboutToBeDeleted, this, &PaintOnTemplateTool::templateAboutToBeDeleted);
 }
 
 PaintOnTemplateTool::~PaintOnTemplateTool()
@@ -178,26 +93,30 @@ const QCursor& PaintOnTemplateTool::getCursor() const
 }
 
 
-void PaintOnTemplateTool::templateDeleted(int /*pos*/, const Template* temp)
+// slot
+void PaintOnTemplateTool::templateAboutToBeDeleted(int /*pos*/, Template* temp)
 {
 	if (temp == this->temp)
 	{
-		temp = nullptr;
+		this->temp = nullptr;
 		deactivate();
 	}
 }
 
+// slot
 void PaintOnTemplateTool::colorSelected(const QColor& color)
 {
 	paint_color = color;
 }
 
+// slot
 void PaintOnTemplateTool::undoSelected()
 {
 	if (temp)
 		temp->drawOntoTemplateUndo(false);
 }
 
+// slot
 void PaintOnTemplateTool::redoSelected()
 {
 	if (temp)
@@ -244,7 +163,12 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoo
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
-		temp->drawOntoTemplate(&coords[0], int(coords.size()), erasing ? QColor(255, 255, 255, 0) : paint_color, erasing ? erase_width : 0, map_bbox);
+		auto mode = QFlags<Template::ScribbleOption>()
+		            .setFlag(Template::FilledAreas, widget->getFillShapes());
+		
+		temp->drawOntoTemplate(&coords[0], int(coords.size()),
+		        erasing ? QColor(255, 255, 255, 0) : paint_color,
+		        erasing ? erase_width : 0, map_bbox, mode);
 		
 		coords.clear();
 		map()->clearDrawingBoundingBox();
@@ -267,11 +191,21 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 		pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
 		pen.setCapStyle(Qt::RoundCap);
 		pen.setJoinStyle(Qt::RoundJoin);
-		painter->setPen(pen);
 		
-		auto size = coords.size();
-		for (std::size_t i = 1; i < size; ++i)
-			painter->drawLine(widget->mapToViewport(coords[i - 1]), widget->mapToViewport(coords[i]));
+		QPolygonF polygon;
+		polygon.reserve(coords.size());
+		for (auto const& coord : coords)
+			polygon.append(widget->mapToViewport(coord));
+
+		if (this->widget->getFillShapes())
+		{
+			painter->setPen(Qt::NoPen);
+			painter->setBrush(QBrush(pen.color(), Qt::Dense5Pattern));
+			painter->drawPolygon(polygon);
+		}
+
+		painter->setPen(pen);
+		painter->drawPolyline(polygon);
 	}
 }
 
@@ -323,6 +257,19 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 	painter.begin(this);
 	painter.setClipRect(event->rect());
 	
+	auto draw_field_selection_marker = [&painter](QRect field_rect) {
+		int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
+		painter.fillRect(field_rect, Qt::black);
+		QPen pen(Qt::white);
+		pen.setStyle(Qt::DotLine);
+		pen.setWidth(line_width);
+		painter.setPen(pen);
+		field_rect.adjust(line_width, line_width, -line_width, -line_width);
+		painter.drawRect(field_rect);
+		field_rect.adjust(line_width, line_width, -line_width, -line_width);
+		return field_rect;
+	};
+
 	int max_x = getNumFieldsX();
 	int max_y = getNumFieldsY();
 	for (int x = 0; x < max_x; ++x)
@@ -339,20 +286,16 @@ void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
 				drawIcon(&painter, QString::fromLatin1(":/images/undo.png"), field_rect);
 			else if (isRedoField(x, y))
 				drawIcon(&painter, QString::fromLatin1(":/images/redo.png"), field_rect);
-			else
+			else if (isFillShapesField(x, y))
+			{
+				if (fill_shapes)
+					field_rect = draw_field_selection_marker(field_rect);
+				drawIcon(&painter, QString::fromLatin1(":/images/scribble-fill-shapes.png"), field_rect);
+			}
+			else if (!isEmptyField(x, y))
 			{
 				if (selected_color == x + getNumFieldsX()*y)
-				{
-					int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
-					painter.fillRect(field_rect, Qt::black);
-					QPen pen(Qt::white);
-					pen.setStyle(Qt::DotLine);
-					pen.setWidth(line_width);
-					painter.setPen(pen);
-					field_rect.adjust(line_width, line_width, -line_width, -line_width);
-					painter.drawRect(field_rect);
-					field_rect.adjust(line_width, line_width, -line_width, -line_width);
-				}
+					field_rect = draw_field_selection_marker(field_rect);
 				painter.fillRect(field_rect, getFieldColor(x, y));
 			}
 		}
@@ -383,7 +326,12 @@ void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
 	{
 		emit redoSelected();
 	}
-	else if (selected_color != x + getNumFieldsX()*y)
+	else if (isFillShapesField(x, y))
+	{
+		fill_shapes = !fill_shapes;
+		update();
+	}
+	else if (!isEmptyField(x, y) && selected_color != x + getNumFieldsX()*y)
 	{
 		selected_color = x + getNumFieldsX()*y;
 		update();
@@ -405,7 +353,7 @@ void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
 
 int PaintOnTemplatePaletteWidget::getNumFieldsX() const
 {
-	return 5;
+	return 6;
 }
 
 int PaintOnTemplatePaletteWidget::getNumFieldsY() const
@@ -418,6 +366,16 @@ QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
 	static QColor rows[2][4] = { {qRgb(255,   0,   0), qRgb(  0, 255,   0), qRgb(  0,   0, 255), qRgb(  0,   0,   0)},
 	                             {qRgb(255, 255,   0), qRgb(219,   0, 216), qRgb(209,  92,   0), qRgb(255, 255, 255)} };
 	return rows[y][x];
+}
+
+bool PaintOnTemplatePaletteWidget::isEmptyField(int x, int y) const
+{
+	return x == 5 && y == 0;
+}
+
+bool PaintOnTemplatePaletteWidget::isFillShapesField(int x, int y) const
+{
+	return x == 5 && y == 1;
 }
 
 bool PaintOnTemplatePaletteWidget::isUndoField(int x, int y) const
@@ -438,158 +396,6 @@ void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& re
 	painter->drawPixmap(field_rect, icon.pixmap(field_rect.size()));
 	painter->setRenderHint(QPainter::Antialiasing, false);
 }
-
-
-
-// ### PaintOnTemplateSelectDialog ###
-
-PaintOnTemplateSelectDialog::PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent)
-: QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint)
-, map(map)
-, view(view)
-{
-#ifdef MAPPER_DEVELOPMENT_BUILD
-	// With a global static, there is no reasonable output when selfTest fails.
-	static bool self_tested = selfTest();
-	Q_UNUSED(self_tested);
-#endif
-#if defined(ANDROID)
-	setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
-	               | Qt::WindowMaximized);
-#endif
-	setWindowTitle(tr("Select template to draw onto"));
-	
-	template_list = new QListWidget();
-	auto current_row = 0;
-	/// \todo Review source string (no ellipsis when no dialog)
-	auto item = new QListWidgetItem(QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Add template..."));
-	item->setData(Qt::UserRole, qVariantFromValue<void*>(nullptr));
-	template_list->addItem(item);
-	for (int i = map->getNumTemplates() - 1; i >= 0; --i)
-	{
-		Template* temp = map->getTemplate(i);
-		if (!temp->canBeDrawnOnto() 
-		    || temp->getTemplateState() != Template::Loaded)
-			continue;
-		
-		if (temp == selected)
-		{
-			selection = selected;
-			current_row = template_list->count();
-		}
-		
-		auto item = new QListWidgetItem(temp->getTemplateFilename());
-		item->setData(Qt::UserRole, qVariantFromValue<void*>(temp));
-		template_list->addItem(item);
-	}
-	template_list->setCurrentRow(current_row);
-	
-	QPushButton* cancel_button = new QPushButton(tr("Cancel"));
-	draw_button = new QPushButton(QIcon(QString::fromLatin1(":/images/pencil.png")), tr("Draw"));
-	draw_button->setDefault(true);
-	
-	auto buttons_layout = new QHBoxLayout();
-	buttons_layout->addWidget(cancel_button);
-	buttons_layout->addStretch(1);
-	buttons_layout->addWidget(draw_button);
-	
-	auto layout = new QVBoxLayout();
-	layout->addWidget(template_list);
-	layout->addSpacing(16);
-	layout->addLayout(buttons_layout);
-	setLayout(layout);
-	
-	connect(cancel_button, &QAbstractButton::clicked, this, &QDialog::reject);
-	connect(draw_button, &QAbstractButton::clicked, this, &PaintOnTemplateSelectDialog::drawClicked);
-}
-
-void PaintOnTemplateSelectDialog::drawClicked()
-{
-	if (auto current = template_list->currentItem())
-	{
-		selection = reinterpret_cast<Template*>(current->data(Qt::UserRole).value<void*>());
-		if (!selection)
-			selection = addNewTemplate();
-		if (selection)
-			accept();
-	}
-}
-
-
-Template* PaintOnTemplateSelectDialog::addNewTemplate() const
-{
-	auto window = qobject_cast<MainWindow*>(parent());
-	if (!window || window->currentPath().isEmpty())
-		return nullptr;
-	
-	auto show_message = [window](const QString &message) {
-#ifdef Q_OS_ANDROID
-		window->showStatusBarMessage(message, 2000);
-#else
-		QMessageBox::warning(window, OpenOrienteering::Map::tr("Error"), message, QMessageBox::Ok, QMessageBox::Ok);
-#endif
-	};
-	
-	// 1000 pixel, 10 pixel per mm, 100 mm per image
-	// When these parameters are changed, alignmentBase() needs to be reviewed.
-	constexpr auto pixel_per_mm = 10;
-	constexpr auto size_mm      = 100;  // multiple of 2
-	constexpr auto size_pixel   = size_mm * pixel_per_mm;
-	
-	// Determine aligned top-left position
-	auto top_left = view->center() - MapCoord{size_mm/2, size_mm/2};
-	auto projected_top_left = map->getGeoreferencing().toProjectedCoords(top_left);
-	const auto base = alignmentBase(map->getScaleDenominator());
-	projected_top_left.setX(roundToMultiple(projected_top_left.x(), base));
-	projected_top_left.setY(roundToMultiple(projected_top_left.y(), base));
-	top_left = map->getGeoreferencing().toMapCoords(projected_top_left);
-	
-	// Find or create a template for the track with a specific name
-	const QString filename = QLatin1String("Draft @ ")
-	                          + QString::number(qRound64(projected_top_left.x()))
-	                          + QLatin1Char(',')
-			                  + QString::number(qRound64(projected_top_left.y()))
-	                          + QLatin1String(".png");
-	QString image_file_path = QFileInfo(window->currentPath()).absoluteDir().canonicalPath()
-	                          + QLatin1Char('/')
-	                          + filename;
-	if (QFileInfo::exists(image_file_path))
-	{
-		show_message(tr("Template file exists: '%1'").arg(filename));
-		return nullptr;
-	}
-	
-	auto image = QImage(size_pixel, size_pixel, QImage::Format_ARGB32);
-	image.fill(QColor(Qt::transparent));
-	QPainter p(&image);
-	p.setPen(QColor(Qt::red));
-	p.drawRect(0, 0, size_pixel-1, size_pixel-1);
-	p.drawText(pixel_per_mm/2, pixel_per_mm/2 + QFontMetrics(p.font()).ascent(),
-	           QFileInfo(image_file_path).fileName());
-	p.end();
-	if (!image.save(image_file_path))
-	{
-		show_message(OpenOrienteering::Map::tr("Cannot save file\n%1:\n%2").arg(filename, QString{}));
-		return nullptr;
-	}
-	
-	auto temp = new TemplateImage{image_file_path, map};
-	temp->setTemplatePosition(MapCoord{top_left + MapCoordF{size_mm/2, size_mm/2}});
-	temp->setTemplateScaleX(1.0/pixel_per_mm);
-	temp->setTemplateScaleY(1.0/pixel_per_mm);
-	temp->setTemplateShear(0);
-	temp->setTemplateRotation(0);
-	temp->loadTemplateFile(false);
-	
-	auto pos = map->getFirstFrontTemplate();
-	map->addTemplate(temp, pos);
-	map->setTemplateAreaDirty(pos);
-	map->setFirstFrontTemplate(pos + 1);
-	map->setTemplatesDirty();
-	
-	return temp;
-}
-
 
 
 }  // namespace OpenOrienteering

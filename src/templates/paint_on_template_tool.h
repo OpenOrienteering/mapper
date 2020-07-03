@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2017, 2018 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -27,7 +27,6 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QColor>
-#include <QDialog>
 #include <QObject>
 #include <QPointer>
 #include <QRectF>
@@ -40,19 +39,14 @@
 
 class QAction;
 class QCursor;
-class QListWidget;
 class QMouseEvent;
 class QPaintEvent;
 class QPainter;
-class QPushButton;
 class QRect;
 
 namespace OpenOrienteering {
 
-class MainWindow;
-class Map;
 class MapEditorController;
-class MapView;
 class MapWidget;
 class PaintOnTemplatePaletteWidget;
 class Template;
@@ -79,8 +73,10 @@ public:
 	
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
-public slots:
-	void templateDeleted(int pos, const OpenOrienteering::Template* temp);
+protected:
+	void templateAboutToBeDeleted(int pos, Template* temp);
+	
+public:
 	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();
@@ -113,6 +109,7 @@ public:
 	~PaintOnTemplatePaletteWidget() override;
 
 	QColor getSelectedColor();
+	bool getFillShapes() { return fill_shapes; }
 	
 	QSize sizeHint() const override;
 	
@@ -130,6 +127,8 @@ private:
 	int getNumFieldsX() const;
 	int getNumFieldsY() const;
 	QColor getFieldColor(int x, int y) const;
+	bool isEmptyField(int x, int y) const;
+	bool isFillShapesField(int x, int y) const;
 	bool isUndoField(int x, int y) const;
 	bool isRedoField(int x, int y) const;
 	
@@ -137,33 +136,8 @@ private:
 	
 	Qt::MouseButtons::Int pressed_buttons;
 	int selected_color;
+	bool fill_shapes = false;
 	bool close_on_selection;
-};
-
-
-
-/**
- * Template selection dialog for PaintOnTemplateTool.
-*/
-class PaintOnTemplateSelectDialog : public QDialog
-{
-Q_OBJECT
-public:
-	PaintOnTemplateSelectDialog(Map* map, MapView* view, Template* selected, MainWindow* parent);
-	
-	Template* getSelectedTemplate() const { return selection; }
-	
-protected:
-	void drawClicked();
-	
-	Template* addNewTemplate() const;
-	
-private:
-	Map* map;
-	MapView* view;
-	Template* selection = nullptr;
-	QListWidget* template_list;
-	QPushButton* draw_button;
 };
 
 

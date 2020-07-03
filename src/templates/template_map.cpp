@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -72,7 +72,7 @@ TemplateMap* TemplateMap::duplicate() const
 {
 	auto* copy = new TemplateMap(*this);
 	if (template_state == Loaded)
-		copy->loadTemplateFileImpl(false);
+		copy->loadTemplateFileImpl();
 	return copy;
 }
 
@@ -87,7 +87,7 @@ bool TemplateMap::isRasterGraphics() const
 	return false;
 }
 
-bool TemplateMap::loadTemplateFileImpl(bool configuring)
+bool TemplateMap::loadTemplateFileImpl()
 {
 	// Prevent unbounded recursive template loading
 	if (locked_maps.contains(template_path))
@@ -101,27 +101,21 @@ bool TemplateMap::loadTemplateFileImpl(bool configuring)
 	
 	if (new_template_valid)
 	{
-		// Remove all template's templates from memory
-		/// \todo prevent loading and/or let user decide
-		for (int i = new_template_map->getNumTemplates()-1; i >= 0; i--)
-		{
-			new_template_map->deleteTemplate(i);
-		}
-		
 		template_map = std::move(new_template_map);
 	}
-	else if (configuring)
+	else if (importer)
 	{
-		if (importer)
-			setErrorString(importer->warnings().back());
-		else
-			setErrorString(tr("Cannot load map file, aborting."));
+		setErrorString(importer->warnings().back());
+	}
+	else
+	{
+		setErrorString(tr("Cannot load map file, aborting."));
 	}
 	
 	return new_template_valid;
 }
 
-bool TemplateMap::postLoadConfiguration(QWidget* /* dialog_parent */, bool& out_center_in_view)
+bool TemplateMap::postLoadSetup(QWidget* /* dialog_parent */, bool& out_center_in_view)
 {
 	// Instead of dealing with the map as being (possibly) georeferenced,
 	// we simply use the both georeferencings to calculate a transformation

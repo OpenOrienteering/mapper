@@ -110,8 +110,8 @@ public:
 	void saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const override;
 	bool loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml) override;
 
-	bool loadTemplateFileImpl(bool configuring) override;
-	bool postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view) override;
+	bool loadTemplateFileImpl() override;
+	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	void unloadTemplateFileImpl() override;
 	
     void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
@@ -137,7 +137,7 @@ public:
 	 */
 	const GeoreferencingOptions& availableGeoreferencing() const { return available_georef; }
 	
-	bool canChangeTemplateGeoreferenced() override;
+	bool canChangeTemplateGeoreferenced() const override;
 	bool trySetTemplateGeoreferenced(bool value, QWidget* dialog_parent) override;
 	
 	
@@ -180,7 +180,7 @@ protected:
 		int y;
 	};
 	
-	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width) override;
+	void drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode) override;
 	void drawOntoTemplateUndo(bool redo) override;
 	void addUndoStep(const DrawOnImageUndoStep& new_step);
 	void calculateGeoreferencing();

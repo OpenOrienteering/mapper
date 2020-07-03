@@ -23,6 +23,7 @@
 
 #include <exception>
 #include <memory>
+#include <utility>
 
 #include <QtGlobal>
 #include <QtMath>
@@ -33,6 +34,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLineF>
+#include <QObject>
 #include <QSaveFile>
 #include <QScopedValueRollback>
 
@@ -47,6 +49,7 @@
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "templates/template.h"
+#include "templates/template_placeholder.h"
 
 
 namespace OpenOrienteering {
@@ -133,17 +136,11 @@ bool Importer::doImport()
 
 
 void Importer::prepare()
-{
-	if (view)
-		view->setTemplateLoadingBlocked(true);
-}
+{}
 
 // Don't add warnings in this function. They may hide the error message.
 void Importer::importFailed()
-{
-	if (view)
-		view->setTemplateLoadingBlocked(false);
-}
+{}
 
 void Importer::validate()
 {
@@ -211,42 +208,43 @@ void Importer::validate()
 			throw FileFormatException(::OpenOrienteering::Importer::tr("Error during symbol post-processing."));
 	}
 	
-	// Template loading: try to find all template files
-	if (view)
-		view->setTemplateLoadingBlocked(false);
+	// Template post processing
 	bool have_lost_template = false;
 	for (int i = 0; i < map->getNumTemplates(); ++i)
 	{
+		QString error_string;
 		Template* temp = map->getTemplate(i);
-		auto const lookup_result = temp->tryToFindTemplateFile(path);
-		if (lookup_result == Template::NotFound)
+		
+		// Resolve actual filepath.
+		switch (temp->tryToFindTemplateFile(path))
 		{
+		case Template::NotFound:
 			have_lost_template = true;
 			continue;
-		}
-		
-		if (view && !view->getTemplateVisibility(temp).visible)
-		{
-			continue;
-		}
-		
-		if (!temp->loadTemplateFile(false))
-		{
-			addWarning(tr("Failed to load template '%1', reason: %2")
-			           .arg(temp->getTemplateFilename(), temp->errorString()));
-			continue;
-		}
-		
-		auto error_string = temp->errorString();
-		if (lookup_result == Template::FoundInMapDir)
-		{
-			error_string.prepend(
+		case Template::FoundInMapDir:
+			error_string.append(
 			            ::OpenOrienteering::Importer::tr(
 			                "Template \"%1\" has been loaded from the map's directory instead of"
-			                " the relative location to the map file where it was previously."
-			                ).arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+			                " the relative location to the map file where it was previously.")
+			            .arg(temp->getTemplateFilename()) + QLatin1Char('\n') );
+		default:
+			;
 		}
 		
+		// Migrate templates of undefined types, based on the now-resolved path.
+		if (auto* placeholder = qobject_cast<TemplatePlaceholder*>(temp))
+		{
+			if (auto actual = placeholder->makeActualTemplate())
+			{
+				temp = actual.get();
+				map->setTemplate(i, std::move(actual));
+				if (view)
+					view->setTemplateVisibility(temp, view->getTemplateVisibility(placeholder));
+			}
+		}
+		
+		// Report warnings
+		error_string.append(temp->errorString());
 		if (!error_string.isEmpty())
 		{
 			addWarning(tr("Warnings when loading template '%1':\n%2")

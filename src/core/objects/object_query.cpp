@@ -1,6 +1,6 @@
 /*
  *    Copyright 2016 Mitchell Krome
- *    Copyright 2017 Kai Pastor
+ *    Copyright 2017-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,6 +35,7 @@
 #include <QString>
 #include <QVarLengthArray>
 
+#include "core/map.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
 #include "core/symbols/symbol.h"
@@ -97,7 +98,64 @@ QString keyToString(const QString &key)
 		return QLatin1Char('"') + toEscaped(key) + QLatin1Char('"');
 }
 
+
+/**
+ * A stack for tracking object query parsing state.
+ */
+class ObjectQueryNesting
+{
+	using ObjectQuery = OpenOrienteering::ObjectQuery;
+	
+	struct Element
+	{
+		ObjectQuery* expression;
+		int depth;
+	};
+	QVarLengthArray<Element, 8> stack;  ///< (Maybe incomplete) parsing states.
+	
+public:
+	int depth = 0;  ///< The explicit depth of nesting (number of parens).
+	
+	/// Returns true if elements can be popped at the current nesting.
+	bool canPop() const noexcept
+	{
+		return !stack.empty() && stack.back().depth == depth;
+	}
+	
+	/// Returns true if elements of the given type can be popped at the current nesting.
+	bool canPop(ObjectQuery::Operator op) const noexcept {
+		return canPop() && stack.back().expression->getOperator() == op;
+	}
+	
+	/// Pushes an expression and the current depth to the stack.
+	void push(ObjectQuery* expression)
+	{
+		stack.push_back(Element{expression, depth});
+	}
+	
+	/// Removes an expression from the stack, and returns it.
+	ObjectQuery* pop() noexcept {
+		auto* expression = stack.back().expression;
+		stack.pop_back();
+		return expression;
+	}
+};
+
+
+/**
+ * Create a cheap placeholder ObjectQuery.
+ * 
+ * During object query parsing, operands right of operators are unknown
+ * at construction time. However, ObjectQuery does not allowed to construct
+ * logical query instances with invalid operands. This function creates valid
+ * placeholders which can be replaced with an invalid operand in a second step.
+ */
+OpenOrienteering::ObjectQuery placeholder()
+{
+	return { static_cast<const OpenOrienteering::Symbol*>(nullptr) };
 }
+
+}  // namespace
 
 
 
@@ -241,8 +299,8 @@ ObjectQuery::ObjectQuery(const ObjectQuery& first, ObjectQuery::Operator op, con
 	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2
+	Q_ASSERT(op <= 3);
+	if (op < 1 || op > 3
 	    || !first || !second)
 	{
 		reset();
@@ -262,8 +320,8 @@ ObjectQuery::ObjectQuery(ObjectQuery&& first, ObjectQuery::Operator op, ObjectQu
 	// Both sub-queries must be valid.
 	// Must be a logical operator
 	Q_ASSERT(op >= 1);
-	Q_ASSERT(op <= 2);
-	if (op < 1 || op > 2
+	Q_ASSERT(op <= 3);
+	if (op < 1 || op > 3
 	    || !first || !second)
 	{
 		reset();
@@ -281,6 +339,13 @@ ObjectQuery::ObjectQuery(const Symbol* symbol) noexcept
 , symbol { symbol }
 {
 	// nothing else
+}
+
+
+// static
+ObjectQuery ObjectQuery::negation(ObjectQuery query) noexcept
+{
+	return { placeholder(), OperatorNot, std::move(query) };
 }
 
 
@@ -312,6 +377,9 @@ QString ObjectQuery::labelFor(ObjectQuery::Operator op)
 	case OperatorOr:
 		//: Very short label
 		return tr("or");
+	case OperatorNot:
+		//: Very short label
+		return tr("not");
 		
 	case OperatorSymbol:
 		//: Very short label
@@ -359,6 +427,8 @@ bool ObjectQuery::operator()(const Object* object) const
 		return (*subqueries.first)(object) && (*subqueries.second)(object);
 	case OperatorOr:
 		return (*subqueries.first)(object) || (*subqueries.second)(object);
+	case OperatorNot:
+		return !(*subqueries.second)(object);
 		
 	case OperatorSymbol:
 		return object->getSymbol() == symbol;
@@ -375,14 +445,14 @@ bool ObjectQuery::operator()(const Object* object) const
 const ObjectQuery::LogicalOperands* ObjectQuery::logicalOperands() const
 {
 	const LogicalOperands* result = nullptr;
-	if (op >= 1 && op <= 2)
+	if (op >= 1 && op <= 3)
 	{
 		result = &subqueries;
 	}
 	else
 	{
 		Q_ASSERT(op >= 1);
-		Q_ASSERT(op <= 2);
+		Q_ASSERT(op <= 3);
 	}
 	return result;
 }
@@ -453,9 +523,12 @@ QString ObjectQuery::toString() const
 	case OperatorOr:
 		ret = subqueries.first->toString() + QLatin1String(" OR ") + subqueries.second->toString();
 		break;
+	case OperatorNot:
+		ret = QLatin1String("NOT ") + subqueries.second->toString();
+		break;
 		
 	case OperatorSymbol:
-		ret = QLatin1String("SYMBOL \"") + symbol->getNumberAsString() + QLatin1Char('\"');
+		ret = QLatin1String("SYMBOL \"") + (symbol ? symbol->getNumberAsString() : QString{}) + QLatin1Char('\"');
 		break;
 		
 	case OperatorInvalid:
@@ -541,6 +614,8 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 	case ObjectQuery::OperatorOr:
 		return *lhs.subqueries.first == *rhs.subqueries.first
 		       && *lhs.subqueries.second == *rhs.subqueries.second;
+	case ObjectQuery::OperatorNot:
+		return *lhs.subqueries.second == *rhs.subqueries.second;
 		
 	case ObjectQuery::OperatorSymbol:
 		return lhs.symbol == rhs.symbol;
@@ -553,14 +628,22 @@ bool operator==(const ObjectQuery& lhs, const ObjectQuery& rhs)
 }
 
 
+
+// ### ObjectQueryParser ###
+
+void ObjectQueryParser::setMap(const Map* map)
+{
+	this->map = map;
+}
+
+
 ObjectQuery ObjectQueryParser::parse(const QString& text)
 {
 	auto result = ObjectQuery{};
 	
 	input = {&text, 0, text.size()};
 	pos = 0;
-	auto paren_depth = 0;
-	QVarLengthArray<ObjectQuery*, 8> nested_expressions;
+	ObjectQueryNesting nested_expressions;
 	auto* current = &result;
 	
 	getToken();
@@ -568,6 +651,7 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 	{
 		if ((token == TokenWord || token == TokenString) && !*current)
 		{
+			// Parse a <TestTerm>.
 			auto key = tokenAsString();
 			getToken();
 			if (token == TokenTextOperator)
@@ -603,53 +687,90 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 			{
 				*current = { ObjectQuery::OperatorSearch, key };
 			}
+			// Finish parsing of "NOT NOT NOT x", making the top-most NOT the current expression.
+			while (nested_expressions.canPop(ObjectQuery::OperatorNot))
+				current = nested_expressions.pop();
+			// After a <TestTerm>, finish parsing of the right side of AND expression.
+			while (nested_expressions.canPop(ObjectQuery::OperatorAnd))
+				current = nested_expressions.pop();
+		}
+		else if (token == TokenSymbol && !*current)
+		{
+			// Start parsing right side of SYMBOL expression.
+			getToken();
+			if (token == TokenWord || token == TokenString)
+			{
+				auto const key = tokenAsString();
+				auto* symbol = findSymbol(key);
+				if (symbol || key.isEmpty())
+					*current = ObjectQuery{symbol};
+				getToken();
+			}
+			else
+			{
+				result = {};
+				break;
+			}
+		}
+		else if (token == TokenNot && !*current)
+		{
+			// Start parsing right side of NOT expression.
+			*current = ObjectQuery::negation(placeholder());
+			nested_expressions.push(current);
+			current = current->logicalOperands()->second.get();
+			*current = {};
+			getToken();
 		}
 		else if (token == TokenAnd && *current)
 		{
-			if (!nested_expressions.isEmpty() && nested_expressions.back()->getOperator() == ObjectQuery::OperatorAnd)
-			{
-				nested_expressions.pop_back(); // replaced by current query
-			}
-			// Cannot construct logical ObjectQuery with invalid operand, but can assign later...
-			auto tmp = ObjectQuery{std::move(*current), ObjectQuery::OperatorAnd, {ObjectQuery::OperatorSearch, text}};
-			*current = std::move(tmp);
-			nested_expressions.push_back(current);
-			
+			// Start parsing right side of AND expression.
+			*current = ObjectQuery{std::move(*current), ObjectQuery::OperatorAnd, placeholder()};
+			nested_expressions.push(current);
 			current = current->logicalOperands()->second.get();
 			*current = {};
-			
 			getToken();
 		}
 		else if (token == TokenOr && *current)
 		{
-			if (!nested_expressions.isEmpty())
-			{
-				current = nested_expressions.back();
-				nested_expressions.pop_back();
-			}
-			// Cannot construct logical ObjectQuery with invalid operand, but can assign later...
-			auto query = ObjectQuery{std::move(*current), ObjectQuery::OperatorOr, {ObjectQuery::OperatorSearch, text}};
-			*current = std::move(query);
-			nested_expressions.push_back(current);
-			
+			// Terminate parsing of the current expression, which becomes the
+			// left side of an OR expression, and start parsing the right side.
+			while (nested_expressions.canPop())
+				current = nested_expressions.pop();
+			*current = ObjectQuery{std::move(*current), ObjectQuery::OperatorOr, placeholder()};
+			nested_expressions.push(current);
 			current = current->logicalOperands()->second.get();
 			*current = {};
-			
 			getToken();
 		}
 		else if (token == TokenLeftParen && !*current)
 		{
-			++paren_depth;
-			nested_expressions.push_back(current);
+			// Start parsing of a new <ObjectQuery> (within pair of parens).
+			nested_expressions.push(current);
+			++nested_expressions.depth;
 			getToken();
 		}
-		else if (token == TokenRightParen && *current
-		         && !nested_expressions.isEmpty()
-		         && paren_depth > 0)
+		else if (token == TokenRightParen && *current && nested_expressions.depth > 0)
 		{
-			--paren_depth;
-			current = nested_expressions.back();
-			nested_expressions.pop_back();
+			// End of <ParenExpression>.
+			// Finish parsing of the current <ObjectQuery> (within pair of parens),
+			// and make it the current expression.
+			while (nested_expressions.canPop())
+				nested_expressions.pop();
+			--nested_expressions.depth;
+			if (nested_expressions.canPop())
+			{
+				current = nested_expressions.pop();
+				// After a <ParenExpression>, finish parsing a "NOT NOT NOT (x)" expression.
+				while (nested_expressions.canPop(ObjectQuery::OperatorNot))
+					current = nested_expressions.pop();
+				// Now finish parsing of the right side of AND expression.
+				while (nested_expressions.canPop(ObjectQuery::OperatorAnd))
+					current = nested_expressions.pop();
+			}
+			else
+			{
+				current = {};
+			}
 			getToken();
 		}
 		else
@@ -660,7 +781,7 @@ ObjectQuery ObjectQueryParser::parse(const QString& text)
 		}
 	}
 	
-	if (result && (!*current || paren_depth > 0))
+	if (result && (!*current || nested_expressions.depth > 0))
 	{
 		result = {};
 	}
@@ -762,6 +883,10 @@ void ObjectQueryParser::getToken()
 			token = TokenOr;
 		else if (token_text == QLatin1String("AND"))
 			token = TokenAnd;
+		else if (token_text == QLatin1String("NOT"))
+			token = TokenNot;
+		else if (token_text == QLatin1String("SYMBOL"))
+			token = TokenSymbol;
 		else
 			token = TokenWord;
 	}
@@ -774,6 +899,19 @@ QString ObjectQueryParser::tokenAsString() const
 	if (token == TokenString)
 		string = fromEscaped(string);
 	return string;
+}
+
+
+const Symbol* ObjectQueryParser::findSymbol(const QString& key) const
+{
+	auto const num_symbols = map ? map->getNumSymbols() : 0;
+	for (int k = 0; k < num_symbols; ++k)
+	{
+		auto* symbol = map->getSymbol(k);
+		if (symbol->getNumberAsString() == key)
+			return symbol;
+	}
+	return nullptr;
 }
 
 
