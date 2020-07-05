@@ -1837,7 +1837,7 @@
         <location filename="../src/core/crs_template_implementation.cpp" line="67"/>
         <source>Gauss-Krueger, datum: Potsdam</source>
         <comment>Gauss-Krueger coordinate reference system</comment>
-        <translation>Gauss-Krueger koordináta referencia rendszer,  Geodéziai Dátum:Potsdam</translation>
+        <translation>Gauss-Krueger koordináta referencia rendszer, Geodéziai Dátum:Potsdam</translation>
     </message>
     <message>
         <location filename="../src/core/crs_template_implementation.cpp" line="68"/>
@@ -6066,7 +6066,8 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="926"/>
         <source>Cannot use this spatial reference:
 %1</source>
-        <translation>Nem tudja használni ezt a térbeli referenciát: %1</translation>
+        <translation>Nem tudja használni ezt a térbeli referenciát: 
+%1</translation>
     </message>
     <message>
         <location filename="../src/gdal/ogr_file_format.cpp" line="988"/>
@@ -6617,7 +6618,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1303"/>
         <source>Failed to prepare the printing.</source>
-        <translation>Nem  sikerült elkészíteni a nyomtatást.</translation>
+        <translation>Nem sikerült előkészíteni a nyomtatást.</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="1312"/>
@@ -6657,7 +6658,8 @@ grafikák</translation>
         <location filename="../src/gui/print_widget.cpp" line="221"/>
         <source>Color
 separations</source>
-        <translation>Színrebontás</translation>
+        <translation>Színre-
+bontás</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="234"/>
@@ -7199,7 +7201,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="317"/>
         <source>&apos;%1&apos; is not a valid storage location.</source>
-        <translation>&apos;%1&apos;  nem egy érvényes tárolóhely.</translation>
+        <translation>&apos;%1&apos; nem egy érvényes tárolóhely.</translation>
     </message>
 </context>
 <context>
@@ -8352,7 +8354,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1020"/>
         <source>The map import generated warnings.</source>
-        <translation>A térkép importálása figyelmeztetéseket  jelzett.</translation>
+        <translation>A térkép importálása figyelmeztetéseket eredményezett.</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="1031"/>
