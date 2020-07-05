@@ -5120,7 +5120,7 @@ valda</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
         <source>Merge area holes together, or merge holes with the object boundary to cut out this part.</source>
-        <translation>Sammanfoga ytans hål, eller sammanfoga hål med objektets kant för att att skära ut den delen.</translation>
+        <translation>Sammanfoga ytans hål, eller sammanfoga hål med objektets kant för att skära ut den delen.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2542"/>
@@ -6305,12 +6305,12 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1532"/>
         <source> - main line</source>
-        <translation type="unfinished"></translation>
+        <translation> - huvudlinje</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1539"/>
         <source> - double line</source>
-        <translation type="unfinished"></translation>
+        <translation> - dubbel linje</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1546"/>
