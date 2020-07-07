@@ -10527,9 +10527,9 @@ Areas with forbidden access totally contained within buildings shall be mapped a
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 528.1</comment>
-        <translation type="unfinished">A versenyző számára tiltott terület (magánterület, virágágyás, vasút). Nem szükséges a területen egyedi objektumok ábrázolása, kivéve az olyan jellemző objektumokat, mint a vasút, nagy épület vagy kiemelkedő fa.Az úti bejáratokat világosan kell ábrázolni.
+        <translation>A versenyző számára tiltott terület (magánterület, virágágyás, vasút). Nem szükséges a területen egyedi objektumok ábrázolása, kivéve az olyan jellemző objektumokat, mint a vasút, nagy épületek vagy kiemelkedő fák. Az úti bejáratokat világosan kell ábrázolni.
 
-Areas with forbidden access totally contained within buildings shall be mapped as being a part of the building.
+Az épületekben teljesen tiltott hozzáféréssel rendelkező területeket az épület részeként kell feltérképezni.
 
 &lt;span style=&quot;color:magenta&quot;&gt;A versenyző számára tiltott területet tilos keresztezni!
 A szabályt megszegő versenyzőket ki kell zárni.&lt;/span&gt;</translation>
@@ -14715,7 +14715,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél, akkor mindkét oldalon 0.5 mm-re
     <message>
         <source>Black below purple for track symbols</source>
         <comment>Color 9</comment>
-        <translation type="unfinished">Fekete lila alatt a vasúti szimbólumokhoz</translation>
+        <translation>Fekete a lila alatt a vasúti szimbólumokhoz</translation>
     </message>
     <message>
         <source>Black 65%</source>
@@ -14884,7 +14884,7 @@ A szintvonalakat úgy kell beállítani (nem törve), hogy ne érintse meg a Kis
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation type="unfinished">A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén az újbóli belépőkbe kell helyezni őket.
+        <translation>A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát....
 A mélyedéshez legalább egy lejtővonalat kell használni.</translation>
     </message>
     <message>
@@ -15511,7 +15511,10 @@ May be combined with symbol Vegetation: slow running, good visibility (407) or V
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Smaller areas must either be left out, exaggerated or shown using symbol Open land (401).</source>
         <comment>Description of symbol 403</comment>
-        <translation type="unfinished">Pusztaság, mocsarak, levágott területek, újonnan ültetett területek (kb. 1 m alatti fák) vagy más általánosan nyitott talaj durva talajjal, hanga vagy magas fű, amely ugyanolyan futhatóságot nyújt, mint a tipikus nyílt erdők. Kombinálható a következő szimbólumokkal: lassú futás, jó láthatóság (407) vagy Vegetation: séta, jó láthatóság (409) a csökkent futhatóság szempontjából.Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Open land (401) szimbólummal kell megjeleníteni.</translation>
+        <translation>Pusztaság, mocsarak, levágott területek, újonnan ültetett területek (kb. 1 m alatti fák) vagy más általánosan nyitott talaj durva talajjal, hanga vagy magas fű, amely ugyanolyan futhatóságot nyújt, mint a tipikus nyílt erdők. 
+Kombinálható a következő szimbólumokkal: lassú futás, jó láthatóság (407) vagy Növényzet: séta, jó láthatóság (409) a csökkent futhatóság szempontjából.
+Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
+A kisebb területeket ki kell hagyni, túl kell tenni, vagy az Nyílt terület (401) szimbólummal kell megjeleníteni.</translation>
     </message>
     <message>
         <source>Rough open land with scattered trees</source>
