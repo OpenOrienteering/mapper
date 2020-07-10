@@ -150,7 +150,7 @@ QVariant ColorsListModel::data(const QModelIndex& index, int role) const
 							.arg(qBlue(colors[index.row()])));
 	}
 	else if (index.column() == 2 && role == Qt::DisplayRole &&
-			 index.row() < comments.size())
+			 index.row() < int(comments.size()))
 	{
 		return QVariant(comments[index.row()]);
 	}
