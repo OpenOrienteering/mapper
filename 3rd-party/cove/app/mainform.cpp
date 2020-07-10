@@ -633,7 +633,7 @@ void mainForm::on_classificationOptionsButton_clicked()
 void mainForm::on_initialColorsButton_clicked()
 {
 	ColorsEditForm* optionsDialog = new ColorsEditForm(this);
-	int settingsNColors = settings.getInt("nColors");
+	auto settingsNColors = static_cast<std::size_t>(settings.getInt("nColors"));
 	std::vector<QString> comments;
 	auto colors = settings.getInitColors(comments);
 	auto nColors = colors.size();

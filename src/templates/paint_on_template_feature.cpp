@@ -84,7 +84,7 @@ void showMessage (MainWindow* window, const QString &message) {
 	                     QMessageBox::Ok,
 	                     QMessageBox::Ok);
 #endif
-};
+}
 
 
 }  // namespace

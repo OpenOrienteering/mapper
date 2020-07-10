@@ -164,6 +164,9 @@ namespace cove {
 /*! \var PatternStrategy Vectorizer::patternStrategy
  Selected pattern selection strategy. \sa setPatternStrategy */
 
+// virtual
+Vectorizer::~Vectorizer() = default;
+
 Vectorizer::Vectorizer()
 	: mc(std::make_unique<MapColorRGB>(2.0))
 	, E(100000)
@@ -171,6 +174,7 @@ Vectorizer::Vectorizer()
 	, q(0.5)
 	, minAlpha(1e-6)
 	, p(2)
+	, quality(0)
 	, learnMethod(KOHONEN_CLASSIC)
 	, colorSpace(COLSPC_RGB)
 	, alphaStrategy(ALPHA_CLASSIC)

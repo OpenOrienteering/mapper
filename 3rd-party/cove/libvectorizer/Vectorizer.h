@@ -27,9 +27,9 @@
 #include <QImage>
 #include <QRgb>
 
-#include "MapColor.h"
-
 namespace cove {
+
+class MapColor;
 class ProgressObserver;
 
 class Vectorizer
@@ -81,8 +81,9 @@ protected:
 	void deleteColorsTable();
 
 public:
+	virtual ~Vectorizer();
 	Vectorizer();
-	Vectorizer(QImage& im);
+	explicit Vectorizer(QImage& im);
 	virtual void setClassificationMethod(LearningMethod learnMethod);
 	virtual void setColorSpace(ColorSpace colorSpace);
 	virtual void setP(double p);
