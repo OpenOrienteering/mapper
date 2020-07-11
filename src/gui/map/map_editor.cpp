@@ -519,6 +519,10 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 			qMin(size.width(), map_widget_rect.width()),
 			qMin(size.height(), map_widget_rect.height())
 			);
+		// Not being part of the layout, widgets must explicitly draw the background.
+		// But for KeyButtonBar, it is enough that the buttons draw their background.
+		if (!qobject_cast<KeyButtonBar*>(child_widget))
+			child_widget->setAutoFillBackground(true);
 		child_widget->show();
 	}
 	else
