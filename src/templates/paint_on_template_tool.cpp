@@ -114,7 +114,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 			paint_color = color;
 			action->setChecked(true);
 		}
-		connect(action, &QAction::triggered, this, [this, color](bool checked) { if (checked) colorSelected(color); });
+		connect(action, &QAction::triggered, this, [this, color](bool checked) { if (checked) setColor(color); });
 		++count;
 	}
 	
@@ -164,7 +164,7 @@ void PaintOnTemplateTool::setFillAreas(bool enabled)
 }
 
 // slot
-void PaintOnTemplateTool::colorSelected(const QColor& color)
+void PaintOnTemplateTool::setColor(const QColor& color)
 {
 	paint_color = color;
 	

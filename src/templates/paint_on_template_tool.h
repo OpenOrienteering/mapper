@@ -76,7 +76,9 @@ public:
 	bool fillAreas() const { return fill_areas; }
 	void setFillAreas(bool enabled);
 	
-	void colorSelected(const QColor& color);
+	const QColor& color() const { return paint_color; }
+	void setColor(const QColor& color);
+	
 	void undoSelected();
 	void redoSelected();
 
