@@ -150,8 +150,18 @@ ActionGridBar::ButtonDisplay ActionGridBar::buttonDisplay(const QToolButton* but
 
 QSize ActionGridBar::sizeHint() const
 {
-	auto extent = row_count * button_size_px;
-	return {extent, extent};
+	int actions_at_begin = -1;
+	int actions_at_end = -1;
+	for (auto const& item : items)
+	{
+		if (item.at_end)
+			actions_at_end = std::max(actions_at_end, item.col);
+		else
+			actions_at_begin = std::max(actions_at_begin, item.col);
+	}
+	auto const dynamic_size = (actions_at_begin + actions_at_end + 2) * button_size_px;
+	auto const fixed_size = rowCount() * button_size_px;
+	return direction == Horizontal ? QSize{ dynamic_size, fixed_size } : QSize{ fixed_size, dynamic_size };
 }
 
 void ActionGridBar::overflowActionClicked()
