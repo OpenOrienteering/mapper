@@ -30,9 +30,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QRectF>
-#include <QSize>
 #include <QString>
-#include <QWidget>
 
 #include "core/map_coord.h"
 #include "tools/tool.h"
@@ -40,15 +38,13 @@
 class QAction;
 class QCursor;
 class QMouseEvent;
-class QPaintEvent;
 class QPainter;
-class QRect;
 
 namespace OpenOrienteering {
 
+class ActionGridBar;
 class MapEditorController;
 class MapWidget;
-class PaintOnTemplatePaletteWidget;
 class Template;
 
 
@@ -77,67 +73,30 @@ protected:
 	void templateAboutToBeDeleted(int pos, Template* temp);
 	
 public:
+	bool fillAreas() const { return fill_areas; }
+	void setFillAreas(bool enabled);
+	
 	void colorSelected(const QColor& color);
 	void undoSelected();
 	void redoSelected();
+
+protected:
+	ActionGridBar* makeToolBar();
 	
 private:
 	bool dragging = false;
 	bool erasing  = false;
+	bool fill_areas = false;
 	QColor paint_color = Qt::black;
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;
 	
 	Template* temp = nullptr;
-	QPointer<PaintOnTemplatePaletteWidget> widget;
+	QPointer<ActionGridBar> widget;
 	
 	static int erase_width;
 	
 	Q_DISABLE_COPY(PaintOnTemplateTool)
-};
-
-
-
-/**
- * A color selection widget for PaintOnTemplateTool.
- */
-class PaintOnTemplatePaletteWidget : public QWidget
-{
-Q_OBJECT
-public:
-	PaintOnTemplatePaletteWidget(bool close_on_selection);
-	~PaintOnTemplatePaletteWidget() override;
-
-	QColor getSelectedColor();
-	bool getFillShapes() { return fill_shapes; }
-	
-	QSize sizeHint() const override;
-	
-signals:
-	void colorSelected(const QColor& color);
-	void undoSelected();
-	void redoSelected();
-	
-protected:
-	void paintEvent(QPaintEvent* event) override;
-	void mousePressEvent(QMouseEvent* event) override;
-	void mouseReleaseEvent(QMouseEvent* event) override;
-	
-private:
-	int getNumFieldsX() const;
-	int getNumFieldsY() const;
-	QColor getFieldColor(int x, int y) const;
-	bool isEmptyField(int x, int y) const;
-	bool isFillShapesField(int x, int y) const;
-	bool isUndoField(int x, int y) const;
-	bool isRedoField(int x, int y) const;
-	
-	void drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect);
-	
-	Qt::MouseButtons::Int pressed_buttons;
-	int selected_color;
-	bool fill_shapes = false;
-	bool close_on_selection;
 };
 
 
