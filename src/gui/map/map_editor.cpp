@@ -519,6 +519,7 @@ void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& 
 			qMin(size.width(), map_widget_rect.width()),
 			qMin(size.height(), map_widget_rect.height())
 			);
+		child_widget->setAutoFillBackground(true);
 		child_widget->show();
 	}
 	else
