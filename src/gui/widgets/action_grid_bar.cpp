@@ -23,14 +23,12 @@
 
 #include <algorithm>
 
-#include <Qt>
 #include <QtGlobal>
 #include <QAction>
 #include <QGridLayout>
 #include <QIcon>
 #include <QLayout>
 #include <QMenu>
-#include <QPixmap>
 #include <QPoint>
 #include <QResizeEvent>
 #include <QSizePolicy>
@@ -74,27 +72,11 @@ int ActionGridBar::columnCount() const
 
 void ActionGridBar::addAction(QAction* action, int row, int col, int row_span, int col_span, bool at_end)
 {
-	// Determine icon size (important for high-dpi screens).
-	// Use a somewhat smaller size than what would cover the whole icon to
-	// account for the (assumed) button border.
-	QSize icon_size = getIconSize(row_span, col_span);
-	
-	// Ensure that the icon of the given action is big enough. If not, scale it up.
-	// NOTE: Here, row_span == col_span is assumed.
-	QIcon icon = action->icon();
-	QPixmap pixmap = icon.pixmap(icon_size, QIcon::Normal, QIcon::Off);
-	if (! pixmap.isNull() && pixmap.width() < icon_size.width())
-	{
-		pixmap = pixmap.scaled(icon_size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-		icon.addPixmap(pixmap);
-		action->setIcon(icon);
-	}
-
 	auto* button = new QToolButton();
 	button->setDefaultAction(action);
 	button->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	button->setAutoRaise(true);
-	button->setIconSize(icon_size);
+	button->setIconSize(getIconSize(row_span, col_span));
 	
 	// Add the item
 	items.push_back({action, button, next_id++, row, col, row_span, col_span, at_end});
