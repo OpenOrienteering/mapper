@@ -62,6 +62,7 @@ for I in \
   georeferencing.cpp \
   georeferencing_dialog.cpp \
   georeferencing_t.cpp \
+  icon_engine \
   key_button_bar.cpp \
   line_symbol.cpp \
   main.cpp \
@@ -82,6 +83,7 @@ for I in \
   renderable.cpp \
   renderable_implementation.cpp \
   settings_dialog.cpp \
+  style_t.cpp \
   /symbol.cpp \
   symbol_replacement.cpp \
   symbol_replacement_dialog.cpp \

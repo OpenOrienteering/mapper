@@ -36,6 +36,33 @@ execute_process(
 )
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
 
+
+# Scaling icon engine
+
+set(SCALING_ICON_ENGINE_SOURCES
+  gui/scaling_icon_engine.cpp
+  gui/scaling_icon_engine_plugin.cpp
+  gui/scaling_icon_engine_plugin.json
+)
+set(SCALING_ICON_ENGINE_DEFINITIONS
+  PUBLIC
+    SCALING_ICON_ENGINE_PLUGIN
+  PRIVATE
+    QT_NO_CAST_FROM_ASCII
+    QT_NO_CAST_TO_ASCII
+    QT_USE_QSTRINGBUILDER
+    QT_STATICPLUGIN
+)
+set(SCALING_ICON_ENGINE_LINK_LIBRARIES
+  PUBLIC
+    Qt5::Gui
+)
+
+add_library(scaling-icon-engine STATIC  ${SCALING_ICON_ENGINE_SOURCES})
+target_compile_definitions(scaling-icon-engine  ${SCALING_ICON_ENGINE_DEFINITIONS})
+target_link_libraries(scaling-icon-engine  ${SCALING_ICON_ENGINE_LINK_LIBRARIES})
+
+
 set(Mapper_Common_SRCS
   global.cpp
   mapper_resource.cpp
@@ -273,6 +300,7 @@ foreach(lib
   mapper-gdal
   mapper-sensors
   printsupport
+  scaling-icon-engine
   Qt5::AndroidExtras
   Qt5::Network
 )
