@@ -39,8 +39,10 @@
 #include <QToolButton>
 #include <QVariant>
 
+#include "settings.h"
 #include "core/map.h"
 #include "core/map_view.h"
+#include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
 #include "gui/widgets/action_grid_bar.h"
@@ -49,6 +51,40 @@
 
 
 namespace OpenOrienteering {
+
+namespace {
+
+/// Indicates whether a color is considered dark, for the purpose of finding contrasting colors.
+constexpr bool isDark(const QRgb rgb) noexcept
+{
+	constexpr auto medium_gray = 110;
+	return qGray(rgb) < medium_gray;
+}
+
+bool isDark(const QColor& color) noexcept
+{
+	return isDark(color.rgb());
+}
+
+static_assert(isDark(qRgb(0,0,0)), "black is dark");
+static_assert(isDark(qRgb(0,0,255)), "blue is dark");
+static_assert(!isDark(qRgb(0,255,0)), "green isn't dark");
+static_assert(!isDark(qRgb(255,255,0)), "yellow isn't dark");
+static_assert(!isDark(qRgb(255,255,255)), "white isn't dark");
+
+/// Draws a black or white checkmark, with good contrast to the background color. 
+void drawCheckmark(QPixmap& pixmap, const QColor& background)
+{
+	auto const icon_size = pixmap.width();
+	auto pen = QPen(QColor(isDark(background) ? Qt::white : Qt::black));
+	pen.setWidth(icon_size / 9);
+	QPainter p(&pixmap);
+	p.setPen(pen);
+	p.drawLine(6*icon_size/20, 11*icon_size/20, 8*icon_size/20, 13*icon_size/20);
+	p.drawLine(8*icon_size/20, 13*icon_size/20, 13*icon_size/20, 6*icon_size/20);
+}
+
+}
 
 
 int PaintOnTemplateTool::erase_width = 4;
@@ -87,6 +123,8 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	settings.beginGroup(QStringLiteral("PaintOnTemplateTool"));
 	auto last_selected = settings.value(QStringLiteral("selectedColor")).toString();
 	
+	auto const icon_size = Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal());
+	
 	auto* toolbar = new ActionGridBar(ActionGridBar::Horizontal, 2);
 	auto* color_button_group = new QButtonGroup(this);
 	
@@ -103,9 +141,13 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	};
 	for (auto const& color: default_colors)
 	{
-		QPixmap pixmap(1,1);
+		QPixmap pixmap(icon_size, icon_size);
 		pixmap.fill(color);
-		auto* action = new QAction(pixmap, color.name(QColor::HexArgb), toolbar);
+		QIcon icon(pixmap);
+		drawCheckmark(pixmap, color);
+		icon.addPixmap(pixmap, QIcon::Normal, QIcon::On);
+		
+		auto* action = new QAction(icon, color.name(QColor::HexArgb), toolbar);
 		action->setCheckable(true);
 		toolbar->addAction(action, count % 2, count / 2);
 		color_button_group->addButton(toolbar->getButtonForAction(action));
