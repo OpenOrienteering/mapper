@@ -96,6 +96,18 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 			drawSegmentedButton(segment, overridden_element, option, painter, widget);
 			return;
 		}
+		if (touch_mode
+		    && element == PE_PanelButtonTool
+		    && option
+		    && option->state & State_On)
+		{
+			auto const& window_color = option->palette.window().color();
+			auto const fill = QBrush(qGray(window_color.rgb()) > 127 ? window_color.darker(125) : window_color.lighter(125));
+			painter->setPen(Qt::NoPen);
+			painter->setBrush(fill);
+			painter->drawRoundedRect(option->rect, 5.0, 5.0, Qt::AbsoluteSize);
+			return;
+		}
 		break;
 		
 #ifdef Q_OS_ANDROID
