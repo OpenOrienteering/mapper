@@ -410,7 +410,7 @@ void TemplateTrack::drawWaypoints(QPainter* painter) const
 		if (!point_name.isEmpty())
 		{
 			painter->setPen(qRgb(255, 0, 0));
-			int width = painter->fontMetrics().width(point_name);
+			int width = painter->fontMetrics().horizontalAdvance(point_name);
 			painter->drawText(QRect(qRound(point.map_coord.x() - 0.5*width),
 			                        qRound(point.map_coord.y() - height),
 			                        width,

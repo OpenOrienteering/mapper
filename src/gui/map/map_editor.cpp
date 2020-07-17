@@ -702,7 +702,7 @@ void MapEditorController::attach(MainWindow* window)
 		statusbar_zoom_icon->setPixmap(pixmap);
 		
 		auto* statusbar_zoom_label = new QLabel();
-		statusbar_zoom_label->setMinimumWidth(fontmetrics.width(QLatin1String(" 0.333x")));
+		statusbar_zoom_label->setMinimumWidth(fontmetrics.horizontalAdvance(QLatin1String(" 0.333x")));
 		statusbar_zoom_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		statusbar_zoom_label->setFrameShape(QFrame::NoFrame);
 		
@@ -730,7 +730,7 @@ void MapEditorController::attach(MainWindow* window)
 #else
 		statusbar_cursorpos_label->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
 #endif
-		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.width(QLatin1String("-3,333.33 -333.33 (mm)")));
+		statusbar_cursorpos_label->setMinimumWidth(fontmetrics.horizontalAdvance(QLatin1String("-3,333.33 -333.33 (mm)")));
 		statusbar_cursorpos_label->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
 		
 		window->statusBar()->addPermanentWidget(statusbar_zoom_frame);
