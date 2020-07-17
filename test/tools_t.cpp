@@ -134,7 +134,7 @@ TestMapEditor::~TestMapEditor()
 
 void TestMapEditor::simulateClick(const QPoint& pos)
 {
-	QTest::mouseClick(map_widget, Qt::LeftButton, nullptr, pos);
+	QTest::mouseClick(map_widget, Qt::LeftButton, {}, pos);
 }
 
 void TestMapEditor::simulateClick(const QPointF& pos)
@@ -144,7 +144,7 @@ void TestMapEditor::simulateClick(const QPointF& pos)
 
 void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 {
-	QTest::mousePress(map_widget, Qt::LeftButton, nullptr, start_pos);
+	QTest::mousePress(map_widget, Qt::LeftButton, {}, start_pos);
 	
 	// NOTE: the implementation of QTest::mouseMove() does not seem to work (tries to set the real cursor position ...)
 	//QTest::mouseMove(map_widget, end_pos);
@@ -152,7 +152,7 @@ void TestMapEditor::simulateDrag(const QPoint& start_pos, const QPoint& end_pos)
 	QMouseEvent event(QEvent::MouseMove, end_pos, map_widget->mapToGlobal(end_pos), Qt::NoButton, Qt::LeftButton, Qt::NoModifier);
 	QApplication::sendEvent(map_widget, &event);
 	
-	QTest::mouseRelease(map_widget, Qt::LeftButton, nullptr, end_pos);
+	QTest::mouseRelease(map_widget, Qt::LeftButton, {}, end_pos);
 }
 
 void TestMapEditor::simulateDrag(const QPointF& start_pos, const QPointF& end_pos)
