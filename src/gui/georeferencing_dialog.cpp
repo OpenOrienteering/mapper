@@ -440,7 +440,7 @@ void GeoreferencingDialog::requestDeclination(bool no_confirm)
 	if (!no_confirm)
 	{
 		int result = QMessageBox::question(this, tr("Online declination lookup"),
-		  trUtf8("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
+		  tr("The magnetic declination for the reference point %1° %2° will now be retrieved from <a href=\"%3\">%3</a>. Do you want to continue?").
 		    arg(latlon.latitude()).arg(latlon.longitude()).arg(user_url),
 		  QMessageBox::Yes | QMessageBox::No,
 		  QMessageBox::Yes );
@@ -604,7 +604,7 @@ void GeoreferencingDialog::updateDeclinationButton()
 
 void GeoreferencingDialog::updateCombinedFactor()
 {
-	QString text = trUtf8("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
+	QString text = tr("%1", "scale factor value").arg(QLocale().toString(georef->getCombinedScaleFactor(), 'f', Georeferencing::scaleFactorPrecision()));
 	if (scale_factor_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	combined_factor_display->setText(text);
@@ -612,7 +612,7 @@ void GeoreferencingDialog::updateCombinedFactor()
 
 void GeoreferencingDialog::updateGrivation()
 {
-	QString text = trUtf8("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
+	QString text = tr("%1 °", "degree value").arg(QLocale().toString(georef->getGrivation(), 'f', Georeferencing::declinationPrecision()));
 	if (grivation_locked)
 		text.append(QString::fromLatin1(" (%1)").arg(tr("locked")));
 	grivation_label->setText(text);
