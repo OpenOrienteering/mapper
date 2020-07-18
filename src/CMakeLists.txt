@@ -29,12 +29,18 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
+
+
+# Build configuration
+
 configure_file(mapper_config.h.in "${CMAKE_CURRENT_BINARY_DIR}/mapper_config.h.tmp")
 execute_process(
   COMMAND "${CMAKE_COMMAND}" -E copy_if_different mapper_config.h.tmp mapper_config.h
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
 )
-include_directories("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}")
+add_library(mapper-config INTERFACE)
+target_include_directories(mapper-config  INTERFACE "${CMAKE_CURRENT_BINARY_DIR}")
 
 
 # Scaling icon engine
@@ -62,6 +68,15 @@ add_library(scaling-icon-engine STATIC  ${SCALING_ICON_ENGINE_SOURCES})
 target_compile_definitions(scaling-icon-engine  ${SCALING_ICON_ENGINE_DEFINITIONS})
 target_link_libraries(scaling-icon-engine  ${SCALING_ICON_ENGINE_LINK_LIBRARIES})
 
+
+# Resources (from project root)
+
+list(APPEND Mapper_RESOURCES "${PROJECT_SOURCE_DIR}/resources.qrc")
+qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
+
+
+# Mapper common: static library of full runtime 
+# (To be used by Mapper executable and by system tests.)
 
 set(Mapper_Common_SRCS
   global.cpp
@@ -271,16 +286,6 @@ set(Mapper_Common_HEADERS
   util/backports.h
 )
 
-
-# Resources (from project root)
-
-list(APPEND Mapper_RESOURCES "${PROJECT_SOURCE_DIR}/resources.qrc")
-qt5_add_resources(Mapper_RESOURCES_RCC ${Mapper_RESOURCES} OPTIONS -no-compress)
-
-
-# Mapper common: static library of full runtime 
-# (To be used by Mapper executable and by system tests.)
-
 add_library(Mapper_Common STATIC
   ${Mapper_Common_SRCS}
   ${Mapper_Common_HEADERS}   # for IDE
@@ -297,6 +302,7 @@ target_link_libraries(Mapper_Common
 )
 foreach(lib
   cove
+  mapper-config
   mapper-gdal
   mapper-sensors
   printsupport
