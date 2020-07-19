@@ -256,7 +256,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="46"/>
         <source>Autosaved file</source>
-        <translation>Arquivo salvo automaticamente</translation>
+        <translation>Ficheiro gravado automaticamente</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/gui/autosave_dialog.cpp" line="48"/>
@@ -270,7 +270,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="52"/>
         <source>File saved by the user</source>
-        <translation>Arquivo salvo pelo usuário</translation>
+        <translation>Ficheiro gravado pelo utilizador</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="59"/>
@@ -280,7 +280,7 @@
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="61"/>
         <source>File %1 was not properly closed. At the moment, there are two versions:</source>
-        <translation>Arquivo %1 não foi fechado corretamente. No momento, há duas versões:</translation>
+        <translation>Ficheiro %1 não foi fechado corretamente. No momento, há duas versões:</translation>
     </message>
     <message>
         <location filename="../src/gui/autosave_dialog.cpp" line="75"/>
@@ -1678,7 +1678,7 @@
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="348"/>
         <source>Translation files (*.qm)</source>
-        <translation>Arquivos de tradução (*.qm)</translation>
+        <translation>Ficheiros de tradução (*.qm)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/general_settings_page.cpp" line="355"/>
@@ -2871,12 +2871,12 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="385"/>
         <source>Exit the application</source>
-        <translation>Sair do aplicativo</translation>
+        <translation>Sair da aplicação</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="391"/>
         <source>&amp;File</source>
-        <translation>&amp;Arquivo</translation>
+        <translation>&amp;Ficheiro</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="410"/>
@@ -2891,7 +2891,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="427"/>
         <source>Show the help file for this application</source>
-        <translation>Mostrar o ficheiro de ajuda para este aplicativo</translation>
+        <translation>Mostrar o ficheiro de ajuda para esta aplicação</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="431"/>
@@ -2901,7 +2901,7 @@
     <message>
         <location filename="../src/gui/main_window.cpp" line="433"/>
         <source>Show information about this application</source>
-        <translation>Mostrar informação sobre este aplicativo</translation>
+        <translation>Mostrar informação sobre esta aplicação</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="436"/>
@@ -2934,7 +2934,7 @@ Você quer salvar as alterações?</translation>
         <location filename="../src/gui/main_window.cpp" line="470"/>
         <location filename="../src/gui/main_window.cpp" line="812"/>
         <source>Unsaved file</source>
-        <translation>Arquivo não salvo</translation>
+        <translation>Ficheiro não gravado</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
@@ -4440,7 +4440,7 @@ Alterar a escala dos dados importados?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4060"/>
         <source>Importable files</source>
-        <translation>Arquivos importáveis</translation>
+        <translation>Ficheiros importáveis</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1721"/>
@@ -4957,7 +4957,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2261"/>
         <source>In line symbol &quot;%1&quot;, the number of dashes in a group has been reduced to 2.</source>
-        <translation>Símbolo de linha &quot;%1&quot;, o número de traços em um grupo foi reduzido a 2.</translation>
+        <translation>Símbolo de linha &quot;%1&quot;, o número de traços num grupo foi reduzido a 2.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2317"/>
@@ -5010,7 +5010,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="139"/>
         <source>OCAD files of version %1 are not supported!</source>
-        <translation>Arquivos OCAD %1 não são suportados!</translation>
+        <translation>Ficheiros OCAD %1 não são suportados!</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="165"/>
@@ -5496,7 +5496,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2421"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation>Arquivos do OCAD %1 não são suportados!</translation>
+        <translation>Ficheiros do OCAD %1 não são suportados!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="236"/>
@@ -6089,7 +6089,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="239"/>
         <source>Device CMYK</source>
-        <translation>Dispositivo CMYK</translation>
+        <translation>Aparelho CMYK</translation>
     </message>
     <message>
         <location filename="../src/gui/print_widget.cpp" line="240"/>
@@ -7419,7 +7419,7 @@ cegonhas felizes
         <location filename="../src/templates/template.cpp" line="595"/>
         <location filename="../src/templates/template.cpp" line="623"/>
         <source>No such file.</source>
-        <translation>Arquivo inexistente.</translation>
+        <translation>Ficheiro inexistente.</translation>
     </message>
     <message>
         <location filename="../src/templates/template.cpp" line="637"/>
@@ -7606,7 +7606,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="69"/>
         <source>World file</source>
-        <translation>Arquivo mundial</translation>
+        <translation>Ficheiro mundial</translation>
     </message>
     <message>
         <location filename="../src/templates/template_image_open_dialog.cpp" line="70"/>
@@ -7747,7 +7747,7 @@ Se você não pretende desenhar sobre esta imagem no entanto, não há nenhum pr
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
         <source>Template files</source>
-        <translation>Arquivos de Mapa Base</translation>
+        <translation>Ficheiros de Mapa Base</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/template_list_widget.cpp" line="414"/>
