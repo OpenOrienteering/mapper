@@ -2733,7 +2733,7 @@
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="120"/>
         <source>Enable border lines</source>
-        <translation>Habilitar linhas de borda</translation>
+        <translation>Ativar linhas de borda</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/line_symbol_settings.cpp" line="214"/>
@@ -3390,7 +3390,7 @@ Importar os dados assim mesmo?</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1044"/>
         <source>Enable touch cursor</source>
-        <translation>Habilitar cursor táctil</translation>
+        <translation>Ativar cursor táctil</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="1045"/>
