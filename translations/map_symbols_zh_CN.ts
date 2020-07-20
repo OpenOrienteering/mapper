@@ -9289,12 +9289,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Uncrossable pipeline</source>
         <comment>Name of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越管道</translation>
     </message>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越管道。如果禁止穿越不可穿越管道，那么应该以符号707（不可穿越边界）来标记。</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -9304,7 +9304,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 535</comment>
-        <translation type="unfinished"></translation>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -9314,7 +9314,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
         <comment>Description of symbol 536</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -9324,27 +9324,27 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
         <comment>Description of symbol 538</comment>
-        <translation type="unfinished"></translation>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 539</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Special man-made feature</source>
         <comment>Name of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊的人工特征</translation>
     </message>
     <message>
         <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
         <comment>Description of symbol 540</comment>
-        <translation type="unfinished"></translation>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line, blue</source>
@@ -9354,7 +9354,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>磁北线是地图上指向磁北极的线。在比例尺为1:5000、1:7500和1:10000的地图上，地图上磁北线的间隔应该为30mm，而在比例尺为1:15000和1:20000的地图上，地图上的间隔应该为20mm。当遮挡边界、悬崖、溪流交汇点和路径末端时，磁北线可以断开。</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -9492,12 +9492,12 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界区域以竖带显示。可以画出边界线。可能对选手危险的区域应该由。这个符号表示。</translation>
     </message>
     <message>
         <source>Out-of-bounds area, bounding line</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界区域，边界线</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -9511,7 +9511,7 @@ forbidden route, it shall be presented like a gate by two perpendicular lines ov
 forbidden route. Also a longer crossing section shall be presented clearly on the map
 by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>出界并禁止穿越的路径以锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿越点，那么应该在禁止路径上由两条垂直线像门一样表示。同样，较长的穿越区域应该通过在锯齿线末端的使用垂直线清晰地显示在地图上。</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -9536,17 +9536,17 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
         <comment>Name of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>穿越路径、小路或梯子上的危险物体</translation>
     </message>
     <message>
         <source>These barriers must be highly visible on the map and should be overprinted in purple. The symbol should be used for all obstacles that are difficult to cross. For uncrossable barrier, symbol 844 shall be used. This symbol can be used for stairs. There is no particular stair symbol.</source>
         <comment>Description of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>这些障碍物必须在地图上高度可见，并以紫色覆盖印刷。符号应该用于所有难于穿越的障碍。位于不可穿越的障碍，应该使用符号844。这个符号可以用于梯子。没有特别的梯子符号。</translation>
     </message>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>不可穿越的障碍/禁止穿越</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
@@ -9595,7 +9595,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -9605,7 +9605,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -15651,7 +15651,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>选手必须从最后一个控制点导航至终点。没有终点线。给出从最后一个控制点到终点的距离。</translation>
     </message>
     <message>
         <source>Length of special route</source>
