@@ -1035,7 +1035,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
         <translation>岩石或人工的沟渠，最小深度应为1米。
 最小长度：1mm（实际长度15米）。
 较短的沟渠可能被放大到最小图形尺寸。
-不可穿越的沟渠应使用符号不可通行的陡崖（201）来表示。
+不可通过的沟渠应使用符号不可通行的陡崖（201）来表示。
 坍塌和容易通过的沟渠可以用 冲沟 (107)来表示。</translation>
     </message>
     <message>
@@ -2746,7 +2746,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -3830,7 +3830,7 @@ For impassable features, the line shall be broken at the crossing point. For pas
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -7611,7 +7611,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 703</comment>
-        <translation>控制点用圆圈表示（足迹 24m）。圆的中心显示了特征的精确位置。为了显示重要的细节，应省略圆的部分。</translation>
+        <translation>检查点用圆圈表示（足迹 24m）。圆的中心显示了特征的精确位置。为了显示重要的细节，应省略圆圈部分。</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -9369,7 +9369,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
         <comment>Description of symbol 602</comment>
-        <translation type="unfinished"></translation>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -9379,7 +9379,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Spot height, text</source>
@@ -9389,7 +9389,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
         <comment>Description of symbol 603.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -9452,7 +9452,7 @@ of symbol 704 before or after a control, it represents an obligatory route for t
 competitors. The symbol can also be used in areas where off-track riding is forbidden
 to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>标记的路径以虚线显示在地图上。如果在检查点前后使用符号704之外的符号，那么它表示选手强制通过的路径。符号也可以用在禁止离开路径骑行的区域，表示地形上标记的允许路径。</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -9472,7 +9472,7 @@ to represent allowed routes that are marked in the terrain.</source>
     <message>
         <source>A boundary which it is not permitted to cross.</source>
         <comment>Description of symbol 707</comment>
-        <translation>不允许跨越的边界。</translation>
+        <translation>不允许通过的边界。</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -9551,7 +9551,7 @@ by using the perpendicular lines at the end of the zigzag lines.</source>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>此符号用于禁止或不能通过的所有点，例如不可通过的障碍，禁止或不能通过的篱笆或墙，禁止使用的道路、路径或小路的较短部分（对于较长的部分，应该使用符号711）。在两条路径或小路几乎碰到的点，然而在地图上并不清晰的情况下，这个符号可以用于指示禁止通过。</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -12996,7 +12996,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     <message>
         <source>The place where the orienteering starts. The centre of the triangle shows the precise position where the orienteering course starts. The start must be on a clearly identifiable point on the map. The triangle points in the direction of the first control.</source>
         <comment>Description of symbol 701</comment>
-        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个控制点。</translation>
+        <translation>定向赛程的起点。三角形的中心位于赛程的确切起点。起点须为图上一个能够清晰辨认的点。三角形指向第一个检查点。</translation>
     </message>
     <message>
         <source>Map issue point</source>
@@ -15651,7 +15651,7 @@ The orientation of the symbol indicates the direction in which the corner points
     <message>
         <source>The competitor has to navigate from the last control to finish. No tapes. Gives the distance from the last control to Finish.</source>
         <comment>Description of symbol 14.3</comment>
-        <translation>选手必须从最后一个控制点导航至终点。没有终点线。给出从最后一个控制点到终点的距离。</translation>
+        <translation>选手必须从最后一个检查点导航至终点。没有终点线。给出从最后一个检查点到终点的距离。</translation>
     </message>
     <message>
         <source>Length of special route</source>
