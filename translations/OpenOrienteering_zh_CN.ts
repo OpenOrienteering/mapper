@@ -8733,7 +8733,7 @@ The maximum supported version is %2.</source>
         <location filename="../src/gui/util_gui.cpp" line="195"/>
         <source>See more...</source>
         <extracomment>This &quot;See more&quot; is displayed as a link to the manual in What&apos;s-this tooltips.</extracomment>
-        <translation>查看更多</translation>
+        <translation>查看更多……</translation>
     </message>
 </context>
 <context>
