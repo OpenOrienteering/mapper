@@ -1587,7 +1587,7 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 	symbol->patterns.reserve(4);
 	
 	// Hatching
-	if (ocd_symbol.hatch_mode != Ocd::HatchNone)
+	if (ocd_symbol.hatch_mode != Ocd::HatchNone && ocd_symbol.hatch_line_width)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::LinePattern;
@@ -1611,7 +1611,8 @@ void OcdFileImport::setupAreaSymbolCommon(OcdImportedAreaSymbol* symbol, bool fi
 		}
 	}
 	
-	if (ocd_symbol.structure_mode != Ocd::StructureNone)
+	if (ocd_symbol.structure_mode != Ocd::StructureNone && ocd_symbol.structure_height
+	    && ocd_symbol.structure_width && data_size)
 	{
 		AreaSymbol::FillPattern pattern;
 		pattern.type = AreaSymbol::FillPattern::PointPattern;
