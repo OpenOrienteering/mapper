@@ -200,7 +200,9 @@ bool isStructureShiftedRows(const AreaSymbol::FillPattern& first, const AreaSymb
 		return clone;
 	};
 	return isStructureAlignedRows(first, second)
+	       && first.line_spacing
 	       && qAbs((first.line_offset - second.line_offset + first.line_spacing) % first.line_spacing - first.line_spacing / 2) <= 1
+	       && first.point_distance
 	       && qAbs((first.offset_along_line - second.offset_along_line + first.point_distance) % first.point_distance - first.point_distance / 2) <= 1
 	       && first.point
 	       && second.point
