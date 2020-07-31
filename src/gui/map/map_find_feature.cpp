@@ -68,7 +68,14 @@ MapFindFeature::MapFindFeature(MapEditorController& controller)
 }
 
 
-MapFindFeature::~MapFindFeature() = default; // not inlined
+MapFindFeature::~MapFindFeature()
+{
+	if (find_dialog)
+	{
+		find_dialog->hide();
+		find_dialog->deleteLater();
+	}
+}
 
 
 
