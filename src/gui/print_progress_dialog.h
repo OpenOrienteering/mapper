@@ -54,7 +54,7 @@ public:
 	 * 
 	 * map_printer must not be nullptr.
 	 */
-	PrintProgressDialog(MapPrinter* map_printer, QWidget* parent = nullptr, Qt::WindowFlags f = 0);
+	PrintProgressDialog(MapPrinter* map_printer, QWidget* parent = nullptr, Qt::WindowFlags f = {});
 	
 	/**
 	 * Destructor.

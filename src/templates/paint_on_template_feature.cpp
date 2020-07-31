@@ -223,7 +223,7 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 {
 	/// \todo Review source string (no ellipsis when no dialog)
 	auto* item = new QListWidgetItem(QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Add template..."));
-	item->setData(Qt::UserRole, qVariantFromValue<void*>(nullptr));
+	item->setData(Qt::UserRole, QVariant::fromValue<void*>(nullptr));
 	item->setData(Qt::UserRole + 1, 0.0);
 	list_widget.addItem(item);
 	auto* current_item = item;
@@ -250,7 +250,7 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 		}
 		
 		auto* item = new QListWidgetItem(temp.getTemplateFilename());
-		item->setData(Qt::UserRole, qVariantFromValue<void*>(&temp));
+		item->setData(Qt::UserRole, QVariant::fromValue<void*>(&temp));
 		item->setData(Qt::UserRole + 1, distance);
 		list_widget.insertItem(row, item);
 		
