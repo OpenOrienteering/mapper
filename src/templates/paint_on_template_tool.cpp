@@ -21,9 +21,12 @@
 
 #include "paint_on_template_tool.h"
 
+#include <type_traits>
+
 #include <Qt>
 #include <QtMath>
 #include <QAction>
+#include <QApplication>
 #include <QButtonGroup>
 #include <QBrush>
 #include <QCursor>
@@ -31,8 +34,10 @@
 #include <QIcon>
 #include <QMouseEvent>
 #include <QPainter>
+#include <QPalette>
 #include <QPen>
 #include <QPixmap>
+#include <QPoint>
 #include <QPolygonF>
 #include <QRgb>
 #include <QSettings>
@@ -84,6 +89,38 @@ void drawCheckmark(QPixmap& pixmap, const QColor& background)
 	p.drawLine(8*icon_size/20, 13*icon_size/20, 13*icon_size/20, 6*icon_size/20);
 }
 
+/// Draws a simple eraser icon.
+void drawEraser(QPixmap& pixmap, const QColor& background)
+{
+	auto const icon_size = pixmap.width();
+	auto pen = QPen(QColor(isDark(background) ? Qt::white : Qt::black));
+	pen.setWidth(icon_size / 9);
+	QPainter p(&pixmap);
+	p.setPen(pen);
+	p.drawLine(8*icon_size/20, 18*icon_size/20, 19*icon_size/20, 18*icon_size/20);
+	p.setBrush(QBrush(Qt::gray, Qt::SolidPattern));
+	static QPoint corners[] = {
+	    { 10*icon_size/20,  0*icon_size/20 },
+	    {  0*icon_size/20, 14*icon_size/20 },
+	    {  8*icon_size/20, 19*icon_size/20 },
+	    { 18*icon_size/20,  5*icon_size/20 },
+	};
+	p.drawPolygon(corners, std::extent<decltype(corners)>::value);
+}
+
+/// Create a simple eraser icon, with a checkmark for `QIcon::On` state.
+QIcon makeEraserIcon(int const icon_size)
+{
+	QPixmap pixmap(icon_size, icon_size);
+	pixmap.fill(Qt::transparent);
+	auto const background = QApplication::palette().color(QPalette::Window);
+	drawEraser(pixmap, background);
+	QIcon icon(pixmap);
+	drawCheckmark(pixmap, background);
+	icon.addPixmap(pixmap, QIcon::Normal, QIcon::On);
+	return icon;
+}
+
 }
 
 
@@ -129,7 +166,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	auto* color_button_group = new QButtonGroup(this);
 	
 	int count = 0;
-	static QColor const default_colors[8] = {
+	static QColor const default_colors[] = {
 	    qRgb(255,   0,   0),
 	    qRgb(255, 255,   0),
 	    qRgb(  0, 255,   0),
@@ -137,7 +174,6 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	    qRgb(  0,   0, 255),
 	    qRgb(209,  92,   0),
 	    qRgb(  0,   0,   0),
-	    qRgb(255, 255, 255)
 	};
 	for (auto const& color: default_colors)
 	{
@@ -160,6 +196,14 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		++count;
 	}
 	
+	auto* erase_action = new QAction(makeEraserIcon(icon_size), tr("Erase"), toolbar);
+	erase_action->setCheckable(true);
+	connect(erase_action, &QAction::triggered, this, [this](bool enabled) { erasing.setFlag(ExplicitErasing, enabled); });
+	toolbar->addAction(erase_action, count % 2, count / 2);
+	// de-select color when activating eraser
+	color_button_group->addButton(toolbar->getButtonForAction(erase_action));
+	++count;
+
 	auto* undo_action = new QAction(QIcon(QString::fromLatin1(":/images/undo.png")),
 	                                ::OpenOrienteering::MapEditorController::tr("Undo"),
 	                                toolbar);
@@ -232,12 +276,15 @@ void PaintOnTemplateTool::redoSelected()
 
 bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* /*widget*/)
 {
+	if (dragging)
+		return true;
+	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
 		map_bbox = QRectF(map_coord.x(), map_coord.y(), 0, 0);
 		dragging = true;
-		erasing = (event->button() == Qt::RightButton) || (paint_color == qRgb(255, 255, 255));
+		erasing.setFlag(RightMouseButtonErasing, event->button() == Qt::RightButton);
 		return true;
 	}
 	

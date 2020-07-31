@@ -27,6 +27,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QColor>
+#include <QFlags>
 #include <QObject>
 #include <QPointer>
 #include <QRectF>
@@ -55,6 +56,13 @@ class PaintOnTemplateTool : public MapEditorTool
 {
 Q_OBJECT
 public:
+	enum ErasingOption {
+		NoErasing = 0,
+		ExplicitErasing = 1,
+		RightMouseButtonErasing = 2
+	};
+	Q_DECLARE_FLAGS(ErasingOptions, ErasingOption)
+	
 	PaintOnTemplateTool(MapEditorController* editor, QAction* tool_action);
 	~PaintOnTemplateTool() override;
 	
@@ -86,8 +94,8 @@ protected:
 	ActionGridBar* makeToolBar();
 	
 private:
+	ErasingOptions erasing = {};
 	bool dragging = false;
-	bool erasing  = false;
 	bool fill_areas = false;
 	QColor paint_color = Qt::black;
 	QRectF map_bbox;
@@ -103,5 +111,9 @@ private:
 
 
 }  // namespace OpenOrienteering
+
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(OpenOrienteering::PaintOnTemplateTool::ErasingOptions)
+
 
 #endif
