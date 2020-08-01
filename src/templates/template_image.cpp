@@ -578,6 +578,11 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
 
+	if (mode.testFlag(PreserveDrawing))
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationAtop);
+	else if (mode.testFlag(OverlayDrawing))
+		painter.setCompositionMode(QPainter::CompositionMode_Multiply);
+
 	if (mode.testFlag(FilledAreas))
 	{
 		painter.setBrush(QBrush(color));

@@ -145,7 +145,9 @@ public:
 	enum ScribbleOption
 	{
 		NoScribbleOptions = 0,
-		FilledAreas	= 1<<0,  ///< Fill area defined by the scribble line
+		FilledAreas       = 1<<0,  ///< Fill area defined by the scribble line.
+		PreserveDrawing	  = 1<<1,  ///< Draw only in free areas.
+		OverlayDrawing	  = 1<<2,  ///< Compose new drawing with the underlying one.
 	};
 	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	

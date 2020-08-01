@@ -83,6 +83,9 @@ protected:
 public:
 	bool fillAreas() const { return fill_areas; }
 	void setFillAreas(bool enabled);
+
+	bool preserveDrawing() const { return preserve_drawing; }
+	void setpreserveDrawing(bool enabled);
 	
 	const QColor& color() const { return paint_color; }
 	void setColor(const QColor& color);
@@ -97,6 +100,8 @@ private:
 	ErasingOptions erasing = {};
 	bool dragging = false;
 	bool fill_areas = false;
+	bool preserve_drawing = false;
+	bool overlay_drawing_mode = false;
 	QColor paint_color = Qt::black;
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;

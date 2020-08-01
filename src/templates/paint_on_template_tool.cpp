@@ -32,6 +32,7 @@
 #include <QCursor>
 #include <QFlags>
 #include <QIcon>
+#include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPalette>
@@ -216,6 +217,21 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	connect(redo_action, &QAction::triggered, this, &PaintOnTemplateTool::redoSelected);
 	toolbar->addActionAtEnd(redo_action, 1, 0);
 	
+	auto* preserve_drawing_action = new QAction(QIcon(QString::fromLatin1(":/images/plus.png")),
+	                                ::OpenOrienteering::MapEditorController::tr("Preserve drawing"),
+	                                toolbar);
+	preserve_drawing_action->setCheckable(true);
+	connect(preserve_drawing_action, &QAction::triggered, this, &PaintOnTemplateTool::setpreserveDrawing);
+	toolbar->addActionAtEnd(preserve_drawing_action, 0, 1);
+	auto* preserve_drawing_button = toolbar->getButtonForAction(preserve_drawing_action);
+	auto* drawing_options_menu = new QMenu(preserve_drawing_button);
+	auto* preserve_drawing_option = drawing_options_menu->addAction(tr("Overlay drawing"));
+	preserve_drawing_option->setCheckable(true);
+	connect(preserve_drawing_option, &QAction::triggered, this, [this](bool enabled) {
+		overlay_drawing_mode = enabled;
+	});
+	preserve_drawing_button->setMenu(drawing_options_menu);
+
 	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
 	                                tr("Filled area"),
 	                                toolbar);
@@ -247,6 +263,12 @@ void PaintOnTemplateTool::templateAboutToBeDeleted(int /*pos*/, Template* temp)
 void PaintOnTemplateTool::setFillAreas(bool enabled)
 {
 	fill_areas = enabled;
+}
+
+// slot
+void PaintOnTemplateTool::setpreserveDrawing(bool enabled)
+{
+	preserve_drawing = enabled;
 }
 
 // slot
@@ -317,7 +339,9 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoo
 		rectInclude(map_bbox, map_coord);
 		
 		auto mode = QFlags<Template::ScribbleOption>()
-		            .setFlag(Template::FilledAreas, fillAreas());
+		            .setFlag(Template::FilledAreas, fillAreas())
+		            .setFlag(Template::PreserveDrawing, preserveDrawing() && !overlay_drawing_mode)
+		            .setFlag(Template::OverlayDrawing, preserveDrawing() && overlay_drawing_mode);
 		
 		temp->drawOntoTemplate(&coords[0], int(coords.size()),
 		        erasing ? QColor(255, 255, 255, 0) : paint_color,
