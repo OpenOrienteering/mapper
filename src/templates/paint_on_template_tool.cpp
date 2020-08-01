@@ -21,35 +21,108 @@
 
 #include "paint_on_template_tool.h"
 
+#include <type_traits>
+
 #include <Qt>
 #include <QtMath>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
 #include <QBrush>
 #include <QCursor>
 #include <QFlags>
 #include <QIcon>
 #include <QMouseEvent>
 #include <QPainter>
-#include <QPaintEvent>
+#include <QPalette>
 #include <QPen>
 #include <QPixmap>
+#include <QPoint>
 #include <QPolygonF>
-#include <QRect>
 #include <QRgb>
 #include <QSettings>
+#include <QToolButton>
 #include <QVariant>
 
+#include "settings.h"
 #include "core/map.h"
 #include "core/map_view.h"
 #include "gui/util_gui.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "gui/widgets/action_grid_bar.h"
 #include "templates/template.h"
 #include "util/util.h"
 
 
 namespace OpenOrienteering {
 
-// ### PaintOnTemplateTool ###
+namespace {
+
+/// Indicates whether a color is considered dark, for the purpose of finding contrasting colors.
+constexpr bool isDark(const QRgb rgb) noexcept
+{
+	constexpr auto medium_gray = 110;
+	return qGray(rgb) < medium_gray;
+}
+
+bool isDark(const QColor& color) noexcept
+{
+	return isDark(color.rgb());
+}
+
+static_assert(isDark(qRgb(0,0,0)), "black is dark");
+static_assert(isDark(qRgb(0,0,255)), "blue is dark");
+static_assert(!isDark(qRgb(0,255,0)), "green isn't dark");
+static_assert(!isDark(qRgb(255,255,0)), "yellow isn't dark");
+static_assert(!isDark(qRgb(255,255,255)), "white isn't dark");
+
+/// Draws a black or white checkmark, with good contrast to the background color. 
+void drawCheckmark(QPixmap& pixmap, const QColor& background)
+{
+	auto const icon_size = pixmap.width();
+	auto pen = QPen(QColor(isDark(background) ? Qt::white : Qt::black));
+	pen.setWidth(icon_size / 9);
+	QPainter p(&pixmap);
+	p.setPen(pen);
+	p.drawLine(6*icon_size/20, 11*icon_size/20, 8*icon_size/20, 13*icon_size/20);
+	p.drawLine(8*icon_size/20, 13*icon_size/20, 13*icon_size/20, 6*icon_size/20);
+}
+
+/// Draws a simple eraser icon.
+void drawEraser(QPixmap& pixmap, const QColor& background)
+{
+	auto const icon_size = pixmap.width();
+	auto pen = QPen(QColor(isDark(background) ? Qt::white : Qt::black));
+	pen.setWidth(icon_size / 9);
+	QPainter p(&pixmap);
+	p.setPen(pen);
+	p.drawLine(8*icon_size/20, 18*icon_size/20, 19*icon_size/20, 18*icon_size/20);
+	p.setBrush(QBrush(Qt::gray, Qt::SolidPattern));
+	static QPoint corners[] = {
+	    { 10*icon_size/20,  0*icon_size/20 },
+	    {  0*icon_size/20, 14*icon_size/20 },
+	    {  8*icon_size/20, 19*icon_size/20 },
+	    { 18*icon_size/20,  5*icon_size/20 },
+	};
+	p.drawPolygon(corners, std::extent<decltype(corners)>::value);
+}
+
+/// Create a simple eraser icon, with a checkmark for `QIcon::On` state.
+QIcon makeEraserIcon(int const icon_size)
+{
+	QPixmap pixmap(icon_size, icon_size);
+	pixmap.fill(Qt::transparent);
+	auto const background = QApplication::palette().color(QPalette::Window);
+	drawEraser(pixmap, background);
+	QIcon icon(pixmap);
+	drawCheckmark(pixmap, background);
+	icon.addPixmap(pixmap, QIcon::Normal, QIcon::On);
+	return icon;
+}
+
+}
+
 
 int PaintOnTemplateTool::erase_width = 4;
 
@@ -75,15 +148,82 @@ void PaintOnTemplateTool::init()
 {
 	setStatusBarText(tr("<b>Click and drag</b>: Paint. <b>Right click and drag</b>: Erase. "));
 	
-	widget = new PaintOnTemplatePaletteWidget(false);
+	widget = makeToolBar();
 	editor->showPopupWidget(widget, tr("Color selection"));
-	connect(editor->getMainWidget(), &QObject::destroyed, widget, [this]() { editor->deletePopupWidget(widget); });
-	connect(widget, &PaintOnTemplatePaletteWidget::colorSelected, this, &PaintOnTemplateTool::colorSelected);
-	connect(widget, &PaintOnTemplatePaletteWidget::undoSelected, this, &PaintOnTemplateTool::undoSelected);
-	connect(widget, &PaintOnTemplatePaletteWidget::redoSelected, this, &PaintOnTemplateTool::redoSelected);
-	colorSelected(widget->getSelectedColor());
 	
 	MapEditorTool::init();
+}
+
+ActionGridBar* PaintOnTemplateTool::makeToolBar()
+{
+	QSettings settings;
+	settings.beginGroup(QStringLiteral("PaintOnTemplateTool"));
+	auto last_selected = settings.value(QStringLiteral("selectedColor")).toString();
+	
+	auto const icon_size = Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal());
+	
+	auto* toolbar = new ActionGridBar(ActionGridBar::Horizontal, 2);
+	auto* color_button_group = new QButtonGroup(this);
+	
+	int count = 0;
+	static QColor const default_colors[] = {
+	    qRgb(255,   0,   0),
+	    qRgb(255, 255,   0),
+	    qRgb(  0, 255,   0),
+	    qRgb(219,   0, 216),
+	    qRgb(  0,   0, 255),
+	    qRgb(209,  92,   0),
+	    qRgb(  0,   0,   0),
+	};
+	for (auto const& color: default_colors)
+	{
+		QPixmap pixmap(icon_size, icon_size);
+		pixmap.fill(color);
+		QIcon icon(pixmap);
+		drawCheckmark(pixmap, color);
+		icon.addPixmap(pixmap, QIcon::Normal, QIcon::On);
+		
+		auto* action = new QAction(icon, color.name(QColor::HexArgb), toolbar);
+		action->setCheckable(true);
+		toolbar->addAction(action, count % 2, count / 2);
+		color_button_group->addButton(toolbar->getButtonForAction(action));
+		if (count == 0 || action->text() == last_selected)
+		{
+			paint_color = color;
+			action->setChecked(true);
+		}
+		connect(action, &QAction::triggered, this, [this, color](bool checked) { if (checked) setColor(color); });
+		++count;
+	}
+	
+	auto* erase_action = new QAction(makeEraserIcon(icon_size), tr("Erase"), toolbar);
+	erase_action->setCheckable(true);
+	connect(erase_action, &QAction::triggered, this, [this](bool enabled) { erasing.setFlag(ExplicitErasing, enabled); });
+	toolbar->addAction(erase_action, count % 2, count / 2);
+	// de-select color when activating eraser
+	color_button_group->addButton(toolbar->getButtonForAction(erase_action));
+	++count;
+
+	auto* undo_action = new QAction(QIcon(QString::fromLatin1(":/images/undo.png")),
+	                                ::OpenOrienteering::MapEditorController::tr("Undo"),
+	                                toolbar);
+	connect(undo_action, &QAction::triggered, this, &PaintOnTemplateTool::undoSelected);
+	toolbar->addActionAtEnd(undo_action, 0, 0);
+	
+	auto* redo_action = new QAction(QIcon(QString::fromLatin1(":/images/redo.png")),
+	                                ::OpenOrienteering::MapEditorController::tr("Redo"),
+	                                toolbar);
+	connect(redo_action, &QAction::triggered, this, &PaintOnTemplateTool::redoSelected);
+	toolbar->addActionAtEnd(redo_action, 1, 0);
+	
+	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
+	                                tr("Filled area"),
+	                                toolbar);
+	fill_action->setCheckable(true);
+	connect(fill_action, &QAction::triggered, this, &PaintOnTemplateTool::setFillAreas);
+	toolbar->addActionAtEnd(fill_action, 1, 1);
+	
+	return toolbar;
 }
 
 const QCursor& PaintOnTemplateTool::getCursor() const
@@ -104,9 +244,19 @@ void PaintOnTemplateTool::templateAboutToBeDeleted(int /*pos*/, Template* temp)
 }
 
 // slot
-void PaintOnTemplateTool::colorSelected(const QColor& color)
+void PaintOnTemplateTool::setFillAreas(bool enabled)
+{
+	fill_areas = enabled;
+}
+
+// slot
+void PaintOnTemplateTool::setColor(const QColor& color)
 {
 	paint_color = color;
+	
+	QSettings settings;
+	settings.beginGroup(QStringLiteral("PaintOnTemplateTool"));
+	settings.setValue(QStringLiteral("selectedColor"), color.name(QColor::HexArgb));
 }
 
 // slot
@@ -126,12 +276,15 @@ void PaintOnTemplateTool::redoSelected()
 
 bool PaintOnTemplateTool::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* /*widget*/)
 {
+	if (dragging)
+		return true;
+	
 	if (event->button() == Qt::LeftButton || event->button() == Qt::RightButton)
 	{
 		coords.push_back(map_coord);
 		map_bbox = QRectF(map_coord.x(), map_coord.y(), 0, 0);
 		dragging = true;
-		erasing = (event->button() == Qt::RightButton) || (paint_color == qRgb(255, 255, 255));
+		erasing.setFlag(RightMouseButtonErasing, event->button() == Qt::RightButton);
 		return true;
 	}
 	
@@ -164,7 +317,7 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoo
 		rectInclude(map_bbox, map_coord);
 		
 		auto mode = QFlags<Template::ScribbleOption>()
-		            .setFlag(Template::FilledAreas, widget->getFillShapes());
+		            .setFlag(Template::FilledAreas, fillAreas());
 		
 		temp->drawOntoTemplate(&coords[0], int(coords.size()),
 		        erasing ? QColor(255, 255, 255, 0) : paint_color,
@@ -197,7 +350,7 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 		for (auto const& coord : coords)
 			polygon.append(widget->mapToViewport(coord));
 
-		if (this->widget->getFillShapes())
+		if (fillAreas())
 		{
 			painter->setPen(Qt::NoPen);
 			painter->setBrush(QBrush(pen.color(), Qt::Dense5Pattern));
@@ -207,194 +360,6 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 		painter->setPen(pen);
 		painter->drawPolyline(polygon);
 	}
-}
-
-
-
-// ### PaintOnTemplatePaletteWidget ###
-
-PaintOnTemplatePaletteWidget::PaintOnTemplatePaletteWidget(bool close_on_selection)
-: QWidget()
-, close_on_selection(close_on_selection)
-{
-	setAttribute(Qt::WA_DeleteOnClose);
-	setAttribute(Qt::WA_OpaquePaintEvent);
-	setAutoFillBackground(false);
-
-	QSettings settings;
-	settings.beginGroup(QString::fromLatin1("PaintOnTemplatePaletteWidget"));
-	selected_color = qMax(0, qMin(getNumFieldsX()*getNumFieldsY() - 1, settings.value(QString::fromLatin1("selectedColor")).toInt()));
-	settings.endGroup();
-	
-	pressed_buttons = 0;
-}
-
-PaintOnTemplatePaletteWidget::~PaintOnTemplatePaletteWidget()
-{
-	QSettings settings;
-	settings.beginGroup(QString::fromLatin1("PaintOnTemplatePaletteWidget"));
-	settings.setValue(QString::fromLatin1("selectedColor"), selected_color);
-	settings.endGroup();
-}
-
-QColor PaintOnTemplatePaletteWidget::getSelectedColor()
-{
-	return getFieldColor(selected_color % getNumFieldsX(), selected_color / getNumFieldsX());
-}
-
-
-QSize PaintOnTemplatePaletteWidget::sizeHint() const
-{
-	constexpr qreal button_size_mm = 13;
-	return QSize(qCeil(getNumFieldsX() * Util::mmToPixelLogical(button_size_mm)),
-	             qCeil(getNumFieldsY() * Util::mmToPixelLogical(button_size_mm)));
-}
-
-
-void PaintOnTemplatePaletteWidget::paintEvent(QPaintEvent* event)
-{
-	QPainter painter;
-	painter.begin(this);
-	painter.setClipRect(event->rect());
-	
-	auto draw_field_selection_marker = [&painter](QRect field_rect) {
-		int line_width = qMax(1, qRound(Util::mmToPixelLogical(0.5)));
-		painter.fillRect(field_rect, Qt::black);
-		QPen pen(Qt::white);
-		pen.setStyle(Qt::DotLine);
-		pen.setWidth(line_width);
-		painter.setPen(pen);
-		field_rect.adjust(line_width, line_width, -line_width, -line_width);
-		painter.drawRect(field_rect);
-		field_rect.adjust(line_width, line_width, -line_width, -line_width);
-		return field_rect;
-	};
-
-	int max_x = getNumFieldsX();
-	int max_y = getNumFieldsY();
-	for (int x = 0; x < max_x; ++x)
-	{
-		for (int y = 0; y < max_y; ++y)
-		{
-			int field_x = width() * x / max_x;
-			int field_y = height() * y / max_y;
-			int field_width = width() * (x+1) / max_x - (width() * x / max_x);
-			int field_height = height() * (y+1) / max_y - (height() * y / max_y);
-			QRect field_rect = QRect(field_x, field_y, field_width, field_height);
-
-			if (isUndoField(x, y))
-				drawIcon(&painter, QString::fromLatin1(":/images/undo.png"), field_rect);
-			else if (isRedoField(x, y))
-				drawIcon(&painter, QString::fromLatin1(":/images/redo.png"), field_rect);
-			else if (isFillShapesField(x, y))
-			{
-				if (fill_shapes)
-					field_rect = draw_field_selection_marker(field_rect);
-				drawIcon(&painter, QString::fromLatin1(":/images/scribble-fill-shapes.png"), field_rect);
-			}
-			else if (!isEmptyField(x, y))
-			{
-				if (selected_color == x + getNumFieldsX()*y)
-					field_rect = draw_field_selection_marker(field_rect);
-				painter.fillRect(field_rect, getFieldColor(x, y));
-			}
-		}
-	}
-	
-	painter.end();
-}
-
-
-void PaintOnTemplatePaletteWidget::mousePressEvent(QMouseEvent* event)
-{
-	if (event->button() != Qt::LeftButton)
-		return;
-	
-	// Workaround for multiple press bug on Android
-	if ((event->button() & ~pressed_buttons) == 0)
-		return;
-	pressed_buttons |= event->button();
-	
-	int x = int(event->x() / (width() / qreal(getNumFieldsX())));
-	int y = int(event->y() / (height() / qreal(getNumFieldsY())));
-	
-	if (isUndoField(x, y))
-	{
-		emit undoSelected();
-	}
-	else if (isRedoField(x, y))
-	{
-		emit redoSelected();
-	}
-	else if (isFillShapesField(x, y))
-	{
-		fill_shapes = !fill_shapes;
-		update();
-	}
-	else if (!isEmptyField(x, y) && selected_color != x + getNumFieldsX()*y)
-	{
-		selected_color = x + getNumFieldsX()*y;
-		update();
-		emit colorSelected(getFieldColor(x, y));
-	}
-	
-	if (close_on_selection)
-		close();
-}
-
-void PaintOnTemplatePaletteWidget::mouseReleaseEvent(QMouseEvent* event)
-{
-	// Workaround for multiple press bug on Android part 2, see above in mousePressEvent()
-	if ((event->button() & pressed_buttons) == 0)
-		return;
-	pressed_buttons &= ~event->button();
-}
-
-
-int PaintOnTemplatePaletteWidget::getNumFieldsX() const
-{
-	return 6;
-}
-
-int PaintOnTemplatePaletteWidget::getNumFieldsY() const
-{
-	return 2;
-}
-
-QColor PaintOnTemplatePaletteWidget::getFieldColor(int x, int y) const
-{
-	static QColor rows[2][4] = { {qRgb(255,   0,   0), qRgb(  0, 255,   0), qRgb(  0,   0, 255), qRgb(  0,   0,   0)},
-	                             {qRgb(255, 255,   0), qRgb(219,   0, 216), qRgb(209,  92,   0), qRgb(255, 255, 255)} };
-	return rows[y][x];
-}
-
-bool PaintOnTemplatePaletteWidget::isEmptyField(int x, int y) const
-{
-	return x == 5 && y == 0;
-}
-
-bool PaintOnTemplatePaletteWidget::isFillShapesField(int x, int y) const
-{
-	return x == 5 && y == 1;
-}
-
-bool PaintOnTemplatePaletteWidget::isUndoField(int x, int y) const
-{
-	return x == 4 && y == 0;
-}
-
-bool PaintOnTemplatePaletteWidget::isRedoField(int x, int y) const
-{
-	return x == 4 && y == 1;
-}
-
-void PaintOnTemplatePaletteWidget::drawIcon(QPainter* painter, const QString& resource_path, const QRect& field_rect)
-{
-	painter->fillRect(field_rect, Qt::white);
-	QIcon icon(resource_path);
-	painter->setRenderHint(QPainter::Antialiasing);
-	painter->drawPixmap(field_rect, icon.pixmap(field_rect.size()));
-	painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 

@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013-2016, 2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,6 +32,7 @@
 #include <QVariant>
 #include <QWidget>
 
+#include "settings.h"
 #include "gui/scaling_icon_engine.h"
 #include "gui/widgets/segmented_button_layout.h"
 
@@ -64,12 +65,19 @@ bool Q_DECL_UNUSED isDockWidgetRelated(const QWidget* widget)
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
  : QProxyStyle(base_style)
 {
-	; // Nothing
+	auto& settings = Settings::getInstance();
+	onSettingsChanged(settings);
+	connect(&settings, &Settings::settingsChanged, this, [this]() {
+		onSettingsChanged(*qobject_cast<Settings*>(sender()));
+	});
 }
 
-MapperProxyStyle::~MapperProxyStyle()
+MapperProxyStyle::~MapperProxyStyle() = default;
+
+
+void MapperProxyStyle::onSettingsChanged(const Settings& settings)
 {
-	; // Nothing, not inlined
+	touch_mode = settings.touchModeEnabled();
 }
 
 void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
@@ -86,6 +94,18 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 		if (int segment = widget ? widget->property("segment").toInt() : 0)
 		{
 			drawSegmentedButton(segment, overridden_element, option, painter, widget);
+			return;
+		}
+		if (touch_mode
+		    && element == PE_PanelButtonTool
+		    && option
+		    && option->state & State_On)
+		{
+			auto const& window_color = option->palette.window().color();
+			auto const fill = QBrush(qGray(window_color.rgb()) > 127 ? window_color.darker(125) : window_color.lighter(125));
+			painter->setPen(Qt::NoPen);
+			painter->setBrush(fill);
+			painter->drawRoundedRect(option->rect, 5.0, 5.0, Qt::AbsoluteSize);
 			return;
 		}
 		break;
