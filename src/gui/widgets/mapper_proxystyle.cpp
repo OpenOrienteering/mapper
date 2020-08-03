@@ -23,11 +23,15 @@
 #include <Qt>
 #include <QBrush>
 #include <QCommonStyle> // IWYU pragma: keep
+#include <qdrawutil.h>
+#include <QApplication>
 #include <QFlags>
 #include <QFormLayout>  // IWYU pragma: keep
+#include <QMainWindow>
 #include <QPainter>
 #include <QPalette>
 #include <QRect>
+#include <QSize>
 #include <QStyleOption>
 #include <QVariant>
 #include <QWidget>
@@ -35,6 +39,7 @@
 #include "settings.h"
 #include "gui/scaling_icon_engine.h"
 #include "gui/widgets/segmented_button_layout.h"
+#include "gui/util_gui.h"
 
 
 namespace OpenOrienteering {
@@ -77,7 +82,34 @@ MapperProxyStyle::~MapperProxyStyle() = default;
 
 void MapperProxyStyle::onSettingsChanged(const Settings& settings)
 {
-	touch_mode = settings.touchModeEnabled();
+	if (settings.touchModeEnabled() == touch_mode)
+		return;
+	
+	if (touch_mode)
+	{
+		touch_mode = false;
+		toolbar = {};
+	}
+	else
+	{
+		touch_mode = true;
+		auto const button_size_mm = settings.getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal();
+		auto const button_size_pixel = qRound(Util::mmToPixelPhysical(button_size_mm));
+		auto const margin_size_pixel = button_size_pixel / 4;
+		toolbar.icon_size = button_size_pixel - margin_size_pixel;
+		auto const scale_factor = qreal(toolbar.icon_size) / QProxyStyle::pixelMetric(PM_ToolBarIconSize);
+		toolbar.item_spacing = std::max(1, margin_size_pixel - 2 * qRound(scale_factor));
+		toolbar.separator_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarSeparatorExtent) * scale_factor);
+		toolbar.extension_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarExtensionExtent) * scale_factor);
+	}
+	
+	// QMainWindow caches the size, so it needs to be made update its cache when toggling touch mode.
+	auto const widgets = QApplication::allWidgets();
+	for (auto* widget : widgets)
+	{
+		if (auto* main_window = qobject_cast<QMainWindow*>(widget))
+			main_window->setIconSize(QSize{-1, -1});
+	}
 }
 
 void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
@@ -188,6 +220,28 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 {
 	switch (metric)
 	{
+	case QStyle::PM_ToolBarIconSize:
+		if (touch_mode)
+			return toolbar.icon_size;
+#ifdef Q_OS_MACOS
+		{
+			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;
+			return s;
+		}
+#endif
+		break;
+	case QStyle::PM_ToolBarItemSpacing:
+		if (touch_mode)
+			return toolbar.item_spacing;
+		break;
+	case QStyle::PM_ToolBarSeparatorExtent:
+		if (touch_mode)
+			return toolbar.separator_extent;
+		break;
+	case QStyle::PM_ToolBarExtensionExtent:
+		if (touch_mode)
+			return toolbar.extension_extent;
+		break;
 #ifdef Q_OS_ANDROID
 	case QStyle::PM_ButtonIconSize:
 		{
@@ -205,13 +259,6 @@ int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option
 	case QStyle::PM_SplitterWidth:
 		{
 			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;
-			return s;
-		}
-#endif
-#ifdef Q_OS_MACOS
-	case QStyle::PM_ToolBarIconSize:
-		{
-			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;
 			return s;
 		}
 #endif

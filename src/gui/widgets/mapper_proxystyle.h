@@ -47,6 +47,18 @@ class Settings;
 class MapperProxyStyle : public QProxyStyle
 {
 Q_OBJECT
+	
+	/**
+	 * This structure holds custom toolbar metrics when touch_mode is active.
+	 */
+	struct ToolBarMetrics
+	{
+		int icon_size;
+		int item_spacing;
+		int separator_extent;
+		int extension_extent;
+	};
+	
 public:
 	/**
 	 * Constructs a new MapperProxyStyle.
@@ -124,6 +136,8 @@ private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
 	
 	void onSettingsChanged(const Settings& settings);
+	
+	ToolBarMetrics toolbar = {};
 	
 	bool touch_mode = false;
 	
