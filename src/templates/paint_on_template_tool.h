@@ -112,6 +112,7 @@ private:
 	static int erase_width;
 	
 	Q_DISABLE_COPY(PaintOnTemplateTool)
+	void storePaintToolStatus();
 };
 
 

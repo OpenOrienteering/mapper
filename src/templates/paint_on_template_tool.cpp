@@ -197,13 +197,20 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		++count;
 	}
 	
+	auto const mode_descriptor = settings.value(QStringLiteral("drawingMode")).toString().split(u',');
+	
 	auto* erase_action = new QAction(makeEraserIcon(icon_size), tr("Erase"), toolbar);
 	erase_action->setCheckable(true);
-	connect(erase_action, &QAction::triggered, this, [this](bool enabled) { erasing.setFlag(ExplicitErasing, enabled); });
+	connect(erase_action, &QAction::triggered, this, [this](bool enabled) { erasing.setFlag(ExplicitErasing, enabled); storePaintToolStatus(); });
 	toolbar->addAction(erase_action, count % 2, count / 2);
 	// de-select color when activating eraser
 	color_button_group->addButton(toolbar->getButtonForAction(erase_action));
 	++count;
+	if (mode_descriptor.contains(QLatin1String("erasing")))
+	{
+		erasing.setFlag(ExplicitErasing, true);
+		erase_action->setChecked(true);
+	}
 
 	auto* undo_action = new QAction(QIcon(QString::fromLatin1(":/images/undo.png")),
 	                                ::OpenOrienteering::MapEditorController::tr("Undo"),
@@ -229,8 +236,20 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	preserve_drawing_option->setCheckable(true);
 	connect(preserve_drawing_option, &QAction::triggered, this, [this](bool enabled) {
 		overlay_drawing_mode = enabled;
+		storePaintToolStatus();
 	});
 	preserve_drawing_button->setMenu(drawing_options_menu);
+	auto overlay = mode_descriptor.contains(QLatin1String("overlay_drawing"));
+	if (mode_descriptor.contains(QLatin1String("preserve_drawing")) || overlay)
+	{
+		preserve_drawing = true;
+		preserve_drawing_action->setChecked(true);
+		if (overlay)
+		{
+			overlay_drawing_mode = true;
+			preserve_drawing_option->setChecked(true);
+		}
+	}
 
 	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
 	                                tr("Filled area"),
@@ -238,6 +257,11 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	fill_action->setCheckable(true);
 	connect(fill_action, &QAction::triggered, this, &PaintOnTemplateTool::setFillAreas);
 	toolbar->addActionAtEnd(fill_action, 1, 1);
+	if (mode_descriptor.contains(QLatin1String("fill_areas")))
+	{
+		fill_areas = true;
+		fill_action->setChecked(true);
+	}	
 	
 	return toolbar;
 }
@@ -263,22 +287,41 @@ void PaintOnTemplateTool::templateAboutToBeDeleted(int /*pos*/, Template* temp)
 void PaintOnTemplateTool::setFillAreas(bool enabled)
 {
 	fill_areas = enabled;
+	storePaintToolStatus();
+}
+
+/// Store paint tool status - i.e. color and drawing mode.
+void PaintOnTemplateTool::storePaintToolStatus()
+{
+	QSettings settings;
+	settings.beginGroup(QStringLiteral("PaintOnTemplateTool"));
+
+	auto mode_descriptor = QStringList {};
+	if (preserve_drawing && overlay_drawing_mode)
+		mode_descriptor.append(QLatin1String("overlay_drawing"));
+	else if (preserve_drawing)
+		mode_descriptor.append(QLatin1String("preserve_drawing"));
+	if (fill_areas)
+		mode_descriptor.append(QLatin1String("fill_areas"));
+	if (erasing.testFlag(ExplicitErasing))
+		mode_descriptor.append(QLatin1String("erasing"));
+	settings.setValue(QStringLiteral("drawingMode"), mode_descriptor.join(u','));
+	
+	settings.setValue(QStringLiteral("selectedColor"), color().name(QColor::HexArgb));	
 }
 
 // slot
 void PaintOnTemplateTool::setpreserveDrawing(bool enabled)
 {
 	preserve_drawing = enabled;
+	storePaintToolStatus();
 }
 
 // slot
 void PaintOnTemplateTool::setColor(const QColor& color)
 {
 	paint_color = color;
-	
-	QSettings settings;
-	settings.beginGroup(QStringLiteral("PaintOnTemplateTool"));
-	settings.setValue(QStringLiteral("selectedColor"), color.name(QColor::HexArgb));
+	storePaintToolStatus();
 }
 
 // slot
