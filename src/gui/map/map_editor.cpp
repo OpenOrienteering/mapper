@@ -503,42 +503,55 @@ void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 }
 
 
-void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title)
+void MapEditorController::showPopupWidget(QWidget* child_widget, const QString& title, PopupLocation location)
 {
-	if (mobile_mode)
-	{
-		// This is used for KeyButtonBar, but also for template painting toolbar.
-		QSize size = child_widget->sizeHint();
-		QRect map_widget_rect = map_widget->rect();
-		
+	auto const make_mobile_popup = [this, child_widget]() -> QWidget* {
 		// Binding child_widget lifetime directly to map_widget
 		child_widget->setParent(map_widget);
-		child_widget->setGeometry(
-			qMax(0, qRound(map_widget_rect.center().x() - 0.5f * size.width())),
-			qMax(0, map_widget_rect.bottom() - size.height()),
-			qMin(size.width(), map_widget_rect.width()),
-			qMin(size.height(), map_widget_rect.height())
-			);
+		
 		// Not being part of the layout, widgets must explicitly draw the background.
 		// But for KeyButtonBar, it is enough that the buttons draw their background.
 		if (!qobject_cast<KeyButtonBar*>(child_widget))
 			child_widget->setAutoFillBackground(true);
-		child_widget->show();
-	}
-	else
-	{
+		return child_widget;
+	};
+		
+	auto const make_desktop_popup = [this, child_widget, &title]() -> QWidget* {
 		auto* dock_widget = new QDockWidget(title, window);
 		dock_widget->setFeatures(dock_widget->features() & ~QDockWidget::DockWidgetClosable);
 		dock_widget->setWidget(child_widget);
 		
 		// Show dock in floating state
 		dock_widget->setFloating(true);
-		dock_widget->show();
-		dock_widget->setGeometry(window->geometry().left() + 40, window->geometry().top() + 100, dock_widget->width(), dock_widget->height());
 		
 		// Binding child_widget lifetime to map_widget via deletion of dock_widget
 		connect(map_widget, &QObject::destroyed, dock_widget, [dock_widget]() { delete dock_widget; });
-	}
+		
+		return dock_widget;
+	};
+	
+	auto const calculate_geometry = [this, location](const QSize& size_hint) -> QRect {
+		auto const map_widget_rect = map_widget->rect();
+		auto const w = qMin(size_hint.width(), map_widget_rect.width());
+		auto const h = qMin(size_hint.height(), map_widget_rect.height());
+		auto x = map_widget->mapToGlobal(map_widget_rect.center()).x() - w / 2;
+		auto y = map_widget->mapToGlobal(map_widget_rect.topLeft()).y();
+		switch (location)
+		{
+		case PopupLocationTop:
+			if (top_action_bar && top_action_bar->isVisible())
+				y += top_action_bar->height();
+			break;
+		case PopupLocationBottom:
+			y = map_widget->mapToGlobal(map_widget_rect.bottomRight()).y() - h;
+			break;
+		}
+		return {x, y, w, h};
+	};
+	
+	auto* popup = mobile_mode ? make_mobile_popup() : make_desktop_popup();
+	popup->setGeometry(calculate_geometry(popup->sizeHint()));
+	popup->show();
 }
 
 void MapEditorController::deletePopupWidget(QWidget* child_widget)

@@ -93,6 +93,13 @@ public:
 		SymbolEditor = 1
 	};
 	
+	/** Locations where to place popup windows. */
+	enum PopupLocation
+	{
+		PopupLocationTop = 0x04,
+		PopupLocationBottom = 0x08,
+	};
+	
 	/**
 	 * Constructs a new MapEditorController for a map.
 	 * 
@@ -205,7 +212,7 @@ public:
 	 * 
 	 * Make sure that the child widget has a reasonable size hint.
 	 */
-	void showPopupWidget(QWidget* child_widget, const QString& title);
+	void showPopupWidget(QWidget* child_widget, const QString& title, PopupLocation location = PopupLocationBottom);
 	
 	/**
 	 * Deletes the given popup widget, which was previously shown with
@@ -808,8 +815,8 @@ private:
 	QToolBar* toolbar_mapparts = nullptr;
 	
 	// For mobile UI
-	ActionGridBar* bottom_action_bar;
-	ActionGridBar* top_action_bar;
+	ActionGridBar* bottom_action_bar = nullptr;
+	ActionGridBar* top_action_bar = nullptr;
 	QToolButton* show_top_bar_button;
 	QAction* mobile_symbol_selector_action;
 	QMenu* mobile_symbol_button_menu;
