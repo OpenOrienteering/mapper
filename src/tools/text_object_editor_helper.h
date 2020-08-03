@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2017 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -26,6 +26,7 @@
 
 #include <Qt>
 #include <QObject>
+#include <QPointer>
 #include <QString>
 
 class QEvent;
@@ -34,6 +35,7 @@ class QKeyEvent;
 class QMouseEvent;
 class QPainter;
 class QRectF;
+class QToolBar;
 class QVariant;
 class QWidget;
 
@@ -43,7 +45,6 @@ class MapCoordF;
 class MapEditorController;
 class MapWidget;
 class TextObject;
-class TextObjectAlignmentDockWidget;
 
 
 /**
@@ -264,12 +265,12 @@ private:
 	 */
 	bool sendMouseEventToInputContext(QEvent* event, const MapCoordF& map_coord);
 	
-	/**
-	 * Sets the horizontal and vertical alignment of the text object.
-	 * 
-	 * This methods acts as a slot for messages from TextObjectAlignmentDockWidget.
-	 */
-	void setTextAlignment(int h_alignment, int v_alignment);
+	
+	QToolBar* makeAlignmentToolBar();
+	
+	void setHorizontalAlignment(int h_alignment);
+	
+	void setVerticalAlignment(int v_alignment);
 	
 	/**
 	 * Switches between the text editing cursor and the default cursor.
@@ -293,7 +294,7 @@ private:
 	
 	TextObject* text_object;
 	MapEditorController* editor;
-	TextObjectAlignmentDockWidget* dock_widget;
+	QPointer<QToolBar> alignment_toolbar;
 	QString pristine_text;
 	QString preedit_string;
 	mutable int block_start;

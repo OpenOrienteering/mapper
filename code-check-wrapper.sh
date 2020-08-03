@@ -100,6 +100,7 @@ for I in \
   template_table_model.cpp \
   template_tool \
   template_track.cpp \
+  text_object_editor_helper.cpp \
   text_brwoser_dialog \
   toast.cpp \
   track_t.cpp \
