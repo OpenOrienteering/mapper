@@ -1051,7 +1051,7 @@
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1187"/>
         <source>&lt;b&gt;%1+Drag&lt;/b&gt;: Follow existing objects. </source>
-        <translation>&lt;b&gt;％1  拖动&lt;/b&gt; ：按照现有对象 </translation>
+        <translation>&lt;b&gt;％1 + 拖动&lt;/b&gt; ：按照现有对象 </translation>
     </message>
     <message>
         <location filename="../src/tools/draw_path_tool.cpp" line="1203"/>
@@ -3114,7 +3114,10 @@ Do you want to scale the symbols to the selected scale?</source>
 %1
 
 File format not recognized.</source>
-        <translation>无法打开文件: %1 文件格式无法识别。</translation>
+        <translation>无法打开文件：
+%1
+
+文件格式无法识别。</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="965"/>
@@ -3261,7 +3264,9 @@ for reading.</source>
         <source>Cannot save file
 %1:
 %2</source>
-        <translation>无法保存文件 %1: %2</translation>
+        <translation>无法保存文件
+%1:
+%2</translation>
     </message>
     <message>
         <source>Nothing to import.</source>
