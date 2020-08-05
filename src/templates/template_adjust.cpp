@@ -49,9 +49,10 @@ namespace OpenOrienteering {
 
 float TemplateAdjustActivity::cross_radius = 4;
 
-TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller) : controller(controller)
+TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller)
+: temp(temp)
+, controller(controller)
 {
-	setActivityObject(temp);
 	connect(controller->getMap(), &Map::templateChanged, this, &TemplateAdjustActivity::templateChanged);
 	connect(controller->getMap(), &Map::templateDeleted, this, &TemplateAdjustActivity::templateDeleted);
 }
@@ -64,8 +65,6 @@ TemplateAdjustActivity::~TemplateAdjustActivity()
 
 void TemplateAdjustActivity::init()
 {
-	auto temp = reinterpret_cast<Template*>(activity_object);
-	
 	dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
 	widget = new TemplateAdjustWidget(temp, controller, dock);
 	dock->setWidget(widget);
@@ -75,7 +74,6 @@ void TemplateAdjustActivity::init()
 
 void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 {
-	auto temp = reinterpret_cast<Template*>(activity_object);
 	bool adjusted = temp->isAdjustmentApplied();
     
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
@@ -148,19 +146,17 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 	return true;
 }
 
-void TemplateAdjustActivity::templateChanged(int index, const Template* temp)
+void TemplateAdjustActivity::templateChanged(int /*index*/, const Template* temp)
 {
-	Q_UNUSED(index);
-	if (static_cast<Template*>(activity_object) == temp)
+	if (this->temp == temp)
 	{
 		widget->updateDirtyRect(true);
 		widget->updateAllRows();
 	}
 }
-void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
+void TemplateAdjustActivity::templateDeleted(int /*index*/, const Template* temp)
 {
-	Q_UNUSED(index);
-	if (static_cast<Template*>(activity_object) == temp)
+	if (this->temp == temp)
 		controller->setEditorActivity(nullptr);
 }
 

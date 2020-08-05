@@ -81,6 +81,7 @@ public slots:
 	void templateDeleted(int index, const OpenOrienteering::Template* temp);
 	
 private:
+	Template* temp;
 	TemplateAdjustDockWidget* dock;
 	TemplateAdjustWidget* widget;
 	MapEditorController* controller;
