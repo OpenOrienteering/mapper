@@ -53,43 +53,13 @@ public:
 	virtual void init();
 	
 	/**
-	 * Sets the "activity object", which is a void pointer which can be
-	 * used for various purposes (such as identifying the activity).
-	 */
-	void setActivityObject(void* address);
-	
-	/**
-	 * Returns the "activity object".
-	 * @see setActivityObject()
-	 */
-	inline void* getActivityObject() const;
-	
-	/**
 	 * All dynamic drawings must be drawn here using the given painter.
 	 * Drawing is only possible in the area specified
 	 * by calling map->setActivityBoundingBox().
 	 */
 	virtual void draw(QPainter* painter, MapWidget* widget);
 	
-protected:
-	void* activity_object;
 };
-
-
-
-//### MapEditorActivity inline code ###
-
-inline
-void MapEditorActivity::setActivityObject(void* address)
-{
-	activity_object = address;
-}
-
-inline
-void* MapEditorActivity::getActivityObject() const
-{
-	return activity_object;
-}
 
 
 }  // namespace OpenOrienteering
