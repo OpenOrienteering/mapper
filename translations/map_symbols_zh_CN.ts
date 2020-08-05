@@ -9414,12 +9414,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
         <comment>Name of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>带有焦点的检查点（在MTBO地图中）</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. The focus point shall be used in case of necessity when the exact position of a control is not clear. A focus point helps to specify the exact track where a control is situated.</source>
         <comment>Description of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>当有必要使检查点的准确位置清晰时，例如在密集的赛道网络中，可以使用焦点（也就是检查点圆中心的点）。在控制点的准确位置不清晰的情况下，应有必要使用焦点。焦点帮助指定检查点所在的准确赛道。</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -9615,17 +9615,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Elongated knoll</source>
         <comment>Name of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>长土丘</translation>
     </message>
     <message>
         <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
         <comment>Description of symbol 113</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -9635,47 +9635,47 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
     </message>
     <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
-        <translation>土坑或洞</translation>
+        <translation>土坑</translation>
     </message>
     <message>
         <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
         <comment>Description of symbol 116</comment>
-        <translation type="unfinished"></translation>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
     </message>
     <message>
         <source>Broken ground, small</source>
         <comment>Name of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎岖的地面，小的</translation>
     </message>
     <message>
         <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
         <comment>Description of symbol 117.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
     </message>
     <message>
         <source>Broken ground, big</source>
         <comment>Name of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>崎岖的地面，大的</translation>
     </message>
     <message>
         <source>The size of the dots may vary.</source>
         <comment>Description of symbol 117.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>点的尺寸会变化。</translation>
     </message>
     <message>
         <source>Special land form feature</source>
         <comment>Name of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>特殊地形特征</translation>
     </message>
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation type="unfinished"></translation>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Passable rock face</source>
@@ -9685,7 +9685,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
@@ -9695,12 +9695,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags</source>
         <comment>Name of symbol 203.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -9710,32 +9710,32 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Passable rock face, no tags, minimum size</source>
         <comment>Name of symbol 203.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
-        <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+        <translation>如果从等高线上可以明显看到岩石表面的下降方向，或辨识性很好，那么应该使用无短线最小尺寸的可翻越石崖。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded</source>
         <comment>Name of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越石崖，无短线，圆滑</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Passable rock face, no tags, rounded, minimum size</source>
         <comment>Name of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
     </message>
     <message>
         <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -9765,7 +9765,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A particularly large and distinct boulder. For gigantic boulders symbol 202 should be used.</source>
         <comment>Description of symbol 207</comment>
-        <translation>大而明顯的岩石。更巨大的岩石應使用符號 202.</translation>
+        <translation>大而明显的演示。更巨大的岩石应使用符号 202 。</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -9775,17 +9775,17 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Boulder field, large</source>
         <comment>Name of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>石块地，大的</translation>
     </message>
     <message>
         <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -9795,7 +9795,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -9805,7 +9805,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
         <comment>Description of symbol 209.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Waterhole</source>
@@ -9815,7 +9815,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
         <comment>Description of symbol 303</comment>
-        <translation type="unfinished"></translation>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
     </message>
     <message>
         <source>Narrow marsh</source>
@@ -9825,7 +9825,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
         <comment>Description of symbol 308</comment>
-        <translation type="unfinished"></translation>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Indistinct marsh</source>
@@ -9835,7 +9835,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
         <comment>Description of symbol 311</comment>
-        <translation type="unfinished"></translation>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
     </message>
     <message>
         <source>Indistinct marsh, minimum size</source>
@@ -9845,12 +9845,12 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Well</source>
         <comment>Name of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>井</translation>
     </message>
     <message>
         <source>Wells and captive springs, which are clearly visible on the ground.</source>
         <comment>Description of symbol 312</comment>
-        <translation type="unfinished"></translation>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
     </message>
     <message>
         <source>Spring</source>
@@ -9860,7 +9860,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
         <comment>Description of symbol 313</comment>
-        <translation type="unfinished"></translation>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Undergrowth: slow running</source>
