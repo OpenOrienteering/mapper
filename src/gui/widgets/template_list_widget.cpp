@@ -813,12 +813,10 @@ void TemplateListWidget::adjustClicked(bool checked)
 	{
 		auto* activity = new TemplateAdjustActivity(currentTemplate(), &controller);
 		controller.setEditorActivity(activity);
-		auto* dock_widget = activity->getDockWidget();
-		dock_widget->show();
-		dock_widget->raise();
-		connect(this, &TemplateListWidget::currentRowChanged, dock_widget, &TemplateAdjustDockWidget::close);
-		connect(dock_widget, &TemplateAdjustDockWidget::closed,
-		        adjust_button, [this]() { adjust_button->setChecked(false); });
+		connect(this, &TemplateListWidget::currentRowChanged,
+		        activity, [this]() { controller.setEditorActivity(nullptr); });		
+		connect(activity, &QObject::destroyed,
+		        this, [this]() { adjust_button->setChecked(false); });
 		
 	}
 	else

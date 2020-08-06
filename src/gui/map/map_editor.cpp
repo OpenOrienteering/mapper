@@ -492,14 +492,20 @@ bool MapEditorController::isEditingInProgress() const
 
 void MapEditorController::setEditorActivity(MapEditorActivity* new_activity)
 {
-	delete editor_activity;
-	map->clearActivityBoundingBox();
+	if (auto* last_activity = editor_activity)
+	{
+		editor_activity = nullptr;
+		map_widget->setActivity(nullptr);
+		map->clearActivityBoundingBox();
+		delete last_activity;
+	}
 	
 	editor_activity = new_activity;
 	if (editor_activity)
+	{
 		editor_activity->init();
-	
-	map_widget->setActivity(editor_activity);
+		map_widget->setActivity(editor_activity);
+	}
 }
 
 

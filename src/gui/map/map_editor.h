@@ -188,7 +188,10 @@ public:
 	
 	/**
 	 * Sets the current editor activity.
-	 * new_activity may be nullptr to disable the current editor activity.
+	 * 
+	 * Before setting the new activity, this function deletes the previous
+	 * activity. Parameter new_activity may be nullptr to just terminate the
+	 * current editor activity.
 	 */
 	void setEditorActivity(MapEditorActivity* new_activity);
 	

@@ -49,33 +49,34 @@ namespace OpenOrienteering {
 
 float TemplateAdjustActivity::cross_radius = 4;
 
-TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller) : controller(controller)
+TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorController* controller)
+: temp(temp)
+, controller(controller)
 {
-	setActivityObject(temp);
 	connect(controller->getMap(), &Map::templateChanged, this, &TemplateAdjustActivity::templateChanged);
-	connect(controller->getMap(), &Map::templateDeleted, this, &TemplateAdjustActivity::templateDeleted);
+	connect(controller->getMap(), &Map::templateAboutToBeDeleted, this, &TemplateAdjustActivity::templateAboutToBeDeleted);
 }
 
 TemplateAdjustActivity::~TemplateAdjustActivity()
 {
-	widget->stopTemplateAdjust();
-	delete dock;
+	if (widget)
+		widget->stopTemplateAdjust();
 }
 
 void TemplateAdjustActivity::init()
 {
-	auto temp = reinterpret_cast<Template*>(activity_object);
-	
-	dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
+	auto* dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
 	widget = new TemplateAdjustWidget(temp, controller, dock);
 	dock->setWidget(widget);
 	dock->setObjectName(QStringLiteral("TemplateAdjust"));
 	controller->addFloatingDockWidget(dock);
+	dock->show();
+	dock->raise();
+	connect(this, &QObject::destroyed, dock, &QObject::deleteLater);
 }
 
 void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
 {
-	auto temp = reinterpret_cast<Template*>(activity_object);
 	bool adjusted = temp->isAdjustmentApplied();
     
 	for (int i = 0; i < temp->getNumPassPoints(); ++i)
@@ -148,19 +149,21 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 	return true;
 }
 
-void TemplateAdjustActivity::templateChanged(int index, const Template* temp)
+
+// slot
+void TemplateAdjustActivity::templateChanged(int /*index*/, const Template* temp)
 {
-	Q_UNUSED(index);
-	if (static_cast<Template*>(activity_object) == temp)
+	if (this->temp == temp)
 	{
 		widget->updateDirtyRect(true);
 		widget->updateAllRows();
 	}
 }
-void TemplateAdjustActivity::templateDeleted(int index, const Template* temp)
+
+// slot
+void TemplateAdjustActivity::templateAboutToBeDeleted(int /*index*/, const Template* temp)
 {
-	Q_UNUSED(index);
-	if (static_cast<Template*>(activity_object) == temp)
+	if (this->temp == temp)
 		controller->setEditorActivity(nullptr);
 }
 
