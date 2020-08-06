@@ -54,22 +54,25 @@ TemplateAdjustActivity::TemplateAdjustActivity(Template* temp, MapEditorControll
 , controller(controller)
 {
 	connect(controller->getMap(), &Map::templateChanged, this, &TemplateAdjustActivity::templateChanged);
-	connect(controller->getMap(), &Map::templateDeleted, this, &TemplateAdjustActivity::templateDeleted);
+	connect(controller->getMap(), &Map::templateAboutToBeDeleted, this, &TemplateAdjustActivity::templateAboutToBeDeleted);
 }
 
 TemplateAdjustActivity::~TemplateAdjustActivity()
 {
-	widget->stopTemplateAdjust();
-	delete dock;
+	if (widget)
+		widget->stopTemplateAdjust();
 }
 
 void TemplateAdjustActivity::init()
 {
-	dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
+	auto* dock = new TemplateAdjustDockWidget(tr("Template adjustment"), controller, controller->getWindow());
 	widget = new TemplateAdjustWidget(temp, controller, dock);
 	dock->setWidget(widget);
 	dock->setObjectName(QStringLiteral("TemplateAdjust"));
 	controller->addFloatingDockWidget(dock);
+	dock->show();
+	dock->raise();
+	connect(this, &QObject::destroyed, dock, &QObject::deleteLater);
 }
 
 void TemplateAdjustActivity::draw(QPainter* painter, MapWidget* widget)
@@ -146,6 +149,8 @@ bool TemplateAdjustActivity::calculateTemplateAdjust(Template* temp, TemplateTra
 	return true;
 }
 
+
+// slot
 void TemplateAdjustActivity::templateChanged(int /*index*/, const Template* temp)
 {
 	if (this->temp == temp)
@@ -154,7 +159,9 @@ void TemplateAdjustActivity::templateChanged(int /*index*/, const Template* temp
 		widget->updateAllRows();
 	}
 }
-void TemplateAdjustActivity::templateDeleted(int /*index*/, const Template* temp)
+
+// slot
+void TemplateAdjustActivity::templateAboutToBeDeleted(int /*index*/, const Template* temp)
 {
 	if (this->temp == temp)
 		controller->setEditorActivity(nullptr);

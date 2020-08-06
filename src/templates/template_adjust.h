@@ -68,23 +68,20 @@ public:
 	void init() override;
 	void draw(QPainter* painter, MapWidget* widget) override;
 	
-	inline TemplateAdjustDockWidget* getDockWidget() const {return dock;}
-	
 	static void drawCross(QPainter* painter, const QPoint& midpoint, QColor color);
 	static int findHoverPoint(Template* temp, const QPoint& mouse_pos, MapWidget* widget, bool& point_src);
 	static bool calculateTemplateAdjust(Template* temp, TemplateTransform& out, QWidget* dialog_parent);
 	
 	static float cross_radius;
 	
-public slots:
+protected:
 	void templateChanged(int index, const OpenOrienteering::Template* temp);
-	void templateDeleted(int index, const OpenOrienteering::Template* temp);
+	void templateAboutToBeDeleted(int index, const OpenOrienteering::Template* temp);
 	
 private:
 	Template* temp;
-	TemplateAdjustDockWidget* dock;
-	TemplateAdjustWidget* widget;
 	MapEditorController* controller;
+	TemplateAdjustWidget* widget = nullptr;
 };
 
 /** Custom QDockWidget which closes the assigned activity when it is closed */
