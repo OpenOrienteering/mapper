@@ -9865,37 +9865,37 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Undergrowth: slow running</source>
         <comment>Name of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>灌木丛：可缓慢通过</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>Forest: difficult to run</source>
         <comment>Name of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>森林：奔跑困难</translation>
     </message>
     <message>
         <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
         <comment>Description of symbol 408</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
     </message>
     <message>
         <source>Undergrowth: difficult to run</source>
         <comment>Name of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>灌木丛：难以奔跑</translation>
     </message>
     <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 409</comment>
-        <translation type="unfinished"></translation>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>Vegetation: very difficult to run, impassable</source>
         <comment>Name of symbol 410</comment>
-        <translation type="unfinished"></translation>
+        <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
