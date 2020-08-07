@@ -36,7 +36,6 @@
 #include "core/map.h"
 #include "core/map_coord.h"
 #include "gui/util_gui.h"
-#include "templates/template.h"
 
 
 namespace OpenOrienteering {
@@ -90,15 +89,7 @@ StretchMapDialog::StretchMapDialog(const Map& map, double stretch_factor, QWidge
 	layout->addRow(adjust_georeferencing_check);
 	
 	adjust_templates_check = new QCheckBox(tr("Scale non-georeferenced templates"));
-	bool have_non_georeferenced_template = false;
-	for (int i = 0; i < map.getNumTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map.getTemplate(i)->isTemplateGeoreferenced();
-	for (int i = 0; i < map.getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map.getClosedTemplate(i)->isTemplateGeoreferenced();
-	if (have_non_georeferenced_template)
-		adjust_templates_check->setChecked(true);
-	else
-		adjust_templates_check->setEnabled(false);
+	adjust_templates_check->setChecked(true);
 	layout->addRow(adjust_templates_check);
 	
 	
