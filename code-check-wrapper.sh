@@ -82,7 +82,9 @@ for I in \
   print_widget.cpp \
   renderable.cpp \
   renderable_implementation.cpp \
+  rotate_map_dialog.cpp \
   settings_dialog.cpp \
+  stretch_map_dialog.cpp \
   style_t.cpp \
   /symbol.cpp \
   symbol_replacement.cpp \

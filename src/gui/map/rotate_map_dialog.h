@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2019, 2020 Kai Pastor
+ *    Copyright 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -19,17 +19,20 @@
  */
 
 
-#ifndef OPENORIENTEERING_MAP_DIALOG_STRETCH_H
-#define OPENORIENTEERING_MAP_DIALOG_STRETCH_H
+#ifndef OPENORIENTEERING_ROTATE_MAP_DIALOG_H
+#define OPENORIENTEERING_ROTATE_MAP_DIALOG_H
 
+#include <functional>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
-class QSpinBox;
-class QCheckBox;
-class QPushButton;
-class QRadioButton;
 class QDoubleSpinBox;
+class QCheckBox;
+class QRadioButton;
 class QWidget;
 
 namespace OpenOrienteering {
@@ -38,21 +41,37 @@ class Map;
 
 
 /**
- * Dialog for stretching or shrinking the whole map.
+ * Dialog for rotating the whole map around a point.
  */
-class StretchMapDialog : public QDialog
+class RotateMapDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/** Creates a new StretchMapDialog. */
-	StretchMapDialog(QWidget* parent, Map* map, double stretch_factor);
-
+	using RotationOp = std::function<void (Map&)>;
+	
+	/** Creates a new RotateMapDialog. */
+	RotateMapDialog(const Map& map, QWidget* parent = nullptr, Qt::WindowFlags f = {});
+	
+	/** Sets the rotation angle in degrees in the corresponding widget. */
+	void setRotationDegrees(double rotation);
+	/** Enables the setting to rotate around the georeferencing reference point. */
+	void setRotateAroundGeorefRefPoint();
+	/** Checks or unchecks the setting to adjust the georeferencing declination. */
+	void setAdjustDeclination(bool adjust);
+	/** Sets the visibility of the setting to adjust the georeferencing declination. */
+	void showAdjustDeclination(bool show);
+	
+	/** Performs the configured rotation on the given map. */
+	void rotate(Map& map) const;
+	
+	/** Returns a rotation functor. */
+	Q_REQUIRED_RESULT RotationOp makeRotation() const;
+	
 private slots:
 	void updateWidgets();
-	void okClicked();
 	
 private:
-	const double stretch_factor;
+	QDoubleSpinBox* rotation_edit;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;
@@ -60,10 +79,8 @@ private:
 	QDoubleSpinBox* other_y_edit;
 	
 	QCheckBox* adjust_georeferencing_check;
+	QCheckBox* adjust_declination_check;
 	QCheckBox* adjust_templates_check;
-	QPushButton* ok_button;
-	
-	Map* map;
 };
 
 

@@ -118,11 +118,11 @@
 #include "gui/print_widget.h"
 #include "gui/text_browser_dialog.h"
 #include "gui/util_gui.h"
-#include "gui/map/map_dialog_rotate.h"
 #include "gui/map/map_dialog_scale.h"
 #include "gui/map/map_editor_activity.h"
 #include "gui/map/map_find_feature.h"
 #include "gui/map/map_widget.h"
+#include "gui/map/rotate_map_dialog.h"
 #include "gui/symbols/symbol_replacement.h"
 #include "gui/widgets/action_grid_bar.h"
 #include "gui/widgets/color_list_widget.h"
@@ -2111,9 +2111,10 @@ void MapEditorController::scaleMapClicked()
 
 void MapEditorController::rotateMapClicked()
 {
-	RotateMapDialog dialog(window, map);
+	RotateMapDialog dialog(*map, window);
 	dialog.setWindowModality(Qt::WindowModal);
-	dialog.exec();
+	if (dialog.exec() == QDialog::Accepted)
+		dialog.rotate(*map);
 }
 
 void MapEditorController::mapNotesClicked()

@@ -153,13 +153,13 @@ set(Mapper_Common_SRCS
   gui/util_gui.cpp
   
   gui/map/new_map_dialog.cpp
-  gui/map/map_dialog_rotate.cpp
   gui/map/map_dialog_scale.cpp
-  gui/map/map_dialog_stretch.cpp
   gui/map/map_editor.cpp
   gui/map/map_editor_activity.cpp
   gui/map/map_find_feature.cpp
   gui/map/map_widget.cpp
+  gui/map/rotate_map_dialog.cpp
+  gui/map/stretch_map_dialog.cpp
   
   gui/symbols/area_symbol_settings.cpp
   gui/symbols/combined_symbol_settings.cpp
