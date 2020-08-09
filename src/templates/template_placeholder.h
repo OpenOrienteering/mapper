@@ -41,7 +41,7 @@ class Map;
 
 
 /**
- * Placeholder for templates which are not loaded regularly.
+ * Placeholder for templates which are not loaded regularly/immediately.
  */
 class TemplatePlaceholder : public Template
 {
@@ -63,9 +63,18 @@ public:
 	std::unique_ptr<Template> makeActualTemplate() const;
 	
 	
+	/** Always returns true. The placeholder doesn't know the actual property. */
 	bool isRasterGraphics() const override;
 	
-    void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
+	/** Does nothing. */
+	void drawTemplate(QPainter* painter, const QRectF& clip_rect, double scale, bool on_screen, qreal opacity) const override;
+	
+	
+	/** Does nothing. */
+	void setTemplateAreaDirty() override;
+	
+	/** As the actual extent is unknown, returns an very large rectangle. */
+	QRectF getTemplateExtent() const override;
 	
 	
 protected:

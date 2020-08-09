@@ -28,6 +28,8 @@
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
+#include <util/util.h>
+
 // IWYU pragma: no_include <qxmlstream.h>
 
 namespace OpenOrienteering {
@@ -125,6 +127,16 @@ bool TemplatePlaceholder::isRasterGraphics() const
 
 void TemplatePlaceholder::drawTemplate(QPainter* /*painter*/, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, qreal /*opacity*/) const
 {}
+
+
+void TemplatePlaceholder::setTemplateAreaDirty()
+{}
+
+QRectF TemplatePlaceholder::getTemplateExtent() const
+{
+	return infiniteRectF();
+}
+
 
 void TemplatePlaceholder::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {
