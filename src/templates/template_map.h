@@ -101,6 +101,12 @@ protected:
 	
 	void setTemplateMap(std::unique_ptr<Map>&& map);
 	
+	
+	void reloadLater();
+	
+	void reload();
+	
+	
 	void calculateTransformation();
 	
 public:
@@ -126,6 +132,7 @@ public:
 	
 private:
 	std::unique_ptr<Map> template_map;
+	bool reload_pending = false;
 	
 	static QStringList locked_maps;
 };

@@ -92,12 +92,6 @@ public:
 	
 	bool postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view) override;
 	
-protected:
-	void reloadLater();
-	
-protected slots:
-	void reload();
-	
 	void applySettings();
 	
 protected:
@@ -121,7 +115,6 @@ private:
 	bool explicit_georef_pending      { false };  //  transient
 	bool use_real_coords              { true };   //  transient
 	bool center_in_view               { false };  //  transient
-	bool reload_pending               { false };  //  transient
 };
 
 
