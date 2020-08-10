@@ -33,7 +33,6 @@
 #include <QPoint>
 #include <QPointF>
 #include <QStringRef>
-#include <QTimer>
 #include <QTransform>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
@@ -52,11 +51,6 @@
 #include "templates/template.h"
 #include "templates/template_positioning_dialog.h"
 #include "templates/template_track.h"
-
-
-#ifdef __clang_analyzer__
-#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT
-#endif
 
 
 namespace OpenOrienteering {
@@ -145,7 +139,6 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 , template_track_compatibility(proto.template_track_compatibility)
 , use_real_coords(proto.use_real_coords)
 , center_in_view(proto.center_in_view)
-, reload_pending(proto.reload_pending)
 {
 	if (proto.explicit_georef)
 		explicit_georef = std::make_unique<Georeferencing>(*proto.explicit_georef);
@@ -458,26 +451,6 @@ void OgrTemplate::mapTransformationChanged()
 		explicit_georef = std::move(map_configuration_georef);
 		resetTemplatePositionOffset();
 	}
-}
-
-
-
-void OgrTemplate::reloadLater()
-{
-	if (reload_pending)
-		return;
-	if (template_state == Loaded)
-		templateMap()->clear(); // no expensive operations before reloading
-	QTimer::singleShot(0, this, &OgrTemplate::reload);
-	reload_pending = true;
-}
-
-void OgrTemplate::reload()
-{
-	if (template_state == Loaded)
-		unloadTemplateFile();
-	loadTemplateFile();
-	reload_pending = false;
 }
 
 

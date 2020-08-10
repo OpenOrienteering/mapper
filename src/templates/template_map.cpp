@@ -29,6 +29,7 @@
 #include <QPainter>
 #include <QRectF>
 #include <QStringList>
+#include <QTimer>
 #include <QTransform>
 #include <QVariant>
 
@@ -42,6 +43,11 @@
 #include "gui/util_gui.h"
 #include "util/transformation.h"
 #include "util/util.h"
+
+
+#ifdef __clang_analyzer__
+#define singleShot(A, B, C) singleShot(A, B, #C) // NOLINT
+#endif
 
 
 namespace OpenOrienteering {
@@ -227,6 +233,27 @@ void TemplateMap::setTemplateMap(std::unique_ptr<Map>&& map)
 {
 	template_map = std::move(map);
 }
+
+
+void TemplateMap::reloadLater()
+{
+	if (reload_pending)
+		return;
+	if (template_state == Loaded)
+		templateMap()->clear(); // no expensive operations before reloading
+	QTimer::singleShot(0, this, &TemplateMap::reload);
+	reload_pending = true;
+}
+
+// slot
+void TemplateMap::reload()
+{
+	if (template_state == Loaded)
+		unloadTemplateFile();
+	loadTemplateFile();
+	reload_pending = false;
+}
+
 
 void TemplateMap::calculateTransformation()
 {
