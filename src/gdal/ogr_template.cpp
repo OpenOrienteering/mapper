@@ -134,7 +134,7 @@ OgrTemplate::OgrTemplate(const QString& path, Map* map)
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapTransformationChanged);
+	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapProjectionChanged);
 	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
 }
 
@@ -155,7 +155,7 @@ OgrTemplate::OgrTemplate(const OgrTemplate& proto)
 	connect(&Settings::getInstance(), &Settings::settingsChanged, this, &OgrTemplate::applySettings);
 	
 	const Georeferencing& georef = map->getGeoreferencing();
-	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapTransformationChanged);
+	connect(&georef, &Georeferencing::projectionChanged, this, &OgrTemplate::mapProjectionChanged);
 	connect(&georef, &Georeferencing::transformationChanged, this, &OgrTemplate::mapTransformationChanged);
 }
 
