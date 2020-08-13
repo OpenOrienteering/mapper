@@ -42,6 +42,10 @@ class Map;
 
 /**
  * Placeholder for templates which are not loaded regularly/immediately.
+ * 
+ * This class can be used e.g. by file format implementations to setup template
+ * configuration without binding early to a particular template implementation
+ * class.
  */
 class TemplatePlaceholder : public Template
 {
@@ -60,6 +64,22 @@ public:
 	const char* getTemplateType() const override;
 	
 	
+	/**
+	 * Create the instance of the actual template implementation class.
+	 * 
+	 * This function can be called as soon as the template configuration is
+	 * complete and the template path is validated, so that the contents of
+	 * the template resource can be taken into account for choosing a template
+	 * implementation class.
+	 * 
+	 * In addition to the regular configuration which is passed via XML, this
+	 * function also copies all dynamic `property` values from the placeholder
+	 * QObject to the actual template implementation object. This can be used
+	 * to set additional configuration hints. However, these properties are
+	 * copied only after finishing XML configuration. It is possible to pick
+	 * them up at data loading time, or by watching out for
+	 * QDynamicPropertyChangeEvent.
+	 */
 	std::unique_ptr<Template> makeActualTemplate() const;
 	
 	

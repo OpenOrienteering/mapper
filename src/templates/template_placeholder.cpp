@@ -23,8 +23,10 @@
 #include <utility>
 
 #include <QByteArray>
+#include <QList>
 #include <QRectF>
 #include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
 
@@ -117,7 +119,15 @@ std::unique_ptr<Template> TemplatePlaceholder::makeActualTemplate() const
 	}
 	QXmlStreamReader reader(buffer);
 	reader.readNextStartElement();  // <template ...>
-	return Template::loadTemplateConfiguration(reader, *map, maybe_open);
+	
+	auto actual_template = Template::loadTemplateConfiguration(reader, *map, maybe_open);
+	if (actual_template)
+	{
+		auto const property_names = dynamicPropertyNames();
+		for (auto const& name : property_names)
+			actual_template->setProperty(name, property(name));
+	}
+	return actual_template;
 }
 
 bool TemplatePlaceholder::isRasterGraphics() const
