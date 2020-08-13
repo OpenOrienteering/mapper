@@ -2134,7 +2134,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="443"/>
         <source>The magnetic declination for the reference point %1° %2° will now be retrieved from &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Do you want to continue?</source>
-        <translation>Misvisning for referansepunktet  %1° %2° vil nå hentes fra &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Vil du fortsette?</translation>
+        <translation>Misvisning for referansepunktet %1° %2° vil nå hentes fra &lt;a href=&quot;%3&quot;&gt;%3&lt;/a&gt;. Vil du fortsette?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="524"/>
@@ -2144,7 +2144,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="524"/>
         <source>The declination has been changed. Do you want to rotate the map content accordingly, too?</source>
-        <translation>Misvisningen  er endret. Vil du rotere kartinnholdet tilsvarende?</translation>
+        <translation>Misvisningen er endret. Vil du rotere kartinnholdet tilsvarende?</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="549"/>
@@ -5835,7 +5835,7 @@ rull musehjulet for å zoome.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="911"/>
         <source>Unable to import template: &quot;%1&quot; is not a supported template type.</source>
-        <translation>Klarte ikke å importere bakgrunnsbilde &quot;%1&quot; er ikke en støttet  bildetype.</translation>
+        <translation>Klarte ikke å importere bakgrunnsbilde: &quot;%1&quot; er ikke en støttet bildetype.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="1229"/>
@@ -7301,7 +7301,7 @@ separations</source>
     <message>
         <location filename="../src/core/storage_location.cpp" line="311"/>
         <source>&apos;%1&apos; is not writable. Changes cannot be saved.</source>
-        <translation>«%1&apos;» er ikke skrivebar.  Endringer kan ikke lagres.</translation>
+        <translation>«%1» er ikke skrivebar. Endringer kan ikke lagres.</translation>
     </message>
     <message>
         <location filename="../src/core/storage_location.cpp" line="314"/>
