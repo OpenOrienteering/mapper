@@ -103,6 +103,27 @@ protected:
 	
 	void calculateTransformation();
 	
+public:
+	/**
+	 * Returns the template transformation for a pure OCD configuration.
+	 * 
+	 * OCD templates in OCD files must use the map's scale and georeferencing.
+	 * Only the template file's grid parameters are taken into account, i.e.
+	 * the template OCD file must be loaded in order to get this transform.
+	 * 
+	 * If template_map is null (i.e. the template is not in loaded state), this
+	 * function returns the current transformation.
+	 */
+	TemplateTransform transformForOcd() const;
+	
+	/**
+	 * The name of the QObject property which activates a pure OCD transformation.
+	 * 
+	 * When this property is set for a TemplateMap, it applies transformForOCD()
+	 * upon first loading of the file, and resets the property after loading.
+	 */
+	static const char* ocdTransformProperty();
+	
 private:
 	std::unique_ptr<Map> template_map;
 	
