@@ -23,10 +23,14 @@
 #include <utility>
 
 #include <QByteArray>
+#include <QList>
 #include <QRectF>
 #include <QStringRef>
+#include <QVariant>
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+
+#include <util/util.h>
 
 // IWYU pragma: no_include <qxmlstream.h>
 
@@ -115,7 +119,15 @@ std::unique_ptr<Template> TemplatePlaceholder::makeActualTemplate() const
 	}
 	QXmlStreamReader reader(buffer);
 	reader.readNextStartElement();  // <template ...>
-	return Template::loadTemplateConfiguration(reader, *map, maybe_open);
+	
+	auto actual_template = Template::loadTemplateConfiguration(reader, *map, maybe_open);
+	if (actual_template)
+	{
+		auto const property_names = dynamicPropertyNames();
+		for (auto const& name : property_names)
+			actual_template->setProperty(name, property(name));
+	}
+	return actual_template;
 }
 
 bool TemplatePlaceholder::isRasterGraphics() const
@@ -125,6 +137,16 @@ bool TemplatePlaceholder::isRasterGraphics() const
 
 void TemplatePlaceholder::drawTemplate(QPainter* /*painter*/, const QRectF& /*clip_rect*/, double /*scale*/, bool /*on_screen*/, qreal /*opacity*/) const
 {}
+
+
+void TemplatePlaceholder::setTemplateAreaDirty()
+{}
+
+QRectF TemplatePlaceholder::getTemplateExtent() const
+{
+	return infiniteRectF();
+}
+
 
 void TemplatePlaceholder::saveTypeSpecificTemplateConfiguration(QXmlStreamWriter& xml) const
 {

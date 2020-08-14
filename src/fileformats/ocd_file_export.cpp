@@ -32,6 +32,7 @@
 #include <type_traits>
 #include <vector>
 
+#include <Qt>
 #include <QtGlobal>
 #include <QtMath>
 #include <QFileInfo>
@@ -40,6 +41,7 @@
 #include <QIODevice>
 #include <QLatin1Char>
 #include <QLatin1String>
+#include <QObject>
 #include <QPoint>
 #include <QPointF>
 #include <QRectF>
@@ -80,6 +82,7 @@
 #include "fileformats/ocd_types_v11.h"  // IWYU pragma: keep
 #include "fileformats/ocd_types_v12.h"  // IWYU pragma: keep
 #include "templates/template.h"
+#include "templates/template_map.h"
 #include "util/encoding.h"
 #include "util/util.h"
 
@@ -535,7 +538,7 @@ QString stringForSpotColor(int i, const MapColor& color)
 
 /// String 8: background map (aka template)
 /// \todo Unify implementation, or use specialization.
-QString stringForTemplate(const Template& temp, const MapView* view, const MapCoord& area_offset, quint16 version)
+QString stringForTemplate(const Template& temp, const MapView* view, const MapCoord& area_offset, quint16 version, Exporter& exporter)
 {
 	auto const visibility = view ? view->getTemplateVisibility(&temp) : TemplateVisibility{};
 	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
@@ -552,13 +555,31 @@ QString stringForTemplate(const Template& temp, const MapView* view, const MapCo
 	QTextStream out(&string_8, QIODevice::Append);
 	out << template_path
 	    << "\ts" << s;
+	if (version >= 10)
+		out << "\tr1";	// visible in background favourites;
+	
 	// The order of the following parameters may not matter,
 	// but choosing the most frequent form may ease testing.
-	if (version >= 11)
+	
+	TemplateMap const* ocd_template = nullptr;
+	if (template_path.endsWith(QLatin1String(".ocd"), Qt::CaseInsensitive))
+		ocd_template = qobject_cast<TemplateMap const*>(&temp);
+	
+	if (ocd_template)
+	{
+		// OCD templates must use the map's scale and georeferencing.
+		TemplateTransform effective_transform;
+		ocd_template->getTransform(effective_transform);
+		if (ocd_template->transformForOcd() != effective_transform)
+		{
+			exporter.addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
+			                    .arg(temp.getTemplateFilename()));
+		}
+	}
+	else if (version >= 11)
 	{
 		// Parameter 'r' (and 's') changed meaning in version 11
-		out << "\tr1"	// visible in background favourites
-		    << qSetRealNumberPrecision(10)
+		out << qSetRealNumberPrecision(10)
 		    << "\tu" << temp.getTemplateScaleX()
 		    << "\tv" << temp.getTemplateScaleY()
 		    << qSetRealNumberPrecision(6)
@@ -573,8 +594,7 @@ QString stringForTemplate(const Template& temp, const MapView* view, const MapCo
 	}
 	else if (version == 10)
 	{
-		out << "\tr1"	// visible in background favourites
-		    << qSetRealNumberPrecision(6)
+		out << qSetRealNumberPrecision(6)
 		    << "\tx" << x
 		    << "\ty" << y
 		    << qSetRealNumberPrecision(8)
@@ -2664,7 +2684,7 @@ void OcdFileExport::exportTemplates()
 			}
 		}
 		
-		addParameterString(8, stringForTemplate(*temp, view, area_offset, ocd_version));
+		addParameterString(8, stringForTemplate(*temp, view, area_offset, ocd_version, *this));
 	}
 }
 

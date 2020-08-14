@@ -102,6 +102,15 @@ bool TemplateMap::loadTemplateFileImpl()
 	if (new_template_valid)
 	{
 		template_map = std::move(new_template_map);
+		
+		if (property(ocdTransformProperty()).toBool())
+		{
+			// Update the transformation without signalling dirty state.
+			transform = transformForOcd();
+			updateTransformationMatrices();
+			setTemplateAreaDirty();
+			setProperty(ocdTransformProperty(), false);
+		}
 	}
 	else if (importer)
 	{
@@ -245,6 +254,25 @@ void TemplateMap::calculateTransformation()
 		qDebug("updateTransform() failed");
 		/// \todo proper error message
 	}
+}
+
+
+TemplateTransform TemplateMap::transformForOcd() const
+{
+	auto t = transform;
+	if (templateMap())
+	{
+		auto const template_origin = templateMap()->getGeoreferencing().toProjectedCoords(MapCoordF{});
+		auto const offset = getMap()->getGeoreferencing().toMapCoords(template_origin);
+		t = {offset.nativeX(), offset.nativeY()};
+	}
+	return t;
+}
+
+const char* TemplateMap::ocdTransformProperty()
+{
+	static const char* name = "TemplateMap::transformForOcd";
+	return name;
 }
 
 
