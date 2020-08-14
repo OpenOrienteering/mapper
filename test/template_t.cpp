@@ -157,6 +157,14 @@ private slots:
 		QCOMPARE(temp->getTemplateFilename(), QString::fromLatin1("world-file.png"));
 		QVERIFY(temp->isTemplateGeoreferenced());
 		
+		QVERIFY(temp->getTemplateState() != Template::Invalid);
+		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("world-file.png"));
+		QCOMPARE(temp->getTemplateRelativePath(nullptr), QStringLiteral("world-file.png"));
+		auto base_dir = QDir(QStringLiteral("testdata:templates"));
+		QCOMPARE(temp->getTemplateRelativePath(&base_dir), QStringLiteral("world-file.png"));
+		base_dir.cdUp();
+		QCOMPARE(temp->getTemplateRelativePath(&base_dir), QStringLiteral("templates/world-file.png"));
+		
 		map.loadTemplateFiles(view);
 		QCOMPARE(temp->getTemplateState(), Template::Loaded);
 		auto rotation_template = 0.01 * qRound(100 * qRadiansToDegrees(temp->getTemplateRotation()));
@@ -196,6 +204,12 @@ private slots:
 		QCOMPARE(temp->getTemplatePath(), QStringLiteral("world-file.png"));
 		QCOMPARE(temp->getTemplateRelativePath(), QStringLiteral("world-file.png"));
 		QCOMPARE(temp->getTemplateState(), Template::Invalid);
+		
+		QCOMPARE(temp->getTemplateRelativePath(nullptr), QStringLiteral("world-file.png"));
+		auto base_dir = QDir(QStringLiteral("testdata:templates"));
+		QCOMPARE(temp->getTemplateRelativePath(&base_dir), QStringLiteral("world-file.png"));
+		base_dir.cdUp();
+		QCOMPARE(temp->getTemplateRelativePath(&base_dir), QStringLiteral("world-file.png"));
 		
 		QBuffer out_buffer;
 		QVERIFY(out_buffer.open(QIODevice::WriteOnly));
