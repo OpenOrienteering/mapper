@@ -536,119 +536,6 @@ QString stringForSpotColor(int i, const MapColor& color)
 
 
 
-/// String 8: background map (aka template)
-/// \todo Unify implementation, or use specialization.
-QString stringForTemplate(const Template& temp, const MapView* view, const MapCoord& area_offset, quint16 version, Exporter& exporter)
-{
-	auto const visibility = view ? view->getTemplateVisibility(&temp) : TemplateVisibility{};
-	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
-	const auto s = visibility.visible ? '1' : '0';
-	
-	auto template_path = temp.getTemplatePath();
-	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
-	
-	const auto x = (temp.getTemplateX() - area_offset.nativeX()) / 1000.0;
-	const auto y = (temp.getTemplateY() - area_offset.nativeY()) / -1000.0;
-	const auto ab = qRadiansToDegrees(temp.getTemplateRotation());
-	
-	QString string_8;
-	QTextStream out(&string_8, QIODevice::Append);
-	out << template_path
-	    << "\ts" << s;
-	if (version >= 10)
-		out << "\tr1";	// visible in background favourites;
-	
-	// The order of the following parameters may not matter,
-	// but choosing the most frequent form may ease testing.
-	
-	TemplateMap const* ocd_template = nullptr;
-	if (template_path.endsWith(QLatin1String(".ocd"), Qt::CaseInsensitive))
-		ocd_template = qobject_cast<TemplateMap const*>(&temp);
-	
-	if (ocd_template)
-	{
-		// OCD templates must use the map's scale and georeferencing.
-		TemplateTransform effective_transform;
-		ocd_template->getTransform(effective_transform);
-		if (ocd_template->transformForOcd() != effective_transform)
-		{
-			exporter.addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
-			                    .arg(temp.getTemplateFilename()));
-		}
-	}
-	else if (version >= 11)
-	{
-		// Parameter 'r' (and 's') changed meaning in version 11
-		out << qSetRealNumberPrecision(10)
-		    << "\tu" << temp.getTemplateScaleX()
-		    << "\tv" << temp.getTemplateScaleY()
-		    << qSetRealNumberPrecision(6)
-		    << "\tx" << x
-		    << "\ty" << y
-		    << qSetRealNumberPrecision(8)
-		    << "\ta" << ab
-		    << "\tb" << ab
-		    // Random order: d [ q t ]
-		    << "\td" << d
-		    ;
-	}
-	else if (version == 10)
-	{
-		out << qSetRealNumberPrecision(6)
-		    << "\tx" << x
-		    << "\ty" << y
-		    << qSetRealNumberPrecision(8)
-		    << "\ta" << ab
-		    << "\tb" << ab
-		    // Data may end here.
-		    << qSetRealNumberPrecision(10)
-		    << "\tu" << temp.getTemplateScaleX()
-		    << "\tv" << temp.getTemplateScaleY()
-		    // Data may end here.
-		    // optional: t, q, d
-		    << "\td" << d
-		    ;
-	}
-	else if (version == 9)
-	{
-		// Parameters 'x'/'y', 'u'/'v' and 'p' changed domain in version 9
-		out << qSetRealNumberPrecision(6)
-		    << "\tx" << x
-		    << "\ty" << y
-		    << qSetRealNumberPrecision(8)
-		    << "\ta" << ab
-		    << qSetRealNumberPrecision(10)
-		    << "\tu" << temp.getTemplateScaleX()
-		    << "\tv" << temp.getTemplateScaleY()
-		    << "\td" << d
-		    << "\tp"
-		    << "\tt0"
-		    << "\to0"
-		    << qSetRealNumberPrecision(6) // less precision than 'a', indeed!
-		    << "\tb" << ab
-		    ;
-	}
-	else
-	{
-		// Data may end here (i.e. after 's'; spotted for OCD file)
-		out << "\tx" << qRound(100 * x)
-		    << "\ty" << qRound(100 * y)
-		    << qSetRealNumberPrecision(8)
-		    << "\ta" << ab
-		    << qSetRealNumberPrecision(10)
-		    << "\tu" << 100 * temp.getTemplateScaleX()
-		    << "\tv" << 100 * temp.getTemplateScaleY()
-		    << "\td" << d
-		    << "\tp-1"
-		    << "\tt0"
-		    << "\to0"
-		    ;
-		// Alternative observation: s, x, y, u, v, a
-	}
-	return string_8;
-}
-
-
 /// String 1030: view
 QString stringForViewPar(const MapView& view, const MapCoord& area_offset, quint16 version)
 {
@@ -2684,8 +2571,120 @@ void OcdFileExport::exportTemplates()
 			}
 		}
 		
-		addParameterString(8, stringForTemplate(*temp, view, area_offset, ocd_version, *this));
+		addParameterString(8, stringForTemplate(*temp, area_offset));
 	}
+}
+
+
+/// String 8: background map (aka template)
+QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& area_offset)
+{
+	auto const visibility = view ? view->getTemplateVisibility(&temp) : TemplateVisibility{};
+	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
+	const auto s = visibility.visible ? '1' : '0';
+	
+	auto template_path = temp.getTemplatePath();
+	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
+	
+	const auto x = (temp.getTemplateX() - area_offset.nativeX()) / 1000.0;
+	const auto y = (temp.getTemplateY() - area_offset.nativeY()) / -1000.0;
+	const auto ab = qRadiansToDegrees(temp.getTemplateRotation());
+	
+	QString string_8;
+	QTextStream out(&string_8, QIODevice::Append);
+	out << template_path
+	    << "\ts" << s;
+	if (ocd_version >= 10)
+		out << "\tr1";	// visible in background favourites;
+	
+	// The order of the following parameters may not matter,
+	// but choosing the most frequent form may ease testing.
+	
+	TemplateMap const* ocd_template = nullptr;
+	if (template_path.endsWith(QLatin1String(".ocd"), Qt::CaseInsensitive))
+		ocd_template = qobject_cast<TemplateMap const*>(&temp);
+	
+	if (ocd_template)
+	{
+		// OCD templates must use the map's scale and georeferencing.
+		TemplateTransform effective_transform;
+		ocd_template->getTransform(effective_transform);
+		if (ocd_template->transformForOcd() != effective_transform)
+		{
+			addWarning(::OpenOrienteering::OcdFileExport::tr("Cannot save custom positioning of template '%1'.")
+			           .arg(temp.getTemplateFilename()));
+		}
+	}
+	else if (ocd_version >= 11)
+	{
+		// Parameter 'r' (and 's') changed meaning in version 11
+		out << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << "\tb" << ab
+		    // Random order: d [ q t ]
+		    << "\td" << d
+		    ;
+	}
+	else if (ocd_version == 10)
+	{
+		out << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << "\tb" << ab
+		    // Data may end here.
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    // Data may end here.
+		    // optional: t, q, d
+		    << "\td" << d
+		    ;
+	}
+	else if (ocd_version == 9)
+	{
+		// Parameters 'x'/'y', 'u'/'v' and 'p' changed domain in version 9
+		out << qSetRealNumberPrecision(6)
+		    << "\tx" << x
+		    << "\ty" << y
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << temp.getTemplateScaleX()
+		    << "\tv" << temp.getTemplateScaleY()
+		    << "\td" << d
+		    << "\tp"
+		    << "\tt0"
+		    << "\to0"
+		    << qSetRealNumberPrecision(6) // less precision than 'a', indeed!
+		    << "\tb" << ab
+		    ;
+	}
+	else
+	{
+		// Data may end here (i.e. after 's'; spotted for OCD file)
+		out << "\tx" << qRound(100 * x)
+		    << "\ty" << qRound(100 * y)
+		    << qSetRealNumberPrecision(8)
+		    << "\ta" << ab
+		    << qSetRealNumberPrecision(10)
+		    << "\tu" << 100 * temp.getTemplateScaleX()
+		    << "\tv" << 100 * temp.getTemplateScaleY()
+		    << "\td" << d
+		    << "\tp-1"
+		    << "\tt0"
+		    << "\to0"
+		    ;
+		// Alternative observation: s, x, y, u, v, a
+	}
+	return string_8;
 }
 
 
