@@ -278,6 +278,8 @@ protected:
 	
 	QString stringForTemplate(const Template& temp, const MapCoord& area_offset);
 	
+	QString pathForTemplate(const Template& temp) const;
+	
 	
 	template< class Format >
 	void exportExtras(OcdFile<Format>& file);

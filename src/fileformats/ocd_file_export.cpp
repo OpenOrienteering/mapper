@@ -35,6 +35,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QDir>
 #include <QFileInfo>
 #include <QFlags>
 #include <QFontMetricsF>
@@ -2583,8 +2584,7 @@ QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& a
 	const auto d = qBound(0, 100 - qRound(100 * visibility.opacity), 100);
 	const auto s = visibility.visible ? '1' : '0';
 	
-	auto template_path = temp.getTemplatePath();
-	template_path.replace(QLatin1Char('/'), QLatin1Char('\\'));
+	auto const template_path = pathForTemplate(temp);
 	
 	const auto x = (temp.getTemplateX() - area_offset.nativeX()) / 1000.0;
 	const auto y = (temp.getTemplateY() - area_offset.nativeY()) / -1000.0;
@@ -2685,6 +2685,16 @@ QString OcdFileExport::stringForTemplate(const Template& temp, const MapCoord& a
 		// Alternative observation: s, x, y, u, v, a
 	}
 	return string_8;
+}
+
+QString OcdFileExport::pathForTemplate(const Template& temp) const
+{
+	auto map_dir = QFileInfo(path).dir();
+	auto path = temp.getTemplateRelativePath(&map_dir);
+	if (path.isEmpty() || path.contains(QLatin1Char('/')))
+		path = temp.getTemplatePath();
+	path.replace(QLatin1Char('/'), QLatin1Char('\\'));
+	return path;
 }
 
 
