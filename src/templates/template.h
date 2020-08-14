@@ -514,6 +514,18 @@ public:
 	/// Changes the path and filename only. Does not do any reloading etc.
 	void setTemplatePath(const QString& value);
 	
+	/**
+	 * Returns an updated relative path.
+	 * 
+	 * If the template is in a valid state and map_dir is given, this function
+	 * returns the corresponding relative path to the template file.
+	 * 
+	 * Otherwise it returns the original relative path if it is not empty, or
+	 * just the template file name.
+	 */
+	QString getTemplateRelativePath(const QDir* map_dir) const;
+	
+	/// Returns the relative path which was set when template was configured from XML.
 	inline const QString& getTemplateRelativePath() const {return template_relative_path;}
 	inline void setTemplateRelativePath(const QString& value) {template_relative_path = value;}
 	

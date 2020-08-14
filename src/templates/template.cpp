@@ -283,14 +283,7 @@ void Template::saveTemplateConfiguration(QXmlStreamWriter& xml, bool open, const
 	xml.writeAttribute(QString::fromLatin1("open"), QString::fromLatin1(open ? "true" : "false"));
 	xml.writeAttribute(QString::fromLatin1("name"), getTemplateFilename());
 	auto primary_path = getTemplatePath();
-	auto relative_path = getTemplateRelativePath();
-	if (getTemplateState() != Invalid)
-	{
-		if (map_dir)
-			relative_path = map_dir->relativeFilePath(primary_path);
-		else if (relative_path.isEmpty())
-			relative_path = getTemplateFilename();
-	}
+	auto relative_path = getTemplateRelativePath(map_dir);
 	if (suppressAbsolutePaths && QFileInfo(primary_path).isAbsolute())
 		primary_path = relative_path;
 	xml.writeAttribute(QString::fromLatin1("path"), primary_path);
@@ -877,6 +870,16 @@ void Template::setTemplateFileInfo(const QFileInfo& file_info)
 void Template::setTemplatePath(const QString& value)
 {
 	setTemplateFileInfo(QFileInfo(value));
+}
+
+QString Template::getTemplateRelativePath(const QDir* map_dir) const
+{
+	auto path = getTemplateRelativePath();
+	if (getTemplateState() != Invalid && map_dir)
+		path = map_dir->relativeFilePath(getTemplatePath());
+	if (path.isEmpty())
+		path = getTemplateFilename();
+	return path;
 }
 
 void Template::setHasUnsavedChanges(bool value)
