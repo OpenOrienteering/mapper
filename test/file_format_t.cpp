@@ -38,6 +38,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QIODevice>
+#include <QLatin1Char>
 #include <QLatin1String>
 #include <QPageSize>
 #include <QPoint>
@@ -61,6 +62,7 @@
 #include "core/map_printer.h"
 #include "core/objects/object.h"
 #include "core/objects/text_object.h"
+#include "core/symbols/area_symbol.h"
 #include "core/symbols/symbol.h"
 #include "fileformats/file_format.h"
 #include "fileformats/file_format_registry.h"
@@ -304,6 +306,44 @@ namespace
 	}
 	
 	
+	void fuzzyCompareSymbol(const AreaSymbol& actual, const AreaSymbol& expected)
+	{
+		auto pattern_rotable = false;
+		for (auto i = 0; i < expected.getNumFillPatterns(); ++i)
+			pattern_rotable |= expected.getFillPattern(i).rotatable();
+		for (auto i = 0; i < actual.getNumFillPatterns(); ++i)
+			COMPARE_SYMBOL_PROPERTY(actual.getFillPattern(i).rotatable(), pattern_rotable, expected);
+	}
+	
+	void fuzzyCompareSymbol(const Symbol& actual, const Symbol& expected, const QByteArray& format_id)
+	{
+		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
+		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
+		
+		if (format_id == "OCD-legacy")
+			return;  // Unmaintained, no other properties testedd.
+		
+		COMPARE_SYMBOL_PROPERTY(actual.isRotatable(), expected.isRotatable(), expected);
+		
+		/// \todo Ideally, the dominant color would be preserved.
+#ifdef EXPORT_PRESERVES_DOMINANT_COLOR
+		COMPARE_SYMBOL_PROPERTY(actual.guessDominantColor()->getName(), expected.guessDominantColor()->getName(), expected);
+#endif
+		if (actual.getType() != expected.getType())
+			return;  // The following tests assume the same type.
+		
+		switch (actual.getType())
+		{
+		case Symbol::Area:
+			fuzzyCompareSymbol(static_cast<AreaSymbol const&>(actual), static_cast<AreaSymbol const&>(expected));
+			break;
+			
+		default:
+			;  /// \todo Extend fuzzy testing
+		}
+		
+	}
+	
 	/**
 	 * Compares map features in a way that works for lossy exporters and importers.
 	 * 
@@ -314,7 +354,7 @@ namespace
 	 * A lossy importer might skip some elements, but it is fair to require that
 	 * it imports everything which is exported by the corresponding exporter.
 	 */
-	void fuzzyCompareMaps(const Map& actual, const Map& expected)
+	void fuzzyCompareMaps(const Map& actual, const Map& expected, const QByteArray& format_id)
 	{
 		// Miscellaneous
 		QCOMPARE(actual.getScaleDenominator(), expected.getScaleDenominator());
@@ -349,9 +389,67 @@ namespace
 		QVERIFY2(actual.getNumColors() <= 2 * expected.getNumColors(), qPrintable(test_label.arg(actual.getNumColors()).arg(expected.getNumColors())));
 		
 		// Symbols
-		// Combined symbols may be dropped on export
+		// Combined symbols may be dropped (split) on export.
+		// Text symbols may be duplicated on export.
 		QVERIFY2(2 * actual.getNumSymbols() >= expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
 		QVERIFY2(actual.getNumSymbols() <= 2 * expected.getNumSymbols(), qPrintable(test_label.arg(actual.getNumSymbols()).arg(expected.getNumSymbols())));
+		
+		auto const fuzzy_match_symbol = [&map = actual, format_id](const Symbol* expected) {
+			Symbol const* actual = nullptr;
+			for (auto i = 0; !actual && i < map.getNumSymbols(); ++i)
+			{
+				auto const* symbol = map.getSymbol(i);
+				if (symbol->getType() != expected->getType()
+				    && symbol->getType() != Symbol::Combined)
+				{
+					continue;
+				}
+				
+				if (format_id.startsWith("OCD"))
+				{
+					// In OCD format, export may have incremented second and or first component.
+					if (symbol->getNumberComponent(0) < expected->getNumberComponent(0)
+					    || symbol->getNumberComponent(0) > expected->getNumberComponent(0) + 1)
+					{
+						continue;
+					}
+				}
+				else if (expected->getNumberAsString() != symbol->getNumberAsString())
+				{
+					continue;
+				}
+				
+				if (!expected->getPlainTextName().startsWith(symbol->getPlainTextName()))
+					continue;
+				
+				actual = symbol;
+			}
+			if (format_id == "OCD8" || format_id == "OCD-legacy")
+			{
+				// Don't elaborate testing for these legacy formats.
+				switch (expected->getType())
+				{
+				case Symbol::Combined:
+					// Expected symbol may be entirely dropped. (Its parts live independently.)
+					if (!actual)
+						return;
+					break;
+				case Symbol::Line:
+					// Expected symbol may be entirely turned into combined symbol.
+					if (!actual && format_id == "OCD-legacy")
+						return;
+					break;
+				default:
+					;  // nothing
+				}
+			}
+			if (actual)
+				fuzzyCompareSymbol(*actual, *expected, format_id);
+			else
+				QFAIL(qPrintable(QString::fromLatin1("Missing symbol: %1 %2").arg(expected->getNumberAsString(), expected->getPlainTextName())));
+		};
+		for (auto i = 0; i < expected.getNumSymbols(); ++i)
+			fuzzy_match_symbol(expected.getSymbol(i));
 		
 		// Objects
 		QVERIFY2(actual.getNumObjects() >= expected.getNumObjects(), qPrintable(test_label.arg(actual.getNumObjects()).arg(expected.getNumObjects())));
@@ -702,6 +800,15 @@ void FileFormatTest::saveAndLoad()
 	printer_config.page_format.v_overlap += 4.0;
 	original->setPrinterConfig(printer_config);
 	
+	// Enforce a unique prefix for symbol names, allowing for reliable
+	// recognition even when truncated. However, this doesn't help with
+	// symbols which are duplicated or dropped on export/import.
+	for (auto i = 0; i < original->getNumSymbols(); ++i)
+	{
+		auto* symbol = original->getSymbol(i);
+		symbol->setName(QLatin1Char('#') + QString::number(i) + QChar::Space + symbol->getPlainTextName());
+	}
+	
 	// Save and load the map
 	auto new_map = saveAndLoadMap(*original, format);
 	QVERIFY2(new_map, "Exception while importing / exporting.");
@@ -718,7 +825,7 @@ void FileFormatTest::saveAndLoad()
 	// be independent of information which cannot be exported into this format
 	if (new_map && format->isWritingLossy())
 	{
-		fuzzyCompareMaps(*new_map, *original);
+		fuzzyCompareMaps(*new_map, *original, format_id);
 		
 		original = std::move(new_map);
 		new_map = saveAndLoadMap(*original, format);
