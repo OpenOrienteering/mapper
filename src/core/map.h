@@ -729,17 +729,16 @@ public:
 	
 	/**
 	 * Removes the template with the given index from the closed template list,
-	 * load the template file and adds the template to the normal template list again.
-	 * The template is made visible in the given view.
-	 * 
-	 * NOTE: if required, adjust first_front_template manually with
-	 * setFirstFrontTemplate() before calling this method!
+	 * adds it to the active list and loads the template file if possible.
 	 * 
 	 * @param i The index of the closed template to reload.
 	 * @param target_pos The desired index in the normal template list after loading.
+	 *                   To place a template immediately below the map, pass index -1.
 	 * @param dialog_parent Widget as parent for possible dialogs.
 	 * @param map_path Path where the map is saved currently. Used as possible
 	 *     search location to locate missing templates.
+	 * 
+	 * @return true if loading was successful.
 	 */
 	bool reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path = {});
 	

@@ -147,20 +147,14 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 	}
 	
 	auto const insert_pos = (item_index == map_row + 1) ? -1 : target_pos;
-	if (!dialog->map->reloadClosedTemplate(src_pos, insert_pos, dialog, dialog->map_directory))
-	{
-		// Revert action
-		delete item(item_index);
-	}
-	else
-	{
-		// Template filename may change if file has moved
-		item(item_index)->setText(dialog->map->getTemplate(target_pos)->getTemplateFilename());
-		// Prepare for next drop
-		item(item_index)->setData(Qt::UserRole, QVariant());
-		
-		dialog->clear_button->setEnabled(dialog->map->getNumClosedTemplates() > 0);
-	}
+	dialog->map->reloadClosedTemplate(src_pos, insert_pos, dialog, dialog->map_directory);
+	
+	// Template filename may change if file has moved
+	item(item_index)->setText(dialog->map->getTemplate(target_pos)->getTemplateFilename());
+	// Prepare for next drop
+	item(item_index)->setData(Qt::UserRole, QVariant());
+	
+	dialog->clear_button->setEnabled(dialog->map->getNumClosedTemplates() > 0);
 	
 	// Always re-fill this list to update the list indices in the item data
 	dialog->updateClosedTemplateList();
