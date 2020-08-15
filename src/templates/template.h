@@ -235,12 +235,22 @@ public:
 	void switchTemplateFile(const QString& new_path, bool load_file);
 	
 	/**
-	 * Shows the dialog to find a moved template.
+	 * Interactively changes the template file.
 	 * 
-	 * If the user selects a new file, tries to switch to the selected template
-	 * file using switchTemplateFile() and by trying to load the new file.
-	 * Returns true if this succeeds; if not, reverts the switch and returns
-	 * false. Also returns false if the dialog is aborted.
+	 * This functions shows a file dialog for selecting a new template file.
+	 * Upon selection, it tries to load the template file. When loading fails,
+	 * the original path and state is restored.
+	 * 
+	 * When this function is called on a TemplatePlaceholder object, an object
+	 * of an actual template implementation class is created in order to load
+	 * the data file. After successful loading, this new object replaces the
+	 * original object in the map's list of active templates, destroying the
+	 * original object. Thus the current object may be no longer in the map's
+	 * active list, and it will be destroyed when control returns to the event
+	 * loop.
+	 * 
+	 * Returns true if a file is selected and the loading succeeds,
+	 * false otherwise.
 	 */
 	bool execSwitchTemplateFileDialog(QWidget* dialog_parent);
 	

@@ -27,6 +27,7 @@
 #include <iterator>
 #include <new>
 #include <type_traits>
+#include <utility>
 
 #include <Qt>
 #include <QtMath>
@@ -488,15 +489,37 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 	const State   old_state = getTemplateState();
 	const QString old_path  = getTemplatePath();
 	
-	switchTemplateFile(new_path, true);
+	if (auto* placeholder = qobject_cast<TemplatePlaceholder*>(this))
+	{
+		setTemplatePath(new_path);
+		auto new_temp = placeholder->makeActualTemplate();
+		if (new_temp)
+		{
+			auto pos = map->findTemplateIndex(this);
+			if (pos >= 0)
+			{
+				auto self = map->setTemplate(pos, std::move(new_temp));
+				if (map->getTemplate(pos)->loadTemplateFile())
+				{
+					// Loading succeeded. This object must be destroyed.
+					self.release()->deleteLater();
+					return true;
+				}
+				// Loading failed. This object must be put back.
+				map->setTemplate(pos, std::move(self));
+				return false;
+			}
+		}
+	}
+	else
+	{
+		switchTemplateFile(new_path, true);
+	}
 	if (getTemplateState() != Loaded)
 	{
 		QString error_template = QCoreApplication::translate("OpenOrienteering::TemplateListWidget", "Cannot open template\n%1:\n%2").arg(new_path);
 		QString error = errorString();
 		Q_ASSERT(!error.isEmpty());
-		QMessageBox::warning(dialog_parent,
-		                     tr("Error"),
-		                     error_template.arg(error));
 		
 		// Revert change
 		switchTemplateFile(old_path, old_state == Loaded);
@@ -504,6 +527,8 @@ bool Template::execSwitchTemplateFileDialog(QWidget* dialog_parent)
 		{
 			template_state = Invalid;
 		}
+		
+		QMessageBox::warning(dialog_parent, tr("Error"), error_template.arg(error));
 		return false;
 	}
 	

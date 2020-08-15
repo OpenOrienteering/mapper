@@ -1944,28 +1944,24 @@ void Map::closeTemplate(int pos)
 
 bool Map::reloadClosedTemplate(int i, int target_pos, QWidget* dialog_parent, const QString& map_path)
 {
+	// Move the template from closed to regular.
 	auto const it_closed = begin(closed_templates) + i;
-	auto temp = std::move(*it_closed);
+	auto unique_temp = std::move(*it_closed);
+	auto *temp = unique_temp.get();
 	closed_templates.erase(it_closed);
+	addTemplate(target_pos, std::move(unique_temp));
 	
-	// Try to find and load the template again
-	if (temp->getTemplateState() != Template::Loaded
-	    && !temp->tryToFindAndReloadTemplateFile(map_path))
-	{
-		temp->execSwitchTemplateFileDialog(dialog_parent);
-	}
+	// Try to find and load the template again.
+	auto loaded = temp->getTemplateState() == Template::Loaded;
+	if (!loaded)
+	    loaded = temp->tryToFindAndReloadTemplateFile(map_path);
+	if (!loaded)
+	    loaded = temp->execSwitchTemplateFileDialog(dialog_parent);
 	
-	// If not loaded successfully, re-add to list of closed templates
-	if (temp->getTemplateState() != Template::Loaded)
-	{
-		closed_templates.push_back(std::move(temp));
-		return false;
-	}
-	
-	addTemplate(target_pos, std::move(temp));
 	if (closed_templates.empty())
 		emit closedTemplateAvailabilityChanged();
-	return true;
+	
+	return loaded;
 }
 
 void Map::loadTemplateFiles(const MapView& view)
