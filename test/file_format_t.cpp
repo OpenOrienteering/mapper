@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2012-2019 Kai Pastor
+ *    Copyright 2012-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -32,6 +32,7 @@
 #include <QtTest>
 #include <QBuffer>
 #include <QByteArray>
+#include <QChar>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -128,6 +129,49 @@ namespace QTest
 
 namespace
 {
+	/**
+	 * Provides QCOMPARE-style symbol property comparison.
+	 * 
+	 * This macro reports the symbol, but avoids expensive string operations
+	 * when the properties match.
+	 */
+	#define COMPARE_SYMBOL_PROPERTY(a, b, symbol) \
+	if ((a) != (b)) \
+	{ \
+		auto const diff = qstrlen(#b) - qstrlen(#a); \
+		auto const fill_a = QString().fill(QChar::Space, +diff); \
+		auto const fill_b = QString().fill(QChar::Space, -diff); \
+		QFAIL(QString::fromLatin1( \
+		       "Compared values are not the same (%1 %2)\n   Actual   (%3)%4: %7\n   Expected (%5)%6: %8") \
+		      .arg((symbol).getNumberAsString(), (symbol).getPlainTextName(), \
+		           QString::fromUtf8(#a), fill_a, \
+		           QString::fromUtf8(#b), fill_b) \
+		      .arg(a).arg(b) \
+		      .toUtf8()); \
+	} \
+	else \
+	{ \
+		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+	}
+	
+	/**
+	 * Provides QVERIFY-style symbol property verification.
+	 * 
+	 * This macro reports the symbol, but avoids expensive string operations
+	 * when the properties match.
+	 */
+	#define VERIFY_SYMBOL_PROPERTY(cond, symbol) \
+	if (cond) \
+	{ \
+		QVERIFY2(cond, QByteArray((symbol).getNumberAsString().toUtf8() + ' ' \
+		                          + (symbol).getPlainTextName().toUtf8())); \
+	} \
+	else \
+	{ \
+		QVERIFY(true);  /* for QEXPECT_FAIL etc. */ \
+	}
+	
+	
 	void comparePrinterConfig(const MapPrinterConfig& copy, const MapPrinterConfig& orig)
 	{
 		QCOMPARE(copy.center_print_area, orig.center_print_area);
@@ -138,6 +182,14 @@ namespace
 		QCOMPARE((copy.print_area.size()*10.0).toSize(), (orig.print_area.size()*10.0).toSize());
 		QCOMPARE(copy.printer_name, orig.printer_name);
 		QCOMPARE(copy.single_page_print_area, orig.single_page_print_area);
+	}
+	
+	void compareSymbol(const Symbol& actual, const Symbol& expected)
+	{
+		COMPARE_SYMBOL_PROPERTY(actual.isHidden(), expected.isHidden(), expected);
+		COMPARE_SYMBOL_PROPERTY(actual.isProtected(), expected.isProtected(), expected);
+		VERIFY_SYMBOL_PROPERTY(actual.stateEquals(&expected), expected);
+		VERIFY_SYMBOL_PROPERTY(actual.equals(&expected, Qt::CaseInsensitive), expected);
 	}
 	
 	void compareMaps(const Map& actual, const Map& expected)
@@ -186,11 +238,7 @@ namespace
 		}
 		else for (int i = 0; i < actual.getNumSymbols(); ++i)
 		{
-			if (!actual.getSymbol(i)->equals(expected.getSymbol(i), Qt::CaseSensitive))
-				qDebug("%s vs %s", qPrintable(actual.getSymbol(i)->getNumberAsString()),
-				                   qPrintable(expected.getSymbol(i)->getNumberAsString()));
-			QVERIFY(actual.getSymbol(i)->equals(expected.getSymbol(i), Qt::CaseSensitive));
-			QVERIFY(actual.getSymbol(i)->stateEquals(expected.getSymbol(i)));
+			compareSymbol(*actual.getSymbol(i), *expected.getSymbol(i));
 		}
 		
 		// Parts and objects
