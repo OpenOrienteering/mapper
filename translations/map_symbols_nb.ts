@@ -2546,7 +2546,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 5</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Opaque Blue</source>
@@ -5487,7 +5487,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Black below light browns</source>
@@ -7268,7 +7268,7 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
     <message>
         <source>Brown 50%</source>
         <comment>Color 4</comment>
-        <translation>Brun  50%</translation>
+        <translation>Brun 50%</translation>
     </message>
     <message>
         <source>Brown</source>
