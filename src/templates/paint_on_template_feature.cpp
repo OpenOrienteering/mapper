@@ -126,7 +126,7 @@ PaintOnTemplateFeature::PaintOnTemplateFeature(MapEditorController& controller)
 	connect(controller.getMap(), &Map::templateAboutToBeDeleted, this, &PaintOnTemplateFeature::templateAboutToBeDeleted);
 	
 	paint_action = new QAction(QIcon(QString::fromLatin1(":/images/pencil.png")),
-	                           QCoreApplication::translate("MapEditorController", "Paint on template"),
+	                           QCoreApplication::translate("OpenOrienteering::MapEditorController", "Paint on template"),
 	                           this);
 	paint_action->setMenuRole(QAction::NoRole);
 	paint_action->setCheckable(true);
@@ -135,7 +135,7 @@ PaintOnTemplateFeature::PaintOnTemplateFeature(MapEditorController& controller)
 	
 	// This action used to be listed as "Paint on template settings" in the touch UI.
 	select_action = new QAction(QIcon(QString::fromLatin1(":/images/paint-on-template-settings.png")),
-	                            QCoreApplication::translate("MapEditorController", "Select template..."),
+	                            QCoreApplication::translate("OpenOrienteering::MapEditorController", "Select template..."),
 	                            this);
 	select_action->setMenuRole(QAction::NoRole);
 	select_action->setWhatsThis(Util::makeWhatThis("toolbars.html#draw_on_template"));
