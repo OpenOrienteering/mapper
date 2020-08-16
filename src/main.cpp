@@ -70,6 +70,10 @@ Q_IMPORT_PLUGIN(PowershellPositionPlugin)
 Q_IMPORT_PLUGIN(NmeaPositionPlugin)
 #endif
 
+#if defined(SCALING_ICON_ENGINE_PLUGIN)
+Q_IMPORT_PLUGIN(ScalingIconEnginePlugin)
+#endif
+
 
 // From map.h
 

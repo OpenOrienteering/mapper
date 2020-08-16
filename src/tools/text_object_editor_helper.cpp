@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2013-2017 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -22,12 +22,17 @@
 #include "text_object_editor_helper.h"
 
 #include <QtGlobal>
+#include <QAbstractButton>
+#include <QAction>
+#include <QButtonGroup>
 #include <QBrush>
 #include <QChar>
 #include <QClipboard>
+#include <QCoreApplication>
 #include <QEvent>
 #include <QFlags>
 #include <QGuiApplication>
+#include <QIcon>
 #include <QInputMethod>
 #include <QInputMethodEvent>
 #include <QKeyEvent>
@@ -42,6 +47,7 @@
 #include <QRgb>
 #include <QStyle>
 #include <QTimer>
+#include <QToolBar>
 #include <QTransform>
 #include <QVariant>
 #include <QWidget>
@@ -50,7 +56,6 @@
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
-#include "gui/widgets/text_alignment_widget.h"
 #include "util/util.h"
 
 
@@ -106,7 +111,6 @@ TextObjectEditorHelper::BatchEdit::~BatchEdit()
 TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object, not_null<MapEditorController*> editor)
 : text_object { text_object }
 , editor { editor }
-, dock_widget { nullptr }
 , pristine_text { text_object->getText() }
 , block_start { -1 }
 , anchor_position { 0 }
@@ -126,15 +130,9 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 	auto window = editor->getWindow();
 	window->setShortcutsBlocked(true);
 	
-	// Show dock in floating state
-	dock_widget = new TextObjectAlignmentDockWidget(this, window);
-	dock_widget->setFocusProxy(window); // Re-route input events
-	dock_widget->setFloating(true);
-	dock_widget->resize(0, 0);
-	dock_widget->window()->setGeometry({editor->getMainWidget()->mapToGlobal({}), dock_widget->size()});
-	dock_widget->show();
-	connect(dock_widget, &TextObjectAlignmentDockWidget::alignmentChanged, this, &TextObjectEditorHelper::setTextAlignment);
-	connect(this, &QObject::destroyed, dock_widget, &QObject::deleteLater);
+	auto const title = QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Alignment");
+	alignment_toolbar = makeAlignmentToolBar();
+	editor->showPopupWidget(alignment_toolbar, title, MapEditorController::PopupLocationTop);
 	
 	// When the app is activated again, re-activate the input method.
 	connect(qApp, &QGuiApplication::applicationStateChanged, this, &TextObjectEditorHelper::claimFocus, Qt::QueuedConnection);
@@ -155,8 +153,10 @@ TextObjectEditorHelper::TextObjectEditorHelper(not_null<TextObject*> text_object
 
 TextObjectEditorHelper::~TextObjectEditorHelper()
 {
-	dock_widget->hide();
-	dock_widget->deleteLater();
+	if (alignment_toolbar)
+	{
+		editor->deletePopupWidget(alignment_toolbar);
+	}
 	
 	QGuiApplication::inputMethod()->hide();
 	if (auto widget = editor->getMainWidget())
@@ -520,6 +520,70 @@ bool TextObjectEditorHelper::sendMouseEventToInputContext(QEvent* event, const M
 }
 
 
+QToolBar* TextObjectEditorHelper::makeAlignmentToolBar()
+{
+	auto* toolbar = new QToolBar();
+	
+	auto* horizontal_alignment_group = new QButtonGroup(toolbar);
+	auto add_horizontal_option = [this, toolbar, horizontal_alignment_group](int alignment, const char* icon, const QString& label) {
+		auto* action = toolbar->addAction(QIcon(QString::fromLatin1(icon)), label);
+		action->setCheckable(true);
+		action->setChecked(text_object->getHorizontalAlignment() == alignment);
+		horizontal_alignment_group->addButton(static_cast<QAbstractButton*>(toolbar->widgetForAction(action)));
+		connect(action, &QAction::triggered, this, [this, alignment]() { setHorizontalAlignment(alignment); });
+	};
+	add_horizontal_option(TextObject::AlignLeft, ":/images/text-align-left.png",
+	                      QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Left"));
+	add_horizontal_option(TextObject::AlignHCenter, ":/images/text-align-hcenter.png",
+	                      QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Center"));
+	add_horizontal_option(TextObject::AlignRight, ":/images/text-align-right.png",
+	                      QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Right"));
+	
+	toolbar->addSeparator();
+	
+	auto* vertical_alignment_group = new QButtonGroup(toolbar);
+	auto add_vertical_option = [this, toolbar, vertical_alignment_group](int alignment, const char* icon, const QString& label) {
+		auto* action = toolbar->addAction(QIcon(QString::fromLatin1(icon)), label);
+		action->setCheckable(true);
+		action->setChecked(text_object->getVerticalAlignment() == alignment);
+		vertical_alignment_group->addButton(static_cast<QAbstractButton*>(toolbar->widgetForAction(action)));
+		connect(action, &QAction::triggered, this, [this, alignment]() { setVerticalAlignment(alignment); });
+	};
+	add_vertical_option(TextObject::AlignTop, ":/images/text-align-top.png",
+	                    QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Top"));
+	add_vertical_option(TextObject::AlignVCenter, ":/images/text-align-vcenter.png",
+	                    QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Center"));
+	add_vertical_option(TextObject::AlignBaseline, ":/images/text-align-baseline.png",
+	                    QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Baseline"));
+	add_vertical_option(TextObject::AlignBottom, ":/images/text-align-bottom.png",
+	                    QCoreApplication::translate("OpenOrienteering::TextObjectAlignmentDockWidget", "Bottom"));
+	
+	return toolbar;
+}
+
+// slot
+void TextObjectEditorHelper::setHorizontalAlignment(int h_alignment)
+{
+	if (int(text_object->getHorizontalAlignment()) != h_alignment)
+	{
+		text_object->setHorizontalAlignment(TextObject::HorizontalAlignment(h_alignment));
+		emit stateChanged();
+	}
+	claimFocus();
+}
+
+// slot
+void TextObjectEditorHelper::setVerticalAlignment(int v_alignment)
+{
+	if (int(text_object->getVerticalAlignment()) != v_alignment)
+	{
+		text_object->setVerticalAlignment(TextObject::VerticalAlignment(v_alignment));
+		emit stateChanged();
+	}
+	claimFocus();
+}
+
+
 bool TextObjectEditorHelper::mousePressEvent(QMouseEvent* event, const MapCoordF& map_coord, MapWidget* widget)
 {
 	Q_UNUSED(widget)
@@ -829,19 +893,6 @@ void TextObjectEditorHelper::includeDirtyRect(QRectF& rect) const
 	foreachLineRect(begin, end, [&transform, &rect](const QRectF& selection_rect) {
 		rectIncludeSafe(rect, transform.mapRect(selection_rect));
 	});
-}
-
-
-
-void TextObjectEditorHelper::setTextAlignment(int h_alignment, int v_alignment)
-{
-	if (int(text_object->getHorizontalAlignment()) != h_alignment
-	    || int(text_object->getVerticalAlignment()) != v_alignment)
-	{
-		text_object->setHorizontalAlignment(TextObject::HorizontalAlignment(h_alignment));
-		text_object->setVerticalAlignment(TextObject::VerticalAlignment(v_alignment));
-		emit stateChanged();
-	}
 }
 
 

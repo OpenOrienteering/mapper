@@ -29,9 +29,9 @@
 
 401    natural = beach AND surface = sand
 201    natural = cliff
-201.2  natural = cliff AND area = yes
+206    natural = cliff AND (area = yes OR is_area = yes)
 401    natural = dune
-201.2  natural = rock AND area = yes
+206    natural = rock AND (area = yes OR is_area = yes)
 401    natural = sand
 205    natural = stone
 
@@ -128,7 +128,7 @@
 
 518    barrier = fence
 406.4  barrier = hedge
-406    barrier = hedge AND area = yes
+406    barrier = hedge AND (area = yes OR is_area = yes)
 515    barrier = wall
 
 521    tourism = alpine_hut

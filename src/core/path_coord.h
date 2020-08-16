@@ -198,7 +198,7 @@ public:
 	/** Position. */
 	MapCoordF pos;
 	
-	/** Index of the cooresponding or preceding map coordinate and flags. */
+	/** Index of the corresponding or preceding map coordinate and flags. */
 	PathCoord::size_type index;
 	
 	/** Relative location of this position on the MapCoordVector edge ([0.0, 1.0)). */

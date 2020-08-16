@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2019, 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -18,14 +19,20 @@
  */
 
 
-#ifndef OPENORIENTEERING_MAP_DIALOG_ROTATE_H
-#define OPENORIENTEERING_MAP_DIALOG_ROTATE_H
+#ifndef OPENORIENTEERING_STRETCH_MAP_DIALOG_H
+#define OPENORIENTEERING_STRETCH_MAP_DIALOG_H
 
+#include <functional>
+
+#include <Qt>
+#include <QtGlobal>
 #include <QDialog>
 #include <QObject>
+#include <QString>
 
-class QDoubleSpinBox;
 class QCheckBox;
+class QDoubleSpinBox;
+class QPushButton;
 class QRadioButton;
 class QWidget;
 
@@ -35,30 +42,27 @@ class Map;
 
 
 /**
- * Dialog for rotating the whole map around a point.
+ * Dialog for stretching or shrinking the whole map.
  */
-class RotateMapDialog : public QDialog
+class StretchMapDialog : public QDialog
 {
 Q_OBJECT
 public:
-	/** Creates a new RotateMapDialog. */
-	RotateMapDialog(QWidget* parent, Map* map);
+	using StretchOp = std::function<void (Map&)>;
 	
-	/** Sets the rotation angle in degrees in the corresponding widget. */
-	void setRotationDegrees(double rotation);
-	/** Enables the setting to rotate around the georeferencing reference point. */
-	void setRotateAroundGeorefRefPoint();
-	/** Checks or unchecks the setting to adjust the georeferencing declination. */
-	void setAdjustDeclination(bool adjust);
-	/** Sets the visibility of the setting to adjust the georeferencing declination. */
-	void showAdjustDeclination(bool show);
+	/** Creates a new StretchMapDialog. */
+	StretchMapDialog(const Map& map, double stretch_factor, QWidget* parent = nullptr, Qt::WindowFlags f = {});
+	
+	/** Performs the configured scaling on the given map. */
+	void stretch(Map& map) const;
+	
+	/** Returns a scaling functor. */
+	Q_REQUIRED_RESULT StretchOp makeStretch() const;
 	
 private slots:
 	void updateWidgets();
-	void okClicked();
 	
 private:
-	QDoubleSpinBox* rotation_edit;
 	QRadioButton* center_origin_radio;
 	QRadioButton* center_georef_radio;
 	QRadioButton* center_other_radio;
@@ -66,10 +70,10 @@ private:
 	QDoubleSpinBox* other_y_edit;
 	
 	QCheckBox* adjust_georeferencing_check;
-	QCheckBox* adjust_declination_check;
 	QCheckBox* adjust_templates_check;
+	QPushButton* ok_button;
 	
-	Map* map;
+	const double stretch_factor;
 };
 
 

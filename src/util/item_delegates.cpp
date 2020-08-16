@@ -177,17 +177,16 @@ QWidget* PercentageDelegate::createEditor(QWidget* parent, const QStyleOptionVie
 	spinbox->setParent(parent);
 	
 	// Commit each change immediately when returning to event loop
-	QSignalMapper* signal_mapper = new QSignalMapper(spinbox);
-	signal_mapper->setMapping(spinbox, spinbox);
-	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), signal_mapper, QOverload<>::of(&QSignalMapper::map), Qt::QueuedConnection);
-	connect(signal_mapper, QOverload<QWidget*>::of(&QSignalMapper::mapped), this, &QItemDelegate::commitData);
+	connect(spinbox, QOverload<int>::of(&QSpinBox::valueChanged), this, [this, spinbox]() {
+		emit const_cast<PercentageDelegate*>(this)->commitData(spinbox); 
+	});
 	
 	return spinbox;
 }
 
 void PercentageDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
 {
-	int value = qRound(index.model()->data(index, Qt::DisplayRole).toFloat() * 100);
+	int value = qRound(index.model()->data(index, Qt::EditRole).toDouble() * 100);
 	static_cast< QSpinBox* >(editor)->setValue(value);
 }
 
@@ -195,9 +194,7 @@ void PercentageDelegate::setModelData(QWidget* editor, QAbstractItemModel* model
 {
 	QSpinBox* spinBox = static_cast< QSpinBox* >(editor);
 	spinBox->interpretText();
-	QMap< int, QVariant > data(model->itemData(index));
-	data[Qt::DisplayRole] = (float)spinBox->value() / 100.0;
-	model->setItemData(index, data);
+	model->setData(index, double(spinBox->value()) / 100.0, Qt::EditRole);
 }
 
 void PercentageDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const

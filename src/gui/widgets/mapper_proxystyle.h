@@ -1,5 +1,5 @@
 /*
- *    Copyright 2013, 2016, 2019 Kai Pastor
+ *    Copyright 2013-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -35,6 +35,8 @@ class QWidget;
 
 namespace OpenOrienteering {
 
+class Settings;
+
 
 /**
  * MapperProxyStyle customizes the platform's base style.
@@ -45,6 +47,18 @@ namespace OpenOrienteering {
 class MapperProxyStyle : public QProxyStyle
 {
 Q_OBJECT
+	
+	/**
+	 * This structure holds custom toolbar metrics when touch_mode is active.
+	 */
+	struct ToolBarMetrics
+	{
+		int icon_size;
+		int item_spacing;
+		int separator_extent;
+		int extension_extent;
+	};
+	
 public:
 	/**
 	 * Constructs a new MapperProxyStyle.
@@ -120,6 +134,12 @@ public:
 	
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
+	
+	void onSettingsChanged(const Settings& settings);
+	
+	ToolBarMetrics toolbar = {};
+	
+	bool touch_mode = false;
 	
 	Q_DISABLE_COPY(MapperProxyStyle)
 };

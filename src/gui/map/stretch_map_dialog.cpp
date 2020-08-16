@@ -19,30 +19,34 @@
  */
 
 
-#include "map_dialog_stretch.h"
+#include "stretch_map_dialog.h"
 
-#include <QDoubleSpinBox>
+#include <Qt>
+#include <QAbstractButton>
 #include <QCheckBox>
 #include <QDialogButtonBox>
+#include <QDoubleSpinBox>
 #include <QFormLayout>
 #include <QLabel>
 #include <QRadioButton>
-#include <QSpinBox>
+#include <QSpacerItem>
 #include <QVBoxLayout>
 
 #include "core/georeferencing.h"
 #include "core/map.h"
-#include "templates/template.h"
+#include "core/map_coord.h"
 #include "gui/util_gui.h"
 
 
 namespace OpenOrienteering {
 
-StretchMapDialog::StretchMapDialog(QWidget* parent, Map* map, double stretch_factor) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint), stretch_factor(stretch_factor), map(map)
+StretchMapDialog::StretchMapDialog(const Map& map, double stretch_factor, QWidget* parent, Qt::WindowFlags f)
+: QDialog(parent, f)
+, stretch_factor(stretch_factor)
 {
 	setWindowTitle(tr("Change scale factor"));
 	
-	QFormLayout* layout = new QFormLayout();
+	auto* layout = new QFormLayout();
 	
 	layout->addRow(Util::Headline::create(tr("Scaling parameters")));
 	
@@ -50,13 +54,13 @@ StretchMapDialog::StretchMapDialog(QWidget* parent, Map* map, double stretch_fac
 	
 	//: Scaling center point
 	center_origin_radio = new QRadioButton(tr("Map coordinate system origin"));
-	if (!map->getGeoreferencing().isValid())
+	if (!map.getGeoreferencing().isValid())
 		center_origin_radio->setChecked(true);
 	layout->addRow(center_origin_radio);
 	
 	//: Scaling center point
 	center_georef_radio = new QRadioButton(tr("Georeferencing reference point"));
-	if (map->getGeoreferencing().isValid())
+	if (map.getGeoreferencing().isValid())
 		center_georef_radio->setChecked(true);
 	else
 		center_georef_radio->setEnabled(false);
@@ -78,22 +82,14 @@ StretchMapDialog::StretchMapDialog(QWidget* parent, Map* map, double stretch_fac
 	layout->addRow(Util::Headline::create(tr("Options")));
 	
 	adjust_georeferencing_check = new QCheckBox(tr("Adjust georeferencing reference point"));
-	if (map->getGeoreferencing().isValid())
+	if (map.getGeoreferencing().isValid())
 		adjust_georeferencing_check->setChecked(true);
 	else
 		adjust_georeferencing_check->setEnabled(false);
 	layout->addRow(adjust_georeferencing_check);
 	
 	adjust_templates_check = new QCheckBox(tr("Scale non-georeferenced templates"));
-	bool have_non_georeferenced_template = false;
-	for (int i = 0; i < map->getNumTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getTemplate(i)->isTemplateGeoreferenced();
-	for (int i = 0; i < map->getNumClosedTemplates() && !have_non_georeferenced_template; ++i)
-		have_non_georeferenced_template = !map->getClosedTemplate(i)->isTemplateGeoreferenced();
-	if (have_non_georeferenced_template)
-		adjust_templates_check->setChecked(true);
-	else
-		adjust_templates_check->setEnabled(false);
+	adjust_templates_check->setChecked(true);
 	layout->addRow(adjust_templates_check);
 	
 	
@@ -111,7 +107,7 @@ StretchMapDialog::StretchMapDialog(QWidget* parent, Map* map, double stretch_fac
 	connect(center_origin_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
 	connect(center_georef_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
 	connect(center_other_radio, &QAbstractButton::clicked, this, &StretchMapDialog::updateWidgets);
-	connect(button_box, &QDialogButtonBox::accepted, this, &StretchMapDialog::okClicked);
+	connect(button_box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 	connect(button_box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 	
 	updateWidgets();
@@ -124,16 +120,25 @@ void StretchMapDialog::updateWidgets()
 	adjust_georeferencing_check->setEnabled(!center_georef_radio->isChecked());
 }
 
-void StretchMapDialog::okClicked()
+void StretchMapDialog::stretch(Map& map) const
 {
-	MapCoord center = MapCoord(0, 0);
-	if (center_georef_radio->isChecked())
-		center = map->getGeoreferencing().getMapRefPoint();
-	else if (center_other_radio->isChecked())
-		center = MapCoord(other_x_edit->value(), -1 * other_y_edit->value());
+	makeStretch()(map);
+}
+
+StretchMapDialog::StretchOp StretchMapDialog::makeStretch() const
+{
+	auto center = MapCoord(0, 0);
+	if (center_other_radio->isChecked())
+		center = MapCoord(other_x_edit->value(), -other_y_edit->value());
 	
-	map->changeScale(map->getScaleDenominator(), stretch_factor, center, false, true, adjust_georeferencing_check->isChecked(), adjust_templates_check->isChecked());
-	accept();
+	auto adjust_georeferencing = adjust_georeferencing_check->isChecked();
+	auto adjust_templates = adjust_templates_check->isChecked();
+	auto center_georef = center_georef_radio->isChecked();
+	auto factor = stretch_factor;
+	return [factor, center, center_georef, adjust_georeferencing, adjust_templates](Map& map) {
+		auto actual_center = center_georef ? map.getGeoreferencing().getMapRefPoint() : center;
+		map.changeScale(map.getScaleDenominator(), factor, actual_center, false, true, adjust_georeferencing, adjust_templates);
+	};
 }
 
 

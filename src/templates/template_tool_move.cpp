@@ -123,7 +123,6 @@ void TemplateMoveTool::updateDragging(const MapCoordF& mouse_pos_map)
 		}
 	}
 	
-	map()->setTemplatesDirty();
 	map()->emitTemplateChanged(templ);
 }
 

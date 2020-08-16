@@ -1,5 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
+ *    Copyright 2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -38,6 +39,8 @@ namespace OpenOrienteering {
 TemplatePositionDockWidget::TemplatePositionDockWidget(Template* temp, MapEditorController* controller, QWidget* parent)
  : QDockWidget(tr("Positioning"), parent), temp(temp), controller(controller)
 {
+	setObjectName(QStringLiteral("TemplatePositioning"));
+	
 	react_to_changes = true;
 	
 	QLabel* x_label = new QLabel(tr("X:"));
@@ -110,7 +113,8 @@ bool TemplatePositionDockWidget::event(QEvent* event)
 void TemplatePositionDockWidget::closeEvent(QCloseEvent* event)
 {
 	Q_UNUSED(event);
-	controller->removeTemplatePositionDockWidget(temp);
+	emit closed();
+	deleteLater();
 }
 
 void TemplatePositionDockWidget::templateChanged(int index, const Template* temp)
@@ -185,7 +189,6 @@ void TemplatePositionDockWidget::valueChanged()
 	temp->setTemplateAreaDirty();
 	
 	// Tell others about changes
-	controller->getMap()->setTemplatesDirty();
 	react_to_changes = false;
 	controller->getMap()->emitTemplateChanged(temp);
 	react_to_changes = true;

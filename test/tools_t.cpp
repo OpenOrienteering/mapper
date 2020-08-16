@@ -1,6 +1,6 @@
 /*
  *    Copyright 2012, 2013 Thomas Schöps
- *    Copyright 2015 Kai Pastor
+ *    Copyright 2015-2020 Kai Pastor
  *
  *    This file is part of OpenOrienteering.
  *
@@ -40,6 +40,7 @@
 #include "gui/main_window.h"
 #include "gui/map/map_editor.h"
 #include "gui/map/map_widget.h"
+#include "templates/paint_on_template_feature.h"
 #include "tools/edit_point_tool.h"
 #include "tools/edit_tool.h"
 
@@ -202,6 +203,29 @@ void ToolsTest::editTool()
 	
 	// Cleanup
 	editor.editor->setTool(nullptr);
+}
+
+
+
+void ToolsTest::paintOnTemplateFeature()
+{
+	// Designed for images of 100 mm at 10 pixel per mm.
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(20000), 200);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(15000), 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(10000), 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(7500) , 100);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(5000) , 50);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(4000) , 50);
+	QCOMPARE(PaintOnTemplateFeature::alignmentBase(1000) , 10);
+	
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  10), -350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  20), -340);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347,  50), -350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(-347, 100), -300);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  10), 350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  20), 340);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347,  50), 350);
+	QCOMPARE(PaintOnTemplateFeature::roundToMultiple(347, 100), 300);
 }
 
 

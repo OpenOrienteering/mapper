@@ -28,6 +28,7 @@
 #include <Qt>
 #include <QtGlobal>
 #include <QtMath>
+#include <QBrush>
 #include <QByteArray>
 #include <QDialog>
 #include <QFileInfo>  // IWYU pragma: keep
@@ -157,7 +158,7 @@ bool TemplateImage::loadTypeSpecificTemplateConfiguration(QXmlStreamReader& xml)
 	return true;
 }
 
-bool TemplateImage::loadTemplateFileImpl(bool configuring)
+bool TemplateImage::loadTemplateFileImpl()
 {
 	QImageReader reader(template_path);
 	
@@ -196,7 +197,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	available_georef = findAvailableGeoreferencing({});
 #endif
 	
-	if (!configuring && is_georeferenced)
+	if (is_georeferenced)
 	{
 		if (!isGeoreferencingUsable())
 		{
@@ -211,7 +212,7 @@ bool TemplateImage::loadTemplateFileImpl(bool configuring)
 	return true;
 }
 
-bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_center_in_view)
+bool TemplateImage::postLoadSetup(QWidget* dialog_parent, bool& out_center_in_view)
 {
 	TemplateImageOpenDialog open_dialog(this, dialog_parent);
 	open_dialog.setWindowModality(Qt::WindowModal);
@@ -235,6 +236,8 @@ bool TemplateImage::postLoadConfiguration(QWidget* dialog_parent, bool& out_cent
 				calculateGeoreferencing();
 				auto const center_pixel = MapCoordF(0.5 * (image.width() - 1), 0.5 * (image.height() - 1));
 				initial_georef.setProjectedRefPoint(georef->toProjectedCoords(center_pixel));
+				initial_georef.setCombinedScaleFactor(1.0);
+				initial_georef.setGrivation(0.0);
 			}
 			
 			GeoreferencingDialog dialog(dialog_parent, map, &initial_georef, false);
@@ -359,7 +362,7 @@ QPointF TemplateImage::calcCenterOfGravity(QRgb background_color)
 }
 
 
-bool TemplateImage::canChangeTemplateGeoreferenced()
+bool TemplateImage::canChangeTemplateGeoreferenced() const
 {
 	// No need to care for CRS here and now: This is handled by the dialog ATM.
 	return !available_georef.effective.transform.source.isEmpty();
@@ -375,7 +378,7 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		
 		if (value)
 		{
-			// Cf. postLoadConfiguration
+			// Cf. postLoadSetup
 			// Let user select the coordinate reference system.
 			// \todo Change description text below (no longer just for world files.)
 			Q_UNUSED(QT_TR_NOOP("Select the coordinate reference system of the georeferenced image."))
@@ -402,15 +405,25 @@ bool TemplateImage::trySetTemplateGeoreferenced(bool value, QWidget* dialog_pare
 		{
 			is_georeferenced = false;
 		}
-		map->setTemplatesDirty();
+		map->emitTemplateChanged(this);
 	}
 	return isTemplateGeoreferenced() == value;
 }
 
 void TemplateImage::updateGeoreferencing()
 {
-	if (is_georeferenced && template_state == Template::Loaded)
-		updatePosFromGeoreferencing();
+	if (is_georeferenced)
+	{
+		if (map->getGeoreferencing().isLocal())
+		{
+			is_georeferenced = false;
+			map->emitTemplateChanged(this);
+		}
+		else if (template_state == Template::Loaded)
+		{
+			updatePosFromGeoreferencing();
+		}
+	}
 }
 
 
@@ -493,7 +506,7 @@ bool TemplateImage::isGeoreferencingUsable() const
 }
 
 
-void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width)
+void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, const QColor& color, qreal width, ScribbleOptions mode)
 {
 	QPointF* points;
 	QRect radius_bbox;
@@ -574,8 +587,16 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	pen.setJoinStyle(Qt::RoundJoin);
 	painter.setPen(pen);
 	painter.setRenderHint(QPainter::Antialiasing);
-	for (int i = 0; i < draw_iterations; ++ i)
-		painter.drawPolyline(points, num_coords);
+
+	if (mode.testFlag(FilledAreas))
+	{
+		painter.setBrush(QBrush(color));
+		for (int i = 0; i < draw_iterations; ++i)
+			painter.drawPolygon(points, num_coords);
+	} else {
+		for (int i = 0; i < draw_iterations; ++i)
+			painter.drawPolyline(points, num_coords);
+	}
 	
 	painter.end();
 	delete[] points;

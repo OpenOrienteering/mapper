@@ -125,43 +125,36 @@ void ReopenTemplateDialog::OpenTemplateList::dropEvent(QDropEvent* event)
 	// Loop over the resulting list and find the item with integer UserData.
 	// NOTE: if you know a better way of doing this, I would like to hear it!
 	int src_pos = -1;
-	int target_pos = 0;
+	int target_pos = dialog->map->getNumTemplates();
 	int item_index = -1;
-	bool in_front = false;
-	for (int i = count() - 1; i >= 0; --i)
+	int map_row = count();
+	for (int i = 0; src_pos < 0; ++i)
 	{
-		QListWidgetItem* cur_item = item(i);
-		if (cur_item->data(Qt::UserRole).type() == QVariant::Int)
+		auto item_data = item(i)->data(Qt::UserRole);
+		switch (item_data.type())
 		{
-			src_pos = cur_item->data(Qt::UserRole).toInt();
+		case QVariant::Int:
 			item_index = i;
+			src_pos = item_data.toInt();
 			break;
+		case QVariant::Bool:
+			map_row = i;
+			break;
+		default:
+			--target_pos;
+			Q_ASSERT(target_pos >= 0);
 		}
-		if (cur_item->data(Qt::UserRole).type() != QVariant::Bool)
-			++target_pos;
-		else
-			in_front = true;
 	}
-	Q_ASSERT(target_pos <= dialog->map->getNumTemplates());
 	
-	if (!in_front)
-		dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() + 1);
-	if (!dialog->map->reloadClosedTemplate(src_pos, target_pos, dialog, dialog->map_directory))
-	{
-		// Revert action
-		if (!in_front)
-			dialog->map->setFirstFrontTemplate(dialog->map->getFirstFrontTemplate() - 1);
-		delete item(item_index);
-	}
-	else
-	{
-		// Template filename may change if file has moved
-		item(item_index)->setText(dialog->map->getTemplate(target_pos)->getTemplateFilename());
-		// Prepare for next drop
-		item(item_index)->setData(Qt::UserRole, QVariant());
-		
-		dialog->clear_button->setEnabled(dialog->map->getNumClosedTemplates() > 0);
-	}
+	auto const insert_pos = (item_index == map_row + 1) ? -1 : target_pos;
+	dialog->map->reloadClosedTemplate(src_pos, insert_pos, dialog, dialog->map_directory);
+	
+	// Template filename may change if file has moved
+	item(item_index)->setText(dialog->map->getTemplate(target_pos)->getTemplateFilename());
+	// Prepare for next drop
+	item(item_index)->setData(Qt::UserRole, QVariant());
+	
+	dialog->clear_button->setEnabled(dialog->map->getNumClosedTemplates() > 0);
 	
 	// Always re-fill this list to update the list indices in the item data
 	dialog->updateClosedTemplateList();
