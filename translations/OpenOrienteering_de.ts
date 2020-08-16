@@ -200,7 +200,7 @@
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="229"/>
         <source>Element drawing at boundary</source>
-        <translation>Zeichnen von Elementen  am Rand</translation>
+        <translation>Zeichnen von Elementen am Rand</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="231"/>
@@ -2597,7 +2597,7 @@
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="548"/>
         <source>Unsupported obsolete file format version. Please use program version v%1 or older to load and update the file.</source>
-        <translation>Nicht unterstütztes veraltetes Dateiformat.  Bitte verwenden Sie Programmversion v%1 oder älter, um die Datei zu laden und zu aktualisieren.</translation>
+        <translation>Nicht unterstütztes veraltetes Dateiformat. Bitte verwenden Sie Programmversion v%1 oder älter, um die Datei zu laden und zu aktualisieren.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="560"/>
@@ -5551,7 +5551,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nicht</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5690,7 +5690,7 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2614"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die benutzerdefinierte Ausrichtung von Vorlage &apos;%1&apos; kann nicht gespeichert werden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2944"/>
@@ -6126,12 +6126,12 @@ Zoomen ist mit dem Mausrad möglich.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="199"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="220"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Fläche füllen</translation>
     </message>
 </context>
 <context>
@@ -8583,7 +8583,7 @@ Speichern im GIF-Format wird nicht unterstützt. Zeichnungen auf solchen Vorlage
         <location filename="../src/templates/template_track.cpp" line="294"/>
         <source>These are not configured yet, so they will be shown as the next step.</source>
         <translatorcomment>Add explanation for &quot;these&quot;.</translatorcomment>
-        <translation>Diese ist nicht nicht konfiguriert, daher werden die Einstellungen dazu als nächster Schritt angezeigt.</translation>
+        <translation>Diese ist nicht konfiguriert, daher werden die Einstellungen dazu als nächster Schritt angezeigt.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="295"/>
@@ -9068,7 +9068,7 @@ Die höchste unterstütze Version ist %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkonsistente Deklination/Nadelabweichung festgestellt. Behoben durch automatisches Setzen der Deklination auf %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
