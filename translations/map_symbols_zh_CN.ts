@@ -3181,6 +3181,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>单点</translation>
     </message>
     <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 113.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
         <source>Very broken ground</source>
         <comment>Name of symbol 114</comment>
         <translation>非常坑洼地面</translation>
@@ -3314,9 +3319,19 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <translation>单点符号</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder field, single triangle, enlarged</source>
         <comment>Name of symbol 208.2</comment>
         <translation>大的单点符号</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.2</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -3492,6 +3507,11 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
         <comment>Description of symbol 406</comment>
         <translation>植被茂密（能见度低）的区域，使行进速度降低到正常速度的 60-80%左右。</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
@@ -3783,9 +3803,19 @@ For impassable features, the line shall be broken at the crossing point. For pas
         <translation>突出的人造特征物-⚪</translation>
     </message>
     <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
         <source>Prominent man-made feature – x</source>
         <comment>Name of symbol 531</comment>
         <translation>特殊人造地物 – x</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 531</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -4205,6 +4235,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土墙</translation>
     </message>
     <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
+    </message>
+    <message>
         <source>Erosion gully</source>
         <comment>Name of symbol 109</comment>
         <translation>冲沟</translation>
@@ -4220,9 +4255,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小冲沟</translation>
     </message>
     <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
+    </message>
+    <message>
         <source>Small knoll</source>
         <comment>Name of symbol 112</comment>
         <translation>小土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -4230,9 +4285,49 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小凹地</translation>
     </message>
     <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
+    </message>
+    <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>崎岖的地面，大的</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>点的尺寸会变化。</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>特殊地形特征</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -4290,9 +4385,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>可翻越的石崖</translation>
     </message>
     <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
         <translation>可翻越的石崖-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -4300,9 +4410,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -4360,14 +4495,39 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>石块地</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 209</comment>
         <translation>石群</translation>
     </message>
     <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
+    </message>
+    <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>大的石群</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -4435,6 +4595,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>水坑</translation>
     </message>
     <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
+    </message>
+    <message>
         <source>Crossable watercourse</source>
         <comment>Name of symbol 305</comment>
         <translation>可涉水道</translation>
@@ -4468,6 +4633,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Narrow marsh</source>
         <comment>Name of symbol 308</comment>
         <translation>小水沟</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -4505,14 +4675,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不明显沼泽</translation>
     </message>
     <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
+    </message>
+    <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 311.1</comment>
         <translation>不明显沼泽-最小尺寸</translation>
     </message>
     <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>井</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
+    </message>
+    <message>
         <source>Spring</source>
         <comment>Name of symbol 313</comment>
         <translation>泉</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Special water feature</source>
@@ -4563,6 +4753,41 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Where there are scattered trees in rough open land, areas of white (or green) should appear in the tone. Such an area may be generalised by using a regular pattern of large white dots in the yellow screen. Areas smaller than 16 mm in the maps scale are shown as rough open land (403). Individual trees may be added (418, 419, 420).</source>
         <comment>Description of symbol 404</comment>
         <translation>凌乱开阔土地上零星树木，白色（或绿色）点应出现在其中。可以通过在黄色屏幕中使用大白点的规则图案来概括此类区域。地图比例尺中小于16毫米的区域显示为粗糙的开阔土地（403）。可以添加单个树（418、419、420）。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -4857,14 +5082,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>不可穿越管道</translation>
+    </message>
+    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation>高塔</translation>
     </message>
     <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
+    </message>
+    <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
         <translation>小塔</translation>
+    </message>
+    <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
     </message>
     <message>
         <source>Cairn</source>
@@ -4875,6 +5115,31 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Fodder rack</source>
         <comment>Name of symbol 538</comment>
         <translation>饲料架</translation>
+    </message>
+    <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -4902,14 +5167,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>套版线</translation>
     </message>
     <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
+    </message>
+    <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
         <translation>高程点</translation>
     </message>
     <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
         <translation>高程注记</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -7984,6 +8264,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土丘</translation>
     </message>
     <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>小凹地</translation>
@@ -7992,6 +8277,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -8039,14 +8329,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>可翻越的石崖-最小尺寸</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -8072,6 +8382,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Boulder field</source>
         <comment>Name of symbol 208</comment>
         <translation>石块地</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
     </message>
     <message>
         <source>Stony ground</source>
@@ -8157,6 +8472,26 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Rough open land with scattered trees</source>
         <comment>Name of symbol 404</comment>
         <translation>稀树凌乱空旷地(乔木)</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -8307,6 +8642,16 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0.1</comment>
         <translation>高程点</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0.2</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -10532,9 +10877,24 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>可翻越的石崖</translation>
     </message>
     <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
         <source>Passable rock face, minimum size</source>
         <comment>Name of symbol 203.0.1</comment>
         <translation>可翻越的石崖-最小尺寸</translation>
+    </message>
+    <message>
+        <source>A small vertical rock face (minimum height 1 m) may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.0.1</comment>
+        <translation>小且竖直岩面（最小高度 1m ）可以不使用短线显示。如果岩面下降的方向从等高线上看不明显或识别度不高，应该在下降方向上绘制短线。对于没有显示短线的可翻越岩面，线的末端可以圆滑，来提高识别度。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags</source>
+        <comment>Name of symbol 203.1</comment>
+        <translation>可翻越的石崖，无短线</translation>
     </message>
     <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
@@ -10542,9 +10902,34 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
     </message>
     <message>
+        <source>Passable rock face, no tags, minimum size</source>
+        <comment>Name of symbol 203.1.1</comment>
+        <translation>可翻越的石崖，无短线，最小尺寸</translation>
+    </message>
+    <message>
         <source>Should be used if the direction of fall of the rock face is apparent from the contours and the legibility is good.</source>
         <comment>Description of symbol 203.1.1</comment>
         <translation>如果从等高线上看不到岩石表面的下降方向，或为了提高易读性，应沿下降方向画上短锯齿线。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded</source>
+        <comment>Name of symbol 203.2</comment>
+        <translation>可翻越石崖，无短线，圆滑</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
+    </message>
+    <message>
+        <source>Passable rock face, no tags, rounded, minimum size</source>
+        <comment>Name of symbol 203.2.1</comment>
+        <translation>可翻越石崖，无短线，圆滑，最小尺寸</translation>
+    </message>
+    <message>
+        <source>For passable rock faces shown without tags the ends of the line may be rounded to improve legibility.</source>
+        <comment>Description of symbol 203.2.1</comment>
+        <translation>对于无短线显示的可翻越石崖，线的末端应该圆滑来提高辨识性。</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -10582,14 +10967,39 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>石块地</translation>
     </message>
     <message>
+        <source>An area which is covered with so many blocks of stone that they cannot be marked individually is shown with randomly orientated solid triangles with sides of ratio 8:6:5. A minimum of two triangles should be used. The going is indicated by the density of the triangles. To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208</comment>
+        <translation>覆盖有很多块无法单独标记的石头的区域，由任意指向的实心三角形显示，三角形三边的比例为 8:6:5 。应该最少使用两个三角形。通过性由三角形的密度指示。为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
+        <source>Boulder field, large</source>
+        <comment>Name of symbol 208.1</comment>
+        <translation>石块地，大的</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder fields with a significant difference in boulder size it is permitted to enlarge the triangles by 20%.</source>
+        <comment>Description of symbol 208.1</comment>
+        <translation>为了能够显示石块尺寸显著不同的石块地之间的区别，允许将三角形放大 20% 。</translation>
+    </message>
+    <message>
         <source>Boulder cluster</source>
         <comment>Name of symbol 209</comment>
         <translation>石群</translation>
     </message>
     <message>
+        <source>A small distinct group of boulders so closely clustered together that they cannot be marked individually. The symbol is an equilateral triangle orientated to the north. To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209</comment>
+        <translation>小的清晰的一组石块特别密集地聚在一起，使它们不能各自标记。符号是指向北的等边三角形。为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
+    </message>
+    <message>
         <source>Boulder cluster, large</source>
         <comment>Name of symbol 209.1</comment>
         <translation>大的石群</translation>
+    </message>
+    <message>
+        <source>To be able to show the distinction between boulder clusters with significant difference in size it is permitted to enlarge this symbol by 25% (1.0 mm).</source>
+        <comment>Description of symbol 209.1</comment>
+        <translation>为了能够显示尺寸明显不同的石群之间的差别，允许将此符号放大 25% （ 1mm ）。</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature cannot be crossed.</source>
@@ -10879,14 +11289,49 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>射击场显示为特殊符号，表示需要小心。关联的建筑物分别标记。</translation>
     </message>
     <message>
+        <source>Uncrossable pipeline</source>
+        <comment>Name of symbol 534</comment>
+        <translation>不可穿越管道</translation>
+    </message>
+    <message>
         <source>High tower</source>
         <comment>Name of symbol 535</comment>
         <translation>高塔</translation>
     </message>
     <message>
+        <source>A high tower or large pylon, standing above the level of the surrounding forest. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 535</comment>
+        <translation>高塔或大型电缆塔，高于周围森林的高度而矗立，位置在符号的重心处。</translation>
+    </message>
+    <message>
         <source>Small tower</source>
         <comment>Name of symbol 536</comment>
         <translation>小塔</translation>
+    </message>
+    <message>
+        <source>An obvious shooting platform or seat, or small tower. Location is at the centre of gravity of the symbol.</source>
+        <comment>Description of symbol 536</comment>
+        <translation>明显的射击平台或座位、小塔。位置在符号的重心处。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 539</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 539</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Special man-made feature</source>
+        <comment>Name of symbol 540</comment>
+        <translation>特别的人工特征</translation>
+    </message>
+    <message>
+        <source>Special man-made features are shown with these symbols. The definition of the symbols must be given in each case in the map legend.</source>
+        <comment>Description of symbol 540</comment>
+        <translation>特别的人工特征以这些符号显示。每种情况必须在图例中给出符号的定义。</translation>
     </message>
     <message>
         <source>Magnetic north line</source>
@@ -10914,14 +11359,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>套版线</translation>
     </message>
     <message>
+        <source>At least three registration marks must be placed within the frame of a map in a non-symmetrical position. In addition, a colour check should also be possible.</source>
+        <comment>Description of symbol 602</comment>
+        <translation>必须在地图框内必须将至少三个套版线放置在非对称的位置。此外，应该能够进行颜色检查。</translation>
+    </message>
+    <message>
         <source>Spot height, dot</source>
         <comment>Name of symbol 603.0</comment>
         <translation>高程点</translation>
     </message>
     <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.0</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
+    </message>
+    <message>
         <source>Spot height, text</source>
         <comment>Name of symbol 603.1</comment>
         <translation>高程注记</translation>
+    </message>
+    <message>
+        <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre. The figures are orientated to the north. Water levels are given without the dot.</source>
+        <comment>Description of symbol 603.1</comment>
+        <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -11111,9 +11571,19 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土墙</translation>
     </message>
     <message>
+        <source>A small or partly ruined earth wall shall be shown with a dashed line. Minimum height is 0.5 m.</source>
+        <comment>Description of symbol 108</comment>
+        <translation>小的或部分损坏的土墙应该以虚线显示，最小高度为0.5m。</translation>
+    </message>
+    <message>
         <source>Small erosion gully</source>
         <comment>Name of symbol 110</comment>
         <translation>小冲沟</translation>
+    </message>
+    <message>
+        <source>A small erosion gully or trench. Minimum depth 0.5 m.</source>
+        <comment>Description of symbol 110</comment>
+        <translation>小的被侵蚀的溪谷或沟渠，最小深度0.5m。</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -11121,14 +11591,69 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小土丘</translation>
     </message>
     <message>
+        <source>A small obvious mound or rocky knoll which cannot be drawn to scale with a contour (diameter of mound less than ca. 5 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 112</comment>
+        <translation>小的明显的土丘或岩丘，无法与等高线成比例绘制（土丘直径小于大约 5m ）。小丘的高度突出周围地面应该最小为 1m 。符号不能接触等高线。</translation>
+    </message>
+    <message>
+        <source>Elongated knoll</source>
+        <comment>Name of symbol 113</comment>
+        <translation>长土丘</translation>
+    </message>
+    <message>
+        <source>A small obvious elongated knoll which cannot be drawn to scale with a contour (length less than 12 m and width less than 4 m). The height of the knoll should be a minimum of 1 m from the surrounding ground. Knolls larger than this must be shown by contours. The symbol may not be drawn in free form or such that two elongated knoll symbols overlap. The symbol may not touch a contour line.</source>
+        <comment>Description of symbol 113</comment>
+        <translation>小的明显的长土丘，无法与等高线成比例绘制（长度小于 12m ，宽度小于 4m ）。小丘的高度突出周围地面应该最小为 1m 。大于此尺寸的小丘应该用等高线绘制。符号不能以自由形式绘制或者使两个小丘符号重叠。符号不能接触等高线。</translation>
+    </message>
+    <message>
         <source>Small depression</source>
         <comment>Name of symbol 115</comment>
         <translation>小凹地</translation>
     </message>
     <message>
+        <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
+        <comment>Description of symbol 115</comment>
+        <translation>小的窄的自然凹地或坑洼（直径至少为 2m ），不能用等高线成比例绘制，要另外用半圆表示。深度低于周围地面应该最小为 1m 。位置在符号的重心处，符号指向北。符号116用于人工土坑。</translation>
+    </message>
+    <message>
         <source>Pit</source>
         <comment>Name of symbol 116</comment>
         <translation>土坑或洞</translation>
+    </message>
+    <message>
+        <source>Pits and holes with distinct steep sides which cannot be shown to scale by symbol 106 (minimum diameter 2 m). Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol which is orientated to north.</source>
+        <comment>Description of symbol 116</comment>
+        <translation>某一侧明显陡直的土坑或洞，不能用符号106成比例地绘制（直径至少 2m）。最小深度低于周围地面应该为 1m 。位置在符号的重心处，符号指向北。</translation>
+    </message>
+    <message>
+        <source>Broken ground, small</source>
+        <comment>Name of symbol 117.1</comment>
+        <translation>崎岖的地面，小的</translation>
+    </message>
+    <message>
+        <source>An area of pits or knolls which is too intricate to be shown in detail. The density of randomly placed dots may vary according to the detail on the ground.</source>
+        <comment>Description of symbol 117.1</comment>
+        <translation>太复杂而无法显示细节的土坑或小丘区域。自由放置的点的密度会在根据地面上的细节而变化。</translation>
+    </message>
+    <message>
+        <source>Broken ground, big</source>
+        <comment>Name of symbol 117.2</comment>
+        <translation>崎岖的地面，大的</translation>
+    </message>
+    <message>
+        <source>The size of the dots may vary.</source>
+        <comment>Description of symbol 117.2</comment>
+        <translation>点的尺寸会变化。</translation>
+    </message>
+    <message>
+        <source>Special land form feature</source>
+        <comment>Name of symbol 118</comment>
+        <translation>特殊地形特征</translation>
+    </message>
+    <message>
+        <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
+        <comment>Description of symbol 118</comment>
+        <translation>这个符号可以用于特别小的地形特征。符号的定义必须在地图图例中给出。</translation>
     </message>
     <message>
         <source>Rocky pit</source>
@@ -11196,6 +11721,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>水坑</translation>
     </message>
     <message>
+        <source>A water-filled pit or an area of water which is too small to be shown to scale. Location is the centre of gravity of the symbol, which is orientated to north.</source>
+        <comment>Description of symbol 303</comment>
+        <translation>太小而不能成比例显示的注水的土坑或有水的区域。位置在符号的中心处，指向北。</translation>
+    </message>
+    <message>
         <source>Minor water channel</source>
         <comment>Name of symbol 307</comment>
         <translation>小水道</translation>
@@ -11206,9 +11736,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>天然或人造的次要水道，可能仅间歇性地有水。</translation>
     </message>
     <message>
+        <source>Forest: difficult to run</source>
+        <comment>Name of symbol 408</comment>
+        <translation>森林：奔跑困难</translation>
+    </message>
+    <message>
+        <source>An area with dense trees or thicket (low visibility) which reduce running to ca. 20-60% of normal speed.</source>
+        <comment>Description of symbol 408</comment>
+        <translation>密集的树或灌木区域（视野不好），降低奔跑速度约为正常速度的 20 ~ 60% 。</translation>
+    </message>
+    <message>
         <source>Narrow marsh</source>
         <comment>Name of symbol 308</comment>
         <translation>小水沟</translation>
+    </message>
+    <message>
+        <source>A marsh or trickle of water which is too narrow to be shown with symbol 310 (less than ca. 5 m wide).</source>
+        <comment>Description of symbol 308</comment>
+        <translation>太窄（小于大约 5m 宽）而无法用符号 310 显示的有水的湿地或溪流。</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -11246,14 +11791,34 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>不明显沼泽</translation>
     </message>
     <message>
+        <source>An indistinct or seasonal marsh or area of gradual transition from marsh to firm ground, which is crossable. The edge is generally indistinct and the vegetation similar to that of the surrounding ground. The symbol should be combined with vegetation symbols to show runnability and openness.</source>
+        <comment>Description of symbol 311</comment>
+        <translation>明显的或季节性的沼泽或从沼泽逐渐变成硬地的区域，是可通过的。边沿通常清晰，并且植被与周围环境相似。这个符号应该与植被符号结合，来显示可跑性和开阔程度。</translation>
+    </message>
+    <message>
         <source>Indistinct marsh, minimum size</source>
         <comment>Name of symbol 311.1</comment>
         <translation>不明显沼泽-最小尺寸</translation>
     </message>
     <message>
+        <source>Well</source>
+        <comment>Name of symbol 312</comment>
+        <translation>井</translation>
+    </message>
+    <message>
+        <source>Wells and captive springs, which are clearly visible on the ground.</source>
+        <comment>Description of symbol 312</comment>
+        <translation>在地面上清晰可见的井和不流动的泉。</translation>
+    </message>
+    <message>
         <source>Spring</source>
         <comment>Name of symbol 313</comment>
         <translation>泉</translation>
+    </message>
+    <message>
+        <source>The source of a stream with a distinct outflow. The symbol is orientated to open downstream.</source>
+        <comment>Description of symbol 313</comment>
+        <translation>具有明显出口的溪流的源头。符号指向开放的下游。</translation>
     </message>
     <message>
         <source>Special water feature</source>
@@ -11264,6 +11829,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>A special small water feature. The definition of the symbol must always be given in the map legend.</source>
         <comment>Description of symbol 314</comment>
         <translation>一种特殊的小水体。必须在地图图例中给出符号的定义。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: slow running</source>
+        <comment>Name of symbol 407</comment>
+        <translation>灌木丛：可缓慢通过</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 407</comment>
+        <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Undergrowth: difficult to run</source>
+        <comment>Name of symbol 409</comment>
+        <translation>灌木丛：难以奔跑</translation>
+    </message>
+    <message>
+        <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 20-60% of normal speed. This symbol may not be combined with 406 or 408.</source>
+        <comment>Description of symbol 409</comment>
+        <translation>密集但视野良好的灌木丛，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 20 ~ 60% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable</source>
+        <comment>Name of symbol 410</comment>
+        <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -11344,6 +11934,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Fodder rack</source>
         <comment>Name of symbol 538</comment>
         <translation>饲料架</translation>
+    </message>
+    <message>
+        <source>A fodder rack which is free standing or built on to a tree. Location is at the centre of gravity of the symbol. For land access reasons these may be omitted.</source>
+        <comment>Description of symbol 538</comment>
+        <translation>饲料架独立树立或建在树上。位置在符号的重心处。因为是可以接近的地方，所以这些应该省略。</translation>
     </message>
 </context>
 <context>

@@ -311,7 +311,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordbank är en tydlig förändring i markhöjd som tydligt kan urskiljas från omgivningen, t.ex grus eller sandgropar, väg eller järnvägsbanker eller försänkningar.
+Minsta höjd: 1 m. En jordbank kan påverka löpningsmöjligheterna. Taggarna representerar fulla längden av jordbanken.
+För långa jordbanker är det tillåtet att använda kortare taggar än minimumlängden vid ändarna. Om två jordbanker är nära varandra kan taggarna möjligtvis utelämnas. Opasserbara jordbanker ska representeras som en opasserbar brant(201).
+Minsta längd: 0,6 mm (avtryck 9m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -727,7 +730,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
@@ -770,7 +773,7 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 203.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -913,7 +916,22 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt,
+redovisas med slumpmässigt utplacerade fyllda roterade trianglar,
+sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6).
+Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas
+bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med
+stenig mark.
+Minst 2 trianglar ska användas. En triangel kan användas om den kombineras
+med annan sten/brantsymbol, exempelvis direkt under branter (201,202),
+bredvid stenar (204-206) eller kombinerat med stenig mark (210-212).
+Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm (centrummått).
+Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm (centrummått).
+Täthet: 0,8-1 symbol/mm2
+För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet
+att förstora somliga trianglar till 120 %.
+Utbredning av en triangel: 12 x 6 m.
+</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -1140,7 +1158,10 @@ Dominant areas of water may be shown with 70% colour. Small areas of water and b
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En svart konturlinje betyder att föremålet inte kan passeras.
+Större vattenytor kan redovisas med 70 % punktraster. Mindre vattenytor och vattenytor med smalare partier ska redovisas med helton.
+Minsta bredd (innermått): 0,3 mm.
+Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 x 8 m)</translation>
     </message>
     <message>
         <source>Uncrossable body of water (dominant)</source>
@@ -1152,7 +1173,9 @@ Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
 Minimum width (inside): 0.3 mm.
 Minimum area (inside): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Större vattenytor kan redovisas med 70 % punktraster. Mindre vattenytor och vattenytor med smalare partier ska redovisas med helton.
+Minsta bredd (innermått): 0,3 mm.
+Minsta yta (innermått): 0,55 x 0,55 mm (utbredning 8 x 8 m)</translation>
     </message>
     <message>
         <source>Uncrossable body of water, bank line</source>
@@ -1195,7 +1218,12 @@ Minimum area (inside): 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 Minimum width (full colour): 0.3 mm.
 Minimum area (full colour): 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En grund vattenfylld yta, som tidvis kan vara uttorkad, kan redovisas med streckad konturlinje. Mindre grunda vattenytor kan redovisas med 100% blå (utan konturlinje).
+Minsta bredd (innermått): 0,3 mm.
+Minsta yta (innermått): 0,7 x 0,7 mm (utbredning 10,5 x 10,5 m)
+Minsta bredd (helton): 0,3 mm.
+Minsta yta (helton): 0,55 x 0,55 mm (utbredning 8 x 8 m)
+</translation>
     </message>
     <message>
         <source>Shallow body of water, solid outline</source>
@@ -1866,7 +1894,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
@@ -3493,6 +3521,11 @@ To be able to show obvious height differences within a boulder field, it is perm
         <translation>Stenig mark, löphindrande</translation>
     </message>
     <message>
+        <source>Stony ground, individual dot</source>
+        <comment>Name of symbol 210.1</comment>
+        <translation>Stenig mark, enskiljd punkt</translation>
+    </message>
+    <message>
         <source>Stony ground, walk</source>
         <comment>Name of symbol 211</comment>
         <translation>Stenig mark, svårlöpt</translation>
@@ -4402,7 +4435,7 @@ Minimum length: 0.9 mm (footprint 3.6 m).</source>
     <message>
         <source>Rocky pit or cave (without a distinct entrance)</source>
         <comment>Name of symbol 203</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stenig grop eller grotta (utan tydlig ingång)</translation>
     </message>
     <message>
         <source>A rocky pit, hole, cave (without a distinct entrance) or mineshaft which may constitute a danger to the competitor.
@@ -4624,7 +4657,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>Uncrossable body of water (full colour)</source>
         <comment>Name of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar vattenyta (full färg)</translation>
     </message>
     <message>
         <source>An area of deep water such as a lake, pond, river or fountain. The dark blue colour and the bordering black line indicate that the feature shall not be crossed.
@@ -8714,7 +8747,9 @@ Stödkurvans nivå måste väljas med försiktighet i flack terräng. Den optima
 Minimum length (non-closed): two dashes.
 Minimum length of a form line, knoll or depression: 1.1 mm (footprint 16.5 m)</source>
         <comment>Description of symbol 103</comment>
-        <translation type="unfinished"></translation>
+        <translation>Hjälpkurvor används för att komplettera kurvinformationen. De användsenbart när fullständig redovisning med vanliga höjdkurvor inte är möjlig.Hjälpkurvor ska inte användas som intermediära kurvor. Endast enhjälpkurva ska användas mellan närliggande höjdkurvor.Det är mycket viktigt att hjälpkurvorna används logiskt, vilket innebär attstart- och slut av en hjälpkurva ska vara parallella med närliggandehöjdkurvor.Uppehållen i hjälpkurvorna ska placeras på någorlunda raka delar avhjälpkurvan.Hjälpkurvor kan användas för att skilja mellan platta och mer tydliga höjderoch gropar (lägsta höjd /djup bör vara 1 m).Överdriven användning av hjälpkurvor ska undvikas då det stör dentredimensionella terrängbilden och försvårar kartläsningen.
+Minsta längd (öppen hjälpkurva): två streck.
+Minsta längd för en hjälpkurvehöjd/-grop: 1,1 mm (16,5 m) yttermått</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -8738,7 +8773,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordbank är en tydlig förändring i markhöjd som tydligt kan urskiljas från omgivningen, t.ex grus eller sandgropar, väg eller järnvägsbanker eller försänkningar.
+Minsta höjd: 1 m. En jordbank kan påverka löpningsmöjligheterna. Taggarna representerar fulla längden av jordbanken.
+För långa jordbanker är det tillåtet att använda kortare taggar än minimumlängden vid ändarna. Om två jordbanker är nära varandra kan taggarna möjligtvis utelämnas. Opasserbara jordbanker ska representeras som en opasserbar brant(201).
+Minsta längd: 0,6 mm (avtryck 9m).</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -8751,7 +8789,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordbank är en tydlig förändring i markhöjd som tydligt kan urskiljas från omgivningen, t.ex grus eller sandgropar, väg eller järnvägsbanker eller försänkningar.
+Minsta höjd: 1 m. En jordbank kan påverka löpningsmöjligheterna. Taggarna representerar fulla längden av jordbanken.
+För långa jordbanker är det tillåtet att använda kortare taggar än minimumlängden vid ändarna. Om två jordbanker är nära varandra kan taggarna möjligtvis utelämnas. Opasserbara jordbanker ska representeras som en opasserbar brant(201).
+Minsta längd: 0,6 mm (avtryck 9m).</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -8764,7 +8805,10 @@ Minimum height: 1 m. An earth bank may impact runnability. The tags represent th
 For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol impassable cliff (201).
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>En jordbank är en tydlig förändring i markhöjd som tydligt kan urskiljas från omgivningen, t.ex grus eller sandgropar, väg eller järnvägsbanker eller försänkningar.
+Minsta höjd: 1 m. En jordbank kan påverka löpningsmöjligheterna. Taggarna representerar fulla längden av jordbanken.
+För långa jordbanker är det tillåtet att använda kortare taggar än minimumlängden vid ändarna. Om två jordbanker är nära varandra kan taggarna möjligtvis utelämnas. Opasserbara jordbanker ska representeras som en opasserbar brant(201).
+Minsta längd: 0,6 mm (avtryck 9m).</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -8784,7 +8828,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 104.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -8795,7 +8839,8 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
         <source>Distinct earth wall. Minimum height: 1 m.
 Minimum length: 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tydlig jordvall.Lägsta höjd:1m.
+Minsta längd: 1,4 mm (21 m).</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -8807,7 +8852,9 @@ Minimum length: 1.4 mm (footprint 21 m).</source>
 Minimum length: 1.15 mm (footprint 17 m).
 Contour lines should not be broken around this symbol.</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>En erosionsfåra som är för liten för att redovisas med symbol 104(skärning) redovisas med en enkellinje. Minstadjup: 1 m.
+Minsta längd:1,15 mm(17 m).
+Höjdkurvor bör ritas utan uppehåll genom symbolen.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -8820,7 +8867,10 @@ Minimum height: 1 m.
 The symbol shall not touch or overlap contours.
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig kulle eller topp som inte kan ritas skalriktigt med höjdkurva.
+Lägsta höjd: 1 m.
+Symbolen ska inte vidröra eller överlappa höjdkurvor.
+Utbredning: 7,5 x 7,5 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -8834,7 +8884,12 @@ Small depressions with steep sides are represented with symbol Pit (112).
 The symbol shall not touch or overlap other brown symbols. Location is the centre of gravity of the symbol, and the symbol is orientated to north.
 Footprint: 12 m x 6 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>En liten grop eller håla utan branta sidor som inte kan redovisas
+skalenligt med höjdkurvor. Minsta djup: 1 m. Minsta bredd: 2 m.
+Små gropar med branta sidor redovisas med symbol 112.
+Symbolen får inte vidröra eller överlappa andra bruna symboler.
+Symbolens tyngdpunkt anger läget. Symbolen orienteras mot norr.
+Utbredning: 12 x 6 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -8848,7 +8903,19 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den
+inte kan eller är farlig att passera.
+Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens
+avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste
+baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas
+vid linjesluten.
+Avståndet mellan två opasserbara branter eller mellan opasserbar brant
+och andra opasserbara symboler måste vara mer än 0,3 mm.
+När en brant ligger i anslutning till vatten så att passage längs med
+stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller
+ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant
+ska ansluta till höjdkurvorna.
+Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m)</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -8862,17 +8929,29 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den
+inte kan eller är farlig att passera.
+Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens
+avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste
+baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas
+vid linjesluten.
+Avståndet mellan två opasserbara branter eller mellan opasserbar brant
+och andra opasserbara symboler måste vara mer än 0,3 mm.
+När en brant ligger i anslutning till vatten så att passage längs med
+stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller
+ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant
+ska ansluta till höjdkurvorna.
+Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m)</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation (from ISOM2000)</source>
         <comment>Name of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar brant, (från ISOM2000)</translation>
     </message>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -8886,7 +8965,19 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.
 Minimum length: 0.6 mm (footprint 9 m).</source>
         <comment>Description of symbol 201.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opasserbar brant, stenbrott eller skärning som är så hög och brant att den
+inte kan eller är farlig att passera.
+Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens
+avslutningar kan vara avrundade eller raka. Vid redovisning i plan måste
+baslinjen vara minst 0,35 mm bred. Kortare lutningsstreck kan användas
+vid linjesluten.
+Avståndet mellan två opasserbara branter eller mellan opasserbar brant
+och andra opasserbara symboler måste vara mer än 0,3 mm.
+När en brant ligger i anslutning till vatten så att passage längs med
+stranden nedanför branten inte är möjlig, utelämnas strandkonturen eller
+ska lutningsstrecken tydligt gå över strandkantlinjen. En opasserbar brant
+ska ansluta till höjdkurvorna.
+Kortaste längd, rakt linjeslut: 0,6 mm (9 m), runt linjeslut: 0,7 mm (10,5 m)</translation>
     </message>
     <message>
         <source>Impassable cliff, tag line</source>
@@ -8906,7 +8997,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Cliff</source>
@@ -8972,7 +9063,7 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 202.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Boulder</source>
@@ -8984,7 +9075,14 @@ Minimum length: 0.6 mm (footprint 9 m).</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) boulders with significant difference in size, it is permitted to enlarge the symbol to 0.5 mm for some of the boulders.
 Footprint: 6 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 204</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig sten (bör vara högre än 1 m) som omedelbart kan identifieras i
+terrängen.
+Grupper av stenar redovisas med symbol 207 (grupp av sten) eller med
+blockterrängsymbol (208,209).
+För att kunna särskilja närliggande stenar (närmare än 30 meter) med
+betydande storleksskillnad, är det tillåtet att förstora symbolen till
+0,5 mm för somliga stenar.
+Utbredning: 6 m (7,5 m).</translation>
     </message>
     <message>
         <source>Boulder or large boulder, different size</source>
@@ -9011,7 +9109,11 @@ of the boulders.</source>
 To be able to show the distinction between neighbouring (closer than 30 m apart) large boulders with significant difference in size, it is permitted to reduce the size of the symbol to 0.5 mm for some of the boulders.
 Footprint: 9 m diameter (7.5 m diameter).</source>
         <comment>Description of symbol 205</comment>
-        <translation type="unfinished"></translation>
+        <translation>En särskilt stor och tydlig sten. En stor sten bör vara mer än 2 m hög.
+För att kunna särskilja närliggande stenar (närmare än 30 meter) med
+betydande storleksskillnad, är det tillåtet att förminska symbolen till
+0,5 mm för somliga stenar.
+Utbredning: 9 m (7,5 m).</translation>
     </message>
     <message>
         <source>Gigantic boulder</source>
@@ -9024,7 +9126,12 @@ The gap between gigantic boulders or between gigantic boulders and other impassa
 Minimum width: 0.25 mm (footprint 3.75 m).
 Minimum area: 0.3 mm² (footprint 67 m²).</source>
         <comment>Description of symbol 206</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gigantisk sten, stenpelare eller klippa ska redovisas som en yta. Objekten kan
+variera i form och bredd.
+Avståndet mellan två gigantiska stenar eller mellan gigantiska stenar och
+andra opasserbara symboler måste vara mer än 0,15 mm.
+Minsta bredd: 0,25 mm (3,75 m).
+Minsta yta: 0,3 mm2 (67 m2)</translation>
     </message>
     <message>
         <source>Boulder cluster</source>
@@ -9038,7 +9145,15 @@ To be able to show the distinction between neighbouring (maximum 30 m apart) bou
 The symbol is orientated to north.
 Footprint: 12 m x 10 m.</source>
         <comment>Description of symbol 207</comment>
-        <translation type="unfinished"></translation>
+        <translation>En tydlig grupp av stenar som ligger så tätt att de inte kan redovisas
+individuellt. Stenarna bör vara högre än 1 m.
+En stengrupp måste tydligt kunna identifieras som en grupp av stenar.
+För att kunna särskilja närliggande stengrupper (närmare än 30 meter) med
+betydande storleksskillnad, är det tillåtet att förstora symbolen till 120 %
+(kantlängd 0,96 mm) för somliga stengrupper.
+Tecknet orienteras mot norr.
+Utbredning: 12 x 10 m.
+</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -9048,7 +9163,7 @@ Footprint: 12 m x 10 m.</source>
     <message>
         <source>To be able to show the distinction between neighbouring (maximum 30 m apart) boulder clusters with significant difference in boulder size, it is permitted to use this symbol instead of regular Boulder cluster (207) for some of the boulder clusters.</source>
         <comment>Description of symbol 207.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>För att visa skillnaden mellan näraliggande grupper av stenar (max 30 m isär) av betydligt olika storlket kan man använda denna symbol istället för den vanliga gruppen av stenar (207) för vissa grupper.</translation>
     </message>
     <message>
         <source>Boulder field</source>
@@ -9062,7 +9177,22 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt,
+redovisas med slumpmässigt utplacerade fyllda roterade trianglar,
+sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6).
+Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas
+bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med
+stenig mark.
+Minst 2 trianglar ska användas. En triangel kan användas om den kombineras
+med annan sten/brantsymbol, exempelvis direkt under branter (201,202),
+bredvid stenar (204-206) eller kombinerat med stenig mark (210-212).
+Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm (centrummått).
+Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm (centrummått).
+Täthet: 0,8-1 symbol/mm2
+För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet
+att förstora somliga trianglar till 120 %.
+Utbredning av en triangel: 12 x 6 m.
+</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -9076,7 +9206,22 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt,
+redovisas med slumpmässigt utplacerade fyllda roterade trianglar,
+sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6).
+Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas
+bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med
+stenig mark.
+Minst 2 trianglar ska användas. En triangel kan användas om den kombineras
+med annan sten/brantsymbol, exempelvis direkt under branter (201,202),
+bredvid stenar (204-206) eller kombinerat med stenig mark (210-212).
+Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm (centrummått).
+Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm (centrummått).
+Täthet: 0,8-1 symbol/mm2
+För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet
+att förstora somliga trianglar till 120 %.
+Utbredning av en triangel: 12 x 6 m.
+</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -9086,7 +9231,7 @@ Footprint of individual triangle: 12 m x 6 m.</source>
     <message>
         <source>To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>För att visa en tydlig skilland inom ett område med stenblock är det tillåtet att förstora vissa trianglar till 120%.</translation>
     </message>
     <message>
         <source>Dense boulder field</source>
@@ -9099,7 +9244,15 @@ The maximum centre to centre distance between neighbouring triangles is 0.6 mm.
 Density: 2-3 symbols / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 209</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt
+där löpbarhet är nedsatt, redovisas med slumpmässigt utplacerade fyllda
+roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6).
+Minst 2 trianglar ska användas.
+ Största tillåtna avståndet mellan närliggande trianglar är 0,6 mm (centrummått).
+Täthet: 2-3 symboler/mm2
+För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att
+förstora somliga trianglar till 120 %.
+Utbredning av en triangel: 12 x 6 m.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
@@ -9434,7 +9587,7 @@ A road with two carriageways can be represented using two wide road symbols side
     <message>
         <source>Provided for migration from ISOM2000. Use of this symbol variant is discouraged for new maps.</source>
         <comment>Description of symbol 502.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Försedd för migration från ISOM2000. Denna symbolvariant är inte rekomenderad på nyare kartor.</translation>
     </message>
     <message>
         <source>Road with two carriageways</source>
