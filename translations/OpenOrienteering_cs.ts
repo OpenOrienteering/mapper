@@ -5685,7 +5685,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ne</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5824,7 +5824,7 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2614"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nelze uložit vlastní umístění šablony &apos;% 1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2944"/>
@@ -6285,12 +6285,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="199"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Vymazat</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="220"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyplněná oblast</translation>
     </message>
 </context>
 <context>
@@ -9318,7 +9318,7 @@ Nejvyšší podporovaná verze je %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Byla zjištěna nekonzistentní deklinace / grivace. Vyřešeno automatickým nastavením deklinace na %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
