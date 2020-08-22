@@ -220,6 +220,7 @@ bool operator==(const MapCoord& lhs, const ClipperLib::IntPoint& rhs)
 /**
  * Compares a MapCoord and ClipperLib::IntPoint.
  */
+Q_DECL_UNUSED
 bool operator==(const ClipperLib::IntPoint& lhs, const MapCoord& rhs)
 {
 	return rhs == lhs;
