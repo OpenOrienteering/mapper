@@ -555,7 +555,7 @@ bool Template::setupAndLoad(QWidget* dialog_parent, const MapView* view)
 	if (!isTemplateGeoreferenced() && center_in_view)
 	{
 		auto offset = MapCoord { calculateTemplateBoundingBox().center() };
-		setTemplatePosition(view->center() - offset);
+		setTemplatePosition(view->center() - offset + templatePosition());
 	}
 	
 	return true;
