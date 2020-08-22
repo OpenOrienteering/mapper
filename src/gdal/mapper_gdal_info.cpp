@@ -19,6 +19,7 @@
 
 #include <algorithm>
 #include <cstring>
+#include <exception>
 #include <iostream>
 #include <iterator>
 #include <string>
@@ -102,7 +103,6 @@ void dumpGdalDrivers()
 	
 	std::vector<std::string> raster_import_drivers;
 	std::vector<std::string> vector_import_drivers;
-	std::vector<std::string> secondary_vector_import_drivers;
 	std::vector<std::string> vector_export_drivers;
 	
 	auto const count = GDALGetDriverCount();
@@ -162,8 +162,14 @@ void dumpGdalDrivers()
 
 
 int main(int /*argc*/, char** /*argv*/)
+try
 {
 	GDALAllRegister();
 	dumpGdalDrivers();
 	return 0;
+}
+catch (std::exception& e)
+{
+	std::cout << "Exception: " << e.what() << std::endl;
+	return 1;
 }
