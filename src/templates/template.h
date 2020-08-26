@@ -146,7 +146,8 @@ public:
 	{
 		NoScribbleOptions   = 0x00,
 		FilledAreas         = 0x01,  ///< Fill the area defined by the scribble line.
-		ScribbleOptionsMask = 0x01,  ///< All bits used by ScribbleOption.
+		ComposeBackground   = 0x02,  ///< Draw lines or fill areas only in transparent areas.
+		ScribbleOptionsMask = 0x03,  ///< All bits used by ScribbleOption.
 	};
 	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	

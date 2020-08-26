@@ -38,6 +38,7 @@
 #include <QPen>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPolygonF>
 #include <QRgb>
 #include <QSettings>
@@ -120,6 +121,34 @@ QIcon makeEraserIcon(int const icon_size)
 	return icon;
 }
 
+QIcon makeBackgroundDrawingIcon(int const icon_size)
+{
+	auto const background = QApplication::palette().color(QPalette::Window);
+	QRectF circle = {
+	    0.1*icon_size,  0.1*icon_size,
+	    0.8*icon_size,  0.8*icon_size
+	};
+	QPointF triangle[] = {
+	    { 0,  0 },
+	    { 0.8*icon_size, 0 },
+	    { 0, 1.4*icon_size },
+	};
+	
+	QPixmap pixmap(icon_size, icon_size);
+	pixmap.fill(Qt::transparent);
+	
+	QPainter p(&pixmap);
+	p.setPen(Qt::darkGreen);
+	p.setBrush(Qt::green);
+	p.drawEllipse(circle);
+	p.setPen(Qt::NoPen);
+	p.setBrush(QColor(isDark(background) ? Qt::lightGray : Qt::darkGray));
+	p.drawPolygon(triangle, std::extent<decltype(triangle)>::value);
+	p.end();
+	
+	return QIcon(pixmap);
+}
+
 }
 
 
@@ -194,6 +223,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		}
 		connect(action, &QAction::triggered, this, [this, color]() {
 			erasing.setFlag(ExplicitErasing, false);
+			background_drawing_action->setEnabled(true);
 			setColor(color);
 		});
 		++count;
@@ -204,8 +234,19 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	erase_action->setActionGroup(color_options);
 	connect(erase_action, &QAction::triggered, this, [this]() {
 		erasing.setFlag(ExplicitErasing, true);
+		background_drawing_action->setEnabled(false);
 	});
 	toolbar->addAction(erase_action, count % 2, count / 2);
+	
+	background_drawing_action = new QAction(makeBackgroundDrawingIcon(icon_size),
+	                                        ::OpenOrienteering::MapEditorController::tr("Background drawing"),
+	                                        toolbar);
+	background_drawing_action->setCheckable(true);
+	background_drawing_action->setChecked(options().testFlag(Template::ComposeBackground));
+	connect(background_drawing_action, &QAction::triggered, this, [this](bool checked) {
+		setOptions(options().setFlag(Template::ComposeBackground, checked));
+	});
+	toolbar->addActionAtEnd(background_drawing_action, 0, 1);
 	
 	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
 	                                tr("Filled area"),

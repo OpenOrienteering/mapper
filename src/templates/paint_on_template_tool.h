@@ -103,6 +103,7 @@ private:
 	
 	Template* temp = nullptr;
 	QPointer<ActionGridBar> widget;
+	QAction* background_drawing_action = nullptr;
 	
 	static int erase_width;
 	

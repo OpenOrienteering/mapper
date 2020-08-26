@@ -582,6 +582,8 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	
 	if (color.alpha() == 0)
 		painter.setCompositionMode(QPainter::CompositionMode_Clear);
+	else if (mode.testFlag(ComposeBackground))
+		painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
 	else
 		painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 	
