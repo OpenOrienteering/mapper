@@ -594,6 +594,11 @@ void TemplateImage::drawOntoTemplateImpl(MapCoordF* coords, int num_coords, cons
 	}
 	else
 	{
+		if (mode.testFlag(PatternFill))
+		{
+			painter.setPen(Qt::NoPen);
+			brush.setStyle(Qt::Dense4Pattern);
+		}
 		painter.setBrush(brush);
 		painter.drawPolygon(points, num_coords);
 	}

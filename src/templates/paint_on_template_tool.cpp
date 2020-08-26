@@ -32,6 +32,7 @@
 #include <QCursor>
 #include <QFlags>
 #include <QIcon>
+#include <QMenu>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QPalette>
@@ -224,6 +225,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		connect(action, &QAction::triggered, this, [this, color]() {
 			erasing.setFlag(ExplicitErasing, false);
 			background_drawing_action->setEnabled(true);
+			fill_options->setEnabled(true);
 			setColor(color);
 		});
 		++count;
@@ -235,6 +237,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	connect(erase_action, &QAction::triggered, this, [this]() {
 		erasing.setFlag(ExplicitErasing, true);
 		background_drawing_action->setEnabled(false);
+		fill_options->setEnabled(false);
 	});
 	toolbar->addAction(erase_action, count % 2, count / 2);
 	
@@ -257,6 +260,23 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		setOptions(Template::ScribbleOptions(options()).setFlag(Template::FilledAreas, checked));
 	});
 	toolbar->addActionAtEnd(fill_action, 1, 1);
+	
+	auto* fill_options_menu = new QMenu(toolbar);
+	fill_action->setMenu(fill_options_menu);
+	{
+		fill_options = new QActionGroup(fill_action->menu());
+		auto const add_option = [this, fill_options_menu](const QString& label, Template::ScribbleOption mode) {
+			auto* option = fill_options_menu->addAction(label);
+			option->setCheckable(true);
+			option->setActionGroup(fill_options);
+			option->setChecked((options() & Template::PatternFill) == mode);
+			connect(option, &QAction::triggered, this, [this, mode]() {
+				setOptions(mode | (options() & ~Template::PatternFill));
+			});
+		};
+		add_option(tr("Solid"), {});
+		add_option(tr("Pattern"), Template::PatternFill);
+	}
 	
 	auto* undo_action = new QAction(QIcon(QString::fromLatin1(":/images/undo.png")),
 	                                ::OpenOrienteering::MapEditorController::tr("Undo"),

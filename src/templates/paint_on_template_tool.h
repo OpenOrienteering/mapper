@@ -38,6 +38,7 @@
 #include "tools/tool.h"
 
 class QAction;
+class QActionGroup;
 class QCursor;
 class QMouseEvent;
 class QPainter;
@@ -104,6 +105,7 @@ private:
 	Template* temp = nullptr;
 	QPointer<ActionGridBar> widget;
 	QAction* background_drawing_action = nullptr;
+	QActionGroup* fill_options = nullptr;
 	
 	static int erase_width;
 	
