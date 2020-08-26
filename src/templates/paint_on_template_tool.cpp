@@ -202,8 +202,14 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	toolbar->addAction(erase_action, count % 2, count / 2);
 	// de-select color when activating eraser
 	color_button_group->addButton(toolbar->getButtonForAction(erase_action));
-	++count;
-
+	
+	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
+	                                tr("Filled area"),
+	                                toolbar);
+	fill_action->setCheckable(true);
+	connect(fill_action, &QAction::triggered, this, &PaintOnTemplateTool::setFillAreas);
+	toolbar->addActionAtEnd(fill_action, 1, 1);
+	
 	auto* undo_action = new QAction(QIcon(QString::fromLatin1(":/images/undo.png")),
 	                                ::OpenOrienteering::MapEditorController::tr("Undo"),
 	                                toolbar);
@@ -215,13 +221,6 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	                                toolbar);
 	connect(redo_action, &QAction::triggered, this, &PaintOnTemplateTool::redoSelected);
 	toolbar->addActionAtEnd(redo_action, 1, 0);
-	
-	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
-	                                tr("Filled area"),
-	                                toolbar);
-	fill_action->setCheckable(true);
-	connect(fill_action, &QAction::triggered, this, &PaintOnTemplateTool::setFillAreas);
-	toolbar->addActionAtEnd(fill_action, 1, 1);
 	
 	return toolbar;
 }
