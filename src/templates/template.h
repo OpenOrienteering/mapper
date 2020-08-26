@@ -144,8 +144,9 @@ public:
 	 */
 	enum ScribbleOption
 	{
-		NoScribbleOptions = 0,
-		FilledAreas	= 1<<0,  ///< Fill area defined by the scribble line
+		NoScribbleOptions   = 0x00,
+		FilledAreas         = 0x01,  ///< Fill the area defined by the scribble line.
+		ScribbleOptionsMask = 0x01,  ///< All bits used by ScribbleOption.
 	};
 	Q_DECLARE_FLAGS(ScribbleOptions, ScribbleOption)
 	
