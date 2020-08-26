@@ -26,8 +26,8 @@
 #include <Qt>
 #include <QtMath>
 #include <QAction>
+#include <QActionGroup>
 #include <QApplication>
-#include <QButtonGroup>
 #include <QBrush>
 #include <QCursor>
 #include <QFlags>
@@ -41,7 +41,6 @@
 #include <QPolygonF>
 #include <QRgb>
 #include <QSettings>
-#include <QToolButton>
 #include <QVariant>
 
 #include "settings.h"
@@ -163,7 +162,7 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 	auto const icon_size = Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal());
 	
 	auto* toolbar = new ActionGridBar(ActionGridBar::Horizontal, 2);
-	auto* color_button_group = new QButtonGroup(this);
+	auto* color_options = new QActionGroup(this);
 	
 	int count = 0;
 	static QColor const default_colors[] = {
@@ -185,23 +184,27 @@ ActionGridBar* PaintOnTemplateTool::makeToolBar()
 		
 		auto* action = new QAction(icon, color.name(QColor::HexArgb), toolbar);
 		action->setCheckable(true);
+		action->setActionGroup(color_options);
 		toolbar->addAction(action, count % 2, count / 2);
-		color_button_group->addButton(toolbar->getButtonForAction(action));
 		if (count == 0 || action->text() == last_selected)
 		{
 			paint_color = color;
 			action->setChecked(true);
 		}
-		connect(action, &QAction::triggered, this, [this, color](bool checked) { if (checked) setColor(color); });
+		connect(action, &QAction::triggered, this, [this, color]() {
+			erasing.setFlag(ExplicitErasing, false);
+			setColor(color);
+		});
 		++count;
 	}
 	
 	auto* erase_action = new QAction(makeEraserIcon(icon_size), tr("Erase"), toolbar);
 	erase_action->setCheckable(true);
-	connect(erase_action, &QAction::triggered, this, [this](bool enabled) { erasing.setFlag(ExplicitErasing, enabled); });
+	erase_action->setActionGroup(color_options);
+	connect(erase_action, &QAction::triggered, this, [this]() {
+		erasing.setFlag(ExplicitErasing, true);
+	});
 	toolbar->addAction(erase_action, count % 2, count / 2);
-	// de-select color when activating eraser
-	color_button_group->addButton(toolbar->getButtonForAction(erase_action));
 	
 	auto* fill_action = new QAction(QIcon(QString::fromLatin1(":/images/scribble-fill-shapes.png")),
 	                                tr("Filled area"),
