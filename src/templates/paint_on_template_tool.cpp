@@ -99,7 +99,7 @@ void drawEraser(QPixmap& pixmap, const QColor& background)
 	p.setPen(pen);
 	p.drawLine(8*icon_size/20, 18*icon_size/20, 19*icon_size/20, 18*icon_size/20);
 	p.setBrush(QBrush(Qt::gray, Qt::SolidPattern));
-	static QPoint corners[] = {
+	QPoint corners[] = {
 	    { 10*icon_size/20,  0*icon_size/20 },
 	    {  0*icon_size/20, 14*icon_size/20 },
 	    {  8*icon_size/20, 19*icon_size/20 },
