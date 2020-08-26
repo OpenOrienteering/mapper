@@ -320,15 +320,17 @@ bool PaintOnTemplateTool::mouseReleaseEvent(QMouseEvent* /*event*/, const MapCoo
 		coords.push_back(map_coord);
 		rectInclude(map_bbox, map_coord);
 		
+		auto color = paint_color;
+		auto width = 0;
+		auto mode = options();
 		if (erasing)
 		{
-			auto const erase_mode = options() & Template::FilledAreas;
-			temp->drawOntoTemplate(&coords[0], int(coords.size()), Qt::transparent, erase_width, map_bbox, erase_mode);
+			color = Qt::transparent;
+			mode = mode & Template::FilledAreas;
+			if (!mode.testFlag(Template::FilledAreas))
+				width = erase_width;
 		}
-		else
-		{
-			temp->drawOntoTemplate(&coords[0], int(coords.size()), paint_color, 0, map_bbox, options());
-		}
+		temp->drawOntoTemplate(&coords[0], int(coords.size()), color, width, map_bbox, mode);
 		
 		coords.clear();
 		map()->clearDrawingBoundingBox();
@@ -345,27 +347,35 @@ void PaintOnTemplateTool::draw(QPainter* painter, MapWidget* widget)
 {
 	if (dragging && temp)
 	{
-		auto scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
-		
-		QPen pen(erasing ? qRgb(255, 255, 255) : paint_color);
-		pen.setWidthF(widget->getMapView()->lengthToPixel(1000.0 * scale * (erasing ? erase_width : 1)));
+		QPen pen(erasing ? QColor(Qt::white) : paint_color);
 		pen.setCapStyle(Qt::RoundCap);
 		pen.setJoinStyle(Qt::RoundJoin);
 		
+		auto const scale = qMin(temp->getTemplateScaleX(), temp->getTemplateScaleY());
+		auto const one_mm = widget->getMapView()->lengthToPixel(1000.0 * scale);
+		if (options().testFlag(Template::FilledAreas))
+			pen.setWidthF(0.5 * one_mm);
+		else if (erasing)
+			pen.setWidthF(erase_width * one_mm);
+		else
+			pen.setWidthF(one_mm);
+		
 		QPolygonF polygon;
-		polygon.reserve(coords.size());
+		polygon.reserve(coords.size() + 1);
 		for (auto const& coord : coords)
 			polygon.append(widget->mapToViewport(coord));
 
+		painter->setPen(pen);
 		if (options().testFlag(Template::FilledAreas))
 		{
-			painter->setPen(Qt::NoPen);
+			polygon.append(polygon.front());  // close the polygon
 			painter->setBrush(QBrush(pen.color(), Qt::Dense5Pattern));
 			painter->drawPolygon(polygon);
 		}
-
-		painter->setPen(pen);
-		painter->drawPolyline(polygon);
+		else
+		{
+			painter->drawPolyline(polygon);
+		}
 	}
 }
 
