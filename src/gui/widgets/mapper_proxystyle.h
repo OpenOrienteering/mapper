@@ -24,20 +24,20 @@
 #include <QtGlobal>
 #include <QIcon>
 #include <QObject>
+#include <QPalette>
 #include <QPixmap>
 #include <QProxyStyle>
 #include <QSize>
 #include <QString>
 #include <QStyle>
 
+class QApplication;
 class QPainter;
 class QStyleHintReturn;
 class QStyleOption;
 class QWidget;
 
 namespace OpenOrienteering {
-
-class Settings;
 
 
 /**
@@ -70,10 +70,18 @@ public:
 	 */
 	MapperProxyStyle(QStyle* base_style = nullptr);
 	
+	MapperProxyStyle(const QPalette& palette, QStyle* base_style = nullptr);
+	
 	/**
 	 * Destroys the object.
 	 */
 	~MapperProxyStyle() override;
+	
+	
+	void polish(QApplication* application) override;
+	
+	void unpolish(QApplication* application) override;
+	
 	
 	/**
 	 * Draws the given primitive element.
@@ -137,11 +145,13 @@ public:
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
 	
-	void onSettingsChanged(const Settings& settings);
+	void onSettingsChanged();
 	
+	
+	QPalette default_palette;
 	ToolBarMetrics toolbar = {};
-	
-	bool touch_mode = false;
+	int button_size        = 0;
+	bool touch_mode        = false;
 	
 	Q_DISABLE_COPY(MapperProxyStyle)
 };

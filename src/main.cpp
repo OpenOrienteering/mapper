@@ -34,7 +34,6 @@
 #include <QList>
 #include <QLocale>
 #include <QObject>
-#include <QPalette>
 #include <QPointer>
 #include <QSettings>
 #include <QStaticPlugin>  // IWYU pragma: keep
@@ -185,9 +184,7 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
-	auto const palette = QApplication::palette();
 	QApplication::setStyle(new MapperProxyStyle());
-	QApplication::setPalette(palette);
 	
 	// Create first main window
 	auto first_window = new MainWindow();

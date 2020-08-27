@@ -31,8 +31,6 @@
 #include <QApplication>
 #include <QFlags>
 #include <QFormLayout>  // IWYU pragma: keep
-#include <QList>
-#include <QMainWindow>
 #include <QMetaObject>
 #include <QPainter>
 #include <QPalette>
@@ -70,54 +68,71 @@ bool Q_DECL_UNUSED isDockWidgetRelated(const QWidget* widget)
 	return class_name.contains("DockWidget");
 }
 
+int buttonSizePixel(const Settings& settings)
+{
+	auto const size_mm = settings.getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal();
+	return qRound(Util::mmToPixelPhysical(size_mm));
+}
+
 }  // namespace
 
 
 
 MapperProxyStyle::MapperProxyStyle(QStyle* base_style)
- : QProxyStyle(base_style)
+: MapperProxyStyle(QApplication::palette(), base_style)
 {
-	auto& settings = Settings::getInstance();
-	onSettingsChanged(settings);
-	connect(&settings, &Settings::settingsChanged, this, [this]() {
-		onSettingsChanged(*qobject_cast<Settings*>(sender()));
-	});
+}
+
+MapperProxyStyle::MapperProxyStyle(const QPalette& palette, QStyle* base_style)
+: QProxyStyle(base_style)
+, default_palette(palette)
+{
 }
 
 MapperProxyStyle::~MapperProxyStyle() = default;
 
 
-void MapperProxyStyle::onSettingsChanged(const Settings& settings)
+void MapperProxyStyle::onSettingsChanged()
 {
-	if (settings.touchModeEnabled() == touch_mode)
-		return;
-	
-	if (touch_mode)
+	auto& settings = Settings::getInstance();
+	if (touch_mode != settings.touchModeEnabled()
+	    || (touch_mode && button_size != buttonSizePixel(settings)))
 	{
-		touch_mode = false;
-		toolbar = {};
+#ifndef __clang_analyzer__
+		// No leak: QApplication takes ownership.
+		QApplication::setStyle(new MapperProxyStyle(default_palette));
+#endif
 	}
-	else
+}
+
+
+void MapperProxyStyle::polish(QApplication* application)
+{
+	QProxyStyle::polish(application);
+	QApplication::setPalette(default_palette);
+	
+	auto& settings = Settings::getInstance();
+	connect(&settings, &Settings::settingsChanged, this, &MapperProxyStyle::onSettingsChanged);
+	if (settings.touchModeEnabled())
 	{
 		touch_mode = true;
-		auto const button_size_mm = settings.getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal();
-		auto const button_size_pixel = qRound(Util::mmToPixelPhysical(button_size_mm));
-		auto const margin_size_pixel = button_size_pixel / 4;
-		toolbar.icon_size = button_size_pixel - margin_size_pixel;
+		
+		button_size = buttonSizePixel(settings);
+		auto const margin_size_pixel = button_size / 4;
+		toolbar.icon_size = button_size - margin_size_pixel;
 		auto const scale_factor = qreal(toolbar.icon_size) / QProxyStyle::pixelMetric(PM_ToolBarIconSize);
 		toolbar.item_spacing = std::max(1, margin_size_pixel - 2 * qRound(scale_factor));
 		toolbar.separator_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarSeparatorExtent) * scale_factor);
 		toolbar.extension_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarExtensionExtent) * scale_factor);
 	}
-	
-	// QMainWindow caches the size, so it needs to be made update its cache when toggling touch mode.
-	auto const widgets = QApplication::allWidgets();
-	for (auto* widget : widgets)
-	{
-		if (auto* main_window = qobject_cast<QMainWindow*>(widget))
-			main_window->setIconSize(QSize{-1, -1});
-	}
 }
+
+void MapperProxyStyle::unpolish(QApplication* application)
+{
+	QApplication::setPalette(default_palette);
+	QProxyStyle::unpolish(application);
+}
+
 
 void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const
 {
