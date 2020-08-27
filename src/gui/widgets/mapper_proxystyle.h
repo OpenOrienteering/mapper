@@ -23,6 +23,7 @@
 
 #include <QtGlobal>
 #include <QIcon>
+#include <QFont>
 #include <QObject>
 #include <QPalette>
 #include <QPixmap>
@@ -59,6 +60,19 @@ Q_OBJECT
 		int item_spacing;
 		int separator_extent;
 		int extension_extent;
+	};
+	
+	/**
+	 * This structure holds custom menu metrics when touch_mode is active.
+	 */
+	struct MenuMetrics
+	{
+		int button_indicator;
+		int h_margin;
+		int v_margin;
+		int panel_width;
+		int item_height;
+		int scroller_height;
 	};
 	
 public:
@@ -150,7 +164,11 @@ private:
 	
 	QPalette default_palette;
 	ToolBarMetrics toolbar = {};
+	MenuMetrics menu       = {};
+	QFont original_font    = {};
+	QFont menu_font        = {};
 	int button_size        = 0;
+	int small_icon_size    = 0;
 	bool touch_mode        = false;
 	
 	Q_DISABLE_COPY(MapperProxyStyle)

@@ -23,21 +23,25 @@
 #include <algorithm>
 
 #include <Qt>
+#include <QApplication>
 #include <QBrush>
 #include <QByteArray>
 #include <QColor>
 #include <QCommonStyle> // IWYU pragma: keep
+#include <QCoreApplication>
 #include <qdrawutil.h>  // IWYU pragma: keep
-#include <QApplication>
 #include <QFlags>
 #include <QFormLayout>  // IWYU pragma: keep
+#include <QGuiApplication>
 #include <QMetaObject>
 #include <QPainter>
 #include <QPalette>
 #include <QRect>
 #include <QRgb>
+#include <QScreen>
 #include <QSize>
 #include <QStyleOption>
+#include <QStyleOptionMenuItem>
 #include <QVariant>
 #include <QWidget>
 
@@ -72,6 +76,27 @@ int buttonSizePixel(const Settings& settings)
 {
 	auto const size_mm = settings.getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal();
 	return qRound(Util::mmToPixelPhysical(size_mm));
+}
+
+// Cf. qt_defaultDpiX in qfont.cpp
+int defaultDpi()
+{
+	if (auto* screen = QGuiApplication::primaryScreen())
+		return qRound(screen->logicalDotsPerInchX());
+	return 100;
+}
+
+// Cf. dpiScaled in qstylehelper.cpp, qt_defaultDpiX in qfont.cpp
+qreal dpiScaled(qreal value)
+{
+#ifdef Q_OS_MAC
+	return value;
+#else
+	if (QCoreApplication::instance()->testAttribute(Qt::AA_Use96Dpi))
+		return value;
+	static const qreal scale = defaultDpi() / 96.0;
+	return value * scale;
+#endif
 }
 
 }  // namespace
@@ -120,15 +145,55 @@ void MapperProxyStyle::polish(QApplication* application)
 		button_size = buttonSizePixel(settings);
 		auto const margin_size_pixel = button_size / 4;
 		toolbar.icon_size = button_size - margin_size_pixel;
-		auto const scale_factor = qreal(toolbar.icon_size) / QProxyStyle::pixelMetric(PM_ToolBarIconSize);
-		toolbar.item_spacing = std::max(1, margin_size_pixel - 2 * qRound(scale_factor));
-		toolbar.separator_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarSeparatorExtent) * scale_factor);
-		toolbar.extension_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarExtensionExtent) * scale_factor);
+		{
+			auto const scale_factor = qreal(toolbar.icon_size) / QProxyStyle::pixelMetric(PM_ToolBarIconSize);
+			toolbar.item_spacing = std::max(1, margin_size_pixel - 2 * qRound(scale_factor));
+			toolbar.separator_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarSeparatorExtent) * scale_factor);
+			toolbar.extension_extent = qRound(QProxyStyle::pixelMetric(PM_ToolBarExtensionExtent) * scale_factor);
+		}
+		
+		small_icon_size = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), int(0.7 * toolbar.icon_size));
+		{
+			auto const scale_factor = qreal(small_icon_size) / QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize);
+			menu.button_indicator = qRound(QProxyStyle::pixelMetric(PM_MenuButtonIndicator) * scale_factor);
+			if (baseStyle()->inherits("QFusionStyle"))
+			{
+				// QFusionStyle draws indicators no larger than 14 logical pixels,
+				// cf. qt_fusion_draw_array.
+				// If we return more than that, a tiny indicator is placed near
+				// the center of the button, interfering with the contents.
+				auto const fusion_style_bound = int(dpiScaled(14.0));
+				menu.button_indicator = qMin(menu.button_indicator, fusion_style_bound);
+			}
+			menu.h_margin = qMax(margin_size_pixel / 4, qRound(QProxyStyle::pixelMetric(PM_MenuHMargin) * scale_factor));
+			menu.v_margin = qMax(margin_size_pixel / 4, qRound(QProxyStyle::pixelMetric(PM_MenuVMargin) * scale_factor));
+			menu.panel_width = qRound(QProxyStyle::pixelMetric(PM_MenuPanelWidth) * scale_factor);
+			
+			menu.item_height = button_size;
+			menu.scroller_height = qMax(QProxyStyle::pixelMetric(PM_MenuScrollerHeight), menu.item_height / 2);
+		}
+		
+		menu_font = QApplication::font();
+		{
+			auto const menu_font_size = small_icon_size - 4;  // cf. QMenu's action item rect calculation.
+			if (menu_font_size > original_font.pixelSize())
+			{
+				menu_font.setPixelSize(menu_font_size);
+			}
+			QApplication::setFont(QApplication::font());
+			QApplication::setFont(menu_font, "QMenu");
+			QApplication::setFont(menu_font, "QComboMenuItem");
+		}
 	}
 }
 
 void MapperProxyStyle::unpolish(QApplication* application)
 {
+	if (touch_mode)
+	{
+		QApplication::setFont(QApplication::font());
+	}
+	
 	QApplication::setPalette(default_palette);
 	QProxyStyle::unpolish(application);
 }
@@ -240,71 +305,80 @@ void MapperProxyStyle::drawSegmentedButton(int segment, QStyle::PrimitiveElement
 
 int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const
 {
-	switch (metric)
+	if (touch_mode)
 	{
-	case QStyle::PM_ToolBarIconSize:
-		if (touch_mode)
+		switch (metric)
+		{
+		case QStyle::PM_ToolBarIconSize:
 			return toolbar.icon_size;
-#ifdef Q_OS_MACOS
-		{
-			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;
-			return s;
-		}
-#endif
-		break;
-	case QStyle::PM_ToolBarItemSpacing:
-		if (touch_mode)
+		case QStyle::PM_ToolBarItemSpacing:
 			return toolbar.item_spacing;
-		break;
-	case QStyle::PM_ToolBarSeparatorExtent:
-		if (touch_mode)
+		case QStyle::PM_ToolBarSeparatorExtent:
 			return toolbar.separator_extent;
-		break;
-	case QStyle::PM_ToolBarExtensionExtent:
-		if (touch_mode)
+		case QStyle::PM_ToolBarExtensionExtent:
 			return toolbar.extension_extent;
-		break;
-#ifdef Q_OS_ANDROID
-	case QStyle::PM_ButtonIconSize:
-		{
-			static int s = qMax(QProxyStyle::pixelMetric(metric), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
-			return s;
+		case PM_MenuButtonIndicator:
+			return menu.button_indicator;
+		case PM_MenuHMargin:
+			return menu.h_margin;
+		case PM_MenuVMargin:
+			return menu.v_margin;
+		case PM_MenuPanelWidth:
+			return menu.panel_width;
+		case PM_MenuScrollerHeight:
+			return menu.scroller_height;
+		case QStyle::PM_ButtonIconSize:
+		case QStyle::PM_SmallIconSize:
+			return small_icon_size;
+		case QStyle::PM_DockWidgetSeparatorExtent:
+		case QStyle::PM_SplitterWidth:
+			return (QProxyStyle::pixelMetric(metric) + small_icon_size) / 2;
+		default:
+			break;
 		}
-	case QStyle::PM_SmallIconSize:
-		if (isDockWidgetRelated(widget))
-		{
-			static int s = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
-			return s;
-		}
-		break;
-	case QStyle::PM_DockWidgetSeparatorExtent:
-	case QStyle::PM_SplitterWidth:
-		{
-			static int s = (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth)) / 2;
-			return s;
-		}
-#endif
-	default:
-		break;
 	}
+#ifdef Q_OS_MACOS
+	else
+	{
+		switch (metric)
+		{
+		case QStyle::PM_ToolBarIconSize:
+			return (QProxyStyle::pixelMetric(metric) + QProxyStyle::pixelMetric(QStyle::PM_SmallIconSize)) / 2;
+		default:
+			break;
+		}
+	}
+#endif
 	
 	return QProxyStyle::pixelMetric(metric, option, widget);
 }
 
 QSize MapperProxyStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w) const
 {
-	switch (ct)
+	if (touch_mode)
 	{
-#ifdef Q_OS_ANDROID
-	case QStyle::CT_SizeGrip:
+		switch (ct)
 		{
-			auto width = qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), QProxyStyle::pixelMetric(QStyle::PM_IndicatorWidth));
-			return { width, width };
+		case QStyle::CT_MenuItem:
+			if (auto const* menu_item = qstyleoption_cast<const QStyleOptionMenuItem *>(opt))
+			{
+				auto size = QProxyStyle::sizeFromContents(ct, opt, contents_size, w);
+				if (menu_item->icon.isNull() && (!w || !w->inherits("QComboBox")))
+					size.rwidth() += small_icon_size;  // reserved for checkmark
+				if (menu_item->menuItemType == QStyleOptionMenuItem::Separator && menu_item->text.isEmpty())
+					size.rheight() += menu.v_margin;
+				else
+					size.setHeight(qMax(size.height(), menu.item_height));
+				return size;
+			}
+			break;
+		case QStyle::CT_SizeGrip:
+			return [](int value) {
+				return QSize{ value, value };
+			} (qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), toolbar.icon_size / 2));
+		default:
+			break;
 		}
-		break;
-#endif
-	default:
-		break;
 	}
 	
 	return QProxyStyle::sizeFromContents(ct, opt, contents_size, w);
@@ -361,10 +435,14 @@ int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* opti
 {
 	switch (hint)
 	{
+	case SH_Menu_Scrollable:
+		if (touch_mode)
+			return true;
+		break;
 #ifdef Q_OS_ANDROID
 	case QStyle::SH_FormLayoutWrapPolicy:
 		return QFormLayout::WrapLongRows;
-#endif		
+#endif
 	default:
 		break;
 	}

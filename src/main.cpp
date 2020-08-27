@@ -39,6 +39,7 @@
 #include <QStaticPlugin>  // IWYU pragma: keep
 #include <QString>
 #include <QStringList>
+#include <QTimer>
 #include <QTranslator>
 #include <QWidget>
 
@@ -184,30 +185,40 @@ int main(int argc, char** argv)
 	// Initialize static things like the file format registry.
 	doStaticInitializations();
 	
-	QApplication::setStyle(new MapperProxyStyle());
-	
-	// Create first main window
-	auto first_window = new MainWindow();
-	Q_ASSERT(first_window->testAttribute(Qt::WA_DeleteOnClose));
-	first_window->setController(new HomeScreenController());
-	
-	// Open given files later, i.e. after the initial home screen has been
-	// displayed. In this way, error messages for missing files will show on 
-	// top of a regular main window (home screen or other file).
-	
-	// Treat all program parameters as files to be opened
-	auto const arguments = firstRemoved(QCoreApplication::arguments());
-	for (auto const& arg : arguments)
-		first_window->openPathLater(arg);
-	
-	first_window->applicationStateChanged();
-	
-#ifdef MAPPER_USE_QTSINGLEAPPLICATION
-	resetActivationWindow(qapp);
+	// Some style settings (in particular the menu item font) are not
+	// applied correctly before the app runs. So we postpone these steps
+	// via the event loop.
+	// OTOH the app crashes on Android if we don't set style early enough.
+	QTimer::singleShot(0, qApp, [&qapp]() {
+#ifndef __clang_analyzer__
+		// No leak: QApplication takes ownership.
+		QApplication::setStyle(new MapperProxyStyle());
 #endif
+		
+		// Create first main window
+		auto first_window = new MainWindow();
+		Q_ASSERT(first_window->testAttribute(Qt::WA_DeleteOnClose));
+		first_window->setController(new HomeScreenController());
+		
+		// Open given files later, i.e. after the initial home screen has been
+		// displayed. In this way, error messages for missing files will show on 
+		// top of a regular main window (home screen or other file).
+		
+		// Treat all program parameters as files to be opened
+		auto const arguments = firstRemoved(QCoreApplication::arguments());
+		for (auto const& arg : arguments)
+			first_window->openPathLater(arg);
+		
+		first_window->applicationStateChanged();
+		
+#ifdef MAPPER_USE_QTSINGLEAPPLICATION
+		resetActivationWindow(qapp);
+#endif
+		
+		first_window->setVisible(true);
+		first_window->raise();
+	});
 	
 	// Let application run
-	first_window->setVisible(true);
-	first_window->raise();
 	return QApplication::exec();
 }
