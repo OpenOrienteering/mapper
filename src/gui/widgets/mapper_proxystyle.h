@@ -22,13 +22,15 @@
 #define OPENORIENTEERING_MAPPER_PROXYSTYLE_H
 
 #include <QtGlobal>
+#include <QIcon>
 #include <QObject>
+#include <QPixmap>
 #include <QProxyStyle>
+#include <QSize>
+#include <QString>
 #include <QStyle>
 
-class QIcon;
 class QPainter;
-class QPixmap;
 class QStyleHintReturn;
 class QStyleOption;
 class QWidget;

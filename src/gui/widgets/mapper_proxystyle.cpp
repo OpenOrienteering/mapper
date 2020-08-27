@@ -20,17 +20,24 @@
 
 #include "mapper_proxystyle.h"
 
+#include <algorithm>
+
 #include <Qt>
 #include <QBrush>
+#include <QByteArray>
+#include <QColor>
 #include <QCommonStyle> // IWYU pragma: keep
-#include <qdrawutil.h>
+#include <qdrawutil.h>  // IWYU pragma: keep
 #include <QApplication>
 #include <QFlags>
 #include <QFormLayout>  // IWYU pragma: keep
+#include <QList>
 #include <QMainWindow>
+#include <QMetaObject>
 #include <QPainter>
 #include <QPalette>
 #include <QRect>
+#include <QRgb>
 #include <QSize>
 #include <QStyleOption>
 #include <QVariant>
