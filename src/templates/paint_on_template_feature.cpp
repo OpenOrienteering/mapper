@@ -21,6 +21,7 @@
 
 #include "paint_on_template_feature.h"
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 
@@ -43,9 +44,13 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 #include <QPainter>
+#include <QPixmap>
 #include <QPointF>
+#include <QRect>
 #include <QRectF>
 #include <QSpacerItem>
+#include <QStyle>
+#include <QTransform>
 #include <QVariant>
 #include <QVBoxLayout>
 
@@ -83,6 +88,50 @@ void showMessage (MainWindow* window, const QString &message) {
 	                     QMessageBox::Ok,
 	                     QMessageBox::Ok);
 #endif
+}
+
+
+/**
+ * Constructs a functor which creates icons representing template position.
+ * 
+ * The functor captures the provided viewport, and creates icons which
+ * represent the visible template area as a gray rectangle relative to
+ * a white rectangle with a black outline representing the viewport.
+ */
+auto makeIconBuilder(int width, const QRectF& view_rect)
+{
+	auto const scale = qreal(width) / std::max(view_rect.width(), view_rect.height());
+	QTransform transform;
+	transform.translate(width / 2, width / 2);
+	transform.scale(scale, scale);
+	transform.translate(-view_rect.center().x(), -view_rect.center().y());
+	
+	// Draw viewport (background) aligned to integer pixels.
+	auto const view_rect_px = transform.mapRect(view_rect)
+	                          .toAlignedRect()
+	                          .adjusted(0, 0, -1, -1)
+	                          .intersected({0, 0, width, width});
+	
+	QPixmap pixmap(width, width);
+	pixmap.fill(Qt::transparent);
+	
+	QPainter painter(&pixmap);
+	painter.setPen(Qt::black);
+	painter.setBrush(Qt::white);
+	painter.drawRect(view_rect_px);
+	painter.end();
+	
+	return [pixmap, transform](const QRectF& template_rect) -> QIcon {
+		auto clone = pixmap;
+		QPainter p(&clone);
+		p.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+		p.setWorldTransform(transform);
+		p.setPen(Qt::NoPen);
+		p.setBrush(Qt::darkGray);
+		p.drawRect(template_rect);
+		p.end();
+		return QIcon{clone};
+	};
 }
 
 
@@ -227,20 +276,26 @@ void PaintOnTemplateFeature::initTemplateListWidget(QListWidget& list_widget) co
 	
 	auto& map = *controller.getMap();
 	auto const viewed_rect = viewedRect();
+	auto const icon_width = list_widget.style()->pixelMetric(QStyle::PM_SmallIconSize);
+	auto const icon_builder = makeIconBuilder(icon_width, viewed_rect);
 	
 	auto current_row = 0;
 	for (int i = map.getNumTemplates() - 1; i >= 0; --i)
 	{
 		auto& temp = *map.getTemplate(i);
 		if (temp.getTemplateState() == Template::Invalid
-		    || !temp.canBeDrawnOnto()
-		    || !temp.boundingRect().intersects(viewed_rect))
+		    || !temp.canBeDrawnOnto())
+			continue;
+		
+		auto const bounding_rect = temp.boundingRect();
+		if (!bounding_rect.intersects(viewed_rect))
 			continue;
 		
 		if (&temp == last_template)
 			current_row = list_widget.count();
 		
 		auto* item = new QListWidgetItem(temp.getTemplateFilename());
+		item->setIcon(icon_builder(bounding_rect));
 		item->setData(Qt::UserRole, qVariantFromValue<void*>(&temp));
 		list_widget.addItem(item);
 	}
