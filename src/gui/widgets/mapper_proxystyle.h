@@ -22,20 +22,23 @@
 #define OPENORIENTEERING_MAPPER_PROXYSTYLE_H
 
 #include <QtGlobal>
+#include <QIcon>
+#include <QFont>
 #include <QObject>
+#include <QPalette>
+#include <QPixmap>
 #include <QProxyStyle>
+#include <QSize>
+#include <QString>
 #include <QStyle>
 
-class QIcon;
+class QApplication;
 class QPainter;
-class QPixmap;
 class QStyleHintReturn;
 class QStyleOption;
 class QWidget;
 
 namespace OpenOrienteering {
-
-class Settings;
 
 
 /**
@@ -59,6 +62,19 @@ Q_OBJECT
 		int extension_extent;
 	};
 	
+	/**
+	 * This structure holds custom menu metrics when touch_mode is active.
+	 */
+	struct MenuMetrics
+	{
+		int button_indicator;
+		int h_margin;
+		int v_margin;
+		int panel_width;
+		int item_height;
+		int scroller_height;
+	};
+	
 public:
 	/**
 	 * Constructs a new MapperProxyStyle.
@@ -68,10 +84,18 @@ public:
 	 */
 	MapperProxyStyle(QStyle* base_style = nullptr);
 	
+	MapperProxyStyle(const QPalette& palette, QStyle* base_style = nullptr);
+	
 	/**
 	 * Destroys the object.
 	 */
 	~MapperProxyStyle() override;
+	
+	
+	void polish(QApplication* application) override;
+	
+	void unpolish(QApplication* application) override;
+	
 	
 	/**
 	 * Draws the given primitive element.
@@ -135,11 +159,17 @@ public:
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
 	
-	void onSettingsChanged(const Settings& settings);
+	void onSettingsChanged();
 	
+	
+	QPalette default_palette;
 	ToolBarMetrics toolbar = {};
-	
-	bool touch_mode = false;
+	MenuMetrics menu       = {};
+	QFont original_font    = {};
+	QFont menu_font        = {};
+	int button_size        = 0;
+	int small_icon_size    = 0;
+	bool touch_mode        = false;
 	
 	Q_DISABLE_COPY(MapperProxyStyle)
 };

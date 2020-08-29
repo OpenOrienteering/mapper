@@ -1430,16 +1430,24 @@ void MapEditorController::createMobileGUI()
 	QAction* show_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-downright.png")), tr("Show top bar"), this);
  	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
 	
-	Q_ASSERT(mappart_selector_box);
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
-	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
-		auto* mappart_button = top_action_bar->getButtonForAction(mappart_action);
-		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
-			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
-		mappart_selector_box->setGeometry(mappart_button->geometry());
-		mappart_selector_box->showPopup();
+	auto* mappart_group = new QActionGroup(window);
+	auto* mappart_menu = new QMenu(window);
+	mappart_action->setMenu(mappart_menu);
+	connect(mappart_menu, &QMenu::aboutToShow, this, [this, mappart_menu, mappart_group]() {
+		mappart_menu->clear();
+		Q_ASSERT(mappart_group->actions().isEmpty());
+		for (auto i = 0; i < map->getNumParts(); ++i)
+		{
+			auto* part = map->getPart(i);
+			auto* action = mappart_menu->addAction(part->getName());
+			action->setCheckable(true);
+			action->setActionGroup(mappart_group);
+			if (part == map->getCurrentPart())
+				action->setChecked(true);
+			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+		}
 	});
-	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
 	
 	// Create button for showing the top bar again after hiding it
 	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
@@ -1581,6 +1589,8 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
 	
 	top_action_bar->addActionAtEnd(mappart_action, 1, col++);
+	if (auto* mappart_button = top_action_bar->getButtonForAction(mappart_action))
+		mappart_button->setPopupMode(QToolButton::InstantPopup);
 	
 	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	

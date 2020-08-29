@@ -71,6 +71,7 @@ for I in \
   map_editor.cpp \
   map_find_feature.cpp \
   map_widget.cpp \
+  mapper_proxystyle.cpp \
   /object.cpp \
   object_mover.cpp \
   object_query.cpp \
