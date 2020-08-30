@@ -136,6 +136,8 @@ void MapperProxyStyle::onSettingsChanged()
 
 void MapperProxyStyle::polish(QApplication* application)
 {
+	common_style = qobject_cast<QCommonStyle*>(baseStyle());
+	
 	QProxyStyle::polish(application);
 	QApplication::setPalette(default_palette);
 	
@@ -199,6 +201,15 @@ void MapperProxyStyle::unpolish(QApplication* application)
 	
 	QApplication::setPalette(default_palette);
 	QProxyStyle::unpolish(application);
+	
+	common_style = nullptr;
+}
+
+
+void MapperProxyStyle::childEvent(QChildEvent* event)
+{
+	if (event->added() || event->removed())
+		common_style = qobject_cast<QCommonStyle*>(baseStyle());
 }
 
 
@@ -337,7 +348,7 @@ void MapperProxyStyle::drawComplexControl(QStyle::ComplexControl control, const 
 		switch (control)
 		{
 		case CC_SpinBox:
-			if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+			if (common_style)
 			{
 				common_style->QCommonStyle::drawComplexControl(control, option, painter, widget);
 				return;
@@ -443,7 +454,7 @@ QIcon MapperProxyStyle::standardIcon(QStyle::StandardPixmap standard_icon, const
 	// Cf. https://code.qt.io/cgit/qt/qtbase.git/tree/src/widgets/styles/qfusionstyle.cpp?h=5.12#n3785
 	case QStyle::SP_TitleBarNormalButton:
 	case QStyle::SP_TitleBarCloseButton:
-		if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+		if (common_style)
 		{
 			icon = common_style->QCommonStyle::standardIcon(standard_icon, option, widget);
 		}
@@ -468,7 +479,7 @@ QPixmap MapperProxyStyle::standardPixmap(QStyle::StandardPixmap standard_pixmap,
 	// Cf. https://code.qt.io/cgit/qt/qtbase.git/tree/src/widgets/styles/qfusionstyle.cpp?h=5.12#n3807
 	case QStyle::SP_TitleBarNormalButton:
 	case QStyle::SP_TitleBarCloseButton:
-		if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+		if (common_style)
 		{
 			return common_style->QCommonStyle::standardPixmap(standard_pixmap, option, widget);
 		}

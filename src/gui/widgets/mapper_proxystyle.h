@@ -99,6 +99,11 @@ public:
 	void unpolish(QApplication* application) override;
 	
 	
+protected:
+	void childEvent(QChildEvent* event) override;
+	
+	
+public:
 	/**
 	 * Draws the given primitive element.
 	 * 
@@ -184,7 +189,7 @@ private:
 	
 	void onSettingsChanged();
 	
-	
+	QCommonStyle* common_style = nullptr;
 	QPalette default_palette;
 	ToolBarMetrics toolbar = {};
 	MenuMetrics menu       = {};
