@@ -23,6 +23,7 @@
 #include <algorithm>
 
 #include <Qt>
+#include <QAbstractSpinBox>
 #include <QApplication>
 #include <QBrush>
 #include <QByteArray>
@@ -41,7 +42,9 @@
 #include <QScreen>
 #include <QSize>
 #include <QStyleOption>
+#include <QStyleOptionComplex>
 #include <QStyleOptionMenuItem>
+#include <QStyleOptionSpinBox>
 #include <QVariant>
 #include <QWidget>
 
@@ -229,6 +232,29 @@ void MapperProxyStyle::drawPrimitive(QStyle::PrimitiveElement element, const QSt
 		}
 		break;
 		
+	case PE_IndicatorSpinUp:
+	case PE_IndicatorSpinDown:
+		overridden_element = element == PE_IndicatorSpinUp ? PE_IndicatorSpinPlus : PE_IndicatorSpinMinus;
+		Q_FALLTHROUGH();
+	case PE_IndicatorSpinPlus:
+	case PE_IndicatorSpinMinus:
+		if (touch_mode)
+		{
+			if (const QStyleOptionSpinBox* spinbox = qstyleoption_cast<const QStyleOptionSpinBox*>(option))
+			{
+				// Create a small centered square for QCommonStyle to draw '+'/'-'
+				auto copy = *spinbox;
+				auto const outer_size = qMax(copy.rect.width(), copy.rect.height());
+				auto const inner_size = qMin(3 * outer_size / 6, qMin(copy.rect.width(), copy.rect.height()));
+				auto const delta_x = (copy.rect.width() - inner_size) / 2;
+				auto const delta_y = (copy.rect.height() - inner_size) / 2;
+				copy.rect = {copy.rect.x() + delta_x, copy.rect.y() + delta_y, inner_size, inner_size };
+				QProxyStyle::drawPrimitive(overridden_element, &copy, painter, widget);
+				return;
+			}
+		}
+		break;
+		
 #ifdef Q_OS_ANDROID
 	case QStyle::PE_IndicatorItemViewItemCheck:
 		if (option->state.testFlag(QStyle::State_NoChange)
@@ -302,6 +328,30 @@ void MapperProxyStyle::drawSegmentedButton(int segment, QStyle::PrimitiveElement
 	
 	painter->restore();
 }
+
+
+void MapperProxyStyle::drawComplexControl(QStyle::ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget) const
+{
+	if (touch_mode)
+	{
+		switch (control)
+		{
+		case CC_SpinBox:
+			if (auto* common_style = qobject_cast<QCommonStyle*>(baseStyle()))
+			{
+				common_style->QCommonStyle::drawComplexControl(control, option, painter, widget);
+				return;
+			}
+			break;
+			
+		default:
+			;  // Nothing
+		}
+	}
+	
+	QProxyStyle::drawComplexControl(control, option, painter, widget);
+}
+
 
 int MapperProxyStyle::pixelMetric(PixelMetric metric, const QStyleOption* option, const QWidget* widget) const
 {
@@ -448,6 +498,51 @@ int MapperProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption* opti
 	}
 	
 	return QProxyStyle::styleHint(hint, option, widget, return_data);
+}
+
+QRect MapperProxyStyle::subControlRect(QStyle::ComplexControl cc, const QStyleOptionComplex* option, QStyle::SubControl sc, const QWidget* widget) const
+{
+	if (touch_mode)
+	{
+		switch (cc)
+		{
+		case CC_SpinBox:
+			if (auto* spinbox = qstyleoption_cast<const QStyleOptionSpinBox *>(option))
+			{
+				auto const frame_width = spinbox->frame ? qMax(1, pixelMetric(PM_SpinBoxFrameWidth, spinbox, widget) - 1) : 0;
+				auto rect = spinbox->rect.adjusted(frame_width, frame_width, -frame_width, -frame_width);
+				auto const button_width = rect.height();
+				switch (sc) {
+				case SC_SpinBoxUp:
+					if (spinbox->buttonSymbols == QAbstractSpinBox::NoButtons)
+						return {};
+					rect.setLeft(rect.left() + rect.width() - 2 * button_width);
+					rect.setWidth(button_width);
+					break;
+				case SC_SpinBoxDown:
+					if (spinbox->buttonSymbols == QAbstractSpinBox::NoButtons)
+						return {};
+					rect.setLeft(rect.left() + rect.width() - button_width);
+					rect.setWidth(button_width);
+					break;
+				case SC_SpinBoxEditField:
+					if (spinbox->buttonSymbols != QAbstractSpinBox::NoButtons)
+						rect.setWidth(rect.width() - 2 * button_width);
+					break;
+				case SC_SpinBoxFrame:
+					return spinbox->rect;
+				default:
+					break;
+				}
+				return visualRect(spinbox->direction, spinbox->rect, rect);
+			}
+			break;
+		default:
+			;  // nothing
+		}
+	}
+	
+	return QProxyStyle::subControlRect(cc, option, sc, widget);
 }
 
 
