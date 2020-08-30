@@ -28,6 +28,7 @@
 #include <QPalette>
 #include <QPixmap>
 #include <QProxyStyle>
+#include <QRect>
 #include <QSize>
 #include <QString>
 #include <QStyle>
@@ -35,6 +36,7 @@
 class QApplication;
 class QPainter;
 class QStyleHintReturn;
+class QStyleOptionComplex;
 class QStyleOption;
 class QWidget;
 
@@ -102,10 +104,23 @@ public:
 	 * 
 	 * Implements rendering of segmented buttons for all platforms.
 	 * 
+	 * In touch mode:
+	 * - Up/down spinbox indicators are turned into plus/minus indicators.
+	 * - For spin box indicators, the rect is performed in square with sufficient margin.
+	 * 
 	 * On Android:
 	 * - QStyle::PE_IndicatorItemViewItemCheck is modified for disabled and tristate checkboxes.
 	 */
 	void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget = nullptr) const override;
+	
+	/**
+	 * Draws the given complex control.
+	 * 
+	 * In touch mode:
+	 * - Use QCommonStyle for spinbox drawing if the base style inherits from it.
+	 *   This improves drawing the buttons side by side with full height.
+	 */
+	void drawComplexControl(ComplexControl control, const QStyleOptionComplex* option, QPainter* painter, const QWidget* widget = nullptr) const override;
 	
 	/**
 	 * Returns some adjusted pixel metrics.
@@ -155,6 +170,14 @@ public:
 	 * - QStyle::SH_FormLayoutWrapPolicy is QFormLayout::QFormLayout::WrapLongRows.
 	 */
 	int styleHint(StyleHint hint, const QStyleOption* option = nullptr, const QWidget* widget = nullptr, QStyleHintReturn* return_data = nullptr) const override;
+	
+	/**
+	 * Determines location and size of subcontrols of complex controls.
+	 * 
+	 * In touch mode:
+	 * - Spinbox buttons are placed side by side with full height (.... | + | - |).
+	 */
+	QRect subControlRect(ComplexControl cc, const QStyleOptionComplex* option, SubControl sc, const QWidget* widget) const override;
 	
 private:
 	void drawSegmentedButton(int segment, PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const;
