@@ -1434,7 +1434,10 @@ void MapEditorController::createMobileGUI()
 	auto* mappart_group = new QActionGroup(window);
 	auto* mappart_menu = new QMenu(window);
 	mappart_action->setMenu(mappart_menu);
-	connect(mappart_menu, &QMenu::aboutToShow, this, [this, mappart_menu, mappart_group]() {
+	
+	// Don't use QMenu::aboutToShow because it causes menu mispositioning near
+	// lower screen border when triggered from QToolButton.
+	connect(mappart_action, &QAction::hovered, this, [this, mappart_menu, mappart_group]() {
 		mappart_menu->clear();
 		Q_ASSERT(mappart_group->actions().isEmpty());
 		for (auto i = 0; i < map->getNumParts(); ++i)
