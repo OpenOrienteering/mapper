@@ -1349,11 +1349,15 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
 			 * 
 			 * This must be the application-wide event filter in order to
 			 * catch Qt::Key_Back from popup menus (such as template list,
-			 * overflow actions).
+			 * overflow actions) and modal dialogs.
 			 * 
-			 * Any widgets that want to handle Qt::Key_Back need to watch
-			 * for QEvent::KeyPress.
+			 * Popup are closed when this event is received. Any other widget
+			 * which wants to handle Qt::Key_Back needs to watch for
+			 * QEvent::KeyPress.
 			 */
+			if (auto* popup = QApplication::activePopupWidget())
+				popup->close();
+			
 			event->accept();
 			return true;
 		}
