@@ -5550,7 +5550,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>nem</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5689,7 +5689,7 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2614"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem menthető a(z) &apos;% 1&apos; sablon egyéni pozicionálása.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2944"/>
@@ -6126,12 +6126,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="199"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Töröl</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="220"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Kitöltött terület</translation>
     </message>
 </context>
 <context>
@@ -9189,7 +9189,7 @@ A legnagyobb támogatott verzió a %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkonzisztens deklináció / griváció észlelve. Megoldva a deklináció automatikus beállításával %1° -ra.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
