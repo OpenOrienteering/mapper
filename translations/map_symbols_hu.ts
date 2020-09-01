@@ -1729,7 +1729,13 @@ Since the runnability may vary, such areas should be avoided when setting course
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <comment>Description of symbol 412.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Művelt terület. Ezt a szimbólumot egy másik szimbólummal együtt kell használni:
+- A növénytermesztéshez használt földterülethez a Nyitott terület (401) szimbólumot kell kombinálni.
+- Agrár-erdészeti célra az Erdő (405) vagy a Nyílt terület elszórt fákkal (402) jelzéssel használható.
+A futhatóság a növények vagy fák típusától és az évszaktól függően változhat.
+Mivel a futhatóság változhat, az ilyen területeket kerülni kell a pályák tervezésekor.
+A szimbólum észak felé irányul.
+Minimális terület: 3 mm x 3 mm (lábnyom 45 m x 45 m).</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -2182,7 +2188,8 @@ Utakhoz/ösvényekhez kapcsolódó kisebb hidakat úgy kell megrajzolni, hogy a�
         <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kis gyaloghidat, amelyhez nem vezet út, egyetlen vonással ábrázolják.
+Megjegyzés: ha a folyam szélesebb, mint 0,25 mm, állítsa be ezt a szimbólumot úgy, hogy 0,5 mm-rel nyúljon át a patak mindkét oldalán!</translation>
     </message>
     <message>
         <source>Wall</source>
@@ -2297,17 +2304,17 @@ Minimális alapterület: 1 mm x 1 mm (terepi méret: 15 m x 15 m).</translation>
     <message>
         <source>Area that shall not be entered, solid colour, bounding line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület ahova nem szabad belépni, egyszínű, határoló vonal</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiszta határral rendelkező, használaton kívüli területeket fekete vagy egy másik fekete vonal határolja. Ha a határ nem egyértelmű, fekete vonal nem használható.</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, ahova nem szabad belépni, csíkok</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -2327,12 +2334,12 @@ Minimális alapterület: 1 mm x 1 mm (terepi méret: 15 m x 15 m).</translation>
     <message>
         <source>Area that shall not be entered, stripes, bounding line</source>
         <comment>Name of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, ahová nem szabad belépni, csíkok, határoló vonal</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiszta határral rendelkező, tiltott területeket fekete vagy egy másik fekete vonalnak kell határolnia. Ha a határ nem világos, fekete vonal nem fordulhat elő.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -6814,7 +6821,10 @@ The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 
 Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 However, contour lines shall be cut out for better legibility, if they touch the following symbols: Small earth wall (105), Small knoll (109), Small elongated knoll (110), Small depression (111), Pit or hole (112), Prominent landform feature (115), Stairway (532). The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the line.</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egyenlő magasságú pontokat összekötő vonal.
+A szintvonalak közötti szokásos függőleges intervallum 2 vagy 2,5 m. A szintvonal képének háromdimenziós hatásának hangsúlyozása érdekében a szintvonalakat folytonos vonalakként kell ábrázolni az összes szimbólumon, az épületen (521) és a baldachinon (522) keresztül is.
+A meredekség irányának tisztázása érdekében a szintvonal alsó oldalán eséstüskék rajzolhatók. Használatukkor a hajláshoz kell helyezni őket.
+A jobb olvashatóság érdekében azonban a szintvonalakat ki kell vágni, ha a következő szimbólumokat érintik: Kis földfal (105), Kis gömbölyű (109), Kis hosszúkás domb (110), Kis mélyedés (111), Gödör vagy lyuk (112) ), Kiemelkedő domborzati jellemző (115), Lépcső (532). A szomszédos jellemzők közötti relatív magasságkülönbséget a lehető legpontosabban kell ábrázolni a térképen. Az abszolút magassági pontosság kevésbé fontos. A szintvonal magasságának kissé megváltoztatása megengedett, ha ez javítja a jellemző megjelenítését. Ez az eltérés nem haladhatja meg az alapszintköz intervallum 25% -át, és figyelmet kell fordítani a szomszédos jellemzőkre. A szintvonal legkisebb íve a vonal közepétől a közepéig 0,4 mm.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -6834,12 +6844,12 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. Where an index contour coincides with an area of much detail, it may be shown with symbol Contour (101).</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished"></translation>
+        <translation>Minden ötödik szintvonalat vastagabb vonallal kell megrajzolni. Ez segítséget nyújt a magasságkülönbség és a terepfelület általános alakjának gyors felméréséhez. Ahol az számláló szintvonal egybeesik egy nagyon részletezett területtel, azt a szintvonal (101) szimbólummal lehet megjeleníteni.</translation>
     </message>
     <message>
         <source>Slope line, index contour</source>
         <comment>Name of symbol 102.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eséstüske, számláló szintvonalhoz</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -6854,7 +6864,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Contour values may be included to aid assessment of large height differences. The labels shall be orientated so that the top of the label is on the higher side of the contour. They are inserted in the index contours in positions where other detail is not obscured.</source>
         <comment>Description of symbol 102.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A nagy magasságkülönbségek felmérésének megkönnyítésére magassági értékek is szerepelhetnek. A címkéket úgy kell elhelyezni, hogy a címke teteje a szintvonal felső oldalán legyen. Olyan pozícióban kell elhelyezni azokat a számláló szintvonalban, ahol más részleteket nem takarnak el.</translation>
     </message>
     <message>
         <source>Form line</source>
@@ -6869,7 +6879,7 @@ However, contour lines shall be cut out for better legibility, if they touch the
     <message>
         <source>Slope line, form line</source>
         <comment>Name of symbol 103.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eséstüske, segéd szintvonalhoz</translation>
     </message>
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
@@ -6896,7 +6906,8 @@ The tags should show the full extent of the slope, but may be omitted if two ban
         <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, roads and railway cuttings or embankments.
 The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks shall be drawn with the symbol Impassable cliff (201). The line width of very high earth banks may be 0.37 mm.</source>
         <comment>Description of symbol 104.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A meredek földletörés a talajszint hirtelen változása, amely világosan megkülönböztethető a környezetétől, pl. kavics vagy homok gödrök, utak és vasúti vágatok vagy töltések.
+A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz. Az átjárhatatlan letöréseket az járhatatlan sziklafal (201) szimbólummal kell megrajzolni. A nagyon magas földletörések vonalszélessége 0,37 mm lehet.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -6906,7 +6917,7 @@ The tags should show the full extent of the slope, but may be omitted if two ban
     <message>
         <source>The tags should show the full extent of the slope, but may be omitted if two banks are close together.</source>
         <comment>Description of symbol 104.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tüskéknek meg kell mutatniuk a meredekség teljes mértékét, de elhagyhatók, ha két part közel van egymáshoz.</translation>
     </message>
     <message>
         <source>Small earth wall</source>
@@ -6919,7 +6930,10 @@ Larger earth walls should be represented with the symbols Contour (101), Form li
 Minimum height: 0.5 m.
 Minimum length: 1.4 mm (footprint 5,6 m).</source>
         <comment>Description of symbol 105</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kicsi töltés, vagy földfal, általában ember alkotta.
+A nagyobb töltéseket a szintvonal (101), a segéd szintvonal (103) vagy a földletörés (104) szimbólumokkal kell ábrázolni.
+Minimális magasság: 0,5 m.
+Minimális hossz: 1,4 mm (lábnyom 5,6 m).</translation>
     </message>
     <message>
         <source>Erosion gully or trench</source>
@@ -6931,7 +6945,9 @@ Minimum length: 1.4 mm (footprint 5,6 m).</source>
 Minimum depth: 1 m.
 Minimum length: 2.0 mm (footprint 8 m).</source>
         <comment>Description of symbol 107</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy eróziós vízfolyás vagy árok, amely túl kicsi ahhoz, hogy a földletörés (104), szintvonal (101), számláló szintvonal (102) vagy a segéd szintvonal (103) szimbólummal ábrázolható legyen, egyetlen vonallal ábrázolja. A vonal vége hegyes. A jobb olvashatóság érdekében a szimbólum körvonalai megszakadhatnak.
+Minimális mélység: 1 m.
+Minimális hossz: 2,0 mm (lábnyom 8 m).</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -6944,7 +6960,10 @@ Contour lines should be broken around this symbol.
 Minimum depth: 0.5 m.
 Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
         <comment>Description of symbol 108</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kis eróziós vízfolyás vagy árok.
+A szintvonalakat meg kell szakítani a szimbólum a körül.
+Minimális mélység: 0,5 m.
+Minimális hossz (elszigetelt): három pont (1,6 mm - lábnyom 6,4 m).</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -6956,7 +6975,9 @@ Minimum length (isolated): three dots (1.6 mm - footprint 6.4 m).</source>
 Minimum height: 0.5 m.
 Footprint: 3 m in diameter.</source>
         <comment>Description of symbol 109</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kicsi, jól észrevehető halom vagy sziklás domb, amelyet nem lehet szintvonallal (101), számláló szintvonallal(102) vagy segéd szintvonallal (103) méretarányosan megrajzolni. A szimbólum nem érintheti vagy fedheti át a szintvonalakat.
+Minimális magasság: 0,5 m.
+Lábnyom: 3 m átmérőjű.</translation>
     </message>
     <message>
         <source>Small elongated knoll</source>
@@ -6968,7 +6989,9 @@ Footprint: 3 m in diameter.</source>
 Minimum height: 0.5 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 110</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kicsi, jól látható, hosszúkás domb, amelyet nem lehet szintvonallal (101), számláló szintvonallal (102) vagy segéd szintvonallal (103) méretarányosan megrajzolni. A maximális hossza 6 m-nél, a maximális szélesség 2 m-nél nem lehet nagyobb. Az ennél nagyobb dombokat szintvonallal kell ábrázolni. A szimbólum nem rajzolható szabad formában vagy olyan formában, hogy két hosszúkás domb szimbólum összeérjen vagy átfedje egymást. A szimbólum nem érintheti vagy fedheti át a szintvonalakat.
+Minimális magasság: 0,5 m.
+Lábnyom: 4,8 m x 2,4 m.</translation>
     </message>
     <message>
         <source>Small depression</source>
@@ -6981,12 +7004,15 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.8 m x 2.4 m.</source>
         <comment>Description of symbol 111</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kicsi, sekély természetes mélyedést vagy üreget, amelyet nem lehet ábrázolni a szintvonal (101) vagy a segédszintvonal (103) szimbólummal, félkör alakú jellel ábrázoljuk. A szimbólum nem érintheti vagy fedheti át a többi barna színű szimbólumot.
+Minimális mélység: 0,5 m.
+Minimális szélesség: 1 m.
+Lábnyom: 4,8 m x 2,4 m.</translation>
     </message>
     <message>
         <source>Pit or hole</source>
         <comment>Name of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gödör vagy lyuk</translation>
     </message>
     <message>
         <source>A pit or hole with distinct steep sides which cannot be represented to scale with the symbol Earth bank (104).
@@ -6994,7 +7020,10 @@ Minimum depth: 0.5 m.
 Minimum width: 1 m.
 Footprint: 4.4 m x 5.0 m.</source>
         <comment>Description of symbol 112</comment>
-        <translation type="unfinished"></translation>
+        <translation>Különálló meredek oldalú gödör vagy lyuk, amelyet nem lehet méretarányosan ábrázolni a földletörés szimbólummal (104).
+Minimális mélység: 0,5 m.
+Minimális szélesség: 1 m.
+Lábnyom: 4,4 m x 5,0 m.</translation>
     </message>
     <message>
         <source>Broken ground</source>
@@ -7128,7 +7157,7 @@ For vertical rock faces the tags may be omitted if space is short, e.g. narrow p
     <message>
         <source>Impassable cliff, minimum size (from ISSOM)</source>
         <comment>Name of symbol 201.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Járhatatlan szikla, minimális méret (az ISSOM-ból)</translation>
     </message>
     <message>
         <source>An impassable cliff, quarry or earth bank (see symbol Earth bank 104).
@@ -11219,9 +11248,9 @@ A szabályt megsértő versenyzők kizárásra kerülnek.&lt;/span&gt;</translat
 
 The purple line will extend a bit into the finish symbol. This is a shortcoming of this simple approach.</source>
         <comment>Description of symbol 799</comment>
-        <translation type="unfinished">Ez a jel egyszerű és gyors módszert kínál a edzőpályák készítéséhez.
+        <translation>Ez a jel egyszerű és gyors módszert kínál a edzőpályák készítéséhez.
 
-A lila vonal kissé kiborul a célszimbólumba. Ez az egyszerű megközelítés hiányossága.</translation>
+A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megközelítés hiányossága.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -14868,14 +14897,14 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation type="unfinished">Azonos magasságú pontokat összekötő vonal. A szintvonalak közötti különbség 5 m. Sík terepen 2,5 m-es intervallum használható.
-A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén az újbóli belépőkbe kell helyezni őket.
+        <translation>Azonos magasságú pontokat összekötő vonal. A szintvonalak közötti különbség 5 m. Sík terepen 2,5 m-es intervallum használható.
+A lejtővonalak a szintvonal alsó oldalára húzhatók, hogy tisztázzuk a lejtő irányát. Használatuk esetén a mélyedésekbe kell helyezni őket.
 A zárt szintvonal egy dombot vagy mélyedést jelent. A mélyedésnek legalább egy lejtővonallal kell rendelkeznie. A minimális magasság/mélység 1 m.
-Fontos a szomszédos kontúrvonalak közötti kapcsolat. A szomszédos kontúrvonalak formáját és felépítését mutatják. Kerülni kell a kontúr apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
-A feltűnő tulajdonságokat, mint például a mélyedéseket, visszatérőket, kanyarokat, földpartokat és teraszokat lehet, hogy eltúlozzák.
-Az abszolút magassági pontosságnak nincs jelentősége, de a szomszédos elemek közötti relatív magassági különbséget a lehető legpontosabban meg kell jeleníteni a térképen. Megengedett a szintvonal magasságának kissé megváltoztatása, ha ez javítja a terepelemek ábrázolását. Ez az eltérés nem haladhatja meg a szintvonal különbség 25% -át, és figyelmet kell fordítani a szomszédos tulajdonságokra.
-A kontúrvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A visszatérő vagy a száj szája legalább 0,5 mm legyen a vonal közepétől a középpontjáig (8 m lábnyom).
-A kontúrhüvely minimális hossza 0,9 mm (lábnyom 13,5 m) és a minimális szélessége 0,6 mm (lábnyom 9 m) a mérési távolságon kívül. Kisebb kiemelkedő dombok ábrázolhatók a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólummal, vagy eltúlozhatók a térképen a minimális méret kielégítése érdekében.
+Fontos a szomszédos szintvonalak közötti kapcsolat. A szomszédos szintvonalak formáját és felépítését mutatják. Kerülni kell a szintvonalak apró részleteit, mivel ezek általában elrejtik a terep főbb jellemzőit.
+A feltűnő tulajdonságokat, mint például a mélyedéseket, hajlatokat, kanyarokat, földpartokat és teraszokat el lehet túlozni.
+Az abszolút magassági pontosságnak nincs jelentősége, de a szomszédos elemek közötti relatív magassági különbséget a lehető legpontosabban meg kell jeleníteni a térképen. Megengedett a szintvonal magasságának kismértékű megváltoztatása, ha ez javítja a terepelemek ábrázolását. Ez az eltérés nem haladhatja meg az alapszintköz 25% -át, és figyelmet kell fordítani a szomszédos tulajdonságokra.
+A szintvonal legkisebb íve a vonal közepétől a középpontjáig 0,25 mm (lábnyom 4 m). A hajlat vagy a száj szája legalább 0,5 mm legyen a vonal közepétől a középpontjáig (8 m lábnyom).
+A domb szintvonal minimális hossza 0,9 mm (lábnyom 13,5 m) és a minimális szélessége 0,6 mm (lábnyom 9 m) a mérési távolságon kívül. Kisebb kiemelkedő dombok ábrázolhatók a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólummal, vagy eltúlozhatók a térképen a minimális méret kielégítése érdekében.
 A mélyedésnek meg kell felelnie a lejtő vonalának, tehát a legkisebb hosszúság 1,1 mm (lábnyom 16,5 m) és a minimális szélesség 0,7 mm (10,5 m lábnyom). Kisebb, kiemelkedő mélyedéseket a Lapos mélyedés (111) szimbólummal ábrázolhatunk, vagy eltúlozhatjuk a minimális méret kielégítése érdekében.
 A szintvonalakat úgy kell beállítani (nem törve), hogy ne érintse meg a Kis domb (109) vagy a Kicsi hosszúkás domb (110) szimbólumot.</translation>
     </message>
@@ -14901,8 +14930,8 @@ A mélyedéshez legalább egy lejtővonalat kell használni.</translation>
 An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
-        <translation type="unfinished">Minden ötödik szintvonalat vastagabb vonallal kell rajzolni. Ez segítséget nyújt a magasságkülönbség és a terepfelület általános alakjának gyors felmérésében.
-Az számláló szintvonalat rendes szintvonalként használhatjuk egy nagyon részletezett területen. A kis dombok és mélyedések általában nem ábrázolhatók a számláló szintvonallal.
+        <translation>Minden ötödik szintvonalat vastagabb vonallal kell rajzolni. Ez segítséget nyújt a magasságkülönbség és a terepfelület általános alakjának gyors felmérésében.
+Az számláló szintvonal helyett rendes szintvonalat használhatunk egy nagyon részletezett területen. A kis dombok és mélyedések általában nem ábrázolhatók a számláló szintvonallal.
 Az számláló szintvonal szintjét gondosan kell kiválasztani sík terepen. A számláló szintvonal ideális szintje a legfontosabb lejtőkön lévő központi szintvonal.</translation>
     </message>
     <message>
@@ -15554,11 +15583,11 @@ For openings in symbol Open land (401), the minimum area is 0.7 mm x 0.7 mm (foo
 For openings in symbol Vegetation: walk (408), the minimum area is 0.7 mm x 0.7 mm (footprint 10.5 m x 10.5 m).
 For openings in symbol Vegetation: fight (410) the minimum area is 0.55 mm x 0.55 mm (footprint 8 m x 8 m).</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished">Az adott tereptípusra jellemző nyílt erdő. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem szabad a fehérszínnek megjelennie.
+        <translation>Az adott tereptípusra jellemző nyílt erdő. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem szabad a fehér színnek megjelennie.
 Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m) más színű foltok nyílásainak kivételével, kivéve a következőket:
 Nyílt terepen (401) jelölésű nyílások esetén a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
-A növényzet szimbólum nyílásai: séta (408), a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
-A növényzet szimbólum nyílásai: küzdelemes (410) minimális területe 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
+A növényzet szimbólum nyíltsága: séta (408), a minimális terület 0,7 mm x 0,7 mm (lábnyom 10,5 m x 10,5 m).
+A növényzet szimbólum nyíltsága: küzdelmes (410) minimális területe 0,55 mm x 0,55 mm (lábnyom 8 m x 8 m).</translation>
     </message>
     <message>
         <source>Vegetation: slow running</source>
@@ -15571,7 +15600,7 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+        <translation>Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futás sebességét.
 Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
 Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
 Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
@@ -15587,7 +15616,7 @@ Where runnability is better in one direction, a regular pattern of white stripes
 Minimum area: 1 mm x 1 mm (footprint 15 m x 15 m).
 Minimum width: 0.4 mm (footprint 6 m).</source>
         <comment>Description of symbol 406.1</comment>
-        <translation type="unfinished">Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futást.
+        <translation>Sűrű vegetációval (rossz láthatósággal) rendelkező terület, amely a normál sebesség 60-80% -ára csökkenti a futás sebességét.
 Ahol a futhatóság egy irányban jobb, a fehér csíkok szabályos mintája megmutatja annak irányát.
 Minimális terület: 1 mm x 1 mm (lábnyom 15 m x 15 m).
 Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
