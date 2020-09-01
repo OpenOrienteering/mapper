@@ -34,6 +34,8 @@
 #include <QStyle>
 
 class QApplication;
+class QChildEvent;
+class QCommonStyle;
 class QPainter;
 class QStyleHintReturn;
 class QStyleOptionComplex;
@@ -111,7 +113,7 @@ public:
 	 * 
 	 * In touch mode:
 	 * - Up/down spinbox indicators are turned into plus/minus indicators.
-	 * - For spin box indicators, the rect is performed in square with sufficient margin.
+	 * - Spin box indicators are put into a square geometry with sufficient margin.
 	 * 
 	 * On Android:
 	 * - QStyle::PE_IndicatorItemViewItemCheck is modified for disabled and tristate checkboxes.
@@ -130,23 +132,24 @@ public:
 	/**
 	 * Returns some adjusted pixel metrics.
 	 *
-	 * On OS X:
-	 * - QStyle::PM_ToolBarIconSize is adjusted (reduced) towards QStyle::PM_SmallIconSize.
-	 * 
-	 * On Android:
-	 * - QStyle::PM_ButtonIconSize is enlarged to QStyle::PM_IndicatorWidth (checkbox size),
-	 * - QStyle::PM_SmallIconSize is enlarged to the (overwritten) PM_ButtonIconSize
-	 *   for dockwidget related widgets.
+	 * In touch mode:
+	 * - Toolbar-related metrics are scaled to match user-defined action button size.
+	 * - Toolbar-related metrics are scaled to match user-defined action button size.
+	 * - QStyle::PM_ButtonIconSize and 
+	 *   QStyle::PM_SmallIconSize are possibly enlarged to follow the user-defined action button size.
 	 * - QStyle::PM_DockWidgetSeparatorExtent and
-	 *   QStyle::PM_SplitterWidth are adjusted (enlarged) towards QStyle::PM_IndicatorWidth.
+	 *   QStyle::PM_SplitterWidth are scaled to follow the user-defined action button size.
+	 * 
+	 * Otherwise on OS X:
+	 * - QStyle::PM_ToolBarIconSize is adjusted (reduced) towards QStyle::PM_SmallIconSize.
 	 */ 
 	int pixelMetric(PixelMetric metric, const QStyleOption* option = nullptr, const QWidget* widget = nullptr) const override;
 	
 	/**
 	 * Returns adjusted widget sizes.
 	 * 
-	 * On Android:
-	 * - QStyle::CT_SizeGrip is enlarged to the (overwritten) PM_ButtonIconSize.
+	 * In touch mode:
+	 * - QStyle::CT_SizeGrip is enlarged to the (overwritten) PM_SmallIconSize.
 	 */
 	QSize sizeFromContents(ContentsType ct, const QStyleOption* opt, const QSize& contents_size, const QWidget* w = nullptr) const override;
 	
@@ -156,6 +159,9 @@ public:
 	 * On Android:
 	 * - For dockwidget buttons, the QCommonStyle implementation is used instead
 	 *   of the QFusionStyle one.
+	 * 
+	 * In general:
+	 * - Icons are created with ScalingIconEngine.
 	 */
 	QIcon standardIcon(StandardPixmap standard_icon, const QStyleOption* option, const QWidget* widget) const override;
 	
@@ -170,6 +176,9 @@ public:
 	
 	/**
 	 * Returns adjusted style hints.
+	 * 
+	 * In touch mode:
+	 * - For SH_Menu_Scrollable, this function returns true.
 	 * 
 	 * On Android:
 	 * - QStyle::SH_FormLayoutWrapPolicy is QFormLayout::QFormLayout::WrapLongRows.

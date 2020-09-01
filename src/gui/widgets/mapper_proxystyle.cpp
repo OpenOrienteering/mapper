@@ -27,6 +27,7 @@
 #include <QApplication>
 #include <QBrush>
 #include <QByteArray>
+#include <QChildEvent>
 #include <QColor>
 #include <QCommonStyle> // IWYU pragma: keep
 #include <QCoreApplication>
@@ -436,7 +437,7 @@ QSize MapperProxyStyle::sizeFromContents(QStyle::ContentsType ct, const QStyleOp
 		case QStyle::CT_SizeGrip:
 			return [](int value) {
 				return QSize{ value, value };
-			} (qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), toolbar.icon_size / 2));
+			} (qMax(QProxyStyle::pixelMetric(QStyle::PM_ButtonIconSize), small_icon_size));
 		default:
 			break;
 		}
