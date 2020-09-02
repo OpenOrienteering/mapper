@@ -25,11 +25,13 @@
 #include <QString>
 
 class QAction;
-class QDialog;
+class QActionGroup;
 class QImage;
-class QListWidget;
+class QMenu;
 class QPointF;
 class QRectF;
+class QToolButton;
+class QWidget;
 
 namespace OpenOrienteering {
 
@@ -84,11 +86,6 @@ public:
 	 */
 	QAction* paintAction() { return paint_action; }
 	
-	/**
-	 * The action which lets the use choose a template, or create a new template.
-	 */
-	QAction* selectAction() { return select_action; }
-	
 	
 protected:
 	/**
@@ -101,31 +98,20 @@ protected:
 	 */
 	void paintClicked(bool checked);
 	
-	/**
-	 * Reacts on triggering the paint action.
-	 */
-	void selectTemplateClicked();
 	
 	/**
-	 * Returns a template selected by the user.
+	 * Creates a menu of actions which start painting on new or existing templates.
 	 * 
-	 * May return nullptr when cancelled, or on error.
+	 * When the given action is null, the menu is initially empty. It gets filled
+	 * or updated when the the action is hovered.
 	 */
-	Template* selectTemplate() const;
-	
-	
-	/**
-	 * Creates the user interface and behaviour of the select-template dialog.
-	 * 
-	 * The selected_template parameter determines where the dialog will store
-	 * the selected template when the user closes the dialog.
-	 */
-	void initTemplateDialog(QDialog& dialog, Template*& selected_template) const;
+	QMenu* makeTemplateMenu(QAction* action, QWidget* parent);
 	
 	/**
-	 * Fills a QListWidget with template options.
+	 * Refreshes the contents of the template menu, based on the current view and template state.
 	 */
-	void initTemplateListWidget(QListWidget& list_widget) const;
+	void refreshTemplateMenu(QMenu* menu, QActionGroup* action_group);
+	
 	
 	/**
 	 * Sets up a new or existing template image, and returns it.
@@ -154,10 +140,14 @@ protected:
 	 */
 	QRectF viewedRect() const;
 	
+	/**
+	 * Returns the first toolbutton associated with the paint action, or nullptr.
+	 */
+	QToolButton* buttonForPaintAction();
+	
 private:
 	MapEditorController& controller;
 	QAction* paint_action = nullptr;      // child of this
-	QAction* select_action = nullptr;     // child of this
 	Template* last_template = nullptr;
 	
 	Q_DISABLE_COPY(PaintOnTemplateFeature)

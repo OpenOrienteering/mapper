@@ -1315,14 +1315,10 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
-	auto* paint_on_template_button = new QToolButton();
-	paint_on_template_button->setCheckable(true);
-	paint_on_template_button->setDefaultAction(paint_feature->paintAction());
-	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
-	auto* paint_on_template_menu = new QMenu(paint_on_template_button);
-	paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(paint_on_template_menu);
-	toolbar_drawing->addWidget(paint_on_template_button);
+	auto* paint_action = paint_feature->paintAction();
+	toolbar_drawing->addAction(paint_action);
+	if (auto* button = qobject_cast<QToolButton*>(toolbar_drawing->widgetForAction(paint_action)))
+		button->setPopupMode(QToolButton::MenuButtonPopup);
 	
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
@@ -1508,12 +1504,11 @@ void MapEditorController::createMobileGUI()
 	
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
-	bottom_action_bar->addAction(paint_feature->paintAction(), 0, col);
-	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_feature->paintAction());
-	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
-	mobile_paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
-
+	auto* paint_action = paint_feature->paintAction();
+	bottom_action_bar->addAction(paint_action, 0, col);
+	if (auto* button = bottom_action_bar->getButtonForAction(paint_action))
+		button->setPopupMode(QToolButton::DelayedPopup);
+	
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	auto* button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
