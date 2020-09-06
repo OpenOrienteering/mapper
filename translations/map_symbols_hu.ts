@@ -8481,8 +8481,8 @@ Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
 If it is forbidden to cross or run along the railroad, the forbidden area around the railway shall be represented with symbol Area that shall not be entered (520).
 Minimum length (isolated): two dashes (4 mm - footprint 16 m).</source>
         <comment>Description of symbol 509.1</comment>
-        <translation>A vasút egy sínekkel lefektetett állandó vágány, amelyen mozdonyok, kocsik vagy kocsik közlekedhetnek.
-Ha tilos átkelni vagy végigmenni a vasút mentén, a vasút körüli tiltott területet a Terület szimbólummal kell ábrázolni, amelybe nem szabad belépni (520).
+        <translation>A vasút egy sínekkel lefektetett állandó vágány, amelyen mozdonyok, teher- és személyvagonok közlekedhetnek.
+Ha tilos átkelni vagy végigmenni a vasút mentén, a vasút körüli tiltott területet a(520) Tiltott terület szimbólummal kell ábrázolni, amelybe nem szabad belépni .
 Minimális hossz (elszigetelt): két kötőjel (4 mm - 16 m alapterület).</translation>
     </message>
     <message>
@@ -8494,7 +8494,8 @@ Minimális hossz (elszigetelt): két kötőjel (4 mm - 16 m alapterület).</tran
         <source>A tramway is a public vehicle running regularly along certain streets, usually on rails. The track can be easily crossed by the competitor.
 Tramways are generally not represented. However, if they serve navigation or orientation, they can be represented.</source>
         <comment>Description of symbol 509.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A villamos olyan közúti jármű, amely rendszeresen közlekedik bizonyos utcákon, általában síneken. A pályán a versenyző könnyen áthaladhat.
+A villamosok általában nincsenek megjelenítve. Ha azonban a tájékozódást szolgálják, akkor ábrázolhatók.</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -8507,7 +8508,10 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 510</comment>
-        <translation type="unfinished"></translation>
+        <translation>Elektromos vezeték, kötélpálya vagy sífelvonó.
+A négyzetek jelzik a pilonok pontos helyét. Ha egy villanyvezeték, kötélpálya vagy sífelvonó egy szakasza egy út vagy ösvény mentén halad (és nem nyújt jelentős további tájékozódási értéket), akkor azt el kell hagyni.
+
+&lt;b&gt; Megjegyzés: A szimbólum megrajzolásakor nyomja meg a szóköz billentyűt a pilon szimbólumok új csomópontoknál való elhelyezéséhez. &lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line</source>
@@ -8519,19 +8523,23 @@ The bars indicate the exact location of the pylons. If a section of a power line
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511</comment>
-        <translation type="unfinished"></translation>
+        <translation>A főbb elektromos vezetékeket kettős vonallal kell meghúzni. A vonalak közötti rés jelezheti az elektromos vezeték kiterjedését. A nagyon nagy tartóoszlopokat alaprajz alakban kell ábrázolni az (521)Épület vagy a (524)Magas torony szimbólummal. Ebben az esetben a kábelvezetékek elhagyhatók (a térképen csak a pilonok láthatók).
+
+&lt;b&gt; Megjegyzés: A szimbólum megrajzolásakor nyomja meg a szóköz billentyűt a pilon szimbólumok új csomópontoknál való elhelyezéséhez. &lt;/b&gt;</translation>
     </message>
     <message>
         <source>Major power line with pylons</source>
         <comment>Name of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fő villanyvezeték pilonokkal</translation>
     </message>
     <message>
         <source>Major power lines should be drawn with a double line. The gap between the lines may indicate the extent of the powerline. Very large carrying masts shall be represented in plan shape using symbol Building (521) or High tower (524). In this case, the cable lines can be left out (the map shows only the pylons).
 
 &lt;b&gt;Note: When drawing this symbol, press space to toggle placing the pylon symbols at new nodes.&lt;/b&gt;</source>
         <comment>Description of symbol 511.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A főbb elektromos vezetékeket kettős vonallal kell meghúzni. A vonalak közötti rés jelezheti az elektromos vezeték kiterjedését. A nagyon nagy tartóoszlopokat alaprajz alakban kell ábrázolni az (521)Épület vagy a (524)Magas torony szimbólummal. Ebben az esetben a kábelvezetékek elhagyhatók (a térképen csak a pilonok láthatók).
+
+&lt;b&gt; Megjegyzés: A szimbólum megrajzolásakor nyomja meg a szóköz billentyűt a pilon szimbólumok új csomópontoknál való elhelyezéséhez. &lt;/b&gt;</translation>
     </message>
     <message>
         <source>Bridge, one side</source>
@@ -8542,7 +8550,8 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512</comment>
-        <translation type="unfinished"></translation>
+        <translation>A híd olyan szerkezet, amely átíveli a folyót, szakadékot, utat vagy hasonlót.
+&lt;span style = &quot;color: red&quot;&gt; Ha egy versenyen hidak alatti aluljárókat kívánnak használni, akkor azokat a (710.1)Átkelő hely vagy (710.2) Átkelési szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source>Bridge, minimum width</source>
@@ -8553,7 +8562,8 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <source>A bridge is a structure spanning and permitting passage over a river, chasm, road or the like.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses under bridges are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A híd olyan szerkezet, amely átíveli a folyót, szakadékot, utat vagy hasonlót.
+&lt;span style = &quot;color: red&quot;&gt; Ha egy versenyen hidak alatti aluljárókat kívánnak használni, akkor azokat a (710.1)Átkelő hely vagy (710.2) Átkelési szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source>Underpass or tunnel</source>
@@ -8566,7 +8576,10 @@ Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az aluljáró vagy az alagút a föld vagy az épület alatt futó átjáró, különösen a gyalogosok vagy a járművek átjárója.
+Minimális hossza (az alapvonal): 2 négyzet (0,75 mm - lábnyom 3,0 m).
+&lt;span style = &quot;color: red&quot;&gt; Minimális hossz (az alapvonaltól): 2 négyzet (0,75 mm - lábnyom 3,0 m).
+Ha aluljárókat, alagutakat stb. kell használni a versenyben, akkor azokat a (710.1) Átkelő hely vagy (710.2)Átkelő szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source>Passable wall</source>
@@ -8578,19 +8591,23 @@ If underpasses or tunnels etc. are to be used in a competition, they shall be em
 If such a wall is higher than 1.5 m, it shall be represented with the symbol Impassable wall (515). Wide walls shall be drawn in plan shape using a ground symbol delineated by the passable wall symbol. It should be dotted if possible (minimum length around the dot 0.4 mm each side).
 Minimum length (isolated): 1.4 mm (footprint 5.6 m).</source>
         <comment>Description of symbol 513.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az átjárható fal kőből, téglából, betonból stb. készült szerkezet, amely áthaladhat.
+Ha egy ilyen fal 1,5 m-nél magasabb, akkor azt az (515) Átjárhatatlan fal szimbólummal kell ábrázolni. A széles falakat alaprajzában kell megrajzolni az átjárható falszimbólum által körülhatárolt talajszimbólummal. Lehetőség szerint pontozott legyen (minimális hosszúság a pont körül 0,4 mm mindkét oldalon).
+Minimális hossz (elszigetelt): 1,4 mm (lábnyom 5,6 m).</translation>
     </message>
     <message>
         <source>Passable retained wall</source>
         <comment>Name of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átjárható támfal</translation>
     </message>
     <message>
         <source>A passable wall which is seen only from one side. Half dot must point to the lower level.
 Height is 0.6 - 1.5 m. If lower, use symbol Step or edge of paved area (501.1).
 Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <comment>Description of symbol 513.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átjárható fal, amely csak az egyik oldalról látható. A fél pontnak az alsó szintre kell mutatnia.
+Magassága 0,6 - 1,5 m. Ha alacsonyabb, használja a Lépcső vagy a burkolt terület széle (501.1) szimbólumot.
+Minimális hossz (elszigetelt): 2,4 mm (lábnyom 9,6 m).</translation>
     </message>
     <message>
         <source>Impassable wall</source>
@@ -8601,7 +8618,8 @@ Minimum length (isolated): 2.4 mm (footprint 9.6 m).</source>
         <source>An impassable or uncrossable wall or retaining wall is a wall, which fulfil the function of an enclosure or solid barrier. It shall not be crossed.
 Very wide impassable walls shall be drawn in plan shape and represented with the symbol Building (521).</source>
         <comment>Description of symbol 515</comment>
-        <translation type="unfinished"></translation>
+        <translation>A járhatatlan vagy keresztezhetetlen fal vagy támfal olyan fal, amely eleget tesz a burkolat vagy a szilárd akadály funkciójának. Nem szabad átlépni.
+A nagyon széles, járhatatlan falakat tervszerűen meg kell rajzolni, és az (521) épület szimbólummal kell ábrázolni.</translation>
     </message>
     <message>
         <source>Passable fence or railing</source>
@@ -8613,35 +8631,40 @@ Very wide impassable walls shall be drawn in plan shape and represented with the
 If a fence or railing is dangerous or very difficult to cross, it shall be represented with the symbol Impassable fence or railing (518).
 Minimum length (isolated): 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 516</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az átjárható kerítés egy akadály, körbeveszi vagy határolja a mezőt, udvart stb. , általában oszlopokból, drótból vagy fából készült. A belépés megelőzésére vagy a határok megjelölésére szolgál. A korlát kerítésszerű akadály, amely egy vagy több vízszintes rúdból áll, amelyeket széles körben elhelyezett függőleges oszlopok támasztanak alá, általában át lehet csúsztatni.
+Ha a kerítés vagy a korlát veszélyes vagy nagyon nehezen átléphető, akkor azt az (518)áthatolhatatlan kerítés vagy korlát szimbólummal kell ábrázolni .
+Minimális hossz (elszigetelt): 2,2 mm (lábnyom: 8,8 m).</translation>
     </message>
     <message>
         <source>Impassable fence or railing</source>
         <comment>Name of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>Áthatolhatatlan kerítés vagy korlát</translation>
     </message>
     <message>
         <source>An impassable fence or railing shall not be crossed.
 If the length is shorter than 3 mm, it must be presented with the symbol Impassable wall (515).
 Minimum length (isolated): 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 518</comment>
-        <translation type="unfinished"></translation>
+        <translation>A járhatatlan kerítést vagy korlátot nem szabad átlépni.
+Ha a hossz rövidebb, mint 3 mm, akkor azt az (515)Áthatolhatatlan fal szimbólummal kell feltüntetni.
+Minimális hossz (elszigetelt): 3 mm (lábnyom 12 m).</translation>
     </message>
     <message>
         <source>Crossing point (optional)</source>
         <comment>Name of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átkelő hely (opcionális)</translation>
     </message>
     <message>
         <source>A crossing point is a gap or an opening in a fence, railing or wall, which can easily be passed through by a competitor.
 Small gaps or openings which cannot easily be passed through by competitors, shall not be represented on the map and shall be closed during the competition.</source>
         <comment>Description of symbol 519</comment>
-        <translation type="unfinished"></translation>
+        <translation>A átkelő hely egy kerítésen, korláton vagy falon lévő rés vagy nyílás, amelyen a versenyző könnyen áthaladhat.
+Azok a kicsi hézagok vagy nyílások, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem jelennek meg a térképen, és a verseny ideje alatt zárva vannak.</translation>
     </message>
     <message>
         <source>Area that shall not be entered </source>
         <comment>Name of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, amelyre nem lehet belépni </translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -8651,12 +8674,17 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520</comment>
-        <translation type="unfinished"></translation>
+        <translation>Olyan terület, ahová nem szabad belépni, például magánterület, virágágyás, vasúti terület stb.
+Ezen a területen nem szükséges ábrázolni a terepi jellemzőket, kivéve a nagyon jól ismert jellemzőket, például a vasutakat, nagy épületeket vagy nagyon nagy fákat. A közúti bejáratokat egyértelműen kell ábrázolni.
+&lt;b&gt; Azokat a területeket, amelyeket nem lehet teljes egészében belépni az épületekbe, az épület részeként kell feltérképezni. &lt;/b&gt;
+A területet mindig határvonal (legalább 0,1 mm szélességű) határolja.
+Minimális szélesség: 0,25 mm (lábnyom 1 m).
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Area that shall not be entered, boundary line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, amelyre nem lehet belépni, határvonal</translation>
     </message>
     <message>
         <source>An area that shall not be entered such as a private area, a flower bed, a railway area etc.
@@ -8666,7 +8694,12 @@ The area shall always be delineated by a boundary line (at least 0.1 mm in width
 Minimum width: 0.25 mm (footprint 1 m).
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Olyan terület, ahová nem szabad belépni, például magánterület, virágágyás, vasúti terület stb.
+Ezen a területen nem szükséges ábrázolni a terepi jellemzőket, kivéve a nagyon jól ismert jellemzőket, például a vasutakat, nagy épületeket vagy nagyon nagy fákat. A közúti bejáratokat egyértelműen kell ábrázolni.
+&lt;b&gt; Azokat a területeket, amelyeket nem lehet teljes egészében belépni az épületekbe, az épület részeként kell feltérképezni. &lt;/b&gt;
+A területet mindig határvonal (legalább 0,1 mm szélességű) határolja.
+Minimális szélesség: 0,25 mm (lábnyom 1 m).
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Building</source>
@@ -8680,7 +8713,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
+A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Building, minimum size</source>
@@ -8694,12 +8731,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
+A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Building, fill</source>
         <comment>Name of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Épület, kitöltés</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -8708,12 +8749,16 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
+A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Building, outline</source>
         <comment>Name of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Épület, körvonal</translation>
     </message>
     <message>
         <source>A building is a relatively permanent construction having a roof.
@@ -8722,7 +8767,11 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.4</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
+A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+&lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Canopy</source>
@@ -8735,12 +8784,15 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Canopy, fill</source>
         <comment>Name of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Árkád, kitöltés</translation>
     </message>
     <message>
         <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
@@ -8748,7 +8800,10 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Canopy, outline</source>
@@ -8761,7 +8816,10 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Pillar</source>
@@ -8772,7 +8830,8 @@ Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <source>A pillar is an upright shaft or structure of stone, brick or other material, relatively slender in proportion to its height and any shape in section, used as a building support.
 Pillars smaller than 1 m × 1 m are generally not represented.</source>
         <comment>Description of symbol 522.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az oszlop egy kőből, téglából vagy más anyagból álló függőleges tengely vagy szerkezet, amely a magasságához és a szelvények bármely alakjához viszonyítva viszonylag karcsú, és amelyet építménytámogatásként használnak.
+Az 1 m × 1 m-nél kisebb oszlopok általában nincsenek ábrázolva.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -8784,7 +8843,9 @@ Pillars smaller than 1 m × 1 m are generally not represented.</source>
 Very large towers shall be represented in plan shape with the symbol Building (521).
 Footprint: 8.4 m in diameter.</source>
         <comment>Description of symbol 524</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magas torony vagy nagy pilon.
+A nagyon nagy tornyokat alaprajz alakban az (521)épület jellel kell ábrázolni.
+Lábnyom: 8,4 m átmérőjű.</translation>
     </message>
     <message>
         <source>Small tower</source>
@@ -8795,7 +8856,8 @@ Footprint: 8.4 m in diameter.</source>
         <source>An obvious small tower, platform or seat.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyilvánvaló kis torony, emelvény vagy ülés.
+Lábnyom: 6 m x 6 m.</translation>
     </message>
     <message>
         <source>Cairn, memorial, small monument or boundary stone</source>
@@ -8807,7 +8869,9 @@ Footprint: 6 m x 6 m.</source>
 Large massive monuments shall be represented in plan shape with the symbol Building (521).
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 526</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kőhalom, emlékmű, kis emlékmű vagy határkő, amely nyilvánvaló.
+A nagyméretű, hatalmas műemlékeket az épület szimbólummal (521) kell ábrázolni.
+Lábnyom: 4 m átmérőjű.</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -8818,24 +8882,27 @@ Footprint: 4 m in diameter.</source>
         <source>A fodder rack, which is free standing or attached to a tree.
 Footprint: 6 m x 6 m.</source>
         <comment>Description of symbol 527</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vadetető, takarmánytartó, amely szabadon áll vagy fához van rögzítve.
+Lábnyom: 6 m x 6 m.</translation>
     </message>
     <message>
         <source> Prominent line feature</source>
         <comment>Name of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation> Kiemelkedő vonalszerű jellemző (földfelszíni csővezeték (gáz, olaj, víz stb.), amely fölött vagy alatt lehetséges az áthaladás.)</translation>
     </message>
     <message>
         <source>A prominent man-made line feature. For example, a low pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track that is clearly visible.
 The definition of the symbol must be given on the map.
 Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <comment>Description of symbol 528</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kiemelkedő, ember alkotta vonal szerű tereptárgy. Például egy alacsony csővezeték (gáz, víz, olaj, hő, stb.) Vagy egy jól látható bob / szánkó pálya.
+A szimbólum meghatározását meg kell adni a térképen.
+Minimális hossz: 2,2 mm (lábnyom 8,8 m).</translation>
     </message>
     <message>
         <source> Prominent impassable line feature</source>
         <comment>Name of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation> Kiemelkedő áthatolhatatlan vonalszerű jellemző (földfelszíni csővezeték (gáz, olaj, víz stb.), amely fölött vagy alatt nem lehetséges az áthaladás.)</translation>
     </message>
     <message>
         <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
@@ -8843,7 +8910,10 @@ The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
         <comment>Description of symbol 529</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kiemelkedő, ember alkotta vonal szerű tereptárgy. Például egy alacsony csővezeték (gáz, víz, olaj, hő, stb.) Vagy egy jól látható bob / szánkó pálya.
+A szimbólum meghatározását meg kell adni a térképen.
+Kiemelkedő áthatolhatatlan vonalszerű jellemzőn nem lehetséges az áthaladás.
+Minimális hossz: 2,2 mm (lábnyom 8,8 m).</translation>
     </message>
     <message>
         <source>Prominent man-made feature – ring</source>
@@ -8855,7 +8925,9 @@ Minimum length: 3 mm (footprint 12 m).</source>
 The definition of the symbol must be given on the map.
 Footprint: 4 m in diameter.</source>
         <comment>Description of symbol 530</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jelentős vagy kiemelkedő ember alkotta jellemző.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyom: 4 m átmérőjű.</translation>
     </message>
     <message>
         <source>Prominent man-made feature – x</source>
@@ -8867,55 +8939,65 @@ Footprint: 4 m in diameter.</source>
 The definition of the symbol must be given on the map.
 Footprint: 4.8 m x 4.8 m.</source>
         <comment>Description of symbol 531</comment>
-        <translation type="unfinished"></translation>
+        <translation>A hely a szimbólum súlypontjában van.
+A szimbólum meghatározását meg kell adni a térképen.
+Lábnyom: 4,8 m x 4,8 m.</translation>
     </message>
     <message>
         <source>Stairway, footprint: 1.6 m</source>
         <comment>Name of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lépcsőház, lábnyom: 1,6 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+Minimális hossz: 3 (grafikus) lépés.
+Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 2 m</source>
         <comment>Name of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lépcsőház, lábnyom: 2 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+Minimális hossz: 3 (grafikus) lépés.
+Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 3 m</source>
         <comment>Name of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lépcsőház, lábnyom: 3 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+Minimális hossz: 3 (grafikus) lépés.
+Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>Stairway, footprint: 4 m</source>
         <comment>Name of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lépcsőház, lábnyom: 4 m</translation>
     </message>
     <message>
         <source>Steps of a stairway shall be represented in a generalized manner.
 Minimum length: 3 (graphical) steps.
 Minimum width: 0.4 mm (IM).</source>
         <comment>Description of symbol 532.9</comment>
-        <translation type="unfinished"></translation>
+        <translation>A lépcső lépcsőfokait általános módon kell ábrázolni.
+Minimális hossz: 3 (grafikus) lépés.
+Minimális szélesség: 0,4 mm (IM).</translation>
     </message>
     <message>
         <source>North lines pattern</source>
@@ -8944,7 +9026,7 @@ Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, min
     <message>
         <source>Magnetic north line, black, with arrow</source>
         <comment>Name of symbol 601.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mágneses északi vonal, fekete, nyíllal</translation>
     </message>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm, they represent 120 m on the ground.
@@ -9002,12 +9084,13 @@ Az északi vonalak akkor törhetnek, ha eltakarnak olyan apró jellemzőket, min
         <source>The start or map issue point (if not at the start) is shown by an equilateral triangle which points in the direction of the first control.
 The centre of the triangle shows the precise position of the start point.</source>
         <comment>Description of symbol 701</comment>
-        <translation type="unfinished"></translation>
+        <translation>A kezdő vagy térképkiadási pontot (ha nem a rajtnál van) egy egyenlő oldalú háromszög mutatja, amely az csúcsa az első ellenőrző pont irányába mutat.
+A háromszög közepe megmutatja a rajt pont pontos helyzetét.</translation>
     </message>
     <message>
         <source> Map issue point</source>
         <comment>Name of symbol 702</comment>
-        <translation type="unfinished"></translation>
+        <translation> Térképkiadási pont</translation>
     </message>
     <message>
         <source>If there is a marked route to the start point, the map issue point is marked using this symbol.</source>
@@ -9022,7 +9105,7 @@ The centre of the triangle shows the precise position of the start point.</sourc
     <message>
         <source>The control points are shown with circles (footprint 24 m). The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző pontok körökkel vannak ábrázolva (24 m alapterület). A kör közepe mutatja a jellemző pontos helyzetét. A körök szakaszait el kell hagyni, hogy a fontos részletek megjelenjenek.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -9033,18 +9116,20 @@ The centre of the triangle shows the precise position of the start point.</sourc
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrzőpont számát úgy helyezzük el a ellenőrző pont köréhez, hogy az ne takarja el a fontos részleteket.
+Az erősen színezett térképeknél lehetőségünk van a fehér vagy 0,1 vagy 0,15 mm szélességű szegély használatára.</translation>
     </message>
     <message>
         <source>Control number, with white border</source>
         <comment>Name of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzőpont sorszám, fehér szegéllyel</translation>
     </message>
     <message>
         <source>The number of the control is placed close to the control point circle in such a way that it does not obscure important detail.
 An option for heavily building filled map is the possibility to have a white border with 0.1 or 0.15 mm in width.</source>
         <comment>Description of symbol 704.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrzőpont számát úgy helyezzük el a ellenőrző pont köréhez, hogy az ne takarja el a fontos részleteket.
+Az erősen színezett térképeknél lehetőségünk van a fehér vagy 0,1 vagy 0,15 mm szélességű szegély használatára.</translation>
     </message>
     <message>
         <source>Course line</source>
@@ -9084,7 +9169,7 @@ An option for heavily building filled map is the possibility to have a white bor
     <message>
         <source>An out-of-bounds boundary shall not be crossed. It shall be used for temporary uncrossable boundaries used for the course setting.</source>
         <comment>Description of symbol 708</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiltott terület határát nem szabad átlépni. A pálya készítésnél használt ideiglenes, átléphetetlen határokhoz lehet használni.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -9100,7 +9185,13 @@ An out-of-bounds area shall not be entered.
 Minimum width: 2 mm.
 Minimum area: 4 mm² (footprint 64 m²).</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiltott terület. Ha nincs természetes határ, akkor a következő vonallal lehet határvonalat húzni:
+- egy folytonos vonal jelzi, hogy a határt folyamatosan jelölik (szalagok stb.) a terepen,
+- szaggatott vonal jelzi a szakaszos jelzéseket a terepen,
+- egyetlen vonal sem jelzi, hogy a terepen nincs jelölés.
+A határon túli területre nem lehet belépni.
+Minimális szélesség: 2 mm.
+Minimális terület: 4 mm² (64 m² alapterület).</translation>
     </message>
     <message>
         <source>Out-of-bounds area, solid boundary</source>
@@ -9110,7 +9201,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A solid line indicates that the boundary is marked continuously (tapeetc.) in the terrain.</source>
         <comment>Description of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A folytonos vonal azt jelzi, hogy a határt folyamatosan jelölik (szalag, stb.) a terepen.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, dashed boundary</source>
@@ -9120,7 +9211,7 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
     <message>
         <source>A dashed line indicates intermittent marking in the terrain.</source>
         <comment>Description of symbol 709.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szaggatott vonal jelzi a szakaszos jelzéseket a terepen.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -9142,31 +9233,35 @@ Minimum area: 4 mm² (footprint 64 m²).</source>
         <source>A crossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az átkelő szakasz egy épületen vagy azon keresztül, vagy falon agy kerítésen át, vagy egy közúton vagy vasúton, vagy egy alagúton vagy egy tiltott területen átmenő kereszteződési pontot két, kifelé görbülő vonallal rajzolnak a térképre. &lt;span style = &quot;color: red&quot;&gt; Ha aluljárókat vagy alagutakat stb. kell használni a versenyben, akkor azokat a (710.1) Átkelő hely vagy a (710.2) Átkelő szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source> Temporary construction or closed area</source>
         <comment>Name of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation> Ideiglenes építkezés vagy zárt terület</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714</comment>
-        <translation type="unfinished"></translation>
+        <translation>A nyilvánvaló ideiglenes konstrukciókat, például a nézőknek és a tudósítónak szánt platformokat, a nézők számára zárt területet, az étterem területén kívül stb., tervszerűen kell ábrázolni. Ideiglenes építkezés vagy zárt területe nem lehet belépni.
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source> Temporary construction or closed area, minimum size</source>
         <comment>Name of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation> Ideiglenes építés vagy zárt terület, minimális méret</translation>
     </message>
     <message>
         <source>Obvious temporary constructions like platforms for spectators and speaker, closed area for spectators, outside restaurant areas, etc. shall be represented in plan shape. A Temporary construction or closed area shall not be entered.
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 714.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A nyilvánvaló ideiglenes konstrukciókat, például a nézőknek és a tudósítónak szánt platformokat, a nézők számára zárt területet, az étterem területén kívül stb., tervszerűen kell ábrázolni. Ideiglenes építkezés vagy zárt területe nem lehet belépni.
+Minimális szélesség: 0,5 mm.
+Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -11724,7 +11819,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>Boulder fields / Stony ground</source>
         <comment>Name of symbol 210.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szikla mezők / köves talaj, kicsi</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -11761,7 +11856,9 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
 
 Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pond&quot; in ISOM).</source>
         <comment>Description of symbol 301</comment>
-        <translation type="unfinished"></translation>
+        <translation>A víz nagy területeit ez a szimbólum mutatja (kék 50%). A partvonal színe 100% kék.
+
+A kis vízterületeket teljes színnel kell feltüntetni. Használja a 302. szimbólumot (&quot;Tó&quot; az ISOM-ban ).</translation>
     </message>
     <message>
         <source>Lake, bank line</source>
@@ -11788,7 +11885,9 @@ Small areas of water should be shown with full colour. Use symbol 302 (&quot;Pon
 
 This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lake&quot; in ISMTBOM.</source>
         <comment>Description of symbol 302</comment>
-        <translation type="unfinished"></translation>
+        <translation>A kis vízterületeket teljes színnel kell feltüntetni.
+
+Ez az ISOM &quot;302 Tavacska&quot; szimbóluma, de az ISMTBOM &quot;301 Tó&quot; változata.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -11828,7 +11927,7 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>A marsh which is uncrossable or dangerous for the runner. A blue line surrounds the symbol.</source>
         <comment>Description of symbol 309</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mocsár, amely áthatolhatatlan vagy veszélyes a futó számára. A szimbólumot kék vonal veszi körül.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -11908,22 +12007,22 @@ This is symbol &quot;302 Pond&quot; in ISOM, but is a variation of &quot;301 Lak
     <message>
         <source>Forest: good visibility</source>
         <comment>Name of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erdő: jó láthatóság</translation>
     </message>
     <message>
         <source>Typically open forest for the particular type of terrain. Wherever a part of the forest is too dense to be traversed pushing or carrying a bicycle, no white should appear on the map.</source>
         <comment>Description of symbol 405</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jellemzően nyílt erdő az adott tereptípushoz. Ahol az erdő egy része túl sűrű ahhoz, hogy kerékpárral tologatva vagy cipelve haladhasson rajta, a térképen nem lehet fehér.</translation>
     </message>
     <message>
         <source>Forest: reduced visibility</source>
         <comment>Name of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Erdő: csökkent látási viszonyok</translation>
     </message>
     <message>
         <source>An area with dense trees (low visibility) which reduces the speed of traversing the forest pushing or carrying a bicycle significantly or even makes it impossible to traverse.</source>
         <comment>Description of symbol 406</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sűrű fákkal (gyenge láthatósággal) rendelkező terület, amely jelentősen csökkenti az erdőben a haladási sebességet, vagy tolni, vagy vinni kell a biciklit vagy lehetetlenné teszi az áthaladást.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -12010,7 +12109,7 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
     <message>
         <source>Track: fast riding</source>
         <comment>Name of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: gyors kerékpározás</translation>
     </message>
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
