@@ -3509,9 +3509,29 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <translation>植被茂密（能见度低）的区域，使行进速度降低到正常速度的 60-80%左右。</translation>
     </message>
     <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 406.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
         <source>An area of dense undergrowth but otherwise good visibility (brambles, heather, low bushes, and including cut branches) which reduces running to ca. 60-80% of normal speed. This symbol may not be combined with 406 or 408.</source>
         <comment>Description of symbol 407</comment>
         <translation>密集但视野良好的灌木层，（黑莓树、帚石楠、矮树，以及包括伐倒的树枝），降低跑步速度约为正常速度的 60 ~ 80% 。这个符号可以不与符号 406 或 408 组合。</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 408.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
@@ -4790,6 +4810,51 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>植被密集（树或灌木）几乎不能通过的区域。奔跑速度降低到正常速度的大约 0 - 20% 。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>植被：非常难以奔跑，不可通过，线条</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>符号410线条的最小宽度。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>在一个方向上可奔跑的树林，1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>在一个方向上可奔跑的树林，2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
         <source>Orchard</source>
         <comment>Name of symbol 412</comment>
         <translation>果园(空旷地)</translation>
@@ -4817,14 +4882,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>明显耕地边界</translation>
     </message>
     <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>耕种地的边界，当不以其它符号（围栏、墙、小路等）显示时，则用黑色线条显示。不同类型耕种地的永久边界，以这个符号显示。</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 415</comment>
         <translation>耕地</translation>
     </message>
     <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
+    </message>
+    <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>清晰的树林边沿或树林内非常清晰的植被边界。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -4867,6 +4947,16 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>有两条车道的道路。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>机动车道，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Major road, minimum width</source>
         <comment>Name of symbol 502</comment>
         <translation>主要道路-最小宽度</translation>
@@ -4875,6 +4965,16 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Road wider than 5m. The width of the symbol should be drawn to scale but not smaller than the minimum width. The outer boundary lines may be replaced with symbols 519, 521, 522 or 524 if a fence or wall is so close to the motorway edge that it cannot practically be shown as a separate symbol. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 502</comment>
         <translation>道路宽于5m。符号的宽度应按比例绘制，但不得小于最小宽度。如果围墙或围墙非常靠近高速公路边缘，以致于实际上无法显示为单独的符号，则可以用符号519、521、522或524代替外边界线。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>主干道，最小宽度，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
     </message>
     <message>
         <source>Minor road</source>
@@ -4887,9 +4987,24 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>道路3-5 m宽。黑线之间的空间必须填充为棕色（50％）。正在施工的道路可能会以虚线显示。</translation>
     </message>
     <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>次要道路，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Road</source>
         <comment>Name of symbol 504</comment>
         <translation>公路(＜5m)</translation>
+    </message>
+    <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>保养良好的道路，在各种天气情况下都适于机动车行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Vehicle track</source>
@@ -4897,9 +5012,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>车径</translation>
     </message>
     <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>土路或保养不好的道路，只适用于机动车缓慢行驶。宽度小于 3 m 。</translation>
+    </message>
+    <message>
         <source>Footpath</source>
         <comment>Name of symbol 506</comment>
         <translation>人行径</translation>
+    </message>
+    <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>大的路径，或老的机动车道，在地面上非常明显。</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>小路，或树林中（临时）开辟的路径，能够以竞赛速度沿路奔跑。</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
@@ -4907,14 +5042,31 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>不明显小路</translation>
     </message>
     <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>较不明显的小路或林中开辟的路径。</translation>
+    </message>
+    <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509</comment>
         <translation>窄林道或可通过地表的线迹</translation>
     </message>
     <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>明显的骑马路，宽度小于大约5 m 。骑马路是树林中的线形空隙，沿着它没有明显的道路。当沿着骑马路有条小路时，应该使用符号 507 或 508 代替符号 509。</translation>
+    </message>
+    <message>
         <source>Footbridge</source>
         <comment>Name of symbol 512</comment>
         <translation>小人行桥</translation>
+    </message>
+    <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>步行桥，没有小路引向它。
+注意：如果溪流的宽度大于 0.25 mm ，调整这个符号使它在溪流两侧都延长 0.5 mm ！</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -4972,14 +5124,39 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>石墙</translation>
     </message>
     <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>石墙或表面石砌的岸。</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>毁坏的石墙</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>毁坏的石墙可以用虚线显示。</translation>
+    </message>
+    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>围栏</translation>
     </message>
     <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>木制围栏或绳制围栏，小于大约1.5 m 高。</translation>
+    </message>
+    <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 523</comment>
         <translation>残破围栏</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>毁坏的围栏可以用虚线显示。</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -5032,6 +5209,26 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
     </message>
     <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>永久出界</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>永久性禁止选手进入的区域，显示为出界。覆盖在一般地图的细节上。如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>永久出界，边界线</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
         <source>Paved area</source>
         <comment>Name of symbol 529</comment>
         <translation>铺装区域</translation>
@@ -5057,9 +5254,29 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>废墟</translation>
     </message>
     <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>废墟的地面图以比例显示，减小到相对显示的最小尺寸。非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>废墟，无虚线</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Firing range</source>
@@ -5080,6 +5297,16 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>A distinct grave marked by a stone or shrine. Location is at the centre of gravity of the symbol, which is orientated to north. A cemetery is shown by using grave symbols as space permits.</source>
         <comment>Description of symbol 532</comment>
         <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
+    </message>
+    <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>可穿过的管道</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
     </message>
     <message>
         <source>Uncrossable pipeline</source>
@@ -5110,6 +5337,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
         <translation>石标</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>石标，记号石块或边界石块（或是一些国家的三角点），高度大于 0.5 m 。</translation>
     </message>
     <message>
         <source>Fodder rack</source>
@@ -5147,6 +5379,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>磁北线</translation>
     </message>
     <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
+    </message>
+    <message>
         <source>North lines pattern</source>
         <comment>Name of symbol 601.1</comment>
         <translation>磁北线(面状)</translation>
@@ -5155,6 +5392,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
         <translation>磁北线</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -8504,6 +8746,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>明显耕地边界</translation>
     </message>
     <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
+    </message>
+    <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
@@ -8597,6 +8844,11 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>Pillar</source>
         <comment>Name of symbol 526.3</comment>
         <translation>支柱</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -11028,6 +11280,11 @@ Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm
         <translation>宽度小于2 m的可穿越河流（包括主排水沟）。为了更好的可读性，应在沼泽中画为一条沟渠作为可越过的河流（305）。</translation>
     </message>
     <message>
+        <source>Marsh (in ski orienteering map)</source>
+        <comment>Name of symbol 310.0.1</comment>
+        <translation>沼泽（在滑雪定向越野地图中）</translation>
+    </message>
+    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
         <translation>空旷地</translation>
@@ -11095,9 +11352,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>明显耕地边界</translation>
     </message>
     <message>
+        <source>The boundary of cultivated land when not shown with other symbols (fence, wall, path, etc.) is shown with a black line. A permanent boundary between different types of cultivated land is also shown with this symbol.</source>
+        <comment>Description of symbol 414</comment>
+        <translation>耕种地的边界，当不以其它符号（围栏、墙、小路等）显示时，则用黑色线条显示。不同类型耕种地的永久边界，以这个符号显示。</translation>
+    </message>
+    <message>
         <source>Distinct vegetation boundary</source>
         <comment>Name of symbol 416</comment>
         <translation>明显植被边界</translation>
+    </message>
+    <message>
+        <source>A distinct forest edge or very distinct vegetation boundary within the forest.</source>
+        <comment>Description of symbol 416</comment>
+        <translation>清晰的树林边沿或树林内非常清晰的植被边界。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -11145,9 +11412,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>公路(＜5m)</translation>
     </message>
     <message>
+        <source>A maintained road suitable for motor vehicles in all weather. Width less than 3 m.</source>
+        <comment>Description of symbol 504</comment>
+        <translation>保养良好的道路，在各种天气情况下都适于机动车行驶。宽度小于 3 m 。</translation>
+    </message>
+    <message>
         <source>Narrow ride</source>
         <comment>Name of symbol 509</comment>
         <translation>窄林道或可通过地表的线迹</translation>
+    </message>
+    <message>
+        <source>A distinct ride, less than ca. 5 m wide. A ride is a linear break in the forest (usually plantation) which does not have a distinct path along it. Where there is a path along a ride, symbols 507 or 508 should be used in place of symbol 509.</source>
+        <comment>Description of symbol 509</comment>
+        <translation>明显的骑马路，宽度小于大约5 m 。骑马路是树林中的线形空隙，沿着它没有明显的道路。当沿着骑马路有条小路时，应该使用符号 507 或 508 代替符号 509。</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -11205,9 +11482,19 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>石墙</translation>
     </message>
     <message>
+        <source>A stone wall or stone-faced bank.</source>
+        <comment>Description of symbol 519</comment>
+        <translation>石墙或表面石砌的岸。</translation>
+    </message>
+    <message>
         <source>Fence</source>
         <comment>Name of symbol 522</comment>
         <translation>围栏</translation>
+    </message>
+    <message>
+        <source>A wooden or wire fence less than ca. 1.5 m high.</source>
+        <comment>Description of symbol 522</comment>
+        <translation>木制围栏或绳制围栏，小于大约1.5 m 高。</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -11258,6 +11545,26 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Houses and gardens and other built up areas. Roads, buildings and other significant features within a settlement must be shown. If all buildings cannot be shown, an alternative symbol (black line screen) may be used.</source>
         <comment>Description of symbol 527.1</comment>
         <translation>房屋和花园等建筑区。必须显示居民点内的道路，建筑物和其他重要特征。如果无法显示所有建筑物，则可以使用其他符号（黑线网屏）。</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds</source>
+        <comment>Name of symbol 528</comment>
+        <translation>永久出界</translation>
+    </message>
+    <message>
+        <source>Areas which are permanently forbidden to the runner are shown as out of bounds. The screen is superimposed on the normal map detail. A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528</comment>
+        <translation>永久性禁止选手进入的区域，显示为出界。覆盖在一般地图的细节上。如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
+    </message>
+    <message>
+        <source>Permanently out of bounds, bounding line</source>
+        <comment>Name of symbol 528.1</comment>
+        <translation>永久出界，边界线</translation>
+    </message>
+    <message>
+        <source>A bounding line may be drawn if there is no natural boundary (see 709).</source>
+        <comment>Description of symbol 528.1</comment>
+        <translation>如果没有自然边界，可以绘制出边界线（请见 709 ）。</translation>
     </message>
     <message>
         <source>Paved area</source>
@@ -11340,6 +11647,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>磁北线</translation>
     </message>
     <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
+    </message>
+    <message>
         <source>North lines pattern</source>
         <comment>Name of symbol 601.1</comment>
         <translation>磁北线(面状)</translation>
@@ -11348,6 +11660,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>Magnetic north line, blue</source>
         <comment>Name of symbol 601.2</comment>
         <translation>磁北线</translation>
+    </message>
+    <message>
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing on the map should be 33.33 mm which represents 500 m on the ground at the scale of 1:15 000. For maps with other scales lines placing should be at intervals which represents a round number of meters (e.g. 50 m, 100 m, 250 m, 500 m) and the spacing should be between 20 mm and 40 mm on the map. North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. In areas with very few water features, blue lines may be used.</source>
+        <comment>Description of symbol 601.2</comment>
+        <translation>磁北线是地图上指向磁北极的线。它们在地图上的间隔应该为 33.33 mm ，在比例尺为 1:15 000 时代表地面上的 500 m 。对于其他比例的地图，磁北线应该以整数米的间隔放置（例如， 50 m 、 100 m 、 250 m 、 500 m ），并且地图上的间隔应该在 20 mm 到 40 mm 之间。在可能使小的地形模糊时，如巨石、土丘、悬崖、溪流交汇点、小路尽头等，磁北线可以断开。在水的特征非常少的区域，可以使用蓝色线。</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -11385,6 +11702,141 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <translation>高程用于粗略估计高差。高度数值四舍五入到米。图像指向北。给出水平不使用点。</translation>
     </message>
     <message>
+        <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
+        <comment>Description of symbol 801</comment>
+        <translation>滑雪中心的非常快、宽的雪道，由滑雪道修正设备或道路平整设备修建。</translation>
+    </message>
+    <message>
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
+slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
+technique for slowing and stopping.
+
+In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
+        <comment>Description of symbol 804</comment>
+        <translation>不平的，慢速路径，雪少或有一些树枝。这个符号不用于陡
+坡上，如果道路的宽度允许使用人字台阶来上山，或铲雪
+技术来减速或停止。
+
+为了使交叉点清晰，慢速路径的起点以短线绘制出。</translation>
+    </message>
+    <message>
+        <source>Road covered with snow</source>
+        <comment>Name of symbol 805</comment>
+        <translation>覆盖雪的道路</translation>
+    </message>
+    <message>
+        <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
+        <comment>Description of symbol 805</comment>
+        <translation>铲过雪的可滑行的道路，用通常的道路符号绘制，但更宽。</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, line symbol</source>
+        <comment>Name of symbol 806</comment>
+        <translation>砂质的或无雪的道路，线条符号</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806</comment>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, single symbol</source>
+        <comment>Name of symbol 806.1</comment>
+        <translation>砂质的或无雪的道路，单一符号</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806.1</comment>
+        <translation>地图上的道路，完成时是砂质的或无雪的。一串 V 型
+标记，穿过道路符号，显示道路不可滑行。无雪的道路，和
+砂质含量大的道路，通常标记为禁止的路线。</translation>
+    </message>
+    <message>
+        <source>Unploughed road</source>
+        <comment>Name of symbol 807</comment>
+        <translation>未铲雪的道路</translation>
+    </message>
+    <message>
+        <source>A road which is not opened for traffic, no skiable track.</source>
+        <comment>Description of symbol 807</comment>
+        <translation>交通未开放，没有可滑行的路径。</translation>
+    </message>
+    <message>
+        <source>Prepared area</source>
+        <comment>Name of symbol 808</comment>
+        <translation>准备好的区域</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808</comment>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation>准备好的区域，填充图样</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.1</comment>
+        <translation>回转赛坡（高山滑雪坡）及其他区域，宽的，可滑行的，并且坚硬。
+准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 801.0.2</comment>
+        <translation>准备好的区域，边界</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 801.0.2</comment>
+        <translation>准备好的区域的边界用窄的绿色线（ 0.13 mm ）显示，从而可以清晰地识别每个边沿。</translation>
+    </message>
+    <message>
+        <source>Public snow mobile route</source>
+        <comment>Name of symbol 813</comment>
+        <translation>公共的雪地摩托路线</translation>
+    </message>
+    <message>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <comment>Description of symbol 813</comment>
+        <translation>用于雪地摩托的公共的标记的路线，可以在滑雪定向越野竞赛中使用。这些路线经常不平坦，并且宽度和质量在变化。组织者必须在竞赛说明中将这样的路径的质量向选手发出通知（例如使用图片），并通过临时关闭路径，派人值守路径，或通过其他方式向任何雪地摩托驾驶员发出通知，在路上可能会遇到滑雪定向选手，从而确保选手的安全。如果不能保证选手的安全，路径必须标记为禁止通过，并且必须保证提供安全通道。</translation>
+    </message>
+    <message>
+        <source>Forbidden route, forbidden to cross</source>
+        <comment>Name of symbol 814</comment>
+        <translation>禁止路径，禁止穿过</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, line symbol</source>
+        <comment>Name of symbol 809</comment>
+        <translation>禁止的路线，可穿过，线条符号</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation>禁止的路线，可穿过，单一符号</translation>
+    </message>
+    <message>
+        <source>Equipment deposit</source>
+        <comment>Name of symbol 812</comment>
+        <translation>设备放置位置</translation>
+    </message>
+    <message>
+        <source>A deposit for spare equipment in the terrain.</source>
+        <comment>Description of symbol 812</comment>
+        <translation>地形上备用设备的放置位置。</translation>
+    </message>
+    <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
         <translation>起点</translation>
@@ -11403,6 +11855,11 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
         <translation>检查点以圆圈显示。圆的中心显示了特征的精确位置。圆圈部分应省略以保留重要的细节。</translation>
+    </message>
+    <message>
+        <source>Control point and focus point</source>
+        <comment>Name of symbol 810</comment>
+        <translation>检查点和焦点</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -11857,9 +12314,59 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>植被：难以奔跑，不可通过</translation>
     </message>
     <message>
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced to ca. 0-20% of normal speed.</source>
+        <comment>Description of symbol 410</comment>
+        <translation>植被密集（树或灌木）几乎不能通过的区域。奔跑速度降低到正常速度的大约 0 - 20% 。</translation>
+    </message>
+    <message>
+        <source>Vegetation: very difficult to run, impassable, line</source>
+        <comment>Name of symbol 410.1</comment>
+        <translation>植被：非常难以奔跑，不可通过，线条</translation>
+    </message>
+    <message>
+        <source>Line of minimum width for symbol 410.</source>
+        <comment>Description of symbol 410.1</comment>
+        <translation>符号410线条的最小宽度。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 1</source>
+        <comment>Name of symbol 411.0</comment>
+        <translation>在一个方向上可奔跑的树林，1</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.0</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 2</source>
+        <comment>Name of symbol 411.1</comment>
+        <translation>在一个方向上可奔跑的树林，2</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.1</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
+        <source>Forest runnable in one direction, 3</source>
+        <comment>Name of symbol 411.2</comment>
+        <translation>在一个方向上可奔跑的树林，3</translation>
+    </message>
+    <message>
+        <source>When an area of forest provides good running in one direction but less good in others, white stripes are left in the screen symbol to show the direction of good running.</source>
+        <comment>Description of symbol 411.2</comment>
+        <translation>当树林区域在一个方向上提供了良好的奔跑性，但在其他方向上奔跑性不那么好时，白色条纹留在覆盖符号上，用来显示奔跑性良好的方向。</translation>
+    </message>
+    <message>
         <source>Cultivated land</source>
         <comment>Name of symbol 415</comment>
         <translation>耕地</translation>
+    </message>
+    <message>
+        <source>Cultivated land which is seasonally out-of-bounds due to growing crops may be shown with a black dot screen.</source>
+        <comment>Description of symbol 415</comment>
+        <translation>耕种地，由于种庄稼而季节性地超出边界，可以用覆盖的黑点显示。</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -11882,9 +12389,44 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>符号418、419和420可用于特殊的小植被特征。必须在地图图例中分别给出符号的定义。</translation>
     </message>
     <message>
+        <source>Motorway, under construction</source>
+        <comment>Name of symbol 501.5</comment>
+        <translation>机动车道，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 501.5</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
+        <source>Major road, minimum width, under construction</source>
+        <comment>Name of symbol 502.1</comment>
+        <translation>主干道，最小宽度，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 502.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
+        <source>Minor road, under construction</source>
+        <comment>Name of symbol 503.1</comment>
+        <translation>次要道路，正在施工</translation>
+    </message>
+    <message>
+        <source>A road under construction may be shown with broken lines.</source>
+        <comment>Description of symbol 503.1</comment>
+        <translation>正在施工的道路可以用虚线来表示。</translation>
+    </message>
+    <message>
         <source>Vehicle track</source>
         <comment>Name of symbol 505</comment>
         <translation>车径</translation>
+    </message>
+    <message>
+        <source>A track or poorly maintained road suitable for vehicles only when travelling slowly. Width less than 3 m.</source>
+        <comment>Description of symbol 505</comment>
+        <translation>土路或保养不好的道路，只适用于机动车缓慢行驶。宽度小于 3 m 。</translation>
     </message>
     <message>
         <source>Footpath</source>
@@ -11892,9 +12434,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>人行径</translation>
     </message>
     <message>
+        <source>A large path, or old vehicle track, which is distinct on the ground.</source>
+        <comment>Description of symbol 506</comment>
+        <translation>大的路径，或老的机动车道，在地面上非常明显。</translation>
+    </message>
+    <message>
+        <source>Small path</source>
+        <comment>Name of symbol 507</comment>
+        <translation>小路</translation>
+    </message>
+    <message>
+        <source>A small path or (temporary) forest extraction track which can be followed at competition speed.</source>
+        <comment>Description of symbol 507</comment>
+        <translation>小路，或树林中（临时）开辟的路径，能够以竞赛速度沿路奔跑。</translation>
+    </message>
+    <message>
         <source>Less distinct small path</source>
         <comment>Name of symbol 508</comment>
         <translation>不明显小路</translation>
+    </message>
+    <message>
+        <source>A less distinct small path or forestry extraction track.</source>
+        <comment>Description of symbol 508</comment>
+        <translation>较不明显的小路或林中开辟的路径。</translation>
     </message>
     <message>
         <source>Footbridge</source>
@@ -11902,9 +12464,31 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>小人行桥</translation>
     </message>
     <message>
+        <source>A footbridge with no path leading to it.
+Note: if the stream is wider than 0.25mm, adjust this symbol so it extends 0.5mm over both sides of the stream!</source>
+        <comment>Description of symbol 512</comment>
+        <translation>步行桥，没有小路引向它。
+注意：如果溪流的宽度大于 0.25 mm ，调整这个符号使它在溪流两侧都延长 0.5 mm ！</translation>
+    </message>
+    <message>
+        <source>Ruined stone wall</source>
+        <comment>Name of symbol 520</comment>
+        <translation>毁坏的石墙</translation>
+    </message>
+    <message>
+        <source>A ruined stone wall may be shown by a dashed line.</source>
+        <comment>Description of symbol 520</comment>
+        <translation>毁坏的石墙可以用虚线显示。</translation>
+    </message>
+    <message>
         <source>Ruined fence</source>
         <comment>Name of symbol 523</comment>
         <translation>残破围栏</translation>
+    </message>
+    <message>
+        <source>A ruined fence may be shown with a dashed line.</source>
+        <comment>Description of symbol 523</comment>
+        <translation>毁坏的围栏可以用虚线显示。</translation>
     </message>
     <message>
         <source>Ruin</source>
@@ -11912,9 +12496,29 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>废墟</translation>
     </message>
     <message>
+        <source>The ground plan of a ruin is shown to scale, down to the minimum size shown opposite. Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530</comment>
+        <translation>废墟的地面图以比例显示，减小到相对显示的最小尺寸。非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
+        <source>Ruin, no dashes</source>
+        <comment>Name of symbol 530.1</comment>
+        <translation>废墟，无虚线</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.1</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
+    </message>
+    <message>
         <source>Ruin, minimum size</source>
         <comment>Name of symbol 530.2</comment>
         <translation>废墟最小尺寸</translation>
+    </message>
+    <message>
+        <source>Very small ruins may be drawn with a solid line.</source>
+        <comment>Description of symbol 530.2</comment>
+        <translation>非常小的废墟可以用实线绘制。</translation>
     </message>
     <message>
         <source>Grave</source>
@@ -11927,9 +12531,24 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>以石头或神龛为标志的明显坟墓，位置在符号的重心处，重心向北。在空间允许的情况下，使用坟墓符号来显示墓地。</translation>
     </message>
     <message>
+        <source>Crossable pipeline</source>
+        <comment>Name of symbol 533</comment>
+        <translation>可穿过的管道</translation>
+    </message>
+    <message>
+        <source>A pipeline (gas, water, oil, etc.) above ground level which can be crossed over or under.</source>
+        <comment>Description of symbol 533</comment>
+        <translation>管道（输气、水、油等），在地面之上，可以从上面或下面穿过。</translation>
+    </message>
+    <message>
         <source>Cairn</source>
         <comment>Name of symbol 537</comment>
         <translation>石标</translation>
+    </message>
+    <message>
+        <source>Cairn, memorial stone or boundary stone (or a trigonometric point in some countries) more than 0.5 m high.</source>
+        <comment>Description of symbol 537</comment>
+        <translation>石标，记号石块或边界石块（或是一些国家的三角点），高度大于 0.5 m 。</translation>
     </message>
     <message>
         <source>Fodder rack</source>

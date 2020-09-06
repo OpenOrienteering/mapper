@@ -15604,7 +15604,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208</comment>
-        <translation></translation>
+        <translation>Olyan területet, amelyet olyan sok szétszórt kőtömb borít, hogy nem lehet külön megjelölni, véletlenszerűen elrendezett és orientált háromszögekkel vannak ábrázolva. A sziklamező általában nem befolyásolja a futhatóságot. Ha a sziklamező futtathatósága csökken, akkor a 209-es szimbólumot (sűrű sziklamező) kell használni, vagy a szimbólumot egy kőmező szimbólummal kell kombinálni.
+Legalább két háromszöget kell használni. Egy háromszög használható, ha más sziklaszimbólumokkal kombinálva van (például közvetlenül a sziklaszimbólumok alatt (201, 202), a sziklaszimbólumokkal (204-206) szomszédos, vagy kőmező jelekkel (210-212) kombinálva).
+A szomszédos háromszögek közti távolság legfeljebb 1,2 mm. A szomszédos háromszögek közötti minimális középponttól középpontig a távolság 0,75 mm.
+Sűrűség: 0,8-1 szimbólum / mm². Annak érdekében, hogy a sziklamezőn belül nyilvánvaló magassági különbségeket meg lehessen mutatni, megengedett, hogy a háromszögek egy részét 120%-ra növeljék.
+Az egyes háromszögek lábnyoma: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -15618,7 +15622,11 @@ The maximum centre to centre distance between neighbouring triangles is 1.2 mm. 
 Density: 0.8-1 symbol / mm². To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.
 Footprint of individual triangle: 12 m x 6 m.</source>
         <comment>Description of symbol 208.1</comment>
-        <translation></translation>
+        <translation>Olyan területet, amelyet olyan sok szétszórt kőtömb borít, hogy nem lehet külön megjelölni, véletlenszerűen elrendezett és orientált háromszögekkel vannak ábrázolva. A sziklamező általában nem befolyásolja a futhatóságot. Ha a sziklamező futtathatósága csökken, akkor a 209-es szimbólumot (sűrű sziklamező) kell használni, vagy a szimbólumot egy kőmező szimbólummal kell kombinálni.
+Legalább két háromszöget kell használni. Egy háromszög használható, ha más sziklaszimbólumokkal kombinálva van (például közvetlenül a sziklaszimbólumok alatt (201, 202), a sziklaszimbólumokkal (204-206) szomszédos, vagy kőmező jelekkel (210-212) kombinálva).
+A szomszédos háromszögek közti távolság legfeljebb 1,2 mm. A szomszédos háromszögek közötti minimális középponttól középpontig a távolság 0,75 mm.
+Sűrűség: 0,8-1 szimbólum / mm². Annak érdekében, hogy a sziklamezőn belül nyilvánvaló magassági különbségeket meg lehessen mutatni, megengedett, hogy a háromszögek egy részét 120%-ra növeljék.
+Az egyes háromszögek lábnyoma: 12 m x 6 m.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle, enlarged</source>
@@ -15689,7 +15697,7 @@ Az egyes háromszögek lábnyoma: 12 m x 6 m.</translation>
     <message>
         <source>Crossable body of water</source>
         <comment>Name of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Áthatolható víztest</translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
@@ -15861,7 +15869,7 @@ Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     <message>
         <source>Vegetation: slow running, minimum width</source>
         <comment>Name of symbol 406.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Növényzet: lassú futás, minimális szélesség</translation>
     </message>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
@@ -16223,7 +16231,8 @@ Utakhoz/ösvényekhez kapcsolódó kisebb hidakat úgy kell megrajzolni, hogy a�
         <source>A small footbridge with no path leading to it is represented with a single dash.
 Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 mm over both sides of the stream!</source>
         <comment>Description of symbol 512.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy kis gyaloghidat, amelyhez nem vezet út, egyetlen vonással ábrázolják.
+Megjegyzés: ha a folyam szélesebb, mint 0,25 mm, állítsa be ezt a szimbólumot úgy, hogy 0,5 mm-rel nyúljon át a patak mindkét oldalán!</translation>
     </message>
     <message>
         <source>Wall</source>
@@ -16312,17 +16321,17 @@ Minimális alapterület: 1 mm x 1 mm (terepi méret: 15 m x 15 m).</translation>
     <message>
         <source>Area that shall not be entered, solid colour, bounding line</source>
         <comment>Name of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület ahova nem szabad belépni, egyszínű, határoló vonal</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiszta határral rendelkező, használaton kívüli területeket fekete vagy egy másik fekete vonal határolja. Ha a határ nem egyértelmű, fekete vonal nem használható.</translation>
     </message>
     <message>
         <source>Area that shall not be entered, stripes</source>
         <comment>Name of symbol 520.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, ahova nem szabad belépni, csíkok</translation>
     </message>
     <message>
         <source>An out-of-bounds area is a feature such as a private house, a garden, a factory or another industrial area. Only contours and prominent features such as railways and large buildings shall be shown inside an out-of-bounds area. Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through.
@@ -16342,12 +16351,12 @@ Minimális alapterület: 1 mm x 1 mm (terepi méret: 15 m x 15 m).</translation>
     <message>
         <source>Area that shall not be entered, stripes, bounding line</source>
         <comment>Name of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Terület, ahová nem szabad belépni, csíkok, határoló vonal</translation>
     </message>
     <message>
         <source>Out-of-bound areas with a clear border shall be bounded by a black boundary line or another black line. If the border is unclear no black line shall occur.</source>
         <comment>Description of symbol 520.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiszta határral rendelkező, használaton kívüli területeket fekete vagy egy másik fekete vonal határolja. Ha a határ nem egyértelmű, fekete vonal nem használható.</translation>
     </message>
     <message>
         <source>Building</source>
