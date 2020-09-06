@@ -10044,10 +10044,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <translation>必经路线</translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
         <translation>标记的路径以虚线显示在地图上。如果在检查点前后使用符号704之外的符号，那么它表示选手强制通过的路径。符号也可以用在禁止离开路径骑行的区域，表示地形上标记的允许路径。</translation>
     </message>
@@ -10102,11 +10099,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation>禁止路线</translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
         <translation>出界并禁止穿越的路径以锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿越点，那么应该在禁止路径上由两条垂直线像门一样表示。同样，较长的穿越区域应该通过在锯齿线末端的使用垂直线清晰地显示在地图上。</translation>
     </message>
@@ -11815,6 +11808,11 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
         <translation>禁止路径，禁止穿过</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
+        <comment>Description of symbol 814</comment>
+        <translation>出界并禁止穿越的路径以锯齿线显示。锯齿线应该尽可能连续。如果禁止的路径上有穿越点，那么应该在禁止路径上由两条垂直线像门一样表示。同样，较长的穿越区域应该通过在锯齿线末端的使用垂直线清晰地显示在地图上。</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, line symbol</source>
@@ -15050,7 +15048,7 @@ Map symbol: ISOM 106</source>
         <translation>|D| 土墙</translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>

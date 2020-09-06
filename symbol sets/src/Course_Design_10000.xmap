@@ -1652,7 +1652,7 @@ Map symbol: ISOM 106</description>
                 </point_symbol>
             </symbol>
             <symbol type="1" id="42" code="1.6" name="|D| Earth wall">
-                <description>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+                <description>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</description>
                 <point_symbol inner_radius="1000" inner_color="-1" outer_width="0" outer_color="-1" elements="5">

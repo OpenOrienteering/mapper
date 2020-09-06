@@ -11076,10 +11076,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <translation>Viitoitettu reitti</translation>
     </message>
     <message>
-        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead
-of symbol 704 before or after a control, it represents an obligatory route for the
-competitors. The symbol can also be used in areas where off-track riding is forbidden
-to represent allowed routes that are marked in the terrain.</source>
+        <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
         <translation>Viitoitettu reitti merkitään katkoviivalla. Mikäli merkkiä on käytetty ennen tai jälkeen rastin, osoittaa se kilpailijalle pakollisen reitin. Merkkiä voidaan käyttää myös kohdissa, joissa urien ulkopuoliseen maastoon on viitoitettu ajamisen sallivia reittejä.</translation>
     </message>
@@ -11134,11 +11131,7 @@ to represent allowed routes that are marked in the terrain.</source>
         <translation>Kielletty reitti</translation>
     </message>
     <message>
-        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The
-zigzag line should be as continuous as possible. If there is a crossing point over the
-forbidden route, it shall be presented like a gate by two perpendicular lines over the
-forbidden route. Also a longer crossing section shall be presented clearly on the map
-by using the perpendicular lines at the end of the zigzag lines.</source>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
         <translation>Reitti, jota ei saa käyttää, osoitetaan siksak-viivalla. Viivan tulee olla mahdollisimman jatkuva. Mikäli kielletyn reitin poikki on sallittu ylityspaikka, merkitään se portin tavoin kahdella kohtisuoralla viivalla yli kielletyn reitin. Kielletyn reitin pitempi sallittu osa rajataan samalla tavalla kohtisuorin viivoin.</translation>
     </message>
@@ -12909,6 +12902,11 @@ The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so
         <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
         <translation>Yleisessä käytössä oleva maastoon merkitty reitti moottorikelkkailua varten. Reitti voi olla käytössä hiihtosuunnistuskilpailun aikana. Tällaiset reitit ovat usein pinnaltaan epätasaisia ja niiden leveys ja laatu vaihtelevat. Järjestäjien pitää ilmoittaa kilpailuohjeissa reittien laatu (esim. valokuvilla) ja varmistaa kilpailijoiden turvallisuus sulkemalla reitti väliaikaisesti, miehittämällä reitti tai muulla tavoin ilmoittamalla jokaiselle moottorikelkkailijalle mahdollisuudesta kohdata hiihtosuunnistajia reitillä. Jos kilpailijoiden turvallisuutta ei voida taata, IOF:n valvojan pitää merkitä reitti kielletyksi reitiksi ja varmistaa turvalliset ylityspaikat.</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
+        <comment>Description of symbol 814</comment>
+        <translation>Reitti, jota ei saa käyttää, osoitetaan siksak-viivalla. Viivan tulee olla mahdollisimman jatkuva. Mikäli kielletyn reitin poikki on sallittu ylityspaikka, merkitään se portin tavoin kahdella kohtisuoralla viivalla yli kielletyn reitin. Kielletyn reitin pitempi sallittu osa rajataan samalla tavalla kohtisuorin viivoin.</translation>
     </message>
     <message>
         <source>Equipment deposit</source>
@@ -15911,7 +15909,7 @@ Map symbol: ISOM 106</source>
         <translation>|D| Maavalli</translation>
     </message>
     <message>
-        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.s
+        <source>A narrow wall of earth projecting above the surrounding terrain; may be partially stone faced, usually man-made. Used with symbol 8.11 to indicate a ruined earth wall.
 
 Map symbols: ISOM 107, 108</source>
         <comment>Description of symbol 1.6</comment>
