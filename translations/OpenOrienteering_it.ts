@@ -5375,7 +5375,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="470"/>
         <source>In dashed line symbol %1, the end gap cannot be imported correctly.</source>
-        <translation>Nel simbolo linea tratteggiata %1, la lunghezza dell&apos;intervallo  terminale non può essere importata correttamente.</translation>
+        <translation>Nel simbolo linea tratteggiata %1, la lunghezza dell&apos;intervallo terminale non può essere importata correttamente.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="479"/>
@@ -5559,7 +5559,7 @@ zoomma con la rotella del mouse, se ce l&apos;hai.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="839"/>
         <source>The map contains more than 24 spot colors which is not supported by OCD version 8.</source>
-        <translation>Questa mappa contiene più di di 24 tinte piatte e non è quindi supportata da OCD versione 8.</translation>
+        <translation>Questa mappa contiene più di 24 tinte piatte e non è quindi supportata da OCD versione 8.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="845"/>
