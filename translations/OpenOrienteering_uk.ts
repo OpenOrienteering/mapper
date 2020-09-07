@@ -7575,7 +7575,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="268"/>
         <source>The symbol set import generated warnings.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Імпортований набір знаків створює попередження.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement.cpp" line="276"/>
