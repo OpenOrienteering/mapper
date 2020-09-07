@@ -4334,7 +4334,7 @@ eftersom det inte stöds att spara som %2 (.%3).</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Behåll min plats på skärmen</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="987"/>
@@ -5377,7 +5377,7 @@ valda</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrundsritning</translation>
     </message>
 </context>
 <context>
@@ -6035,7 +6035,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ej</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -6174,7 +6174,7 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2615"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det går inte att spara anpassad positionering av mallen &apos;%1&apos;.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2945"/>
@@ -6609,22 +6609,22 @@ zooma med scrollhjulet om tillgängligt.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="234"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="255"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Fyllt område</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Solid</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Mönster</translation>
+        <translation>Mönster</translation>
     </message>
 </context>
 <context>
@@ -7703,12 +7703,12 @@ separationer</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -9138,7 +9138,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Misslyckades med att transformera koordinaterna.</translation>
+        <translation>Misslyckades med att transformera koordinaterna.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
@@ -9259,7 +9259,7 @@ Tänker du inte rita på bakgrunden är det inget problem.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Spår</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
@@ -9800,7 +9800,7 @@ Högsta versionen som stöds är %2.</translation>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkonsekvent deklination/grivation upptäckt. Löst genom automatisk justering av deklinationen till %1°.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
