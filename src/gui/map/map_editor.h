@@ -61,6 +61,7 @@ class GPSTemporaryMarkers;
 class GPSTrackRecorder;
 class GeoreferencingDialog;
 class MainWindow;
+class MapCoordF;
 class MapEditorActivity;
 class MapEditorTool;
 class MapFindFeature;
@@ -288,6 +289,10 @@ public slots:
 	void pan();
 	/** Moves view to GPS position. */
 	void moveToGpsPos();
+	/** Activates or stops follow-position mode. */
+	void followPositionClicked(bool enable);
+	/** Follow-position mode update handler. */
+	void followPositionUpdate(OpenOrienteering::MapCoordF position);
 	/** Zooms in in the current map widget. */
 	void zoomIn();
 	/** Zooms out in the current map widget. */
@@ -701,6 +706,7 @@ private:
 	
 	QAction* pan_act;
 	QAction* move_to_gps_pos_act;
+	QAction* follow_position_act;
 	QAction* zoom_in_act;
 	QAction* zoom_out_act;
 	QAction* show_all_act;

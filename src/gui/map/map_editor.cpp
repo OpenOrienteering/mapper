@@ -73,6 +73,7 @@
 #include <QPainter>
 #include <QPixmap>
 #include <QPoint>
+#include <QPointF>
 #include <QPushButton>
 #include <QRect>
 #include <QRectF>
@@ -976,6 +977,7 @@ void MapEditorController::createActions()
 	pan_act = newToolAction("panmap", tr("Pan"), this, SLOT(pan()), "move.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act = newAction("movegps", tr("Move to my location"), this, SLOT(moveToGpsPos()), "move-to-gps.png", QString{}, "view_menu.html");
 	move_to_gps_pos_act->setEnabled(false);
+	follow_position_act = newCheckAction("follow-position", tr("Keep my location on screen"), this, SLOT(followPositionClicked(bool)), nullptr, QString{}, "view_menu.html");
 	zoom_in_act = newAction("zoomin", tr("Zoom in"), this, SLOT(zoomIn()), "view-zoom-in.png", QString{}, "view_menu.html");
 	zoom_out_act = newAction("zoomout", tr("Zoom out"), this, SLOT(zoomOut()), "view-zoom-out.png", QString{}, "view_menu.html");
 	show_all_act = newAction("showall", tr("Show whole map"), this, SLOT(showWholeMap()), "view-show-all.png", QString{}, "view_menu.html");
@@ -1315,14 +1317,10 @@ void MapEditorController::createMenuAndToolbars()
 	toolbar_drawing->addAction(draw_text_act);
 	toolbar_drawing->addSeparator();
 	
-	auto* paint_on_template_button = new QToolButton();
-	paint_on_template_button->setCheckable(true);
-	paint_on_template_button->setDefaultAction(paint_feature->paintAction());
-	paint_on_template_button->setPopupMode(QToolButton::MenuButtonPopup);
-	auto* paint_on_template_menu = new QMenu(paint_on_template_button);
-	paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(paint_on_template_menu);
-	toolbar_drawing->addWidget(paint_on_template_button);
+	auto* paint_action = paint_feature->paintAction();
+	toolbar_drawing->addAction(paint_action);
+	if (auto* button = qobject_cast<QToolButton*>(toolbar_drawing->widgetForAction(paint_action)))
+		button->setPopupMode(QToolButton::MenuButtonPopup);
 	
 	// Editing toolbar
 	toolbar_editing = window->addToolBar(tr("Editing"));
@@ -1430,16 +1428,27 @@ void MapEditorController::createMobileGUI()
 	QAction* show_top_bar_action = new QAction(QIcon(QString::fromLatin1(":/images/arrow-thin-downright.png")), tr("Show top bar"), this);
  	connect(show_top_bar_action, &QAction::triggered, this, &MapEditorController::showTopActionBar);
 	
-	Q_ASSERT(mappart_selector_box);
 	QAction* mappart_action = new QAction(QIcon(QString::fromLatin1(":/images/map-parts.png")), tr("Map parts"), this);
-	connect(mappart_action, &QAction::triggered, this, [this, mappart_action]() {
-		auto* mappart_button = top_action_bar->getButtonForAction(mappart_action);
-		if (top_action_bar->buttonDisplay(mappart_button) == ActionGridBar::DisplayOverflow)
-			mappart_button = top_action_bar->getButtonForAction(top_action_bar->getOverflowAction());
-		mappart_selector_box->setGeometry(mappart_button->geometry());
-		mappart_selector_box->showPopup();
+	auto* mappart_group = new QActionGroup(window);
+	auto* mappart_menu = new QMenu(window);
+	mappart_action->setMenu(mappart_menu);
+	
+	// Don't use QMenu::aboutToShow because it causes menu mispositioning near
+	// lower screen border when triggered from QToolButton.
+	connect(mappart_action, &QAction::hovered, this, [this, mappart_menu, mappart_group]() {
+		mappart_menu->clear();
+		Q_ASSERT(mappart_group->actions().isEmpty());
+		for (auto i = 0; i < map->getNumParts(); ++i)
+		{
+			auto* part = map->getPart(i);
+			auto* action = mappart_menu->addAction(part->getName());
+			action->setCheckable(true);
+			action->setActionGroup(mappart_group);
+			if (part == map->getCurrentPart())
+				action->setChecked(true);
+			connect(action, &QAction::triggered, this, [this, i]() { changeMapPart(i); });
+		}
 	});
-	connect(mappart_selector_box, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MapEditorController::changeMapPart);
 	
 	// Create button for showing the top bar again after hiding it
 	const auto button_size_px = qRound(Util::mmToPixelPhysical(Settings::getInstance().getSetting(Settings::ActionGridBar_ButtonSizeMM).toReal()));
@@ -1484,7 +1493,12 @@ void MapEditorController::createMobileGUI()
 	});
 	zoom_out_button->setMenu(mobile_zoom_out_menu);
 
+	auto* move_to_gps_pos_menu = new QMenu(bottom_action_bar);
+	move_to_gps_pos_menu->addAction(follow_position_act);
+	move_to_gps_pos_act->setMenu(move_to_gps_pos_menu);
 	bottom_action_bar->addAction(move_to_gps_pos_act, 1, col++);
+	if (auto* button = bottom_action_bar->getButtonForAction(move_to_gps_pos_act))
+		button->setPopupMode(QToolButton::DelayedPopup);
 	
 	bottom_action_bar->addAction(hatch_areas_view_act, 0, col);
 	bottom_action_bar->addAction(baseline_view_act, 1, col++);	
@@ -1497,12 +1511,11 @@ void MapEditorController::createMobileGUI()
 	
 	bottom_action_bar->addAction(gps_temporary_point_act, 1, col++);
 
-	bottom_action_bar->addAction(paint_feature->paintAction(), 0, col);
-	auto* paint_on_template_button = bottom_action_bar->getButtonForAction(paint_feature->paintAction());
-	auto* mobile_paint_on_template_menu = new QMenu(paint_on_template_button);
-	mobile_paint_on_template_menu->addAction(paint_feature->selectAction());
-	paint_on_template_button->setMenu(mobile_paint_on_template_menu);
-
+	auto* paint_action = paint_feature->paintAction();
+	bottom_action_bar->addAction(paint_action, 0, col);
+	if (auto* button = bottom_action_bar->getButtonForAction(paint_action))
+		button->setPopupMode(QToolButton::DelayedPopup);
+	
 	// Right side
 	bottom_action_bar->addActionAtEnd(mobile_symbol_selector_action, 0, 1, 2, 2);
 	auto* button = bottom_action_bar->getButtonForAction(mobile_symbol_selector_action);
@@ -1581,6 +1594,8 @@ void MapEditorController::createMobileGUI()
 	top_action_bar->addActionAtEnd(boolean_merge_holes_act, 1, col++);
 	
 	top_action_bar->addActionAtEnd(mappart_action, 1, col++);
+	if (auto* mappart_button = top_action_bar->getButtonForAction(mappart_action))
+		mappart_button->setPopupMode(QToolButton::InstantPopup);
 	
 	bottom_action_bar->setToUseOverflowActionFrom(top_action_bar);
 	
@@ -1945,6 +1960,39 @@ void MapEditorController::moveToGpsPos()
 	auto cur_gps_pos = gps_display->getLatestGPSCoord();
 	main_view->setCenter({ cur_gps_pos.x(), cur_gps_pos.y() });
 	gps_display->startBlinking(3);
+}
+
+void MapEditorController::followPositionClicked(bool enable)
+{
+	if (enable)
+		connect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+	else
+		disconnect(gps_display, &GPSDisplay::mapPositionUpdated, this, &MapEditorController::followPositionUpdate);
+}
+
+void MapEditorController::followPositionUpdate(MapCoordF position)
+{
+	// When the given position is out of the half-width half-height rectangle
+	// in the center of the view, push the position's coordinate to the center
+	// of the view.
+	auto const map_view_rect = main_view->calculateViewedRect(map_widget->viewportToView(map_widget->rect()));
+	auto center = map_view_rect.center();
+	bool update = false;
+	if (position.x() < map_view_rect.left() + map_view_rect.width() / 4
+	    || position.x() > map_view_rect.right() - map_view_rect.width() / 4)
+	{
+		center.setX(position.x());
+		update = true;
+	}
+	if (position.y() < map_view_rect.top() + map_view_rect.height() / 4
+	    || position.y() > map_view_rect.bottom() - map_view_rect.height() / 4)
+	{
+		center.setY(position.y());
+		update = true;
+	}
+	
+	if (update)
+		main_view->setCenter(MapCoord(center));
 }
 
 void MapEditorController::zoomIn()

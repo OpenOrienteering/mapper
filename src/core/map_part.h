@@ -124,6 +124,11 @@ public:
 	Object* getObject(int i);
 	
 	/**
+	 * Tests if the part contains the given object.
+	 */
+	bool contains(const Object* object) const;
+	
+	/**
 	 * Returns the index of the object.
 	 * 
 	 * Loops over all objects in the part and looks for the given pointer.

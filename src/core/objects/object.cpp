@@ -1524,7 +1524,7 @@ void PathObject::changePathBounds(
 	out_coords.back().setHolePoint(true);
 	out_coords.back().setClosePoint(false);
 	
-	const auto copy_size  = std::ptrdiff_t(std::min(out_coords.size(), std::size_t(part_size)));
+	const auto copy_size  = std::min(static_cast<decltype(part_size)>(out_coords.size()), part_size);
 	const auto part_start = begin(coords) + part.first_index;
 	std::copy(begin(out_coords), begin(out_coords) + copy_size, part_start);
 	if (copy_size < part_size)

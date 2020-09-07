@@ -350,6 +350,10 @@ public:
 	/** Pointer to path object containing this part */
 	PathObject* path = nullptr;
 	
+	PathPart() = delete;
+	PathPart(const PathPart&) = default;
+	PathPart(PathPart&&) = default;
+	
 	PathPart(
 	        PathObject& path,
 	        MapCoordVector::size_type start_index,

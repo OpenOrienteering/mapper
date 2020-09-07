@@ -34,9 +34,11 @@
 #include <QString>
 
 #include "core/map_coord.h"
+#include "templates/template.h"
 #include "tools/tool.h"
 
 class QAction;
+class QActionGroup;
 class QCursor;
 class QMouseEvent;
 class QPainter;
@@ -46,7 +48,6 @@ namespace OpenOrienteering {
 class ActionGridBar;
 class MapEditorController;
 class MapWidget;
-class Template;
 
 
 /**
@@ -81,10 +82,10 @@ protected:
 	void templateAboutToBeDeleted(int pos, Template* temp);
 	
 public:
-	bool fillAreas() const { return fill_areas; }
-	void setFillAreas(bool enabled);
+	Template::ScribbleOptions options() const noexcept { return paint_options; }
+	void setOptions(Template::ScribbleOptions options);
 	
-	const QColor& color() const { return paint_color; }
+	const QColor& color() const noexcept { return paint_color; }
 	void setColor(const QColor& color);
 	
 	void undoSelected();
@@ -96,13 +97,15 @@ protected:
 private:
 	ErasingOptions erasing = {};
 	bool dragging = false;
-	bool fill_areas = false;
+	Template::ScribbleOptions paint_options = {};
 	QColor paint_color = Qt::black;
 	QRectF map_bbox;
 	std::vector<MapCoordF> coords;
 	
 	Template* temp = nullptr;
 	QPointer<ActionGridBar> widget;
+	QAction* background_drawing_action = nullptr;
+	QActionGroup* fill_options = nullptr;
 	
 	static int erase_width;
 	
