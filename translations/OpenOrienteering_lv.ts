@@ -7878,7 +7878,9 @@ Vai vēlaties saglabāt savas izmaiņas?</translation>
 takes the routechoice
 to jump over the lazy dog
 1234567890</source>
-        <translation>Glāžšķūņa rūķīši griež šķiņķi ar šķērēm</translation>
+        <translation>Glāžšķūņa rūķīši griež
+šķiņķi ar šķērēm
+1234567890</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_setting_dialog.cpp" line="489"/>
