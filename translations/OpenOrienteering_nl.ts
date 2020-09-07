@@ -2728,7 +2728,7 @@
         <location filename="../src/fileformats/file_import_export.cpp" line="258"/>
         <location filename="../src/fileformats/file_import_export.cpp" line="260"/>
         <source>At least one template file could not be found.</source>
-        <translation>Ten minste één sjabloon kon niet niet worden gevonden.</translation>
+        <translation>Ten minste één sjabloon kon niet worden gevonden.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/file_import_export.cpp" line="261"/>
@@ -8117,7 +8117,7 @@ van de wijs
     <message>
         <location filename="../src/gui/widgets/tags_widget.cpp" line="234"/>
         <source>The key &quot;%1&quot; already exists and must not be used twice.</source>
-        <translation>De naam  &quot;%1&quot; bestaat reeds en mag niet nogmaals gebruikt worden.</translation>
+        <translation>De naam &quot;%1&quot; bestaat reeds en mag niet nogmaals gebruikt worden.</translation>
     </message>
 </context>
 <context>
