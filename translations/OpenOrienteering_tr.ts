@@ -554,7 +554,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
 </context>
 <context>
@@ -2230,7 +2230,7 @@
 %1
 
 %2</source>
-        <translation type="unfinished">Dosya açılamadı:
+        <translation>Dosya açılamadı:
 %1
 
 %2</translation>
@@ -4163,14 +4163,14 @@ selected</source>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4181"/>
         <source>Question</source>
-        <translation type="unfinished">Soru</translation>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="4182"/>
         <source>The scale of the imported data is 1:%1 which is different from this map&apos;s scale of 1:%2.
 
 Rescale the imported data?</source>
-        <translation type="unfinished">İçe aktarılan verilerin ölçeği, bu haritanın 1:% 2 ölçeğinden farklı olan 1:% 1&apos;dir.
+        <translation>İçe aktarılan verilerin ölçeği (1:%1), bu haritanın ölçeğinden (1:%2) farklıdır.
 
 İçe aktarılan veriler yeniden ölçeklendirilsin mi?</translation>
     </message>
@@ -4821,12 +4821,12 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1936"/>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1947"/>
         <source>Coordinates are adjusted to fit into the OCAD 8 drawing area (-2 m ... 2 m).</source>
-        <translation type="unfinished">Koordinatlar OCAD 8 çizim alanına sığacak şekilde ayarlanır (-2 m ... 2 m).</translation>
+        <translation>Koordinatlar OCAD 8 çizim alanına sığacak şekilde ayarlanır (-2 m ... 2 m).</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="1958"/>
         <source>Some coordinates remain outside of the OCAD 8 drawing area. They might be unreachable in OCAD.</source>
-        <translation type="unfinished">Bazı koordinatlar OCAD 8 çizim alanının dışında kalmaktadır. OCAD&apos;de erişilemez olabilirler.</translation>
+        <translation>Bazı koordinatlar OCAD 8 çizim alanının dışında kalmaktadır. OCAD&apos;de erişilemez olabilirler.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="2229"/>
@@ -5369,7 +5369,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="2420"/>
         <source>OCD files of version %1 are not supported!</source>
-        <translation type="unfinished">%1 sürümündeki OCD dosyaları desteklenmiyor!</translation>
+        <translation>%1 sürümündeki OCD dosyaları desteklenmiyor!</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="234"/>
@@ -6985,7 +6985,7 @@ separations</source>
 %1
 
 %2</source>
-        <translation type="unfinished">Dosya açılamadı:
+        <translation>Dosya açılamadı:
 %1
 
 %2</translation>
@@ -7818,7 +7818,7 @@ to jump over the lazy dog
     <message>
         <location filename="../src/templates/template_track.cpp" line="503"/>
         <source>Question</source>
-        <translation type="unfinished">Soru</translation>
+        <translation>Soru</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="504"/>

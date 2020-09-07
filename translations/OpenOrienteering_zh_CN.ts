@@ -5382,7 +5382,7 @@ zoom using the mouse wheel, if available.</source>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>不是</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5521,7 +5521,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2614"/>
         <source>Cannot save custom positioning of template &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>不能存储底图 &apos;%1&apos; 定制的定位。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="2944"/>
@@ -5944,12 +5944,12 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="199"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="220"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>填充区域</translation>
     </message>
 </context>
 <context>
@@ -8813,7 +8813,7 @@ The maximum supported version is %2.</source>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="731"/>
         <source>Inconsistent declination/grivation detected. Resolved by automatic adjustment of the declination to %1°.</source>
-        <translation type="unfinished"></translation>
+        <translation>检测到不一致的方位角/磁偏角。通过磁偏角自动调整到 %1° 而已经解决。</translation>
     </message>
     <message>
         <location filename="../src/fileformats/xml_file_format.cpp" line="861"/>
