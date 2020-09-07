@@ -200,7 +200,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="232"/>
         <source>Draw elements if the center is inside the boundary.</source>
-        <translation>Desenhe elementos se o centro está dentro dos limites</translation>
+        <translation>Desenhe elementos se o centro está dentro dos limites.</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/area_symbol_settings.cpp" line="233"/>
@@ -1335,7 +1335,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="57"/>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="61"/>
         <source>Antialiasing makes the map look much better, but also slows down the map display</source>
-        <translation>Antialiasing faz o mapa parecer melhor, mas  a exibição em tela fica mais lenta</translation>
+        <translation>Antialiasing faz o mapa parecer melhor, mas a exibição em tela fica mais lenta</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/editor_settings_page.cpp" line="60"/>
@@ -2043,7 +2043,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="246"/>
         <location filename="../src/gui/select_crs_dialog.cpp" line="90"/>
         <source>&amp;Coordinate reference system:</source>
-        <translation>Sistema de  referência de &amp;Coordenada:</translation>
+        <translation>Sistema de referência de &amp;Coordenada:</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="252"/>
@@ -3021,7 +3021,7 @@ Tradução em Português-BR feita por João Manoel Franco.</translation>
     <message>
         <location filename="../src/gui/main_window.cpp" line="425"/>
         <source>Open &amp;Manual</source>
-        <translation>Abrir  &amp;Manual</translation>
+        <translation>Abrir &amp;Manual</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="427"/>
@@ -4322,7 +4322,7 @@ selecionados</translation>
         <location filename="../src/gui/map/map_editor.cpp" line="2444"/>
         <source>Draw polygonal and curved lines.</source>
         <translatorcomment>Para desenhar linhas poligonais, clique e arraste em seguida com o mouse. Para curvas, clicar e soltar movendo o mouse para o ponto de tangência e aí clicar de novo e arrastar ajustando a curva.</translatorcomment>
-        <translation>Desenhar linhas curvas e poligonais.  Clicar e arrastar para desenhar linha reta, mais um clique para confirmar. Clicar e soltar, depois clicar adiante e arrastar para desenhar curva. Duplo clique para finalizar.</translation>
+        <translation>Desenhar linhas curvas e poligonais. Clicar e arrastar para desenhar linha reta, mais um clique para confirmar. Clicar e soltar, depois clicar adiante e arrastar para desenhar curva. Duplo clique para finalizar.</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="2444"/>
@@ -5389,17 +5389,17 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="793"/>
         <source>During import of text symbol %1: ignoring custom word spacing (%2%)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando o espaçamento entre as palavras personalizado (%2%)</translation>
+        <translation>Durante a importação do símbolo de texto %1: ignorando o espaçamento entre as palavras personalizado (%2%)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="798"/>
         <source>During import of text symbol %1: ignoring custom indents (%2/%3)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando travessões personalizados (%2/%3)</translation>
+        <translation>Durante a importação do símbolo de texto %1: ignorando travessões personalizados (%2/%3)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="819"/>
         <source>During import of text symbol %1: ignoring text framing (mode %2)</source>
-        <translation>Durante a importação do símbolo de texto %1:  ignorando enquadramento de texto (modo %2)</translation>
+        <translation>Durante a importação do símbolo de texto %1: ignorando enquadramento de texto (modo %2)</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocad8_file_format.cpp" line="973"/>
@@ -5512,7 +5512,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="621"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation type="unfinished">Codificação &apos;%1&apos; não está disponível.  Verifique as definições.</translation>
+        <translation>Codificação &apos;%1&apos; não está disponível. Verifique as definições.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_export.cpp" line="650"/>
@@ -5757,7 +5757,7 @@ aproximar e afastar usando a roda do mouse, se disponível.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="111"/>
         <source>Encoding &apos;%1&apos; is not available. Check the settings.</source>
-        <translation>Codificação &apos;%1&apos; não está disponível.  Verifique as definições.</translation>
+        <translation>Codificação &apos;%1&apos; não está disponível. Verifique as definições.</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="244"/>
@@ -7517,7 +7517,7 @@ de cores</translation>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="112"/>
         <source>Keep the symbols&apos; hidden / protected states of the old symbol set</source>
-        <translation>Mantenha os  estados de símbolos ocultos / protegidos do conjunto de símbolo antigo</translation>
+        <translation>Mantenha os estados de símbolos ocultos / protegidos do conjunto de símbolo antigo</translation>
     </message>
     <message>
         <location filename="../src/gui/symbols/symbol_replacement_dialog.cpp" line="135"/>
