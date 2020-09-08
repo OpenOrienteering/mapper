@@ -3863,7 +3863,7 @@ protože uložení jako %2 (.%3) není podporováno.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Udržuj mou polohu na obrazovce</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
@@ -5039,7 +5039,7 @@ symbolů</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Kresba na pozadí</translation>
     </message>
 </context>
 <context>
@@ -6303,12 +6303,12 @@ mapy. Změna zvětšení je možná pomocí kolečka myši.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Plný</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Vzor</translation>
+        <translation>Vzor</translation>
     </message>
 </context>
 <context>
@@ -7349,12 +7349,12 @@ barev</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -8691,7 +8691,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Nepodařilo se transformovat souřadnice.</translation>
+        <translation>Nepodařilo se transformovat souřadnice.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
@@ -8812,7 +8812,7 @@ Pokud ovšem není vaším úmyslem na tento podklad kreslit, nejedná se o prob
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Cesta</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
