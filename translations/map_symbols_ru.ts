@@ -3113,7 +3113,7 @@ To be able to show obvious height differences within a boulder field, it is perm
         <comment>Description of symbol 208</comment>
         <translation>Область, которая покрыта таким количеством камней, что они не могут быть отображены отдельно, показывается треугольниками. Поле камней обычно не влияет на проходимость. Если проходимость снижается, то следует использовать знак 209 (плотное поле камней).
 Необходимо использовать минимум два треугольника. Можно использовать один треугольник, если он сочетается с другими знаками скал и камней 
-(например, непосредственно под знаками скалы (201, 202), рядом со знаками камней (204-206) или в сочетании  со знаками (210-212)). 
+(например, непосредственно под знаками скалы (201, 202), рядом со знаками камней (204-206) или в сочетании со знаками (210-212)). 
 Чтобы иметь возможность показывать явные разности высот в пределах каменистого поля, разрешается увеличить некоторые треугольники до 120%.</translation>
     </message>
     <message>
@@ -3275,7 +3275,7 @@ Collapsed and easily crossable trenches should be mapped as erosion gullies.</so
     <message>
         <source>Shallow body of water, solid outline</source>
         <comment>Name of symbol 302.2</comment>
-        <translation>Мелководье,  сплошной контур</translation>
+        <translation>Мелководье, сплошной контур</translation>
     </message>
     <message>
         <source>Shallow body of water, dashed outline</source>
