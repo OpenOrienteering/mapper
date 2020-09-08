@@ -1549,7 +1549,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="59"/>
         <source>Use GDAL for GPX</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzi GDAL por GPX</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="65"/>
@@ -5857,7 +5857,7 @@ zoom using the mouse wheel, if available.</source>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Ŝablono</translation>
+        <translation>Ŝablono</translation>
     </message>
 </context>
 <context>
@@ -6827,12 +6827,12 @@ apartigoj</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -8190,17 +8190,17 @@ Tamen se vi ne intencas desegni sur ĉi tiu ŝablono, tio ne estas problemo.</tr
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Vojo</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
         <source>Route</source>
-        <translation type="unfinished"></translation>
+        <translation>Itinero</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="108"/>
         <source>Waypoint</source>
-        <translation type="unfinished"></translation>
+        <translation>Vojpunkto</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="251"/>
