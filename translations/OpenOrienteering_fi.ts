@@ -1602,7 +1602,7 @@
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="53"/>
         <source>Import Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuontiasetukset</translation>
     </message>
     <message>
         <location filename="../src/gdal/gdal_settings_page.cpp" line="56"/>
@@ -2134,7 +2134,7 @@
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
         <source>Scale factor change</source>
-        <translation type="unfinished"></translation>
+        <translation>Skaalauskertoimen muutos</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="553"/>
@@ -4975,7 +4975,7 @@ valittu</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Taustapiirustus</translation>
     </message>
 </context>
 <context>
@@ -5622,7 +5622,7 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/core/objects/object_query.cpp" line="382"/>
         <source>not</source>
         <extracomment>Very short label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ei</translation>
     </message>
     <message>
         <location filename="../src/core/objects/object_query.cpp" line="386"/>
@@ -5798,7 +5798,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="807"/>
         <source>Unable to import symbol %1.%2 &quot;%3&quot;: %4</source>
-        <translation>Ei voi tuoda symbolia  %1.%2 &quot;%3&quot;: %4</translation>
+        <translation>Ei voi tuoda symbolia %1.%2 &quot;%3&quot;: %4</translation>
     </message>
     <message>
         <location filename="../src/fileformats/ocd_file_import.cpp" line="811"/>
@@ -6116,8 +6116,8 @@ zoomaa hiiren rullalla.</translation>
         <location filename="../src/gdal/ogr_file_format.cpp" line="882"/>
         <source>Unable to load %n objects, reason: %1</source>
         <translation>
+            <numerusform>%n kohde eI voi ladata, syy: %1</numerusform>
             <numerusform>%n kohdetta eI voi ladata, syy: %1</numerusform>
-            <numerusform>%n kohdetta eI voi ladata,  syy: %1</numerusform>
         </translation>
     </message>
     <message>
@@ -6196,12 +6196,12 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="234"/>
         <source>Erase</source>
-        <translation type="unfinished"></translation>
+        <translation>Poista</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="255"/>
         <source>Filled area</source>
-        <translation type="unfinished"></translation>
+        <translation>Täytetty alue</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
@@ -6211,7 +6211,7 @@ zoomaa hiiren rullalla.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Malli</translation>
+        <translation>Malli</translation>
     </message>
 </context>
 <context>
@@ -7244,12 +7244,12 @@ erottelut</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -7311,7 +7311,7 @@ erottelut</translation>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="47"/>
         <source>Change scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Vaihda skaalauskerrointa</translation>
     </message>
     <message>
         <location filename="../src/gui/map/stretch_map_dialog.cpp" line="51"/>
@@ -8544,7 +8544,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Koordinaattien muuntaminen epäonnistui.</translation>
+        <translation>Koordinaattien muuntaminen epäonnistui.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
@@ -8665,7 +8665,7 @@ Jos et aio piirtää taustakartalle, tämä ei ole ongelma.</translation>
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Jälki</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
