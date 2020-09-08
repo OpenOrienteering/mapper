@@ -7898,7 +7898,7 @@ Minimum area: 1 mm² (footprint 16 m²) for openings in screens of other colours
         <comment>Description of symbol 405</comment>
         <translation>Tipikus nyílt erdő az adott tereptípushoz. Ha az erdő egyik része sem könnyen futható, akkor a térképen nem lehet fehér.
 Minimális szélesség (nyílásokhoz): 0,3 mm.
-Minimális terület: 1 mm² (16 m² alapterület) más színű képernyőkön történő nyílásokhoz, a (408)Növényzet: séta és a (401)Nyílt terület  kivételével, ahol a minimális terület 0,5 mm² (8 m² alapterület).</translation>
+Minimális terület: 1 mm² (16 m² alapterület) más színű képernyőkön történő nyílásokhoz, a (408)Növényzet: séta és a (401)Nyílt terület kivételével, ahol a minimális terület 0,5 mm² (8 m² alapterület).</translation>
     </message>
     <message>
         <source> Vegetation: slow running</source>
@@ -8153,7 +8153,7 @@ Minimális terület: 4 mm² (64 m²)</translation>
         <source>A boundary of symbol cultivated land vegetation (401, 412, 413, 414) or a permanent boundary between different types of cultivated land, when not shown with other symbols (fence, wall, path, etc.)
 Minimum length: 1 mm (footprint 4 m).</source>
         <comment>Description of symbol 415</comment>
-        <translation>A művelt területet növényzetét határoló  jel (401, 412, 413, 414) vagy egy állandó határ a különböző típusú művelt területek között, ha más szimbólumokkal (kerítés, fal, ösvény stb.) Nincs feltüntetve.
+        <translation>A művelt területet növényzetét határoló jel (401, 412, 413, 414) vagy egy állandó határ a különböző típusú művelt területek között, ha más szimbólumokkal (kerítés, fal, ösvény stb.) Nincs feltüntetve.
 Minimális hossz: 1 mm (lábnyom 4 m).</translation>
     </message>
     <message>
@@ -8276,7 +8276,7 @@ A burkolt területeken található peremek általában nincsenek ábrázolva, ha
 Distinct differences within the paved area can be represented with the symbol Step or edge of paved area (501.1), if they serve navigation. The black border line can be omitted where it is logical (e.g. indistinct / gradual gravel-to-grass transitions).
 Differences in the brown colour shall be used to show differences in the traffic of vehicles or pedestrians.</source>
         <comment>Description of symbol 501.6</comment>
-        <translation>A burkolt terület szilárd felületű terület, például aszfalt, kemény kavics, csempe, beton vagy hasonlók. Határolni kell (vagy be kell keretezni) az (501.1)burkolt terület lépcsője vagy széle  szimbólummal.
+        <translation>A burkolt terület szilárd felületű terület, például aszfalt, kemény kavics, csempe, beton vagy hasonlók. Határolni kell (vagy be kell keretezni) az (501.1)burkolt terület lépcsője vagy széle szimbólummal.
 Az aszfaltozott területen belüli különbségek a burkolt terület lépcsője vagy széle (501.1) szimbólummal ábrázolhatók, ha ezek a tájékozódást szolgálják. A fekete határvonal elhagyható ott, ahol logikus (pl. Homályos / fokozatos kavics-fű átmenetek).
 A barna szín különbségeket kell használni a járművek vagy a gyalogosok forgalmában mutatkozó különbségek kimutatására.</translation>
     </message>
@@ -8469,7 +8469,8 @@ Minimális hossz: két szakasz dupla kötőjel (7,9 mm - 31,6 m alapterület) ..
         <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol Small unpaved footpath or track (506) shall be used.
 Minimum length: two dashes (9.75 mm - footprint 39 m).</source>
         <comment>Description of symbol 508</comment>
-        <translation type="unfinished"></translation>
+        <translation>A nyiladék egy egyenes törés az erdőben (általában ültetvényben), amely mentén nincs külön út. Ha van egy út egy nyiladékban mentén, akkor az (506) Kis burkolatlan gyalogút vagy nyom szimbólumot kell használni.
+Minimális hossz: két kötőjel (9,75 mm - lábnyom 39 m).</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -8713,8 +8714,8 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
-A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+        <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
+Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
 &lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
@@ -8731,8 +8732,8 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.1</comment>
-        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
-A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+        <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
+Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
 &lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
@@ -8749,8 +8750,8 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.3</comment>
-        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
-A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+        <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
+Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
 &lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
@@ -8767,8 +8768,8 @@ Buildings within symbol Area that shall not be entered (520) may just be represe
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 521.4</comment>
-        <translation type="unfinished">Egy épület ami viszonylag állandó építmény, amelynek teteje van.
-A szimbólumterületen belüli épületek, amelyekbe nem lehet belépni (520), egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
+        <translation>Egy épület egy viszonylag állandó építmény, amelynek teteje van.
+Az (520) szimbólumterületen belüli épületek, amelyekbe nem lehet belépni , egyszerűsített módon ábrázolhatók. A teljes épületen belüli területeket az épület részeként kell feltérképezni. Egy épületbe nem lehet belépni.
 &lt;b&gt; Az épületek és az egyéb járhatatlan elemek közötti minimális hézag 0,40 mm.... &lt;/b&gt;
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
@@ -8784,7 +8785,7 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522</comment>
-        <translation type="unfinished">Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+        <translation>Egy árkád, kupola, vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok,póznák vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok. 
 Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
 Minimális szélesség: 0,5 mm.
 Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
@@ -8800,10 +8801,10 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.3</comment>
-        <translation>Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+        <translation>Az árkád, kupola, vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, póznák vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
 Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
-Minimális szélesség: 0,5 mm.
-Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
+Minimális szélesség:0,5mm.
+Minimális terület: 0,25mm²(4m²alapterület).</translation>
     </message>
     <message>
         <source>Canopy, outline</source>
@@ -8816,10 +8817,10 @@ Small passable parts of buildings which cannot easily be crossed by competitors,
 Minimum width: 0.5 mm.
 Minimum area: 0.25 mm² (footprint 4 m²).</source>
         <comment>Description of symbol 522.4</comment>
-        <translation>Az árkád, kupola,vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, oszlopok vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
+        <translation>Az árkád, kupola, vagy olyan épületszerkezet (tetővel), amelyet általában oszlopok, póznák vagy falak támasztanak alá, például átjárók, folyosók, bíróságok, buszmegállók, benzinkutak vagy garázsok.
 Az épületek kis átjárható részei, amelyeken a versenyzők nem tudnak könnyen áthaladni, nem láthatók a térképen, és a verseny ideje alatt zárva vannak.
-Minimális szélesség: 0,5 mm.
-Minimális terület: 0,25 mm² (4 m² alapterület).</translation>
+Minimális szélesség:0,5mm.
+Minimális terület: 0,25mm²(4m²alapterület).</translation>
     </message>
     <message>
         <source>Pillar</source>
@@ -9222,7 +9223,8 @@ Minimális terület: 4 mm² (64 m² alapterület).</translation>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy átkelő helyet a falon vagy a kerítésen, vagy azokon keresztül, vagy egy közúton vagy vasúton, vagy egy alagúton vagy tiltott területen két, kifelé görbülő vonallal rajzolnak a térképre. 
+&lt;span style = &quot;color: red&quot;&gt; Ha aluljárókat vagy alagutakat stb. kell használni a versenyben, akkor azokat a (710.1) Átkelő hely vagy a (710.2) Átkelő szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source>Crossing section, one side</source>
@@ -9233,7 +9235,8 @@ Minimális terület: 4 mm² (64 m² alapterület).</translation>
         <source>A crossing section through or over a building, wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map as a linear object, according to the plan shape.
 &lt;span style=&quot;color: red&quot;&gt;If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
         <comment>Description of symbol 710.2</comment>
-        <translation type="unfinished">Az átkelő szakasz egy épületen vagy azon keresztül, vagy falon agy kerítésen át, vagy egy közúton vagy vasúton, vagy egy alagúton vagy egy tiltott területen átmenő kereszteződési pontot két, kifelé görbülő vonallal rajzolnak a térképre. &lt;span style = &quot;color: red&quot;&gt; Ha aluljárókat vagy alagutakat stb. kell használni a versenyben, akkor azokat a (710.1) Átkelő hely vagy a (710.2) Átkelő szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
+        <translation>Az átkelő szakasz egy épületen vagy azon keresztül, vagy falon vagy kerítésen át, vagy egy közúton vagy vasúton, vagy egy alagúton vagy egy tiltott területen átmenő kereszteződési pontot két, kifelé görbülő vonallal rajzolnak a térképre. 
+&lt;span style = &quot;color: red&quot;&gt; Ha aluljárókat vagy alagutakat stb. kell használni a versenyben, akkor azokat a (710.1) Átkelő hely vagy a (710.2) Átkelő szakasz szimbólumokkal kell kiemelni. &lt;/span&gt;</translation>
     </message>
     <message>
         <source> Temporary construction or closed area</source>
@@ -11809,7 +11812,7 @@ A lila vonal a rajt jeltől tart a cél szimbólum felé. Ez az egyszerű megkö
     <message>
         <source>Boulder fields / Stony ground, small</source>
         <comment>Name of symbol 210</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sziklamezők / köves talaj, kicsi</translation>
     </message>
     <message>
         <source>Stony or rocky ground which affects going should be shown on the map. The dots should be randomly distributed with density according to the amount of rock. A minimum of three dots should be used.</source>
@@ -12114,79 +12117,81 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
     <message>
         <source>A track with stabilised surface, at least 1.5 m wide. Forest road or well-maintained track with no obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 831</comment>
-        <translation type="unfinished"></translation>
+        <translation>Stabilizált felületű nyom, legalább 1,5 m széles. Erdei út vagy gondozott nyom akadályok nélkül. Sebesség 75-100%.</translation>
     </message>
     <message>
         <source>Path: fast riding</source>
         <comment>Name of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>út: gyors kerékpározás</translation>
     </message>
     <message>
         <source>Well-maintained path narrower than 1.5 m wide. Smooth, clean path with no erosion or obstacles. Speed 75-100 %.</source>
         <comment>Description of symbol 832</comment>
-        <translation type="unfinished"></translation>
+        <translation>1,5 m-nél keskenyebb, gondozott ösvény. Sima, tiszta ösvény, erózió és akadályok nélkül. Sebesség 75-100%.</translation>
     </message>
     <message>
         <source>Track: medium riding</source>
         <comment>Name of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyom: közepes sebességű kerékpározás</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 833</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legalább 1,5 m széles pálya, némi sebességcsökkenéssel, apró akadályok, például kövek, sziklák, dombok, fű, homok vagy sár lehetőségével. Sebesség 50-75%.</translation>
     </message>
     <message>
         <source>Path: medium riding</source>
         <comment>Name of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyom: közepes sebességű kerékpározás</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide with some reduction in speed with the possibility of small obstacles such as stones, rocks, ruts, grass, sand or mud. Speed 50-75 %.</source>
         <comment>Description of symbol 834</comment>
-        <translation type="unfinished"></translation>
+        <translation>1,5 méternél keskenyebb ösvény, némi sebességcsökkenéssel, apró akadályok, például kövek, sziklák, dombok, fű, homok vagy sár lehetőségével. Sebesség 50-75%.</translation>
     </message>
     <message>
         <source>Track: slow riding</source>
         <comment>Name of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyom: lassú kerékpározás</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with obstacles that require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 835</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legalább 1,5 m széles pálya, olyan akadályokkal, amelyek megkövetelik a versenyzőktől, az útvonal választást, hogy elkerüljék az olyan akadályokat, mint a kövek, sziklák, urak, fű, homok vagy sár. Sziklás felületek lehetősége. A pedálozás nehezebb, a kerékpározás lelassul. Képzett / fitt versenyzők átmennek. A kevésbé képzett / fitt versenyzőknek le kell szállniuk. Sebesség 25-50%.</translation>
     </message>
     <message>
         <source>Path: slow riding</source>
         <comment>Name of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>Út: lassú kerékpározás</translation>
     </message>
     <message>
         <source>A path narrower than 1.5 m wide, with sufficient obstacles to require the riders to choose their way to avoid obstacles such as stones, rocks, ruts, grass, sand or mud. Possibility of rocky surfaces. Pedaling is more difficult, riding is slowed. Skilled/fit riders will pass. Less skilled/fit riders may have to dismount. Speed 25-50 %.</source>
         <comment>Description of symbol 836</comment>
-        <translation type="unfinished"></translation>
+        <translation>1,5 m-nél keskenyebb ösvény, elegendő akadályokkal ahhoz, hogy a versenyzők megválasszák az utat, hogy elkerüljék az olyan akadályokat, mint a kövek, sziklák, utak, fű, homok vagy sár. Sziklás felületek lehetősége. A pedálozás nehezebb, a kerékpározás sebessége lelassul. Képzett / fitt versenyzők átmennek. A kevésbé képzett / fitt versenyzőknek le kell szállniuk. Sebesség 25-50%.</translation>
     </message>
     <message>
         <source>Track: difficult to ride</source>
         <comment>Name of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyomvonal: nehéz kerékpározni</translation>
     </message>
     <message>
         <source>A track at least 1.5 m wide, with difficult obstacles such as roots, deep sand/mud,
 erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
 required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation type="unfinished"></translation>
+        <translation>Legalább 1,5 m széles nyomvonal nehéz akadályokkal, például gyökerekkel, mély homokkal / iszappal,
+erózió vagy sziklás lépések. Nagyon lassú lovaglás vagy lehetetlen vezetni. Képzett / fitt versenyzők lehetnek
+leszálláshoz szükséges. Sebesség max. 25%.</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
         <comment>Name of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ösvény: nehéz kerékpározni</translation>
     </message>
     <message>
         <source>A path less than 1.5 m wide, with difficult obstacles such as roots, deep sand/mud, erosion or rocky steps. Very slow riding or impossible riding. Skilled/fit riders may be required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 838</comment>
-        <translation type="unfinished"></translation>
+        <translation>1,5 m-nél kisebb ösvény, nehéz akadályokkal, mint például gyökerek, mély homok / iszap, erózió vagy sziklás lépcsők. Nagyon lassú vagy lehetetlen a kerékpározás. Szakképzett / fitt versenyzőkre lehet szükség a leszálláshoz. Sebesség max. 25%.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -12196,7 +12201,7 @@ required to dismount. Speed max 25 %.</source>
     <message>
         <source>Non-ridable narrow forest rides should be represented.</source>
         <comment>Description of symbol 509.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nem kerékpározható keskeny erdei nyiladékokat ábrázolni kell.</translation>
     </message>
     <message>
         <source>Railway</source>
@@ -12257,7 +12262,8 @@ required to dismount. Speed max 25 %.</source>
         <source>This stone wall symbol should represent all visible walls. If a stone wall is forbidden to
 cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 521</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ezzel a kőfal szimbólummal kell az összes látható falat ábrázolni. Ha egy kőfalon tiltott
+az átkelés, akkor a 707 szimbólummal (nem átléphető határ) kell jelölni.</translation>
     </message>
     <message>
         <source>High fence</source>
@@ -12277,7 +12283,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>All ways through or over high fences or walls must be indicated. The symbol may also be used for a gate through or stile over a stone wall (521) or a fence (524) or a pipeline (534).</source>
         <comment>Description of symbol 525</comment>
-        <translation type="unfinished"></translation>
+        <translation>A magas kerítéseken vagy falakon keresztül vagy azokon keresztüli utakat fel kell tüntetni. A szimbólum használható (521)kőfalon , (524)kerítésen vagy (534) csővezetéken átvezető kapun vagy afölött is.</translation>
     </message>
     <message>
         <source>Building</source>
@@ -12352,7 +12358,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A pipeline which cannot be crossed. If an uncrossable pipeline is forbidden to cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
         <comment>Description of symbol 534</comment>
-        <translation type="unfinished"></translation>
+        <translation>Olyan csővezeték, amelyet nem lehet átlépni. Ha az átjárhatatlan csővezetéken az áthaladás tilos, akkor azt 707-es szimbólummal (tiltott határ) kell megjelölni.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -12412,7 +12418,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Magnetic north lines are lines placed on the map pointing to magnetic north. At the scale of 1:5000, 1:7500 and 1:10000 the spacing of north lines on the map should be 30 mm, while at the scale of 1:15000 and 1:20000 the spacing on the map should be 20 mm. North lines may be broken where they obscure small features such as boulders, cliffs, stream junctions, and path ends.</source>
         <comment>Description of symbol 601.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mágneses északi vonalak a térképen elhelyezett vonalak, amelyek mágneses északra mutatnak. Az 1: 5000, 1: 7500 és 1: 10000 méretaránynál az északi vonalak távolságának a térképen 30 mm-nek kell lennie, míg az 1: 15000 és 1: 20000 méretaránynál a térképen a távolságának 20 mm-nek kell lennie. Az északi vonalak megszakadhatnak, ha eltakarják az olyan apró jellemzőket, mint a kövek, sziklák, patakok kereszteződései és az ösvények vége.</translation>
     </message>
     <message>
         <source>North lines pattern, blue</source>
@@ -12472,12 +12478,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
         <comment>Name of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrzőpont fókuszponttal (MTBO térképeken)</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. The focus point shall be used in case of necessity when the exact position of a control is not clear. A focus point helps to specify the exact track where a control is situated.</source>
         <comment>Description of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>A fókuszpont (vagyis a vezérlőkör közepén lévő pont) akkor használható, ha tisztázni kell az ellenőrzőpont pontos helyzetét, például egy sűrű úthálózatban. A fókuszpontot szükség esetén akkor lehet használni, amikor az ellenőrző pont pontos helyzete nem egyértelmű. A fókuszpont segít megadni a pontos pályát, ahol az ellenőrzőpont található.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -12507,7 +12513,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A marked route is shown on the map with a dashed line. If the symbol is used instead of symbol 704 before or after a control, it represents an obligatory route for the competitors. The symbol can also be used in areas where off-track riding is forbidden to represent allowed routes that are marked in the terrain.</source>
         <comment>Description of symbol 705</comment>
-        <translation type="unfinished"></translation>
+        <translation>A jelzet útvonal szaggatott vonallal jelenik meg a térképen. Ha a szimbólumot a 704 szimbólum helyett egy ellenőrző pont előtt vagy után használják, akkor az kötelező utat jelent a versenyzők számára. A szimbólum olyan területeken is használható, ahol az úton kívüli kerékpározás tilos a terepen megjelölt megengedett útvonalakként.</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -12547,12 +12553,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>An out-of-bounds area is shown with vertical stripes. A bounding line may be drawn. The areas which may be dangerous to competitors shall be presented by this symbol.</source>
         <comment>Description of symbol 709</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy tiltott területet függőleges csíkokkal ábrázolják. Határvonal húzható. Azokat a területeket, amelyek veszélyesek lehetnek a versenyzőkre, ezzel a szimbólummal kell jelölni.</translation>
     </message>
     <message>
         <source>Out-of-bounds area, bounding line</source>
         <comment>Name of symbol 709.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiltott terület, határoló vonal</translation>
     </message>
     <message>
         <source>Forbidden route</source>
@@ -12562,7 +12568,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 711.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy útvonal, amelyek nem használhatók és tilosak átlépni, cikk-cakk vonallal vannak feltüntetve. A cikk-cakk vonal lehetőleg folyamatos legyen. Ha a tiltott útvonalon van átkelőhely, akkor azt a kapuként két merőleges vonallal kell ábrázolni a tiltott útvonal felett. Hosszabb átkelő szakaszt is egyértelműen fel kell tüntetni a térképen a cikk-cakk vonalak végén lévő merőleges vonalak felhasználásával.</translation>
     </message>
     <message>
         <source>First aid post</source>
@@ -12587,22 +12593,22 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
         <comment>Name of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>Veszélyes tárgy a nyomvonalakon vagy ösvényeken, lépcsőn</translation>
     </message>
     <message>
         <source>These barriers must be highly visible on the map and should be overprinted in purple. The symbol should be used for all obstacles that are difficult to cross. For uncrossable barrier, symbol 844 shall be used. This symbol can be used for stairs. There is no particular stair symbol.</source>
         <comment>Description of symbol 843</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ezeknek az akadályoknak jól láthatóaknak kell lenniük a térképen, és lilával kell őket felülre nyomtatni. A szimbólumot minden olyan akadálynál fel kell használni, amelyen nehéz átjutni. Áthidalhatatlan akadály esetén a 844 szimbólumot kell használni. Ez a szimbólum lépcsőkhöz használható. Nincs külön lépcsőszimbólum.</translation>
     </message>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nem átléphető sorompó / tilos átlépni</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ez a szimbólum használható minden olyan helyre, amelyen tilos vagy lehetetlen áthaladni, pl. áthatolhatatlan korlátok; kerítések vagy falak, amelyeket tilos vagy lehetetlen átlépni; rövid útszakaszok, vágányok vagy utak, amelyek használata tilos (hosszabb szakaszoknál a 711-es jelet kell használni). Olyan helyeken, ahol két pálya vagy út majdnem találkozik, de a helyzet nem egyértelmű a térképen, ez a szimbólum arra használható, hogy jelezze, hogy tilos az átkelés.</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -14945,7 +14951,7 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél, akkor mindkét oldalon 0.5 mm-re
     <message>
         <source>Green for SkiO</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Zöld a SkiO számára</translation>
     </message>
     <message>
         <source>Black 100%</source>
@@ -15525,7 +15531,8 @@ of the boulders.</source>
 
 Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb eső) sziklákat (204) jelentős méretkülönbséggel, megengedett, hogy ezt a szimbólumot (0,5 mm) a 204 szimbólum nagyításaként használjuk néhány szikla esetében.
 
-Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb lévő) nagy sziklákat (205), amelyek jelentős különbséggel rendelkeznek, megengedett, hogy ezt a szimbólumot (0,5 mm) a 205 szimbólum redukciójaként használjuk egyes szikláknál.</translation>
+Annak érdekében, hogy meg lehessen különböztetni a szomszédos (egymástól 30 méternél közelebb lévő) nagy sziklákat (205), amelyek jelentős különbséggel rendelkeznek, megengedett, hogy ezt a szimbólumot (0,5 mm) a 205 szimbólum redukciójaként használjuk 
+egyes szikláknál.</translation>
     </message>
     <message>
         <source>Large boulder</source>
@@ -15650,42 +15657,42 @@ Az egyes háromszögek lábnyoma: 12 m x 6 m.</translation>
     <message>
         <source>Body of water that shall not be crossed, with bank line</source>
         <comment>Name of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Víztest, amelyet nem szabad keresztezni, partvonallal</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha a víztestet nem borítja jég vagy nem lehet átkelni, akkor a terület színének 100% -ban kéknek kell lennie. Fekete partvonal jelzi, hogy a jellemzőt nem szabad átlépni.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed</source>
         <comment>Name of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Víztest, amelyet nem szabad átlépni</translation>
     </message>
     <message>
         <source>When a body of water is not covered with ice or shall not be crossed, the colour of the area shall be 100% blue. A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha a víztestet nem borítja jég vagy nem lehet átkelni, akkor a terület színének 100% -ban kéknek kell lennie. Fekete partvonal jelzi, hogy a jellemzőt nem szabad átlépni.</translation>
     </message>
     <message>
         <source>Body of water that shall not be crossed, bank line</source>
         <comment>Name of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Víztest, amelyen nem szabad átkelni, partvonal</translation>
     </message>
     <message>
         <source>A black bank line indicates that the feature shall not be crossed.</source>
         <comment>Description of symbol 301.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete partvonal jelzi, hogy a jellemzőt nem szabad átlépni.</translation>
     </message>
     <message>
         <source>Crossable body of water, with bank line</source>
         <comment>Name of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Víztest, amelyet nem szabad átlépni, partvonallal</translation>
     </message>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 301.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha egy víztesten az átkelés engedélyezett, a színnek 50% -ban kéknek kell lennie. A áthatolható víztest partvonala a sí-tájfutó térképen úgy jelenik meg, mint az ISOM szabványban a (302)sekély víztest.</translation>
     </message>
     <message>
         <source>Crossable body of water</source>
@@ -15695,17 +15702,17 @@ Az egyes háromszögek lábnyoma: 12 m x 6 m.</translation>
     <message>
         <source>When a body of water is allowed to be crossed, the colour shall be 50% blue. The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ha egy víztesten az átkelés engedélyezett, a színnek 50% -ban kéknek kell lennie. A áthatolható víztest partvonala a sí-tájfutó térképen úgy jelenik meg, mint az ISOM szabványban a (302)sekély víztest.</translation>
     </message>
     <message>
         <source>Crossable body of water, bank line</source>
         <comment>Name of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Átjárható víztömeg, partvonal</translation>
     </message>
     <message>
         <source>The bank line of the crossable waterbody is presented in ski orienteering map like in ISOM Shallow body of water (302).</source>
         <comment>Description of symbol 302.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>A áthatolható víztest partvonala a sí-tájfutó térképen úgy jelenik meg, mint az ISOM szabványban a (302)sekély víztest.</translation>
     </message>
     <message>
         <source>Crossable watercourse</source>
@@ -15732,12 +15739,12 @@ Minimális hosszúság (izolált): 1 mm (lábnyom 15 m).</translation>
     <message>
         <source>Marsh (in ski orienteering map)</source>
         <comment>Name of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mocsár (sífutó térképen)</translation>
     </message>
     <message>
         <source>The marshes shall be shown with the same symbol as Indistinct marsh (310) in the orienteering map specification, so that the track symbols drawn can be read more clearly.</source>
         <comment>Description of symbol 310.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A mocsarakat ugyanolyan szimbólummal kell feltüntetni, mint a tájékozódási térkép specifikációjában a (310)időszakos mocsarat , hogy a rajzolt pályaszimbólumok tisztábban olvashatók legyenek.</translation>
     </message>
     <message>
         <source>Open land</source>
@@ -15867,7 +15874,7 @@ Minimális szélesség: 0,4 mm (lábnyom 6 m).</translation>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running speed.</source>
         <comment>Description of symbol 406.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sűrű növényzettel (alacsony láthatósággal) rendelkező terület, amely csökkenti a futási sebességet.</translation>
     </message>
     <message>
         <source>Orchard</source>
@@ -16594,12 +16601,12 @@ Az északi vonalakat törni kell a térkép olvashatóságának javítása érde
     <message>
         <source>Control point and focus point</source>
         <comment>Name of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ellenőrző pont és fókusz pont</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) shall be used to clarify the exact position of a control.</source>
         <comment>Description of symbol 703</comment>
-        <translation type="unfinished"></translation>
+        <translation>A fókuszpontot (vagyis a vezérlőkör közepén lévő pontot) kell használni a ellenőrző pont pontos helyzetének tisztázására.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -16688,17 +16695,17 @@ Minimális terület: 2 mm x 2 mm (terepi méret 30 m x 30 m).</translation>
     <message>
         <source>Equipment deposit</source>
         <comment>Name of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>Felszerelés lerakat</translation>
     </message>
     <message>
         <source>A deposit for spare equipment in the terrain.</source>
         <comment>Description of symbol 715</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lerakat a terepen lévő pótalkatrészeknek.</translation>
     </message>
     <message>
         <source>Simple SkiO Course</source>
         <comment>Name of symbol 799</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egyszerű SkiO pálya</translation>
     </message>
     <message>
         <source>This symbol provides a simple and quick way to make training courses.
@@ -16712,39 +16719,41 @@ A lila vonalat pontonként a rajttól a célig halad. Ez az egyszerű megközel�
     <message>
         <source>Very wide track &gt; 3.0 m</source>
         <comment>Name of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nagyon széles pálya&gt; 3,0 m</translation>
     </message>
     <message>
         <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
         <comment>Description of symbol 801</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nagyon gyors, széles sípályák a síközpontokban, sípálya ápolóval vagy pálya szintezővel készültek.</translation>
     </message>
     <message>
         <source>Wide track 1.5 - 3.0 m</source>
         <comment>Name of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>Széles pálya 1,5 - 3,0 m</translation>
     </message>
     <message>
         <source>A fast, skateable track made by a snow mobile, width usually 1.5 - 3.0 m. Skateable tracks
 rougher and softer than the wide skateable tracks in the area.</source>
         <comment>Description of symbol 802</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gyors, korcsolyázható pálya, amelyet hómobil alkot, szélessége általában 1,5 - 3,0 m. A korcsolyázható pályák
+durvábbak és puhábbak, mint a terület széles korcsolyapályái.</translation>
     </message>
     <message>
         <source>Track 1.0 - 1.5 m</source>
         <comment>Name of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pálya 1,0 - 1,5 m</translation>
     </message>
     <message>
         <source>A good track made by a snow mobile, usually 1.0 - 1.5 m wide. In steep slopes, tracks may
 be made wider to reduce widening during competition.</source>
         <comment>Description of symbol 803</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jó pálya, amelyet hómobil alkot, általában 1,0 - 1,5 m széles. A meredek lejtőkön a pályákat is
+szélesebbé kell tenni a verseny közbeni szélesedés csökkentése érdekében.</translation>
     </message>
     <message>
         <source>Track, slow 0.8 - 1.0 m</source>
         <comment>Name of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>Pálya, lassú 0,8 - 1,0 m</translation>
     </message>
     <message>
         <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
@@ -16753,41 +16762,49 @@ technique for slowing and stopping.
 
 In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
         <comment>Description of symbol 804</comment>
-        <translation type="unfinished"></translation>
+        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek
+lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést
+a lassítás és a megállás technikáját.
+
+A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal kell megrajzolni.</translation>
     </message>
     <message>
         <source>Road covered with snow</source>
         <comment>Name of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hóval borított út</translation>
     </message>
     <message>
         <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
         <comment>Description of symbol 805</comment>
-        <translation type="unfinished"></translation>
+        <translation>A hókotrott, síelhető utakat normál, de szélesebb útjelzéssel rajzolták.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, line symbol</source>
         <comment>Name of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>Homokos vagy havas út, vonal szimbólum</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806</comment>
-        <translation type="unfinished"></translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
+jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
+az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>Sanded or snowless road, single symbol</source>
         <comment>Name of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Homokos vagy havas út, egyetlen szimbólum</translation>
     </message>
     <message>
         <source>A road on the map which is sanded or snowless during the competition. A chain of V-
 marks across the road symbol show that the road is not skiable. Snowless roads and
 heavily sanded roads should normally be marked as forbidden routes.</source>
         <comment>Description of symbol 806.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy hómentes. A &quot;V&quot;-lánc
+jelek az út szimbólumán azt mutatják meg, hogy az út nem síelhető. A hómentes utakat és
+az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
     </message>
     <message>
         <source>Unploughed road</source>
@@ -16797,44 +16814,46 @@ heavily sanded roads should normally be marked as forbidden routes.</source>
     <message>
         <source>A road which is not opened for traffic, no skiable track.</source>
         <comment>Description of symbol 807</comment>
-        <translation type="unfinished"></translation>
+        <translation>A forgalom számára nem nyitott út, nincs síelhető pálya.</translation>
     </message>
     <message>
         <source>Prepared area</source>
         <comment>Name of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>Előkészített terület</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szlalom lejtők (alpesi sípályák) és egyéb területek, amelyek szélesek, síelhetők és kemények.
+Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
     </message>
     <message>
         <source>Prepared area, fill pattern</source>
         <comment>Name of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Előkészített terület, kitöltési minta</translation>
     </message>
     <message>
         <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
 The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szlalom lejtők (alpesi sípályák) és egyéb területek, amelyek szélesek, síelhetők és kemények.
+Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
     </message>
     <message>
         <source>Prepared area, boundary</source>
         <comment>Name of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Előkészített terület, határ</translation>
     </message>
     <message>
         <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
         <comment>Description of symbol 808.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, line symbol</source>
         <comment>Name of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiltott útvonal, átjárható, vonal szimbólum</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -16842,12 +16861,15 @@ At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
+Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.
+A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva
+hogy a nyomhálózatban jobban látható legyen.</translation>
     </message>
     <message>
         <source>Forbidden route, crossable, single symbol</source>
         <comment>Name of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tiltott útvonal, átjárható, vonal szimbólum</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can be crossed but not followed.
@@ -16855,28 +16877,32 @@ At least two symbols must be used to mark a forbidden route.
 The symbol Forbidden route (711) is drawn in a larger size in a ski orienteering map so
 that it is more clearly visible in the track network.</source>
         <comment>Description of symbol 809.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiltott útvonal szimbólummal jelölt vonalak átléphetők, de nem követhetők.
+Legalább két szimbólumot kell használni a tiltott útvonal megjelölésére.
+A (711)Tiltott útvonal szimbólum a sífutó térképen nagyobb méretben van megrajzolva
+hogy a nyomhálózatban jobban látható legyen.</translation>
     </message>
     <message>
         <source>Public snow mobile route</source>
         <comment>Name of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyilvános hómobil útvonal</translation>
     </message>
     <message>
         <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
         <comment>Description of symbol 813</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nyilvános és kijelölt útvonal a hómobilok számára, amelyek a sífutóverseny során használatosak lehetnek. Ezek az útvonalak gyakran egyenetlenek és különböző szélességűek és minőségűek. A szervezőknek tájékoztatniuk kell a versenyre vonatkozó utasításokat a versenyben részt vevő versenyzőkkel az ilyen útvonalak minőségéről (pl. fényképekkel), és biztosítaniuk kell a versenytársak biztonságát az útvonal ideiglenes lezárásával, az útvonal személyzettel való biztosításával vagy más módon, tájékoztatva a hómobil sofőröket arról, hogy az útvonalon sí-tájfutókkal találkozhatnak. Ha a versenytársak biztonsága nem garantálható, az útvonalat tiltottként kell megjelölni, és biztosítani kell a biztonságos átjárókat.</translation>
     </message>
     <message>
         <source>Forbidden route, forbidden to cross</source>
         <comment>Name of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tiltott útvonal, tilos átkelni</translation>
     </message>
     <message>
         <source>Linear features marked with the forbidden route symbol can not be followed, and can not be crossed except at specially marked crossing points. Do not enter road regardless of whether the road is badly plowed, ice-covered, no traffic etc.
 A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
         <comment>Description of symbol 814</comment>
-        <translation type="unfinished"></translation>
+        <translation>A tiltott útvonal szimbólummal jelölt lineáris jellemzők nem követhetők, és csak speciálisan megjelölt átkelési pontokon léphetők át. Ne lépjen be az úttól függetlenül attól, hogy az út rosszul tisztított, jég borította-e, nincs-e forgalom stb.
+Azon útvonal, amelyen nem használhatók és tilosak átlépni, cikk-cakkal vannak feltüntetve. A cikk-cakk vonal lehetőleg folyamatos legyen. Ha a tiltott útvonalon van átkelőhely, akkor azt a kapuként két merőleges vonallal kell ábrázolni a tiltott útvonal felett. Egy hosszabb átkelő szakaszt is egyértelműen fel kell tüntetni a térképen a cikk-cakk vonalak végén lévő merőleges vonalak felhasználásával.</translation>
     </message>
     <message>
         <source>OpenOrienteering Logo</source>
@@ -16899,22 +16925,22 @@ A route which is out-of-bounds and forbidden to cross is shown with a zigzag. Th
     <message>
         <source>Black for control descriptions</source>
         <comment>Color 1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete az ellenőrzőpontok leírásaihoz</translation>
     </message>
     <message>
         <source>White above framing</source>
         <comment>Color 2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a keretezés felett</translation>
     </message>
     <message>
         <source>Black for framing</source>
         <comment>Color 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fekete a keretezéshez</translation>
     </message>
     <message>
         <source>White below framing</source>
         <comment>Color 4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehér a keret alatt</translation>
     </message>
     <message>
         <source>Black</source>
@@ -17096,27 +17122,27 @@ A határoló vonalat, ha az nem természetes határ, a következő módon jelöl
     <message>
         <source>Heading: Single line for event title or classes</source>
         <comment>Name of symbol 99.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Címsor: Egy sor az esemény nevéhez vagy futamokhoz</translation>
     </message>
     <message>
         <source>Optionally this block can be used as [ Classes line ] between [ Event title ] and [ Course nature ].</source>
         <comment>Description of symbol 99.0</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opcionálisan ez a blokk [kategória sor ]-ként használható az [ Esemény neve ] és a [Versenyforma] között.</translation>
     </message>
     <message>
         <source>Heading: Event title, two lines</source>
         <comment>Name of symbol 99.0.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fejléc: Esemény neve, két sor</translation>
     </message>
     <message>
         <source>Heading: Event title, three lines</source>
         <comment>Name of symbol 99.0.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fejléc: Esemény neve, három sor</translation>
     </message>
     <message>
         <source>Course nature</source>
         <comment>Name of symbol 99.2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Versenyforma</translation>
     </message>
     <message>
         <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
@@ -17124,12 +17150,15 @@ A határoló vonalat, ha az nem természetes határ, a következő módon jelöl
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
         <comment>Description of symbol 99.2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ez a blokk a futam fő paramétereit írja le. Célja, hogy segítsen megérteni a nehézségi fokot. 
+ - Rendszer: | Kategória | Hossz | Magasságemelkedés |
+ - A pálya hosszát 0,1 km-re kerekített kilométerben adják meg.
+ - A magasságemelkedést a legközelebbi 5 m-re kerekített méterben kell megadni.</translation>
     </message>
     <message>
         <source>Description of individual control</source>
         <comment>Name of symbol 99.3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az egyedi ellenőrző pontok leírása</translation>
     </message>
     <message>
         <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
@@ -17143,12 +17172,21 @@ F: Dimensions, combinations
 G: Location of the control flag
 H: Other information</source>
         <comment>Description of symbol 99.3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Oszlopok vázlata: | A | B | C | D | E | F | G | H |
+
+V: Ellenőrzőpont sorszám
+B: Ellenőrző kód
+C: Melyik több hasonló tereptárgyak közül
+D: Az ellenőrzőpont tereptárgy jellemzője
+E: A tereptárgy jellemzője (vagy 2. tereptárgy)
+F: Méret(ek) / Kombinációs jel
+G: Az ellenőrzőpont bója elhelyezkedése
+H: Egyéb információk</translation>
     </message>
     <message>
         <source>Textual description of individual control</source>
         <comment>Name of symbol 99.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az egyedi ellenőrző pontok szöveges leírása</translation>
     </message>
     <message>
         <source>Scheme of columns: |A|B|Text|
@@ -17156,68 +17194,77 @@ H: Other information</source>
 A: Control number
 B: Control code</source>
         <comment>Description of symbol 99.4</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az oszlopok rendszere: | A| B| Szöveg|
+
+A: Ellenőrző pont sorszáma
+B: Ellenőrző pont kódja</translation>
     </message>
     <message>
         <source>Thicker horizontal line</source>
         <comment>Name of symbol 99.5</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vastagabb vízszintes vonal</translation>
     </message>
     <message>
         <source>A thicker horizontal line should be used after every third description and on either side of any special instruction.
 
 In this symbol set, you need to add this symbol manually after the start location row and after every three consequent rows of 99.3 Description of individual control.</source>
         <comment>Description of symbol 99.5</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Minden harmadik pontleírás után és bármely speciális utasítás mindkét oldalán vastagabb vízszintes vonalat kell használni.
+
+Ebben a szimbólumkészletben ezt a szimbólumot manuálisan kell hozzáadnia a kezdő helysor után és a 99.3 minden további sora után. Az egyedi ellenőrzőpontok leírása.</translation>
     </message>
     <message>
         <source>|A| Start location</source>
         <comment>Name of symbol 99.6</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">| A | Indulás helye</translation>
     </message>
     <message>
         <source>Shown in first line of descriptions, using the description as if it were a control feature.
 
 Map symbol: ISOM 701</source>
         <comment>Description of symbol 99.6</comment>
-        <translation type="unfinished"></translation>
+        <translation>A leírások első sorában jelenik meg, a leírást úgy használva, mintha egy ellenőrző pont lenne.
+
+Térkép szimbólum: ISOM 701</translation>
     </message>
     <message>
         <source>|A| Control number</source>
         <comment>Name of symbol 99.7</comment>
-        <translation type="unfinished"></translation>
+        <translation>| A|Az ellenőrző pont sorszáma</translation>
     </message>
     <message>
         <source>Numbering of controls is in the sequence they are to be visited, unless the description is for a Score competition.
 
 Map symbol: ISOM 703</source>
         <comment>Description of symbol 99.7</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az ellenőrzőpont számozása abban a sorrendben történik, ahogyan meg kell látogatni azokat, kivéve, ha a leírás egy Pontszám versenyre vonatkozik.
+
+Térkép szimbólum: ISOM 703</translation>
     </message>
     <message>
         <source>|B| Control code</source>
         <comment>Name of symbol 99.8</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">| B | Ellenőrző kód</translation>
     </message>
     <message>
         <source>The control code should be a number greater than 30.</source>
         <comment>Description of symbol 99.8</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az ellenőrző kódnak 30-nál nagyobb számnak kell lennie.</translation>
     </message>
     <message>
         <source>|C| Northern</source>
         <comment>Name of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C | Északi</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| North Eastern</source>
         <comment>Name of symbol 0.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation>| C| Észak-Kelet</translation>
     </message>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
