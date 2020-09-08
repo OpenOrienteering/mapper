@@ -4149,7 +4149,7 @@ mert a % 2 (.% 3) mentés nem támogatott.</translation>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="980"/>
         <source>Keep my location on screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartsa meg a tartózkodási helyemet a képernyőn</translation>
     </message>
     <message>
         <location filename="../src/gui/map/map_editor.cpp" line="994"/>
@@ -4902,7 +4902,7 @@ kiválasztva</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="245"/>
         <source>Background drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttér rajz</translation>
     </message>
 </context>
 <context>
@@ -6144,12 +6144,12 @@ zoomoljon az egér görgetőgombjával, ha van ilyen lehetősége.</translation>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="277"/>
         <source>Solid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egyszínű</translation>
     </message>
     <message>
         <location filename="../src/templates/paint_on_template_tool.cpp" line="278"/>
         <source>Pattern</source>
-        <translation type="unfinished">Minta</translation>
+        <translation>Minta</translation>
     </message>
 </context>
 <context>
@@ -7177,12 +7177,12 @@ bontás</translation>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="117"/>
         <source>NMEA (Qt)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (Qt)</translation>
     </message>
     <message>
         <location filename="../src/sensors/sensors_settings_page.cpp" line="120"/>
         <source>NMEA (OpenOrienteering)</source>
-        <translation type="unfinished"></translation>
+        <translation>NMEA (OpenOrienteering)</translation>
     </message>
     <message>
         <source>Serial port (NMEA)</source>
@@ -8436,7 +8436,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
         <location filename="../src/templates/template_map.cpp" line="171"/>
         <location filename="../src/templates/template_map.cpp" line="305"/>
         <source>Failed to transform the coordinates.</source>
-        <translation type="unfinished">Nem sikerült transzformálni a koordinátákat.</translation>
+        <translation>Nem sikerült átalakítanilni a koordinátákat.</translation>
     </message>
     <message>
         <location filename="../src/templates/template_map.cpp" line="198"/>
@@ -8558,7 +8558,7 @@ Ha nem akarsz a háttérre rajzolni, akkor ez nem jelent problémát.</translati
     <message>
         <location filename="../src/templates/template_track.cpp" line="82"/>
         <source>Track</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyom</translation>
     </message>
     <message>
         <location filename="../src/templates/template_track.cpp" line="95"/>
