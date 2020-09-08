@@ -520,7 +520,7 @@
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="453"/>
         <source>%1 (%2°, %3 lpi)</source>
-        <translation type="unfinished">%1 (%2°, %3 lpi)</translation>
+        <translation>%1 (%2°, %3 lpi)</translation>
     </message>
     <message>
         <location filename="../src/gui/widgets/color_list_widget.cpp" line="83"/>
@@ -2129,7 +2129,8 @@
         <location filename="../src/gui/georeferencing_dialog.cpp" line="835"/>
         <source>The online declination lookup failed:
 %1</source>
-        <translation>Wyszukiwanie wartości deklinacji online nie powiodło się: %1</translation>
+        <translation>Wyszukiwanie wartości deklinacji online nie powiodło się:
+%1</translation>
     </message>
     <message>
         <location filename="../src/gui/georeferencing_dialog.cpp" line="153"/>
@@ -3172,7 +3173,8 @@ Format pliku nierozpoznany.</translation>
         <location filename="../src/gui/main_window.cpp" line="655"/>
         <source>The file has been modified.
 Do you want to save your changes?</source>
-        <translation>Plik został zmodyfikowany. Zapisać zmiany?</translation>
+        <translation>Plik został zmodyfikowany.
+Zapisać zmiany?</translation>
     </message>
     <message>
         <location filename="../src/gui/main_window.cpp" line="776"/>
