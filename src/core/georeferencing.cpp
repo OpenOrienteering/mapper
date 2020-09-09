@@ -164,6 +164,9 @@ namespace
 			proj_context_use_proj4_init_rules(PJ_DEFAULT_CTX, 1);
 
 #if defined(Q_OS_ANDROID)
+			proj_log_func(nullptr, nullptr, [](void* /*unused*/, int /*unused*/, const char *msg) {
+				qDebug("%s", msg);
+			});
 			// Register file finder function needed by Proj.4
 			proj_context_set_file_finder(nullptr, &projFileHelperAndroid, nullptr);
 			auto proj_data = QFileInfo(projCacheDirectory().path());
