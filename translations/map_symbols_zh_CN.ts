@@ -1819,7 +1819,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410） 周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -1837,7 +1837,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416.1</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410）周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -13580,7 +13580,7 @@ Minimum length, black dot implementation: 5 dots (2.5 mm - footprint 37 m).
 Minimum length, green line implementation: 4 dashes (1.8 mm - footprint 27 m).</source>
         <comment>Description of symbol 416</comment>
         <translation>树林中明显的树林边缘或植被边界。
-非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，建议使用绿色虚线表示植被分界线。
+非常明显的树林边缘和植被边界可以使用耕作地边界符号来表示。在地图上只能使用一个植被分界线符号（黑色虚线或绿色虚线）。对于具有大量岩石特征的区域，推荐使用绿色虚线表示植被分界线。
 绿线的一个缺点是它不能用于在符号难行植被（410） 周围和内部表示明显的植被边界。这些情况的替代方案是使用符号 耕作地分界线（415） 。
 最小长度， 黑点： 5点（ 2.5mm - 实地长度37米）。
 最小长度， 绿线： 4 段虚线（1.8mm - 实地长度27米）。</translation>
@@ -15910,7 +15910,7 @@ Map symbol: ISOM 538</source>
 
 The default line shows a box of 5 mm by 5mm and can be removed from the final symbols.</source>
         <comment>Description of symbol 7</comment>
-        <translation>通常不建议引入本地符号。如果使用了本地符号，那么在像吸引国际参赛的活动中，本地符号的信息应该在赛前具体提供给选手。
+        <translation>通常不推荐引入本地符号。如果使用了本地符号，那么在像吸引国际参赛的活动中，本地符号的信息应该在赛前具体提供给选手。
 
 默认的线显示了 5mm X 5mm 的方块，可以从最终符号中去掉。</translation>
     </message>
