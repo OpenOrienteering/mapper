@@ -207,7 +207,7 @@ void NewMapDialog::updateSymbolSetList()
 	}
 	
 	load_from_file = new QListWidgetItem(tr("Load symbol set from a file..."));
-	load_from_file->setData(Qt::UserRole, qVariantFromValue<void*>(nullptr));
+	load_from_file->setData(Qt::UserRole, QVariant::fromValue<void*>(nullptr));
 	load_from_file->setIcon(QIcon(QString::fromLatin1(":/images/open.png")));
 	symbol_set_list->addItem(load_from_file);
 	
