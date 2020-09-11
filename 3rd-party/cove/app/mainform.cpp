@@ -791,7 +791,7 @@ void mainForm::on_bwImageSaveButton_clicked()
 
 	QString selectedFilter("PNG (*.png)");
 	QString newfilename = QFileDialog::getSaveFileName(
-		this, QString::null, QFileInfo(imageFileName).dir().path(), filter,
+		this, QString(), QFileInfo(imageFileName).dir().path(), filter,
 		&selectedFilter);
 
 	if (!newfilename.isEmpty())
