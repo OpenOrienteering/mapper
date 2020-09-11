@@ -1437,9 +1437,8 @@ Minimum width: 0.25 mm (footprint 3.8 m).</source>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 410.4</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches
-praktisch unpassierbar ist.
-Minimale Ausdehnung: 0.35 mm (Wirklichkeit 5 m)</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches praktisch unpassierbar ist.
+Mindestbreite: 0,35 mm</translation>
     </message>
     <message>
         <source>Vegetation, impassable (from ISOM 2017, first edition)</source>
@@ -2730,7 +2729,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Hilfshöhenlinien werden verwendet, wo mehr Information über die Geländeform gegeben werden muss. Sie werden nur dort benutzt, wo eine Darstellung mit Normalkurven unvollständig wäre. Sie dürfen nicht als zusätzlich mittlere Normalkurve verwendet werden. Zwischen benachbarten Normalkurven darf immer nur eine Hilfshöhenlinie gezeichnet werden. Es ist ist wichtig, dass Hilfshöhenlinien in das Normalkurvenbild integriert sind, so dass Anfang und Ende einer Hilfshöhenlinie parallel zu den benachbarten Normalkurven verlaufen. Die Unterbrechungen der Hilfshöhenlinie müssen an ausreichend geraden Abschnitten der Linie platziert werden. Hilfshöhenlinien können verwendet werden, um flache Kuppen oder Senken von auffälligeren zu unterscheiden.</translation>
+        <translation>Hilfshöhenlinien werden verwendet, wo mehr Information über die Geländeform gegeben werden muss. Sie werden nur dort benutzt, wo eine Darstellung mit Normalkurven unvollständig wäre. Sie dürfen nicht als zusätzlich mittlere Normalkurve verwendet werden. Zwischen benachbarten Normalkurven darf immer nur eine Hilfshöhenlinie gezeichnet werden. Es ist wichtig, dass Hilfshöhenlinien in das Normalkurvenbild integriert sind, so dass Anfang und Ende einer Hilfshöhenlinie parallel zu den benachbarten Normalkurven verlaufen. Die Unterbrechungen der Hilfshöhenlinie müssen an ausreichend geraden Abschnitten der Linie platziert werden. Hilfshöhenlinien können verwendet werden, um flache Kuppen oder Senken von auffälligeren zu unterscheiden.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -2740,7 +2739,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.</source>
         <comment>Description of symbol 103.1</comment>
-        <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden werden.</translation>
+        <translation>Ein Fallstrich kann auf der tiefergelegenen Seite der Höhenlinie gezeichnet werden, um die Richtung des Gefälles im Gelände zu verdeutlichen. Fallstriche sollten vorzugsweise in Einbuchtungen verwendet werden.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -2750,7 +2749,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104</comment>
-        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
+        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
     </message>
     <message>
         <source>Earth bank, minimum size</source>
@@ -2760,7 +2759,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.1</comment>
-        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
+        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
     </message>
     <message>
         <source>Earth bank, top line</source>
@@ -2770,7 +2769,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.2</comment>
-        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
+        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
     </message>
     <message>
         <source>Earth bank, tag line</source>
@@ -2790,7 +2789,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. Minimum height: 1 m. An earth bank may impact runnability. The tags represent the full extent of the earth bank. For long earth banks it is allowed to use tags shorter than the minimum length at the ends. If two earth banks are close together, tags may be omitted. Impassable earth banks shall be represented using symbol 201 (impassable cliff).</source>
         <comment>Description of symbol 104.9</comment>
-        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte  von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
+        <translation>Eine Erdböschung ist ein auffälliger Höhenwechsel, der sich deutlich von der Umgebung abhebt, wie z. B. Kies- oder Sandgruben, Einschnitte von Straßen und Eisenbahnen oder Dämme. Mindesthöhe: 1 m. Eine Erdböschung kann die Belaufbarkeit beeinflussen. Die Fallstriche zeigen die gesamte Ausdehnung der Böschung. An langen Erdböschungen können an den Ende kürzere Fallstriche verwendet werden. Wenn zwei Böschungen eng beieinander liegen, können Fallstriche weggelassen werden. Unpassierbare Böschungen sollten mit der Signatur 201 (unpassierbare Felswand) gezeichnet werden.</translation>
     </message>
     <message>
         <source>Earth wall</source>
@@ -2811,8 +2810,8 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <source>A ruined or less distinct earth wall. Minimum height: 0.5 m.
 Minimum length: two dashes (footprint 55 m). If shorter, the symbol must be exaggerated to the minimum length or changed to symbol 105 (earth wall).</source>
         <comment>Description of symbol 106</comment>
-        <translation>Ein verfallener oder undeutlicher Erdwall. Minimale Höhe 0.5 m.
-Minimale Länge: 2 Striche (3.65 mm - Wirklichkeit 55 m). Falls kürzer, muss das Symbol zur minimalen Länge überzeichnet oder in Symbol 105 (Erdwall) geändert werden.</translation>
+        <translation>Ein verfallener oder undeutlicher Erdwall. Minimale Höhe 0,5 m.
+Minimale Länge: 2 Striche (3,65 mm - Wirklichkeit 55 m). Falls kürzer, muss das Symbol zur minimalen Länge überzeichnet oder in Symbol 105 (Erdwall) geändert werden.</translation>
     </message>
     <message>
         <source>Erosion gully</source>
@@ -2835,9 +2834,8 @@ Normalkurven (Höhenlinien) sollen an diesem Symbol nicht unterbrochen werden.</
         <source>A small erosion gully, dry ditch or trench. Minimum depth: 0.5 m.
 Contour lines should be broken around this symbol.</source>
         <comment>Description of symbol 108</comment>
-        <translation>Ein kleiner Erosionsgraben, trockener Bewässerungsgraben oder Schützengraben. Mindesttiefe: 0.5m.
-Minimale Länge (isoliert) 3 Punkte (1.15 mm - Wirklichkeit 17 m).
-Höhenkurven sollen bei diesem Symbol unterbrochen werden.</translation>
+        <translation>Eine kleine Erosionsrinne, ein Trockengraben oder Graben. Mindesttiefe: 0,5 m. 
+Höhenlinien sollten an diesem Symbol unterbrochen werden.</translation>
     </message>
     <message>
         <source>Small knoll</source>
@@ -2898,12 +2896,11 @@ The minimum number of dots is three (footprint 10 m x 10 m).
 Contours shall not be cut in broken ground areas.
 Density: 3 to 5 dots / mm² (9-16%).</source>
         <comment>Description of symbol 113</comment>
-        <translation>Ein Gebiet mit Löchern und/oder Hügeln, welches für eine genaue Darstellung zu detailreich ist. Ebenso deutlich erkennbare andere Arten von rauem und unebenem
-Boden mit kleinem Einfluss auf die Belaufbarkeit.
+        <translation>Ein Gebiet mit Löchern und/oder Hügeln, welches für eine genaue Darstellung zu detailreich ist. Ebenso deutlich erkennbare andere Arten von rauem und unebenem Boden mit kleinem Einfluss auf die Belaufbarkeit.
 Es ist ein Flächensymbol.
 Die minimale Anzahl Punkte ist drei (Wirklichkeit 10 m x 10 m).
 Höhenkurven sollten in kleinkupiertem Gelände nicht unterbrochen werden.
-Dichte: 3–5 Punkte/mm2 (Dichte 9-16%).</translation>
+Dichte: 3–5 Punkte/mm² (Dichte 9-16%).</translation>
     </message>
     <message>
         <source>Broken ground, individual dot</source>
@@ -2927,12 +2924,11 @@ The minimum number of dots is three (footprint 7m x 7m).
 Contours shall not be cut in broken ground areas.
 Density: 8 to 10 dots / mm² (25-32%).</source>
         <comment>Description of symbol 114</comment>
-        <translation>Ein Gebiet mit Löchern und/oder Hügeln, welches für eine genaue Darstellung zu
-detailreich ist. Ebenso deutlich erkennbare andere Arten von rauem und unebenem
-Boden mit Einfluss auf die Belaufbarkeit.
+        <translation>Ein Gebiet mit Löchern und/oder Hügeln, welches für eine genaue Darstellung zu detailreich ist. Ebenso deutlich erkennbare andere Arten von rauem und unebenem Boden mit Einfluss auf die Belaufbarkeit.
 Das ist ein Flächensymbol.
+Die Mindestanzahl Punkte ist drei (Wirklichkeit 7 m x 7 m).
 Höhenkurven sollten in stark kleinkupiertem Gelände nicht unterbrochen werden.
-Dichte: 8–10 Punkte/mm2 (Dichte 25-32%).</translation>
+Dichte: 8–10 Punkte/mm² (Dichte 25-32%).</translation>
     </message>
     <message>
         <source>Prominent landform feature</source>
@@ -2942,8 +2938,7 @@ Dichte: 8–10 Punkte/mm2 (Dichte 25-32%).</translation>
     <message>
         <source>The feature must be very clearly distinguishable from its surroundings. Location is the centre of gravity of the symbol, which is orientated to north. The symbol may not touch or overlap other brown symbols.</source>
         <comment>Description of symbol 115</comment>
-        <translation>Das Objekt muss sich klar von der Umgebung unterscheiden. Die Lage entspricht dem Schwerpunkt des Symbols, welches nach Norden auszurichten ist. Das Symbol darf andere braune Objekte nicht berühren oder überdecken.
-Wirklichkeit: 13.5 m x 11.5 m.</translation>
+        <translation>Das Objekt muss sich klar von der Umgebung unterscheiden. Die Lage entspricht dem Schwerpunkt des Symbols, welches nach Norden auszurichten ist. Das Symbol darf andere braune Objekte nicht berühren oder überdecken.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -2958,10 +2953,8 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201</comment>
         <translation>Eine Felswand, ein Abbruch oder eine Erdböschung, deren Höhe und Steilheit das Überqueren oder Erklettern unmöglich oder gefährlich machen.
 Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden. Die Enden der Hauptlinie können gerade oder rund sein. An den Enden dürfen kürzere Fallstriche verwendet werden.
-Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0.3 mm breit sein.
-Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage
-unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen,
-oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
+Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0,3 mm breit sein.
+Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen, oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -2976,9 +2969,8 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <comment>Description of symbol 201.1</comment>
         <translation>Eine Felswand, ein Abbruch oder eine Erdböschung, deren Höhe und Steilheit das Überqueren oder Erklettern unmöglich oder gefährlich machen.
 Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden. Die Enden der Hauptlinie können gerade oder rund sein. An den Enden dürfen kürzere Fallstriche verwendet werden.
-Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0.3 mm breit sein.
-Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage
-unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen,
+Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0,3 mm breit sein.
+Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen,
 oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
     </message>
     <message>
@@ -2993,11 +2985,9 @@ The gap between two impassable cliffs or between impassable cliffs and other imp
 When an impassable cliff drops straight into water, making it impossible to pass under the cliff along the water’s edge, the bank line is omitted or the tags shall clearly extend over the bank line. An impassable cliff should interplay with the contour lines.</source>
         <comment>Description of symbol 201.2</comment>
         <translation>Eine Felswand, ein Abbruch oder eine Erdböschung, deren Höhe und Steilheit das Überqueren oder Erklettern unmöglich oder gefährlich machen.
-Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden. Die Enden der Hauptlinie können gerade oder rund sein. &lt;b&gt;Für flächentreue Darstellung ist die minimale Breite 0.35 mm.&lt;/b&gt; An den Enden dürfen kürzere Fallstriche verwendet werden.
-Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0.3 mm breit sein.
-Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage
-unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen,
-oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
+Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden. Die Enden der Hauptlinie können gerade oder rund sein. &lt;b&gt;Für flächentreue Darstellungen ist die Mindestbreite 0,35 mm.&lt;/b&gt; An den Enden dürfen kürzere Fallstriche verwendet werden.
+Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0,3 mm breit sein.
+Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen, oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
     </message>
     <message>
         <source>Impassable cliff, top line</source>
@@ -3045,8 +3035,8 @@ Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage 
 Ends of the top line may be rounded or square. A passage between two cliffs must be at least 0.2 mm. A cliff should interplay with the contour lines.
 Crossing a cliff will normally slow progress.</source>
         <comment>Description of symbol 202</comment>
-        <translation>Eine passierbare Felswand oder ein passierbarer Abbruch, bei dem die Richtung des Gefälles des Felsen sich aus den Höhenkurven ergibt. Minimale Höhe: 1 m.
-Die Enden der Hauptlinie können gerade oder rund sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0.2 mm breit sein. Eine Felswand sollte mit dem Höhenkurvenbild harmonieren.
+        <translation>Eine passierbare Felswand oder ein passierbarer Abbruch, bei dem die Richtung des Gefälles des Felsen sich aus den Höhenkurven ergibt. Mindesthöhe: 1 m.
+Die Enden der Hauptlinie können gerade oder rund sein. Ein Durchgang zwischen zwei passierbaren Felsen muss mindestens 0,2 mm breit sein. Eine Felswand sollte mit dem Höhenkurvenbild harmonieren.
 Das Queren eines Felsens verlangsamt normalerweise das Laufen.</translation>
     </message>
     <message>
@@ -3284,8 +3274,7 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210</comment>
-        <translation>Steiniger oder felsiger Boden, der die Laufgeschwindigkeit auf 60-80% der normalen
-Laufgeschwindigkeit reduziert.
+        <translation>Steiniger oder felsiger Boden, der die Laufgeschwindigkeit auf 60-80% der normalen Laufgeschwindigkeit reduziert.
 Die Punkte sollten zufällig angeordnet werden, jedoch die Darstellung wichtiger Geländeformen und anderer Objekte nicht stören.
 Die minimale Anzahl Punkte ist drei (Wirklichkeit 10 m x 10 m).
 Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol 416 (Deutliche Vegetationsgrenze) verwechselt werden.</translation>
@@ -3301,10 +3290,9 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 10 m x 10 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 210.1</comment>
-        <translation>Steiniger oder felsiger Boden, der die Laufgeschwindigkeit auf 60-80% der normalen
-Laufgeschwindigkeit reduziert.
+        <translation>Steiniger oder felsiger Boden, der die Laufgeschwindigkeit auf 60-80% der normalen Laufgeschwindigkeit reduziert.
 Die Punkte sollten zufällig angeordnet werden, jedoch die Darstellung wichtiger Geländeformen und anderer Objekte nicht stören.
-Die minimale Anzahl Punkte ist drei (Wirklichkeit 10 m x 10 m).
+Die Mindestanzahl der Punkte ist drei (Wirklichkeit 10 m x 10 m).
 Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol 416 (Deutliche Vegetationsgrente) verwechselt werden.</translation>
     </message>
     <message>
@@ -3318,12 +3306,10 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 8 m x 8 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 211</comment>
-        <translation>Steiniger oder felsiger Boden, der die Belaufbarkeit stark reduziert (auf 20-60%
-der normalen Laufgeschwindigkeit).
+        <translation>Steiniger oder felsiger Boden, der die Belaufbarkeit stark reduziert (auf 20-60% der normalen Laufgeschwindigkeit).
 Die Punkte sollten zufällig angeordnet werden, jedoch die Darstellung wichtiger Geländeformen und anderer Objekte nicht stören.
 Die minimale Anzahl Punkte ist drei (Wirklichkeit 8 m x 8 m).
-Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol
-416 (Deutliche Vegetationsgrenze) verwechselt werden.</translation>
+Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol 416 (Deutliche Vegetationsgrenze) verwechselt werden.</translation>
     </message>
     <message>
         <source>Stony ground, fight</source>
@@ -3336,12 +3322,10 @@ The dots should be randomly distributed but not interfere with the representatio
 The minimum number of dots is three (footprint 7 m x 7 m).
 To avoid confusion with symbol 416 (distinct vegetation boundary), the dots should not be arranged to form a line.</source>
         <comment>Description of symbol 212</comment>
-        <translation>Steiniger oder felsiger Boden, der schwer passierbar ist (weniger als 20% der normalen
-Laufgeschwindigkeit).
+        <translation>Steiniger oder felsiger Boden, der schwer passierbar ist (weniger als 20% der normalen Laufgeschwindigkeit).
 Die Punkte sollten zufällig angeordnet werden, jedoch die Darstellung wichtiger Geländeformen und anderer Objekte nicht stören.
 Die minimale Anzahl Punkte ist drei (Wirklichkeit 7 m x 7 m).
-Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol
-416 (Deutliche Vegetationsgrenze) verwechselt werden.</translation>
+Die Punkte sollten nicht auf einer Linie liegen, so dass sie nicht mit dem Symbol 416 (Deutliche Vegetationsgrenze) verwechselt werden.</translation>
     </message>
     <message>
         <source>Sandy ground</source>
@@ -3380,10 +3364,9 @@ Impassable trenches shall be represented using symbol 201 (impassable cliff).
 Collapsed and easily crossable trenches should be mapped as erosion gullies.</source>
         <comment>Description of symbol 215</comment>
         <translation>Ein natürlicher oder künstlicher Graben oder Schützengraben oder eine Felsspalte. Die minimale Tiefe sollte 1 m sein.
-Minimale Länge: 2 mm (Wirklichkeit 30 m).
+Mindestlänge: 2 mm (Wirklichkeit 30 m).
 Kürzere Gräben und Spalten können auf die Minimaldimension verlängert werden.
-Unpassierbare Gräben und Spalten müssen mit dem Symbol 201 (unpassierbare
-Felswand) dargestellt werden.
+Unpassierbare Gräben und Spalten müssen mit dem Symbol 201 (unpassierbare Felswand) dargestellt werden.
 Leicht passierbare Gräben und Spalten oder verfallene Schützengräben sollten als Graben (107) dargestellt werden.</translation>
     </message>
     <message>
@@ -3506,11 +3489,7 @@ Minimale Länge (isoliert): 1 mm (Wirklichkeit 15 m).</translation>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
         <comment>Description of symbol 307</comment>
-        <translation>Ein Sumpf, der für den Wettkämpfer unpassierbar oder gefährlich ist. Die schwarze
-Umrisslinie betont, dass das Objekt unpassierbar ist. Als Grenze zum Symbol 301
-(unpassierbares Gewässer) wird die schwarze Linie weggelassen. Das Symbol
-kann mit Symbolen für raues offenes Gebiet (403, 404) kombiniert werden.
-Das Symbol ist nach Norden auszurichten.</translation>
+        <translation>Ein Sumpf, der für den Wettkämpfer unpassierbar oder gefährlich ist. Die schwarze Umrisslinie betont, dass das Objekt unpassierbar ist. Als Grenze zum Symbol 301 (unpassierbares Gewässer) wird die schwarze Linie weggelassen. Das Symbol kann mit Symbolen für raues offenes Gebiet (403, 404) kombiniert werden. Das Symbol ist nach Norden auszurichten.</translation>
     </message>
     <message>
         <source>Uncrossable marsh</source>
@@ -3520,11 +3499,7 @@ Das Symbol ist nach Norden auszurichten.</translation>
     <message>
         <source>A marsh which is uncrossable or dangerous for the competitor. The black outline emphasises that the feature is uncrossable. The black outline is omitted for boundaries between uncrossable marsh and symbol 301 (uncrossable body of water). The symbol may be combined with a rough open land symbol (403, 404) to show openness. The symbol is orientated to north.</source>
         <comment>Description of symbol 307.1</comment>
-        <translation>Ein Sumpf, der für den Wettkämpfer unpassierbar oder gefährlich ist. Die schwarze
-Umrisslinie betont, dass das Objekt unpassierbar ist. Als Grenze zum Symbol 301
-(unpassierbares Gewässer) wird die schwarze Linie weggelassen. Das Symbol
-kann mit Symbolen für raues offenes Gebiet (403, 404) kombiniert werden.
-Das Symbol ist nach Norden auszurichten.</translation>
+        <translation>Ein Sumpf, der für den Wettkämpfer unpassierbar oder gefährlich ist. Die schwarze Umrisslinie betont, dass das Objekt unpassierbar ist. Als Grenze zum Symbol 301 (unpassierbares Gewässer) wird die schwarze Linie weggelassen. Das Symbol kann mit Symbolen für raues offenes Gebiet (403, 404) kombiniert werden. Das Symbol ist nach Norden auszurichten.</translation>
     </message>
     <message>
         <source>Uncrossable marsh, border line</source>
@@ -3599,8 +3574,7 @@ The symbol shall be combined with other symbols to show runnability and openness
 The symbol is orientated to north.</source>
         <comment>Description of symbol 310.1</comment>
         <translation>Ein undeutlicher, oder zeitweise ausgetrockneter Sumpf oder eine Übergangsform von Sumpf zu festem Boden, welche passierbar ist. Die Begrenzung ist in der Regel undeutlich und die Vegetation ähnlich der Umgebung.
-Das Symbol wird mit anderen Symbolen kombiniert, so dass auch Belaufbarkeit
-und Baumbewuchs erkennbar werden.
+Das Symbol wird mit anderen Symbolen kombiniert, so dass auch Belaufbarkeit und Baumbewuchs erkennbar werden.
 Das Symbol ist nach Norden auszurichten.</translation>
     </message>
     <message>
@@ -3741,8 +3715,7 @@ Minimale Ausdehnung: 1,5 mm (Wirklichkeit 22,5 m). Minimale Fläche: 2,5 mm x 2,
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
         <comment>Description of symbol 406</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (beschränkte Sicht), welche die Laufgeschwindigkeit
-auf 60-80% reduziert.</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (beschränkte Sicht), welche die Laufgeschwindigkeit auf 60-80% reduziert.</translation>
     </message>
     <message>
         <source>Vegetation runnable in one direction, 1</source>
@@ -3772,8 +3745,7 @@ auf 60-80% reduziert.</translation>
     <message>
         <source>An area with dense trees or thickets (low visibility) which reduce running to about 20-60% of normal speed.</source>
         <comment>Description of symbol 408</comment>
-        <translation>Ein Gebiet mit dicht stehenden Bäumen oder Dickicht und schlechter Sicht,
-Laufgeschwindigkeit reduziert auf 20–60%.</translation>
+        <translation>Ein Gebiet mit dicht stehenden Bäumen oder Dickicht und schlechter Sicht, Laufgeschwindigkeit reduziert auf 20–60%.</translation>
     </message>
     <message>
         <source>Vegetation runnable in one direction, 2</source>
@@ -3805,8 +3777,7 @@ Laufgeschwindigkeit reduziert auf 20–60%.</translation>
 Areas of good visibility that are very difficult to run or impassable are represented using symbol 410 (vegetation, fight) or 411 (vegetation, impassable).</source>
         <comment>Description of symbol 409</comment>
         <translation>Ein Gebiet mit guter Sicht, welches wegen Bodenbewuchs (Brombeeren, Heidekraut, kleine Büsche, Fallholz) schwer passierbar ist. Die Laufgeschwindigkeit ist auf 20-60% reduziert.
-Für Gebiete mit guter Sicht, welche sehr schwer passierbar oder unpassierbar
-sind, werden die Symbole 410 (Vegetation, sehr starke Laufbehinderung) oder 411 (Vegetation, unpassierbar) verwendet.</translation>
+Für Gebiete mit guter Sicht, welche sehr schwer passierbar oder unpassierbar sind, werden die Symbole 410 (Vegetation, sehr starke Laufbehinderung) oder 411 (Vegetation, unpassierbar) verwendet.</translation>
     </message>
     <message>
         <source>Vegetation, fight</source>
@@ -3858,9 +3829,7 @@ Aus Gründen der Fairness sind fast unpassierbare Gebiete (Laufgeschwindigkeit a
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
         <comment>Description of symbol 411</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches
-praktisch unpassierbar ist.
-Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches praktisch unpassierbar ist. Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
     </message>
     <message>
         <source>Vegetation, impassable</source>
@@ -3870,8 +3839,7 @@ Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable. Most useful for narrow and small areas.</source>
         <comment>Description of symbol 411.1</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches praktisch unpassierbar ist.
-Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches praktisch unpassierbar ist. Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
     </message>
     <message>
         <source>Vegetation, impassable, minimum width</source>
@@ -3882,9 +3850,8 @@ Nützlich vor allem für kleine Gebiete und schmale Streifen.</translation>
         <source>An area of dense vegetation (trees or undergrowth) which is effectively impassable.
 Minimum width: 0.35 mm</source>
         <comment>Description of symbol 411.2</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches
-praktisch unpassierbar ist.
-Minimale Ausdehnung: 0.35 mm (Wirklichkeit 5 m)</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (Bäume, Dickicht oder Bodenvegetation), welches praktisch unpassierbar ist.
+Mindestbreite: 0,35 mm</translation>
     </message>
     <message>
         <source>Cultivated land</source>
@@ -3973,11 +3940,8 @@ Very distinct forest edges and vegetation boundaries may be represented using th
 Minimum length, black dot implementation: 5 dots (2.5 mm – footprint 37 m).</source>
         <comment>Description of symbol 416</comment>
         <translation>Ein deutlicher Waldrand oder eine deutliche Vegetationsgrenze im Wald.
-Sehr ausgeprägte Waldränder und Vegetationsgrenzen können mit dem Symbol
-415 (deutliche Kulturgrenze) dargestellt werden. Nur eine Version des Symbols
-(entweder schwarz punktiert oder grün gestrichelt) darf auf einer Karte verwendet
-werden.
-Minimale Länge für schwarz punktierte Linie: 5 Punkte (2.5 mm - Wirklichkeit 37 m).</translation>
+Sehr ausgeprägte Waldränder und Vegetationsgrenzen können mit dem Symbol 415 (deutliche Kulturgrenze) dargestellt werden. Nur eine Version des Symbols (entweder schwarz punktiert oder grün gestrichelt) darf auf einer Karte verwendet werden.
+Mindestlänge für schwarz punktierte Linie: 5 Punkte (2,5 mm - Wirklichkeit 37 m).</translation>
     </message>
     <message>
         <source>Distinct vegetation boundary, green dashed line</source>
@@ -4014,7 +3978,7 @@ Minimale Länge für grün gestrichelte Linie: 4 Striche (1.8 mm - Wirklichkeit 
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 418</comment>
         <translation>Sparsam zu verwenden, da Personen mit eingeschränkter Farbwahrnehmung dieses Symbol leicht mit dem Symbol 109 (Kuppe) verwechseln können.
-Wirklichkeit: 7.5 m x 7.5 m.</translation>
+Größe in Wirklichkeit: 7.5 m x 7.5 m.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
@@ -4220,8 +4184,7 @@ Belaufbarkeit: Normal belaufbar.</translation>
 If it is forbidden to run along the railway, it shall be combined with the overprint symbol for forbidden route. If it is forbidden to cross the railway, it must be combined with a symbol for forbidden area.</source>
         <comment>Description of symbol 509</comment>
         <translation>Ein Gleis für Eisenbahnen oder andere Fahrzeuge.
-Falls es verboten ist, das Gleis entlang zu laufen, muss es mit dem Symbol 711 (verbotene Strecke) kombiniert werden.
-Falls das Überqueren des Gleises verboten ist, muss es mit einem Symbol für verbotene Gebiete kombiniert werden.</translation>
+Falls es verboten ist, das Gleis entlang zu laufen, muss es mit dem Symbol 711 (verbotene Strecke) kombiniert werden. Falls das Überqueren des Gleises verboten ist, muss es mit einem Symbol für verbotene Gebiete kombiniert werden.</translation>
     </message>
     <message>
         <source>Power line, cableway or skilift</source>
@@ -4415,8 +4378,7 @@ Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Ausspar
 Vertical black stripes may be used for areas where it is important to show a complete representation of the terrain (e.g. when a part of the forest is out-of-bounds). The area shall be discontinued where a path or track goes through. Out-of-bounds areas should be bounded by the black boundary line or another black line symbol (e.g. fence).</source>
         <comment>Description of symbol 520.2</comment>
         <translation>Ein Gebiet mit verbotenem Zutritt, beispielsweise Privatgelände, Garten, Fabrik oder Industriegelände. Nur Höhenkurven und markante Objekte wie Bahngleise und große Gebäude werden im verbotenen Gebiet dargestellt.
-Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B. wenn ein Waldteil verbotenes Gebiet ist).
-Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen. Verbotenes Gebiet sollte mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol (z.B. Zaun) begrenzt werden.</translation>
+Vertikale schwarze Streifen können für Zonen verwendet werden, wenn es wichtig ist, das ganze Gebiet vollständig darzustellen (z.B. wenn ein Waldteil verbotenes Gebiet ist). Dort, wo ein Pfad oder Weg hindurchführt, ist im verbotenen Gebiet eine Aussparung zu machen. Verbotenes Gebiet sollte mit einer schwarzen Linie oder einem anderen schwarzen Liniensymbol (z.B. Zaun) begrenzt werden.</translation>
     </message>
     <message>
         <source>Out of bounds area, alternative bounding line</source>
@@ -4546,7 +4508,7 @@ Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit 
     <message>
         <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
         <comment>Description of symbol 523.1</comment>
-        <translation>Ruinen, die zu klein sind um maßstäblich dargestellt zu werden, werden mit einer durchzogenen Linie dargestellt.</translation>
+        <translation>Ruinen, die zu klein sind, um maßstäblich dargestellt zu werden, werden mit einer durchzogenen Linie dargestellt.</translation>
     </message>
     <message>
         <source>High tower</source>
@@ -4854,8 +4816,7 @@ Eine verbotene Strecke sollte nicht verwendet werden.</translation>
         <source>A route which is out-of-bounds. Competitors are allowed to cross directly over a forbidden route, but it is forbidden to go along it.
 An out-of-bounds route shall not be used.</source>
         <comment>Description of symbol 711.1</comment>
-        <translation>Eine Strecke welche verboten ist. Wettkämpfer dürfen eine verbotene Strecke direkt
-überschreiten, aber es ist verboten, der Strecke entlang zu laufen.
+        <translation>Eine Strecke welche verboten ist. Wettkämpfer dürfen eine verbotene Strecke direkt überschreiten, aber es ist verboten, der Strecke entlang zu laufen.
 Eine verbotene Strecke sollte nicht verwendet werden.</translation>
     </message>
     <message>
@@ -5141,7 +5102,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
         <comment>Description of symbol 109</comment>
-        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder. Minimale Tiefe: 1 m.</translation>
     </message>
     <message>
         <source>Small erosion gully</source>
@@ -7729,8 +7690,7 @@ Minimum area: 1 mm² (footprint 16 m²).</source>
     <message>
         <source>An area with dense vegetation (low visibility) which reduces running to about 60-80% of normal speed.</source>
         <comment>Description of symbol 406.2</comment>
-        <translation>Ein Gebiet mit dichter Vegetation (beschränkte Sicht), welche die Laufgeschwindigkeit
-auf 60-80% reduziert.</translation>
+        <translation>Ein Gebiet mit dichter Vegetation (beschränkte Sicht), welche die Laufgeschwindigkeit auf 60-80% reduziert.</translation>
     </message>
     <message>
         <source> Vegetation: slow running, good visibility</source>
@@ -9142,7 +9102,7 @@ Auf der Karte sollen die relativen Höhenunterschiede benachbarter Objekte bestm
     <message>
         <source>Contour values may be included to aid assessment of large height differences. They are inserted in the index contours in positions where other detail is not obscured. The figures should be orientated so that the top of the figure is on the higher side of the contour.</source>
         <comment>Description of symbol 105</comment>
-        <translation>Die Höhenlinienzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in  Zählhöhenlinien plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
+        <translation>Die Höhenlinienzahlen können zum Abschätzen großer Höhenunterschiede eingefügt werden. Sie werden so in Zählhöhenlinien plaziert, dass andere Objekte nicht verdeckt werden. Die Ziffern sollten so ausgerichtet werden, dass ihr oberer Teil auf der höheren Seite der Höhenlinie liegt.</translation>
     </message>
     <message>
         <source>Earth bank</source>
@@ -9291,7 +9251,9 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung (siehe Signatur Erdböschung 106) wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
+        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung (siehe Signatur Erdböschung 106) wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden). 
+
+Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
     </message>
@@ -9308,7 +9270,9 @@ The tags may extend over an area symbol representing detail immediately below th
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung (siehe Signatur Erdböschung 106) wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
+        <translation>Eine unpassierbare Felswand, Steinbruch oder Erdböschung (siehe Signatur Erdböschung 106) wird mit Fallstrichen gezeichnet, welche die volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z.B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer Breite von 0,3 mm gezeichnet werden). 
+
+Die Fallstriche können sich über die Flächensignatur von unmittelbar unter der Felswand liegendem Gelände erstrecken. Befindet sich eine Felswand direkt am Wasser, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen oder werden die Fallstriche deutlich über die Uferlinie gezeichnet. Die Mindesthöhe ist 2 m.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Es ist verboten, ein mit dieser Signatur gezeichnetes Objekt zu überqueren. Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span&gt;</translation>
     </message>
@@ -9360,7 +9324,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
     <message>
         <source>A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. Minimum height is 1 m. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203</comment>
-        <translation>Eine kleine senkrechte Felswand kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird oder die Lesbarkeit verbessert werden soll, können kurze Fallstriche gezeichnet werden.  Die Mindesthöhe beträgt 1 m. Bei passierbaren Felswänden ohne Fallstriche können die Linienenden zur besseren Lesbarkeit abgerundet werden.</translation>
+        <translation>Eine kleine senkrechte Felswand kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird oder die Lesbarkeit verbessert werden soll, können kurze Fallstriche gezeichnet werden. Die Mindesthöhe beträgt 1 m. Bei passierbaren Felswänden ohne Fallstriche können die Linienenden zur besseren Lesbarkeit abgerundet werden.</translation>
     </message>
     <message>
         <source>Passable rock face, minimum size</source>
@@ -9370,7 +9334,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
     <message>
         <source>A small vertical rock face may be shown without tags. If the direction of fall of the rock face is not apparent from the contours or to improve legibility, short tags should be drawn in the direction of the fall. Minimum height is 1 m. For passable rock faces shown without tags the end of the line may be rounded to improve legibility.</source>
         <comment>Description of symbol 203.0.1</comment>
-        <translation>Eine kleine senkrechte Felswand kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird oder die Lesbarkeit verbessert werden soll, können kurze Fallstriche gezeichnet werden.  Die Mindesthöhe beträgt 1 m. Bei passierbaren Felswänden ohne Fallstriche können die Linienenden zur besseren Lesbarkeit abgerundet werden.</translation>
+        <translation>Eine kleine senkrechte Felswand kann ohne Fallstriche gezeichnet werden. Falls die Richtung des Gefälles der Felswand aus den Höhenlinien nicht deutlich wird oder die Lesbarkeit verbessert werden soll, können kurze Fallstriche gezeichnet werden. Die Mindesthöhe beträgt 1 m. Bei passierbaren Felswänden ohne Fallstriche können die Linienenden zur besseren Lesbarkeit abgerundet werden.</translation>
     </message>
     <message>
         <source>Passable rock face, no tags</source>
@@ -9782,8 +9746,7 @@ Minimalgröße: vier Striche.</translation>
     <message>
         <source>An area of meadows with scattered trees or bushes, with grass or similar ground cover offering very good runnability. Areas smaller than 10 mm² at the maps scale are shown as open land (401). Symbols prominent large tree (418) and prominent bush or small tree (419) may be added.</source>
         <comment>Description of symbol 402</comment>
-        <translation>Ein Gebiet von Wiesen mit einzelnen Bäumen oder Büschen, mit Gras oder ähnlicher Bodenvegetation, die gut belaufbar sind. Flächen kleiner als 10 mm² auf der Karte werden als Offenes Gebiet (401) dargestellt. Symbole für Markanter großer Baum
-(418) und Markanter Busch oder kleiner Baum (419) können hinzugefügt werden.</translation>
+        <translation>Ein Gebiet von Wiesen mit einzelnen Bäumen oder Büschen, mit Gras oder ähnlicher Bodenvegetation, die gut belaufbar sind. Flächen kleiner als 10 mm² auf der Karte werden als Offenes Gebiet (401) dargestellt. Symbole für Markanter großer Baum (418) und Markanter Busch oder kleiner Baum (419) können hinzugefügt werden.</translation>
     </message>
     <message>
         <source>Rough open land</source>
@@ -10095,9 +10058,7 @@ Zur besseren Lesbarkeit ist diese Signatur deutlicher gezeichnet als innerhalb v
     <message>
         <source>A small unpaved footpath or track. Not to be used in urban areas.</source>
         <comment>Description of symbol 507</comment>
-        <translation>Ein schmaler unbefestigter Weg oder Pfad. 
-
-Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
+        <translation>Ein schmaler unbefestigter Weg oder Pfad. Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     </message>
     <message>
         <source>Less distinct small path</source>
@@ -10107,9 +10068,7 @@ Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     <message>
         <source>A less distinct path or forestry extraction track. Not to be used in urban areas.</source>
         <comment>Description of symbol 508</comment>
-        <translation>Ein undeutlicher Pfad oder eine Forst-Schleifspur.
-
-Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
+        <translation>Ein undeutlicher Pfad oder eine Forst-Schleifspur. Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     </message>
     <message>
         <source>Narrow ride</source>
@@ -10119,9 +10078,7 @@ Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     <message>
         <source>A distinct ride is a linear break in the forest (usually in a plantation), which does not have a distinct path along it. Where there is a path along a ride, the symbol small unpaved footpath or track (506.1) shall be used. Not to be used in urban areas.</source>
         <comment>Description of symbol 509</comment>
-        <translation>Eine deutliche Schneise ist eine geradlinige Unterbrechung des Waldes (in der Regel in einer Anpflanzung), in der kein deutlicher Pfad verläuft. (Wenn entlang einer Schneise ein Pfad verläuft, soll die Signatur Kleiner unbefestigter Weg oder Pfad (507) anstelle dieser Signatur verwendet werden.)
-
-Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
+        <translation>Eine deutliche Schneise ist eine geradlinige Unterbrechung des Waldes (in der Regel in einer Anpflanzung), in der kein deutlicher Pfad verläuft. (Wenn entlang einer Schneise ein Pfad verläuft, soll die Signatur Kleiner unbefestigter Weg oder Pfad (507) anstelle dieser Signatur verwendet werden.) Diese Signatur darf in Siedlungsgebieten nicht verwendet werden.</translation>
     </message>
     <message>
         <source>Bridge, minimum width</source>
@@ -10791,7 +10748,7 @@ Missachtung im Wettkampf führt zur Disqualifikation des Wettkämpfers.&lt;/span
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.1</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.</translation>
     </message>
@@ -10807,7 +10764,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.2</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.
 
@@ -10823,7 +10780,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.3</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.</translation>
     </message>
@@ -10837,7 +10794,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.4</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.</translation>
     </message>
@@ -10853,7 +10810,7 @@ North lines may be broken where they obscure small features such as boulders, kn
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.5</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.
 
@@ -10869,7 +10826,7 @@ Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kupp
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.6</comment>
-        <translation>Nordlinien sind Linien in der Karte, die die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
+        <translation>Nordlinien sind Linien in der Karte, welche die magnetische Nordrichtung anzeigen. Ihr Abstand soll 30 mm in 1:5.000er Karten und 37,5 mm in 1:4000er Karten betragen, so dass er 150 m im Gelände entspricht.
 
 Nordlinien dürfen unterbrochen werden, wenn sie kleine Objekte wie Steine, Kuppen, Felswände, Grabengabeln, Pfadenden o.ä. überdecken würden.</translation>
     </message>
@@ -11345,7 +11302,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
         <comment>Description of symbol 109</comment>
-        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder. Minimale Tiefe: 1 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
@@ -11355,7 +11312,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201</comment>
-        <translation>Eine unpassierbare Felswand, Abbruch oder eine Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
+        <translation>Eine unpassierbare Felswand, ein unpassierbarer Steinbruch oder eine unpassierbare Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unterhalb der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
     </message>
     <message>
         <source>Impassable cliff, minimum size</source>
@@ -11365,7 +11322,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>An impassable cliff, quarry or earth bank (see 106) is shown with a 0.35 mm line and downward tags showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags should clearly extend over the bank line.</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Eine unpassierbare Felswand, ein unpassierbarer Steinbruch oder eine unpassierbare Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unter der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
+        <translation>Eine unpassierbare Felswand, ein unpassierbarer Steinbruch oder eine unpassierbare Erdböschung (vgl. Signatur 106) wird mit einer 0,35 mm breiten Linie gezeichnet, sowie mit Fallstrichen, die ihre volle Ausdehnung von der Oberkante bis zum Fuß angeben. Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden, z. B. bei schmalen Durchgängen zwischen Felswänden (der Durchgang soll mindestens mit einer lichten Breite von 0,3 mm gezeichnet werden). Die Fallstriche können sich auf die Flächensignatur von unmittelbar unter der Felswand liegenden Objekten erstrecken. Wenn eine Felswand direkt am Wasser steht, so dass eine Passage unterhalb der Felswand am Ufer entlang nicht möglich ist, wird die Uferlinie weggelassen, oder die Fallstriche müssen deutlich über die Uferlinie hinausgehen.</translation>
     </message>
     <message>
         <source>Impassable cliff, no tags</source>
@@ -11518,7 +11475,7 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
     <message>
         <source>A crossable watercourse (including a major drainage ditch) less than 2 m wide. For better legibility a ditch in a marsh should be drawn as a crossable watercourse (305).</source>
         <comment>Description of symbol 306</comment>
-        <translation>Ein passierbarer Wasserlauf (einschließlich großer Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen passierbare kleine Wasserläufe in Sümpfen als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
+        <translation>Ein passierbarer Wasserlauf (einschließlich größerer Drainagegräben) von weniger als 2 m Breite. Zur besseren Lesbarkeit sollen in Sümpfen verlaufende passierbare kleine Wasserläufe als passierbare Wasserläufe gezeichnet werden (Signatur 305).</translation>
     </message>
     <message>
         <source>Minor water channel</source>
@@ -11644,7 +11601,7 @@ Dies ist Symbol &quot;302 Pond&quot; in ISOM, aber eine Variante von &quot;301 L
         <source>Land planted with fruit trees or bushes. The dot lines may be orientated to show the
 direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 412</comment>
-        <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Land, das mit Obstbäumen und -büschen bepflanzt ist. Die Punktlinie kann zur Angabe der Pflanzrichtung nach dieser ausgerichtet werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Vineyard</source>
@@ -11654,7 +11611,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
     <message>
         <source>The green lines may be orientated to show the direction of planting. If yellow coloured areas becomes dominant, a screen (75%) instead of full yellow may be used.</source>
         <comment>Description of symbol 413</comment>
-        <translation>Die grünen Linien können zur Angabe der Pflanzrichtung danach orientiert werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
+        <translation>Die grünen Linien können zur Angabe der Pflanzrichtung nach dieser ausgerichtet werden. Wenn gelbe Flächen zu dominant werden, kann ein Raster (75%) anstelle des gelben Volltons gewählt werden.</translation>
     </message>
     <message>
         <source>Special vegetation feature</source>
@@ -11786,7 +11743,7 @@ direction of planting. If yellow coloured areas becomes dominant, a screen (75%)
 erosion or rocky steps. Very slow riding or impossible to ride. Skilled/fit riders may be
 required to dismount. Speed max 25 %.</source>
         <comment>Description of symbol 837</comment>
-        <translation>Ein mindestens 1,5 m breiter Weg mit schwierigen Hindernissen wie Wurzeln, tiefer Sand oder Schlamm, Auswaschungen oder steinige Stufen. Sehr langsames Fahren oder Fahren unmöglich. Auch Erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit maximal 25%.</translation>
+        <translation>Ein mindestens 1,5 m breiter Weg mit schwierigen Hindernissen wie Wurzeln, tiefer Sand oder Schlamm, Auswaschungen oder steinige Stufen. Sehr langsames Fahren oder Fahren unmöglich. Auch erfahrene/fitte Fahrer müssen möglicherweise absteigen. Geschwindigkeit maximal 25%.</translation>
     </message>
     <message>
         <source>Path: difficult to ride</source>
@@ -12082,12 +12039,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Control point with focus point (in MTBO maps)</source>
         <comment>Name of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollposten mit Fokuspunkt (in MTBO Karten)</translation>
     </message>
     <message>
         <source>The focus point (i.e. the point in the centre of a control circle) can be used when it is necessary to clarify the exact position of a control for instance in a dense track network. The focus point shall be used in case of necessity when the exact position of a control is not clear. A focus point helps to specify the exact track where a control is situated.</source>
         <comment>Description of symbol 840</comment>
-        <translation type="unfinished"></translation>
+        <translation>Der Fokuspunkt (d.h. der Punkt in der Mitte des Kontrollpostens) kann verwendet werden wenn es notwendig ist die exakte Position eines Postens, beispielsweise einem dichten Wegnetz, darzustellen. Der Fokuspunkt soll verwendet werden, sofern die exakte Position des Postens nicht eindeutig ist. Ein Fokuspunkt gibt den exakten Weg an, wo der Kontrollposten steht.</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -12107,7 +12064,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Where controls are to be visited in order, the start, control points and finish are joined together by straight lines. Sections of lines should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 704</comment>
-        <translation>Wenn Kontrollposten in einer bestimmten Reihenfolge anzulaufen sind, werden sie mit geraden Linien verbunden. Teile der Verbindungslinie können weggelassen werden, damit wichtige Details sichtbar bleiben.</translation>
+        <translation>Wenn Kontrollposten in einer bestimmten Reihenfolge anzulaufen sind, werden Start, Kontrollposten und Ziel mit geraden Linien verbunden. Teile der Verbindungslinie können weggelassen werden, damit wichtige Kartendetails sichtbar bleiben.</translation>
     </message>
     <message>
         <source>Marked route</source>
@@ -12132,12 +12089,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Uncrossable boundary</source>
         <comment>Name of symbol 707</comment>
-        <translation>Unpassierbare Grenze</translation>
+        <translation>Unpassierbare Begrenzung</translation>
     </message>
     <message>
         <source>A boundary which it is not permitted to cross.</source>
         <comment>Description of symbol 707</comment>
-        <translation>Eine Grenze, die nicht überquert werden darf.</translation>
+        <translation>Eine Begrenzungslinie, die nicht überquert werden darf.</translation>
     </message>
     <message>
         <source>Crossing point</source>
@@ -12147,7 +12104,7 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.</source>
         <comment>Description of symbol 708</comment>
-        <translation>Eine Passage durch oder über eine Mauer oder einen Zaun, über eine Straße oder Eisenbahn, oder durch einen Tunnel oder ein verbotenes Gebiet wird auf der Karte mit zwei nach außen gerichteten Bögen gezeichnet.</translation>
+        <translation>Eine Passage durch oder über eine Mauer oder einen Zaun, über eine Straße oder Eisenbahn, durch einen Tunnel oder durch ein verbotenes Gebiet wird auf der Karte mit zwei nach außen gerichteten Bögen gezeichnet.</translation>
     </message>
     <message>
         <source>Out-of-bounds area</source>
@@ -12182,17 +12139,17 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>The location of a first aid post.</source>
         <comment>Description of symbol 712</comment>
-        <translation>Die Lage eines Erste-Hilfe-Postens.</translation>
+        <translation>Der Standort eines Erste-Hilfe-Postens.</translation>
     </message>
     <message>
         <source>Refreshment point</source>
         <comment>Name of symbol 713</comment>
-        <translation>Getränkepunkt</translation>
+        <translation>Getränkeposten</translation>
     </message>
     <message>
         <source>The location of a refreshment point which is not at a control.</source>
         <comment>Description of symbol 713</comment>
-        <translation>Die Lage eines Getränkepunktes, der nicht gleichzeitig Kontrollposten ist.</translation>
+        <translation>Die Lage eines Getränkepostens oder Verpflegungspostens, der nicht gleichzeitig Kontrollposten ist.</translation>
     </message>
     <message>
         <source>Dangerous object across tracks or paths, stairs</source>
@@ -12207,12 +12164,12 @@ cross, it shall be marked with the symbol 707 (uncrossable boundary).</source>
     <message>
         <source>Uncrossable barrier / forbidden to cross</source>
         <comment>Name of symbol 844</comment>
-        <translation>Unüberwindliches Hindernis / Überqueren verboten</translation>
+        <translation>Unüberwindbares Hindernis / Überqueren verboten</translation>
     </message>
     <message>
         <source>This symbol can be used for all spots that are forbidden or impossible to pass, e.g. uncrossable barriers; fences or walls that are forbidden or impossible to cross; short sections of roads, tracks or paths that are forbidden to use (for longer sections, symbol 711 shall be used). In spots where two tracks or paths almost meet, but the situation is not obvious on the map, this symbol can be used to indicate that crossing is forbidden.</source>
         <comment>Description of symbol 844</comment>
-        <translation>Dieses Symbol kann für alle Stellen verwendet werden, die nicht passiert werden dürfen oder können, z.B. unüberwindliche Hindernisse; Zäune oder Mauern, die nicht überstiegen werden dürfen oder können; Wege oder Pfade, die nicht benutzt werden dürfen (für längere Abschnitte ist Symbol 711 zu benutzen). An Stellen, an denen sich zwei Wege oder Pfade fast treffen, die Situation auf der Karte aber nicht deutlich ist, kann dieses Symbol benutzt werden, um anzuzeigen, dass ein Übergang verboten ist.</translation>
+        <translation>Dieses Symbol kann für alle Orte verwendet werden, die nicht passiert werden dürfen oder können, zum Beispiel: Unüberwindbare Hindernisse; Zäune oder Mauern, die nicht überquert werden dürfen oder können; Wege oder Pfade, die nicht benutzt werden dürfen (für längere Abschnitte ist Symbol 711 zu benutzen). An Stellen, an denen sich zwei Wege oder Pfade fast treffen, wo die Situation auf der Karte aber nicht deutlich ist, kann mit diesem Symbol ein &quot;Überqueren verboten&quot; angezeigt werden.</translation>
     </message>
     <message>
         <source>Simple Orienteering Course</source>
@@ -13134,7 +13091,7 @@ Hinweis: Wenn das Bachsymbol breiter als 0,25 mm ist, muss das Stegsymbol angepa
     <message>
         <source>An erosion gully or trench which is too small to be shown by symbol 106 is shown by a single line. The line width reflects the size of the gully. Minimum depth 1 m. The end of the line is pointed.</source>
         <comment>Description of symbol 109</comment>
-        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder.  Minimale Tiefe: 1 m.</translation>
+        <translation>Eine Erosionsrinne oder ein Graben, der so klein ist, dass er nicht mehr mit der Signatur 106 dargestellt werden kann, wird mit einem Strich gezeichnet. Die Linienbreite spiegelt die Größe des Grabens wieder. Minimale Tiefe: 1 m.</translation>
     </message>
     <message>
         <source>Impassable cliff</source>
