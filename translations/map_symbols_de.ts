@@ -4400,7 +4400,7 @@ Buildings larger than 75 m x 75 m may be represented with a dark grey infill in 
         <comment>Description of symbol 521</comment>
         <translation>Ein Gebäude wird mit seinem Grundriss dargestellt, soweit der Kartenmaßstab das erlaubt.
 
-Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit dargestellt werden. Gebäude innerhalb verbotenen Gebieten werden generalisiert. Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0,25 mm sein.
+Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit dargestellt werden. Gebäude innerhalb verbotenen Gebieten werden generalisiert. Flächen, die ganz von einem Gebäude umschlossen sind, werden nicht kartiert, sondern als Teil des Gebäudes dargestellt. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0,25 mm sein.
 
 Minimale Fläche: 0,5 mm x 0,5 mm (Wirklichkeit 7,5 m x 7,5 m).
 
@@ -4432,7 +4432,7 @@ Passages through buildings must have a minimum width of 0.3 mm (footprint 4.5 m)
         <comment>Description of symbol 521.2</comment>
         <translation>Gebäude größer als 75 m x 75 m können in urbanen Gebieten dunkelgrau dargestellt werden.
 
-Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit dargestellt werden. Gebäude innerhalb verbotenen Gebieten werden generalisiert. Flächen, die ganz von einem Gebäude umschlossen sind, sind nicht zu kartieren, sondern als Teil des Gebäudes darzustellen. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0,25 mm sein.</translation>
+Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit dargestellt werden. Gebäude innerhalb verbotenen Gebieten werden generalisiert. Flächen, die ganz von einem Gebäude umschlossen sind, werden nicht zu kartiert, sondern als Teil des Gebäudes dargestellt. Die minimale Lücke für einen Durchgang zwischen Gebäuden oder zwischen Gebäuden und anderen unpassierbaren Objekten sollte 0,25 mm sein.</translation>
     </message>
     <message>
         <source>Large building</source>
@@ -4502,7 +4502,7 @@ Durchgänge durch Gebäude müssen mindestens 0,3 mm (Wirklichkeit 4,5 m) breit 
     <message>
         <source>Ruins that are so small that they cannot be drawn to scale may be represented using a solid line.</source>
         <comment>Description of symbol 523.1</comment>
-        <translation>Ruinen, die zu klein sind, um maßstäblich dargestellt zu werden, werden mit einer durchzogenen Linie dargestellt.</translation>
+        <translation>Ruinen, die zu klein sind, um maßstäblich dargestellt zu werden, sind mit einer durchzogenen Linie darzustellen.</translation>
     </message>
     <message>
         <source>High tower</source>
