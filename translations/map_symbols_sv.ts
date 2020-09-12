@@ -195,15 +195,15 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation>En höjdkurva sammanbinder två punkter på samma höjdnivå. Standardskillnaden i höjd mellan två höjdkurvor, ekvidistansen, är 5m. En stödkurva med ekvidistans 2,5m kan användas i flack terräng. 
+        <translation>En höjdkurva sammanbinder två punkter på samma höjdnivå. Standardskillnaden i höjd mellan två höjdkurvor, ekvidistansen, är 5m. En stödkurva med ekvidistans 2,5m kan användas i flack terräng.
 Lutningsstreck kan ritas på den nedre sidan av en höjdkurva för att förtydliga riktningen av lutningen. Vid användning måste lutningsstrecket placeras i inbuktningar, tex. sänkor.
-En stängd höjdkurva representerar en höjd eller grop. En grop måste ha minst ett lutningsstreck. Minsta höjd/djup bör vara 1m. 
-Förhållandet mellan två närliggande höjdkurvor är viktigt. Närliggande höjdkurvor visar form och konturer av terrängen. Små detaljer i kurvningen bör undvikas eftersom de tenderar att dölja större formationer i terrängen. 
+En stängd höjdkurva representerar en höjd eller grop. En grop måste ha minst ett lutningsstreck. Minsta höjd/djup bör vara 1m.
+Förhållandet mellan två närliggande höjdkurvor är viktigt. Närliggande höjdkurvor visar form och konturer av terrängen. Små detaljer i kurvningen bör undvikas eftersom de tenderar att dölja större formationer i terrängen.
 Framstående detaljer så som gropar, sänkor, åsar och terrasser kan behöva överdrivas.
-Exakt återgivelse i höjd för varje objekt är inte viktigt, däremot är höjdskillnaden mellan närliggande objekt viktigt att den anges så noggrant som möjligt. Det är tillåtet att överdriva ett objekts höjd något för att förtydliga ett objekt. Denna justering bör dock inte överstiga 25% av ekvidistansen, och man måste ha förhållandet med närliggande objekt i åtanke. 
-Den minsta tillåtna böjning av en höjdkurva är 0,25mm i radie (4m i terrängen). Längden på en sänka eller ås måste vara större än 0,5mm från mitten till mitten av kurvan (8m i terrängen). 
-Minimumlängd på en höjd är 0.9mm (13,5m i terrängen) och minimumbredd är 0,6mm (9m i terrängen). Mindre men tydliga höjder bör ritas med symbolen Liten höjd (109) eller Liten avlång höjd (110) eller så kan de överdrivas för att uppnå minimummåtten. 
-En grop måste ha minst ett lutningsstreck, så minimumlängden är 1,1mm (16,5m i terrängen) och minimumbredd 0,7mm (10,5 i terrängen). Mindre men tydliga gropar kan ritas med symbolen Liten grop (111) eller så kan de överdrivas för att uppfylla minimummåtten. 
+Exakt återgivelse i höjd för varje objekt är inte viktigt, däremot är höjdskillnaden mellan närliggande objekt viktigt att den anges så noggrant som möjligt. Det är tillåtet att överdriva ett objekts höjd något för att förtydliga ett objekt. Denna justering bör dock inte överstiga 25% av ekvidistansen, och man måste ha förhållandet med närliggande objekt i åtanke.
+Den minsta tillåtna böjning av en höjdkurva är 0,25mm i radie (4m i terrängen). Längden på en sänka eller ås måste vara större än 0,5mm från mitten till mitten av kurvan (8m i terrängen).
+Minimumlängd på en höjd är 0.9mm (13,5m i terrängen) och minimumbredd är 0,6mm (9m i terrängen). Mindre men tydliga höjder bör ritas med symbolen Liten höjd (109) eller Liten avlång höjd (110) eller så kan de överdrivas för att uppnå minimummåtten.
+En grop måste ha minst ett lutningsstreck, så minimumlängden är 1,1mm (16,5m i terrängen) och minimumbredd 0,7mm (10,5 i terrängen). Mindre men tydliga gropar kan ritas med symbolen Liten grop (111) eller så kan de överdrivas för att uppfylla minimummåtten.
 Konturer bör följas med höjdkurvan för att inte tangera objekt av symbolen Liten höjd (109) eller Liten avlång höjd (110).</translation>
     </message>
     <message>
@@ -215,7 +215,7 @@ Konturer bör följas med höjdkurvan för att inte tangera objekt av symbolen L
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Lutningsstreck bör ritas på nedåtsidan av höjdkurvan för att förtydliga lutningen. Lutningsstreck bör placeras i inbuktningar så som sänkor. 
+        <translation>Lutningsstreck bör ritas på nedåtsidan av höjdkurvan för att förtydliga lutningen. Lutningsstreck bör placeras i inbuktningar så som sänkor.
 En grop måste innehålla minst ett lutningsstreck.</translation>
     </message>
     <message>
@@ -229,7 +229,7 @@ An index contour may be represented as an ordinary contour line in an area with 
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
         <translation>Var femte höjdkurva bör ritas med en tjockare linje. Detta är en hjälp för att snabbt urskilja höjdskillnad och större konturer i terrängen.
-En stödkurva kan användas som en vanlig höjdkurva med mycket detaljer. Små höjdformationer och gropar är normalt inte redovisade med stödkurva. 
+En stödkurva kan användas som en vanlig höjdkurva med mycket detaljer. Små höjdformationer och gropar är normalt inte redovisade med stödkurva.
 Stödkurvans nivå måste väljas med försiktighet i flack terräng. Den optimala nivån för höjdkurvan är mitt i sluttningen för de mest tydliga och branta sluttningarna.</translation>
     </message>
     <message>
@@ -1714,7 +1714,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -2124,7 +2124,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2563,7 +2563,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2575,7 +2575,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -3110,7 +3110,7 @@ Symbolen ska inte vidröra eller överlappa höjdkurvor.</translation>
         <source>An obvious elongated knoll which cannot be drawn to scale with a contour. Minimum height: 1 m.
 The symbol shall not touch or overlap contours.</source>
         <comment>Description of symbol 110</comment>
-        <translation>En tydlig avlång höjd som inte kan ritas skalriktig med höjdkurva. Lägsta höjd: 1 m. 
+        <translation>En tydlig avlång höjd som inte kan ritas skalriktig med höjdkurva. Lägsta höjd: 1 m.
 Symbolen ska inte vidröra eller överlappa höjdkurvor.</translation>
     </message>
     <message>
@@ -3235,7 +3235,7 @@ inte kan eller är farlig att passera.
 Lutningsstreck kan utelämnas om utrymmet är begränsat. Baslinjens
 avslutningar kan vara avrundade eller raka. Kortare lutningsstreck kan
 användas vid linjesluten.
- Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred. 
+ Vid redovisning i plan måste baslinjen vara minst 0,35 mm bred.
 Avståndet mellan två opasserbara branter eller mellan opasserbar brant
 och andra opasserbara symboler måste vara mer än 0,3 mm.
 När en brant ligger i anslutning till vatten så att passage längs med
@@ -3485,7 +3485,7 @@ To be able to show the distinction between neighbouring (maximum 30 metres apart
 A minimum of two triangles should be used. One triangle may be used if it is combined with other rock symbols (for instance directly below cliff symbols (201, 202), adjacent to boulder symbols (204-206) or combined with stony ground symbols (210-212)).
 To be able to show obvious height differences within a boulder field, it is permitted to enlarge some of the triangles to 120%.</source>
         <comment>Description of symbol 208</comment>
-        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6). Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med stenig mark. Minst 2 trianglar ska användas. En triangel kan användas om den kombineras med annan sten/brantsymbol, exempelvis direkt under branter (201,202), bredvid stenar (204-206) eller kombinerat med stenig mark (210-212). Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm ( centrummått ). Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm ( centrummått ). Täthet: 0,8-     1 symbol/mm 2 (12-16 %). För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
+        <translation>Ett område täckt av så många stenblock att de inte kan redovisas individuellt, redovisas med slumpmässigt utplacerade fyllda roterade trianglar, sidförhållande 8:6:5 (inre vinklar: 92.9, 48.5, 38.6). Blockterräng påverkar normalt inte löpbarheten. Om löpbarheten påverkas bör symbol 209 (tät blockterräng) användas eller symbolen kombineras med stenig mark. Minst 2 trianglar ska användas. En triangel kan användas om den kombineras med annan sten/brantsymbol, exempelvis direkt under branter (201,202), bredvid stenar (204-206) eller kombinerat med stenig mark (210-212). Största tillåtna avståndet mellan närliggande trianglar är 1,2 mm ( centrummått ). Minsta tillåtna avståndet mellan närliggande trianglar är 0,75 mm ( centrummått ). Täthet: 0,8-   1 symbol/mm 2 (12-16 %). För att visa tydliga höjdskillnader mellan block i blockterräng, är det tillåtet att förstora somliga trianglar till 120 %.</translation>
     </message>
     <message>
         <source>Boulder field, single triangle</source>
@@ -5064,7 +5064,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -5077,7 +5077,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -5147,7 +5147,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -5588,7 +5588,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -5865,7 +5865,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -6605,7 +6605,7 @@ sidan av stödkurvan.</translation>
         <translation type="unfinished">Skärning</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -6615,7 +6615,7 @@ sidan av stödkurvan.</translation>
         <translation>Skärning, minsta längd</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8676,15 +8676,15 @@ The minimum length of a contour knoll is 0.9 mm (footprint 13.5 m) and the minim
 A depression must accommodate a slope line, so the minimum length is 1.1 mm (footprint 16.5 m) and the minimum width is 0.7 mm (footprint 10.5 m) outside measure. Smaller, prominent depressions can be represented using symbol Small depression (111) or they can be exaggerated to satisfy the minimum dimension.
 Contours should be adapted (not broken) in order not to touch symbol Small knoll (109) or Small elongated knoll (110).</source>
         <comment>Description of symbol 101</comment>
-        <translation>En höjdkurva sammanbinder två punkter på samma höjdnivå. Standardskillnaden i höjd mellan två höjdkurvor, ekvidistansen, är 5m. En stödkurva med ekvidistans 2,5m kan användas i flack terräng. 
+        <translation>En höjdkurva sammanbinder två punkter på samma höjdnivå. Standardskillnaden i höjd mellan två höjdkurvor, ekvidistansen, är 5m. En stödkurva med ekvidistans 2,5m kan användas i flack terräng.
 Lutningsstreck kan ritas på den nedre sidan av en höjdkurva för att förtydliga riktningen av lutningen. Vid användning måste lutningsstrecket placeras i inbuktningar, tex. sänkor.
-En stängd höjdkurva representerar en höjd eller grop. En grop måste ha minst ett lutningsstreck. Minsta höjd/djup bör vara 1m. 
-Förhållandet mellan två närliggande höjdkurvor är viktigt. Närliggande höjdkurvor visar form och konturer av terrängen. Små detaljer i kurvningen bör undvikas eftersom de tenderar att dölja större formationer i terrängen. 
+En stängd höjdkurva representerar en höjd eller grop. En grop måste ha minst ett lutningsstreck. Minsta höjd/djup bör vara 1m.
+Förhållandet mellan två närliggande höjdkurvor är viktigt. Närliggande höjdkurvor visar form och konturer av terrängen. Små detaljer i kurvningen bör undvikas eftersom de tenderar att dölja större formationer i terrängen.
 Framstående detaljer så som gropar, sänkor, åsar och terrasser kan behöva överdrivas.
-Exakt återgivelse i höjd för varje objekt är inte viktigt, däremot är höjdskillnaden mellan närliggande objekt viktigt att den anges så noggrant som möjligt. Det är tillåtet att överdriva ett objekts höjd något för att förtydliga ett objekt. Denna justering bör dock inte överstiga 25% av ekvidistansen, och man måste ha förhållandet med närliggande objekt i åtanke. 
-Den minsta tillåtna böjning av en höjdkurva är 0,25mm i radie (4m i terrängen). Längden på en sänka eller ås måste vara större än 0,5mm från mitten till mitten av kurvan (8m i terrängen). 
-Minimumlängd på en höjd är 0.9mm (13,5m i terrängen) och minimumbredd är 0,6mm (9m i terrängen). Mindre men tydliga höjder bör ritas med symbolen Liten höjd (109) eller Liten avlång höjd (110) eller så kan de överdrivas för att uppnå minimummåtten. 
-En grop måste ha minst ett lutningsstreck, så minimumlängden är 1,1mm (16,5m i terrängen) och minimumbredd 0,7mm (10,5 i terrängen). Mindre men tydliga gropar kan ritas med symbolen Liten grop (111) eller så kan de överdrivas för att uppfylla minimummåtten. 
+Exakt återgivelse i höjd för varje objekt är inte viktigt, däremot är höjdskillnaden mellan närliggande objekt viktigt att den anges så noggrant som möjligt. Det är tillåtet att överdriva ett objekts höjd något för att förtydliga ett objekt. Denna justering bör dock inte överstiga 25% av ekvidistansen, och man måste ha förhållandet med närliggande objekt i åtanke.
+Den minsta tillåtna böjning av en höjdkurva är 0,25mm i radie (4m i terrängen). Längden på en sänka eller ås måste vara större än 0,5mm från mitten till mitten av kurvan (8m i terrängen).
+Minimumlängd på en höjd är 0.9mm (13,5m i terrängen) och minimumbredd är 0,6mm (9m i terrängen). Mindre men tydliga höjder bör ritas med symbolen Liten höjd (109) eller Liten avlång höjd (110) eller så kan de överdrivas för att uppnå minimummåtten.
+En grop måste ha minst ett lutningsstreck, så minimumlängden är 1,1mm (16,5m i terrängen) och minimumbredd 0,7mm (10,5 i terrängen). Mindre men tydliga gropar kan ritas med symbolen Liten grop (111) eller så kan de överdrivas för att uppfylla minimummåtten.
 Konturer bör följas med höjdkurvan för att inte tangera objekt av symbolen Liten höjd (109) eller Liten avlång höjd (110).</translation>
     </message>
     <message>
@@ -8696,7 +8696,7 @@ Konturer bör följas med höjdkurvan för att inte tangera objekt av symbolen L
         <source>Slope lines may be drawn on the lower side of a contour line to clarify the direction of slope. When used, they should be placed in re-entrants.
 A depression has to have at least one slope line.</source>
         <comment>Description of symbol 101.1</comment>
-        <translation>Lutningsstreck bör ritas på nedåtsidan av höjdkurvan för att förtydliga lutningen. Lutningsstreck bör placeras i inbuktningar så som sänkor. 
+        <translation>Lutningsstreck bör ritas på nedåtsidan av höjdkurvan för att förtydliga lutningen. Lutningsstreck bör placeras i inbuktningar så som sänkor.
 En grop måste innehålla minst ett lutningsstreck.</translation>
     </message>
     <message>
@@ -8710,7 +8710,7 @@ An index contour may be represented as an ordinary contour line in an area with 
 The index contour level must be carefully selected in flat terrain. The ideal level for the index contour is the central contour in the most prominent slopes.</source>
         <comment>Description of symbol 102</comment>
         <translation>Var femte höjdkurva bör ritas med en tjockare linje. Detta är en hjälp för att snabbt urskilja höjdskillnad och större konturer i terrängen.
-En stödkurva kan användas som en vanlig höjdkurva med mycket detaljer. Små höjdformationer och gropar är normalt inte redovisade med stödkurva. 
+En stödkurva kan användas som en vanlig höjdkurva med mycket detaljer. Små höjdformationer och gropar är normalt inte redovisade med stödkurva.
 Stödkurvans nivå måste väljas med försiktighet i flack terräng. Den optimala nivån för höjdkurvan är mitt i sluttningen för de mest tydliga och branta sluttningarna.</translation>
     </message>
     <message>
@@ -9755,7 +9755,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -10559,7 +10559,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -10572,7 +10572,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code

@@ -1456,7 +1456,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -1866,7 +1866,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2305,7 +2305,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2317,7 +2317,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -2690,7 +2690,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Every fifth contour shall be drawn with a thicker line. This is an aid to the quick assessment of height difference and the overall shape of the terrain surface. An index contour may be represented as an ordinary contour line in an area with much detail. Small contour knolls and depressions are normally not represented using index contours.</source>
         <comment>Description of symbol 102</comment>
-        <translation>Her beşinci kontur kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve yeryüzünün genel şeklinin  hızlı değerlendirmesine yardımcı olur. Bir indeks eşyükselti eğrisi çok detay içeren bir arazide normal bir eşyükselti çizgisi gibi temsil edilebilir. Küçük tepecikler ve çöküntüler normalde indeks eşyükselti kullanarak gösterilmez.</translation>
+        <translation>Her beşinci kontur kalın bir çizgi ile çizilmelidir. Bu, yükseklik farkının ve yeryüzünün genel şeklinin hızlı değerlendirmesine yardımcı olur. Bir indeks eşyükselti eğrisi çok detay içeren bir arazide normal bir eşyükselti çizgisi gibi temsil edilebilir. Küçük tepecikler ve çöküntüler normalde indeks eşyükselti kullanarak gösterilmez.</translation>
     </message>
     <message>
         <source>Contour value</source>
@@ -2710,7 +2710,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>Form lines are used where more information must be given about the shape of the ground. Form lines are added only where representation would be incomplete with ordinary contours. They shall not be used as intermediate contours. Only one form line should be used between neighbouring contours. It is very important that a form line fits logically into the contour system, so the start and end of a form line should be parallel to the neighbouring contours. The gaps between the form line dashes must be placed on reasonably straight sections of the form line. Form lines can be used to differentiate flat knolls and depressions from more distinct ones.</source>
         <comment>Description of symbol 103</comment>
-        <translation>Biçim çizgileri yerin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Biçim çizgileri sadece normal  eşyükselti ile temsilin eksik olacağı yerlerde eklenir. Ara eşyükseltiler gibi kullanılamaz. Tek bir biçim çizgisi komşu eşyükseltilerin arasında kullanılmalıdır. Biçim çizgilerinin eşyükselti sistemine mantıklı uyması çok önemlidir, bu yüzden biçim çizgisi başlangıç ve bitişi komşu eşyükseltilere paralel olmalıdır. Biçim çizgisinin kesikli çizgileri arasındaki boşluklar, form çizgisinin oldukça düz bölümlerine yerleştirilmelidir. Biçim çizgileri düz tepecikleri ve çöküntüleri daha belirgin olanlardan ayırmak için kullanılabilir.</translation>
+        <translation>Biçim çizgileri yerin şekli hakkında daha fazla bilgi verilmesi gereken yerlerde kullanılır. Biçim çizgileri sadece normal eşyükselti ile temsilin eksik olacağı yerlerde eklenir. Ara eşyükseltiler gibi kullanılamaz. Tek bir biçim çizgisi komşu eşyükseltilerin arasında kullanılmalıdır. Biçim çizgilerinin eşyükselti sistemine mantıklı uyması çok önemlidir, bu yüzden biçim çizgisi başlangıç ve bitişi komşu eşyükseltilere paralel olmalıdır. Biçim çizgisinin kesikli çizgileri arasındaki boşluklar, form çizgisinin oldukça düz bölümlerine yerleştirilmelidir. Biçim çizgileri düz tepecikleri ve çöküntüleri daha belirgin olanlardan ayırmak için kullanılabilir.</translation>
     </message>
     <message>
         <source>Slope line, formline</source>
@@ -4180,7 +4180,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -4193,7 +4193,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -4263,7 +4263,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -4704,7 +4704,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -4981,7 +4981,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -5647,7 +5647,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Toprak set</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -5657,7 +5657,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Toprak set, minimum boy</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -8568,7 +8568,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -9372,7 +9372,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -9385,7 +9385,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code

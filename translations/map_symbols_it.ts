@@ -1462,7 +1462,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -1872,7 +1872,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2311,7 +2311,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2323,7 +2323,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -2676,7 +2676,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
     <message>
         <source>A line joining points of equal height. The standard vertical interval between contours is 5 metres. A contour interval of 2.5 metres may be used for flat terrains. The smallest bend in a contour is 0.25 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
-        <translation>Linea che unisce tutti i punti alla stessa quota. L&apos;equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di  livello è di 0.25 mm dal centro della linea.</translation>
+        <translation>Linea che unisce tutti i punti alla stessa quota. L&apos;equidistanza standard tra le curve di livello è di 5m. Un equidistanza di 2.5m può essere utilizzata per terreni pianeggianti. La minor curvatura di una curva di livello è di 0.25 mm dal centro della linea.</translation>
     </message>
     <message>
         <source>Slope line, contour</source>
@@ -3188,7 +3188,7 @@ Lo spazio fra due sassi enormi o un altro oggetto non attraversabile deve essere
 To be able to show the distinction between neighbouring (maximum 30 metres apart), boulder clusters with significant difference in boulder size, it is permitted to enlarge this symbol by 20% (edge length 0.96 mm) for some of the boulder clusters.</source>
         <comment>Description of symbol 207</comment>
         <translation>Un gruppo di sassi così raggruppati da non poter essere mappati individualmente. I sassi nel gruppo devono essere più alti di un metro. Un gruppo di sassi deve essere facilmente identificabile come un gruppo di sassi.
-Per permettere di mostrare  una evidente differenza di dimensione fra gruppi di sassi vicini (non più di 30 m), si può ingrandire questo simbolo del 20% (lunghezza lato 0.96 mm) per qualche gruppo di sassi.</translation>
+Per permettere di mostrare una evidente differenza di dimensione fra gruppi di sassi vicini (non più di 30 m), si può ingrandire questo simbolo del 20% (lunghezza lato 0.96 mm) per qualche gruppo di sassi.</translation>
     </message>
     <message>
         <source>Boulder cluster, large</source>
@@ -3563,7 +3563,7 @@ The dots may be white (scattered trees) or green (scattered bushes/thickets). On
 The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404</comment>
-        <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. 
+        <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo.
 I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Solo la variante con i pallini bianchi può essere combinata con il simbolo 407 (sottobosco) o 409 (sottobosco fitto) per mostrare un rallentamento nella corsa.
 Il simbolo è orientato a nord.
 Larghezza minima: 1.5 mm (ingombro 22.5 m). Area minima: 2.5 mm x 2.5 mm. Aree più piccole non devono essere disegnate oppure esagerate o deve essere usato il simbolo 403 (aperto grezzo).</translation>
@@ -3579,7 +3579,7 @@ The dots may be white (scattered trees) or green (scattered bushes/thickets). On
 The symbol is orientated to north.
 Minimum width: 1.5 mm (footprint 22.5 m). Minimum area: 2.5 x 2.5 mm. Smaller areas must either be left out, exaggerated or shown using symbol 403 (rough open land).</source>
         <comment>Description of symbol 404.1</comment>
-        <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo. 
+        <translation>Un area con alberi e cespugli sparsi in un terreno aperto grezzo viene generalizzata usando un motivo regolare di grandi pallini su sfondo giallo.
 I pallini possono essere bianchi (alberi sparsi) o verdi (cespugli sparsi). Solo la variante con i pallini bianchi può essere combinata con il simbolo 407 (sottobosco) o 409 (sottobosco fitto) per mostrare un rallentamento nella corsa.
 Il simbolo è orientato a nord.
 Larghezza minima: 1.5 mm (ingombro 22.5 m). Area minima: 2.5 mm x 2.5 mm. Aree più piccole non devono essere disegnate oppure esagerate o deve essere usato il simbolo 403 (aperto grezzo).</translation>
@@ -5507,7 +5507,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -5520,7 +5520,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -5590,7 +5590,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -6031,7 +6031,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -6308,7 +6308,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -7104,7 +7104,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Scarpata</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -7114,7 +7114,7 @@ The purple line will extend a bit into the finish symbol. This is a shortcoming 
         <translation>Scarpata, lunghezza minima</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -10223,7 +10223,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -11027,7 +11027,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -11040,7 +11040,7 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code

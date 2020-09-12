@@ -1461,7 +1461,7 @@ Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
         <source>Cultivated land. This symbol must be used together with another symbol:
 - For land used for growing crops, combine with symbol Open land (401).
 - For agroforrestry, use with symbol Forest (405) or Open land with scattered trees (402).
-Runnability may vary according to the type of crops or trees, and the time of year. 
+Runnability may vary according to the type of crops or trees, and the time of year.
 Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is orientated to north.
 Minimum area: 3 mm x 3 mm (footprint 45 m x 45 m).</source>
@@ -1871,7 +1871,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Muuri</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -2310,7 +2310,7 @@ North lines shall be broken to improve the legibility of the map, for instance w
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.0</comment>
         <translation type="unfinished"></translation>
@@ -2322,7 +2322,7 @@ Spot heights must only be used where they do not conflict with other symbols.</s
     </message>
     <message>
         <source>Spot heights are used for the rough assessment of height differences. The height is given to the nearest metre.
-Water levels are given without the dot. 
+Water levels are given without the dot.
 Spot heights must only be used where they do not conflict with other symbols.</source>
         <comment>Description of symbol 603.1</comment>
         <translation type="unfinished"></translation>
@@ -3467,7 +3467,7 @@ Minimipituus kaksi viivan osaa (4.25 mm, maastomitta 64 m).</translation>
 The definition of the symbol must be given on the map.
 Runnability: slow running.</source>
         <comment>Description of symbol 508.2</comment>
-        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Symbolin määritelmä annettava erikseen kartassa. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla 
+        <translation>Linja tai ura, esim. metsäkoneura tai hiihtoladun pohja, jossa ei ole selkeästi havaittavaa polkua. Symbolin määritelmä annettava erikseen kartassa. Juostavuus esitetään symboliviivaa hieman paksummalla taustaviivalla
 •Vihreä 20 %: hidastava juostavuus.
 Minimipituus kaksi viivan osaa (4.25 mm, maastomitta 64 m).</translation>
     </message>
@@ -3952,7 +3952,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <translation>Irtomaarinne</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Poikkiviivat peittävät koko rinteen alueen ja ne voidaan jättää pois kapeissa kohdissa. Ylipääsemättömät rinteet kuvataan merkillä 201 (ylipääsemätön jyrkänne). Erittäin korkeat rinteet merkitään viivalla 0.25.</translation>
     </message>
@@ -3962,7 +3962,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <translation>Irtomaarinne, minimikoko</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Poikkiviivat peittävät koko rinteen alueen ja ne voidaan jättää pois kapeissa kohdissa. Ylipääsemättömät rinteet kuvataan merkillä 201 (ylipääsemätön jyrkänne). Erittäin korkeat rinteet merkitään viivalla 0.25.</translation>
     </message>
@@ -4064,7 +4064,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation>Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen. 
+        <translation>Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen.
 Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</translation>
     </message>
     <message>
@@ -4105,7 +4105,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation>Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä. 
+        <translation>Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä.
 Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation>
     </message>
     <message>
@@ -6648,7 +6648,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -6661,7 +6661,7 @@ Minimum area: 0.5 mm² (footprint 8 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed. 
+        <source>An area with dense trees or thicket (low visibility) which reduces running to about 20-60% of normal speed.
 When runnability is better in one direction a regular pattern of white / green 30% stripes is left in the screen to show the direction of better running. At least two stripes shall be clearly visible.
 Minimum width: 0.4 mm.
 Minimum area: 0.5 mm² (footprint 8 m²).</source>
@@ -6731,7 +6731,7 @@ Minimum area: 9 mm² (144 m²).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses. 
+        <source>Cultivated land, normally used for growing crops. Runnability may vary according to the type of crops grown and the time of year. Since the runnability may vary, such areas should be avoided when setting courses.
 The symbol is combined with symbol Out-of-bounds area (709) to show cultivated land that shall not be entered.
 Minimum width: 3 mm.
 Minimum area: 9 mm² (144 m²).</source>
@@ -7172,7 +7172,7 @@ The bars indicate the exact location of the pylons. If a section of a power line
         <translation>Alikulkukäytävä tai tunneli</translation>
     </message>
     <message>
-        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles. 
+        <source>An underpass or a tunnel is a passage running underneath the ground or a building, especially a passage for pedestrians or vehicles.
 Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 &lt;span style=&quot;color: red&quot;&gt;Minimum length (of baseline): 2 squares (0.75 mm - footprint 3.0 m).
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with the symbol Crossing point (710.1) or Crossing section (710.2).&lt;/span&gt;</source>
@@ -7449,7 +7449,7 @@ Minimum length: 2.2 mm (footprint 8.8 m).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track. 
+        <source>An impassable man-made line feature. For example, a high pipeline (gas, water, oil, heat, etc.) or a bobsleigh / skeleton track.
 The definition of the symbol must be given on the map.
 A prominent impassable line feature shall not be crossed.
 Minimum length: 3 mm (footprint 12 m).</source>
@@ -7984,7 +7984,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
         <translation>Korkeuskäyrä</translation>
     </message>
     <message>
-        <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1). 
+        <source>A line joining points of equal height. The standard vertical interval between contours is 2 or 2.5 m. To emphasize the 3-dimensional effect of the contour line image, contour lines shall be represented as continuous lines through all symbols, also building (526.1) and canopy (526.2). However, contour lines shall be cut out for better legibility, if they touch the following symbols: small earth wall (108.1), small knoll (112), small elongated knoll (113), small depression (115), pit or hole (116), prominent landform feature (118), step or edge of paved area (529.1).
 
 The relative height difference between neighbouring features must be represented on the map as accurately as possible. Absolute height accuracy is of less importance. It is permissible to alter the height of a contour slightly if this will improve the representation of a feature. This deviation should not exceed 25% of the contour interval and attention must be paid to neighbouring features. The smallest bend in a contour is 0.4 mm from centre to centre of the lines.</source>
         <comment>Description of symbol 101</comment>
@@ -8190,14 +8190,14 @@ tiheästi alueella on yksityiskohtia.</translation>
         <translation>Ylipääsemätön jyrkänne &lt;span style=&quot;color:magenta&quot;&gt;(kielletty kulkea)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
+        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201</comment>
-        <translation>Ylipääsemätön jyrkänne, louhos tai irtomaarinne (ks. 106). Minimikorkeus on vähintään 2.0 m. Viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia pystysuorien jyrkänteiden viettosuuntaviivat voidaan jättää pois esim. kapeissa solissa, joissa jyrkänne on molemmin puolin. Vastakkaisten jyrkänteiden väli piirretään vähintään 0.3 mm leveäksi. 
+        <translation>Ylipääsemätön jyrkänne, louhos tai irtomaarinne (ks. 106). Minimikorkeus on vähintään 2.0 m. Viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia pystysuorien jyrkänteiden viettosuuntaviivat voidaan jättää pois esim. kapeissa solissa, joissa jyrkänne on molemmin puolin. Vastakkaisten jyrkänteiden väli piirretään vähintään 0.3 mm leveäksi.
 
 Viettosuuntaviivat saavat ulottua sen aluevärin päälle, jolla kuvataan maastotyyppiä, joka alkaa jyrkänteestä. Mikäli jyrkänne on vesistön äärellä eikä sen ja rannan välistä voi kulkea, tulee viettosuuntaviivat ulottaa selvästi yli vesistön reunaviivan.
 
@@ -8210,14 +8210,14 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Ylipääsemätön jyrkänne, minimikoko &lt;span style=&quot;color:magenta&quot;&gt;(kielletty kulkea)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm). 
+        <source>An impassable cliff, quarry or earth bank [see symbol earth bank (106)]. Tags are drawn downwards, showing its full extent from the top line to the foot. For vertical rock faces the tags may be omitted if space is short, e.g. narrow passages between cliffs (the passage should be drawn with a width of at least 0.3 mm).
 
 The tags may extend over an area symbol representing detail immediately below the rock face. When a rock face drops straight into water making it impossible to pass under the cliff along the water&apos;s edge, the bank line is omitted or the tags shall clearly extend over the bank line. Minimum height is 2 meters.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an impassable cliff!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 201.0.1</comment>
-        <translation>Ylipääsemätön jyrkänne, louhos tai irtomaarinne (ks. 106). Minimikorkeus on vähintään 2.0 m. Viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia pystysuorien jyrkänteiden viettosuuntaviivat voidaan jättää pois esim. kapeissa solissa, joissa jyrkänne on molemmin puolin. Vastakkaisten jyrkänteiden väli piirretään vähintään 0.3 mm leveäksi. 
+        <translation>Ylipääsemätön jyrkänne, louhos tai irtomaarinne (ks. 106). Minimikorkeus on vähintään 2.0 m. Viettosuuntaviivoilla osoitetaan jyrkänteen korkeus yläreunasta alareunaan. Tilanpuutteen takia pystysuorien jyrkänteiden viettosuuntaviivat voidaan jättää pois esim. kapeissa solissa, joissa jyrkänne on molemmin puolin. Vastakkaisten jyrkänteiden väli piirretään vähintään 0.3 mm leveäksi.
 
 Viettosuuntaviivat saavat ulottua sen aluevärin päälle, jolla kuvataan maastotyyppiä, joka alkaa jyrkänteestä. Mikäli jyrkänne on vesistön äärellä eikä sen ja rannan välistä voi kulkea, tulee viettosuuntaviivat ulottaa selvästi yli vesistön reunaviivan.
 
@@ -8632,7 +8632,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Suo</translation>
     </message>
     <message>
-        <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness. 
+        <source>A crossable marsh, usually with a distinct edge. The symbol shall be combined with vegetation symbols to show runnability and openness.
 
 Minimum size: not less than 2 lines, 5 mm long.</source>
         <comment>Description of symbol 310</comment>
@@ -8803,7 +8803,7 @@ Minimum width 0.25 mm.</source>
         <translation>Metsä: erittäin vaikeasti juostava</translation>
     </message>
     <message>
-        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced 1-20% of normal speed. 
+        <source>An area of dense vegetation (trees or undergrowth) which is barely passable. Running reduced 1-20% of normal speed.
 
 Minimum width: 0.25 mm.</source>
         <comment>Description of symbol 410</comment>
@@ -8934,7 +8934,7 @@ kuvataan vain väripinnoin (keltainen, vihreä).</translation>
     </message>
     <message>
         <source>An area of dense vegetation (trees or undergrowth) which is impassable or which shall not be crossed, due to forbidden access or because it may constitute a danger to the competitor.
- 
+
 Minimum width: 0.4 mm.
 
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross impassable vegetation!
@@ -9207,7 +9207,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 If a fence or railing is higher than 2 m or very difficult to cross, it shall be represented with the symbol impassable fence or railing (524).</source>
         <comment>Description of symbol 522</comment>
-        <translation>Ylitettävissä oleva aita on este, joka sulkee tai rajaa peltoa, pihaa tms. ja joka on usein tehty pylväistä sekä langasta tai puusta. 
+        <translation>Ylitettävissä oleva aita on este, joka sulkee tai rajaa peltoa, pihaa tms. ja joka on usein tehty pylväistä sekä langasta tai puusta.
 
 Mikäli aita on yli 2 m korkea tai vaikeasti ylitettävä, se tulee kuvata ylipääsemättömän aidan tai kaiteen merkillä (524).</translation>
     </message>
@@ -9245,11 +9245,11 @@ aikana.</translation>
         <translation>Rakennus &lt;span style=&quot;color:magenta&quot;&gt;(kielletty kulkea läpi tai yli)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
+        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building.
 
-The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
+The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map.
 
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1</comment>
         <translation>Rakennuksena kuvataan tavanomaisten rakennusten lisäksi muut rakenteet, joissa on katto. Rakennukset, jotka sijaitsevat kielletyn alueen merkillä (528.1) kuvattavalla alueella voi kuvata yleistettynä. Alueet, jotka täysin liittyvät rakennukseen, tulee kuvata rakennuksena.
@@ -9286,11 +9286,11 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Rakennus, minimikoko &lt;span style=&quot;color:magenta&quot;&gt;(kielletty kulkea läpi tai yli)&lt;/span&gt;</translation>
     </message>
     <message>
-        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building. 
+        <source>A building is a relatively permanent construction having a roof. Buildings within symbol area with forbidden access (527.1) may just be represented in a simplified manner.Areas totally contained within a building shall be mapped as being a part of the building.
 
-The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map. 
+The minimum gap between buildings and between buildings and other impassable features shall be 0.40 mm. The black screen percentage should be chosen according to the terrain. A dark screen gives a better contrast to passable areas, such as streets, stairways and canopies, while a light screen makes contours and course overprint more clearly visible (which can be important in very densely built up urban terrain and in steep urban terrain). The black screen shall be the same for the whole map.
 
-&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building! 
+&lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to pass through or over a building!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 526.1.3</comment>
         <translation>Rakennuksena kuvataan tavanomaisten rakennusten lisäksi muut rakenteet, joissa on katto. Rakennukset, jotka sijaitsevat kielletyn alueen merkillä (528.1) kuvattavalla alueella voi kuvata yleistettynä. Alueet, jotka täysin liittyvät rakennukseen, tulee kuvata rakennuksena.
@@ -9307,7 +9307,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Katos</translation>
     </message>
     <message>
-        <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages. 
+        <source>A canopy is a building construction (with a roof), normally supported by pillars, poles or walls, such as passages, gangways, courts, bus stops, gas stations or garages.
 
 Small passable parts of buildings which can not easily be crossed by competitors, shall not be represented on the map and shall be closed during the competition.</source>
         <comment>Description of symbol 526.2</comment>
@@ -9362,7 +9362,7 @@ Areas with forbidden access totally contained within buildings shall be mapped a
 &lt;span style=&quot;color:magenta&quot;&gt;It is forbidden to cross an area with forbidden access!
 Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
         <comment>Description of symbol 528.1</comment>
-        <translation>Alue, jolle kilpailija ei saa mennä, kuten yksityinen piha, kukkamaa, rautatiealue tms. Alueen sisäisiä kohteita ei saa kuvata, elleivät ne ole erityisen huomattavia tai merkittäviä, kuten rautatiet, suuret rakennukset tai huomattavat puut. Ajoliittymät alueelle tulee kuvata selkeästi. 
+        <translation>Alue, jolle kilpailija ei saa mennä, kuten yksityinen piha, kukkamaa, rautatiealue tms. Alueen sisäisiä kohteita ei saa kuvata, elleivät ne ole erityisen huomattavia tai merkittäviä, kuten rautatiet, suuret rakennukset tai huomattavat puut. Ajoliittymät alueelle tulee kuvata selkeästi.
 
 Kielletyt alueet, jotka täysin liittyvät ympäröiviin rakennuksiin, kuvataan osana rakennuksia.
 
@@ -9729,11 +9729,11 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Suunnanottoviiva - musta</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.1</comment>
-        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä,
 polunhaaroja, polunpäitä jne.</translation>
@@ -9744,14 +9744,14 @@ polunhaaroja, polunpäitä jne.</translation>
         <translation>Suunnaottoviiva, musta nuolella</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.2</comment>
         <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee
-olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä, polunhaaroja, polunpäitä jne.
 
@@ -9767,7 +9767,7 @@ Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.3</comment>
-        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä, polunhaaroja, polunpäitä jne.</translation>
     </message>
@@ -9781,7 +9781,7 @@ Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.</source>
         <comment>Description of symbol 601.0.4</comment>
-        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä,
 polunhaaroja, polunpäitä jne.</translation>
@@ -9792,14 +9792,14 @@ polunhaaroja, polunpäitä jne.</translation>
         <translation>Suunnanottoviiva, sininen viivalla</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc.
 
 &lt;b&gt;Note: this is a non-standard addition to the symbol set.&lt;/b&gt;</source>
         <comment>Description of symbol 601.0.5</comment>
         <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee
-olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä, polunhaaroja, polunpäitä jne.
 
@@ -9811,11 +9811,11 @@ Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä
         <translation>Suunnaottoviiva, kuvio, sininen</translation>
     </message>
     <message>
-        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground. 
+        <source>Magnetic north lines are lines placed on the map pointing to magnetic north. Their spacing shall be 30 mm on the 1:5 000 map so they represent 150 m on the ground.
 
 North lines may be broken where they obscure small features such as boulders, knolls, cliffs, stream junctions, path ends, etc. Cut holes in the pattern to create these breaks.</source>
         <comment>Description of symbol 601.0.6</comment>
-        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla. 
+        <translation>Suunnanottoviivoilla osoitetaan maaston magneettinen pohjoissuunta. Viivojen etäisyyden tulee olla 150 maastometriä eli 30 mm 1:5000-kartalla ja 37.5 mm 1:4000-kartalla.
 
 Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä, kuten kiviä, kumpareita, jyrkänteitä, polunhaaroja, polunpäitä jne.</translation>
     </message>
@@ -9831,7 +9831,7 @@ Suunnanottoviivat katkaistaan kohdista, joissa ne peittäisivät karttamerkkejä
 
 Väri: kaikki painettavat värit
 
-Symboli sisältää kaikki painettavat värit - älä laita värejä erillisinä symboleina koska virheellinen sijoittelu johtaa epäselvään painojälkeen (misregistration).  Testi toimii vain offset-painamisessa (vaatii värierottelun).</translation>
+Symboli sisältää kaikki painettavat värit - älä laita värejä erillisinä symboleina koska virheellinen sijoittelu johtaa epäselvään painojälkeen (misregistration). Testi toimii vain offset-painamisessa (vaatii värierottelun).</translation>
     </message>
     <message>
         <source>Spot height, dot</source>
@@ -9935,7 +9935,7 @@ Tätä sääntöä rikkovat kilpailijat hylätään.&lt;/span&gt;</translation>
         <translation>Portti</translation>
     </message>
     <message>
-        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards. 
+        <source>A crossing point through or over a wall or fence, or across a road or railway or through a tunnel or an out-of-bounds area is drawn on the map with two lines curving outwards.
 
 If underpasses or tunnels etc. are to be used in a competition, they shall be emphasized with symbol crossing point (708) or crossing section (708.1).</source>
         <comment>Description of symbol 708</comment>
@@ -9978,7 +9978,7 @@ Competitors violating this rule will be disqualified.&lt;/span&gt;</source>
 
 Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
 - yhtenäinen viiva, jos alue on merkitty maastoon yhtenäisellä nauhalla
-- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin 
+- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin
 - ilman rajausta, jos aluetta ei ole merkitty maastoon.
 
 &lt;span style=&quot;color:magenta&quot;&gt;Merkin osoittamalle alueelle meneminen on kielletty
@@ -10239,7 +10239,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
         <translation>Irtomaarinne</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation>Selvästi näkyvät ja ympäristöstään erottuvat maaston perustason leikkaukset, kuten sora- ja hiekkakuopat, jokipenkereet sekä teiden ja rautateiden leikkaukset kuvataan irtomaarinteenä. Poikkiviivat pitäisi ulottaa koko rinteen matkalle ylhäältä juureen, mutta ne voidaan jättää pois kohdissa, joissa kaksi vastakkaista rinnettä ovat lähellä toisiaan. Kulkukelvottomat rinteet tulee kuvata ylipääsemättömän jyrkänteen merkillä (201). Erittäin korkeiden irtomaarinteiden viivan leveys voi olla 0,25 mm.</translation>
     </message>
@@ -10249,7 +10249,7 @@ Kansainvälisten kilpailujen kartoissa johtokäyrät on aina kuvattava. Suomessa
         <translation>Irtomaarinne, minimikoko</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation>Selvästi näkyvät ja ympäristöstään erottuvat maaston perustason leikkaukset, kuten sora- ja hiekkakuopat, jokipenkereet sekä teiden ja rautateiden leikkaukset kuvataan irtomaarinteenä. Poikkiviivat pitäisi ulottaa koko rinteen matkalle ylhäältä juureen, mutta ne voidaan jättää pois kohdissa, joissa kaksi vastakkaista rinnettä ovat lähellä toisiaan. Kulkukelvottomat rinteet tulee kuvata ylipääsemättömän jyrkänteen merkillä (201). Erittäin korkeiden irtomaarinteiden viivan leveys voi olla 0,25 mm.</translation>
     </message>
@@ -10667,7 +10667,7 @@ Suomessa merkki 418 kuvaa suurta yksittäistä puuta.</translation>
     <message>
         <source>Road 3-5 m wide. The space between the black lines must be filled with brown (50%). A road under construction may be shown with broken lines.</source>
         <comment>Description of symbol 503</comment>
-        <translation>Päällystetty, 3-5 m leveä tie. Reunaviivojen väli täytetään 50 % ruskealla.  Karttamerkkiä käytetään vain päällystettyjen teiden kuvaamiseen.</translation>
+        <translation>Päällystetty, 3-5 m leveä tie. Reunaviivojen väli täytetään 50 % ruskealla. Karttamerkkiä käytetään vain päällystettyjen teiden kuvaamiseen.</translation>
     </message>
     <message>
         <source>Track: fast riding</source>
@@ -11246,7 +11246,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished">Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen. 
+        <translation type="unfinished">Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen.
 Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</translation>
     </message>
     <message>
@@ -11287,7 +11287,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation type="unfinished">Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä. 
+        <translation type="unfinished">Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä.
 Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation>
     </message>
     <message>
@@ -12041,7 +12041,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation type="unfinished">Irtomaarinne</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106</comment>
         <translation type="unfinished">Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Poikkiviivat peittävät koko rinteen alueen ja ne voidaan jättää pois kapeissa kohdissa. Ylipääsemättömät rinteet kuvataan merkillä 201 (ylipääsemätön jyrkänne). Erittäin korkeat rinteet merkitään viivalla 0.25.</translation>
     </message>
@@ -12051,7 +12051,7 @@ Huom: jos vesistö on leveämpi kuin 0.25mm, säädä symbolia niin että se ylt
         <translation type="unfinished">Irtomaarinne, minimikoko</translation>
     </message>
     <message>
-        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings  or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
+        <source>A steep earth bank is an abrupt change in ground level which can be clearly distinguished from its surroundings, e.g. gravel or sand pits, road and railway cuttings or embankments. The tags should show the full extent of the slope, but may be omitted if two banks are close together. Impassable banks should be drawn with symbol 201 (impassable cliff). The line width of very high earth banks may be 0.25 mm.</source>
         <comment>Description of symbol 106.0.1</comment>
         <translation type="unfinished">Selvästi näkyvät ja ympäristöstään erottuvat rinteet, esim. sora- ja hiekkakuopat, jokien, teiden ja rautateiden leikkaukset. Poikkiviivat peittävät koko rinteen alueen ja ne voidaan jättää pois kapeissa kohdissa. Ylipääsemättömät rinteet kuvataan merkillä 201 (ylipääsemätön jyrkänne). Erittäin korkeat rinteet merkitään viivalla 0.25.</translation>
     </message>
@@ -13003,8 +13003,8 @@ A bounding line may be drawn if there is no natural boundary, as follows:
         <translation type="unfinished">
 Kielletty alue (ks. myös merkki 528), merkitään pystysuorin viivoin. Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraavasti:
 - yhtenäinen viiva, jos alue on merkitty maastoon yhtenäisellä nauhalla,
-- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin ja 
-- ilman rajausta, jos aluetta ei ole merkitty maastoon. 
+- katkoviiva, jos alue on merkitty maastoon viitoitusnauhoin ja
+- ilman rajausta, jos aluetta ei ole merkitty maastoon.
 
 
 
@@ -13144,7 +13144,7 @@ Yhdysviiva menee hieman maaliympyrän sisäpuolelle, mikä on symbolin helppoude
     <message>
         <source>Small shallow natural depressions and hollows (minimum diameter 2 m) which cannot be shown to scale by contours are represented by a semicircle. Minimum depth from the surrounding ground should be 1 m. Location is the centre of gravity of the symbol, which is orientated to north. Symbol 116 is used for man-made pits.</source>
         <comment>Description of symbol 115</comment>
-        <translation type="unfinished">Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen. 
+        <translation type="unfinished">Pieni luonnonmaaston suppa, jota ei voida kuvata mittakaavan mukaisesti korkeuskäyrin. Merkin käyttö edellyttää vähintään 1 metrin korkeuseroa. Merkki avautuu pohjoiseen.
 Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</translation>
     </message>
     <message>
@@ -13185,7 +13185,7 @@ Minimimitta halkaisija 2m. Kaivetut pienet kuopat kuvataan merkillä 116.</trans
     <message>
         <source>This symbol can be used for a special small land form feature. The definition of the symbol must be given in the map legend.</source>
         <comment>Description of symbol 118</comment>
-        <translation type="unfinished">Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä. 
+        <translation type="unfinished">Pieni kumparemainen erikoiskohde. Merkillä kuvataan samantapaiset kohteet koko kartta-alalla, joka selvitetään merkkien selityksissä.
 Suomessa merkillä kuvataan muurahaispesää, (minimikorkeus 1,5m).</translation>
     </message>
     <message>
@@ -14807,7 +14807,7 @@ Note: if the stream is wider than 0.25 mm, adjust this symbol so it extends 0.5 
         <translation>Muuri</translation>
     </message>
     <message>
-        <source>A significant wall of stone, concrete, wood or other materials. 
+        <source>A significant wall of stone, concrete, wood or other materials.
 Minimum height: 1 m.
 Minimum length (isolated): 1.4 mm (footprint 21 m).</source>
         <comment>Description of symbol 513</comment>
@@ -15627,7 +15627,7 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty. 
+        <source>This block describes the main parameters of a course. Its purpose is to help understand the degree of difficulty.
  - Scheme: | Course code | Length | Height climb |
  - The course length is given in kilometres rounded to the nearest 0.1 km.
  - The height climb is given in metres rounded to the nearest 5 m.</source>
@@ -15640,7 +15640,7 @@ Mikäli maastossa ei ole ko. alueen luonnollista rajaa, merkitään raja seuraav
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scheme of columns: |A|B|C|D|E|F|G|H| 
+        <source>Scheme of columns: |A|B|C|D|E|F|G|H|
 
 A: Control number
 B: Control code
