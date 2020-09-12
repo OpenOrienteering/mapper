@@ -2971,8 +2971,7 @@ When an impassable cliff drops straight into water, making it impossible to pass
         <translation>Eine Felswand, ein Abbruch oder eine Erdböschung, deren Höhe und Steilheit das Überqueren oder Erklettern unmöglich oder gefährlich machen.
 Bei senkrechten Felswänden können die Fallstriche bei Platzmangel weggelassen werden. Die Enden der Hauptlinie können gerade oder rund sein. An den Enden dürfen kürzere Fallstriche verwendet werden.
 Eine passierbare Lücke zwischen unpassierbaren Felswänden oder zwischen unpassierbaren Felswänden und anderen unpassierbaren Objekten muss auf der Karte mindestens 0,3 mm breit sein.
-Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen,
-oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
+Befindet sich eine unpassierbare Felswand direkt am Wasser, sodass eine Passage unter der Felswand dem Ufer entlang nicht möglich ist, so wird die Uferlinie weggelassen, oder die Fallstriche werden deutlich über die Uferlinie hinaus gezeichnet. Eine unpassierbare Felswand sollte mit dem Höhenkurvenbild harmonieren.</translation>
     </message>
     <message>
         <source>Impassable cliff, plan shape representation</source>
@@ -3975,7 +3974,8 @@ Minimale Länge für grün gestrichelte Linie: 4 Striche (1.8 mm - Wirklichkeit 
 Footprint: 7.5 m x 7.5 m.</source>
         <comment>Description of symbol 418</comment>
         <translation>Sparsam zu verwenden, da Personen mit eingeschränkter Farbwahrnehmung dieses Symbol leicht mit dem Symbol 109 (Kuppe) verwechseln können.
-Größe in Wirklichkeit: 7.5 m x 7.5 m.</translation>
+
+Größe in Wirklichkeit: 7,5 m x 7,5 m.</translation>
     </message>
     <message>
         <source>Prominent vegetation feature</source>
