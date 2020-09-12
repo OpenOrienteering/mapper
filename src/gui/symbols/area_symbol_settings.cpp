@@ -83,7 +83,7 @@ AreaSymbolSettings::AreaSymbolSettings(AreaSymbol* symbol, SymbolSettingDialog* 
 	color_edit = new ColorDropDown(map);
 	general_layout->addRow(tr("Area color:"), color_edit);
 	
-	minimum_size_edit = Util::SpinBox::create(1, 0.0, 999999.9, trUtf8("mm²"));
+	minimum_size_edit = Util::SpinBox::create(1, 0.0, 999999.9, tr("mm²"));
 	general_layout->addRow(tr("Minimum size:"), minimum_size_edit);
 	
 	general_layout->addItem(Util::SpacerItem::create(this));

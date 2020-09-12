@@ -331,7 +331,7 @@ void DrawPointTool::updateStatusText()
 	if (isDragging())
 	{
 		auto angle = qRadiansToDegrees(preview_object->getRotation());
-		setStatusBarText( trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1String("| ") +
+		setStatusBarText( tr("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1String("| ") +
 		                  tr("<b>%1</b>: Fixed angles. ").arg(ModifierKey::control()) );
 	}
 	else if (preview_object->getSymbol()->isRotatable())
@@ -343,7 +343,7 @@ void DrawPointTool::updateStatusText()
 		auto angle = qRadiansToDegrees(preview_object->getRotation());
 		if (!qIsNull(angle))
 		{
-			parts.push_front(trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1Char('|'));
+			parts.push_front(tr("<b>Angle:</b> %1° ").arg(QLocale().toString(angle, 'f', 1)) + QLatin1Char('|'));
 			parts.push_back(tr("<b>%1, 0</b>: Reset rotation.").arg(ModifierKey::escape()));
 		}
 		setStatusBarText(parts.join(QLatin1Char(' ')));

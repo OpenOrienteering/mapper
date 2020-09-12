@@ -78,7 +78,7 @@ void RotatePatternTool::updateStatusText()
 		constexpr auto pi_x_2 = M_PI * 2.0;
 		constexpr auto to_deg = 180.0 / M_PI;
 		const auto rotation = std::fmod(-(constrained_pos_map - click_pos_map).angle() + pi_x_1_5, pi_x_2) * to_deg;
-		text = trUtf8("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1));
+		text = tr("<b>Angle:</b> %1° ").arg(QLocale().toString(rotation, 'f', 1));
 	}
 	else
 	{
