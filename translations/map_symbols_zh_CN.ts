@@ -3287,6 +3287,20 @@ Rocky pits larger than 5 m in diameter should be exaggerated and represented usi
         <translation>不同尺寸的石块或大石块</translation>
     </message>
     <message>
+        <source>A boulder which is larger than neighboring boulders (204), or a large boulder which is smaller than neighboring large boulders (205).
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) boulders (204) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an enlargement of symbol 204 for some of the boulders.
+
+To be able to show the distinction between neighbouring (closer than 30 metres apart) large boulders (205) with significant difference in size, it is permitted to use this symbol (0.5 mm) as an as a reduction of symbol 205 for some of the boulders.</source>
+        <comment>Description of symbol 204.5</comment>
+        <translation>大于相邻大石（204）的石头，或者小于相邻巨石（205）的巨石。
+
+为了能够显示相邻的（距离少于30米）大石（204）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号204的放大石头。
+
+为了能够显示相邻的（距离少于30米）巨石（205）在尺寸大小上明显的区别，允许使用此符号（0.5 mm）作为对某些符号205
+的缩小巨石。</translation>
+    </message>
+    <message>
         <source>Large boulder</source>
         <comment>Name of symbol 205</comment>
         <translation>大石</translation>
