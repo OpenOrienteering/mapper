@@ -13740,6 +13740,11 @@ Megjegyzés: ha az víz szélesebb 0.25mm-nél akkor mindkét oldalon 0.5 mm-rel
         <translation>Átgázolható kis vízfolyás vagy nagyobb vízelvezető árok, amely 2 méternél keskenyebb. A jobb olvashatóság kedvéért a mocsáron átvezető vizes árkot átgázolható vízfolyásként (305) célszerű ábrázolni.</translation>
     </message>
     <message>
+        <source>Marsh (in ski orienteering map)</source>
+        <comment>Name of symbol 310.0.1</comment>
+        <translation>Mocsár (sífutó térképen)</translation>
+    </message>
+    <message>
         <source>Open land</source>
         <comment>Name of symbol 401</comment>
         <translation>Nyílt terület</translation>
@@ -14197,6 +14202,141 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
         <translation>A tengerszint feletti magassági értékeket magasságkülönbségek durva becsléséhez használhatjuk. A magasságot méterre kerekítve adjuk meg. A számokészakra tájoltak. A vizek szintjét pont nélkül írjuk meg.</translation>
     </message>
     <message>
+        <source>Very fast, wide ski tracks in ski centres, made with a ski trail groomer or a track leveller.</source>
+        <comment>Description of symbol 801</comment>
+        <translation>Nagyon gyors, széles sípályák a síközpontokban, sípálya ápolóval vagy pálya szintezővel készültek.</translation>
+    </message>
+    <message>
+        <source>A rough, slow track with little snow or some brushwood. This symbol is not used in steep
+slopes, if the width of the track allows using herringbone steps for uphill, or snow plowing
+technique for slowing and stopping.
+
+In order to clarify a junction, the beginning of a slow track is drawn with a short line.</source>
+        <comment>Description of symbol 804</comment>
+        <translation>Egy durva, lassú pálya kis hóval vagy bozótfonattal (vékony ágakból szőtt tekercs). Ez a szimbólum nem használható meredek
+lejtőkön, ha a pálya szélessége lehetővé teszi a halszálkás lépések használatát felfelé, vagy hóekézést
+a lassítás és a megállás technikáját.
+
+A csomópont tisztázása érdekében a lassú pálya kezdetét rövid vonallal kell megrajzolni.</translation>
+    </message>
+    <message>
+        <source>Road covered with snow</source>
+        <comment>Name of symbol 805</comment>
+        <translation type="unfinished">Hóval borított út</translation>
+    </message>
+    <message>
+        <source>Snowploughed, skiable roads are drawn with a normal road symbol but wider.</source>
+        <comment>Description of symbol 805</comment>
+        <translation>A hókotrott, síelhető utakat normál, de szélesebb útjelzéssel rajzolták.</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, line symbol</source>
+        <comment>Name of symbol 806</comment>
+        <translation>Homokos vagy havas út, vonal szimbólum</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806</comment>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
+jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
+az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+    </message>
+    <message>
+        <source>Sanded or snowless road, single symbol</source>
+        <comment>Name of symbol 806.1</comment>
+        <translation>Homokos vagy havas út, egyetlen szimbólum</translation>
+    </message>
+    <message>
+        <source>A road on the map which is sanded or snowless during the competition. A chain of V-
+marks across the road symbol show that the road is not skiable. Snowless roads and
+heavily sanded roads should normally be marked as forbidden routes.</source>
+        <comment>Description of symbol 806.1</comment>
+        <translation>Út a térképen, amely a verseny alatt homokos vagy havas. &quot;V&quot;-lánc
+jelek az út szimbólumán azt mutatják, hogy az út nem síelhető. A hómentes utakat és
+az erősen homokos utakat általában tiltott útvonalakként kell megjelölni.</translation>
+    </message>
+    <message>
+        <source>A road which is not opened for traffic, no skiable track.</source>
+        <comment>Description of symbol 807</comment>
+        <translation>A forgalom számára nem nyitott út, nincs síelhető pálya.</translation>
+    </message>
+    <message>
+        <source>Prepared area</source>
+        <comment>Name of symbol 808</comment>
+        <translation>Előkészített terület</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808</comment>
+        <translation>Szlalom lejtők (alpesi sípályák) és egyéb területek, amelyek szélesek, síelhetők és kemények.
+Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
+    </message>
+    <message>
+        <source>Prepared area, fill pattern</source>
+        <comment>Name of symbol 808.0.1</comment>
+        <translation>Előkészített terület, kitöltési minta</translation>
+    </message>
+    <message>
+        <source>Slalom slopes (alpine skiing slopes) and other areas which are wide, skiable and hard.
+The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 808.0.1</comment>
+        <translation>Szlalom lejtők (alpesi sípályák) és egyéb területek, amelyek szélesek, síelhetők és kemények.
+Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
+    </message>
+    <message>
+        <source>Prepared area, boundary</source>
+        <comment>Name of symbol 801.0.2</comment>
+        <translation>Előkészített terület, határ</translation>
+    </message>
+    <message>
+        <source>The boundaries of prepared areas are shown with a narrow green line (0.13 mm) so every edge can be read clearly.</source>
+        <comment>Description of symbol 801.0.2</comment>
+        <translation>Az előkészített területek határait keskeny zöld vonal (0,13 mm) mutatja, így minden széle világosan leolvasható.</translation>
+    </message>
+    <message>
+        <source>Public snow mobile route</source>
+        <comment>Name of symbol 813</comment>
+        <translation>Nyilvános hómobil útvonal</translation>
+    </message>
+    <message>
+        <source>A public and marked route for snow mobiles that may be in use during the ski orienteering competition. These routes are often uneven and of varying width and quality. The organizers must inform competitors in the competition instructions about the quality of such routes (e.g. with photographs) and ensure the safety of the competitors by temporarily closing the route, manning the route or by other means informing any snow mobile drivers about the possibility of encountering ski orienteers on the route. If the safety of the competitors can not be guaranteed, the route must be marked as forbidden and safe passages must be ensured.</source>
+        <comment>Description of symbol 813</comment>
+        <translation>Nyilvános és kijelölt útvonal a hómobilok számára, amelyek a sífutóverseny során használatosak lehetnek. Ezek az útvonalak gyakran egyenetlenek és különböző szélességűek és minőségűek. A szervezőknek tájékoztatniuk kell a versenyre vonatkozó utasításokat a versenyben részt vevő versenyzőkkel az ilyen útvonalak minőségéről (pl. fényképekkel), és biztosítaniuk kell a versenytársak biztonságát az útvonal ideiglenes lezárásával, az útvonal személyzettel való biztosításával vagy más módon, tájékoztatva a hómobil sofőröket arról, hogy az útvonalon sí-tájfutókkal találkozhatnak. Ha a versenytársak biztonsága nem garantálható, az útvonalat tiltottként kell megjelölni, és biztosítani kell a biztonságos átjárókat.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, forbidden to cross</source>
+        <comment>Name of symbol 814</comment>
+        <translation type="unfinished">Tiltott útvonal, tilos átkelni</translation>
+    </message>
+    <message>
+        <source>A route which is out-of-bounds and forbidden to cross is shown with a zigzag. The zigzag line should be as continuous as possible. If there is a crossing point over the forbidden route, it shall be presented like a gate by two perpendicular lines over the forbidden route. Also a longer crossing section shall be presented clearly on the map by using the perpendicular lines at the end of the zigzag lines.</source>
+        <comment>Description of symbol 814</comment>
+        <translation>Egy útvonal, amelyek nem használhatók és tilosak átlépni, cikk-cakk vonallal vannak feltüntetve. A cikk-cakk vonal lehetőleg folyamatos legyen. Ha a tiltott útvonalon van átkelőhely, akkor azt a kapuként két merőleges vonallal kell ábrázolni a tiltott útvonal felett. Hosszabb átkelő szakaszt is egyértelműen fel kell tüntetni a térképen a cikk-cakk vonalak végén lévő merőleges vonalak felhasználásával.</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, line symbol</source>
+        <comment>Name of symbol 809</comment>
+        <translation>Tiltott útvonal, átjárható, vonal szimbólum</translation>
+    </message>
+    <message>
+        <source>Forbidden route, crossable, single symbol</source>
+        <comment>Name of symbol 809.0.1</comment>
+        <translation>Tiltott útvonal, átjárható, vonal szimbólum</translation>
+    </message>
+    <message>
+        <source>Equipment deposit</source>
+        <comment>Name of symbol 812</comment>
+        <translation>Felszerelés lerakat</translation>
+    </message>
+    <message>
+        <source>A deposit for spare equipment in the terrain.</source>
+        <comment>Description of symbol 812</comment>
+        <translation>Lerakat a terepen lévő pótalkatrészeknek.</translation>
+    </message>
+    <message>
         <source>Start</source>
         <comment>Name of symbol 701</comment>
         <translation>Rajt</translation>
@@ -14215,6 +14355,11 @@ Ha a sárgával jelölt területek kerülnek túlsúlyba, a teli szín helyett 7
         <source>The control points are shown with circles. The centre of the circle shows the precise position of the feature. Sections of circles should be omitted to leave important detail showing.</source>
         <comment>Description of symbol 702</comment>
         <translation>Az ellenőrzőpon helyét kör jelöli. A kör középpontja mutatja a tereptárgy pontos helyét. A kör vonalát megszakíthatjuk ha az fontos részleteket takar.</translation>
+    </message>
+    <message>
+        <source>Control point and focus point</source>
+        <comment>Name of symbol 810</comment>
+        <translation>Ellenőrző pont és fókusz pont</translation>
     </message>
     <message>
         <source>Control number</source>
@@ -17269,7 +17414,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.1</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| Eastern</source>
@@ -17279,7 +17424,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.2</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| South Eastern</source>
@@ -17299,7 +17444,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| South western</source>
@@ -17309,7 +17454,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.3</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| Western</source>
@@ -17319,7 +17464,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.1.4</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| North Western</source>
@@ -17329,7 +17474,7 @@ Térkép szimbólum: ISOM 703</translation>
     <message>
         <source>The more northern of two similar features, or the northern-most of several similar features.</source>
         <comment>Description of symbol 0.2.4</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A két hasonló jellemző északibb, vagy a legtöbb hasonló jellemző északi része.</translation>
     </message>
     <message>
         <source>|C| Upper</source>
